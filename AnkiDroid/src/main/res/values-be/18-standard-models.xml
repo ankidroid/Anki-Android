@@ -20,17 +20,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Вонкавы бок</string>
-    <string name="back_field_name">Зваротны бок</string>
+    <string name="front_field_name">Пярэдні бок</string>
+    <string name="back_field_name">Задні бок</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Тэкст</string>
     <string name="extra_field_name">Дадаткова</string>
-    <string name="field_to_ask_front_name">Дадаць зваротны бок</string>
+    <string name="field_to_ask_front_name">Дадаць адваротны бок</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Картка %d</string>
     <!--Note type-->
     <string name="basic_model_name">Асноўны</string>
     <string name="cloze_model_name">З пропускамі</string>
-    <string name="basic_typing_model_name">Асноўны (надрукуйце адказ)</string>
-    <string name="forward_reverse_model_name">Асноўны (і адваротная картка)</string>
-    <string name="forward_optional_reverse_model_name">Асноўны (і неабавязковая адваротная картка)</string>
+    <string name="basic_typing_model_name">Асноўная (надрукуйце адказ)</string>
+    <string name="forward_reverse_model_name">Асноўная (з адваротнай карткай)</string>
+    <string name="forward_optional_reverse_model_name">Асноўная (з неабавязковай адваротнай карткай)</string>
 </resources>

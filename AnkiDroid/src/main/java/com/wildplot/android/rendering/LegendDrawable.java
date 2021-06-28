@@ -23,7 +23,7 @@ import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class LegendDrawable implements Drawable, Legendable {
 
     private String mName = "";

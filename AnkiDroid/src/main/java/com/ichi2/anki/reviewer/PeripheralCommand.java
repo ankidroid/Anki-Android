@@ -18,6 +18,8 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,12 @@ public class PeripheralCommand {
     @NonNull
     private final CardSide mCardSide;
 
-    private final @ViewerCommandDef int mCommand;
+    private final ViewerCommand mCommand;
 
     private final ModifierKeys mModifierKeys;
 
 
-    private PeripheralCommand(int keyCode, @ViewerCommandDef int command, @NonNull CardSide side, ModifierKeys modifierKeys) {
+    private PeripheralCommand(int keyCode, ViewerCommand command, @NonNull CardSide side, ModifierKeys modifierKeys) {
         this.mKeyCode = keyCode;
         this.mUnicodeCharacter = null;
         this.mCommand = command;
@@ -49,7 +51,7 @@ public class PeripheralCommand {
         this.mModifierKeys = modifierKeys;
     }
 
-    private PeripheralCommand(@Nullable Character unicodeCharacter, @ViewerCommandDef int command, @NonNull CardSide side, ModifierKeys modifierKeys) {
+    private PeripheralCommand(@Nullable Character unicodeCharacter, ViewerCommand command, @NonNull CardSide side, ModifierKeys modifierKeys) {
         this.mModifierKeys = modifierKeys;
         this.mKeyCode = null;
         this.mUnicodeCharacter = unicodeCharacter;
@@ -57,7 +59,7 @@ public class PeripheralCommand {
         this.mCardSide = side;
     }
 
-    public int getCommand() {
+    public ViewerCommand getCommand() {
         return mCommand;
     }
 
@@ -77,20 +79,20 @@ public class PeripheralCommand {
         return mCardSide == CardSide.ANSWER || mCardSide == CardSide.BOTH;
     }
 
-    public static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side) {
+    public static PeripheralCommand unicode(char unicodeChar, ViewerCommand command, CardSide side) {
         return unicode(unicodeChar, command, side, ModifierKeys.allowShift());
     }
 
-    private static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side, ModifierKeys modifierKeys) {
+    private static PeripheralCommand unicode(char unicodeChar, ViewerCommand command, CardSide side, ModifierKeys modifierKeys) {
         // Note: cast is needed to select the correct constructor
         return new PeripheralCommand((Character) unicodeChar, command, side, modifierKeys);
     }
 
-    public static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side) {
+    public static PeripheralCommand keyCode(int keyCode, ViewerCommand command, CardSide side) {
         return keyCode(keyCode, command, side, ModifierKeys.none());
     }
 
-    private static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side, ModifierKeys modifiers) {
+    private static PeripheralCommand keyCode(int keyCode, ViewerCommand command, CardSide side, ModifierKeys modifiers) {
         return new PeripheralCommand(keyCode, command, side, modifiers);
     }
 

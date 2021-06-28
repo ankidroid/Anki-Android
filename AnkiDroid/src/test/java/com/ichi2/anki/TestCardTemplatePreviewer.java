@@ -3,7 +3,9 @@ package com.ichi2.anki;
 public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
     protected boolean mShowingAnswer = false;
     public boolean getShowingAnswer() { return mShowingAnswer; }
-    public void disableDoubleClickPrevention() { mLastClickTime = (AbstractFlashcardViewer.DOUBLE_TAP_IGNORE_THRESHOLD * -2); }
+    public void disableDoubleClickPrevention() {
+        mLastClickTime = (AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2);
+    }
 
 
     @Override
@@ -14,7 +16,7 @@ public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
     }

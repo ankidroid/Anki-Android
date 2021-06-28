@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +46,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -59,11 +62,13 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
 
+import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,7 +91,19 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     private TemporaryModel mTempModel;
     private long mModelId;
     private long mNoteId;
+
+    // the position of the cursor in the editor view
+    private HashMap<Integer, Integer> mEditorPosition;
+
+    // the current editor view among front/style/back
+    private HashMap<Integer, Integer> mEditorViewId;
     private int mStartingOrdId;
+
+    private static final String EDITOR_POSITION_KEY = "editorPosition";
+    private static final String EDITOR_VIEW_ID_KEY = "editorViewId";
+    private static final String EDITOR_MODEL_ID = "modelId";
+    private static final String EDITOR_NOTE_ID = "noteId";
+    private static final String EDITOR_START_ORD_ID = "ordId";
     private static final int REQUEST_PREVIEWER = 0;
     private static final int REQUEST_CARD_BROWSER_APPEARANCE = 1;
 
@@ -110,22 +127,29 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_template_editor_activity);
         // Load the args either from the intent or savedInstanceState bundle
+        mEditorPosition = new HashMap<>();
+        mEditorViewId = new HashMap<>();
+
         if (savedInstanceState == null) {
             // get model id
-            mModelId = getIntent().getLongExtra("modelId", NOT_FOUND_NOTE_TYPE);
+            mModelId = getIntent().getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE);
             if (mModelId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided");
                 finishWithoutAnimation();
                 return;
             }
             // get id for currently edited note (optional)
-            mNoteId = getIntent().getLongExtra("noteId", -1L);
+            mNoteId = getIntent().getLongExtra(EDITOR_NOTE_ID, -1L);
             // get id for currently edited template (optional)
             mStartingOrdId = getIntent().getIntExtra("ordId", -1);
+            mEditorPosition.put(0, 0);
+            mEditorViewId.put(0, R.id.front_edit);
         } else {
-            mModelId = savedInstanceState.getLong("modelId");
-            mNoteId = savedInstanceState.getLong("noteId");
-            mStartingOrdId = savedInstanceState.getInt("ordId");
+            mModelId = savedInstanceState.getLong(EDITOR_MODEL_ID);
+            mNoteId = savedInstanceState.getLong(EDITOR_NOTE_ID);
+            mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID);
+            mEditorPosition = (HashMap<Integer, Integer>) savedInstanceState.getSerializable(EDITOR_POSITION_KEY);
+            mEditorViewId = (HashMap<Integer, Integer>) savedInstanceState.getSerializable(EDITOR_VIEW_ID_KEY);
             mTempModel = TemporaryModel.fromBundle(savedInstanceState);
         }
 
@@ -138,9 +162,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putAll(getTempModel().toBundle());
-        outState.putLong("modelId", mModelId);
-        outState.putLong("noteId", mNoteId);
-        outState.putInt("ordId", mStartingOrdId);
+        outState.putLong(EDITOR_MODEL_ID, mModelId);
+        outState.putLong(EDITOR_NOTE_ID, mNoteId);
+        outState.putInt(EDITOR_START_ORD_ID, mStartingOrdId);
+        outState.putSerializable(EDITOR_VIEW_ID_KEY, mEditorViewId);
+        outState.putSerializable(EDITOR_POSITION_KEY, mEditorPosition);
         super.onSaveInstanceState(outState);
     }
 
@@ -274,7 +300,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
     @Nullable
-    private CardTemplateFragment getCurrentFragment() {
+    @VisibleForTesting()
+    CardTemplateFragment getCurrentFragment() {
         try {
             return (CardTemplateFragment) getSupportFragmentManager().findFragmentByTag("f" + mViewPager.getCurrentItem());
         } catch (Exception e) {
@@ -305,7 +332,14 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return CardTemplateFragment.newInstance(position, mNoteId);
+            int editorPosition = 0;
+            int editorViewId = R.id.front_edit;
+
+            if (mEditorPosition.get(position) != null && mEditorViewId.get(position) != null) {
+                editorPosition = mEditorPosition.get(position);
+                editorViewId = mEditorViewId.get(position);
+            }
+            return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId);
         }
 
 
@@ -337,20 +371,36 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
     public static class CardTemplateFragment extends Fragment {
-        private EditText mFront;
-        private EditText mCss;
-        private EditText mBack;
+        private FixedTextView mCurrentEdtiorTitle;
+        private EditText mEditorEditText;
+
+        private int mCurrentEditorViewId;
+        private int mEditorPosition;
+
         private CardTemplateEditor mTemplateEditor;
         private TabLayoutMediator mTabLayoutMediator;
 
-        public static CardTemplateFragment newInstance(int position, long noteId) {
+        public static CardTemplateFragment newInstance(int position, long noteId, int editorPosition, int viewId) {
             CardTemplateFragment f = new CardTemplateFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
-            args.putLong("noteId",noteId);
+            args.putLong(EDITOR_NOTE_ID,noteId);
+            args.putInt(EDITOR_POSITION_KEY, editorPosition);
+            args.putInt(EDITOR_VIEW_ID_KEY, viewId);
             f.setArguments(args);
             return f;
         }
+
+
+        public int getCurrentEditorViewId() {
+            return mCurrentEditorViewId;
+        }
+
+
+        public void setCurrentEditorViewId(int currentEditorViewId) {
+            mCurrentEditorViewId = currentEditorViewId;
+        }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -367,21 +417,45 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Timber.d(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.");
                 return mainView;
             }
-            // Load EditText Views
-            mFront = mainView.findViewById(R.id.front_edit);
-            mCss = mainView.findViewById(R.id.styling_edit);
-            mBack = mainView.findViewById(R.id.back_edit);
-            // Set EditText content
-            mFront.setText(template.getString("qfmt"));
-            mCss.setText(tempModel.getCss());
-            mBack.setText(template.getString("afmt"));
+
+            mCurrentEdtiorTitle = mainView.findViewById(R.id.title_edit);
+            mEditorEditText = mainView.findViewById(R.id.editor_editText);
+            mEditorPosition = getArguments().getInt(EDITOR_POSITION_KEY);
+
+
+            BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
+            bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int currentSelectedId = item.getItemId();
+                    mTemplateEditor.mEditorViewId.put(position, currentSelectedId);
+                    if (currentSelectedId == R.id.styling_edit) {
+                        setCurrentEditorView(currentSelectedId, tempModel.getCss(), R.string.card_template_editor_styling);
+                        return true;
+                    } else if (currentSelectedId == R.id.back_edit) {
+                        setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back);
+                        return true;
+                    } else {
+                        setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front);
+                        return true;
+                    }
+                }
+            });
+            // set saved or default view
+            bottomNavigation.setSelectedItemId(getArguments().getInt(EDITOR_VIEW_ID_KEY));
+
             // Set text change listeners
             TextWatcher templateEditorWatcher = new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    template.put("qfmt", mFront.getText());
-                    template.put("afmt", mBack.getText());
-                    mTemplateEditor.getTempModel().updateCss(mCss.getText().toString());
+                    mTemplateEditor.mEditorPosition.put(position, mEditorEditText.getSelectionStart());
+                    if (mCurrentEditorViewId == R.id.styling_edit) {
+                        tempModel.updateCss(mEditorEditText.getText().toString());
+                    } else if (mCurrentEditorViewId == R.id.back_edit) {
+                        template.put("afmt", mEditorEditText.getText());
+                    } else {
+                        template.put("qfmt", mEditorEditText.getText());
+                    }
                     mTemplateEditor.getTempModel().updateTemplate(position, template);
                 }
 
@@ -393,12 +467,20 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 @Override
                 public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { /* do nothing */ }
             };
-            mFront.addTextChangedListener(templateEditorWatcher);
-            mCss.addTextChangedListener(templateEditorWatcher);
-            mBack.addTextChangedListener(templateEditorWatcher);
+
+            mEditorEditText.addTextChangedListener(templateEditorWatcher);
+
             // Enable menu
             setHasOptionsMenu(true);
             return mainView;
+        }
+
+        public void setCurrentEditorView(@NonNull int id, @NonNull String editorContent, @NonNull int editorTitleId) {
+            setCurrentEditorViewId(id);
+            mEditorEditText.setText(editorContent);
+            mCurrentEdtiorTitle.setText(getResources().getString(editorTitleId));
+            mEditorEditText.setSelection(mEditorPosition);
+            mEditorEditText.requestFocus();
         }
 
 
@@ -436,9 +518,12 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
-                @StringRes int overrideStringRes = template.has("did") && !template.isNull("did") ?
-                        R.string.card_template_editor_deck_override_on :
-                        R.string.card_template_editor_deck_override_off;
+                
+                @StringRes int overrideStringRes = R.string.card_template_editor_deck_override_off;
+
+                if (template != null && template.has("did") && !template.isNull("did")) {
+                    overrideStringRes = R.string.card_template_editor_deck_override_on;
+                }
 
                 menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes);
             }
@@ -512,15 +597,16 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return true;
             } else if (itemId == R.id.action_card_browser_appearance) {
                 Timber.i("CardTemplateEditor::Card Browser Template button pressed");
-                launchCardBrowserAppearance(getCurrentTemplate());
-
+                JSONObject currentTemplate = getCurrentTemplate();
+                if (currentTemplate != null) {
+                    launchCardBrowserAppearance(currentTemplate);
+                }
                 return super.onOptionsItemSelected(item);
             }
             return super.onOptionsItemSelected(item);
         }
 
 
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void performPreview() {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
@@ -541,7 +627,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Save the model and pass the filename if updated
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-            startActivityForResult(i, REQUEST_PREVIEWER);
+            mOnRequestPreviewResult.launch(i);
         }
 
 
@@ -575,7 +661,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
         private void launchCardBrowserAppearance(JSONObject currentTemplate) {
             Context context = AnkiDroidApp.getInstance().getBaseContext();
             if (context == null) {
@@ -584,14 +669,19 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return;
             }
             Intent browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate);
-            startActivityForResult(browserAppearanceIntent, REQUEST_CARD_BROWSER_APPEARANCE);
+            mOnCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent);
         }
 
 
-        @CheckResult @NonNull
+        @CheckResult
         private JSONObject getCurrentTemplate() {
             int currentCardTemplateIndex = getCurrentCardTemplateIndex();
-            return mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").getJSONObject(currentCardTemplateIndex);
+            try {
+                return mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").getJSONObject(currentCardTemplateIndex);
+            } catch (JSONException e) {
+                Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex);
+                return null;
+            }
         }
 
 
@@ -627,31 +717,24 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             return false;
         }
 
-
-        @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == REQUEST_CARD_BROWSER_APPEARANCE) {
-                onCardBrowserAppearanceResult(resultCode, data);
+        ActivityResultLauncher<Intent> mOnCardBrowserAppearanceActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() != RESULT_OK) {
                 return;
             }
+            onCardBrowserAppearanceResult(result.getData());
+        });
 
-            if (requestCode == REQUEST_PREVIEWER) {
+        ActivityResultLauncher<Intent> mOnRequestPreviewResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() != RESULT_OK) {
+                    return;
+                }
                 TemporaryModel.clearTempModelFiles();
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
                 ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
                 mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
-            }
-        }
+        });
 
-
-        private void onCardBrowserAppearanceResult(int resultCode, @Nullable Intent data) {
-            if (resultCode != RESULT_OK) {
-                Timber.i("Activity Cancelled: Card Template Browser Appearance");
-                return;
-            }
-
+        private void onCardBrowserAppearanceResult(@Nullable Intent data) {
             CardTemplateBrowserAppearanceEditor.Result result = CardTemplateBrowserAppearanceEditor.Result.fromIntent(data);
             if (result == null) {
                 Timber.w("Error processing Card Template Browser Appearance result");
@@ -661,7 +744,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             Timber.i("Applying Card Template Browser Appearance result");
 
             JSONObject currentTemplate = getCurrentTemplate();
-            result.applyTo(currentTemplate);
+            if (currentTemplate != null) {
+                result.applyTo(currentTemplate);
+            }
         }
 
         /* Used for updating the collection when a model has been edited */

@@ -5,30 +5,46 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
+import android.database.SQLException;
+import android.os.Bundle;
+import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
+import com.ichi2.testutils.BackupManagerTestUtilities;
+import com.ichi2.testutils.DbUtils;
+import com.ichi2.utils.ResourceLoader;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
+import org.robolectric.annotation.Config;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -246,8 +262,236 @@ public class DeckPickerTest extends RobolectricTest {
         }
     }
 
+    @Test
+    public void deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
+        // Refactor: It would be much better to use a spy - see if we can get this into Robolecteic
+        try {
+            InitialActivityTest.grantWritePermissions();
+            BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());
+            // We don't show it if the user is new.
+            AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("lastVersion", "0.1").apply();
+
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+            assertThat("Analytics opt-in should be displayed", d.mDisplayedAnalyticsOptIn, is(true));
+
+        } finally {
+            InitialActivityTest.revokeWritePermissions();
+            BackupManagerTestUtilities.reset();
+        }
+    }
+
+
+    @Test
+    public void doNotShowOptionsMenuWhenCollectionInaccessible() {
+        try {
+            enableNullCollection();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            assertThat("Options menu not displayed when collection is inaccessible", d.mPrepareOptionsMenu, is(false));
+        } finally {
+            disableNullCollection();
+        }
+    }
+
+    @Test
+    public void showOptionsMenuWhenCollectionAccessible() {
+        try {
+            InitialActivityTest.grantWritePermissions();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            assertThat("Options menu is displayed when collection is accessible", d.mPrepareOptionsMenu, is(true));
+        } finally {
+            InitialActivityTest.revokeWritePermissions();
+        }
+    }
+
+    @Test
+    public void doNotShowSyncBadgeWhenCollectionInaccessible() {
+        try {
+            enableNullCollection();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            assertThat("Sync badge is not displayed when collection is inaccessible", d.mDisplaySyncBadge, is(false));
+        } finally {
+            disableNullCollection();
+        }
+    }
+
+    @Test
+    public void showSyncBadgeWhenCollectionAccessible() {
+        try {
+            InitialActivityTest.grantWritePermissions();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            assertThat("Sync badge is displayed when collection is accessible", d.mDisplaySyncBadge, is(true));
+        } finally {
+            InitialActivityTest.revokeWritePermissions();
+        }
+    }
+
+    @Test
+    public void onResumeLoadCollectionFailureWithInaccessibleCollection() {
+        try {
+            InitialActivityTest.revokeWritePermissions();
+            enableNullCollection();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+            // Neither collection, not its models will be initialized without storage permission
+            assertThat("Lazy Collection initialization CollectionTask.LoadCollectionComplete fails", d.getCol(), is(nullValue()));
+        } finally {
+            disableNullCollection();
+        }
+    }
+
+    @Test
+    public void onResumeLoadCollectionSuccessWithAccessibleCollection() {
+        try {
+            InitialActivityTest.grantWritePermissions();
+            DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            assertThat("Collection initialization ensured by CollectionTask.LoadCollectionComplete", d.getCol(), is(notNullValue()));
+            assertThat("Collection Models Loaded", d.getCol().getModels(), is(notNullValue()));
+        } finally {
+            InitialActivityTest.revokeWritePermissions();
+        }
+    }
+
+    @Test
+    public void version16CollectionOpens() {
+        try {
+            setupColV16();
+
+            InitialActivityTest.setupForValid(getTargetContext());
+
+            DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            waitForAsyncTasksToComplete();
+
+            assertThat("Collection should now be open", CollectionHelper.getInstance().colIsOpen());
+
+            assertThat(CollectionType.SCHEMA_V_16.isCollection(getCol()), is(true));
+
+            assertThat("Decks should be visible", deckPicker.getDeckCount(), is(1));
+        } finally {
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
+    @Test
+    public void corruptVersion16CollectionShowsDatabaseError() {
+        try {
+            setupColV16();
+
+            // corrupt col
+            DbUtils.performQuery(getTargetContext(), "drop table deck_config");
+
+            InitialActivityTest.setupForValid(getTargetContext());
+
+            DeckPickerEx deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            waitForAsyncTasksToComplete();
+
+            assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
+            assertThat("An error dialog should be displayed", deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_LOAD_FAILED));
+        } finally {
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
+    @Test
+    public void notEnoughSpaceToBackupShowsError() {
+        Class<DeckPickerNoSpaceForBackup> clazz = DeckPickerNoSpaceForBackup.class;
+        try {
+            setupColV16();
+
+            InitialActivityTest.setupForValid(getTargetContext());
+
+            DeckPickerNoSpaceForBackup deckPicker = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
+            waitForAsyncTasksToComplete();
+
+            assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
+            assertThat("A downgrade failed dialog should be shown", deckPicker.mDisplayedDowngradeFailed, is(true));
+        } finally {
+            InitialActivityTest.setupForDefault();
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "xlarge-port")
+    public void checkDisplayOfStudyOptionsOnTablet() {
+        DeckPickerEx deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+
+        StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+        assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
+    }
+
+
+    private void useCollection(@SuppressWarnings("SameParameterValue") CollectionType collectionType) {
+        // load asset into temp
+        String path = ResourceLoader.getTempCollection(getTargetContext(), collectionType.getAssetFile());
+
+        File p = new File(path);
+        assertThat(p.isFile(), is(true));
+        String collectionDirectory = p.getParent();
+
+        // set collection path
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
+        preferences.edit().putString("deckPath", collectionDirectory).apply();
+
+        // ensure collection not loaded yet
+        assertThat("collection should not be loaded", CollectionHelper.getInstance().colIsOpen(), is(false));
+    }
+
+
+    protected void setupColV16() {
+        Storage.setUseInMemory(false);
+        DB.setSqliteOpenHelperFactory(new FrameworkSQLiteOpenHelperFactory());
+        useCollection(CollectionType.SCHEMA_V_16);
+    }
+
+
+    public enum CollectionType {
+        SCHEMA_V_16("schema16.anki2", "ThisIsSchema16");
+
+        private final String mAssetFile;
+        private final String mDeckName;
+
+
+        CollectionType(String s, String deckName) {
+            this.mAssetFile = s;
+            this.mDeckName = deckName;
+        }
+
+        public String getAssetFile() {
+            return mAssetFile;
+        }
+
+
+        public boolean isCollection(Collection col) {
+            return col.getDecks().allNames().contains(mDeckName);
+        }
+    }
+
+    private static class DeckPickerNoSpaceForBackup extends DeckPickerEx {
+
+        private boolean mDisplayedDowngradeFailed;
+
+
+        @Override
+        public BackupManager getBackupManager() {
+            BackupManager bm = spy(new BackupManager());
+            doReturn(false).when(bm).hasFreeDiscSpace(any());
+            return bm;
+        }
+
+
+        @Override
+        public void displayDowngradeFailedNoSpace() {
+            this.mDisplayedDowngradeFailed = true;
+            super.displayDowngradeFailedNoSpace();
+        }
+    }
+
     private static class DeckPickerEx extends DeckPicker {
         private int mDatabaseErrorDialog;
+        private boolean mDisplayedAnalyticsOptIn;
+        private boolean mPrepareOptionsMenu;
+        private boolean mDisplaySyncBadge = false;
+
 
         @Override
         public void showDatabaseErrorDialog(int id) {
@@ -256,6 +500,26 @@ public class DeckPickerTest extends RobolectricTest {
 
         public void onStoragePermissionGranted() {
             onRequestPermissionsResult(DeckPicker.REQUEST_STORAGE_PERMISSION, new String[] { "" }, new int[] { PackageManager.PERMISSION_GRANTED });
+        }
+
+
+        @Override
+        protected void displayAnalyticsOptInDialog() {
+            this.mDisplayedAnalyticsOptIn = true;
+            super.displayAnalyticsOptInDialog();
+        }
+
+
+        @Override
+        public boolean onPrepareOptionsMenu(Menu menu) {
+            this.mPrepareOptionsMenu = super.onPrepareOptionsMenu(menu);
+            return mPrepareOptionsMenu;
+        }
+
+        @Override
+        protected void displaySyncBadge(Menu menu) {
+            this.mDisplaySyncBadge = true;
+            super.displaySyncBadge(menu);
         }
     }
 }

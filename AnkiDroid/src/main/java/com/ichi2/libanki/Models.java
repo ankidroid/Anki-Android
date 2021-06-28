@@ -71,9 +71,9 @@ public class Models {
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.*?\\}\\}");
 
     public static final String DEFAULT_MODEL =
-              "{'sortf': 0, "
-            + "'did': 1, "
-            + "'latexPre': \""
+              "{\"sortf\": 0, "
+            + "\"did\": 1, "
+            + "\"latexPre\": \""
             + "\\\\documentclass[12pt]{article}\\n"
             + "\\\\special{papersize=3in,5in}\\n"
             + "\\\\usepackage[utf8]{inputenc}\\n"
@@ -82,14 +82,14 @@ public class Models {
             + "\\\\setlength{\\\\parindent}{0in}\\n"
             + "\\\\begin{document}\\n"
             + "\", "
-            + "'latexPost': \"\\\\end{document}\", "
-            + "'mod': 0, "
-            + "'usn': 0, "
-            + "'vers': [], " // FIXME: remove when other clients have caught up
-            + "'type': "
+            + "\"latexPost\": \"\\\\end{document}\", "
+            + "\"mod\": 0, "
+            + "\"usn\": 0, "
+            + "\"vers\": [], " // FIXME: remove when other clients have caught up
+            + "\"type\": "
             + Consts.MODEL_STD
             + ", "
-            + "'css': \".card {\\n"
+            + "\"css\": \".card {\\n"
             + " font-family: arial;\\n"
             + " font-size: 20px;\\n"
             + " text-align: center;\\n"
@@ -98,15 +98,15 @@ public class Models {
             + "}\""
             + "}";
 
-    private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
+    private static final String defaultField = "{\"name\": \"\", " + "\"ord\": null, " + "\"sticky\": false, " +
     // the following alter editing, and are used as defaults for the template wizard
-            "'rtl': False, " + "'font': \"Arial\", " + "'size': 20, " +
+            "\"rtl\": false, " + "\"font\": \"Arial\", " + "\"size\": 20, " +
             // reserved for future use
-            "'media': [] }";
+            "\"media\": [] }";
 
-    private static final String defaultTemplate = "{'name': \"\", " + "'ord': null, " + "'qfmt': \"\", "
-            + "'afmt': \"\", " + "'did': null, " + "'bqfmt': \"\"," + "'bafmt': \"\"," + "'bfont': \"Arial\"," +
-            "'bsize': 12 }";
+    private static final String defaultTemplate = "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", "
+            + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"Arial\"," +
+            "\"bsize\": 12 }";
 
     // /** Regex pattern used in removing tags from text before diff */
     // private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
@@ -201,6 +201,13 @@ public class Models {
             m.put("mod", mCol.getTime().intTime());
             m.put("usn", mCol.usn());
             // TODO: fix empty id problem on _updaterequired (needed for model adding)
+            if (!isModelNew(m)) {
+                // this fills in the `req` chunk of the model. Not used on AnkiDroid 2.15+ or AnkiDesktop 2.1.x
+                // Included only for backwards compatibility (to AnkiDroid <2.14 etc)
+                // https://forums.ankiweb.net/t/is-req-still-used-or-present/9977
+                // https://github.com/ankidroid/Anki-Android/issues/8945
+                _updateRequired(m);
+            }
             if (templates) {
                 _syncTemplates(m);
             }
@@ -957,6 +964,25 @@ public class Models {
      * Required field/text cache
      * ***********************************************************************************************
      */
+
+    private void _updateRequired(Model m) {
+        if (m.isCloze()) {
+            // nothing to do
+            return;
+        }
+        JSONArray req = new JSONArray();
+        List<String> flds = m.getFieldsNames();
+        JSONArray templates = m.getJSONArray("tmpls");
+        for (JSONObject t: templates.jsonObjectIterable()) {
+            Object[] ret = _reqForTemplate(m, flds, t);
+            JSONArray r = new JSONArray();
+            r.put(t.getInt("ord"));
+            r.put(ret[0]);
+            r.put(ret[1]);
+            req.put(r);
+        }
+        m.put("req", req);
+    }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(Model m, List<String> flds, JSONObject t) {

@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -165,7 +166,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
         updateButtonsState();
@@ -267,7 +268,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return new PreviewerCard(col, cardListIndex);
     }
 
-    /** Get a dummy card */
+
+    /**
+     * This method generates a note from a sample model, or fails if invalid. It does not currently have knowledge of field content
+     * A cloze uses the same model. Its content (not provided in params) determines validity of an ordinal
+     */
     protected @Nullable Card getDummyCard(Model model, int ordinal) {
         Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
@@ -278,11 +283,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         for (int i = 0; i < fieldNames.size() && i < n.getFields().length; i++) {
             n.setField(i, fieldNames.get(i));
         }
+
+        if (model.isCloze()) {
+            ordinal = 0;
+        }
+
         try {
             JSONObject template = model.getJSONArray("tmpls").getJSONObject(ordinal);
-            PreviewerCard card = (PreviewerCard)getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0L, false);
-            card.setNote(n);
-            return card;
+            return getCol().getNewLinkedCard(new PreviewerCard(getCol(), n), n, template, 1, 0L, false);
         } catch (Exception e) {
             Timber.e("getDummyCard() unable to create card");
         }
@@ -293,16 +301,18 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     /** Override certain aspects of Card behavior so we may display unsaved data */
     public class PreviewerCard extends Card {
 
-        private Note mNote;
+        @Nullable private final Note mNote;
 
 
-        private PreviewerCard(Collection col) {
+        private PreviewerCard(Collection col, @NonNull Note note) {
             super(col);
+            mNote = note;
         }
 
 
         private PreviewerCard(Collection col, long id) {
             super(col, id);
+            mNote = null;
         }
 
 
@@ -323,12 +333,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 return mNote;
             }
             return super.note();
-        }
-
-
-        /** set an unsaved note to use for rendering */
-        public void setNote(Note note) {
-            mNote = note;
         }
 
 

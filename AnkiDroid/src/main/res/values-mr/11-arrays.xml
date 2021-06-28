@@ -35,83 +35,83 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>Always report</item>
-        <item>Never report</item>
-        <item>Ask me</item>
+        <item>नेहमी नोंदवा</item>
+        <item>कधीही रिपोर्ट करू नका</item>
+        <item>मला विचार</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Suspend card</item>
-        <item>Tag only</item>
+        <item>निलंबन कार्ड</item>
+        <item>केवळ टॅग करा</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>New cards in random order</item>
-        <item>New cards in order added</item>
+        <item>यादृच्छिक क्रमाने नवीन कार्डे</item>
+        <item>क्रमाने नवीन कार्डे जोडली</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>Oldest seen first</item>
-        <item>Random</item>
-        <item>Increasing intervals</item>
-        <item>Decreasing intervals</item>
-        <item>Most lapsed</item>
-        <item>Order added</item>
-        <item>Order due</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
+        <item>सर्वात पहिले पाहिलेले</item>
+        <item>यादृच्छिक</item>
+        <item>वाढती मध्यांतर</item>
+        <item>मध्यांतर कमी होत आहे</item>
+        <item>बहुतेक संपले</item>
+        <item>ऑर्डर जोडली</item>
+        <item>ऑर्डर देय</item>
+        <item>प्रथम नवीन जोडले</item>
+        <item>सापेक्ष प्रमाणाबाहेरपणा</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>Use current deck</item>
-        <item>Decide by note type</item>
+        <item>वर्तमान डेक वापरा</item>
+        <item>नोट प्रकाराद्वारे निर्णय घ्या</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Mix new cards and reviews</item>
-        <item>New cards after reviews</item>
-        <item>New cards before reviews</item>
+        <item>नवीन कार्डे आणि पुनरावलोकने मिक्स करा</item>
+        <item>पुनरावलोकने नंतर नवीन कार्डे</item>
+        <item>पुनरावलोकनापूर्वी नवीन कार्डे</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
-        <item>Always</item>
+        <item>जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</item>
+        <item>नेहमी</item>
     </string-array>
     <string-array name="day_theme_labels">
-        <item>Light</item>
-        <item>Plain</item>
+        <item>प्रकाश</item>
+        <item>साधा</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
+        <item>काळा</item>
+        <item>गडद</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>xx- लहान</item>
+        <item>x-लहान</item>
+        <item>लहान</item>
+        <item>मध्यम</item>
+        <item>मोठे</item>
+        <item>x- मोठा</item>
+        <item>xx- मोठे</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_no_action">कृतीविना</string>
+    <string name="gesture_answer_1">उत्तर बटण 1</string>
+    <string name="gesture_answer_2">उत्तर बटण 2</string>
+    <string name="gesture_answer_3">उत्तर बटण 3</string>
+    <string name="gesture_answer_4">उत्तर बटण 4</string>
+    <string name="gesture_answer_green">उत्तर शिफारस केलेले (हिरवे)</string>
+    <string name="gesture_answer_better_recommended">शिफारस केल्यापेक्षा उत्तर चांगले</string>
+    <string name="gesture_tag_note">टॅग नोट</string>
+    <string name="gesture_lookup">देखावा अभिव्यक्ती</string>
+    <string name="gesture_play">मीडिया प्ले करा</string>
+    <string name="gesture_abort_learning">शिक्षण रद्द करा</string>
+    <string name="gesture_flag_red">लाल ध्वज टॉगल करा</string>
+    <string name="gesture_flag_orange">ऑरेंज ध्वज टॉगल करा</string>
+    <string name="gesture_flag_green">ग्रीन ध्वज टॉगल करा</string>
+    <string name="gesture_flag_blue">निळा ध्वज टॉगल करा</string>
+    <string name="gesture_flag_remove">ध्वज काढा</string>
+    <string name="gesture_page_up">पृष्ठ वर</string>
+    <string name="gesture_page_down">पृष्ठ खाली</string>
+    <string name="gesture_abort_sync">निरस्त शिक्षण आणि संकालन</string>
+    <string name="gesture_toggle_whiteboard">व्हाईटबोर्ड टॉगल करा</string>
+    <string name="record_voice">आवाज रेकॉर्ड करा</string>
+    <string name="replay_voice">आवाज पुन्हा प्ले करा</string>
 </resources>

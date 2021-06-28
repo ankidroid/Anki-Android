@@ -21,6 +21,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -52,11 +54,10 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
 
-import androidx.fragment.app.FragmentFactory;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -159,11 +160,11 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      *                      deck has no options associated with it yet and should use a default
      *                      set of values.
      */
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openFilteredDeckOptions(boolean defaultConfig) {
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
-        getActivity().startActivityForResult(i, DECK_OPTIONS);
+        Timber.i("openFilteredDeckOptions()");
+        mOnDeckOptionsActivityResult.launch(i);
         ActivityTransitionAnimation.slide(getActivity(), FADE);
     }
 
@@ -184,6 +185,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Timber.i("onCreate()");
         super.onCreate(savedInstanceState);
         //If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && getArguments() != null) {
@@ -193,6 +195,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Timber.i("onCreateView()");
         if (container == null) {
             // Currently in a layout without a container, so no reason to create our view.
             return null;
@@ -202,8 +205,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         initAllContentViews(studyOptionsView);
         mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar);
-        mToolbar.inflateMenu(R.menu.study_options_fragment);
         if (mToolbar != null) {
+            mToolbar.inflateMenu(R.menu.study_options_fragment);
             configureToolbar();
         }
         refreshInterface(true);
@@ -217,14 +220,14 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (mFullNewCountThread != null) {
             mFullNewCountThread.interrupt();
         }
-        Timber.d("onDestroy()");
+        Timber.i("onDestroy()");
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d("onResume()");
+        Timber.i("onResume()");
         refreshInterface(true);
     }
 
@@ -243,12 +246,14 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     private void openReviewer() {
+        Timber.i("openReviewer()");
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
             mToReviewer = true;
-            getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
+            Timber.i("openReviewer() fragmented mode");
+            mOnRequestReviewActivityResult.launch(reviewer);
+            // TODO #8913 should we finish the activity here? when it comes back from review it's dead and mToolbar is null and it crashes
         } else {
             // Go to DeckPicker after studying when not tablet
             reviewer.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -303,7 +308,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, BooleanGetter> mUndoListener = new TaskListener<Card, BooleanGetter>() {
+    private final TaskListener<Card, Computation<?>> mUndoListener = new TaskListener<Card, Computation<?>>() {
         @Override
         public void onPreExecute() {
 
@@ -311,12 +316,11 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
         @Override
-        public void onPostExecute(BooleanGetter v) {
+        public void onPostExecute(Computation<?> v) {
             openReviewer();
         }
     };
 
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int itemId = item.getItemId();
@@ -330,7 +334,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 openFilteredDeckOptions();
             } else {
                 Intent i = new Intent(getActivity(), DeckOptions.class);
-                getActivity().startActivityForResult(i, DECK_OPTIONS);
+                Timber.i("Opening deck options for activity result");
+                mOnDeckOptionsActivityResult.launch(i);
                 ActivityTransitionAnimation.slide(getActivity(), FADE);
             }
             return true;
@@ -376,6 +381,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
     private void configureToolbarInternal(boolean recur) {
+        Timber.i("configureToolbarInternal()");
         try {
             mToolbar.setOnMenuItemClickListener(this);
             Menu menu = mToolbar.getMenu();
@@ -417,7 +423,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
             // Set the back button listener
             if (!mFragmented) {
-                final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white_24dp);
+                final Drawable icon = AppCompatResources.getDrawable(getContext(), R.drawable.ic_arrow_back_white);
                 icon.setAutoMirrored(true);
                 mToolbar.setNavigationIcon(icon);
                 mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(END));
@@ -440,57 +446,48 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-
-    @SuppressWarnings("deprecation") // Tracked as https://github.com/ankidroid/Anki-Android/issues/8293
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
-
-        // rebuild action bar
-        configureToolbar();
-
-        // boot back to deck picker if there was an error
-        if (resultCode == DeckPicker.RESULT_DB_ERROR || resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(resultCode);
+    ActivityResultLauncher<Intent> mOnRequestReviewActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult");
+        if (mToolbar != null) {
+            configureToolbar(); // FIXME we were crashing here because mToolbar is null #8913
+        } else {
+            AnkiDroidApp.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment");
+        }
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
+            closeStudyOptions(result.getResultCode());
             return;
         }
+        if (result.getResultCode() == Reviewer.RESULT_NO_MORE_CARDS) {
+            // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
+            if ((getCol().getSched().count() > 0) && (mStudyOptionsView != null)) {
+                View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
+                UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
+            }
+        }
+    });
 
-        // perform some special actions depending on which activity we're returning from
-        if (requestCode == STATISTICS || requestCode == BROWSE_CARDS) {
-            // select original deck if the statistics or card browser were opened,
-            // which can change the selected deck
-            if (intent.hasExtra("originalDeck")) {
-                getCol().getDecks().select(intent.getLongExtra("originalDeck", 0L));
-            }
+    ActivityResultLauncher<Intent> mOnDeckOptionsActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult");
+        configureToolbar();
+        if ((result.getResultCode() == DeckPicker.RESULT_DB_ERROR) || (result.getResultCode() == DeckPicker.RESULT_MEDIA_EJECTED)) {
+            closeStudyOptions(result.getResultCode());
+            return;
         }
-        if (requestCode == DECK_OPTIONS) {
-            if (mLoadWithDeckOptions) {
-                mLoadWithDeckOptions = false;
-                Deck deck = getCol().getDecks().current();
-                if (deck.isDyn() && deck.has("empty")) {
-                    deck.remove("empty");
-                }
-                    mProgressDialog = StyledProgressDialog.show(getActivity(), null,
-                            getResources().getString(R.string.rebuild_filtered_deck), true);
-                    TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
-            } else {
-                TaskManager.waitToFinish();
-                refreshInterface(true);
+        if (mLoadWithDeckOptions) {
+            mLoadWithDeckOptions = false;
+            Deck deck = getCol().getDecks().current();
+            if (deck.isDyn() && deck.has("empty")) {
+                deck.remove("empty");
             }
-        } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
-            if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-                if (getCol().getSched().count() > 0 && mStudyOptionsView != null) {
-                    View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
-                    UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
-                }
-            }
-        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-            mCurrentContentView = CONTENT_STUDY_OPTIONS;
-            setFragmentContentView(mStudyOptionsView);
+            mProgressDialog = StyledProgressDialog.show(getActivity(), null,
+                    getResources().getString(R.string.rebuild_filtered_deck), true);
+            TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
+        } else {
+            TaskManager.waitToFinish();
+            refreshInterface(true);
         }
-    }
+    });
+
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {

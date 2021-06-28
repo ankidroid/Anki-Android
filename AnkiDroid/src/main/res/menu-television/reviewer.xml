@@ -20,25 +20,25 @@
     <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
-        android:icon="@drawable/ic_clear_white_24dp"
+        android:icon="@drawable/ic_clear_white"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_hide_whiteboard"
         android:title="@string/hide_whiteboard"
-        android:icon="@drawable/ic_gesture_white_24dp"
+        android:icon="@drawable/ic_gesture_white"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_change_whiteboard_pen_color"
         android:icon="@drawable/ic_color_lens_white_24dp"
-        android:title="@string/title_whiteboard_pen_color"
+        android:title="@string/title_whiteboard_editor"
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_undo"
         android:enabled="false"
-        android:icon="@drawable/ic_undo_white_24dp"
+        android:icon="@drawable/ic_undo_white"
         android:title="@string/undo"
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
@@ -69,11 +69,11 @@
     <item
         android:id="@+id/action_toggle_whiteboard"
         android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white_24dp"
+        android:icon="@drawable/ic_gesture_white"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:icon="@drawable/ic_mode_edit_white"
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
@@ -104,18 +104,18 @@
     <item
         android:id="@+id/action_bury"
         android:title="@string/menu_bury"
-        android:icon="@drawable/ic_flip_to_back_white_24dp"/>
+        android:icon="@drawable/ic_flip_to_back_white"/>
     <item
         android:id="@+id/action_suspend"
         android:title="@string/menu_suspend"
-        android:icon="@drawable/ic_action_suspend" />
+        android:icon="@drawable/ic_pause_circle_outline" />
     <item
         android:id="@+id/action_delete"
         android:title="@string/menu_delete_note"
-        android:icon="@drawable/ic_delete_white_24dp"/>
+        android:icon="@drawable/ic_delete_white"/>
     <item
         android:id="@+id/action_mark_card"
-        android:icon="@drawable/ic_star_outline_white_24dp"
+        android:icon="@drawable/ic_star_border_white"
         android:title="@string/menu_mark_note"
         ankidroid:showAsAction="ifRoom"/>
     <item

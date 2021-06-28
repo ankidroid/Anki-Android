@@ -95,6 +95,7 @@
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
     <string name="menu_select">Metni seç</string>
+    <string name="menu_lookup">Arama metni</string>
     <string name="menu_search">%1$s\'de Ara</string>
-    <string name="menu_mark_note">Notu işâretle</string>
-    <string name="menu_unmark_note">İşâreti kaldır</string>
+    <string name="menu_mark_note">Notu işaretle</string>
+    <string name="menu_unmark_note">İşareti kaldır</string>
     <string name="menu_toggle_mic_tool_bar">Telaffuzu kontrol et</string>
     <string name="new_deck">Deste oluştur</string>
-    <string name="create" comment="Button to create a filtered deck">Oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>
     <string name="night_mode">Gece modu</string>
     <string name="directory_inaccessible">AnkiDroid dizinine ulaşılamıyor</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">\'{{%s}}\' eksik.</string>
     <string name="wrong_tag_closed">Bulundu \'{{/%1$s}}\', ama \'{{/%2$s}}\' beklendi.</string>
     <string name="filter_error">%s Filtresinde Hata</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Koleksiyonlar birleştirilemiyor.\nHangi koleksiyonu tutmak istersiniz?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid\'deki koleksiyonunuzun yerini AnkiWeb\'deki koleksiyonunuz alsın mı?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb\'deki koleksiyonunuzun yerini AnkiDroid\'deki koleksiyonunuz alsın mı?</string>
+    <string name="sync_conflict_title_new">Tutulacak koleksiyonu seç</string>
+    <string name="sync_conflict_replace_title">Koleksiyonu değiştir</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

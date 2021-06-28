@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.SharedPreferences;
 
 
+import com.ichi2.anki.exception.OutOfSpaceException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -41,6 +42,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class BackupManager {
@@ -54,13 +57,6 @@ public class BackupManager {
 
     /** Number of hours after which a backup new backup is created */
     private static final int BACKUP_INTERVAL = 5;
-
-
-    /* Prevent class from being instantiated */
-    private BackupManager() {
-        // do nothing
-    }
-
 
     public static boolean isActivated() {
         return true;
@@ -86,26 +82,44 @@ public class BackupManager {
 
 
     public static boolean performBackupInBackground(String path, @NonNull Time time) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, false, time);
+        return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, false, time);
     }
 
 
     public static boolean performBackupInBackground(String path, boolean force, @NonNull Time time) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, force, time);
+        return new BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, force, time);
     }
 
+    public boolean performDowngradeBackupInForeground(String path) throws OutOfSpaceException {
+
+        File colFile = new File(path);
+
+        if (!hasFreeDiscSpace(colFile)) {
+            Timber.w("Could not backup: no free disc space");
+            throw new OutOfSpaceException();
+        }
+
+        File backupFile = getBackupFile(colFile, "ankiDroidv16.colpkg");
+
+        try {
+            return performBackup(colFile, backupFile);
+        } catch (Exception e) {
+            Timber.w(e);
+            AnkiDroidApp.sendExceptionReport(e, "performBackupInForeground");
+            return false;
+        }
+    }
 
     @SuppressWarnings("PMD.NPathComplexity")
-    private static boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
+    public boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        if (prefs.getInt("backupMax", 8) == 0 && !force) {
+        if (hasDisabledBackups(prefs) && !force) {
             Timber.w("backups are disabled");
             return false;
         }
         final File colFile = new File(colPath);
         File[] deckBackups = getBackups(colFile);
-        int len = deckBackups.length;
-        if (len > 0 && deckBackups[len - 1].lastModified() == colFile.lastModified()) {
+        if (isBackupUnnecessary(colFile, deckBackups)) {
             Timber.d("performBackup: No backup necessary due to no collection changes");
             return false;
         }
@@ -114,17 +128,7 @@ public class BackupManager {
         Calendar cal = time.gregorianCalendar();
 
         // Abort backup if one was already made less than 5 hours ago
-        Date lastBackupDate = null;
-        while (lastBackupDate == null && len > 0) {
-            try {
-                len--;
-                lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
-                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
-            } catch (ParseException e) {
-                Timber.w(e);
-                lastBackupDate = null;
-            }
-        }
+        Date lastBackupDate = getLastBackupDate(deckBackups, df);
         if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > time.intTimeMS() && !force) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
@@ -140,21 +144,21 @@ public class BackupManager {
         }
 
         // Abort backup if destination already exists (extremely unlikely)
-        final File backupFile = new File(getBackupDirectory(colFile.getParentFile()), backupFilename);
+        final File backupFile = getBackupFile(colFile, backupFilename);
         if (backupFile.exists()) {
             Timber.d("performBackup: No new backup created. File already exists");
             return false;
         }
 
         // Abort backup if not enough free space
-        if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+        if (!hasFreeDiscSpace(colFile)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).apply();
             return false;
         }
 
         // Don't bother trying to do backup if the collection is too small to be valid
-        if (colFile.length() < MIN_BACKUP_COL_SIZE) {
+        if (collectionIsTooSmallToBeValid(colFile)) {
             Timber.d("performBackup: No backup created as the collection is too small to be valid");
             return false;
         }
@@ -164,34 +168,115 @@ public class BackupManager {
         if (CollectionHelper.getInstance().colIsOpen()) {
             Timber.w("Collection is already open during backup... we probably shouldn't be doing this");
         }
-        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
 
         // Backup collection as Anki package in new thread
+        performBackupInNewThread(colFile, backupFile);
+        return true;
+    }
+
+
+    protected boolean isBackupUnnecessary(File colFile, File[] deckBackups) {
+        int len = deckBackups.length;
+
+        // If have no backups, then a backup is necessary
+        if (len <= 0) {
+            return false;
+        }
+
+        // no collection changes means we don't need a backup
+        return deckBackups[len - 1].lastModified() == colFile.lastModified();
+    }
+
+
+    /** Returns the last date of a backup, or null if none */
+    @Nullable
+    protected Date getLastBackupDate(File[] deckBackups, SimpleDateFormat df) {
+        // TODO: It appears that we can just use a loop here
+        // TODO: This doesn't seem to work properly - we don't use a min()
+        int len = deckBackups.length;
+        Date lastBackupDate = null;
+        while (lastBackupDate == null && len > 0) {
+            try {
+                len--;
+                lastBackupDate = df.parse(deckBackups[len].getName().replaceAll(
+                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$", "$1"));
+            } catch (ParseException e) {
+                Timber.w(e);
+                lastBackupDate = null;
+            }
+        }
+        return lastBackupDate;
+    }
+
+
+    @NonNull
+    protected File getBackupFile(File colFile, String backupFilename) {
+        return new File(getBackupDirectory(colFile.getParentFile()), backupFilename);
+    }
+
+
+    protected void performBackupInNewThread(File colFile, File backupFile) {
+        Timber.i("Launching new thread to backup %s to %s", colFile.getAbsolutePath(), backupFile.getPath());
         Thread thread = new Thread() {
             @Override
             public void run() {
-                // Save collection file as zip archive
-                try {
-                    ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
-                    ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
-                    zos.putNextEntry(ze);
-                    CompatHelper.getCompat().copyFile(colPath, zos);
-                    zos.close();
-                    // Delete old backup files if needed
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                    deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
-                    // set timestamp of file in order to avoid creating a new backup unless its changed
-                    if (!backupFile.setLastModified(colFile.lastModified())) {
-                        Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFilename);
-                    }
-                    Timber.i("Backup created succesfully");
-                } catch (IOException e) {
-                    Timber.w(e);
-                }
+                performBackup(colFile, backupFile);
             }
         };
         thread.start();
-        return true;
+    }
+
+
+    protected boolean performBackup(File colFile, File backupFile) {
+        String colPath = colFile.getAbsolutePath();
+        // Save collection file as zip archive
+        try {
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
+            ZipEntry ze = new ZipEntry(CollectionHelper.COLLECTION_FILENAME);
+            zos.putNextEntry(ze);
+            CompatHelper.getCompat().copyFile(colPath, zos);
+            zos.close();
+            // Delete old backup files if needed
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
+            // set timestamp of file in order to avoid creating a new backup unless its changed
+            if (!backupFile.setLastModified(colFile.lastModified())) {
+                Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.getName());
+                return false;
+            }
+            Timber.i("Backup created succesfully");
+            return true;
+        } catch (IOException e) {
+            Timber.w(e);
+            return false;
+        }
+    }
+
+
+    protected boolean collectionIsTooSmallToBeValid(File colFile) {
+        return colFile.length()
+                < MIN_BACKUP_COL_SIZE;
+    }
+
+
+    protected boolean hasFreeDiscSpace(File colFile) {
+        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile);
+    }
+
+
+    /**
+     * @param colFile The current collection file to backup
+     * @return the amount of free space required for a backup.
+     */
+    public static long getRequiredFreeSpace(File colFile) {
+        // We add a minimum amount of free space to ensure against
+        return colFile.length() + (MIN_FREE_SPACE * 1024 * 1024);
+    }
+
+
+    @VisibleForTesting
+    boolean hasDisabledBackups(SharedPreferences prefs) {
+        return prefs.getInt("backupMax", 8) == 0;
     }
 
 
@@ -334,5 +419,10 @@ public class BackupManager {
             }
         }
         return dir.delete();
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static BackupManager createInstance() {
+        return new BackupManager();
     }
 }

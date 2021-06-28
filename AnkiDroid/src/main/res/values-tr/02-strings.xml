@@ -109,10 +109,9 @@
     <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_first_field">İlk alan boş</string>
-    <string name="note_editor_no_cloze_delations">Bu not türü çıkartmalı (boşluk doldurmalı) silme işlemlerini içermelidir</string>
-    <string name="note_editor_set_field_language">Alanın dilini belirle</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cloze_delations">Bu not türü boşluk doldurma içermelidir</string>
+    <string name="note_editor_no_cards_created_all_fields">Seçili not türü hiç kart çıkarmadı.\nLütfen başka bir not türü seçin, veya \"Kartlar\"a basıp alan değişikliği ekleyin.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Boşluk doldurma sadece Boşluklu not türünde çalışır</string>
     <string name="saving_facts">Not kaydediliyor</string>
     <string name="saving_model">Not tipini kaydet</string>
     <string name="save">Kaydet</string>
@@ -122,10 +121,10 @@
     <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
     <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
     <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Zaman sınırına ulaşıldı</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%2$s %1$d kart çalışıldı</item>
-        <item quantity="other">%2$s %1$d kart çalışıldı</item>
+        <item quantity="one">%2$s dakikada %1$d kart çalışıldı</item>
+        <item quantity="other">%2$s dakikada %1$d kart çalışıldı</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -159,34 +158,34 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silerek %s dosyasının verileriyle değiştirir. Emin misiniz?</string>
     <string name="import_message_add_confirm">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir.</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
+    <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
     <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
     <string name="import_log_failed_validate">apkg onaylama başarısız</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_log_insufficient_space">Paketi zipten çıkarmak için yeterli alan yok. %1$d gerekti, %2$d mevcut</string>
+    <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
+    <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
+    <string name="import_error_unhandled_request">Aktarım isteği işlenemedi</string>
+    <string name="import_error_corrupt_zip">Apkg dosyası bozuk. Lütfen silip yeniden indirin.\n\nTemel sebep: %s</string>
+    <string name="import_error_exception">Paket içeri aktarılamadı\n\n%s</string>
+    <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
+    <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() başarısız oldu (belki depolama alanı bitmiştir)</string>
+    <string name="import_error_unhandled_scheme">Şurdan ele alınmayan içeri aktarım: \"%s\"</string>
     <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_include_schedule">Zamanlama dâhil</string>
     <string name="export_include_media">Medya dâhil</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="confirm_apkg_export">Koleksiyon Anki paketi hâlinde dışarı aktarılsın mı?</string>
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Anki Paketi Gönderilsin mi?</string>
+    <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
+    <string name="export_successful_title">Anki paketi gönderilsin mi?</string>
     <string name="export_send_button">Gönder</string>
     <string name="export_save_button">Dosyaya kaydet</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
-    <string name="export_save_apkg_successful">Anki Paketi başarıyla kaydedildi</string>
-    <string name="export_save_apkg_unsuccessful">Anki Paketi kaydı başarısız oldu</string>
+    <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
+    <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
     <string name="export_email_subject">AnkiDroid hafızakartlarına çıkartıldı: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
@@ -258,11 +257,11 @@
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' Yüklemesi başarısız oldu.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
+    <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına pcden veya mobilden girin: </string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="no_outgoing_link_in_cardbrowser">Kartta harici sayfa linki desteklenmiyor.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Düzeltilmiş Kartlar</string>
     <!-- Deckpicker Background -->
@@ -272,22 +271,23 @@
     <string name="restore_default">Varsayılana Dön</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Navigasyon Çekmecesini Gösteri JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Seçenek Menüsünü Gösteri JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
+    <string name="white_board_image_saved">Yazı tahtası resmi %s adresine kaydedildi</string>
     <string name="title_whiteboard_pen_color">Beyaz tahta kalem rengi</string>
+    <string name="title_whiteboard_editor">Yazı tahtası düzenleyici</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Boş kartlar bulundu. Lütfen Araçlar>Boş Kartlar\'ı çalıştırın.]]></string>
     <string name="note_importer_error_empty_first_field">Boş ilk alan: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="note_importer_error_first_field_matched">İlk alan eşleşti: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">İlk alanla tekrar eklendi: %s</string>
+    <string name="note_importer_error_appeared_twice">Dosyada iki kez çıktı: %s</string>
+    <string name="note_importer_error_empty_notes">Bir veya daha fazla not içeri aktarılmadı, çünkü hiç kart üretmediler. Bu durum boş alanlarınız olduğunda ya da metin dosyasındaki içeriği doğru alanlarla eşlemediğinizde meydana gelebilir.</string>
+    <string name="csv_importer_error_invalid_field_count">\"%1$s\"in %2$d alanı vardı, %3$d bekleniyordu</string>
     <string name="csv_importer_error_exception">İptal edildi: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin.</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d notu eklendi</item>
         <item quantity="other">%d notları eklendi</item>
@@ -301,24 +301,24 @@
         <item quantity="other">%d notları değiştirilmedi</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>
+    <string name="invalid_json_data">Kart geçersiz veri sağladı. %s</string>
+    <string name="valid_js_api_version">Geçersiz AnkiDroid JS API sürümü. Geliştiriciyle iletişime geçin(%s), veya vikiye bakın.</string>
+    <string name="update_js_api_version">AnkiDroid JS API güncellemesi mevcut.  Geliştiriciyle iletişime geçin(%s), veya vikiye bakın.</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Görüntüle</string>
     <string name="anki_js_error_code">(Hata kodu: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Debug bilgisi not panosuna kopyalandı</string>
+    <string name="about_ankidroid_error_copy_debug_info">Debug bilgisi not panosuna kopyalanırken hata</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
+    <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
     <string name="cannot_load_http_resource">Yüklenen HTTP kaynakları artık desteklenmiyor</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>
     <string name="ankidroid_init_failed_webview_title">Kritik hata</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Araç Çubuğunu Göster</string>
@@ -329,11 +329,11 @@
     <string name="insert_heading">Başlık ekle</string>
     <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
     <string name="insert_mathjax">MathJax denklemi ekle</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="insert_cloze">Boşluk doldurma ekle</string>
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
     <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">Seçili metinden önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu elementini kaldırmak için basılı tutun</string>
     <string name="remove_toolbar_item">Araç çubuğu öğesini sil?</string>
     <string name="note_editor_paste_too_large">Görsel yapıştırmak için çok büyük, lütfen görseli elle ekleyin</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
@@ -347,5 +347,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">E-posta adresi gereklidir</string>
     <string name="password_empty">Parola gereklidir</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Çıkmak için tekrar geriye basın</string>
 </resources>

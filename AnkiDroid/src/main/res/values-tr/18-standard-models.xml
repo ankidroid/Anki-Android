@@ -29,7 +29,7 @@
     <string name="card_n_name">Kart: %d</string>
     <!--Note type-->
     <string name="basic_model_name">Temel</string>
-    <string name="cloze_model_name">Cloze</string>
+    <string name="cloze_model_name">Boşluklu</string>
     <string name="basic_typing_model_name">Basic (type in the answer)</string>
     <string name="forward_reverse_model_name">Basic (and reversed card)</string>
     <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>

@@ -37,14 +37,16 @@
             android:summary="@string/day_offset_summ"
             android:title="@string/day_offset_with_description"
             app:interval="1"
-            app:min="0" />
-        <com.ichi2.preferences.NumberRangePreference
+            app:min="0"
+            app:xlabel="@string/xlabel_dayoffset_seekbar"
+            app:ylabel="@string/ylabel_dayoffset_seekbar" />
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="learnCutoff"
             android:summary="@string/time_limit_summ"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0" />
-        <com.ichi2.preferences.NumberRangePreference
+        <com.ichi2.preferences.IncrementerNumberRangePreference
             android:key="timeLimit"
             android:summary="@string/time_limit_summ"
             android:title="@string/time_limit"
@@ -54,6 +56,13 @@
             android:key="newTimezoneHandling"
             android:title="@string/new_timezone"
             android:defaultValue="false" />
+        <com.ichi2.preferences.NumberRangePreference
+            android:defaultValue="200"
+            android:key="doubleTapTimeInterval"
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:title="@string/pref_double_tap_time_interval"
+            app:min="0"
+            app:max="2000" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
@@ -128,6 +137,11 @@
             android:defaultValue="true"
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
+        <CheckBoxPreference
+            android:key="showLargeAnswerButtons"
+            android:defaultValue="false"
+            android:summary="@string/show_large_answer_buttons_summ"
+            android:title="@string/show_large_answer_buttons"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
         <com.ichi2.ui.SeekBarPreference

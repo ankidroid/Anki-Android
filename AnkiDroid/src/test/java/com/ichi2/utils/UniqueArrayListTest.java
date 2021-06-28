@@ -18,6 +18,7 @@ package com.ichi2.utils;
 
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 
 public class UniqueArrayListTest {
 
@@ -83,6 +87,22 @@ public class UniqueArrayListTest {
         Collections.sort(longs);
         uniqueList.sort();
         assertListEquals(longs, uniqueList);
+    }
+
+    @Test //#8807
+    public void test_sorting_will_not_call_collectionsSort() {
+        List<Integer> longs = Arrays.asList(10, 9, 7, 3, 2, -1, 5, 1, 65, -656);
+
+        List<Integer> sorted = new ArrayList<>(longs);
+        Collections.sort(sorted);
+
+        try (MockedStatic<Collections> MockCollection = mockStatic(Collections.class)) {
+            UniqueArrayList<Integer> uniqueList = UniqueArrayList.from(longs);
+            uniqueList.sort();
+            assertListEquals(sorted, uniqueList);
+
+            MockCollection.verify(() -> Collections.sort(any(), any()), never());
+        }
     }
 
 

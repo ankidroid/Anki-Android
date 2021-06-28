@@ -40,6 +40,14 @@
     <issue id="ViewTag" severity="fatal" />
     <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
+    <issue id="UnknownId" severity="fatal" />
+
+    <!--           RTL Rules               -->
+    <issue id="RtlCompat" severity="fatal" />
+    <issue id="RtlEnabled" severity="fatal" />
+    <issue id="RtlHardcoded" severity="fatal" />
+    <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
+    <issue id="RtlSymmetry" severity="ignore" />
 
     <!-- This come from Timber and we need to also ignore them  -->
     <issue id="BinaryOperationInTimber" severity="ignore" />
@@ -219,13 +227,11 @@
     <issue id="InvalidPermission" severity="ignore" />
     <issue id="ManifestResource" severity="ignore" />
     <issue id="ManifestTypo" severity="ignore" />
-    <issue id="FloatMath" severity="ignore" />
     <issue id="MergeMarker" severity="ignore" />
     <issue id="MergeRootFrame" severity="ignore" />
     <issue id="IncompatibleMediaBrowserServiceCompatVersion" severity="ignore" />
     <issue id="InnerclassSeparator" severity="ignore" />
     <issue id="Instantiatable" severity="ignore" />
-    <issue id="MissingRegistered" severity="ignore" />
     <issue id="MissingId" severity="ignore" />
     <issue id="LibraryCustomView" severity="ignore" />
     <issue id="ResAuto" severity="ignore" />
@@ -271,10 +277,6 @@
     <issue id="ResourceCycle" severity="ignore" />
     <issue id="ResourceName" severity="ignore" />
     <issue id="ValidRestrictions" severity="ignore" />
-    <issue id="RtlCompat" severity="ignore" />
-    <issue id="RtlEnabled" severity="ignore" />
-    <issue id="RtlSymmetry" severity="ignore" />
-    <issue id="RtlHardcoded" severity="ignore" />
     <issue id="ScrollViewSize" severity="ignore" />
     <issue id="SdCardPath" severity="ignore" />
     <issue id="SecureRandom" severity="ignore" />
@@ -344,7 +346,6 @@
     <issue id="WrongCase" severity="ignore" />
     <issue id="InvalidId" severity="ignore" />
     <issue id="NotSibling" severity="ignore" />
-    <issue id="UnknownId" severity="ignore" />
     <issue id="UnknownIdInLayout" severity="ignore" />
     <issue id="SuspiciousImport" severity="ignore" />
     <issue id="WrongFolder" severity="ignore" />

@@ -108,6 +108,8 @@
     <string name="import_complete_count">卡牌已导入：%d</string>
     <string name="sd_card_full_title">SD 卡已满</string>
     <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
+    <string name="no_space_to_downgrade_title">没有空间</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
     <string name="restore_backup">你的牌组集合将会被替换成一个旧的副本，任何未保存的进程都将丢失。</string>
     <string name="dialog_cancel">取消</string>
@@ -221,10 +223,21 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">隐私</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid 隐私政策</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb 隐私政策</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb 条款和条件</string>
     <string name="help_title_send_exception">发送故障排除报告</string>
     <string name="help_dialog_exception_report_debounce">报告已经提交</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">可能在 %d 秒后触发自动同步</item>
     </plurals>
+    <string name="deck_picker_new">此牌组中今天要看的新卡片数</string>
+    <string name="deck_picker_rev">此牌组今天到期的卡片数量。</string>
+    <string name="deck_picker_lrn">此牌组中学习中的卡片数</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">打开包含今天要查看的卡片数量的牌组概览页。</string>
 </resources>

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題が含まれている必要があります</string>
-    <string name="note_editor_set_field_language">フィールドの言語を設定</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードは生成できませんでした。\n別のノートタイプを選択するか、「カード」をクリックしてフィールドの置き換えをしてください。</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め部分の挿入は、穴埋めタイプのノートで機能します</string>
     <string name="saving_facts">カードの保存</string>
@@ -268,6 +267,7 @@
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[空のカードが見つかりました。ツール>空のカードを実行してください。]]></string>
     <string name="note_importer_error_empty_first_field">最初のフィールドが空: %s</string>

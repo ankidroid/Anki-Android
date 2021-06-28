@@ -57,12 +57,12 @@
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">स्लेट सुरक्षित करें </string>
-    <string name="enable_whiteboard">स्लेट सक्षम करें</string>
-    <string name="disable_whiteboard">स्लेट अक्षम करें</string>
-    <string name="show_whiteboard">Whiteboard दिखाएँ</string>
-    <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
-    <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
+    <string name="save_whiteboard">श्वेतपट्ट सहेजें</string>
+    <string name="enable_whiteboard">श्वेतपट्ट सक्षम करें</string>
+    <string name="disable_whiteboard">श्वेतपट्ट अक्षम करें</string>
+    <string name="show_whiteboard">श्वेतपट्ट दिखाएँ</string>
+    <string name="hide_whiteboard">श्वेतपट्ट छिपाएं</string>
+    <string name="clear_whiteboard">श्वेतपट्ट साफ करें</string>
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
-    <string name="note_editor_set_field_language">फ़ील्ड भाषा सेट करें</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोज डिलीट केवल क्लोज नोट टाइप पर काम करेगा</string>
     <string name="saving_facts">नोट सहेजने</string>
@@ -276,9 +275,10 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">कृपया जावास्क्रिप्ट का उपयोग करके शो नेविगेशन दराज का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">कृपया जावास्क्रिप्ट का उपयोग करके शो विकल्प मेनू का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">व्हाइटबोर्ड छवि को बचाने में विफल। %s</string>
-    <string name="white_board_image_saved">व्हाइटबोर्ड छवि %s में सहेजी गई</string>
-    <string name="title_whiteboard_pen_color">व्हाईट बोर्ड के पेन</string>
+    <string name="white_board_image_save_failed">श्वेतपट्ट छवि को सहेजने में विफल। %s</string>
+    <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
+    <string name="title_whiteboard_pen_color">श्वेतपट्ट के कलम का रंग</string>
+    <string name="title_whiteboard_editor">श्वेतपट्ट संपादक</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[खाली कार्ड मिले। कृपया उपकरण> खाली कार्ड चलाएं।]]></string>
     <string name="note_importer_error_empty_first_field">खाली पहला क्षेत्र: %s</string>
@@ -348,5 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ई-मेल पते की आवश्यकता है</string>
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
 </resources>

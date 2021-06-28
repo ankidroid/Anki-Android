@@ -36,6 +36,8 @@ import org.robolectric.android.controller.ActivityController;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 @RunWith(RobolectricTestRunner.class)
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
@@ -111,7 +113,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
     }
 
     private Card getSavedCard(Model model, int ordinal) {
-        Note n = getCol().newNote(model);
+        @NonNull Note n = getCol().newNote(model);
         List<String> fieldNames = model.getFieldsNames();
         for (int i = 0; i < fieldNames.size(); i++) {
             n.setField(i, fieldNames.get(i));

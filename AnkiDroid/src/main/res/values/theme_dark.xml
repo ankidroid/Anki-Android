@@ -44,8 +44,8 @@
         <item name="currentDeckBackgroundColor">@color/theme_dark_row_current</item>
         <item name="dynDeckColor">#6699d6</item>
         <item name="deckDivider">@drawable/divider_dark</item>
-        <item name="expandRef">@drawable/ic_chevron_right_white_24dp</item>
-        <item name="collapseRef">@drawable/ic_expand_more_white_24dp</item>
+        <item name="expandRef">@drawable/ic_chevron_right_white</item>
+        <item name="collapseRef">@drawable/ic_expand_more_white</item>
         <!-- Count colors -->
         <item name="newCountColor">@color/material_indigo_200</item>
         <item name="learnCountColor">@color/material_red_200</item>
@@ -95,6 +95,9 @@
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
+        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonRippleColor">#BABABA</item>
+        <item name="buttonForegroundColor">#757575</item>
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>
@@ -102,16 +105,15 @@
         <item name="fab_item_background">@drawable/fab_label_background_pre21</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
-        <item name="attachFileImage">@drawable/ic_attachment_white_24dp</item>
-        <item name="upDownImage">@drawable/ic_import_export_white_24dp</item>
-        <item name="dialogErrorIcon">@drawable/ic_warning_white_36dp</item>
-        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white_36dp</item>
-        <item name="dialogSendIcon">@drawable/ic_send_white_36dp</item>
+        <item name="attachFileImage">@drawable/ic_attachment_white</item>
+        <item name="upDownImage">@drawable/ic_import_export_white</item>
+        <item name="dialogErrorIcon">@drawable/ic_warning_white</item>
+        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white</item>
+        <item name="dialogSendIcon">@drawable/ic_send_white</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">true</item>
         <!--Custom Tabs colors-->
-        <item name="customTabToolbarColor">#3d3d3d</item>
         <item name="customTabNavBarColor">@color/material_grey_800</item>
     </style>
 

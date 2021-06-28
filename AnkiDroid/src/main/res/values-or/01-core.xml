@@ -95,6 +95,7 @@
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
     <string name="rename_deck">ଡେକ୍ କୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏବଂ ଏହାର ସମସ୍ତ କାର୍ଡ ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_select">ପାଠ୍ୟ ଚୟନ କରନ୍ତୁ</string>
-    <string name="menu_search">%1$s ରେ ଦେଖନ୍ତୁ</string>
+    <string name="menu_lookup">ଦୃଷ୍ଟିପାତ ପାଠ୍ୟ</string>
+    <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="new_deck">ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="create" comment="Button to create a filtered deck">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଫିଲ୍ଟର୍ ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
@@ -137,12 +138,12 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d ସେକେଣ୍ଡ</string>
-    <string name="time_quantity_minutes">%d ମିନିଟ୍‌</string>
-    <string name="time_quantity_hours_minutes">%1$d ଘଣ୍ଟା %2$d ମିନିଟ୍‌</string>
-    <string name="time_quantity_hours">%d ଘଣ୍ଟା</string>
-    <string name="time_quantity_days">%d ଦିନ</string>
-    <string name="time_quantity_days_hours">%1$d ଦିନ %2$d ଘଣ୍ଟା</string>
+    <string name="time_quantity_seconds">%d ସେ</string>
+    <string name="time_quantity_minutes">%d ମି</string>
+    <string name="time_quantity_hours_minutes">%1$d ଘ %2$d ମି</string>
+    <string name="time_quantity_hours">%d ଘ</string>
+    <string name="time_quantity_days">%d ଦି</string>
+    <string name="time_quantity_days_hours">%1$d ଦି %2$d ଘ</string>
     <string name="time_quantity_months">%.1f ମା</string>
     <string name="time_quantity_years">%.1f ବର୍ଷ</string>
     <!-- or "%.1f a" -->
@@ -166,7 +167,7 @@
     <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, \"ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ\" ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
-    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସଂପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
+    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync">ସିଙ୍କ୍</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
@@ -191,7 +192,7 @@
     <string name="invalid_template">ଗୋଟିଏ କାର୍ଡ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ</string>
     <string name="card_template_editor_would_delete_note">ଏହି କାର୍ଡ ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ କାର୍ଡ ପ୍ରକାର ସୃଷ୍ଟି ଏବଂ ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">କାର୍ଡ ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
-    <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ କାର୍ଡ ପାଇଁ କାର୍ଡ ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି। </string>
+    <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ କାର୍ଡ ପାଇଁ କାର୍ଡ ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ବ୍ରାଉଜର ରୂପ</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">\'{{%s}}\' ନିଖୋଜ ଅଛି।</string>
     <string name="wrong_tag_closed">\'{{/%1$s}}\' ମିଳିଲା, କିନ୍ତୁ \'{{/%2$s}}\' ଆଶା କରାଯାଇଥିଲା</string>
     <string name="filter_error">ଛାଣକ %s ରେ ତ୍ରୁଟି</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">ସଂଗ୍ରହଗୁଡ଼ିକ ମିଶ୍ରଣ ହୋଇପାରିବ ନାହିଁ।\nଆପଣ କେଉଁ ସଂଗ୍ରହ ରଖିବାକୁ ଚାହାଁନ୍ତି?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid ରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଆପଣଙ୍କ AnkiWeb ର ସଂଗ୍ରହ ସହିତ ବଦଳାଇବେ କି?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb ରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଆପଣଙ୍କ AnkiDroid ର ସଂଗ୍ରହ ସହିତ ବଦଳାଇବେ କି?</string>
+    <string name="sync_conflict_title_new">ରଖିବାକୁ ସଂଗ୍ରହ ଚୟନ କରନ୍ତୁ</string>
+    <string name="sync_conflict_replace_title">ସଂଗ୍ରହକୁ ବଦଳାନ୍ତୁ</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$dଟିଏ ପତ୍ର (0 ବାକି)</item>
+        <item quantity="other">%1$dଟି ପତ୍ର (0 ବାକି)</item>
+    </plurals>
 </resources>

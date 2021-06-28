@@ -346,7 +346,7 @@ public class ReviewerTest extends RobolectricTest {
         cloneTemplate(models, m);
         cloneTemplate(models, m);
 
-        Note newNote = getCol().newNote();
+        @NonNull Note newNote = getCol().newNote();
         newNote.setField(0, "Hello");
         assertThat(newNote.model().get("name"), is("Three"));
 

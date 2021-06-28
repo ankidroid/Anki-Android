@@ -51,8 +51,8 @@ import com.android.utils.Pair;
 import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.StringFormatDetector;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.NonNull;
+import com.android.annotations.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -111,7 +111,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
     @Override
-    public void visitElement(@NotNull XmlContext context, @NotNull Element element) {
+    public void visitElement(@NonNull XmlContext context, @NonNull Element element) {
         // Only check the golden copy - not the translated sources.
         if (!"values".equals(context.file.getParentFile().getName())) {
             return;
@@ -158,7 +158,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
     @Override
-    public void afterCheckRootProject(@NotNull Context context) {
+    public void afterCheckRootProject(@NonNull Context context) {
         for (List<StringDeclaration> duplicates : allStrings.values()) {
             if (duplicates.size() <= 1) {
                 continue;
@@ -185,7 +185,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
                     firstLocation = location;
                 } else {
                     prevLocation.setSecondary(location);
-                    location.setMessage(String.format("Duplicates value in `%s`. Add a `comment` attribute to explain this duplication", names.get(0)));
+                    location.setMessage(String.format("Duplicates value in `%s`. Add a `comment` attribute on both strings to explain this duplication", names.get(0)));
                     location.setSelfExplanatory(false);
                     if (!string.equals(prevString)) {
                         caseVaries = true;

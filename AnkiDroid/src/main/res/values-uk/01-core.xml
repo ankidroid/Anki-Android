@@ -105,6 +105,7 @@
     <string name="unbury">Повернути</string>
     <string name="rename_deck">Переназвати колоду</string>
     <string name="create_shortcut">Створити значок</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додати</string>
     <string name="menu_add_note">Додати запис</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
@@ -126,12 +127,12 @@
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>
+    <string name="menu_lookup">Шукати текст</string>
     <string name="menu_search">Пошук у %1$s</string>
     <string name="menu_mark_note">Позначити запис</string>
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="new_deck">Створити колоду</string>
-    <string name="create" comment="Button to create a filtered deck">Створити</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="night_mode">Нічний режим</string>
     <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
@@ -164,7 +165,7 @@
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Пошук колоди</string>
     <string name="empty_deck_add_note">Додати картку</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть на кнопку +, щоб додати новий вміст.</string>
@@ -223,4 +224,18 @@
     <string name="open_tag_not_closed">Відсутнє «{{%s}».</string>
     <string name="wrong_tag_closed">Знайдено «{{/%1$s}}», але очікувалось «{{/%2$s}}»</string>
     <string name="filter_error">Помилка в фільтрі %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Колекції не можна поєднати.\nЯку колекцію Ви хочете зберегти?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Замінити вашу колекцію на AnkiDroid вашою колекцією з AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Замінити вашу колекцію на AnkiWeb вашою колекцією з AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Обрати колекцію для збереження</string>
+    <string name="sync_conflict_replace_title">Замінити колекцію</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
-    <string name="note_editor_set_field_language">设置字段语言</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
     <string name="saving_facts">保存笔记</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s （从“%2$s”）</string>
     <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">已到达时间盒</string>
     <plurals name="timebox_reached">
         <item quantity="other">在%2$s内学习了%1$d张卡片</item>
     </plurals>
@@ -142,7 +141,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">已添加%d张卡片</item>
     </plurals>
-    <string name="check_db">检查数据</string>
+    <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
     <string name="check_db_message">正在检查数据库\n请等待...</string>
@@ -269,6 +268,7 @@
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
+    <string name="title_whiteboard_editor">白板编辑器</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
     <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>

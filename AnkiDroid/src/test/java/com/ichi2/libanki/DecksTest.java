@@ -13,10 +13,8 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static android.service.autofill.Validators.not;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,7 +23,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
 
@@ -41,7 +38,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void duplicateName() {
         Decks decks = getCol().getDecks();
-        decks.load("{2: {\"name\": \"A\", \"id\":2}, 3: {\"name\": \"A\", \"id\":3}, 4: {\"name\": \"A::B\", \"id\":4}}", "{}");
+        decks.load("{\"2\": {\"name\": \"A\", \"id\":2}, \"3\": {\"name\": \"A\", \"id\":3}, \"4\": {\"name\": \"A::B\", \"id\":4}}", "{}");
         decks.checkIntegrity();
         JSONObject deckA = decks.byName("A");
         Asserts.notNull(deckA, "A deck with name \"A\" should still exists");
@@ -122,10 +119,10 @@ public class DecksTest extends RobolectricTest {
         n.setItem("Front", "abc");
         col.addNote(n);
 
-        assertEquals(decks.id_dont_create("new deck").longValue(), parentId);
-        assertEquals(decks.id_dont_create("  New Deck  ").longValue(), parentId);
-        assertNull(decks.id_dont_create("Not existing deck"));
-        assertNull(decks.id_dont_create("new deck::not either"));
+        assertEquals(decks.id_for_name("new deck").longValue(), parentId);
+        assertEquals(decks.id_for_name("  New Deck  ").longValue(), parentId);
+        assertNull(decks.id_for_name("Not existing deck"));
+        assertNull(decks.id_for_name("new deck::not either"));
     }
 
 
@@ -319,4 +316,17 @@ public class DecksTest extends RobolectricTest {
         assertNull(decks.byName("filtered::sub"));
     }
 
+    @Test
+    public void confForDidReturnsDefaultIfNotFound() {
+        // https://github.com/ankitects/anki/commit/94d369db18c2a6ac3b0614498d8abcc7db538633
+        Decks decks = getCol().getDecks();
+
+        Deck d = decks.all().get(0);
+        d.put("conf", 12L);
+        decks.save();
+
+        DeckConfig config = decks.confForDid(d.getLong("id"));
+
+        assertThat("If a config is not found, return the default", config.getLong("id"), is(1L));
+    }
 }

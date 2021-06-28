@@ -276,26 +276,20 @@ public class SchedV2Test extends RobolectricTest {
     }
 
     @Test
-    public void newTimezoneHandling() throws ConfirmModSchemaException, BackendNotSupportedException {
+    public void newTimezoneHandling() throws BackendNotSupportedException {
         // #5805
-        assertThat("localOffset should not be set if using V1 Scheduler", getCol().getConf().has("localOffset"), is(false));
-
         assertThat("Sync ver should be updated if we have a valid Rust collection", Consts.SYNC_VER, is(10));
-
-        getCol().changeSchedulerVer(2);
 
         assertThat("localOffset should be set if using V2 Scheduler", getCol().getConf().has("localOffset"), is(true));
 
         SchedV2 sched = (SchedV2) getCol().getSched();
 
-        assertThat("new timezone should not be enabled by default", sched._new_timezone_enabled(), is(false));
-
-        sched.set_creation_offset();
-
-        assertThat("new timezone should now be enabled", sched._new_timezone_enabled(), is(true));
+        assertThat("new timezone should be enabled by default", sched._new_timezone_enabled(), is(true));
 
         // a second call should be fine
         sched.set_creation_offset();
+
+        assertThat("new timezone should still be enabled", sched._new_timezone_enabled(), is(true));
 
         // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
         sched._current_timezone_offset();
@@ -1744,16 +1738,18 @@ public class SchedV2Test extends RobolectricTest {
         deck.put("resched", false);
         sched.rebuildDyn(did);
         col.reset();
-        advanceRobolectricLooper();
         Card card;
         for(int i = 0; i < 3; i++) {
+            advanceRobolectricLooperWithSleep();
             card = sched.getCard();
             assertNotNull(card);
             sched.answerCard(card, Consts.BUTTON_ONE);
         }
+        advanceRobolectricLooperWithSleep();
         assertEquals(1, sched.lrnCount());
         card = sched.getCard();
         assertEquals(1, sched.counts(card).getLrn());
+        advanceRobolectricLooperWithSleep();
         sched.answerCard(card, Consts.BUTTON_ONE);
         assertDoesNotThrow(col::undo);
     }

@@ -42,13 +42,9 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         CustomStudyDialogFactory customStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this);
         customStudyDialogFactory.attachToActivity(this);
         super.onCreate(savedInstanceState);
-        // The empty frame layout is a workaround for fragments not showing when they are added
-        // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
-        // higher) with the appcompat package.
-        View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
-        setContentView(mainView);
+        setContentView(R.layout.studyoptions);
         // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer(mainView);
+        initNavigationDrawer(findViewById(android.R.id.content));
         if (savedInstanceState == null) {
             loadStudyOptionsFragment();
         }

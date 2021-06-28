@@ -17,12 +17,12 @@ package com.ichi2.anki.dialogs.customstudy;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -46,7 +46,8 @@ import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
-import com.ichi2.anki.dialogs.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -65,7 +66,7 @@ import java.util.Locale;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment implements
-        TagsDialog.TagsDialogListener {
+        TagsDialogListener {
     // Different configurations for the context menu
     public static final int CONTEXT_MENU_STANDARD = 0;
     public static final int CONTEXT_MENU_LIMITS = 1;
@@ -117,6 +118,13 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         args.putBoolean("jumpToReviewer", jumpToReviewer);
         this.setArguments(args);
         return this;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerFragmentResultReceiver(this);
     }
 
 
@@ -173,7 +181,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                              * of that Dialog.
                              */
                             long currentDeck = requireArguments().getLong("did");
-                            TagsDialog dialogFragment = TagsDialog.newInstance(
+                            TagsDialog dialogFragment = new TagsDialog().withArguments(
                                     TagsDialog.DialogType.CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                     new ArrayList<>(mCollection.getTags().byDeck(currentDeck, true)));
                             mCustomStudyListener.showDialogFragment(dialogFragment);

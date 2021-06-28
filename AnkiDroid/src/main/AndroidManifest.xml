@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="replace"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <permission android:name="com.ichi2.anki.permission.READ_WRITE_DATABASE"
@@ -461,11 +461,11 @@
             />
         <meta-data
             android:name="com.sec.minimode.icon.portrait.normal"
-            android:resource="@drawable/anki"
+            android:resource="@drawable/ic_anki"
             />
         <meta-data
             android:name="com.sec.minimode.icon.landscape.normal"
-            android:resource="@drawable/anki"
+            android:resource="@drawable/ic_anki"
             />
 
         <!--

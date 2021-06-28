@@ -1,9 +1,29 @@
+/****************************************************************************************
+ * Copyright (c) 2021 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.libanki;
 
 import android.content.res.Resources;
 
+import com.ichi2.utils.ArrayUtil;
 import com.ichi2.utils.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,9 +55,35 @@ public abstract class UndoAction {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract @Nullable Card undo(@NonNull Collection col);
 
-    public static @NonNull UndoAction revertToProvidedState (@StringRes int undoNameId, Card card){
-        Note note = card.note();
-        List<Card> cards = note.cards();
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card){
+        return revertToProvidedState(undoNameId, card, card.note().cards());
+    }
+
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    public static @NonNull UndoAction revertCardToProvidedState(@StringRes int undoNameId, Card card){
+        return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()));
+    }
+
+
+    /**
+     * Create an UndoAction that set back `card` and its siblings to the current states.
+     * @param undoNameId The id of the string representing an action that could be undone
+     * @param card the card currently in the reviewer
+     * @param cards The cards that must be reverted
+     * @return An UndoAction which, if executed, put back the `card` in the state given here
+     */
+    private static @NonNull UndoAction revertToProvidedState(@StringRes int undoNameId, Card card, Iterable<Card> cards){
         return new UndoAction(undoNameId) {
             public @Nullable
             Card undo(@NonNull Collection col) {

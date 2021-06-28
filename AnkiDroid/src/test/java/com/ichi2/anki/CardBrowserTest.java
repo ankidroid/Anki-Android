@@ -5,17 +5,22 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
+import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,6 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 import javax.annotation.CheckReturnValue;
 
@@ -39,6 +45,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
+import static java.util.Arrays.stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -48,6 +55,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -257,6 +266,50 @@ public class CardBrowserTest extends RobolectricTest {
         }
     }
 
+
+    @Test
+    public void flagsAreShownInBigDecksTest() {
+        int numberOfNotes = 75;
+        CardBrowser cardBrowser = getBrowserWithNotes(numberOfNotes);
+
+        // select a random card
+        Random random = new Random(1);
+        int cardPosition = random.nextInt(numberOfNotes);
+        assumeThat("card position to select is 60", cardPosition, is(60));
+        cardBrowser.checkCardsAtPositions(cardPosition);
+        assumeTrue("card at position 60 is selected", cardBrowser.hasCheckedCardAtPosition(cardPosition));
+
+        // flag the selected card with flag = 1
+        final int flag = 1;
+        cardBrowser.flagTask(flag);
+        advanceRobolectricLooperWithSleep();
+        // check if card flag turned to flag = 1
+        assertThat("Card should be flagged", getCheckedCard(cardBrowser).getCard().userFlag(), is(flag));
+
+        // unflag the selected card with flag = 0
+        final int unflagFlag = 0;
+        cardBrowser.flagTask(unflagFlag);
+        advanceRobolectricLooperWithSleep();
+        // check if card flag actually changed from flag = 1
+        assertThat("Card flag should be removed", getCheckedCard(cardBrowser).getCard().userFlag(), not(flag));
+
+        // deselect and select all cards
+        cardBrowser.onSelectNone();
+        cardBrowser.onSelectAll();
+        // flag all the cards with flag = 3
+        final int flagForAll = 3;
+        cardBrowser.flagTask(flagForAll);
+        advanceRobolectricLooperWithSleep();
+        // check if all card flags turned to flag = 3
+        assertThat(
+                "All cards should be flagged",
+                stream(cardBrowser.getCardIds())
+                        .map(cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId))
+                        .noneMatch(flag1 -> flag1 != flagForAll)
+        );
+    }
+
+
     @Test
     public void flagValueIsShownOnCard() {
         Note n = addNoteUsingBasicModel("1", "back");
@@ -265,13 +318,17 @@ public class CardBrowserTest extends RobolectricTest {
         long cardId = n.cids().get(0);
 
         CardBrowser b = getBrowserWithNoNewCards();
-        CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);
 
-
-        int actualFlag = cardProperties.getCard().userFlag();
+        int actualFlag = getCardFlagAfterFlagChangeDone(b, cardId);
 
         assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
     }
+
+
+    private int getCardFlagAfterFlagChangeDone(CardBrowser cardBrowser, long cardId) {
+        return cardBrowser.getPropertiesForCardId(cardId).getCard().userFlag();
+    }
+
 
     @Test
     public void startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
@@ -383,7 +440,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
 
-        b.selectDeckId(targetDid);
+        b.selectDeckAndSave(targetDid);
 
         assertThat("The target deck should be selected", b.getLastDeckId(), is(targetDid));
 
@@ -527,6 +584,68 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Results should only be from the selected deck", cardBrowser.getCardCount(), is(1));
     }
 
+    /** PR #8553 **/
+    @Test
+    public void checkDisplayOrderPersistence() {
+        // Start the Card Browser with Basic Model
+        ensureCollectionLoadIsSynchronous();
+        ActivityController<CardBrowser> cardBrowserController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+                .create().start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+        advanceRobolectricLooperWithSleep();
+
+        // Make sure card has default value in sortType field
+        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get("sortType"), is("noteFld"));
+
+        // Store the current (before changing the database) Mod Time
+        long initialMod = getCol().getMod();
+
+        // Change the display order of the card browser
+        cardBrowserController.get().changeCardOrder(7);     // order no. 7 corresponds to "cardEase"
+
+        // Kill and restart the activity and ensure that display order is preserved
+        Bundle outBundle = new Bundle();
+        cardBrowserController.saveInstanceState(outBundle);
+        cardBrowserController.pause().stop().destroy();
+        cardBrowserController = Robolectric.buildActivity(CardBrowser.class).create(outBundle).start().resume().visible();
+        saveControllerForCleanup(cardBrowserController);
+
+        // Find the current (after database has been changed) Mod time
+        long finalMod = getCol().getMod();
+
+        assertThat("Card Browser has the new sortType field", getCol().getConf().get("sortType"), is("cardEase"));
+        Assert.assertNotEquals("Modification time must change", initialMod, finalMod);
+    }
+
+    @Test
+    public void checkIfLongSelectChecksAllCardsInBetween() {
+        // #8467 - selecting cards outside the view pane (20) caused a crash as we were using view-based positions
+        CardBrowser browser = getBrowserWithNotes(25);
+        selectOneOfManyCards(browser, 7); // HACK: Fix a bug in tests by choosing a value < 8
+        selectOneOfManyCards(browser, 24);
+        assertThat(browser.checkedCardCount(), is(18));
+    }
+
+    @Test
+    public void checkIfSearchAllDecksWorks() {
+        addNoteUsingBasicModel("Hello", "World");
+        long deck = addDeck("Test Deck");
+        getCol().getDecks().select(deck);
+        Card c2 = addNoteUsingBasicModel("Front", "Back").firstCard();
+        c2.setDid(deck);
+        c2.flush();
+
+        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        cardBrowser.searchCards("Hello");
+        advanceRobolectricLooperWithSleep();
+        assertThat("Card browser should have Test Deck as the selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Test Deck"));
+        assertThat("Result should be empty", cardBrowser.getCardCount(), is(0));
+
+        cardBrowser.searchAllDecks();
+        advanceRobolectricLooperWithSleep();
+        assertThat("Result should contain one card", cardBrowser.getCardCount(), is(1));
+    }
+
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
@@ -565,17 +684,26 @@ public class CardBrowserTest extends RobolectricTest {
         browser.clearCardData(positionToCorrupt);
     }
 
-    private void selectOneOfManyCards(CardBrowser browser) {
+    private void selectOneOfManyCards(CardBrowser cardBrowser) {
+        selectOneOfManyCards(cardBrowser, 0);
+    }
+
+    private void selectOneOfManyCards(CardBrowser browser, int position) {
         Timber.d("Selecting single card");
         ShadowActivity shadowActivity = shadowOf(browser);
         ListView toSelect = shadowActivity.getContentView().findViewById(R.id.card_browser_list);
-        int position = 0;
 
-        //roboelectric doesn't easily seem to allow us to fire an onItemLongClick
+        // Robolectric doesn't easily seem to allow us to fire an onItemLongClick
         AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
-        if (listener == null)
+        if (listener == null) {
             throw new IllegalStateException("no listener found");
-        listener.onItemLongClick(null, toSelect.getChildAt(position),
+        }
+
+        View childAt = toSelect.getChildAt(position);
+        if (childAt == null) {
+            Timber.w("Can't use childAt on position " + position + " for a single click as it is not visible");
+        }
+        listener.onItemLongClick(null, childAt,
                 position, toSelect.getItemIdAtPosition(position));
     }
 
@@ -601,13 +729,23 @@ public class CardBrowserTest extends RobolectricTest {
         return getBrowserWithNotes(3);
     }
 
+    private static class CardBrowserSizeOne extends CardBrowser {
+        @Override
+        protected int numCardsToRender() {
+            return 1;
+        }
+    }
 
     private CardBrowser getBrowserWithNotes(int count) {
+        return getBrowserWithNotes(count, CardBrowser.class);
+    }
+
+    private CardBrowser getBrowserWithNotes(int count, Class<? extends CardBrowser> cardBrowserClass) {
         ensureCollectionLoadIsSynchronous();
         for(int i = 0; i < count; i ++) {
             addNoteUsingBasicModel(Integer.toString(i), "back");
         }
-        ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
+        ActivityController<? extends CardBrowser> multimediaController = Robolectric.buildActivity(cardBrowserClass, new Intent())
                 .create().start();
         multimediaController.resume().visible();
         saveControllerForCleanup(multimediaController);
@@ -628,5 +766,32 @@ public class CardBrowserTest extends RobolectricTest {
         saveControllerForCleanup(multimediaController);
         advanceRobolectricLooperWithSleep();
         return multimediaController.get();
+    }
+
+
+    // Regression test for #8821
+    @Test
+    public void emptyScroll() {
+        CardBrowser cardBrowser = getBrowserWithNotes(2);
+
+        CardBrowser.RenderOnScroll renderOnScroll = cardBrowser.new RenderOnScroll();
+        renderOnScroll.onScroll(cardBrowser.mCardsListView, 0, 0, 2);
+    }
+
+    @Test
+    public void searchCardsNumberOfResultCount() {
+        int cardsToRender = 1;
+
+
+        CardBrowser cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne.class);
+
+        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+
+        TaskManager.launchCollectionTask(task, cardBrowser.new SearchCardsHandler(cardBrowser));
+        CardBrowser.CardCollection<CardBrowser.CardCache> cards = cardBrowser.getCards();
+        assertThat(2, is(cards.size()));
+        assertTrue(cards.get(0).isLoaded());
+        assertFalse(cards.get(1).isLoaded());
+
     }
 }

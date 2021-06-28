@@ -138,6 +138,8 @@
     <string name="import_complete_count">البطاقات المستوردة: %d</string>
     <string name="sd_card_full_title">بطاقة الـSD ممتلئة</string>
     <string name="sd_card_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
+    <string name="no_space_to_downgrade_title">لا توجد مساحة</string>
+    <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
     <string name="dialog_cancel">إلغاء</string>
@@ -256,6 +258,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">فيسبوك</string>
     <string name="help_item_twitter">تويتر</string>
+    <string name="help_title_privacy">الخصوصية</string>
+    <string name="help_item_ankidroid_privacy_policy">سياسة خصوصية أنكيدرويد</string>
+    <string name="help_item_ankiweb_privacy_policy">سياسة خصوصية أنكي ويب</string>
+    <string name="help_item_ankiweb_terms_and_conditions">أخكام وشروط أنكي ويب</string>
     <string name="help_title_send_exception">إرسال تقرير استكشاف الأخطاء</string>
     <string name="help_dialog_exception_report_debounce">تم إرسال التقرير مسبقًا</string>
     <!--Sync-->
@@ -267,4 +273,11 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
+    <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
+    <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
+    <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">افتح صفحة مراجعة الرزمة،  والتي تحتوي عدد البطاقات التي تراها اليوم.</string>
 </resources>

@@ -41,7 +41,7 @@
     <string name="check_db_title">데이터베이스를 점검할까요?</string>
     <string name="check_db_warning">시간이 오래 걸릴 수 있습니다</string>
     <string name="check_db_acknowledge">데이터베이스 점검됨</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">데이터베이스를 점검하고 최적화했습니다.\n%d MB만큼 공간을 확보했습니다.</string>
     <string name="contextmenu_deckpicker_delete_deck">카드 묶음 삭제</string>
     <string name="delete_deck_default_deck">기본 카드 묶음은 삭제할 수 없습니다</string>
     <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
@@ -64,27 +64,27 @@
     <string name="reposition_card_dialog_message">시작 위치:</string>
     <string name="reposition_card_not_new_error">새 카드만 순서를 조정할 수 있습니다.</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="other">%d개의 카드를 옮겼습니다.</item>
     </plurals>
     <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
     <string name="reset_card_dialog_message">이 카드는 새 카드 대기열의 맨 마지막에 배치됩니다.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d개의 카드를 초기화했습니다.</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="other">카드 기한 변경</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">현재 간격: %d일</item>
     </plurals>
     <string name="reschedule_card_dialog_message">x일 안에 검토를 위한 일정 조정:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 카드의 일정이 조정됨</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="reschedule_card_dialog_new_card_warning">새 카드의 기한을 변경합니다. 기한을 변경하려면 새 카드도 \"review cards\"로 바뀝니다. \'카드 이동\' 옵션을 이용하여 새 카드의 대기열에서 위치를 변경합니다.</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">기한을 변경하려면 스케줄러가 향후 카드를 처리하는 방법도 재설정됩니다. (%d%%로 설정됨)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">파일 관리자에서 뭉치를 선택하거나 aboud:downloads 페이지를 방문하여 가져옵니다.</string>
     <string name="answering_error_title">데이터베이스 오류</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">오류 보고하기</string>
@@ -108,11 +108,13 @@
     <string name="import_complete_count">카드 가져옴: %d</string>
     <string name="sd_card_full_title">SD 카드 꽉 참</string>
     <string name="sd_card_almost_full_title">SD 카드 거의 꽉 참</string>
+    <string name="no_space_to_downgrade_title">빈 공간 없음</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">아니요</string>
     <string name="dialog_continue">계속하기</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
@@ -138,10 +140,10 @@
     <string name="check_media_no_unused_missing">사용되지 않거나 누락된 파일이 발견되지 않았습니다.</string>
     <string name="check_media_db_updated">미디어 데이터베이스를 다시 기록했습니다.</string>
     <string name="check_media_delete_unused">사용되지 않은 파일 삭제</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">미디어 삭제 중&#8230;</string>
+    <string name="delete_media_result_title">삭제 결과</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d files deleted</item>
+        <item quantity="other">파일 %d개 삭제됨</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">모든 카드</string>
@@ -149,18 +151,18 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중...</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">취소하시겠습니까?</string>
     <string name="empty_cards_none">빈 카드 없음</string>
     <string name="empty_cards_count">삭제할 카드: %d</string>
     <string name="empty_cards_deleted">삭제된 카드: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">마이크 사용 권한을 얻을 수 없습니다.</string>
+    <string name="multimedia_editor_camera_permission_refused">카메라 사용 권한을 얻을 수 없습니다. 기능이 비활성화되었습니다.</string>
+    <string name="multimedia_editor_failed">멀티미디어 편집기를 열기 실패</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">오디오 녹음 권한이 거부됨</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_title">AnkiDroid에 오신 것을 환영합니다</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
@@ -210,21 +212,32 @@
     <string name="help_title_get_help">Get Help</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">오류 보고</string>
+    <string name="help_title_support_ankidroid">AnkiDroid 지원하기</string>
+    <string name="help_item_support_opencollective_donate">후원하기</string>
+    <string name="help_item_support_develop_ankidroid">개발 지원하기</string>
+    <string name="help_item_support_rate_ankidroid">평가하기</string>
+    <string name="help_item_support_other_ankidroid">기타</string>
+    <string name="help_title_community">커뮤니티</string>
+    <string name="help_item_anki_forums">Anki 포럼</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_send_exception">문제 해결 보고서 보내기</string>
+    <string name="help_dialog_exception_report_debounce">이미 제출한 보고서입니다.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">%d초 안에 자동으로 동기화될 수 있습니다.</item>
     </plurals>
+    <string name="deck_picker_new">이 뭉치에서 볼 수 있는 새 카드 수입니다.</string>
+    <string name="deck_picker_rev">이 뭉치에서 오늘까지 예정된 카드의 수입니다.</string>
+    <string name="deck_picker_lrn">이 뭉치에서 학습 중인 카드 수입니다.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">오늘 공부할 카드의 개요 페이지를 엽니다.</string>
 </resources>

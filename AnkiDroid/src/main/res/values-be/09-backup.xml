@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Не хапае вольнага месца каб захаваць рэзервовую копію. Паменьшыце глыбіню рэзервавання, ці выдаліце якія іншыя файлы.</string>
+    <string name="backup_deck_no_space_left">Не хапае вольнага месца для захавання рэзервовай копіі. Паменшыце глыбіню рэзервавання або выдаліце непатрэбныя файлы.</string>
     <string name="sd_space_warning">Засталося менш за %d МБ на вашай SD-картцы.\nВызваліце крыху месца, каб пазбегнуць страты даных.</string>
     <string name="backup_restore">Аднавіць з рэзервовай копіі</string>
     <string name="backup_new_collection">Новая калекцыя</string>
-    <string name="backup_del_collection">Выдаленне калекцыі і стварэнне новай</string>
-    <string name="backup_del_collection_question">Выдаліць калекцыю і стварыць новую? Вы згубіце ўсе звесткі пра свае дасягненні і выдаліце ўсе каркі.</string>
+    <string name="backup_del_collection">Выдаліць калекцыю і стварыць новую</string>
+    <string name="backup_del_collection_question">Выдаліць калекцыю і стварыць новую? Вы згубіце ўсе звесткі пра вашы дасягненні і выдаліце ўсе каркі.</string>
     <string name="backup_full_sync_from_server">Поўная сінхранізацыя з сервера</string>
-    <string name="backup_full_sync_from_server_question">Перазапісаць калекцыю на прыладзе той, якая атрымана з рэсурса AnkiWeb? Вы згубіце ўсе звесткі пра свае дасягненні і пра апошнюю сінхранізацыю.</string>
+    <string name="backup_full_sync_from_server_question">Перазапісаць вашу калекцыю той, якая атрыманая з AnkiWeb? Вы згубіце ўсе звесткі пра свае дасягненні і час апошняй сінхранізацыі.</string>
     <string name="error_handling_title">Апрацоўка памылак</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Параметры</string>
     <string name="backup_retry_opening">Адкрыць паўторна</string>
@@ -55,8 +55,8 @@
     <string name="backup_invalid_file_error">Выбраны памылковы файл рэзервовай копіі</string>
     <string name="backup_restore_select_title">Выберыце рэзервовую копію для аднаўлення</string>
     <string name="backup_restore_no_backups">Рэзервовых копій на гэтай прыладзе няма. Калі ў вас ёсць рэзервовыя копіі на настольным камп\'ютары, калі ласка, скапіюйце іх уручную ў папку з праграмай AnkiDroid.</string>
-    <string name="open_collection_failed_title">Калекцыя не адкрыта</string>
-    <string name="corrupt_db_message">На жаль, ваша калекцыя пашкоджана. \n\nНацісніце \"Параметры\" для таго, каб аднавіць яе з рэзервовай копіі. Калі гэта не дапаможа, прытрымлівайцеся наступных інструкцый для ручнога аднаўлення базы даных:\n%1$s</string>
+    <string name="open_collection_failed_title">Калекцыя не адкрытая</string>
+    <string name="corrupt_db_message">На жаль, ваша калекцыя пашкоджаная. \n\nНацісніце \"Параметры\" для таго, каб аднавіць яе з рэзервовай копіі. Калі гэта не дапаможа, то ў даведніку знайдзіце інструкцыі для ручнога аднаўлення базы даных:\n%1$s</string>
     <string name="access_collection_failed_message">Адбылася памылка падчас доступу да вашай калекцыі. Гэта можа быць вынікам бясшкоднай памылкі або праблемай з самой калекцыяй. \n\nПаспрабуйце запусціць праверку базы даных або аднаўленне з рэзервовай копіі націснуўшы на кнопку \"Параметры\". Калі гэта паведамленне будзе з\'яўляцца і далей, калі ласка, адпраўце паведамленне пра памылку: \n%1$s</string>
-    <string name="deck_repair_error">Калекцыя не можа быць выпраўлена</string>
+    <string name="deck_repair_error">Немагчыма аднавіць калекцыю</string>
 </resources>

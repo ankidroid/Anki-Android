@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.text.Editable;
@@ -51,7 +52,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -71,7 +71,9 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
-import com.ichi2.anki.dialogs.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialog;
+import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
+import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -88,13 +90,13 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton;
 import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -105,10 +107,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
-import com.ichi2.utils.ContentResolverUtil;
-import com.ichi2.utils.DeckComparator;
-import com.ichi2.utils.FileUtil;
-import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.CheckCameraPermission;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
@@ -120,9 +119,6 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -137,7 +133,6 @@ import java.util.Set;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
@@ -154,7 +149,8 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  */
 public class NoteEditor extends AnkiActivity implements
         DeckSelectionDialog.DeckSelectionListener,
-        TagsDialog.TagsDialogListener {
+        DeckDropDownAdapter.SubtitleListener,
+        TagsDialogListener {
     // DA 2020-04-13 - Refactoring Plans once tested:
     // * There is a difference in functionality depending on whether we are editing
     // * Extract mAddNote and mCurrentEditedCard into inner class. Gate mCurrentEditedCard on edit state.
@@ -217,10 +213,14 @@ public class NoteEditor extends AnkiActivity implements
 
     private LinearLayout mFieldsLayoutContainer;
 
-    private TextView mTagsButton;
-    private TextView mCardsButton;
+    private MediaRegistration mMediaRegistration;
+
+    private TagsDialogFactory mTagsDialogFactory;
+
+    private AppCompatButton mTagsButton;
+    private AppCompatButton mCardsButton;
     private Spinner mNoteTypeSpinner;
-    private Spinner mNoteDeckSpinner;
+    private DeckSpinnerSelection mDeckSpinnerSelection;
 
     // Non Null after onCollectionLoaded, but still null after construction. So essentially @NonNull but it would fail.
     private Note mEditorNote;
@@ -229,7 +229,6 @@ public class NoteEditor extends AnkiActivity implements
     private Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
-    private ArrayList<Long> mAllDeckIds;
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
@@ -262,17 +261,17 @@ public class NoteEditor extends AnkiActivity implements
 
     @Override
     public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
-        if (deck != null) {
-            mCurrentDid = deck.getDeckId();
-            mNoteDeckSpinner.setSelection(mAllDeckIds.indexOf(deck.getDeckId()), false);
+        if (deck == null) {
+            return;
         }
+        mCurrentDid = deck.getDeckId();
+        mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
     }
 
-    private void displayDeckOverrideDialog(Collection col) {
-        FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
-        List<DeckSelectionDialog.SelectableDeck> decks = DeckSelectionDialog.SelectableDeck.fromCollection(col, nonDynamic);
-        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(getString(R.string.search_deck), null, false, decks);
-        AnkiActivity.showDialogFragment(NoteEditor.this, dialog);
+    @Override
+    public String getSubtitleText() {
+        return "";
     }
 
     private enum AddClozeType {
@@ -405,6 +404,10 @@ public class NoteEditor extends AnkiActivity implements
             return;
         }
         Timber.d("onCreate()");
+
+        mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
+        mMediaRegistration =  new MediaRegistration(this);
+
         super.onCreate(savedInstanceState);
         mFieldState.setInstanceState(savedInstanceState);
         setContentView(R.layout.note_editor);
@@ -505,8 +508,8 @@ public class NoteEditor extends AnkiActivity implements
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mTagsButton = findViewById(R.id.CardEditorTagText);
-        mCardsButton = findViewById(R.id.CardEditorCardsText);
+        mTagsButton = findViewById(R.id.CardEditorTagButton);
+        mCardsButton = findViewById(R.id.CardEditorCardsButton);
         mCardsButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor");
             showCardTemplateEditor();
@@ -604,56 +607,8 @@ public class NoteEditor extends AnkiActivity implements
         if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
-        mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
-
-        ArrayList<Deck> decks = getCol().getDecks().all();
-        Collections.sort(decks, DeckComparator.INSTANCE);
-        final ArrayList<String> deckNames = new ArrayList<>(decks.size());
-        mAllDeckIds = new ArrayList<>(decks.size());
-        for (Deck d : decks) {
-            // add current deck and all other non-filtered decks to deck list
-            long thisDid = d.getLong("id");
-            String currentName = d.getString("name");
-            String lineContent = null;
-            if (d.isStd()) {
-                lineContent = currentName ;
-            } else if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() == thisDid) {
-                lineContent = getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(mCurrentEditedCard.getODid()));
-            } else {
-                continue;
-            }
-            deckNames.add(lineContent);
-            mAllDeckIds.add(thisDid);
-        }
-
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deckNames) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
-                // Cast the drop down items (popup items) as text view
-                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
-
-                // If this item is selected
-                if (position == mNoteDeckSpinner.getSelectedItemPosition()) {
-                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
-                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
-                }
-
-                // Return the modified view
-                return tv;
-            }
-        };
-        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
-        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteDeckSpinner.setOnTouchListener(new View.OnTouchListener() {
-
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        displayDeckOverrideDialog(getCol());
-                    }
-                    return true;
-                }
-            });
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.note_deck_spinner);
+        mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
         String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
@@ -719,7 +674,6 @@ public class NoteEditor extends AnkiActivity implements
         }
     }
 
-
     private void modifyCurrentSelection(Toolbar.TextFormatter formatter, FieldEditText textBox) {
 
         // get the current text and selection locations
@@ -745,8 +699,8 @@ public class NoteEditor extends AnkiActivity implements
 
         // Update text field with updated text and selection
         int length = beforeText.length() + newText.length() + afterText.length();
-        StringBuilder newValue = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
-        textBox.setText(newValue);
+        StringBuilder newFieldContent = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
+        textBox.setText(newFieldContent);
 
         int newStart = formatResult.start;
         int newEnd = formatResult.end;
@@ -784,8 +738,8 @@ public class NoteEditor extends AnkiActivity implements
 
             case KeyEvent.KEYCODE_D:
                 //null check in case Spinner is moved into options menu in the future
-                if (event.isCtrlPressed() && (mNoteDeckSpinner != null)) {
-                    displayDeckOverrideDialog(getCol());
+                if (event.isCtrlPressed() && (mDeckSpinnerSelection.getSpinner() != null)) {
+                    mDeckSpinnerSelection.displayDeckOverrideDialog(getCol());
                 }
                 break;
 
@@ -1106,20 +1060,6 @@ public class NoteEditor extends AnkiActivity implements
 
 
     @Override
-    protected void onPause() {
-        dismissAllDialogFragments(); //remove the "field language" as it can't be reshown without a field reference
-        super.onPause();
-    }
-
-
-    @Override
-    protected void onResume() {
-        dismissAllDialogFragments(); // dismiss "tags" as it may have been attached after onPause is called
-        super.onResume();
-    }
-
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
@@ -1374,7 +1314,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
-        TagsDialog dialog = TagsDialog.newInstance(TagsDialog.DialogType.ADD_TAG, selTags, tags);
+        TagsDialog dialog = mTagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.ADD_TAG, selTags, tags);
         showDialogFragment(dialog);
     }
 
@@ -1599,73 +1539,13 @@ public class NoteEditor extends AnkiActivity implements
     }
 
     private boolean onImagePaste(EditText editText, Uri uri) {
-        try {
-            if (!mPastedImageCache.containsKey(uri.toString())) {
-                mPastedImageCache.put(uri.toString(), loadImageIntoCollection(uri));
-            }
-            String imageTag = mPastedImageCache.get(uri.toString());
-            if (imageTag == null) {
-                return false;
-            }
-            insertStringInField(editText, imageTag);
-            return true;
-        } catch (SecurityException ex) {
-            // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
-            // This typically works if the user copies again - don't know the exact cause
-
-            //  java.lang.SecurityException: Permission Denial: opening provider
-            //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
-            //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste image");
-            return false;
-        } catch (Exception e) {
-            // NOTE: This is happy path coding which works on Android 9.
-            AnkiDroidApp.sendExceptionReport(e, "NoteEditor:onImagePaste");
-            Timber.w(e, "Failed to paste image");
-            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
+        String imageTag = mMediaRegistration.onImagePaste(uri);
+        if (imageTag == null) {
             return false;
         }
+        insertStringInField(editText, imageTag);
+        return true;
     }
-
-
-    /**
-     * Loads an image into the collection.media folder and returns a HTML reference
-     * @param uri The uri of the image to load
-     * @return HTML referring to the loaded image
-     */
-    @Nullable
-    private String loadImageIntoCollection(Uri uri) throws IOException {
-        //noinspection PointlessArithmeticExpression
-        final int oneMegabyte = 1 * 1000 * 1000;
-        String filename = ContentResolverUtil.getFileName(getContentResolver(), uri);
-        InputStream fd = getContentResolver().openInputStream(uri);
-
-        Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
-
-        File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
-        String tempFilePath = clipCopy.getAbsolutePath();
-        long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
-
-        Timber.d("File was %d bytes", bytesWritten);
-        if (bytesWritten > oneMegabyte) {
-            Timber.w("File was too large: %d bytes", bytesWritten);
-            UIUtils.showThemedToast(this, getString(R.string.note_editor_paste_too_large), false);
-            new File(tempFilePath).delete();
-            return null;
-        }
-
-
-        MultimediaEditableNote noteNew = new MultimediaEditableNote();
-        noteNew.setNumFields(1);
-        ImageField field = new ImageField();
-        field.setHasTemporaryMedia(true);
-        field.setImagePath(tempFilePath);
-        noteNew.setField(0, field);
-        NoteService.saveMedia(getCol(), noteNew);
-
-        return field.getFormattedValue();
-    }
-
 
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
@@ -1682,6 +1562,13 @@ public class NoteEditor extends AnkiActivity implements
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+
+                /* To check whether Camera Permission is asked in AndroidManifest.xml */
+                if (!CheckCameraPermission.manifestContainsPermission(this)) {
+                    MenuItem item = popup.getMenu().findItem(R.id.menu_multimedia_photo);
+                    item.setVisible(false);
+                }
+
                 popup.setOnMenuItemClickListener(item -> {
 
                     int itemId = item.getItemId();
@@ -1935,6 +1822,7 @@ public class NoteEditor extends AnkiActivity implements
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
         }
+        mDeckSpinnerSelection.selectDeckById(mCurrentDid);
     }
 
 
@@ -1956,7 +1844,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition();
-        updateDeckPosition();
+        setDid(note);
         updateTags();
         updateCards(mEditorNote.model());
         updateToolbar();
@@ -2103,17 +1991,6 @@ public class NoteEditor extends AnkiActivity implements
         mNoteTypeSpinner.setSelection(position, false);
     }
 
-
-    private void updateDeckPosition() {
-        int position = mAllDeckIds.indexOf(mCurrentDid);
-        if (position != -1) {
-            mNoteDeckSpinner.setSelection(position, false);
-        } else {
-            Timber.e("updateDeckPosition() error :: mCurrentDid=%d, position=%d", mCurrentDid, position);
-        }
-    }
-
-
     private void updateTags() {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>(0);
@@ -2154,14 +2031,14 @@ public class NoteEditor extends AnkiActivity implements
 
 
     private boolean updateField(FieldEditText field) {
-        String currentValue = "";
+        String fieldContent = "";
         Editable fieldText = field.getText();
         if (fieldText != null) {
-            currentValue = fieldText.toString();
+            fieldContent = fieldText.toString();
         }
-        String newValue = convertToHtmlNewline(currentValue);
-        if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
-            mEditorNote.values()[field.getOrd()] = newValue;
+        String correctedFieldContent = convertToHtmlNewline(fieldContent);
+        if (!mEditorNote.values()[field.getOrd()].equals(correctedFieldContent)) {
+            mEditorNote.values()[field.getOrd()] = correctedFieldContent;
             return true;
         }
         return false;
@@ -2234,11 +2111,12 @@ public class NoteEditor extends AnkiActivity implements
                 // Update deck
                 if (!getCol().getConf().optBoolean("addToCur", true)) {
                     mCurrentDid = model.getLong("did");
-                    updateDeckPosition();
                 }
 
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
                 setDuplicateFieldStyles();
+                mDeckSpinnerSelection.setDeckId(mCurrentDid);
+                mDeckSpinnerSelection.updateDeckPosition();
             }
         }
 
@@ -2286,17 +2164,15 @@ public class NoteEditor extends AnkiActivity implements
                 updateTags();
                 findViewById(R.id.CardEditorTagButton).setEnabled(false);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                mNoteDeckSpinner.setEnabled(false);
-                int position = mAllDeckIds.indexOf(mCurrentEditedCard.getDid());
-                if (position != -1) {
-                    mNoteDeckSpinner.setSelection(position, false);
-                }
+                mDeckSpinnerSelection.setEnabledActionBarSpinner(false);
+                mDeckSpinnerSelection.setDeckId(mCurrentEditedCard.getDid());
+                mDeckSpinnerSelection.updateDeckPosition();
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false);
                 updateCards(mCurrentEditedCard.model());
                 findViewById(R.id.CardEditorTagButton).setEnabled(true);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
-                mNoteDeckSpinner.setEnabled(true);
+                mDeckSpinnerSelection.setEnabledActionBarSpinner(true);
             }
         }
 
@@ -2346,12 +2222,6 @@ public class NoteEditor extends AnkiActivity implements
                 menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                // This should be after "Paste as Plain Text"
-                menu.add(Menu.NONE, mSetLanguageId, 99, R.string.note_editor_set_field_language);
-            }
-
-
             return initialSize != menu.size();
         }
 
@@ -2363,20 +2233,9 @@ public class NoteEditor extends AnkiActivity implements
                 convertSelectedTextToCloze(mTextBox, AddClozeType.INCREMENT_NUMBER);
                 mode.finish();
                 return true;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanguageId) {
-                displaySelectInputLanguage();
-                mode.finish();
-                return true;
             } else {
                 return false;
             }
-        }
-
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private void displaySelectInputLanguage() {
-            DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
-            showDialogFragment(dialogFragment);
         }
 
 

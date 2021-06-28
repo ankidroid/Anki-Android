@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
     <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
     <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
-    <string name="note_editor_set_field_language">تنظیم زبان زمینه</string>
     <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ذخیره یادداشت</string>
@@ -279,6 +278,7 @@
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[کارت های خالی پیدا شد. لطفا ابزار>کارت های خالی را اجرا کنید.]]></string>
     <string name="note_importer_error_empty_first_field">فیلد اول خالی: %s</string>

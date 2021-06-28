@@ -29,7 +29,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,32 +36,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
-import com.ichi2.libanki.Deck;
 import com.ichi2.ui.FixedTextView;
 
-import com.ichi2.utils.JSONException;
-
-import java.util.ArrayList;
 import java.util.Locale;
 
 import timber.log.Timber;
 
 
-public class Statistics extends NavigationDrawerActivity implements DeckDropDownAdapter.SubtitleListener {
+public class Statistics extends NavigationDrawerActivity implements
+        DeckSelectionDialog.DeckSelectionListener,
+        DeckDropDownAdapter.SubtitleListener {
 
     public static final int TODAYS_STATS_TAB_POSITION = 0;
     public static final int FORECAST_TAB_POSITION = 1;
@@ -77,9 +75,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     private ViewPager2 mViewPager;
     private TabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
-    private long mDeckId;
-    private ArrayList<Deck> mDropDownDecks;
-    private Spinner mActionBarSpinner;
+    private DeckSpinnerSelection mDeckSpinnerSelection;
     private static boolean sIsSubtitle;
 
 
@@ -110,27 +106,21 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mViewPager.setOffscreenPageLimit(8);
         mSlidingTabLayout = findViewById(R.id.sliding_tabs);
 
-        // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = getCol().getDecks().allSorted();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        mActionBarSpinner = findViewById(R.id.toolbar_spinner);
-        mActionBarSpinner.setAdapter(new DeckDropDownAdapter(this, mDropDownDecks));
-        mActionBarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        // Fixes #8984: scroll to position 0 in RTL layouts
+        ViewTreeObserver tabObserver = mSlidingTabLayout.getViewTreeObserver();
+        tabObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            // Note: we can't use a lambda as we use 'this' to refer to the class.
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectDropDownItem(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // do nothing
+            public void onGlobalLayout() {
+                // we need this here: If we select tab 0 before in an RTL context the layout has been drawn,
+                // then it doesn't perform a scroll animation and selects the wrong element
+                mSlidingTabLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mSlidingTabLayout.selectTab(mSlidingTabLayout.getTabAt(0));
             }
         });
-        mActionBarSpinner.setVisibility(View.VISIBLE);
 
         // Setup Task Handler
-        mTaskHandler = new AnkiStatsTaskHandler(col);
+        mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
 
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new FixedTextView(this).getTextSize();
@@ -138,9 +128,13 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
-
-        // Default to libanki's selected deck
-        selectDeckById(getCol().getDecks().selected());
+        long deckId = getCol().getDecks().selected();
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.setShowAllDecks(true);
+        mDeckSpinnerSelection.selectDeckById(deckId);
+        mTaskHandler.setDeckId(deckId);
+        mViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -211,34 +205,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void selectDropDownItem(int position) {
-        mActionBarSpinner.setSelection(position);
-        if (position == 0) {
-            mDeckId = Stats.ALL_DECKS_ID;
-        } else {
-            Deck deck = mDropDownDecks.get(position - 1);
-            try {
-                mDeckId = deck.getLong("id");
-            } catch (JSONException e) {
-                Timber.e(e, "Could not get ID from deck");
-            }
-        }
-        mTaskHandler.setDeckId(mDeckId);
-        mViewPager.getAdapter().notifyDataSetChanged();
-    }
-
-    // Iterates the drop down decks, and selects the one matching the given id
-    private boolean selectDeckById(long deckId) {
-        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            if (mDropDownDecks.get(dropDownDeckIdx).getLong("id") == deckId) {
-                selectDropDownItem(dropDownDeckIdx + 1);
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * @return text to be used in the subtitle of the drop-down deck selector
      */
@@ -260,7 +226,20 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         return mSlidingTabLayout;
     }
 
-    private long getDeckId() { return mDeckId; }
+    private long getDeckId() { return mDeckSpinnerSelection.getDeckId(); }
+
+
+    @Override
+    public void onDeckSelected(@Nullable DeckSelectionDialog.SelectableDeck deck) {
+        if (deck == null) {
+            return;
+        }
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mTaskHandler.setDeckId(deck.getDeckId());
+        mViewPager.getAdapter().notifyDataSetChanged();
+    }
+
 
     /**
      * A {@link FragmentStateAdapter} that returns a fragment corresponding to
@@ -291,6 +270,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //track current settings for each individual fragment
         protected long mDeckId;
         protected AsyncTask mStatisticsTask;
+        protected AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;
@@ -348,14 +328,19 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         @Override
         public void onDestroy() {
-            if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                mStatisticsTask.cancel(true);
-            }
+            cancelTasks();
             if (mActivityPager.getAdapter() != null) {
                 mActivityPager.getAdapter().unregisterAdapterDataObserver(mDataObserver);
             }
             super.onDestroy();
         }
+
+        protected void cancelTasks() {
+            Timber.w("canceling tasks");
+            TaskOperations.stopTaskGracefully(mStatisticsTask);
+            TaskOperations.stopTaskGracefully(mStatisticsOverviewTask);
+        }
+
 
         private String getTabTitle(int position) {
             Locale l = Locale.getDefault();
@@ -544,9 +529,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = ((Statistics) requireActivity()).getDeckId();
-                    if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                        mStatisticsTask.cancel(true);
-                    }
+                    cancelTasks();
                     createChart();
                 }
             }
@@ -623,7 +606,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)requireActivity()).getTaskHandler());
-            mStatisticsTask = handler.createStatisticsOverview(mWebView, mProgressBar);
+            mStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 
 
@@ -638,9 +621,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = ((Statistics) requireActivity()).getDeckId();
-                if (mStatisticsTask != null && !mStatisticsTask.isCancelled()) {
-                    mStatisticsTask.cancel(true);
-                }
+                cancelTasks();
                 createStatisticOverview();
             }
         }

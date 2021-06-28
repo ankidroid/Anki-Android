@@ -20,6 +20,7 @@ package com.ichi2.utils;
 import org.apache.commons.collections4.list.SetUniqueList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -159,11 +160,8 @@ public class UniqueArrayList<E> extends SetUniqueList<E> implements List<E>, Set
      * <p>The specified list must be modifiable, but need not be resizable.
      *
      * @implNote
-     * This implementation defers to the {@link Collections#sort(List, Comparator)}
-     * method using this list and the given comparator.
-     *
      * DO NOT call {@link Collections#sort(List, Comparator)} using this list directly
-     * this will throw due to a limitation on setting items on the  {@link ListIterator}
+     * this can throw due to a limitation on setting items on the  {@link ListIterator}
      * returned by {@link #listIterator()}
      *
      * @param  c the comparator to determine the order of the list.  A
@@ -174,7 +172,13 @@ public class UniqueArrayList<E> extends SetUniqueList<E> implements List<E>, Set
      */
     @Override
     public void sort(@Nullable Comparator<? super E> c) {
-        Collections.sort(mList, c);
+        Object[] elements = mList.toArray();
+        Arrays.sort(elements, (Comparator) c);
+        ListIterator<E> i = mList.listIterator();
+        for (Object element : elements) {
+            i.next();
+            i.set((E) element);
+        }
     }
 
 

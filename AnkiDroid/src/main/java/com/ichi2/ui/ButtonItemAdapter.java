@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 /*
  * The MIT License (MIT)
 
@@ -93,7 +94,7 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
         private final ImageButton mButton;
         private final ButtonItemAdapter mAdapter;
 
-        ButtonVH(View itemView, ButtonItemAdapter adapter) {
+        private ButtonVH(View itemView, ButtonItemAdapter adapter) {
             super(itemView);
             mTitle = itemView.findViewById(R.id.card_browser_my_search_name_textview);
             mButton = itemView.findViewById(R.id.card_browser_my_search_remove_button);
@@ -109,10 +110,10 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
                 return;
             }
             if (view instanceof ImageButton) {
-                mAdapter.mButtonCallback.onButtonClicked(mItems.get(getAdapterPosition()));
+                mAdapter.mButtonCallback.onButtonClicked(mItems.get(getBindingAdapterPosition()));
             }
             else {
-                mAdapter.mItemCallback.onItemClicked(mItems.get(getAdapterPosition()));
+                mAdapter.mItemCallback.onItemClicked(mItems.get(getBindingAdapterPosition()));
             }
         }
     }

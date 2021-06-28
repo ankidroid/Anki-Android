@@ -95,6 +95,7 @@
     <string name="unbury">Откопай</string>
     <string name="rename_deck">Преименувай тестето</string>
     <string name="create_shortcut">Създай пряк път</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добави</string>
     <string name="menu_add_note">Добави бележка</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Акаунт за синхронизириране</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
     <string name="menu_select">Избор на текст</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Търсене в %1$s</string>
     <string name="menu_mark_note">Маркирай бележка</string>
     <string name="menu_unmark_note">Размаркирай бележка</string>
     <string name="menu_toggle_mic_tool_bar">Проверете произношението</string>
     <string name="new_deck">Създай тесте</string>
-    <string name="create" comment="Button to create a filtered deck">Създай</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
     <string name="night_mode">Нощен режим</string>
     <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">Липсва „{{%s}}“.</string>
     <string name="wrong_tag_closed">Намерено „{{/%1$s}}“, но очаквано „{{/%2$s}}“</string>
     <string name="filter_error">Грешка във филтъра %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -126,6 +126,8 @@
     <string name="import_complete_count">Імпортовано карток: %d</string>
     <string name="sd_card_full_title">SD карта заповнена</string>
     <string name="sd_card_almost_full_title">SD-карта майже заповнена</string>
+    <string name="no_space_to_downgrade_title">Пам\'ять заповнена</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
     <string name="restore_backup">Вашу колекцію замінить стара копія. Будь-який незбережений прогрес буде втрачено.</string>
     <string name="dialog_cancel">Скасувати</string>
@@ -242,6 +244,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Надіслати звіт про несправності</string>
     <string name="help_dialog_exception_report_debounce">Звіт вже надіслано</string>
     <!--Sync-->
@@ -251,4 +257,11 @@
         <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
         <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
     </plurals>
+    <string name="deck_picker_new">Кількість нових карт, що будуть бачити сьогодні в цій колоді.</string>
+    <string name="deck_picker_rev">Кількість нових карток на сьогодні в цій колоді</string>
+    <string name="deck_picker_lrn">Кількість карток для повторення на сьогодні в цій колоді</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Відкрити сторінку огляду колоди, що містить число карт для перегляду на сьогодні.</string>
 </resources>

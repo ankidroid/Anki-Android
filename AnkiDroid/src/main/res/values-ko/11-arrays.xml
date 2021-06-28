@@ -80,13 +80,13 @@
         <item>어두움</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>엄청나게 작음</item>
+        <item>매우 작음</item>
+        <item>작음</item>
+        <item>보통</item>
+        <item>크게</item>
+        <item>매우 크게</item>
+        <item>엄청나게 크게</item>
     </string-array>
     <!--
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
@@ -99,19 +99,19 @@
     <string name="gesture_answer_4">답변 버튼 4</string>
     <string name="gesture_answer_green">답변 추천 (녹색)</string>
     <string name="gesture_answer_better_recommended">권장된 것 보다 더 나은 답변</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_tag_note">노트 태그 넣기</string>
+    <string name="gesture_lookup">중복 항목 표시</string>
+    <string name="gesture_play">미디어 재생</string>
+    <string name="gesture_abort_learning">학습 중단</string>
+    <string name="gesture_flag_red">빨간색 플래그 넣기 / 빼기</string>
+    <string name="gesture_flag_orange">주황색 플래그 넣기 / 빼기</string>
+    <string name="gesture_flag_green">초록색 플래그 넣기 / 빼기</string>
+    <string name="gesture_flag_blue">파란색 플래그 넣기 / 빼기</string>
+    <string name="gesture_flag_remove">플래그 빼기</string>
+    <string name="gesture_page_up">페이지 위로</string>
+    <string name="gesture_page_down">페이지 아래로</string>
+    <string name="gesture_abort_sync">학습을 중단하고 동기화</string>
+    <string name="gesture_toggle_whiteboard">화이트보드 켜기 / 끄기</string>
+    <string name="record_voice">목소리 녹음</string>
+    <string name="replay_voice">목소리 녹음 재생</string>
 </resources>

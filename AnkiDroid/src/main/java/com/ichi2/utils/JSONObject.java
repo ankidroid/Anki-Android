@@ -54,6 +54,9 @@ import java.util.Map;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import static com.ichi2.utils.JSON.checkDouble;
 
 public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
@@ -65,6 +68,27 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     public JSONObject(Map copyFrom) {
         super(copyFrom);
+    }
+
+    /**
+     * Creates a new {@code JSONObject} by copying mappings for the listed names
+     * from the given object. Names that aren't present in {@code copyFrom} will
+     * be skipped.
+     *
+     * Code copied from upstream.
+     */
+    public JSONObject(@NonNull org.json.JSONObject copyFrom, @NonNull String /*@NonNull*/ [] names) {
+        this();
+        try {
+            for (String name : names) {
+                Object value = copyFrom.opt(name);
+                if (value != null) {
+                    super.put(name, value);
+                }
+            }
+        } catch (org.json.JSONException e) {
+            throw new JSONException(e);
+        }
     }
 
     // original code from https://github.com/stleary/JSON-java/blob/master/JSONObject.java
@@ -223,13 +247,58 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
-    public JSONObject accumulate(String name, Object value) {
-        try {
-            super.accumulate(name, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
+    // Copied from upstream
+    private static String checkName(String name) {
+        if (name == null) {
+            throw new JSONException("Names must be non-null");
         }
+        return name;
+    }
+
+    /**
+     * Appends {@code value} to the array already mapped to {@code name}. If
+     * this object has no mapping for {@code name}, this inserts a new mapping.
+     * If the mapping exists but its value is not an array, the existing
+     * and new values are inserted in order into a new array which is itself
+     * mapped to {@code name}. In aggregate, this allows values to be added to a
+     * mapping one at a time.
+     *
+     * <p> Note that {@code append(String, Object)} provides better semantics.
+     * In particular, the mapping for {@code name} will <b>always</b> be a
+     * {@link JSONArray}. Using {@code accumulate} will result in either a
+     * {@link JSONArray} or a mapping whose type is the type of {@code value}
+     * depending on the number of calls to it.
+     *
+     * @param value a {@link JSONObject}, {@link JSONArray}, String, Boolean,
+     *     Integer, Long, Double, {@link #NULL} or null. May not be {@link
+     *     Double#isNaN() NaNs} or {@link Double#isInfinite() infinities}.
+     */
+    // TODO: Change {@code append) to {@link #append} when append is
+    // unhidden.
+    // Copied from upstream.
+    // It must be copied, otherwise it adds a org.json.JSONArray instead of a JSONArray
+    // in the object
+    @NonNull public JSONObject accumulate(@NonNull String name, @Nullable Object value) {
+        Object current = opt(checkName(name));
+        if (current == null) {
+            return put(name, value);
+        }
+
+        // check in accumulate, since array.put(Object) doesn't do any checking
+        if (value instanceof Number) {
+            checkDouble(((Number) value).doubleValue());
+        }
+
+        if (current instanceof JSONArray) {
+            JSONArray array = (JSONArray) current;
+            array.put(value);
+        } else {
+            JSONArray array = new JSONArray();
+            array.put(current);
+            array.put(value);
+            put(name, array);
+        }
+        return this;
     }
 
     @CheckResult
@@ -291,7 +360,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         try {
             return JSONArray.arrayToArray(super.getJSONArray(name));
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new JSONException (e);
         }
     }
 
@@ -300,17 +369,27 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         try {
             return objectToObject(super.getJSONObject(name));
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new JSONException (e);
         }
     }
 
+
+    // Code copied from upstream
     @CheckResult
     public JSONArray toJSONArray(JSONArray names) {
-        try {
-            return JSONArray.arrayToArray(super.toJSONArray(names));
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
+        JSONArray result = new JSONArray();
+        if (names == null) {
+            return null;
         }
+        int length = names.length();
+        if (length == 0) {
+            return null;
+        }
+        for (int i = 0; i < length; i++) {
+            String name = JSON.toString(names.opt(i));
+            result.put(opt(name));
+        }
+        return result;
     }
 
     @CheckResult
@@ -318,7 +397,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         try {
             return org.json.JSONObject.numberToString(number);
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new JSONException (e);
         }
     }
 
@@ -376,5 +455,14 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             ret.put(i.getKey(), i.getValue());
         }
         return ret;
+    }
+
+    @Override
+    public String toString(int indentSpace) {
+        try {
+            return super.toString(indentSpace);
+        } catch (org.json.JSONException e) {
+            throw new JSONException(e);
+        }
     }
 }

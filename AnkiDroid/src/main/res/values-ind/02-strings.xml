@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
     <string name="note_editor_no_first_field">Bidang teks pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Tipe catatan ini harus berisi titik-titik</string>
-    <string name="note_editor_set_field_language">Atur bahasa bidang</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>
@@ -269,6 +268,7 @@
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard. %s</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
     <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Kartu kosong ditemukan. Harap jalankan Alat>Kartu Kosong.]]></string>
     <string name="note_importer_error_empty_first_field">Bidang pertama kosong: %s</string>

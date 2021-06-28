@@ -79,30 +79,35 @@
     <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Again</string>
     <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
+    <string name="ease_button_good">ကောင်းတယ်</string>
+    <string name="ease_button_easy">လွယ်တယ်</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
+    <string name="menu_import">သွင်းကုန်</string>
+    <string name="undo">ပယ်ဖျက်ပါ</string>
+    <string name="undo_action_review">နောက်ဆုံးသုံးသပ်ချက်</string>
+    <string name="undo_action_change_deck_multi">ကုန်းပတ်ကိုပြောင်းပါ</string>
     <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
+    <string name="unbury">ဖယ်ရှားပါ (တစ်စုံတစ်ယောက်သို့မဟုတ်တစ်ခုခု)</string>
+    <string name="rename_deck">ကုန်းပတ်အမည်ပြောင်းပါ</string>
+    <string name="create_shortcut">ဖြတ်လမ်းဖန်တီ</string>
+    <string name="browse_cards">Browse cards</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ထည့်ပါ</string>
+    <string name="menu_add_note">မှတ်ချက်ထည့်ပါ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">အကောင့်အားတိုက်ဆိုင်ညှိယူပါ</string>
+    <string name="menu_dismiss_note">ဖျောက်ထား /
+ဖျက်ပါ</string>
+    <string name="menu_bury_card">ကဒ်မြှုပ်ပါ  (or)
+ကဒ်ဖုံးကွယ်ပါ</string>
+    <string name="menu_bury_note">မှတ်စုကိုဝှက်ပါ</string>
+    <string name="menu_suspend_card">ကဒ်ကိုရပ်ဆိုင်းထားပါ</string>
+    <string name="menu_suspend_note">မှတ်စုကိုဆိုင်းငံ့ထားပါ</string>
+    <string name="menu_bury">သင်္ဂြိုဟ် (သို့မဟုတ်)
+
+ထားသို့မဟုတ်မြေပြင်အောက်မှာပုန်းရှောင်။</string>
     <string name="menu_suspend">Suspend</string>
     <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag">အလံ</string>
+    <string name="menu_flag_card">ကဒ်အလံ</string>
     <string name="menu_flag_card_zero">No flag</string>
     <string name="menu_flag_card_one">Red flag</string>
     <string name="menu_flag_card_two">Orange flag</string>
@@ -111,12 +116,12 @@
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_select">Select text</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Lookup in %1$s</string>
     <string name="menu_mark_note">Mark note</string>
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create" comment="Button to create a filtered deck">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -143,7 +148,8 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
+    <string name="empty_cram_label">ဗလာ (သို့မဟုတ်)
+ဘာမှမရှိဘူး</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
@@ -205,4 +211,15 @@
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

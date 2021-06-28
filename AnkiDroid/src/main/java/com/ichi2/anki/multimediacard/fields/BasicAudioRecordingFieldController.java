@@ -57,8 +57,8 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             mTempAudioPath = AudioView.generateTempAudioFile(mActivity);
         }
 
-        mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.av_play, R.drawable.av_pause,
-                R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+        mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
+                R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
         mAudioView.setOnRecordingFinishEventListener(v -> {
             // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
             // FIXME is this okay if it is still null?

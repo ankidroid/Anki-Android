@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nessuna carta creata. Si prega di compilare altri campi</string>
     <string name="note_editor_no_first_field">Il primo campo è vuoto</string>
     <string name="note_editor_no_cloze_delations">Questo tipo di nota deve contenere cloze</string>
-    <string name="note_editor_set_field_language">Imposta lingua del campo</string>
     <string name="note_editor_no_cards_created_all_fields">Il tipo di nota attuale non ha prodotto nessuna carta.\nScegli un altro tipo di nota, o fai clic su «Carte» e aggiungi una sostituzione del campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">I cloze deletions funzionano solo sui tipi di nota Cloze</string>
     <string name="saving_facts">Salvataggio nota</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">Riordino le carte...</string>
     <string name="field_remapping">%1$s (di \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Limita di tempo raggiunta</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta studiata in %2$s</item>
         <item quantity="other">%1$d carte studiate in %2$s</item>
@@ -279,6 +278,7 @@
     <string name="white_board_image_save_failed">Salvataggio dell\'immagine della lavagna fallito. %s</string>
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
     <string name="title_whiteboard_pen_color">Colore della penna della lavagna</string>
+    <string name="title_whiteboard_editor">Editor di lavagna bianca</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Trovate carte vuote. Si prega di eseguire Strumenti>Carte Vuote.]]></string>
     <string name="note_importer_error_empty_first_field">Primo campo vuoto: %s</string>
@@ -348,5 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">L\'indirizzo di posta elettronica è obbligatorio.</string>
     <string name="password_empty">La password è obbligatoria</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Premi di nuovo indietro per uscire</string>
 </resources>

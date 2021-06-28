@@ -1,42 +1,34 @@
-/****************************************************************************************
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                        *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki;
 
 import android.animation.Animator;
 import android.content.SharedPreferences;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.ichi2.libanki.Decks;
-import com.ichi2.ui.FixedEditText;
-
-import java.util.Objects;
+import com.ichi2.anki.dialogs.CreateDeckDialog;
 
 import timber.log.Timber;
 
 public class DeckPickerFloatingActionMenu {
 
-    private final FloatingActionButton mAddDeckButton;
-    private final FloatingActionButton mAddNoteButton;
-    private final FloatingActionButton mAddSharedButton;
     private final FloatingActionButton mFabMain;
     private final LinearLayout mAddSharedLayout;
     private final LinearLayout mAddDeckLayout;
@@ -45,84 +37,65 @@ public class DeckPickerFloatingActionMenu {
     private boolean mIsFABOpen = false;
 
     private final DeckPicker mDeckPicker;
-    private LinearLayout mLinearLayout;
+    private final LinearLayout mLinearLayout;
 
     public DeckPickerFloatingActionMenu(View view, DeckPicker deckPicker) {
-        this.mDeckPicker = deckPicker;
+        mDeckPicker = deckPicker;
         mAddNoteLayout = (LinearLayout)view.findViewById(R.id.add_note_layout);
         mAddSharedLayout = (LinearLayout)view.findViewById(R.id.add_shared_layout);
         mAddDeckLayout = (LinearLayout)view.findViewById(R.id.add_deck_layout);
         mFabMain = (FloatingActionButton)view.findViewById(R.id.fab_main);
-        mAddNoteButton = (FloatingActionButton)view.findViewById(R.id.add_note_action);
-        mAddSharedButton = (FloatingActionButton)view.findViewById(R.id.add_shared_action);
-        mAddDeckButton = (FloatingActionButton)view.findViewById(R.id.add_deck_action);
+        FloatingActionButton addNoteButton = (FloatingActionButton) view.findViewById(R.id.add_note_action);
+        FloatingActionButton addSharedButton = (FloatingActionButton) view.findViewById(R.id.add_shared_action);
+        FloatingActionButton addDeckButton = (FloatingActionButton) view.findViewById(R.id.add_deck_action);
         mFabBGLayout = view.findViewById(R.id.fabBGLayout);
         mLinearLayout = view.findViewById(R.id.deckpicker_view);
 
-        mFabMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mIsFABOpen) {
-                    showFloatingActionMenu();
-                } else {
-                    closeFloatingActionMenu();
-                }
-            }
-        });
+        TextView addNoteLabel = view.findViewById(R.id.add_note_label);
+        TextView addSharedLabel = view.findViewById(R.id.add_shared_label);
+        TextView addDeckLabel = view.findViewById(R.id.add_deck_label);
 
-        mFabBGLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mFabMain.setOnClickListener(v -> {
+            if (!mIsFABOpen) {
+                showFloatingActionMenu();
+            } else {
                 closeFloatingActionMenu();
             }
         });
 
-        mAddDeckButton.setOnClickListener(addDeckButtonView -> {
+        mFabBGLayout.setOnClickListener(v -> closeFloatingActionMenu());
+
+        View.OnClickListener addDeckListener = addDeckButtonView -> {
             if (mIsFABOpen) {
                 closeFloatingActionMenu();
-                EditText mDialogEditText = new FixedEditText(mDeckPicker);
-                mDialogEditText.setSingleLine(true);
-                mDialogEditText.requestFocus();
-                MaterialDialog materialDialog = new MaterialDialog.Builder(mDeckPicker)
-                        .title(R.string.new_deck)
-                        .positiveText(R.string.dialog_ok)
-                        .customView(mDialogEditText, true)
-                        .onPositive((dialog, which) -> {
-                            String deckName = mDialogEditText.getText().toString();
-                            if (Decks.isValidDeckName(deckName)) {
-                                boolean creation_succeed = deckPicker.createNewDeck(deckName);
-                                if (!creation_succeed) {
-                                    return;
-                                }
-                            } else {
-                                Timber.d("configureFloatingActionsMenu::addDeckButton::onPositiveListener - Not creating invalid deck name '%s'", deckName);
-                                UIUtils.showThemedToast(mDeckPicker, mDeckPicker.getString(R.string.invalid_deck_name), false);
-                            }
-                        })
-                        .negativeText(R.string.dialog_cancel)
-                        .show();
-
-                // Open keyboard when dialog shows
-                Objects.requireNonNull(materialDialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                CreateDeckDialog createDeckDialog = new CreateDeckDialog(mDeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
+                createDeckDialog.setOnNewDeckCreated((i) -> deckPicker.updateDeckList());
+                createDeckDialog.showDialog();
             }
-        });
+        };
+        addDeckButton.setOnClickListener(addDeckListener);
+        addDeckLabel.setOnClickListener(addDeckListener);
 
-        mAddSharedButton.setOnClickListener(addSharedButtonView -> {
+        View.OnClickListener addSharedListener = addSharedButtonView -> {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck");
             closeFloatingActionMenu();
             deckPicker.addSharedDeck();
-        });
+        };
+        addSharedButton.setOnClickListener(addSharedListener);
+        addSharedLabel.setOnClickListener(addSharedListener);
 
-        mAddNoteButton.setOnClickListener(addNoteButtonView -> {
+        View.OnClickListener addNoteListener = addNoteButtonView -> {
             Timber.d("configureFloatingActionsMenu::addNoteButton::onClickListener - Adding Note");
             closeFloatingActionMenu();
             deckPicker.addNote();
-        });
+        };
+        addNoteButton.setOnClickListener(addNoteListener);
+        addNoteLabel.setOnClickListener(addNoteListener);
     }
 
-    private boolean animationDisabled() {
+    private boolean animationEnabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mDeckPicker);
-        return preferences.getBoolean("safeDisplay", false);
+        return !preferences.getBoolean("safeDisplay", false);
     }
 
 
@@ -139,7 +112,7 @@ public class DeckPickerFloatingActionMenu {
     private void showFloatingActionMenu() {
         mLinearLayout.setAlpha(0.5f);
         mIsFABOpen = true;
-        if (!animationDisabled()) {
+        if (animationEnabled()) {
             // Show with animation
             mAddNoteLayout.setVisibility(View.VISIBLE);
             mAddSharedLayout.setVisibility(View.VISIBLE);
@@ -165,7 +138,7 @@ public class DeckPickerFloatingActionMenu {
         mLinearLayout.setAlpha(1f);
         mIsFABOpen = false;
         mFabBGLayout.setVisibility(View.GONE);
-        if (!animationDisabled()) {
+        if (animationEnabled()) {
             // Close with animation
             mFabMain.animate().rotation(0);
             mAddNoteLayout.animate().translationY(200f).setDuration(30);

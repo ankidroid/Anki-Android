@@ -126,6 +126,8 @@
     <string name="import_complete_count">Импортировано карточек: %d</string>
     <string name="sd_card_full_title">В хранилище нет места</string>
     <string name="sd_card_almost_full_title">В хранилище почти нет места</string>
+    <string name="no_space_to_downgrade_title">Нет места</string>
+    <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
     <string name="dialog_cancel">Отменить</string>
@@ -242,8 +244,12 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_send_exception">Отправить отчёт о неполадках</string>
+    <string name="help_dialog_exception_report_debounce">Отчёт уже отправлен</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>
@@ -251,4 +257,11 @@
         <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
+    <string name="deck_picker_new">Количество новых карт, которые сегодня можно увидеть в этой колоде.</string>
+    <string name="deck_picker_rev">Количество карт на сегодня в этой колоде.</string>
+    <string name="deck_picker_lrn">Количество карт в обучении в этой колоде.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Откройте страницу предварительного просмотра колоды, содержащую количество карточек для просмотра сегодня.</string>
 </resources>

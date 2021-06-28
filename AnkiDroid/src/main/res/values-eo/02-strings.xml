@@ -106,11 +106,10 @@
     <string name="custom_study_limit_tags">Limigi al specialaj etikedoj</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redakti noton</string>
-    <string name="discard_unsaved_changes">Ĉu fermi kaj perdi entajpitan tekston?</string>
+    <string name="discard_unsaved_changes">Ĉu fermi kaj perdi la enigitan tekston?</string>
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
-    <string name="note_editor_set_field_language">Agordi lingvon de kampo</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">Reordigado de kartoj&#8230;</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Limigo de lernada tempo atingita</string>
     <plurals name="timebox_reached">
         <item quantity="one">Lernis %1$d karton dum %2$s</item>
         <item quantity="other">Lernis %1$d kartojn dum %2$s</item>
@@ -150,7 +149,7 @@
     <string name="empty_cards">Malplenaj kartoj</string>
     <string name="check_db_message">Kontrolado de datumbazo&#8230;</string>
     <string name="empty_card_warning">Tiu ĉi karto estas malplena. Uzu la agon “malplenaj kartoj” en la menuo ĉe la ekrano de kartaroj.</string>
-    <string name="unknown_type_field_warning">Entajpu respondon: nekonata kampo %s</string>
+    <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
@@ -279,6 +278,7 @@
     <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
+    <string name="title_whiteboard_editor">Redaktilo de skribtabulo</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Trovis malplenajn kartojn. Ekigu “iloj” → “malplenaj kartoj”]]></string>
     <string name="note_importer_error_empty_first_field">Unua kampo malplena: %s</string>
@@ -348,5 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Retpoŝta adreso estas postulata</string>
     <string name="password_empty">Pasvorto estas postulata</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Frapetu denove por eliri</string>
 </resources>

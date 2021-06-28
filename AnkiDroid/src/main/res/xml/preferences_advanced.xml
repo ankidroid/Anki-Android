@@ -39,15 +39,13 @@
             android:key="custom_sync_server_link"
             android:title="@string/custom_sync_server_title"/>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <com.ichi2.ui.SeekBarPreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:defaultValue="8"
                 android:key="backupMax"
-                android:max="10"
                 android:summary="@string/preference_summary_literal"
-                android:text=""
                 android:title="@string/pref_backup_max"
-                app:interval="1"
-                app:min="0" />
+                app:min="0"
+                app:max="99" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_workarounds"
@@ -124,7 +122,7 @@
                 android:key="dictionary"
                 android:title="@string/dictionary" />
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@drawable/ic_dialog_alert"
+                android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
                 android:negativeButtonText="@string/dialog_cancel"
@@ -171,8 +169,8 @@
 
     <CheckBoxPreference
         android:key="schedVer"
-        android:title="@string/sched_ver"
-        android:summary="@string/sched_ver_summ" />
+        android:title="@string/sched_v2"
+        android:summary="@string/sched_v2_summ" />
     <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title">

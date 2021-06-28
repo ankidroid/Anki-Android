@@ -49,6 +49,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -151,6 +153,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         if (i > 0) {
                             JSONObject presetValues = new JSONObject(mDynExamples[i]);
                             JSONArray ar = presetValues.names();
+                            if (ar == null) {
+                                continue;
+                            }
                             for (String name: ar.stringIterable()) {
                                 if ("steps".equals(name)) {
                                     mUpdate.put("stepsOn", true);
@@ -364,7 +369,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             mPref = new DeckPreferenceHack();
             mPref.registerOnSharedPreferenceChangeListener(this);
 
-            this.addPreferencesFromResource(R.xml.cram_deck_options);
+            this.addPreferences(mCol);
             this.buildLists();
             this.updateSummaries();
         }
@@ -385,6 +390,36 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
+    @SuppressWarnings("deprecation")  // Tracked as #5019 on github: addPreferencesFromResource
+    private void addPreferences(@NonNull Collection col) {
+        this.addPreferencesFromResource(R.xml.cram_deck_options);
+
+        if (col.schedVer() != 1) {
+            Timber.d("sched v2: removing filtered deck custom study steps");
+            // getPreferenceScreen.removePreference didn't return true, so remove from the category
+            android.preference.PreferenceCategory category = (android.preference.PreferenceCategory) this.findPreference("studyOptions");
+            removePreference(category, "stepsOn");
+            removePreference(category, "steps");
+        }
+
+    }
+
+    @SuppressWarnings("deprecation")  // Tracked as #5019 on github: findPreference
+    private void removePreference(@Nullable android.preference.PreferenceCategory category, String key) {
+        @Nullable android.preference.Preference preference = this.findPreference(key);
+        if (category == null || preference == null) {
+            Timber.w("Failed to remove preference '%s'", key);
+            return;
+        }
+
+        boolean result = category.removePreference(preference);
+        if (!result) {
+            Timber.w("Failed to remove preference '%s'", key);
+        }
+    }
+
 
     @Override
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019

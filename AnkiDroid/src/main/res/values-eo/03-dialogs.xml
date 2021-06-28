@@ -114,6 +114,8 @@
     <string name="import_complete_count">Enportis kartojn: %d</string>
     <string name="sd_card_full_title">SD-karto estas plena</string>
     <string name="sd_card_almost_full_title">SD-karto estas preskaŭ plena</string>
+    <string name="no_space_to_downgrade_title">Mankas spaco</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
     <string name="restore_backup_title">Ĉu restarigi sekurkopion?</string>
     <string name="restore_backup">Via kolekto estos anstataŭigita per eksa kopio. Ĉiu nekonservita progreso perdiĝos.</string>
     <string name="dialog_cancel">Nuligi</string>
@@ -228,6 +230,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Privateco</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid: privateca politiko</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb: privateca politiko</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb: kondiĉoj de uzado</string>
     <string name="help_title_send_exception">Sendi raporton pri problemo</string>
     <string name="help_dialog_exception_report_debounce">Raporto sendita</string>
     <!--Sync-->
@@ -235,4 +241,11 @@
         <item quantity="one">Aŭtomata samtempigo povas startigi post %d sekundo</item>
         <item quantity="other">Aŭtomata samtempigo povas startigi post %d sekundoj</item>
     </plurals>
+    <string name="deck_picker_new">Nombro de novaj hodiaŭaj kartoj por montri en tiu ĉi kartaro.</string>
+    <string name="deck_picker_rev">Nombro de hodiaŭaj lernendaj kartoj en tiu ĉi kartaro.</string>
+    <string name="deck_picker_lrn">Nombro de lernataj kortoj en tiu ĉi kartaro.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Malfermu la kartaran sumigon enhavantan nombron de kartoj por montri hodiaŭ.</string>
 </resources>

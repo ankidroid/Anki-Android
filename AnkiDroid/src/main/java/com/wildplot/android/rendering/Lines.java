@@ -30,7 +30,7 @@ import com.wildplot.android.rendering.interfaces.Legendable;
  * The LinesPoints objects draw points from a data array and connect them with lines on.
  * These LinesPoints are drawn onto a PlotSheet object
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class Lines implements Drawable, Legendable {
 
     private boolean mHasShadow = false;

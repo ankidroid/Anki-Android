@@ -45,11 +45,11 @@ public class TemporaryModelTest extends RobolectricTest {
         TemporaryModel.clearTempModelFiles();
 
         // Make sure save / retrieve works
-        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), new JSONObject("{foo: bar}"));
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), new JSONObject("{\"foo\": \"bar\"}"));
         Assert.assertNotNull("Saving temp model unsuccessful", tempModelPath);
         JSONObject tempModel = TemporaryModel.getTempModel(tempModelPath);
         Assert.assertNotNull("Temp model not read successfully", tempModel);
-        Assert.assertEquals(new JSONObject("{foo: bar}").toString(), tempModel.toString());
+        Assert.assertEquals(new JSONObject("{\"foo\": \"bar\"}").toString(), tempModel.toString());
 
         // Make sure clearing works
         Assert.assertEquals(1, TemporaryModel.clearTempModelFiles());
@@ -69,7 +69,7 @@ public class TemporaryModelTest extends RobolectricTest {
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
-        TemporaryModel tempModel = new TemporaryModel(new Model("{ foo: bar }"));
+        TemporaryModel tempModel = new TemporaryModel(new Model("{ \"foo\": \"bar\" }"));
 
         tempModel.addTemplateChange(ADD, 3);
         Object[][] expected1 = {{3, ADD}};

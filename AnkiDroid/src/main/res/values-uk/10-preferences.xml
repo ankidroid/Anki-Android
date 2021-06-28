@@ -43,233 +43,242 @@
     <string name="enabled">Ввімкнено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Основні налаштування</string>
-    <string name="pref_cat_reviewing">Навчання</string>
+    <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
     <string name="pref_cat_reviewing_summ">Параметри навчання, які впливають на всі колоди</string>
-    <string name="pref_cat_reviewer_behaviour">Поведінка</string>
-    <string name="pref_cat_flashcard">Відображення</string>
-    <string name="pref_cat_whiteboard">Дошка</string>
-    <string name="pref_cat_appearance">Зовнішній вигляд</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведінка</string>
+    <string name="pref_cat_flashcard" maxLength="41">Відображення</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
+    <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
     <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
-    <string name="pref_cat_themes">Теми</string>
-    <string name="pref_cat_fonts">Шрифти</string>
-    <string name="pref_cat_gestures">Жести</string>
+    <string name="pref_cat_themes" maxLength="41">Теми</string>
+    <string name="pref_cat_fonts" maxLength="41">Шрифти</string>
+    <string name="pref_cat_gestures" maxLength="41">Жести</string>
     <string name="pref_cat_gestures_summ">Використовувати дотики і проведення пальцем замість кнопок</string>
-    <string name="pref_cat_actions">Дії</string>
-    <string name="pref_cat_advanced">Розширені налаштування</string>
+    <string name="pref_cat_actions" maxLength="41">Дії</string>
+    <string name="pref_cat_advanced" maxLength="41">Розширені налаштування</string>
     <string name="pref_cat_advanced_summ">Оптимізація та експериментальні функції</string>
-    <string name="pref_cat_performance">Продуктивність</string>
-    <string name="pref_cat_workarounds">Спеціальні функції</string>
-    <string name="pref_cat_plugins">Плагіни</string>
-    <string name="about_title">Про AnkiDroid</string>
+    <string name="pref_cat_performance" maxLength="41">Продуктивність</string>
+    <string name="pref_cat_workarounds" maxLength="41">Спеціальні функції</string>
+    <string name="pref_cat_plugins" maxLength="41">Плагіни</string>
+    <string name="about_title" maxLength="41">Про AnkiDroid</string>
     <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Ширина штриха</string>
-    <string name="use_input_tag">Введіть відповідь на картці</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
+    <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
     <string name="use_input_tag_summ">Додає на картку поле введення для відповіді</string>
-    <string name="dictionary">Подивитися у словнику</string>
-    <string name="reset_languages">Скинути мови</string>
+    <string name="dictionary" maxLength="41">Подивитися у словнику</string>
+    <string name="reset_languages" maxLength="41">Скинути мови</string>
     <string name="reset_languages_summ">Скинути присвоєння мов (для озвучування текстів і словників) для всіх колод</string>
     <string name="reset_languages_question">Скинути всі мовні налаштування?</string>
     <string name="reset_confirmation">Всі налаштування скинуті</string>
-    <string name="card_zoom">Масштаб карт</string>
-    <string name="image_zoom">Масштаб картинок</string>
-    <string name="button_size">Розмір кнопки відповіді</string>
-    <string name="card_browser_font_size">Масштаб шрифту в переглядачі карток</string>
-    <string name="card_browser_hide_media">Показувати назви файлів у переглядачі карток</string>
+    <string name="card_zoom" maxLength="41">Масштаб карт</string>
+    <string name="image_zoom" maxLength="41">Масштаб картинок</string>
+    <string name="button_size" maxLength="41">Розмір кнопки відповіді</string>
+    <string name="card_browser_font_size" maxLength="41">Масштаб шрифту в переглядачі карток</string>
+    <string name="card_browser_hide_media" maxLength="41">Показувати назви файлів у переглядачі карток</string>
     <string name="card_browser_hide_media_summary">Показувати назви медіафайлів в переглядачі карток в полях запитання/відповіді</string>
-    <string name="col_path">Шлях до папки AnkiDroid</string>
-    <string name="fullscreen_review">Повноекранний режим</string>
+    <string name="col_path" maxLength="41">Шлях до папки AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Повноекранний режим</string>
     <string name="full_screen_off">Вимкнено</string>
     <string name="full_screen_system">Приховати системну панель</string>
     <string name="full_screen_complete">Приховати системну панель і панель кнопок відповіді</string>
     <string name="full_screen_error_gestures">Включіть жести, щоб приховати панель кнопок відповіді</string>
-    <string name="answer_buttons_position">Положення кнопок відповіді</string>
+    <string name="answer_buttons_position" maxLength="41">Положення кнопок відповіді</string>
     <string-array name="answer_buttons_position_labels">
         <item>Вгорі</item>
         <item>Внизу</item>
     </string-array>
-    <string name="gestures">Увімкнути жести</string>
+    <string name="gestures" maxLength="41">Увімкнути жести</string>
     <string name="gestures_summ">Використовувати жести для таких дій, як відповідь і редагування карток.</string>
-    <string name="gestures_allow_links">Ігнорувати жести на посиланнях</string>
+    <string name="gestures_allow_links" maxLength="41">Ігнорувати жести на посиланнях</string>
     <string name="gestures_allow_links_summary">Жести не враховуватимуться, якщо натиснуто на посилання чи підказку.</string>
-    <string name="gestures_corner_touch">9-точковий дотик</string>
+    <string name="gestures_corner_touch" maxLength="41">9-точковий дотик</string>
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
-    <string name="gestures_swipe_up">Провести пальцем вгору</string>
-    <string name="gestures_swipe_down">Провести пальцем донизу</string>
-    <string name="gestures_swipe_left">Провести пальцем вліво</string>
-    <string name="gestures_swipe_right">Провести пальцем вправо</string>
-    <string name="gestures_double_tap">Подвійний дотик</string>
-    <string name="gestures_tap_top">Дотик зверху</string>
-    <string name="gestures_tap_left">Дотик ліворуч</string>
-    <string name="gestures_tap_right">Дотик праворуч</string>
-    <string name="gestures_tap_bottom">Дотик внизу</string>
-    <string name="gestures_corner_tap_top_left">Дотик лівого верхнього кута</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Відкривати панель навігації при проведенні вправо з будь-якого місця на екрані</string>
+    <string name="gestures_swipe_up" maxLength="41">Провести пальцем вгору</string>
+    <string name="gestures_swipe_down" maxLength="41">Провести пальцем донизу</string>
+    <string name="gestures_swipe_left" maxLength="41">Провести пальцем вліво</string>
+    <string name="gestures_swipe_right" maxLength="41">Провести пальцем вправо</string>
+    <string name="gestures_double_tap" maxLength="41">Подвійний дотик</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_tap_top" maxLength="41">Дотик зверху</string>
+    <string name="gestures_tap_left" maxLength="41">Дотик ліворуч</string>
+    <string name="gestures_tap_right" maxLength="41">Дотик праворуч</string>
+    <string name="gestures_tap_bottom" maxLength="41">Дотик внизу</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Дотик лівого верхнього кута</string>
     <string name="gestures_corner_tap_top_center">Дотик зверху по центрі</string>
-    <string name="gestures_corner_tap_top_right">Дотик правого верхнього кута</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Дотик правого верхнього кута</string>
     <string name="gestures_corner_tap_middle_left">Дотик зліва посередині</string>
-    <string name="gestures_corner_tap_middle_center">Дотик посередині</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Дотик посередині</string>
     <string name="gestures_corner_tap_middle_right">Дотик справа посередині </string>
-    <string name="gestures_corner_tap_bottom_left">Дотик лівого нижнього кута</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_center">Дотик знизу по центрі</string>
-    <string name="gestures_corner_tap_bottom_right">Дотик правого нижнього кута</string>
-    <string name="gestures_volume_up">Кнопка «Гучніше»</string>
-    <string name="gestures_volume_down">Кнопка «Тихіше»</string>
-    <string name="more_scrolling_buttons">eReader</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
+    <string name="gestures_volume_up" maxLength="41">Кнопка «Гучніше»</string>
+    <string name="gestures_volume_down" maxLength="41">Кнопка «Тихіше»</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Також використовувати клавіші kanji/katakana, emoji/kao-moji для прокручування</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Меню</string>
     <string name="card_browser_enable_external_context_menu_summary">Включає \'%s\' в загальне контекстне меню</string>
-    <string name="double_scrolling_gap">Подвійне прокручування</string>
+    <string name="double_scrolling_gap" maxLength="41">Подвійне прокручування</string>
     <string name="double_scrolling_gap_summ">Подвоїти розрив прокручування в eReader-і</string>
-    <string name="swipe_sensitivity">Чутливість проведення пальцем</string>
-    <string name="tts">Синтез мовлення</string>
+    <string name="swipe_sensitivity" maxLength="41">Чутливість проведення пальцем</string>
+    <string name="tts" maxLength="41">Синтез мовлення</string>
     <string name="tts_summ">Читає питання та відповіді, якщо відсутній аудіофайл</string>
-    <string name="sync_fetch_missing_media">Завантажувати медіафайли</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Завантажувати медіафайли</string>
     <string name="sync_fetch_missing_media_summ">Автоматично завантажувати відсутні медіафайли під час синхронізації</string>
-    <string name="sync_account">Профіль AnkiWeb</string>
+    <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Автоматична синхронізація</string>
+    <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
-    <string name="sync_status_badge">Відображати стан синхронізації</string>
+    <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
-    <string name="day_theme">Денна тема</string>
-    <string name="night_theme">Нічна тема</string>
-    <string name="default_font">Шрифт за замовчуванням</string>
-    <string name="override_font">Застосування шрифту за замовчуванням</string>
-    <string name="language">Мова</string>
+    <string name="day_theme" maxLength="41">Денна тема</string>
+    <string name="night_theme" maxLength="41">Нічна тема</string>
+    <string name="default_font" maxLength="41">Шрифт за замовчуванням</string>
+    <string name="override_font" maxLength="41">Застосування шрифту за замовчуванням</string>
+    <string name="language" maxLength="41">Мова</string>
     <string name="language_system">Мова системи</string>
-    <string name="notification_pref">Сповіщення</string>
-    <string name="notification_pref_title">Сповіщати, коли</string>
+    <string name="notification_pref" maxLength="41">Сповіщення</string>
+    <string name="notification_pref_title" maxLength="41">Сповіщати, коли</string>
     <string name="never_notify">Ніколи не сповіщати</string>
     <string name="notify_when_pending">Тільки важливі сповіщення</string>
     <string name="notification_minimum_cards_due">%d карток в черзі</string>
-    <string name="notification_minimum_cards_due_vibrate">Вібрація</string>
-    <string name="notification_minimum_cards_due_blink">Миготіння світлодіоду</string>
-    <string name="timeout_answer_text">Автоматично відображати відповідь</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрація</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Миготіння світлодіоду</string>
+    <string name="timeout_answer_text" maxLength="41">Автоматично відображати відповідь</string>
     <string name="timeout_answer_summ">Показати відповідь автоматично, без введення даних користувачем. Затримка включає в себе час автоматичного відтворення аудіофайлів.</string>
-    <string name="timeout_answer_seconds">Час показу відповіді</string>
+    <string name="timeout_answer_seconds" maxLength="41">Час показу відповіді</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек.</string>
-    <string name="timeout_question_seconds">Час показу наступного питання</string>
+    <string name="timeout_question_seconds" maxLength="41">Час показу наступного питання</string>
     <string name="select_locale_title">Виберіть мову</string>
-    <string name="software_render">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Статичний режим екрану</string>
+    <string name="software_render" maxLength="41">Вимкнути апаратне відображення карт</string>
+    <string name="software_render_summ">Апаратне відображення швидше, але має проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу оглядача картки, спробуйте це налаштування.</string>
+    <string name="safe_display" maxLength="41">Статичний режим екрану</string>
     <string name="safe_display_summ">Вимкнути всю анімацію та використовувати безпечні методи для відображення карток. Це може бути потрібно для E-ink пристроїв</string>
-    <string name="disable_extended_text_ui">Вимкнути режим редагування одиничного поля</string>
+    <string name="disable_extended_text_ui" maxLength="41">Вимкнути режим редагування одиничного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Включає контекстне меню «Завдання з пропусками» в альбомному (горизонтальному) режимі</string>
-    <string name="vertical_centering">Вирівнювання по центру</string>
+    <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
-    <string name="pref_backup_max">Кількість резервних копій</string>
-    <string name="show_estimates">Показувати час кнопки</string>
+    <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
-    <string name="show_top_bar">Показати верхню панель</string>
+    <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
+    <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
+    <string name="show_top_bar" maxLength="41">Показати верхню панель</string>
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
-    <string name="show_progress">Показати ті, що залишилися</string>
+    <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
-    <string name="show_eta">Показувати залишок часу</string>
+    <string name="show_eta" maxLength="41">Показувати залишок часу</string>
     <string name="show_eta_summ">Показувати скільки залишилося часу навчання</string>
-    <string name="use_current">Колода для нових карт</string>
-    <string name="new_spread">Позиція нових карток</string>
-    <string name="learn_cutoff">Ліміт вивчення карток наперед</string>
-    <string name="time_limit">Період лічильника переглядів</string>
+    <string name="use_current" maxLength="41">Колода для нових карт</string>
+    <string name="new_spread" maxLength="41">Позиція нових карток</string>
+    <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
+    <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
     <string name="time_limit_summ">XXX хв.</string>
-    <string name="new_timezone">Обробка нового часового поясу</string>
-    <string name="day_offset_with_description">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
+    <string name="new_timezone" maxLength="41">Обробка нового часового поясу</string>
+    <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
     <string name="day_offset_summ">XXX год.</string>
-    <string name="sched_ver">Експериментальний планувальник V2</string>
-    <string name="sched_ver_summ">Увімкнути експериментальний планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Північ</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">Планувальник V2</string>
+    <string name="sched_v2_summ">Увімкнути новий планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
     <string name="sched_ver_toggle_title">Підтвердити</string>
     <string name="sched_ver_2to1">Це призведе до скидання будь-яких карток у процесі навчання, очищення фільтрів та змінення версії планувальника. Продовжити?</string>
     <string name="sched_ver_1to2">Експериментальний планувальник може спричинити неправильне планування. Переконайтеся, що ви сперше прочитали документацію. Продовжити?</string>
-    <string name="pref_keep_screen_on">Не вимикати екран</string>
+    <string name="pref_keep_screen_on" maxLength="41">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
-    <string name="convert_fen_text">Підтримка шахової нотації</string>
+    <string name="convert_fen_text" maxLength="41">Підтримка шахової нотації</string>
     <string name="convert_fen_text_summ">Намалювати шахову дошку з Нотації Форсайта — Едвардса. Нотацію потрібно укласти в [fen][/fen] теґи.</string>
-    <string name="enable_api_title">Увімкнути AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">Увімкнути AnkiDroid API</string>
     <string name="enable_api_summary">Дозволяє іншим додаткам підключатися до AnkiDroid і читати / записувати дані без вашого втручання</string>
-    <string name="custom_buttons">Панель кнопок додатку</string>
+    <string name="custom_buttons" maxLength="41">Панель кнопок додатку</string>
     <string name="custom_buttons_summary">Налаштування кнопок на панелі додатку</string>
     <string name="custom_buttons_setting_always_show">Завжди показувати</string>
     <string name="custom_buttons_setting_if_room">Показувати якщо є місце</string>
     <string name="custom_buttons_setting_menu_only">Тільки меню</string>
-    <string name="reset_custom_buttons">Скидання за замовчуванням</string>
-    <string name="thirdparty_apps_title">API додатки сторонніх виробників</string>
+    <string name="reset_custom_buttons" maxLength="41">Скидання за замовчуванням</string>
+    <string name="thirdparty_apps_title" maxLength="41">API додатки сторонніх виробників</string>
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
-    <string name="html_javascript_debugging">HTML / Javascript налагодження</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Розширена статистика</string>
-    <string name="enable_advanced_statistics_title">Увімкнути розширену статистику</string>
+    <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>
     <string name="enable_advanced_statistics_summ">Якщо увімкнено, то відображати прогноз статистики, заснований на обчисленнях і моделюванні майбутніх переглядів, а якщо вимкнено, то на вже спланованих майбутніх переглядах.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Обчислювати перші Х дн., симулювати решту</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Точність обчислень</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Число кроків моделювання</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Обчислювати перші Х дн., симулювати решту</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Точність обчислень</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число кроків моделювання</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Користувацький сервер</string>
-    <string name="custom_sync_server_enable_title">Використовувати користувацький сервер синхронізації</string>
+    <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Використовувати користувацький сервер синхронізації</string>
     <string name="custom_sync_server_enable_summary">Якщо ви не хочете використовувати сервер AnkiWeb, то ви можете вказати альтернативний сервер</string>
-    <string name="custom_sync_server_base_url_title">URL для синхронізації</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
     <string name="custom_sync_server_base_url_invalid">Непрацююче посилання для синхронізації</string>
-    <string name="custom_sync_server_media_url_title">URL Media-даних</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
     <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Зміни опцій групи колоди впливатимуть на кілька колод. Якщо ви бажаєте змінити лише поточну колоду, спочатку додайте нову групу опцій</string>
     <string name="studyoptions_limit_select_tags">Оберіть позначки</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Опис колоди (впливає лише на поточну колоду)</string>
-    <string name="deck_conf_group">Група опцій</string>
+    <string name="deck_conf_deck_description" maxLength="41">Опис колоди (впливає лише на поточну колоду)</string>
+    <string name="deck_conf_group" maxLength="41">Група опцій</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d колода використовує цю групу</item>
         <item quantity="few">%1$s\n%2$d колод використовують цю групу</item>
         <item quantity="many">%1$s\n%2$d колод використовують цю групу</item>
         <item quantity="other">%1$s\n%2$d колод використовують цю групу</item>
     </plurals>
-    <string name="deck_conf_new_cards">Нові картки</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Перегляди</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
-    <string name="deck_conf_general">Загальні</string>
-    <string name="deck_conf_reminders">Нагадування</string>
-    <string name="deck_conf_steps">Кроки (в хвилинах)</string>
-    <string name="deck_conf_order">Порядок</string>
-    <string name="deck_conf_new_cards_day">Нових карток за добу</string>
-    <string name="deck_conf_graduating_ivl">Інтервал «Добре»</string>
+    <string name="deck_conf_new_cards" maxLength="41">Нові картки</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Перегляди</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
+    <string name="deck_conf_general" maxLength="41">Загальні</string>
+    <string name="deck_conf_reminders" maxLength="41">Нагадування</string>
+    <string name="deck_conf_steps" maxLength="41">Кроки (в хвилинах)</string>
+    <string name="deck_conf_order" maxLength="41">Порядок</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Нових карток за добу</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Інтервал «Добре»</string>
     <string name="deck_conf_days">ХХХ днів</string>
-    <string name="deck_conf_easy_ivl">Інтервал «Легко»</string>
-    <string name="deck_conf_start_ease">Початкова легкість</string>
-    <string name="deck_conf_max_rev">Максимальна кількість переглядів за добу</string>
-    <string name="deck_conf_new_bury">Відкласти пов\'язані нові картки</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Інтервал «Легко»</string>
+    <string name="deck_conf_start_ease" maxLength="41">Початкова легкість</string>
+    <string name="deck_conf_max_rev" maxLength="41">Максимальна кількість переглядів за добу</string>
+    <string name="deck_conf_new_bury" maxLength="41">Відкласти пов\'язані нові картки</string>
     <string name="deck_conf_new_bury_summ">Пов\'язані нові картки будуть відкладені до завтра</string>
-    <string name="deck_conf_rev_bury">Відкласти пов’язані перегляди</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Відкласти пов’язані перегляди</string>
     <string name="deck_conf_rev_bury_summ">Пов\'язані перегляди будуть відкладені на завтра</string>
-    <string name="deck_conf_use_general_timeout_settings">Використати загальні налаштування</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Використати загальні налаштування</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Використовувати загальні налаштування \"Автоматичного відображення відповіді\" замість параметрів для цієї групи.</string>
-    <string name="deck_conf_easy_bonus">Бонус легкості</string>
-    <string name="deck_conf_hard_factor">Інтервал \"Важко\"</string>
-    <string name="deck_conf_ivl_fct">Модифікатор інтервалу</string>
-    <string name="deck_conf_max_ivl">Максимальний інтервал</string>
-    <string name="deck_conf_new_lps_ivl">Новий інтервал</string>
-    <string name="deck_conf_min_ivl">Мінімальний інтервал</string>
-    <string name="deck_conf_leech_thres">Поріг липкої картки</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Бонус легкості</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Інтервал \"Важко\"</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Модифікатор інтервалу</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Максимальний інтервал</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Новий інтервал</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Мінімальний інтервал</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Поріг липкої картки</string>
     <string name="deck_conf_fails">XXX разів забуто</string>
-    <string name="deck_conf_leech_action">Дія для липкої картки</string>
-    <string name="deck_conf_max_time">Максимальний час відповіді</string>
+    <string name="deck_conf_leech_action" maxLength="41">Дія для липкої картки</string>
+    <string name="deck_conf_max_time" maxLength="41">Максимальний час відповіді</string>
     <string name="deck_conf_seconds">ХХХ секунд</string>
-    <string name="deck_conf_timer">Показати таймер відповіді</string>
-    <string name="deck_conf_autoplay">Програвати аудіо автоматично</string>
-    <string name="deck_conf_replayq">Відтворити питання</string>
+    <string name="deck_conf_timer" maxLength="41">Показати таймер відповіді</string>
+    <string name="deck_conf_autoplay" maxLength="41">Програвати аудіо автоматично</string>
+    <string name="deck_conf_replayq" maxLength="41">Відтворити питання</string>
     <string name="deck_conf_replayq_summ">Після показу відповіді відтворити аудіо питання і відповіді</string>
-    <string name="deck_conf_manage">Керування групами</string>
+    <string name="deck_conf_manage" maxLength="41">Керування групами</string>
     <string name="deck_conf_manage_summ">Додати і змінити налаштування груп</string>
-    <string name="deck_conf_current_group">Поточна група</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Перейменувати</string>
-    <string name="deck_conf_reset">Відновити базові налаштування</string>
+    <string name="deck_conf_current_group" maxLength="41">Поточна група</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Перейменувати</string>
+    <string name="deck_conf_reset" maxLength="41">Відновити базові налаштування</string>
     <string name="deck_conf_reset_message">Відновити поточну групу опцій до базових налаштувань?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Створити нову групу</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Створити нову групу</string>
     <string name="deck_conf_add_summ">Створіть копію поточної групи опцій</string>
     <string name="deck_conf_remove_message">Видалити поточну групу опцій?</string>
-    <string name="deck_conf_set_subdecks">Встановити для усіх підколод</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Встановити для усіх підколод</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s підколод використовуватимуть групу опцій</item>
         <item quantity="few">%s підколоди використовуватимуть конфігурацію</item>
@@ -277,27 +286,27 @@
         <item quantity="other">%s підколод використовуватимуть конфігурацію</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Установити групу поточних параметрів для усіх підколод цієї колоди?</string>
-    <string name="pref_browser_editor_font">Переглядач та редактор шрифтів</string>
-    <string name="deck_conf_cram_filter">Фільтр</string>
-    <string name="deck_conf_cram_search">Пошук</string>
-    <string name="deck_conf_cram_limit">Обмежити до</string>
-    <string name="deck_conf_cram_order">картки вибрані за</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
+    <string name="pref_browser_editor_font" maxLength="41">Переглядач та редактор шрифтів</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
+    <string name="deck_conf_cram_search" maxLength="41">Пошук</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Обмежити до</string>
+    <string name="deck_conf_cram_order" maxLength="41">картки вибрані за</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
-    <string name="deck_conf_cram_steps">Власні кроки (в хвилинах)</string>
-    <string name="deck_conf_cram_steps_summ">Задати власні кроки</string>
-    <string name="deck_conf_reminders_enabled">Увімкнути нагадувальне сповіщення для колод у цій групі</string>
-    <string name="deck_conf_reminders_time">Нагадати в</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Власні кроки (в хвилинах)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Увімкнути нагадувальне сповіщення для колод у цій групі</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Нагадати в</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
-    <string name="analytics_title">Поділитися інформацією про використання функцій</string>
+    <string name="analytics_title" maxLength="41">Поділитися інформацією про використання функцій</string>
     <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
-    <string name="note_editor_replace_newlines">Замінити нові рядки на HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Замінити нові рядки на HTML</string>
     <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
-    <string name="no_code_formatting">Просте форматування введених відповідей</string>
+    <string name="no_code_formatting" maxLength="41">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">Перемкнути на «Вводити відповідь»</string>
+    <string name="type_in_answer_focus_summ">Автоматично переходити при повторенні до поля «Вводити відповідь»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
 </resources>

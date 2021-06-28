@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
     <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
-    <string name="note_editor_set_field_language">تعيين لغة الحقل</string>
     <string name="note_editor_no_cards_created_all_fields">لا يولّد نوع الملحوظة الحالي أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة حقل بديل</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">انتهت مهلة تقسيم المهام</string>
     <plurals name="timebox_reached">
         <item quantity="zero">درست %1$d بطاقة خلال %2$s</item>
         <item quantity="one">درست %1$d بطاقة خلال %2$s</item>
@@ -319,6 +318,7 @@
     <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
     <string name="title_whiteboard_pen_color">لون قلم السبورة</string>
+    <string name="title_whiteboard_editor">لون قلم السبورة</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[عُثِر على بطاقات فارغة. استخدم أدوات>بطاقات فارغة.]]></string>
     <string name="note_importer_error_empty_first_field">حقل أول فارغ: %s</string>
@@ -400,5 +400,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">يلزم بريد إلكتروني</string>
     <string name="password_empty">تلزم كلمة مرور</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">اضغط رجوع مجدداً للخروج</string>
 </resources>

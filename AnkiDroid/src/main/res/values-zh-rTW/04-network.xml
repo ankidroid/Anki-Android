@@ -63,22 +63,15 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">偏好設定</string>
     <string name="deckpreferences_title">XXX 的選項</string>
-    <string name="sync_conflict_message">你本地的牌組與 AnkiWeb 牌組之間的差異無法合併，因此需要以某一方的牌組來覆蓋另一方的牌組。\n\n你想要上傳本地的牌組，或是從AnkiDroid 下載牌組呢？</string>
-    <string name="sync_conflict_local">上傳</string>
-    <string name="sync_conflict_remote">下載</string>
-    <string name="sync_conflict_remote_confirm">覆蓋本地的集合嗎？</string>
-    <string name="sync_conflict_local_confirm">覆蓋伺服器上的集合嗎？</string>
     <string name="sync_prepare_syncing">正在準備同步...</string>
     <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
     <string name="sync_uploading_message">上傳中...</string>
     <string name="sync_downloading_message">下載中...</string>
     <string name="sync_title">同步</string>
-    <string name="sync_downloading_media">正在下載媒體檔 %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
     <string name="sync_log_clocks_unsynchronized">你裝置上的時鐘是不正確的，誤差%2$s %1$d 秒；要同步的話，需要兩邊的時鐘和時區都是正確的，不然可能會有問題。請確定手機上的日期、時間、時區都是正確的，然後再同步一次。</string>
     <string name="sync_log_clocks_unsynchronized_tz">，裝置的時區可能是錯誤的</string>
     <string name="sync_log_clocks_unsynchronized_date">，裝置的日期可能是錯誤的</string>
-    <string name="sync_conflict_title">同步衝突</string>
     <string name="sync_no_changes_message">未發現資料變動</string>
     <string name="sync_database_acknowledge">集合同步完成</string>
     <string name="sync_log_error_specific">同步錯誤，類型：%1$s，訊息：%2$s</string>
@@ -128,5 +121,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">同步(完整)</string>
     <string name="sync_menu_title_no_account">同步(登入)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">無法連結到 AnkiWeb。您的網路是否正常嗎？\n\n%s</string>
 </resources>

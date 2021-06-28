@@ -79,8 +79,8 @@
         <item quantity="other">Hodiaŭ vi lernis %1$d kartojn dum %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">entajpu respondon</string>
-    <string name="show_answer">montri respondon</string>
+    <string name="type_answer_hint">enigu respondon</string>
+    <string name="show_answer">Montri respondon</string>
     <string name="hide_answer">Kaŝi respondon</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
@@ -95,6 +95,7 @@
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
     <string name="create_shortcut">Krei simbolan ligilon</string>
+    <string name="browse_cards">Foliumi kartojn</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_select">Elekti tekston</string>
+    <string name="menu_lookup">Serĉi tekston</string>
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
     <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="new_deck">Krei kartaron</string>
-    <string name="create" comment="Button to create a filtered deck">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
     <string name="night_mode">Nokta reĝimo</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
@@ -154,7 +155,7 @@
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Serĉi kartaron</string>
     <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">Mankas “{{%s}}”.</string>
     <string name="wrong_tag_closed">Trovis “{{/%1$s}}”, sed esperis “{{/%2$s}}”.</string>
     <string name="filter_error">Eraro en filtrilo %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Ne povas kombini la kolektojn.\nKiun kolekton vi volas konservi?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Ĉu anstataŭigi vian lokan kolekton en AnkiDroid per via fora kolekto el AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Ĉu anstataŭigi vian foran kolekton AnkiWeb per via loka kolekto el AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Elektu kolekton por konservi</string>
+    <string name="sync_conflict_replace_title">Anstataŭigi kolekton</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d karto (0 lernenda)</item>
+        <item quantity="other">%1$d kartoj (0 lernenda)</item>
+    </plurals>
 </resources>

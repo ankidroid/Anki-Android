@@ -31,16 +31,19 @@ import androidx.fragment.app.FragmentActivity;
 import timber.log.Timber;
 
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiSerialization;
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
 import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
 import com.ichi2.anki.multimediacard.glosbe.json.Response;
@@ -77,8 +80,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private LanguagesListerGlosbe mLanguageLister;
     private Spinner mSpinnerFrom;
     private Spinner mSpinnerTo;
-    @SuppressWarnings("deprecation") // tracked in github as #5020
-    private android.app.ProgressDialog mProgressDialog = null;
+    private View mLoadingLayout;
+    private TextView mLoadingLayoutTitle;
+    private TextView mLoadingLayoutMessage;
+    private LinearLayout mMainLayout;
     private String mWebServiceAddress;
     private ArrayList<String> mPossibleTranslations;
     private String mLangCodeTo;
@@ -111,6 +116,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         setContentView(R.layout.activity_translation);
 
+        mLoadingLayout = findViewById(R.id.progress_bar_layout);
+        mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title);
+        mLoadingLayoutMessage = findViewById(R.id.progress_bar_layout_message);
+
         try {
             mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
@@ -121,15 +130,15 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         // If translation fails this is a default - source will be returned.
         mTranslation = mSource;
 
-        LinearLayout linearLayout = findViewById(R.id.MainLayoutInTranslationActivity);
+        mMainLayout = findViewById(R.id.MainLayoutInTranslationActivity);
 
         TextView tv = new FixedTextView(this);
         tv.setText(getText(R.string.multimedia_editor_trans_poweredglosbe));
-        linearLayout.addView(tv);
+        mMainLayout.addView(tv);
 
         TextView tvFrom = new FixedTextView(this);
         tvFrom.setText(getText(R.string.multimedia_editor_trans_from));
-        linearLayout.addView(tvFrom);
+        mMainLayout.addView(tvFrom);
 
         mLanguageLister = new LanguagesListerGlosbe();
 
@@ -138,18 +147,18 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                 mLanguageLister.getLanguages());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerFrom.setAdapter(adapter);
-        linearLayout.addView(mSpinnerFrom);
+        mMainLayout.addView(mSpinnerFrom);
 
         TextView tvTo = new FixedTextView(this);
         tvTo.setText(getText(R.string.multimedia_editor_trans_to));
-        linearLayout.addView(tvTo);
+        mMainLayout.addView(tvTo);
 
         mSpinnerTo = new Spinner(this);
         ArrayAdapter<String> adapterTo = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 mLanguageLister.getLanguages());
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerTo.setAdapter(adapterTo);
-        linearLayout.addView(mSpinnerTo);
+        mMainLayout.addView(mSpinnerTo);
 
         final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -171,10 +180,22 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             translate();
         });
 
-        linearLayout.addView(btnDone);
+        mMainLayout.addView(btnDone);
 
     }
 
+
+    private void showProgressBar(CharSequence title, CharSequence message) {
+        mMainLayout.setVisibility(View.GONE);
+        mLoadingLayout.setVisibility(View.VISIBLE);
+        mLoadingLayoutTitle.setText(title);
+        mLoadingLayoutMessage.setText(message);
+    }
+
+    private void hideProgressBar() {
+        mLoadingLayout.setVisibility(View.GONE);
+        mMainLayout.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -193,7 +214,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         @Override
         protected void onPostExecute(String result) {
-            mProgressDialog.dismiss();
+            hideProgressBar();
             mTranslation = result;
             showPickTranslationDialog();
         }
@@ -201,18 +222,14 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     }
 
 
-    @SuppressWarnings("deprecation") // ProgressDialog change tracked in github as #5020
     protected void translate() {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));
             return;
         }
 
-        mProgressDialog = android.app.ProgressDialog.show(this, getText(R.string.multimedia_editor_progress_wait_title),
-                getText(R.string.multimedia_editor_trans_translating_online), true, false);
-
-        mProgressDialog.setCancelable(true);
-        mProgressDialog.setOnCancelListener(this);
+        showProgressBar(getText(R.string.multimedia_editor_progress_wait_title),
+                getText(R.string.multimedia_editor_trans_translating_online));
 
         mWebServiceAddress = computeAddress();
 
@@ -221,7 +238,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             mTranslationLoadPost.execute();
         } catch (Exception e) {
             Timber.w(e);
-            mProgressDialog.dismiss();
+            hideProgressBar();
             showToast(getText(R.string.multimedia_editor_something_wrong));
         }
     }
@@ -259,9 +276,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private void showToastLong(CharSequence text) {
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, false);
     }
 
 
@@ -271,8 +286,15 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return;
         }
 
-        Gson gson = new Gson();
-        Response resp = gson.fromJson(mTranslation, Response.class);
+        ObjectMapper objectMapper = AnkiSerialization.getObjectMapper();
+        Response resp;
+        try {
+            resp = objectMapper.readValue(mTranslation, Response.class);
+        } catch (JsonProcessingException e) {
+            Timber.w(e);
+            returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
+            return;
+        }
 
         if (resp == null) {
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString());
@@ -378,15 +400,13 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     private void returnFailure(String explanation) {
         showToast(explanation);
         setResult(RESULT_CANCELED);
-        dismissCarefullyProgressDialog();
+        hideProgressBar();
         finish();
     }
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 
@@ -414,7 +434,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
     private void stopWorking() {
         TaskOperations.stopTaskGracefully(mTranslationLoadPost);
-        dismissCarefullyProgressDialog();
+        hideProgressBar();
     }
 
 
@@ -424,17 +444,6 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         stopWorking();
     }
 
-
-    private void dismissCarefullyProgressDialog() {
-        try {
-            if ((mProgressDialog != null) && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-            }
-        } catch (Exception e) {
-            Timber.w(e);
-            // nothing is done intentionally
-        }
-    }
 
     private int getSpinnerIndex(Spinner spinner, String myString){
 

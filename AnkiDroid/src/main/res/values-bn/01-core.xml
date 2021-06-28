@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">জি</string>
     <!-- Navigation drawer items-->
     <string name="decks">ডেকসমূহ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">কার্ড ব্রাউজার</string>
@@ -64,15 +64,15 @@
         <item quantity="other">%d মিনিট বাকি আছে</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d ঘণ্টা %d বাকি</item>
+        <item quantity="other">%d ঘণ্টা %d বাকি</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d দিন %d বাকি</item>
+        <item quantity="other">%d দিন %d বাকি</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">সংগ্রহ টি খালি</string>
+    <string name="no_cards_placeholder_description">কার্ড অ্যাড করা শুরু করুন\n+ আইকন চেপে</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%2$s আজ পঠিত %1$d কার্ড</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">উত্তর লিখুন</string>
     <string name="show_answer">উত্তর দেখান</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">উত্তর ঢাকুন</string>
     <string name="ease_button_again">আবার</string>
     <string name="ease_button_hard">কঠিন</string>
     <string name="ease_button_good">ভালো</string>
@@ -90,11 +90,12 @@
     <string name="menu_import">আমদানি করুন</string>
     <string name="undo">বাতিল করুন</string>
     <string name="undo_action_review">সর্বশেষ পর্যালোচনা</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_change_deck_multi">ডেক পরিবর্তন করুন</string>
+    <string name="move_all_to_deck">সবগুলো ডেক এ সড়াও</string>
     <string name="unbury">বাতিল স্থগিত করুন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">শর্টকাট তৈরী করুন</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
@@ -106,22 +107,22 @@
     <string name="menu_bury">বাতিল</string>
     <string name="menu_suspend">স্থগিত</string>
     <string name="menu_delete_note">নোট মুছে ফেলুন</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">ফ্ল্যাগ</string>
+    <string name="menu_flag_card">ফ্ল্যাগ কার্ড</string>
+    <string name="menu_flag_card_zero">নো ফ্ল্যাগ</string>
+    <string name="menu_flag_card_one">লাল ফ্ল্যাগ</string>
+    <string name="menu_flag_card_two">কমলা ফ্ল্যাগ</string>
+    <string name="menu_flag_card_three">সবুজ ফ্ল্যাগ</string>
+    <string name="menu_flag_card_four">নীল ফ্ল্যাগ</string>
+    <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
     <string name="menu_select">টেক্সট নির্বাচন করুন</string>
+    <string name="menu_lookup">খুঁজে দেখো টেক্সট</string>
     <string name="menu_search">অনুসন্ধান করুন %1$s</string>
     <string name="menu_mark_note">টীকা চিহ্ন</string>
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">উচ্চারণ চেক করো</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
-    <string name="create" comment="Button to create a filtered deck">তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
     <string name="night_mode">নাইট মোড</string>
     <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>
@@ -129,7 +130,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">অনুগ্রহ করে আগানোর জন্য অঙ্কিড্রইডকে \'storage\' পারমিশনের অনুমতি দেন</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -139,24 +140,24 @@
     -->
     <string name="time_quantity_seconds">%d সেকেন্ড</string>
     <string name="time_quantity_minutes">%d মিনিট</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d মিনিট</string>
     <string name="time_quantity_hours">%d ঘন্টা</string>
     <string name="time_quantity_days">%d দিন</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d ঘণ্টা</string>
     <string name="time_quantity_months">%.1f মাস</string>
     <string name="time_quantity_years">%.1f বছর</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">পুনর্নির্মাণ করা হচ্ছে ফিল্টারড ডেক</string>
     <string name="rebuild_cram_label">নতুন করে তৈরি করো</string>
     <string name="empty_cram_label">খালি</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">সাব ডেক বানাও</string>
+    <string name="empty_filtered_deck">খালি করা হচ্ছে ফিল্টারড ডেক</string>
     <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
     <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck">ডেক অনুসন্ধান</string>
+    <string name="empty_deck_add_note">কার্ড যোগ করো</string>
+    <string name="invalid_deck_name">ডেক নাম বৈধ নয়</string>
     <string name="studyoptions_empty">এই ডেক খালি আছে। প্রেস + বাটন নতুন উপাদান যোগ করতে।</string>
     <string name="studyoptions_limit_reached">প্রতিদিনের পড়াশোনা সীমায় পৌঁছে গিয়েছে</string>
     <string name="studyoptions_empty_schedule">পড়ার জন্য নির্ধারিত কোন কার্ড</string>
@@ -166,7 +167,7 @@
     <string name="studyoptions_congrats_custom">স্বাভাবিক সময়সূচির বাইরে পড়াশোনা করার জন্য, \'প্রথা অধ্যয়ন\' বোতাম স্পর্শ</string>
     <string name="studyoptions_no_cards_due">কোন কার্ড এখনও কার্যকরী হবে</string>
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">এই নোট সম্পাদনা করুন এবং কিছু ক্লোজ দিলিশন অ্যাড করুন (%1$s)</string>
     <string name="button_sync">সিংক্রোনাইজ</string>
     <string name="cancel_sync_confirm">আপনি সিঙ্ক বাতিল করতে চান?</string>
     <string name="continue_sync">সিংক বজায় রাখুন</string>
@@ -181,8 +182,8 @@
     <string name="card_template_editor_front">সম্মুখ খসড়া</string>
     <string name="card_template_editor_back">পশ্চাৎ খসড়া</string>
     <string name="card_template_editor_styling">স্টাইলিং</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">কার্ড ব্রাউজারের চেহারা</string>
+    <string name="card_template_editor_deck_override">ডেকের অগ্রাহ্য</string>
     <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">Error in filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

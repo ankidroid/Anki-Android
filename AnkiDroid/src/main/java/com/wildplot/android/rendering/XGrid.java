@@ -26,7 +26,7 @@ import com.wildplot.android.rendering.interfaces.Drawable;
 /**
  * This class represents grid lines parallel to the x-axis
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class XGrid implements Drawable {
 
     /**

@@ -1,3 +1,18 @@
+/****************************************************************************************
+ * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 
 package com.ichi2.anki.dialogs;
 
@@ -88,8 +103,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             case DIALOG_SYNC_CONFLICT_RESOLUTION: {
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 return builder.iconAttr(R.attr.dialogSyncErrorIcon)
-                        .positiveText(res().getString(R.string.sync_conflict_local))
-                        .negativeText(res().getString(R.string.sync_conflict_remote))
+                        .positiveText(res().getString(R.string.sync_conflict_keep_local_new))
+                        .negativeText(res().getString(R.string.sync_conflict_keep_remote_new))
                         .neutralText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> ((SyncErrorDialogListener) getActivity())
                                 .showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL))
@@ -100,7 +115,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL: {
                 // Confirmation before pushing local collection to server after sync conflict
-                return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
+                        .positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
@@ -111,7 +127,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE: {
                 // Confirmation before overwriting local collection with server collection after sync conflict
-                return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
+                return builder.iconAttr(R.attr.dialogSyncErrorIcon)
+                        .positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
@@ -133,7 +150,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL: {
                 // Confirmation before pushing local collection to server after sanity check error
-                return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
+                return builder.positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_UPLOAD);
@@ -143,7 +160,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE: {
                 // Confirmation before overwriting local collection with server collection after sanity check error
-                return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
+                return builder.positiveText(res().getString(R.string.dialog_positive_replace))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
@@ -181,8 +198,9 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.not_logged_in_title);
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
+                return res().getString(R.string.sync_conflict_replace_title);
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
-                return res().getString(R.string.sync_conflict_title);
+                return res().getString(R.string.sync_conflict_title_new);
             default:
                 return res().getString(R.string.sync_error);
         }
@@ -210,13 +228,13 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             case DIALOG_CONNECTION_ERROR:
                 return res().getString(R.string.connection_error_message);
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
-                return res().getString(R.string.sync_conflict_message);
+                return res().getString(R.string.sync_conflict_message_new);
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL:
-                return res().getString(R.string.sync_conflict_local_confirm);
+                return res().getString(R.string.sync_conflict_local_confirm_new);
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE:
-                return res().getString(R.string.sync_conflict_remote_confirm);
+                return res().getString(R.string.sync_conflict_remote_confirm_new);
             case DIALOG_SYNC_CORRUPT_COLLECTION: {
                 String syncMessage = getArguments().getString("dialogMessage");
                 String repairUrl = getString(R.string.repair_deck);

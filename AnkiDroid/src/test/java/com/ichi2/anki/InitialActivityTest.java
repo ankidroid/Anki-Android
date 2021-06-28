@@ -17,8 +17,10 @@
 package com.ichi2.anki;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
+import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.After;
@@ -67,14 +69,29 @@ public class InitialActivityTest extends RobolectricTest {
     }
 
     public static void setupForDatabaseConflict() {
-        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
-        app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        grantWritePermissions();
         ShadowEnvironment.setExternalStorageState("mounted");
     }
 
+    public static void setupForValid(Context context) {
+        grantWritePermissions();
+        ShadowEnvironment.setExternalStorageState("mounted");
+        BackupManagerTestUtilities.setupSpaceForBackup(context);
+    }
+
     public static void setupForDefault() {
+        revokeWritePermissions();
+        ShadowEnvironment.setExternalStorageState("removed");
+    }
+
+
+    protected static void grantWritePermissions() {
+        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
+        app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    protected static void revokeWritePermissions() {
         ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
         app.denyPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-        ShadowEnvironment.setExternalStorageState("removed");
     }
 }

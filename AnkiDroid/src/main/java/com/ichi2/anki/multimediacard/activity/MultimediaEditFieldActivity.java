@@ -47,6 +47,7 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
+import com.ichi2.utils.CheckCameraPermission;
 import com.ichi2.utils.Permissions;
 
 import java.io.File;
@@ -215,6 +216,11 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO_RECORDING);
         menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.AUDIO_CLIP);
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
+
+        /* To check whether Camera Permission is asked in AndroidManifest.xml */
+        if (!CheckCameraPermission.manifestContainsPermission(this)) {
+            menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(false);
+        }
         return true;
     }
 
@@ -342,13 +348,14 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         recreateEditingUi(mCurrentChangeRequest);
     }
 
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (mCurrentChangeRequest == null) {
             cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
             return;
         }
 
         Timber.d("onRequestPermissionsResult. Code: %d", requestCode);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

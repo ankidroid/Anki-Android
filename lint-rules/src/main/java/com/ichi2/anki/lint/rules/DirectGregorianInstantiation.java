@@ -12,8 +12,8 @@ import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.NonNull;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
 
@@ -69,7 +69,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
 
 
     @Override
-    public void visitMethodCall(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method) {
+    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
         List<UClass> foundClasses = context.getUastFile().getClasses();
@@ -84,7 +84,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
 
 
     @Override
-    public void visitConstructor(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod constructor) {
+    public void visitConstructor(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod constructor) {
         super.visitConstructor(context, node, constructor);
         List<UClass> foundClasses = context.getUastFile().getClasses();
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {

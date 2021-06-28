@@ -43,253 +43,262 @@
     <string name="enabled">활성화됨</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">일반 설정</string>
-    <string name="pref_cat_reviewing">복습</string>
+    <string name="pref_cat_reviewing" maxLength="41">복습</string>
     <string name="pref_cat_reviewing_summ">특정 카드 묶음에 한정되지 않은 복습 설정</string>
-    <string name="pref_cat_reviewer_behaviour">동작</string>
-    <string name="pref_cat_flashcard">디스플레이</string>
-    <string name="pref_cat_whiteboard">화이트보드</string>
-    <string name="pref_cat_appearance">외관</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">동작</string>
+    <string name="pref_cat_flashcard" maxLength="41">디스플레이</string>
+    <string name="pref_cat_whiteboard" maxLength="41">화이트보드</string>
+    <string name="pref_cat_appearance" maxLength="41">외관</string>
     <string name="pref_cat_appearance_summ">기본 글꼴과 테마 변경</string>
-    <string name="pref_cat_themes">테마</string>
-    <string name="pref_cat_fonts">글꼴</string>
-    <string name="pref_cat_gestures">제스쳐</string>
+    <string name="pref_cat_themes" maxLength="41">테마</string>
+    <string name="pref_cat_fonts" maxLength="41">글꼴</string>
+    <string name="pref_cat_gestures" maxLength="41">제스쳐</string>
     <string name="pref_cat_gestures_summ">버튼 대신 탭과 밀기 사용</string>
-    <string name="pref_cat_actions">작업</string>
-    <string name="pref_cat_advanced">고급 설정</string>
+    <string name="pref_cat_actions" maxLength="41">작업</string>
+    <string name="pref_cat_advanced" maxLength="41">고급 설정</string>
     <string name="pref_cat_advanced_summ">최적화 및 실험적 기능</string>
-    <string name="pref_cat_performance">성능</string>
-    <string name="pref_cat_workarounds">차선책</string>
-    <string name="pref_cat_plugins">플러그인</string>
-    <string name="about_title">AnkiDroid에 대해서</string>
+    <string name="pref_cat_performance" maxLength="41">성능</string>
+    <string name="pref_cat_workarounds" maxLength="41">차선책</string>
+    <string name="pref_cat_plugins" maxLength="41">플러그인</string>
+    <string name="about_title" maxLength="41">AnkiDroid에 대해서</string>
     <string name="about_version">버전: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">획 두께</string>
-    <string name="use_input_tag">카드에 정답 입력</string>
+    <string name="whiteboard_stroke_width" maxLength="41">획 두께</string>
+    <string name="use_input_tag" maxLength="41">카드에 정답 입력</string>
     <string name="use_input_tag_summ">카드 안의 텍스트 입력 상자에다가 정답을 입력하도록 사용</string>
-    <string name="dictionary">색인 사전</string>
-    <string name="reset_languages">언어 재설정</string>
+    <string name="dictionary" maxLength="41">색인 사전</string>
+    <string name="reset_languages" maxLength="41">언어 재설정</string>
     <string name="reset_languages_summ">모든 카드 묶음에 할당된 언어(사전과 TTS) 초기화</string>
     <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
     <string name="reset_confirmation">모든 상태 재설정</string>
-    <string name="card_zoom">카드 확대</string>
-    <string name="image_zoom">이미지 확대</string>
-    <string name="button_size">정답 버튼 크기</string>
-    <string name="card_browser_font_size">카드 탐색기 글꼴 크기 조정</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">카드 확대</string>
+    <string name="image_zoom" maxLength="41">이미지 확대</string>
+    <string name="button_size" maxLength="41">정답 버튼 크기</string>
+    <string name="card_browser_font_size" maxLength="41">카드 탐색기 글꼴 크기 조정</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid 디렉토리</string>
-    <string name="fullscreen_review">전체 화면 모드</string>
+    <string name="col_path" maxLength="41">AnkiDroid 디렉토리</string>
+    <string name="fullscreen_review" maxLength="41">전체 화면 모드</string>
     <string name="full_screen_off">끔</string>
     <string name="full_screen_system">시스템 바 숨기기</string>
     <string name="full_screen_complete">시스템 바와 정답 버튼 숨기기</string>
     <string name="full_screen_error_gestures">정답 버튼을 숨기려면 제스처를 사용하도록 해야 합니다.</string>
-    <string name="answer_buttons_position">정답 버튼 위치</string>
+    <string name="answer_buttons_position" maxLength="41">정답 버튼 위치</string>
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
         <item>하단</item>
     </string-array>
-    <string name="gestures">제스처 사용</string>
+    <string name="gestures" maxLength="41">제스처 사용</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">위로 밀기</string>
-    <string name="gestures_swipe_down">아래로 밀기</string>
-    <string name="gestures_swipe_left">왼쪽 밀기</string>
-    <string name="gestures_swipe_right">오른쪽 밀기</string>
-    <string name="gestures_double_tap">더블 탭</string>
-    <string name="gestures_tap_top">상단 탭하기</string>
-    <string name="gestures_tap_left">왼쪽 탭하기</string>
-    <string name="gestures_tap_right">오른쪽 탭하기</string>
-    <string name="gestures_tap_bottom">아래쪽 탭하기</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_swipe_up" maxLength="41">위로 밀기</string>
+    <string name="gestures_swipe_down" maxLength="41">아래로 밀기</string>
+    <string name="gestures_swipe_left" maxLength="41">왼쪽 밀기</string>
+    <string name="gestures_swipe_right" maxLength="41">오른쪽 밀기</string>
+    <string name="gestures_double_tap" maxLength="41">더블 탭</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_tap_top" maxLength="41">상단 탭하기</string>
+    <string name="gestures_tap_left" maxLength="41">왼쪽 탭하기</string>
+    <string name="gestures_tap_right" maxLength="41">오른쪽 탭하기</string>
+    <string name="gestures_tap_bottom" maxLength="41">아래쪽 탭하기</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">e리더</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">e리더</string>
     <string name="more_scrolling_buttons_summ">한자/가타카나, 이모지/카오모지 버튼도 스크롤링에 사용</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">이중 스크롤</string>
+    <string name="double_scrolling_gap" maxLength="41">이중 스크롤</string>
     <string name="double_scrolling_gap_summ">eReader 사용시 스크롤 간격 두배로 늘리기</string>
-    <string name="swipe_sensitivity">밀기 동작 민감도</string>
-    <string name="tts">TTS</string>
+    <string name="swipe_sensitivity" maxLength="41">밀기 동작 민감도</string>
+    <string name="tts" maxLength="41">TTS</string>
     <string name="tts_summ">질문과 정답에 사운드 파일이 없을 경우 자동으로 읽어주기</string>
-    <string name="sync_fetch_missing_media">동기화할 때 미디어파일 가져오기</string>
+    <string name="sync_fetch_missing_media" maxLength="41">동기화할 때 미디어파일 가져오기</string>
     <string name="sync_fetch_missing_media_summ">동기화 할때 누락된 미디어를 자동으로 검색하여 가져오기합니다.</string>
-    <string name="sync_account">AnkiWeb 계정</string>
+    <string name="sync_account" maxLength="41">AnkiWeb 계정</string>
     <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">자동 동기화</string>
+    <string name="automatic_sync_choice" maxLength="41">자동 동기화</string>
     <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">주간 테마</string>
-    <string name="night_theme">야간 테마</string>
-    <string name="default_font">기본 글꼴</string>
-    <string name="override_font">기본 글꼴 적용 가능성</string>
-    <string name="language">언어</string>
+    <string name="day_theme" maxLength="41">주간 테마</string>
+    <string name="night_theme" maxLength="41">야간 테마</string>
+    <string name="default_font" maxLength="41">기본 글꼴</string>
+    <string name="override_font" maxLength="41">기본 글꼴 적용 가능성</string>
+    <string name="language" maxLength="41">언어</string>
     <string name="language_system">시스템 언어설정</string>
-    <string name="notification_pref">알림</string>
-    <string name="notification_pref_title">다음의 경우에 알림</string>
+    <string name="notification_pref" maxLength="41">알림</string>
+    <string name="notification_pref_title" maxLength="41">다음의 경우에 알림</string>
     <string name="never_notify">알리지 않음</string>
     <string name="notify_when_pending">대기중인 메세지 있음</string>
     <string name="notification_minimum_cards_due">%d 보다 많은 카드 남음</string>
-    <string name="notification_minimum_cards_due_vibrate">진동</string>
-    <string name="notification_minimum_cards_due_blink">LED 깜빡이기</string>
-    <string name="timeout_answer_text">자동으로 정답 표시</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
+    <string name="timeout_answer_text" maxLength="41">자동으로 정답 표시</string>
     <string name="timeout_answer_summ">사용자 입력 없이 자동으로 답변을 표시합니다. 지연에는 자동으로 재생되는 오디오 파일의 시간이 포함됩니다.</string>
-    <string name="timeout_answer_seconds">정답을 표시할 시간</string>
+    <string name="timeout_answer_seconds" maxLength="41">정답을 표시할 시간</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 초</string>
-    <string name="timeout_question_seconds">다음 문제를 표시할 시간</string>
+    <string name="timeout_question_seconds" maxLength="41">다음 문제를 표시할 시간</string>
     <string name="select_locale_title">언어 선택</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">안전한 디스플레이 모드</string>
+    <string name="safe_display" maxLength="41">안전한 디스플레이 모드</string>
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">가운데 정렬</string>
+    <string name="vertical_centering" maxLength="41">가운데 정렬</string>
     <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
-    <string name="pref_backup_max">최대 백업 개수</string>
-    <string name="show_estimates">버튼에 시간 표시</string>
+    <string name="pref_backup_max" maxLength="41">최대 백업 개수</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="show_estimates" maxLength="41">버튼에 시간 표시</string>
     <string name="show_estimates_summ">답변 버튼에 다음 복습 시간 표시</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">남은 개수 표시</string>
+    <string name="show_progress" maxLength="41">남은 개수 표시</string>
     <string name="show_progress_summ">남은 카드 개수 표시</string>
-    <string name="show_eta">예상 완료일 표시</string>
+    <string name="show_eta" maxLength="41">예상 완료일 표시</string>
     <string name="show_eta_summ">남은 시간 표시</string>
-    <string name="use_current">새 카드의 카드 묶음</string>
-    <string name="new_spread">새 카드 위치</string>
-    <string name="learn_cutoff">미리 학습하기 시간 설정</string>
-    <string name="time_limit">타임박스 시간 설정</string>
+    <string name="use_current" maxLength="41">새 카드의 카드 묶음</string>
+    <string name="new_spread" maxLength="41">새 카드 위치</string>
+    <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
+    <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
     <string name="time_limit_summ">XXX 분</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
-    <string name="sched_ver">실험적 V2 스케줄러</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">오후 11시</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">확인</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">화면을 켜진 상태로 유지</string>
+    <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
     <string name="pref_keep_screen_on_summ">화면 꺼짐 시간 비활성화</string>
-    <string name="convert_fen_text">체스 표기법 지원</string>
+    <string name="convert_fen_text" maxLength="41">체스 표기법 지원</string>
     <string name="convert_fen_text_summ">Forsyth–Edwards 표기법으로 체스판을 그립니다. 표기법은 [fen][/fen] 태그에서 묶어야 합니다.</string>
-    <string name="enable_api_title">AnkiDroid API를 사용하도록 설정</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API를 사용하도록 설정</string>
     <string name="enable_api_summary">사용자의 개입 없이 다른 앱이 AnkiDroid에 연결하고 데이터를 읽고 쓸 수 있도록 허용</string>
-    <string name="custom_buttons">앱 바 버튼</string>
+    <string name="custom_buttons" maxLength="41">앱 바 버튼</string>
     <string name="custom_buttons_summary">앱 바에 어떠한 동작이 표시될 것인지 지정</string>
     <string name="custom_buttons_setting_always_show">항상 표시</string>
     <string name="custom_buttons_setting_if_room">공간이 있는 경우 표시</string>
     <string name="custom_buttons_setting_menu_only">메뉴만</string>
-    <string name="reset_custom_buttons">기본값으로 초기화</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">기본값으로 초기화</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
-    <string name="html_javascript_debugging">HTML 자바스크립트 디버깅</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML 자바스크립트 디버깅</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">고급 통계</string>
-    <string name="enable_advanced_statistics_title">고급 통계 사용</string>
+    <string name="advanced_statistics_title" maxLength="41">고급 통계</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">고급 통계 사용</string>
     <string name="enable_advanced_statistics_summ">향후 복습의 시뮬레이션이나 계산에 기반한(옵션 사용할 경우), 또는 이미 예정된 향후 복습에 기반한(옵션 사용하지 않을 경우) 예측 통계를 표시</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">처음 n일을 계산, 나머지는 시뮬레이트</string>
-    <string name="advanced_forecast_stats_compute_precision_title">계산의 정확도</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">시뮬레이션 반복 횟수</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">처음 n일을 계산, 나머지는 시뮬레이트</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">계산의 정확도</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">시뮬레이션 반복 횟수</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">자체 동기화 서버</string>
-    <string name="custom_sync_server_enable_title">자체 동기화 서버 사용</string>
+    <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">자체 동기화 서버 사용</string>
     <string name="custom_sync_server_enable_summary">독점 AnkiWeb 서비스를 사용하지 않기를 원하신다면 대체 서버를 여기에 지정할 수 있습니다.</string>
-    <string name="custom_sync_server_base_url_title">동기화 URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">동기화 URL</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">미디어 동기화 URL</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">미디어 동기화 URL</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">태그 선택</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">카드 묶음 설명 (이 카드 묶음에만 적용됩니다)</string>
-    <string name="deck_conf_group">옵션 그룹</string>
+    <string name="deck_conf_deck_description" maxLength="41">카드 묶음 설명 (이 카드 묶음에만 적용됩니다)</string>
+    <string name="deck_conf_group" maxLength="41">옵션 그룹</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 덱이 이 그룹을 사용합니다</item>
     </plurals>
-    <string name="deck_conf_new_cards">새 카드</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">복습 횟수</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">학습경과 시간</string>
-    <string name="deck_conf_general">일반</string>
-    <string name="deck_conf_reminders">알림</string>
-    <string name="deck_conf_steps">학습단계(분)</string>
-    <string name="deck_conf_order">순서</string>
-    <string name="deck_conf_new_cards_day">1일 새카드 수</string>
-    <string name="deck_conf_graduating_ivl">졸업 간격</string>
+    <string name="deck_conf_new_cards" maxLength="41">새 카드</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">복습 횟수</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">학습경과 시간</string>
+    <string name="deck_conf_general" maxLength="41">일반</string>
+    <string name="deck_conf_reminders" maxLength="41">알림</string>
+    <string name="deck_conf_steps" maxLength="41">학습단계(분)</string>
+    <string name="deck_conf_order" maxLength="41">순서</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">1일 새카드 수</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">졸업 간격</string>
     <string name="deck_conf_days">XXX일</string>
-    <string name="deck_conf_easy_ivl">쉬운 간격</string>
-    <string name="deck_conf_start_ease">쉽게 시작</string>
-    <string name="deck_conf_max_rev">최대의 리뷰 / 일</string>
-    <string name="deck_conf_new_bury">연관된 새 카드를 나중에 보기</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">쉬운 간격</string>
+    <string name="deck_conf_start_ease" maxLength="41">쉽게 시작</string>
+    <string name="deck_conf_max_rev" maxLength="41">최대의 리뷰 / 일</string>
+    <string name="deck_conf_new_bury" maxLength="41">연관된 새 카드를 나중에 보기</string>
     <string name="deck_conf_new_bury_summ">관련된 새 카드가 다음 날이 될 때까지 나타나지 않습니다.</string>
-    <string name="deck_conf_rev_bury">관련된 복습 카드 나중에 보기</string>
+    <string name="deck_conf_rev_bury" maxLength="41">관련된 복습 카드 나중에 보기</string>
     <string name="deck_conf_rev_bury_summ">관련된 복습 카드는 다음 날이 될 때까지 나타나지 않습니다.</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">쉬운 버튼 보너스값</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">간격 수정자</string>
-    <string name="deck_conf_max_ivl">최대 간격</string>
-    <string name="deck_conf_new_lps_ivl">새 간격</string>
-    <string name="deck_conf_min_ivl">최소 간격</string>
-    <string name="deck_conf_leech_thres">달라붙기 임계점</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">쉬운 버튼 보너스값</string>
+    <string name="deck_conf_hard_factor" maxLength="41">어려움 간격</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">간격 수정자</string>
+    <string name="deck_conf_max_ivl" maxLength="41">최대 간격</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">새 간격</string>
+    <string name="deck_conf_min_ivl" maxLength="41">최소 간격</string>
+    <string name="deck_conf_leech_thres" maxLength="41">달라붙기 임계점</string>
     <string name="deck_conf_fails">XXX 실패</string>
-    <string name="deck_conf_leech_action">달라붙기 작업</string>
-    <string name="deck_conf_max_time">최대 응답 시간</string>
+    <string name="deck_conf_leech_action" maxLength="41">달라붙기 작업</string>
+    <string name="deck_conf_max_time" maxLength="41">최대 응답 시간</string>
     <string name="deck_conf_seconds">XXX 초</string>
-    <string name="deck_conf_timer">답변 타이머 보이기</string>
-    <string name="deck_conf_autoplay">오디오 자동 재생</string>
-    <string name="deck_conf_replayq">질문 반복</string>
+    <string name="deck_conf_timer" maxLength="41">답변 타이머 보이기</string>
+    <string name="deck_conf_autoplay" maxLength="41">오디오 자동 재생</string>
+    <string name="deck_conf_replayq" maxLength="41">질문 반복</string>
     <string name="deck_conf_replayq_summ">정답이 보여졌을 때, 질문과 정답 오디오 둘 다 다시 재생합니다.</string>
-    <string name="deck_conf_manage">그룹 관리</string>
+    <string name="deck_conf_manage" maxLength="41">그룹 관리</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">현재 그룹</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">이름 바꾸기</string>
-    <string name="deck_conf_reset">기본값 복원</string>
+    <string name="deck_conf_current_group" maxLength="41">현재 그룹</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">이름 바꾸기</string>
+    <string name="deck_conf_reset" maxLength="41">기본값 복원</string>
     <string name="deck_conf_reset_message">현재 옵션 그룹을 기본값으로 복원할까요?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">새로 환경설정 지정</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">새로 환경설정 지정</string>
     <string name="deck_conf_add_summ">현재 옵션 그룹의 복사본을 만들기</string>
     <string name="deck_conf_remove_message">현재 옵션 그룹을 제거할까요?</string>
-    <string name="deck_conf_set_subdecks">모든 하위 묶음에 설정하기</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">모든 하위 묶음에 설정하기</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 하위 카드 묶음이 이 그룹을 사용 합니다</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>
-    <string name="pref_browser_editor_font">탐색기 및 편집기 글꼴</string>
-    <string name="deck_conf_cram_filter">필터</string>
-    <string name="deck_conf_cram_search">검색</string>
-    <string name="deck_conf_cram_limit">한도</string>
-    <string name="deck_conf_cram_order">에 선택된 카드</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정을 다시</string>
+    <string name="pref_browser_editor_font" maxLength="41">탐색기 및 편집기 글꼴</string>
+    <string name="deck_conf_cram_filter" maxLength="41">필터</string>
+    <string name="deck_conf_cram_search" maxLength="41">검색</string>
+    <string name="deck_conf_cram_limit" maxLength="41">한도</string>
+    <string name="deck_conf_cram_order" maxLength="41">에 선택된 카드</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정을 다시</string>
     <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
-    <string name="deck_conf_cram_steps">사용자 지정 단계(분)</string>
-    <string name="deck_conf_cram_steps_summ">사용자 정의 단계 정의</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">알림 시간</string>
+    <string name="deck_conf_cram_steps" maxLength="41">사용자 지정 단계(분)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">사용자 정의 단계 정의</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">알림 시간</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>

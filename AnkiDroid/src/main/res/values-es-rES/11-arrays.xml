@@ -110,8 +110,8 @@
     <string name="gesture_flag_remove">Eliminar Bandera</string>
     <string name="gesture_page_up">Página Arriba</string>
     <string name="gesture_page_down">Página Abajo</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="gesture_abort_sync">Abortar Aprendizaje y Sincronizar</string>
+    <string name="gesture_toggle_whiteboard">Alternar Pizarra</string>
+    <string name="record_voice">Grabar Voz</string>
+    <string name="replay_voice">Reproducir Voz</string>
 </resources>

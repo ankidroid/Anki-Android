@@ -1,4 +1,4 @@
-
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki;
 
 import android.app.Activity;
@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -139,11 +140,16 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Timber.i("Home button pressed");
-            finishWithoutAnimation();
-            return true;
+            return onActionBarBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected boolean onActionBarBackPressed() {
+        finishWithoutAnimation();
+        return true;
+    }
+
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
@@ -255,6 +261,28 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         enableIntentAnimation(intent);
         startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
+    }
+
+
+    public void launchActivityForResult(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
+        try {
+            launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation));
+        } catch (ActivityNotFoundException e) {
+            Timber.w(e);
+            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
+        }
+    }
+
+
+    public void launchActivityForResultWithoutAnimation(Intent intent, ActivityResultLauncher<Intent> launcher) {
+        disableIntentAnimation(intent);
+        launchActivityForResult(intent, launcher, NONE);
+    }
+
+
+    public void launchActivityForResultWithAnimation(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
+        enableIntentAnimation(intent);
+        launchActivityForResult(intent, launcher, animation);
     }
 
 
@@ -378,7 +406,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
+        int toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary);
         int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =

@@ -43,255 +43,264 @@
     <string name="enabled">Käytössä</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Yleiset asetukset</string>
-    <string name="pref_cat_reviewing">Läpikäynti</string>
+    <string name="pref_cat_reviewing" maxLength="41">Läpikäynti</string>
     <string name="pref_cat_reviewing_summ">Pakasta riippumattomat kertausasetukset</string>
-    <string name="pref_cat_reviewer_behaviour">Toiminta</string>
-    <string name="pref_cat_flashcard">Näyttö</string>
-    <string name="pref_cat_whiteboard">Valkotaulu</string>
-    <string name="pref_cat_appearance">Ulkoasu</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Toiminta</string>
+    <string name="pref_cat_flashcard" maxLength="41">Näyttö</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Valkotaulu</string>
+    <string name="pref_cat_appearance" maxLength="41">Ulkoasu</string>
     <string name="pref_cat_appearance_summ">Vaihda teemaa ja oletusfonttia</string>
-    <string name="pref_cat_themes">Teemat</string>
-    <string name="pref_cat_fonts">Fontit</string>
-    <string name="pref_cat_gestures">Eleet</string>
+    <string name="pref_cat_themes" maxLength="41">Teemat</string>
+    <string name="pref_cat_fonts" maxLength="41">Fontit</string>
+    <string name="pref_cat_gestures" maxLength="41">Eleet</string>
     <string name="pref_cat_gestures_summ">Käytä napautuksia ja pyyhkäisyjä painikkeiden sijaan</string>
-    <string name="pref_cat_actions">Toiminnot</string>
-    <string name="pref_cat_advanced">Lisäasetukset</string>
+    <string name="pref_cat_actions" maxLength="41">Toiminnot</string>
+    <string name="pref_cat_advanced" maxLength="41">Lisäasetukset</string>
     <string name="pref_cat_advanced_summ">Optimointi ja kokeelliset ominaisuudet</string>
-    <string name="pref_cat_performance">Suorituskyky</string>
-    <string name="pref_cat_workarounds">Korjaukset</string>
-    <string name="pref_cat_plugins">Lisäosat</string>
-    <string name="about_title">Tietoja AnkiDroidista</string>
+    <string name="pref_cat_performance" maxLength="41">Suorituskyky</string>
+    <string name="pref_cat_workarounds" maxLength="41">Korjaukset</string>
+    <string name="pref_cat_plugins" maxLength="41">Lisäosat</string>
+    <string name="about_title" maxLength="41">Tietoja AnkiDroidista</string>
     <string name="about_version">Versio: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Viivan leveys</string>
-    <string name="use_input_tag">Kirjoita vastaus korttiin</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Viivan leveys</string>
+    <string name="use_input_tag" maxLength="41">Kirjoita vastaus korttiin</string>
     <string name="use_input_tag_summ">Kirjoita vastaus kortin sisällä olevaan vastauskenttään</string>
-    <string name="dictionary">Sanakirja</string>
-    <string name="reset_languages">Palauta kielet</string>
+    <string name="dictionary" maxLength="41">Sanakirja</string>
+    <string name="reset_languages" maxLength="41">Palauta kielet</string>
     <string name="reset_languages_summ">Palauta kielimääritykset (tekstissä puheeksi ja sanakirjoissa) kaikissa pakoissa</string>
     <string name="reset_languages_question">Palauta kaikki kielivalinnat?</string>
     <string name="reset_confirmation">Kaikki tilat palautettu</string>
-    <string name="card_zoom">Kortin tarkennus</string>
-    <string name="image_zoom">Kuvan tarkennus</string>
-    <string name="button_size">Vastauspainikkeen koko</string>
-    <string name="card_browser_font_size">Korttiselaimen kirjasimien skaalaus</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">Kortin tarkennus</string>
+    <string name="image_zoom" maxLength="41">Kuvan tarkennus</string>
+    <string name="button_size" maxLength="41">Vastauspainikkeen koko</string>
+    <string name="card_browser_font_size" maxLength="41">Korttiselaimen kirjasimien skaalaus</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid-hakemisto</string>
-    <string name="fullscreen_review">Koko näytön tila</string>
+    <string name="col_path" maxLength="41">AnkiDroid-hakemisto</string>
+    <string name="fullscreen_review" maxLength="41">Koko näytön tila</string>
     <string name="full_screen_off">Pois päältä</string>
     <string name="full_screen_system">Piilota järjestelmäpalkit</string>
     <string name="full_screen_complete">Piilota järjestelmäpalkit ja vastauspainikkeet</string>
     <string name="full_screen_error_gestures">Sinun täytyy ottaa käyttöön eleet piilottaaksesi vastauspainikkeet</string>
-    <string name="answer_buttons_position">Vastauspainikkeiden sijainti</string>
+    <string name="answer_buttons_position" maxLength="41">Vastauspainikkeiden sijainti</string>
     <string-array name="answer_buttons_position_labels">
         <item>Ylhäällä</item>
         <item>Alhaalla</item>
     </string-array>
-    <string name="gestures">Ota eleet käyttöön</string>
+    <string name="gestures" maxLength="41">Ota eleet käyttöön</string>
     <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Pyyhkäisy ylös</string>
-    <string name="gestures_swipe_down">Pyyhkäisy alas</string>
-    <string name="gestures_swipe_left">Pyyhkäisy vasemmalle</string>
-    <string name="gestures_swipe_right">Pyyhkäisy oikealle</string>
-    <string name="gestures_double_tap">Kaksoiskosketus</string>
-    <string name="gestures_tap_top">Kosketus ylös</string>
-    <string name="gestures_tap_left">Kosketus vasemmalle</string>
-    <string name="gestures_tap_right">Kosketus oikealle</string>
-    <string name="gestures_tap_bottom">Kosketus alas</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_swipe_up" maxLength="41">Pyyhkäisy ylös</string>
+    <string name="gestures_swipe_down" maxLength="41">Pyyhkäisy alas</string>
+    <string name="gestures_swipe_left" maxLength="41">Pyyhkäisy vasemmalle</string>
+    <string name="gestures_swipe_right" maxLength="41">Pyyhkäisy oikealle</string>
+    <string name="gestures_double_tap" maxLength="41">Kaksoiskosketus</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_tap_top" maxLength="41">Kosketus ylös</string>
+    <string name="gestures_tap_left" maxLength="41">Kosketus vasemmalle</string>
+    <string name="gestures_tap_right" maxLength="41">Kosketus oikealle</string>
+    <string name="gestures_tap_bottom" maxLength="41">Kosketus alas</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">sähkökirja</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">sähkökirja</string>
     <string name="more_scrolling_buttons_summ">Käytä myös kanji/katakana, emoji/kao-moji -painikkeita vierittämiseen</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">Kaksoisvieritys</string>
+    <string name="double_scrolling_gap" maxLength="41">Kaksoisvieritys</string>
     <string name="double_scrolling_gap_summ">Kaksinkertaista vieritysaskeleen koko eReaderin kanssa</string>
-    <string name="swipe_sensitivity">Pyyhkäisyjen herkkyys</string>
-    <string name="tts">Puhesyntetisaattori</string>
+    <string name="swipe_sensitivity" maxLength="41">Pyyhkäisyjen herkkyys</string>
+    <string name="tts" maxLength="41">Puhesyntetisaattori</string>
     <string name="tts_summ">Lue kysymys ja vausta, jos äänitiedosto ei tule mukana</string>
-    <string name="sync_fetch_missing_media">Hae media synkronointi</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Hae media synkronointi</string>
     <string name="sync_fetch_missing_media_summ">Hakee automaattisesti puuttuvat mediat kun synkronoidaan.</string>
-    <string name="sync_account">AnkiWeb tili</string>
+    <string name="sync_account" maxLength="41">AnkiWeb tili</string>
     <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Automaattinen synkronointi</string>
+    <string name="automatic_sync_choice" maxLength="41">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Päiväteema</string>
-    <string name="night_theme">Yöteema</string>
-    <string name="default_font">Oletusfontti</string>
-    <string name="override_font">Oletuskirjasimen käyttöalue</string>
-    <string name="language">Kieli</string>
+    <string name="day_theme" maxLength="41">Päiväteema</string>
+    <string name="night_theme" maxLength="41">Yöteema</string>
+    <string name="default_font" maxLength="41">Oletusfontti</string>
+    <string name="override_font" maxLength="41">Oletuskirjasimen käyttöalue</string>
+    <string name="language" maxLength="41">Kieli</string>
     <string name="language_system">Järjestelmän kieli</string>
-    <string name="notification_pref">Ilmoitukset</string>
-    <string name="notification_pref_title">Ilmoita, kun</string>
+    <string name="notification_pref" maxLength="41">Ilmoitukset</string>
+    <string name="notification_pref_title" maxLength="41">Ilmoita, kun</string>
     <string name="never_notify">Älä ilmoita koskaan</string>
     <string name="notify_when_pending">Odottavia ilmoituksia saatavilla</string>
     <string name="notification_minimum_cards_due">Enemmän kuin %d korttia erääntymässä</string>
-    <string name="notification_minimum_cards_due_vibrate">Värinä</string>
-    <string name="notification_minimum_cards_due_blink">Vilkkuvalo</string>
-    <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Värinä</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Vilkkuvalo</string>
+    <string name="timeout_answer_text" maxLength="41">Näytä vastaukset automaattisesti</string>
     <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän komentoa. Viive sisältää ajan automaattisesti toistetaville äänitiedostoille.</string>
-    <string name="timeout_answer_seconds">Aika ennen vastauksen näyttämistä</string>
+    <string name="timeout_answer_seconds" maxLength="41">Aika ennen vastauksen näyttämistä</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds">Aika ennen seuraavan kysymyksen näyttämistä</string>
+    <string name="timeout_question_seconds" maxLength="41">Aika ennen seuraavan kysymyksen näyttämistä</string>
     <string name="select_locale_title">Valitse kieli</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Turvallinen näyttötila</string>
+    <string name="safe_display" maxLength="41">Turvallinen näyttötila</string>
     <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-muste laitteet voivat vaatia tätä.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">Tasaa keskelle</string>
+    <string name="vertical_centering" maxLength="41">Tasaa keskelle</string>
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
-    <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>
-    <string name="show_estimates">Näytä aika painikkeissa</string>
+    <string name="pref_backup_max" maxLength="41">Varmuuskopioiden enimmäismäärä</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">Näytä jäljelläoleva</string>
+    <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
     <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
-    <string name="show_eta">Näytä ETA</string>
+    <string name="show_eta" maxLength="41">Näytä ETA</string>
     <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
-    <string name="use_current">Pakka uusille korteille</string>
-    <string name="new_spread">Uuden kortin sijainti</string>
-    <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>
-    <string name="time_limit">Aikaraja</string>
+    <string name="use_current" maxLength="41">Pakka uusille korteille</string>
+    <string name="new_spread" maxLength="41">Uuden kortin sijainti</string>
+    <string name="learn_cutoff" maxLength="41">Kertauksen etukäteisaikaraja</string>
+    <string name="time_limit" maxLength="41">Aikaraja</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX tuntia yli puolenyön</string>
-    <string name="sched_ver">Kokeellinen V2 ajastin</string>
-    <string name="sched_ver_summ">Ota kokeellinen ajastin käyttöön. Pakottaa muutokset yhteen suuntaa seuraavassa synkronoinnissa</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Vahvista</string>
     <string name="sched_ver_2to1">Tämä alustaa kaikki opiskeltavat kortit, tyhjentää suodatetut pakat ja muuttaa ajastimen versiota. Jatketaanko?</string>
     <string name="sched_ver_1to2">Kokeellinen ajastin voi aiheuttaa väärään ajastuksen. Varmista että olet lukenut dokumentaation ensiksi, kiitos. Jatketaanko?</string>
-    <string name="pref_keep_screen_on">Pidä näyttö päällä</string>
+    <string name="pref_keep_screen_on" maxLength="41">Pidä näyttö päällä</string>
     <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
-    <string name="convert_fen_text">Tuki shakkinotaatiolle</string>
+    <string name="convert_fen_text" maxLength="41">Tuki shakkinotaatiolle</string>
     <string name="convert_fen_text_summ">Piirrä shakkilauta Forsyth-Edwards-notaatiolla. Tekstin pitää olla ympäröity [fen][/fen] tunnisteilla.</string>
-    <string name="enable_api_title">Ota käyttöön AnkiDroid-rajapinta</string>
+    <string name="enable_api_title" maxLength="41">Ota käyttöön AnkiDroid-rajapinta</string>
     <string name="enable_api_summary">Anna muiden sovellusten käyttää itsenäisesti AnkiDroidin tietoja</string>
-    <string name="custom_buttons">Sovelluspalkin painikkeet</string>
+    <string name="custom_buttons" maxLength="41">Sovelluspalkin painikkeet</string>
     <string name="custom_buttons_summary">Mukauta, mitkä toiminnot näkyvät sovelluspalkissa</string>
     <string name="custom_buttons_setting_always_show">Näytä aina</string>
     <string name="custom_buttons_setting_if_room">Näytä, jos tilaa</string>
     <string name="custom_buttons_setting_menu_only">Vain valikossa</string>
-    <string name="reset_custom_buttons">Palauta oletukset</string>
-    <string name="thirdparty_apps_title">Kolmannen osapuolen API-sovellukset</string>
+    <string name="reset_custom_buttons" maxLength="41">Palauta oletukset</string>
+    <string name="thirdparty_apps_title" maxLength="41">Kolmannen osapuolen API-sovellukset</string>
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortti HTML AnkiDroid kansioon</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Tarkat statistiikat</string>
-    <string name="enable_advanced_statistics_title">Ota tarkat statistiikat käyttöön</string>
+    <string name="advanced_statistics_title" maxLength="41">Tarkat statistiikat</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Ota tarkat statistiikat käyttöön</string>
     <string name="enable_advanced_statistics_summ">Näytä ennustetut tilastot, jotka perustuvat tulevien korttien laskentaan tai simulaation (käytössä) tai jo suunniteltuihin tuleviin harjoituksiin (ei käytössä).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Laske ensimmäiset n päivää, simuloi loput</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Laskennan tarkkuus</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Iteraatioiden määrä simuloinnissa</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Laske ensimmäiset n päivää, simuloi loput</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Laskennan tarkkuus</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Iteraatioiden määrä simuloinnissa</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Mukautettu synkronointiserveri</string>
-    <string name="custom_sync_server_enable_title">Käytä mukautettua synkronointiserveriä</string>
+    <string name="custom_sync_server_title" maxLength="41">Mukautettu synkronointiserveri</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Käytä mukautettua synkronointiserveriä</string>
     <string name="custom_sync_server_enable_summary">Jos et halua käyttää AnkiWebin omaa palvelua, voit määrittää vaihtoehtoisen serverin täällä</string>
-    <string name="custom_sync_server_base_url_title">Synkronointiosoite</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Synkronointiosoite</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">Median synkronointiosoite</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Median synkronointiosoite</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Muutokset pakkaryhmän asetuksiin vaikuttaa useisiin pakkoihin. Jos haluat muuttaa vain nykyistä pakkaa, valitse uusi asetukset-ryhmä.</string>
     <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Pakan kuvaus (vaikuttaa vain nykyisen pakkaan)</string>
-    <string name="deck_conf_group">Asetusryhmä</string>
+    <string name="deck_conf_deck_description" maxLength="41">Pakan kuvaus (vaikuttaa vain nykyisen pakkaan)</string>
+    <string name="deck_conf_group" maxLength="41">Asetusryhmä</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d pakka käyttää tätä ryhmää</item>
         <item quantity="other">%1$s\n%2$d pakkaa käyttää tätä ryhmää</item>
     </plurals>
-    <string name="deck_conf_new_cards">Uusia kortteja</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Kertauksia</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Vääriä vastauksia</string>
-    <string name="deck_conf_general">Yleistä</string>
-    <string name="deck_conf_reminders">Muistutukset</string>
-    <string name="deck_conf_steps">Askelia (minuuteissa)</string>
-    <string name="deck_conf_order">järjestys</string>
-    <string name="deck_conf_new_cards_day">Uusia kortteja / päivä</string>
-    <string name="deck_conf_graduating_ivl">Valmistumisaikaväli</string>
+    <string name="deck_conf_new_cards" maxLength="41">Uusia kortteja</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Kertauksia</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Vääriä vastauksia</string>
+    <string name="deck_conf_general" maxLength="41">Yleistä</string>
+    <string name="deck_conf_reminders" maxLength="41">Muistutukset</string>
+    <string name="deck_conf_steps" maxLength="41">Askelia (minuuteissa)</string>
+    <string name="deck_conf_order" maxLength="41">järjestys</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Uusia kortteja / päivä</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Valmistumisaikaväli</string>
     <string name="deck_conf_days">XXX päivä(ä)</string>
-    <string name="deck_conf_easy_ivl">Aikaväli helpoille korteille</string>
-    <string name="deck_conf_start_ease">Helppous alussa</string>
-    <string name="deck_conf_max_rev">Päivittäisten kertausten maksimimäärä</string>
-    <string name="deck_conf_new_bury">Hautaa liittyvät uudet kortit</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Aikaväli helpoille korteille</string>
+    <string name="deck_conf_start_ease" maxLength="41">Helppous alussa</string>
+    <string name="deck_conf_max_rev" maxLength="41">Päivittäisten kertausten maksimimäärä</string>
+    <string name="deck_conf_new_bury" maxLength="41">Hautaa liittyvät uudet kortit</string>
     <string name="deck_conf_new_bury_summ">Liittyvät uudet kortit haudataan seuraavaan päivään asti</string>
-    <string name="deck_conf_rev_bury">Hautaa liittyvät kertaukset</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Hautaa liittyvät kertaukset</string>
     <string name="deck_conf_rev_bury_summ">Liittyvät kertaukset haudataan seuraavaan päivään asti</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">Bonus helppoudesta</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Aikavälin muokkaaja</string>
-    <string name="deck_conf_max_ivl">Enimmäisaikaväli</string>
-    <string name="deck_conf_new_lps_ivl">Uusi aikaväli</string>
-    <string name="deck_conf_min_ivl">Pienin aikaväli</string>
-    <string name="deck_conf_leech_thres">Vaikean kortin kynnysarvo</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bonus helppoudesta</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Aikavälin muokkaaja</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Enimmäisaikaväli</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Uusi aikaväli</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Pienin aikaväli</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Vaikean kortin kynnysarvo</string>
     <string name="deck_conf_fails">XXX väärää vastausta</string>
-    <string name="deck_conf_leech_action">Toiminto vaikean kortin yhteydessä</string>
-    <string name="deck_conf_max_time">Pisin sallittu vastausaika</string>
+    <string name="deck_conf_leech_action" maxLength="41">Toiminto vaikean kortin yhteydessä</string>
+    <string name="deck_conf_max_time" maxLength="41">Pisin sallittu vastausaika</string>
     <string name="deck_conf_seconds">XXX sekuntia</string>
-    <string name="deck_conf_timer">Näytä vastausajastin</string>
-    <string name="deck_conf_autoplay">Toista äänet automaattisesti</string>
-    <string name="deck_conf_replayq">Toista kysymys</string>
+    <string name="deck_conf_timer" maxLength="41">Näytä vastausajastin</string>
+    <string name="deck_conf_autoplay" maxLength="41">Toista äänet automaattisesti</string>
+    <string name="deck_conf_replayq" maxLength="41">Toista kysymys</string>
     <string name="deck_conf_replayq_summ">Toista sekä kysymyksen, että vastauksen äänet, kun vastaus näytetään</string>
-    <string name="deck_conf_manage">Ryhmien hallinta</string>
+    <string name="deck_conf_manage" maxLength="41">Ryhmien hallinta</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Nykyinen ryhmä</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Nimeä uudelleen</string>
-    <string name="deck_conf_reset">Palauta oletusarvot</string>
+    <string name="deck_conf_current_group" maxLength="41">Nykyinen ryhmä</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Nimeä uudelleen</string>
+    <string name="deck_conf_reset" maxLength="41">Palauta oletusarvot</string>
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Lisää</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Lisää</string>
     <string name="deck_conf_add_summ">Luo kopio nykyisestä asetusryhmästä</string>
     <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
-    <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Aseta kaikille alipakoille</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s alapakka käyttää tätä ryhmää</item>
         <item quantity="other">%s alapakkaa käyttää tätä ryhmää</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>
-    <string name="pref_browser_editor_font">Selaimen ja editorin kirjasintyyppi</string>
-    <string name="deck_conf_cram_filter">Suodatin</string>
-    <string name="deck_conf_cram_search">Haku</string>
-    <string name="deck_conf_cram_limit">Rajoita</string>
-    <string name="deck_conf_cram_order">korttia valittu</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ajoita uudelleen</string>
+    <string name="pref_browser_editor_font" maxLength="41">Selaimen ja editorin kirjasintyyppi</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
+    <string name="deck_conf_cram_search" maxLength="41">Haku</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>
+    <string name="deck_conf_cram_order" maxLength="41">korttia valittu</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ajoita uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Ajoita kortit tämän pakan vastausten perusteella</string>
-    <string name="deck_conf_cram_steps">Muokatut vaiheet (minuuteissa)</string>
-    <string name="deck_conf_cram_steps_summ">Määritä muokatut vaiheet</string>
-    <string name="deck_conf_reminders_enabled">Salli muistutusilmoitukset tämän pakkaryhmän pakoille.</string>
-    <string name="deck_conf_reminders_time">Remind at</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Muokatut vaiheet (minuuteissa)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä muokatut vaiheet</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Salli muistutusilmoitukset tämän pakkaryhmän pakoille.</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Remind at</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
-    <string name="analytics_title">Jaa sovelluskäyttötietojasi</string>
+    <string name="analytics_title" maxLength="41">Jaa sovelluskäyttötietojasi</string>
     <string name="analytics_summ">Voit kehittää AnkiDroidia auttamalla kehitystiimiä näkemään mitä ominaisuuksia käytät</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>

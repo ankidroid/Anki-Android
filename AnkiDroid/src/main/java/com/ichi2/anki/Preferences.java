@@ -26,7 +26,6 @@ import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -39,7 +38,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.URLUtil;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -110,12 +108,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
+            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
     private static long fileLength;
 
+    /** The collection path when Preferences was opened  */
+    private String mOldCollectionPath = null;
 
     // ----------------------------------------------------------------------------
     // Overridden methods
@@ -129,6 +129,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getResources().getText(R.string.preferences_title));
+
+        // onRestoreInstanceState takes priority, this is only set on init.
+        mOldCollectionPath = CollectionHelper.getCollectionPath(this);
     }
 
     private Collection getCol() {
@@ -163,6 +166,40 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        // If the collection path has changed, we want to move back to the deck picker immediately
+        // This performs the move when back is pressed on the "Advanced" screen
+        if (!Utils.equals(CollectionHelper.getCollectionPath(this), mOldCollectionPath)) {
+            restartWithNewDeckPicker();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    protected void restartWithNewDeckPicker() {
+        // PERF: DB access on foreground thread
+        CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(deckPicker);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("mOldCollectionPath", mOldCollectionPath);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        mOldCollectionPath = state.getString("mOldCollectionPath");
+    }
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -210,8 +247,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
                         return true;
                     } else {
-                        Toast.makeText(getApplicationContext(),
-                                R.string.full_screen_error_gestures, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(),
+                                R.string.full_screen_error_gestures, false);
                         return false;
                     }
                 });
@@ -312,7 +349,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 .positiveText(R.string.dialog_ok)
                                 .negativeText(R.string.reset_custom_buttons)
                                 .onPositive((dialog, which) -> dialog.dismiss())
-                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory()))
+                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(this)))
                                 .show();
                         return false;
                     }
@@ -393,12 +430,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
                 fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        Toast.makeText(getApplicationContext(), R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                        UIUtils.showThemedToast(getApplicationContext(), R.string.directory_inaccessible, false);
                         return;
                     }
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
-                    Toast.makeText(getApplicationContext(), android.R.string.ok, Toast.LENGTH_SHORT).show();
+                    UIUtils.showThemedToast(getApplicationContext(), android.R.string.ok, true);
                 });
                 // Workaround preferences
                 removeUnnecessaryAdvancedPrefs(screen);
@@ -583,7 +620,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             }
                             break;
                         case "schedVer":
-                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optInt("schedVer", 1) == 2);
+                            ((android.preference.CheckBoxPreference)pref).setChecked(col.schedVer() == 2);
                     }
                 } catch (NumberFormatException e) {
                     throw new RuntimeException(e);

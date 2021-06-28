@@ -35,7 +35,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -357,10 +356,9 @@ public class ModelBrowser extends AnkiActivity {
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
                         //Create textbox to name new model
-                        new MaterialDialog.Builder(ModelBrowser.this)
+                        new MaterialEditTextDialog.Builder(ModelBrowser.this, mModelNameInput)
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)
-                                .customView(mModelNameInput, true)
                                 .onPositive((innerDialog, innerWhich) -> {
                                         String modelName = mModelNameInput.getText().toString();
                                         addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
@@ -445,11 +443,10 @@ public class ModelBrowser extends AnkiActivity {
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
         mModelNameInput.setSelection(mModelNameInput.getText().length());
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mModelNameInput)
                             .title(R.string.rename_model)
                             .positiveText(R.string.rename)
                             .negativeText(R.string.dialog_cancel)
-                            .customView(mModelNameInput, true)
                             .onPositive((dialog, which) -> {
                                     Model model = mModels.get(mModelListPosition);
                                     String deckName = mModelNameInput.getText().toString()
@@ -541,9 +538,7 @@ public class ModelBrowser extends AnkiActivity {
 
 
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(this, text, true);
     }
 
 

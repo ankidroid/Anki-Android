@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_height="fill_parent"
     android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="12dp" >
-    <!-- Front -->
+    android:paddingTop="12dp">
+
+    <!-- Editor -->
     <com.ichi2.ui.FixedTextView
+        android:id="@+id/title_edit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -25,67 +29,27 @@
             android:gravity="center"
             android:orientation="vertical" >
             <com.ichi2.ui.FixedEditText
-                android:id="@+id/front_edit"
+                android:id="@+id/editor_editText"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
-                android:contentDescription="@string/card_template_editor_front"
-                android:inputType="textMultiLine"/>
+                android:layout_gravity="top"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:fontFamily="monospace"
+                tools:text="{{Front}}"/>
         </LinearLayout>
     </ScrollView>
-    <!-- Styling -->
-    <com.ichi2.ui.FixedTextView
-        android:layout_width="fill_parent"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/card_template_editor_bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:focusable="true"
-        android:text="@string/card_template_editor_styling" />
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fadeScrollbars="false"
-        android:fillViewport="true" >
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" >
-            <com.ichi2.ui.FixedEditText
-                android:id="@+id/styling_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_margin="5dp"
-                android:contentDescription="@string/card_template_editor_styling"
-                android:text=""
-                android:inputType="textMultiLine"/>
-        </LinearLayout>
-    </ScrollView>
-    <!-- Back -->
-    <com.ichi2.ui.FixedTextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:focusable="true"
-        android:text="@string/card_template_editor_back" />
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fadeScrollbars="false"
-        android:fillViewport="true" >
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" >
-            <com.ichi2.ui.FixedEditText
-                android:id="@+id/back_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_margin="5dp"
-                android:contentDescription="@string/card_template_editor_back"
-                android:inputType="textMultiLine"/>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_gravity="bottom"
+        android:background="?attr/colorPrimary"
+        app:itemIconTint="@color/bottom_navigation_icon_color"
+        app:itemTextColor="@color/bottom_navigation_text_color"
+        app:menu="@menu/card_template_editor_navigation_bar_menu"
+        />
+
 </LinearLayout>

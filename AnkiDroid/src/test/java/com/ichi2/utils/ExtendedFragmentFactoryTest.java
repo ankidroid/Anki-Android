@@ -75,4 +75,25 @@ public class ExtendedFragmentFactoryTest {
 
         verify(baseFactory, times(1)).instantiate(fakeClassLoader, fakeClassName);
     }
+
+
+    @Test
+    public void testAttachToFragmentManager() {
+        final FragmentManager fragmentManager = mock(FragmentManager.class);
+        final FragmentFactory baseFactory = mock(FragmentFactory.class);
+
+        when(fragmentManager.getFragmentFactory()).thenReturn(baseFactory);
+
+        final ExtendedFragmentFactory testFF = new TestFragmentFactoryTest();
+
+        final ExtendedFragmentFactory result = testFF.attachToFragmentManager(fragmentManager);
+
+        assertEquals(testFF, result);
+
+        verify(fragmentManager, times(1)).setFragmentFactory(testFF);
+
+        testFF.instantiate(fakeClassLoader, fakeClassName);
+
+        verify(baseFactory, times(1)).instantiate(fakeClassLoader, fakeClassName);
+    }
 }

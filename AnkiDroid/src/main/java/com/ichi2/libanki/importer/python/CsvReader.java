@@ -30,7 +30,7 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class CsvReader implements Iterable<List<String>> {
 
     public final CsvDialect dialect;

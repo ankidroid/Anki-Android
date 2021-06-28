@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
-    <string name="note_editor_set_field_language">ᱡᱟᱭᱜᱟ ᱨᱮᱭᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
@@ -275,6 +274,7 @@
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱧᱟᱢᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱦᱟᱹᱛᱤᱭᱟᱨ>ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱠᱚ ᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ]]></string>
     <string name="note_importer_error_empty_first_field">ᱢᱟᱲᱟᱝ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ: %s</string>

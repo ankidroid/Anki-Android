@@ -133,8 +133,8 @@
 
     <!-- padding is hardcoded in Toolbar.java (32) to allow for fixing the scrollview -->
     <style name="note_editor_toolbar_button">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:padding">4dp</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:tint">@color/black</item>
@@ -144,4 +144,13 @@
     <style name="card_browser_spinner_layout">
         <item name="android:layout_height">48dp</item>
     </style>
+
+
+    <style name="reviewer_whiteboard_editor_button_style">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+
 </resources>

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nevytvorili sa žiadne kartičky. Prosím vyplňte viac polí</string>
     <string name="note_editor_no_first_field">Prvé pole je prázdne</string>
     <string name="note_editor_no_cloze_delations">Tento typ poznámky musí obsahovať doplňovačku</string>
-    <string name="note_editor_set_field_language">Nastaviť jazyk poľa</string>
     <string name="note_editor_no_cards_created_all_fields">Aktuálny typ poznámky nevytvoril žiadne kartičky.\nProsím zvoľte iný typ poznámky, alebo kliknite ‘Kartičky’ a pridajte substitúciu poľa</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačka bude fungovať iba na poznámkach typu doplňovačka</string>
     <string name="saving_facts">Poznámka sa ukladá</string>
@@ -299,6 +298,7 @@
     <string name="white_board_image_save_failed">Nepodarilo sa uložiť obrázok tabule. %s</string>
     <string name="white_board_image_saved">Obrázok tabule sa uložil do %s</string>
     <string name="title_whiteboard_pen_color">Farba pera pre tabuľu</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Našli sa prázdne kartičky. Spustite, prosím, Nástroje>Vyprázdniť kartičky.]]></string>
     <string name="note_importer_error_empty_first_field">Prázdne prvé pole: %s</string>

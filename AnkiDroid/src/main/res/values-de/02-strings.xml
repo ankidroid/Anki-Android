@@ -98,7 +98,7 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
-    <string name="custom_study_increase_review_limit">Heutiges Limit für Wiederholungskarten ändern</string>
+    <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
     <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
-    <string name="note_editor_set_field_language">Feldsprache festlegen</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur beim Notiztyp »Lückentext«</string>
     <string name="saving_facts">Notiz speichern</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">Sortiere Karten&#8230;</string>
     <string name="field_remapping">%1$s (von »%2$s«)</string>
     <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Zeitlimit erreicht</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d Karte gelernt in %2$s</item>
         <item quantity="other">%1$d Karten gelernt in %2$s</item>
@@ -279,6 +278,7 @@
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
     <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
+    <string name="title_whiteboard_editor">Whiteboard-Editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
     <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>
@@ -348,5 +348,5 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Die E-Mail-Adresse ist erforderlich</string>
     <string name="password_empty">Das Passwort ist erforderlich</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
 </resources>

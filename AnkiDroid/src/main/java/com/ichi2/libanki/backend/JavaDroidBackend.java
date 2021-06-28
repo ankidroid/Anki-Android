@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.backend;
 
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
@@ -69,5 +70,11 @@ public class JavaDroidBackend implements DroidBackend {
     @Override
     public int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException {
         throw new BackendNotSupportedException();
+    }
+
+
+    @Override
+    public void useNewTimezoneCode(Collection col) {
+        // intentionally blank - unavailable on Java backend
     }
 }

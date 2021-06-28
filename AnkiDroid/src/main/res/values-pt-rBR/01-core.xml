@@ -57,7 +57,7 @@
     <string name="study_more">Estudar mais</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d cartão programado (%2$s)</item>
-        <item quantity="other">%1$d cards programados (%2$s)</item>
+        <item quantity="other">%1$d cartões programados (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
@@ -95,6 +95,7 @@
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
+    <string name="menu_lookup">question</string>
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_toggle_mic_tool_bar">Verificar pronúncia</string>
     <string name="new_deck">Criar baralho</string>
-    <string name="create" comment="Button to create a filtered deck">Criar</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
     <string name="night_mode">Modo noturno</string>
     <string name="directory_inaccessible">Diretório do AnkiDroid está inacessível</string>
@@ -154,12 +155,12 @@
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Pesquisa do deck</string>
     <string name="empty_deck_add_note">Adicionar cartão</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
-    <string name="studyoptions_empty_schedule">Sem cards programados para estudar</string>
+    <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
     <string name="studyoptions_congrats_more_rev">O limite foi atingido, mas ainda existem cards não revisados. Você pode aumentar o limite nas opções.</string>
     <string name="studyoptions_congrats_more_new">O limite foi atingido. Ainda existem novos cards. Você pode aumentar o limite diário nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">Faltando \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">\'{{/%1$s}}\' foi encontrado, mas o esperado é \'{{/%2$s}}\'</string>
     <string name="filter_error">Erro no filtro %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">As coleções não podem ser combinadas\nQual coleção você quer manter?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Sobrepor sua coleção no AnkiDroid pela sua coleção do AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Sobrepor sua coleção no AnkiWeb pela sua coleção do AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Selecione a coleção a ser mantida</string>
+    <string name="sync_conflict_replace_title">Sobrepor coleção</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

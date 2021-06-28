@@ -47,7 +47,6 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -55,12 +54,13 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -134,6 +134,12 @@ public class Collection implements CollectionGetter {
     private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
+    /**
+     * This is only used for collections which were created before
+     * the new collections default was v2
+     * In that case, 'schedVer' is not set, so this default is used.
+     * See: #8926
+     * */
     private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
@@ -144,12 +150,12 @@ public class Collection implements CollectionGetter {
     public static final String DEFAULT_CONF = "{"
             +
             // review options
-            "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
-            + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
+            "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", "
+            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, "
             +
             // other config
-            "'curModel': null, " + "'nextPos': 1, " + "'sortType': \"noteFld\", "
-            + "'sortBackwards': False, 'addToCur': True }"; // add new to currently selected deck?
+            "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", "
+            + "\"sortBackwards\": false, \"addToCur\": true }"; // add new to currently selected deck?
 
     private static final int UNDO_SIZE_MAX = 20;
 
@@ -286,32 +292,10 @@ public class Collection implements CollectionGetter {
         if (sChunk != 0) {
             return sChunk;
         }
-        // the window size is saved in
-        // io.requery.android.database.CursorWindow.sCursorWindowSize.
-        // Values are copied here. Ideally, a getter would allow to access it.
+        // This is valid for the framework sqlite as far back as Android 5 / SDK21
+        // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
         final int WINDOW_SIZE_KB = 2048;
         int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
-
-        // We have the ability to look into our sqlite implementation on Android and use it's value
-        // as a ceiling. Try it, with a reasonable fallback in case of failure
-        SupportSQLiteDatabase db = mDb.getDatabase();
-        String db_name = (db instanceof DatabaseChangeDecorator) ? ((DatabaseChangeDecorator) db).getWrapped().getClass().getName() : null;
-
-        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
-            try {
-                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
-                cursorWindowSize.setAccessible(true);
-                int possibleCursorWindowSize = cursorWindowSize.getInt(null);
-                Timber.d("Reflectively discovered database default cursor window size %d", possibleCursorWindowSize);
-                if (possibleCursorWindowSize > 0) {
-                    sCursorWindowSize = possibleCursorWindowSize;
-                } else {
-                    Timber.w("Obtained unusable cursor window size: %d. Using default %d", possibleCursorWindowSize, sCursorWindowSize);
-                }
-            } catch (Exception e) {
-                Timber.w(e, "Unable to get window size from requery cursor.");
-            }
-        }
 
         // reduce the actual size a little bit.
         // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
@@ -925,7 +909,7 @@ public class Collection implements CollectionGetter {
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
-            if (did > 0 && mDecks.getDecks().containsKey(did)) {
+            if (did > 0 && mDecks.get(did, false) != null) {
             } else if (parameterDid != 0) {
                 did = parameterDid;
             } else {
@@ -1099,6 +1083,7 @@ public class Collection implements CollectionGetter {
     }
 
 
+    @RustCleanup("#8951 - Remove FrontSide added to the front")
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
@@ -1134,6 +1119,7 @@ public class Collection implements CollectionGetter {
             if ("q".equals(type)) {
                 format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+                fields.put("FrontSide", "");
             } else {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
@@ -1156,7 +1142,8 @@ public class Collection implements CollectionGetter {
             // empty cloze?
             if ("q".equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
-                    String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                    String link = String.format("<a href=\"%s\">%s</a>", mContext.getResources().getString(R.string.link_ankiweb_docs_cloze_deletion), "help");
+                    System.out.println(link);
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
             }
@@ -1345,6 +1332,16 @@ public class Collection implements CollectionGetter {
             mUndo.removeFirst();
         }
     }
+
+
+    public void onCreate() {
+        mDroidBackend.useNewTimezoneCode(this);
+        getConf().put("schedVer", 2);
+        setMod();
+        // we need to reload the scheduler: this was previously loaded as V1
+        _loadScheduler();
+    }
+
 
     @VisibleForTesting
     public static class UndoReview extends UndoAction {
@@ -1715,8 +1712,8 @@ public class Collection implements CollectionGetter {
         int fixCount = 0;
         for (long id : mDecks.allDynamicDeckIds()) {
             try {
-                if (mDecks.hasDeckOptions(id)) {
-                    mDecks.removeDeckOptions(id);
+                if (hasDeckOptions(id)) {
+                    removeDeckOptions(id);
                     fixCount++;
                 }
             } catch (NoSuchDeckException e) {
@@ -1728,6 +1725,24 @@ public class Collection implements CollectionGetter {
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
         }
         return problems;
+    }
+
+
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = getDecks().get(deckId, false);
+        if (deck == null) {
+            throw new NoSuchDeckException(deckId);
+        }
+        return deck;
+    }
+
+    private boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
+        return getDeckOrFail(deckId).has("conf");
+    }
+
+
+    private void removeDeckOptions(long deckId) throws NoSuchDeckException {
+        getDeckOrFail(deckId).remove("conf");
     }
 
 

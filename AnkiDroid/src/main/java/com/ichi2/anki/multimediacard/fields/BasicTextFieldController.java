@@ -30,9 +30,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
@@ -334,9 +334,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
      * @param text A short cut to show a toast
      */
     private void showToast(CharSequence text) {
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(mActivity, text, duration);
-        toast.show();
+        UIUtils.showThemedToast(mActivity, text, true);
     }
 
 

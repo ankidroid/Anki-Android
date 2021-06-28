@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Кәртләр ясалмаган. Кубрәк юлларны тутырыгыз</string>
     <string name="note_editor_no_first_field">Беренче юл буш</string>
     <string name="note_editor_no_cloze_delations">Бу кәрт төре эчендә бушлыклар белән күнегү булырга тиеш</string>
-    <string name="note_editor_set_field_language">Текст телен көйләргә</string>
     <string name="note_editor_no_cards_created_all_fields">Хәзерге язу төре бернинди кәрт тә ясамады.\nЗинhар, башка язу төрен сайлагыз я \"Кәртләр\" төймәсенә басыгыз hәм юл кертегез</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Буш юллар белән күнегүләр буш юллар белән язулар төрендә генә эшләячәк</string>
     <string name="saving_facts">Язу саклана</string>
@@ -155,13 +154,13 @@
     <string name="import_select_title">Импорт өчен файл сайлагыз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
     <string name="import_message_replace_confirm">Бу сезнең хәзерге коллекцияне бетерер hәм аны %s файлы белән алыштырыр</string>
-    <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин.</string>
+    <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин</string>
     <string name="import_log_no_apkg">Бу эшли торган Anki файлы түгел</string>
     <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
     <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
     <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
     <string name="import_log_insufficient_space">Пакетны ачу өчен урын җитми. Кирәк: %1$d, бар: %2$d</string>
-    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде. Яңадан тырышып карагыз.</string>
+    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде.\nЯңадан тырышып карагыз</string>
     <string name="import_succeeded_but_check_database">Импортлау уңышлы үтте, чистарту - уңышсыз. Мәгълүмәт базасын тикшерегез. Төп сәбәп: %s</string>
     <string name="import_error_unhandled_request">Импортлау таләбен эшкәртеп булмый</string>
     <string name="import_error_corrupt_zip">apkg файлы бозык. Зинhар, аны бетерегез hәм яңадан йөкләгез.\n\nТөп сәбәп: %s</string>
@@ -197,7 +196,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
+    <string name="select_tts">Текст телен көйләргә</string>
     <string name="custom_study">Тагын өйрәнү</string>
     <string name="more_options">Күбрәк</string>
     <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
@@ -244,7 +243,7 @@
         <item quantity="other">%2$d cards to review in %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error sharing apkg file</string>
+    <string name="apk_share_error">apkg файлын экспортлаганда хата</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
@@ -257,7 +256,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">Җирлек</string>
     <string name="choose_an_image">Choose an Image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
@@ -269,6 +268,7 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">Empty first field: %s</string>

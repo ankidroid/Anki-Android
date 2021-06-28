@@ -95,6 +95,7 @@
     <string name="unbury">Grav op</string>
     <string name="rename_deck">Omdøb kortsæt</string>
     <string name="create_shortcut">Opret genvej</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig gerne slette denne note og alle dens kort?\n%s</string>
     <string name="menu_select">Vælg tekst</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Slå op i %1$s</string>
     <string name="menu_mark_note">Markér note</string>
     <string name="menu_unmark_note">Fjern markering fra note</string>
     <string name="menu_toggle_mic_tool_bar">Tjek udtale</string>
     <string name="new_deck">Opret dæk</string>
-    <string name="create" comment="Button to create a filtered deck">Opret</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>
     <string name="night_mode">Nattetilstand</string>
     <string name="directory_inaccessible">AnkiDroid vejviser er utilgængelig</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">Mangler \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Fandt \'{{/%1$s}}\', men forventede \'{{/%2$s}}\'</string>
     <string name="filter_error">Fejl i filter %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

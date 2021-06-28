@@ -43,258 +43,267 @@
     <string name="enabled">Enabled</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Општа подешавања</string>
-    <string name="pref_cat_reviewing">Обука</string>
+    <string name="pref_cat_reviewing" maxLength="41">Обука</string>
     <string name="pref_cat_reviewing_summ">Подешавање прегледача за опште шпилове</string>
-    <string name="pref_cat_reviewer_behaviour">Понашање</string>
-    <string name="pref_cat_flashcard">Приказ</string>
-    <string name="pref_cat_whiteboard">Бела табла</string>
-    <string name="pref_cat_appearance">Appearance</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Понашање</string>
+    <string name="pref_cat_flashcard" maxLength="41">Приказ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Бела табла</string>
+    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
-    <string name="pref_cat_themes">Themes</string>
-    <string name="pref_cat_fonts">Fonts</string>
-    <string name="pref_cat_gestures">Гестови</string>
+    <string name="pref_cat_themes" maxLength="41">Themes</string>
+    <string name="pref_cat_fonts" maxLength="41">Fonts</string>
+    <string name="pref_cat_gestures" maxLength="41">Гестови</string>
     <string name="pref_cat_gestures_summ">Користи тапкање и пребацивања уместо дугмиће</string>
-    <string name="pref_cat_actions">Дејство</string>
-    <string name="pref_cat_advanced">Напредно</string>
+    <string name="pref_cat_actions" maxLength="41">Дејство</string>
+    <string name="pref_cat_advanced" maxLength="41">Напредно</string>
     <string name="pref_cat_advanced_summ">Оптимизације и експерименталне функције</string>
-    <string name="pref_cat_performance">Перформансе</string>
-    <string name="pref_cat_workarounds">Трикови</string>
-    <string name="pref_cat_plugins">Додаци</string>
-    <string name="about_title">O AnkiDroid-у</string>
+    <string name="pref_cat_performance" maxLength="41">Перформансе</string>
+    <string name="pref_cat_workarounds" maxLength="41">Трикови</string>
+    <string name="pref_cat_plugins" maxLength="41">Додаци</string>
+    <string name="about_title" maxLength="41">O AnkiDroid-у</string>
     <string name="about_version">Верзија: </string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width">Ширина капи</string>
-    <string name="use_input_tag">Type answer into the card</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Ширина капи</string>
+    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="dictionary">Кориснички речник</string>
-    <string name="reset_languages">Ресетуј језике</string>
+    <string name="dictionary" maxLength="41">Кориснички речник</string>
+    <string name="reset_languages" maxLength="41">Ресетуј језике</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
     <string name="reset_confirmation">Ресетована сва подешавања</string>
-    <string name="card_zoom">Зумирање картице</string>
-    <string name="image_zoom">Зумирање слике</string>
-    <string name="button_size">Величина дугмета за одговор</string>
-    <string name="card_browser_font_size">Величина фонта прегледача картица</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_zoom" maxLength="41">Зумирање картице</string>
+    <string name="image_zoom" maxLength="41">Зумирање слике</string>
+    <string name="button_size" maxLength="41">Величина дугмета за одговор</string>
+    <string name="card_browser_font_size" maxLength="41">Величина фонта прегледача картица</string>
+    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid directory</string>
-    <string name="fullscreen_review">Пуноекрански режим</string>
+    <string name="col_path" maxLength="41">AnkiDroid directory</string>
+    <string name="fullscreen_review" maxLength="41">Пуноекрански режим</string>
     <string name="full_screen_off">Off</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
-    <string name="answer_buttons_position">Answer buttons position</string>
+    <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">
         <item>Top</item>
         <item>Bottom</item>
     </string-array>
-    <string name="gestures">Омогући гестове</string>
+    <string name="gestures" maxLength="41">Омогући гестове</string>
     <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
+    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_swipe_up">Пребацити горе</string>
-    <string name="gestures_swipe_down">Пребацити доле</string>
-    <string name="gestures_swipe_left">Пребацити лево</string>
-    <string name="gestures_swipe_right">Пребацити десно</string>
-    <string name="gestures_double_tap">Двоструко куцкање</string>
-    <string name="gestures_tap_top">Куцкање горе</string>
-    <string name="gestures_tap_left">Куцкање лево</string>
-    <string name="gestures_tap_right">Куцкање десно</string>
-    <string name="gestures_tap_bottom">Куцкање доле</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_swipe_up" maxLength="41">Пребацити горе</string>
+    <string name="gestures_swipe_down" maxLength="41">Пребацити доле</string>
+    <string name="gestures_swipe_left" maxLength="41">Пребацити лево</string>
+    <string name="gestures_swipe_right" maxLength="41">Пребацити десно</string>
+    <string name="gestures_double_tap" maxLength="41">Двоструко куцкање</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_tap_top" maxLength="41">Куцкање горе</string>
+    <string name="gestures_tap_left" maxLength="41">Куцкање лево</string>
+    <string name="gestures_tap_right" maxLength="41">Куцкање десно</string>
+    <string name="gestures_tap_bottom" maxLength="41">Куцкање доле</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
-    <string name="more_scrolling_buttons">eReader</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_volume_up" maxLength="41">Volume up</string>
+    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Користи Канџи/Катакана, Емоџи/Као-моџи јапанску дугмад за проклизавање</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
-    <string name="double_scrolling_gap">Дупло проклизавање</string>
+    <string name="double_scrolling_gap" maxLength="41">Дупло проклизавање</string>
     <string name="double_scrolling_gap_summ">Удвостручи међупросторе између клизаче на е-Читалацу</string>
-    <string name="swipe_sensitivity">Осетљивост пребацивање</string>
-    <string name="tts">Текст у говор</string>
+    <string name="swipe_sensitivity" maxLength="41">Осетљивост пребацивање</string>
+    <string name="tts" maxLength="41">Текст у говор</string>
     <string name="tts_summ">Читај питање/одговор, ако нема прикључене звучне датотеке</string>
-    <string name="sync_fetch_missing_media">Додај медије</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Додај медије</string>
     <string name="sync_fetch_missing_media_summ">Аутоматски додај недостајуће медија датотеке при синхронизацији.</string>
-    <string name="sync_account">AnkiWeb налог</string>
+    <string name="sync_account" maxLength="41">AnkiWeb налог</string>
     <string name="sync_account_summ_logged_out">Нисте ауторизовани</string>
     <string name="sync_account_summ_logged_in">%s</string>
-    <string name="automatic_sync_choice">Аутоматска синхронизација</string>
+    <string name="automatic_sync_choice" maxLength="41">Аутоматска синхронизација</string>
     <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
         од 10 минута.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme">Day theme</string>
-    <string name="night_theme">Night theme</string>
-    <string name="default_font">Подразумевани фонт</string>
-    <string name="override_font">Уобичајан фонт</string>
-    <string name="language">Језик</string>
+    <string name="day_theme" maxLength="41">Day theme</string>
+    <string name="night_theme" maxLength="41">Night theme</string>
+    <string name="default_font" maxLength="41">Подразумевани фонт</string>
+    <string name="override_font" maxLength="41">Уобичајан фонт</string>
+    <string name="language" maxLength="41">Језик</string>
     <string name="language_system">Системски језик</string>
-    <string name="notification_pref">Обавештења</string>
-    <string name="notification_pref_title">Показуј при</string>
+    <string name="notification_pref" maxLength="41">Обавештења</string>
+    <string name="notification_pref_title" maxLength="41">Показуј при</string>
     <string name="never_notify">Никада</string>
     <string name="notify_when_pending">Поруке су доступне</string>
     <string name="notification_minimum_cards_due">Више од %d карата се очекује</string>
-    <string name="notification_minimum_cards_due_vibrate">Вибрирај</string>
-    <string name="notification_minimum_cards_due_blink">Мигај</string>
-    <string name="timeout_answer_text">Аутоматски приказуј одговор</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибрирај</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Мигај</string>
+    <string name="timeout_answer_text" maxLength="41">Аутоматски приказуј одговор</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds">Време за приказивање одговора</string>
+    <string name="timeout_answer_seconds" maxLength="41">Време за приказивање одговора</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
-    <string name="timeout_question_seconds">Време за приказивање следећег питања</string>
+    <string name="timeout_question_seconds" maxLength="41">Време за приказивање следећег питања</string>
     <string name="select_locale_title">Изаберите језик</string>
-    <string name="software_render">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display">Безбедан режим приказивања</string>
+    <string name="safe_display" maxLength="41">Безбедан режим приказивања</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering">Центрирај вертикално</string>
+    <string name="vertical_centering" maxLength="41">Центрирај вертикално</string>
     <string name="vertical_centering_summ">Центрирај садржај картица вертикално</string>
-    <string name="pref_backup_max">Максималан број резервне датотеке</string>
-    <string name="show_estimates">Прикажи дугме времена</string>
+    <string name="pref_backup_max" maxLength="41">Максималан број резервне датотеке</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="show_estimates" maxLength="41">Прикажи дугме времена</string>
     <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress">Прикажи преостале</string>
+    <string name="show_progress" maxLength="41">Прикажи преостале</string>
     <string name="show_progress_summ">Прикажи број остале картице</string>
-    <string name="show_eta">Show ETA</string>
+    <string name="show_eta" maxLength="41">Show ETA</string>
     <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current">Шпил за нове картице</string>
-    <string name="new_spread">Нова позиција карте</string>
-    <string name="learn_cutoff">Учити више од задатог лимита</string>
-    <string name="time_limit">Ограничење времена</string>
+    <string name="use_current" maxLength="41">Шпил за нове картице</string>
+    <string name="new_spread" maxLength="41">Нова позиција карте</string>
+    <string name="learn_cutoff" maxLength="41">Учити више од задатог лимита</string>
+    <string name="time_limit" maxLength="41">Ограничење времена</string>
     <string name="time_limit_summ">XXX мин</string>
-    <string name="new_timezone">New timezone handling</string>
-    <string name="day_offset_with_description">Start of next day (0 is midnight, 23 is 11PM)</string>
+    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summ">XXX сати после поноћ</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Confirm</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
-    <string name="pref_keep_screen_on">Држи екран укљученим</string>
+    <string name="pref_keep_screen_on" maxLength="41">Држи екран укљученим</string>
     <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
-    <string name="convert_fen_text">Подршка шаховских бележака</string>
+    <string name="convert_fen_text" maxLength="41">Подршка шаховских бележака</string>
     <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
-    <string name="enable_api_title">Омогући AnkiDroid API</string>
+    <string name="enable_api_title" maxLength="41">Омогући AnkiDroid API</string>
     <string name="enable_api_summary">Нека се друге апликације повежу са AnkiDroid и читају/записују податке без ваше интервенције</string>
-    <string name="custom_buttons">App bar buttons</string>
+    <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">Always show</string>
     <string name="custom_buttons_setting_if_room">Show if room</string>
     <string name="custom_buttons_setting_menu_only">Menu only</string>
-    <string name="reset_custom_buttons">Reset to default</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
+    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title">Advanced statistics</string>
-    <string name="enable_advanced_statistics_title">Enable advanced statistics</string>
+    <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
     <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title">Precision of computation</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title">Number of iterations of the simulation</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precision of computation</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">Custom sync server</string>
-    <string name="custom_sync_server_enable_title">Use custom sync server</string>
+    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Use custom sync server</string>
     <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-    <string name="custom_sync_server_base_url_title">Sync url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
-    <string name="custom_sync_server_media_url_title">Media sync url</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Изаберите ознаке</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
-    <string name="deck_conf_group">Група опције</string>
+    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
+    <string name="deck_conf_group" maxLength="41">Група опције</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d шпил користи ову групу</item>
         <item quantity="few">%1$s\n%2$d шпила користи ову групу</item>
         <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
     </plurals>
-    <string name="deck_conf_new_cards">Нове картице</string>
-    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Понављања</string>
-    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Промашаји</string>
-    <string name="deck_conf_general">Опште</string>
-    <string name="deck_conf_reminders">Reminders</string>
-    <string name="deck_conf_steps">Кораци (у минутима)</string>
-    <string name="deck_conf_order">Редослед</string>
-    <string name="deck_conf_new_cards_day">Нове картице/дан</string>
-    <string name="deck_conf_graduating_ivl">Интервал завршетка</string>
+    <string name="deck_conf_new_cards" maxLength="41">Нове картице</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Понављања</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Промашаји</string>
+    <string name="deck_conf_general" maxLength="41">Опште</string>
+    <string name="deck_conf_reminders" maxLength="41">Reminders</string>
+    <string name="deck_conf_steps" maxLength="41">Кораци (у минутима)</string>
+    <string name="deck_conf_order" maxLength="41">Редослед</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Нове картице/дан</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Интервал завршетка</string>
     <string name="deck_conf_days">XXX дан(а)</string>
-    <string name="deck_conf_easy_ivl">Лаган интервал</string>
-    <string name="deck_conf_start_ease">Лак старт</string>
-    <string name="deck_conf_max_rev">Максималан број прегледа у дану</string>
-    <string name="deck_conf_new_bury">Закопај повезане нове картице</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Лаган интервал</string>
+    <string name="deck_conf_start_ease" maxLength="41">Лак старт</string>
+    <string name="deck_conf_max_rev" maxLength="41">Максималан број прегледа у дану</string>
+    <string name="deck_conf_new_bury" maxLength="41">Закопај повезане нове картице</string>
     <string name="deck_conf_new_bury_summ">Повезане нове картице су закопане до следећег дана</string>
-    <string name="deck_conf_rev_bury">Закопај повезане одзиве</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Закопај повезане одзиве</string>
     <string name="deck_conf_rev_bury_summ">Повезани одзиви су закопане до следећег дана</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus">Лак бонус</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
-    <string name="deck_conf_ivl_fct">Атрибут интервала</string>
-    <string name="deck_conf_max_ivl">Максимални интервал</string>
-    <string name="deck_conf_new_lps_ivl">Нови интервал</string>
-    <string name="deck_conf_min_ivl">Минимални интервал</string>
-    <string name="deck_conf_leech_thres">Праг до ког се картица сматра пијавица</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Лак бонус</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Атрибут интервала</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Максимални интервал</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Нови интервал</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Минимални интервал</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Праг до ког се картица сматра пијавица</string>
     <string name="deck_conf_fails">XXX неуспеха</string>
-    <string name="deck_conf_leech_action">Дејство пијавице</string>
-    <string name="deck_conf_max_time">Максимално време одговора</string>
+    <string name="deck_conf_leech_action" maxLength="41">Дејство пијавице</string>
+    <string name="deck_conf_max_time" maxLength="41">Максимално време одговора</string>
     <string name="deck_conf_seconds">XXX секунди</string>
-    <string name="deck_conf_timer">Покажи тајмер за одговор</string>
-    <string name="deck_conf_autoplay">Аутоматски репродукуј аудио</string>
-    <string name="deck_conf_replayq">Репродуковање питања</string>
+    <string name="deck_conf_timer" maxLength="41">Покажи тајмер за одговор</string>
+    <string name="deck_conf_autoplay" maxLength="41">Аутоматски репродукуј аудио</string>
+    <string name="deck_conf_replayq" maxLength="41">Репродуковање питања</string>
     <string name="deck_conf_replayq_summ">При приказу одговора, репродукуј аудио и питања и одговора</string>
-    <string name="deck_conf_manage">Групе</string>
+    <string name="deck_conf_manage" maxLength="41">Групе</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group">Текућа група</string>
-    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Преименуј</string>
-    <string name="deck_conf_reset">Врати подразумевана подешавања</string>
+    <string name="deck_conf_current_group" maxLength="41">Текућа група</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Преименуј</string>
+    <string name="deck_conf_reset" maxLength="41">Врати подразумевана подешавања</string>
     <string name="deck_conf_reset_message">Да вратим тренутну групу опција на подразумевана подешавања?</string>
-    <string name="deck_conf_add" comment="Adding a new deck option group">Додавање конфигурације</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Додавање конфигурације</string>
     <string name="deck_conf_add_summ">Направи копију текуће групе опција</string>
     <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
-    <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Задај за све групе подшпилова</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s подшпил ће да користи ову групу</item>
         <item quantity="few">%s подшпила ће да користи ову групу</item>
         <item quantity="other">%s подшпила ће да користи ову групу</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>
-    <string name="pref_browser_editor_font">Прегледач и фонт уредника</string>
-    <string name="deck_conf_cram_filter">Филтер</string>
-    <string name="deck_conf_cram_search">Претрага</string>
-    <string name="deck_conf_cram_limit">Ограничи</string>
-    <string name="deck_conf_cram_order">картице изабране по</string>
-    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Препланирање</string>
+    <string name="pref_browser_editor_font" maxLength="41">Прегледач и фонт уредника</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Филтер</string>
+    <string name="deck_conf_cram_search" maxLength="41">Претрага</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Ограничи</string>
+    <string name="deck_conf_cram_order" maxLength="41">картице изабране по</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Препланирање</string>
     <string name="deck_conf_cram_reschedule_summ">Препланирање картица, засновано на мојим одговорима у том шпилу</string>
-    <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
-    <string name="deck_conf_cram_steps_summ">Одредити допунске кораке</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
-    <string name="deck_conf_reminders_time">Remind at</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Одредити допунске кораке</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Remind at</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title">Share feature usage</string>
+    <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus">Focus ‘type in answer’</string>
+    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>

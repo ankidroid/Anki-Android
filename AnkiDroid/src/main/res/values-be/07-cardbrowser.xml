@@ -40,84 +40,84 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d картка паказаная</item>
-        <item quantity="few">%d карткі паказаныя</item>
-        <item quantity="many">%d картак паказана</item>
-        <item quantity="other">%d карткі паказаныя</item>
+        <item quantity="one">Паказана %d картка</item>
+        <item quantity="few">Паказана %d карткі</item>
+        <item quantity="many">Паказана %d картак</item>
+        <item quantity="other">Паказана %d карткі</item>
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
-    <string name="card_browser_delete_card">Выдаліць нататкі</string>
+    <string name="card_browser_delete_card">Выдаліць запісы</string>
     <string name="card_browser_suspend_card">Прыпыненых картак</string>
     <string name="card_browser_change_deck">Змяніць калоду</string>
-    <string name="card_browser_unsuspend_card">Аднавіць карткі</string>
-    <string name="card_browser_mark_card">Пазначыць нататкі</string>
-    <string name="card_browser_unmark_card">Зняць пазнакі з нататак</string>
-    <string name="delete_card_title">Выдаліць нататку?</string>
+    <string name="card_browser_unsuspend_card">Аднавіць прыпыненыя карткі</string>
+    <string name="card_browser_mark_card">Пазначыць запісы</string>
+    <string name="card_browser_unmark_card">Зняць пазнакі з запісаў</string>
+    <string name="delete_card_title">Выдаліць запіс?</string>
     <string name="changed_deck_message">Перамешчана ў %s</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
-    <string name="card_browser_search_by_tag">Фільтр па пазнаках</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">Мае запыты</string>
+    <string name="card_browser_search_by_tag">Фільтраваць па метках</string>
+    <string name="card_browser_search_by_flag">Фільтраваць па пазнаках</string>
+    <string name="card_browser_list_my_searches">Мае запыты пошуку</string>
     <string name="card_browser_list_my_searches_save">Захаваць запыты пошуку</string>
-    <string name="card_browser_list_my_searches_title">Выберыце захаваны пошукавы запыт</string>
-    <string name="card_browser_list_my_searches_new_name">Назва для бягучага запыту</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Немагчыма захаваць пошук без назвы</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе!</string>
+    <string name="card_browser_list_my_searches_title">Выберыце захаваны запыт пошуку</string>
+    <string name="card_browser_list_my_searches_new_name">Назва запыту пошуку</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельга захаваць пошук без назвы</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
-    <string name="card_browser_change_display_order">Змяеіць парадак паказу</string>
+    <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
-    <string name="card_browser_change_display_order_reverse">Выберыце поле двойчы, каб звярнуць сартаванне</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Паўтарэнняў</string>
-    <string name="card_details_tags">Пазнакі</string>
+    <string name="card_browser_change_display_order_reverse">Выберыце поле двойчы, каб сартаваць у адваротным парадку</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Будзе паўторана</string>
+    <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">
         <item>Без сартавання (хутка)</item>
         <item>Па полі сартавання</item>
         <item>Па часе стварэння</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Па часе змянення запісу</item>
+        <item>Па часе змянення карткі</item>
         <item>Па часе паўтарэння</item>
         <item>Па інтэрвале</item>
-        <item>Па складанасці</item>
-        <item>Па праглядах</item>
-        <item>Па правалах</item>
+        <item>Па лёгкасці</item>
+        <item>Па паўтарэннях</item>
+        <item>Па памылках</item>
     </string-array>
     <string name="card_browser_select_all">Выбраць усё</string>
     <string name="card_browser_select_none">Адмяніць выбар</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новыя)</string>
     <string name="card_browser_due_filtered_card">(фільтраваныя)</string>
-    <string name="card_browser_interval_learning_card">(якія зараз вучацца)</string>
-    <string name="card_browser_no_cards_in_deck">У калодзе \'%s\' картак не знойдзена</string>
+    <string name="card_browser_interval_learning_card">(вывучаюцца)</string>
+    <string name="card_browser_no_cards_in_deck">У калодзе \'%s\' не знойдзена картак</string>
     <string name="card_browser_search_all_decks">Шукаць ва ўсіх калодах</string>
     <string name="card_browser_unknown_deck_name">Невядома</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="few">%d cards deleted</item>
-        <item quantity="many">%d cards deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">Выдалена %d картка</item>
+        <item quantity="few">Выдалена %d карткі</item>
+        <item quantity="many">Выдалена %d картак</item>
+        <item quantity="other">Выдалена %d карткі</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Дадана</string>
+    <string name="card_info_first_review">Першае паўтарэнне</string>
+    <string name="card_info_latest_review">Апошняе паўтарэнне</string>
+    <string name="card_info_interval">Інтэрвал</string>
+    <string name="card_info_ease">Лёгкасць</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Паўтарэнняў</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Памылак</string>
+    <string name="card_info_average_time">Сярэдні час</string>
+    <string name="card_info_total_time">Агульны час</string>
+    <string name="card_info_card_type">Тып карткі</string>
+    <string name="card_info_note_type">Тып запісу</string>
+    <string name="card_info_deck_name">Назва калоды</string>
+    <string name="card_info_card_id">Ідэнт. карткі</string>
+    <string name="card_info_note_id">Ідэнт. запісу</string>
+    <string name="card_info_revlog_time">Час</string>
+    <string name="card_info_revlog_date">Дата</string>
+    <string name="card_info_revlog_rating">Рэйтынг</string>
+    <string name="card_info_revlog_type">Тып</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Вучыцца</string>
+    <string name="card_info_revlog_review">Паўтараецца</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Паўторна завучаныя</string>
+    <string name="card_info_revlog_filtered">Фільтраваныя</string>
+    <string name="card_info_ease_not_applicable">Н/Д</string>
 </resources>

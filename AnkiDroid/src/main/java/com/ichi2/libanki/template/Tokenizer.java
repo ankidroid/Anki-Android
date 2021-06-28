@@ -1,3 +1,19 @@
+/****************************************************************************************
+ * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.libanki.template;
 
 import java.util.Iterator;
@@ -18,6 +34,15 @@ import static com.ichi2.libanki.template.Tokenizer.TokenKind.TEXT;
  * Due to the way iterator work in java, it's easier for the class to keep track of the template
  */
 public class Tokenizer implements Iterator<Tokenizer.Token> {
+    /** 
+     * If this text appears at the top of a template (not considering whitespaces and other \s symbols), then the
+     * template accept legacy handlebars. That is <% foo %> is interpreted similarly as {{ foo }}.
+     * This is used for compatibility with legacy version of anki.
+     *
+     * Same as rslib/src/template's ALT_HANDLEBAR_DIRECTIVE upstream*/
+    @VisibleForTesting
+    public final static String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
+
     /**
      * The remaining of the string to read.
      */
@@ -25,9 +50,23 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
     /**
      * Become true if lexing failed. That is, the string start with {{, but no }} is found.
      */
-    private @Nullable boolean mFailed;
+    private boolean mFailed = false;
 
+    /**
+     * Whether we consider <% and %> as handlebar
+     */
+    private final boolean mLegacy;
+
+
+    /**
+     * @param template A question or answer template.
+     */
     Tokenizer(@NonNull String template) {
+        String trimmed = template.trim();
+        mLegacy = trimmed.startsWith(ALT_HANDLEBAR_DIRECTIVE);
+        if (mLegacy) {
+            template = trimmed.substring(ALT_HANDLEBAR_DIRECTIVE.length());
+        }
         mTemplate = template;
     }
 
@@ -80,8 +119,8 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         private final String mText;
 
 
-        public Token(TokenKind king, String text) {
-            mKind = king;
+        public Token(TokenKind kind, String text) {
+            mKind = kind;
             mText = text;
         }
 
@@ -109,8 +148,17 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         public @NonNull String getText() {
             return mText;
         }
+
+        @VisibleForTesting
+        public @NonNull Token new_to_legacy() {
+            return new Token(mKind, Tokenizer.new_to_legacy(mText));
+        }
     }
 
+    @VisibleForTesting
+    public static @NonNull String new_to_legacy(String template_part) {
+        return template_part.replace("{{", "<%").replace("}}", "%>");
+    }
 
 
     /**
@@ -151,17 +199,35 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
             IResult r = ((IResult) obj);
             return mToken.equals(r.mToken) && mRemaining.equals(r.mRemaining);
         }
-    }
 
+        @VisibleForTesting
+        public @NonNull IResult new_to_legacy() {
+            return new IResult(mToken.new_to_legacy(), Tokenizer.new_to_legacy(mRemaining));
+        }
+    }
 
     /**
      * @param template The part of the template that must still be lexed
-     * @return The longest prefix without {{, or null if it's empty.
+     * @param legacy whether <% is accepted as a handlebar
+     * @return The longest prefix without handlebar, or null if it's empty.
      */
-    @VisibleForTesting
-    protected static @Nullable IResult text_token(@NonNull String template) {
-        int first_handlebar = template.indexOf("{{");
-        int text_size = (first_handlebar == -1) ? template.length() : first_handlebar;
+    protected static @Nullable IResult text_token(@NonNull String template, boolean legacy) {
+        int first_legacy_handlebar = (legacy) ? template.indexOf("<%") : -1;
+        int first_new_handlebar = template.indexOf("{{");
+        int text_size;
+        if (first_new_handlebar == -1) {
+            if (first_legacy_handlebar == -1) {
+                text_size = template.length();
+            } else {
+                text_size = first_legacy_handlebar;
+            }
+        } else {
+            if (first_legacy_handlebar == -1 || first_new_handlebar < first_legacy_handlebar) {
+                text_size = first_new_handlebar;
+            } else {
+                text_size = first_legacy_handlebar;
+            }
+        }
         if (text_size == 0) {
             return null;
         }
@@ -184,11 +250,11 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         }
         switch (start.charAt(0)) {
             case '#':
-                return new Token(OPEN_CONDITIONAL, start.substring(1));
+                return new Token(OPEN_CONDITIONAL, start.substring(1).trim());
             case '/':
-                return new Token(CLOSE_CONDITIONAL, start.substring(1));
+                return new Token(CLOSE_CONDITIONAL, start.substring(1).trim());
             case '^':
-                return new Token(OPEN_NEGATED, start.substring(1));
+                return new Token(OPEN_NEGATED, start.substring(1).trim());
             default:
                 return new Token(REPLACEMENT, start);
         }
@@ -197,34 +263,64 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
 
     /**
      * @param template a part of a template to lex
+     * @param legacy   Whether to also consider handlebar starting with <%
+     * @return The content of handlebar at start of template
+     */
+    protected static @Nullable IResult handlebar_token(@NonNull String template, boolean legacy) {
+        IResult new_handlebar_token = new_handlebar_token(template);
+        if (new_handlebar_token != null) {
+            return new_handlebar_token;
+        }
+        if (legacy) {
+            return legacy_handlebar_token(template);
+        }
+        return null;
+    }
+
+    /**
+     * @param template a part of a template to lex
      * @return The content of handlebar at start of template
      */
     @VisibleForTesting
-    protected static @Nullable IResult handlebar_token(@NonNull String template) {
-        if (template.length() < 2 || template.charAt(0) != '{' || template.charAt(1) != '{') {
+    protected static @Nullable IResult new_handlebar_token(@NonNull String template) {
+        return handlebar_token(template, "{{", "}}");
+    }
+
+    protected static @Nullable IResult handlebar_token(@NonNull String template, @NonNull String prefix, @NonNull String suffix) {
+        if (!template.startsWith(prefix)) {
             return null;
         }
-        int end = template.indexOf("}}");
+        int end = template.indexOf(suffix);
         if (end == -1) {
             return null;
         }
-        String content = template.substring(2, end);
+        String content = template.substring(prefix.length(), end);
         @NonNull Token handlebar = classify_handle(content);
-        return new IResult(handlebar, template.substring(end+2));
+        return new IResult(handlebar, template.substring(end + suffix.length()));
+    }
+
+
+    /**
+     * @param template a part of a template to lex
+     * @return The content of handlebar at start of template
+     */
+    @VisibleForTesting
+    protected static @Nullable IResult legacy_handlebar_token(@NonNull String template) {
+        return handlebar_token(template, "<%", "%>");
     }
 
 
     /**
      * @param template The remaining of template to lex
+     * @param legacy   Whether to accept <% as handlebar
      * @return The next token, or null at end of string
      */
-    @VisibleForTesting
-    protected static @Nullable IResult next_token(@NonNull String template) {
-        IResult t = handlebar_token(template);
+    protected static @Nullable IResult next_token(@NonNull String template, boolean legacy) {
+        IResult t = handlebar_token(template, legacy);
         if (t != null) {
             return t;
         }
-        return text_token(template);
+        return text_token(template, legacy);
     }
 
 
@@ -237,7 +333,7 @@ public class Tokenizer implements Iterator<Tokenizer.Token> {
         if (mTemplate.length() == 0) {
             throw new NoSuchElementException();
         }
-        IResult ir = next_token(mTemplate);
+        IResult ir = next_token(mTemplate, mLegacy);
         if (ir == null) {
             // Missing closing }}
             mFailed = true;

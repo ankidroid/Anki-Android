@@ -1029,7 +1029,7 @@ public class CardContentProvider extends ContentProvider {
             case DECKS:
                 // Insert new deck with specified name
                 String deckName = values.getAsString(FlashCardsContract.Deck.DECK_NAME);
-                did = col.getDecks().id_dont_create(deckName);
+                did = col.getDecks().id_for_name(deckName);
                 if (did != null) {
                     throw new IllegalArgumentException("Deck name already exists: " + deckName);
                 }

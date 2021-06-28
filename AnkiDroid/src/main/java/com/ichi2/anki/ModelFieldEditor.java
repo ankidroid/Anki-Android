@@ -47,12 +47,12 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -204,20 +204,15 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
 
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(R.string.model_field_editor_add)
                 .positiveText(R.string.dialog_ok)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
-                    String fieldName = _uniqueName(mFieldNameInput);
-                    if (fieldName == null) {
-                        return;
-                    }
                     //Name is valid, now field is added
                     changeHandler listener = changeFieldHandler();
+                    String fieldName = _uniqueName(mFieldNameInput);
                     try {
-                        mCol.modSchema();
-                        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+                        addField(fieldName, listener, true);
                     } catch (ConfirmModSchemaException e) {
                         e.log();
 
@@ -225,10 +220,12 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         ConfirmationDialog c = new ConfirmationDialog();
                         c.setArgs(getResources().getString(R.string.full_sync_confirmation));
                         Runnable confirm = () -> {
-                            mCol.modSchemaNoCheck();
-                            String fieldName1 = mFieldNameInput.getText().toString()
-                                    .replaceAll("[\\n\\r]", "");
-                            TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName1), listener);
+                            try {
+                                addField(fieldName, listener, false);
+                            } catch (ConfirmModSchemaException e1) {
+                                e1.log();
+                                //This should never be thrown
+                            }
                             dismissContextMenu();
                         };
 
@@ -241,6 +238,22 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 })
                 .negativeText(R.string.dialog_cancel)
                 .show();
+    }
+
+
+    private void addField(String fieldName, changeHandler listener, boolean modSchemaCheck)
+            throws ConfirmModSchemaException {
+
+        if (fieldName == null) {
+            return;
+        }
+        //Name is valid, now field is added
+        if (modSchemaCheck) {
+            mCol.modSchema();
+        } else {
+            mCol.modSchemaNoCheck();
+        }
+        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
     }
 
 
@@ -290,10 +303,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mFieldNameInput.setSingleLine(true);
         mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(R.string.model_field_editor_rename)
                 .positiveText(R.string.rename)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                     String fieldName = _uniqueName(mFieldNameInput);
                     if (fieldName == null) {
@@ -336,10 +348,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private void repositionFieldDialog() {
         mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-        new MaterialDialog.Builder(this)
+        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, mFieldLabels.size()))
                 .positiveText(R.string.dialog_ok)
-                .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
                         String newPosition = mFieldNameInput.getText().toString();
                         int pos;
@@ -358,7 +369,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1));
+                                TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1), listener);
                             } catch (ConfirmModSchemaException e) {
                                 e.log();
 
@@ -613,5 +624,20 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onLocaleSelectionCancelled() {
         dismissAllDialogFragments();
+    }
+
+
+    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
+    void addField(EditText fieldNameInput) throws ConfirmModSchemaException {
+        String fieldName = _uniqueName(fieldNameInput);
+
+        addField(fieldName, new changeHandler(this), true);
+    }
+
+    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
+    void renameField(EditText fieldNameInput) throws ConfirmModSchemaException {
+        this.mFieldNameInput = fieldNameInput;
+
+        renameField();
     }
 }

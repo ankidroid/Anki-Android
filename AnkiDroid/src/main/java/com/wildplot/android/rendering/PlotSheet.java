@@ -39,7 +39,7 @@ import timber.log.Timber;
  * This is a sheet that is used to plot mathematical functions including coordinate systems and optional extras like
  * legends and descriptors. Additionally all conversions from image to plot coordinates are done here
  */
-@SuppressLint("FieldNamingPatternDetector")
+@SuppressLint("NonPublicNonStaticFieldName")
 public class PlotSheet implements Drawable {
 
     protected Typeface typeface = Typeface.DEFAULT;

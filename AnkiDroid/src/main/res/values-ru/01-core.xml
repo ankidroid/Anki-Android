@@ -105,6 +105,7 @@
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -126,12 +127,12 @@
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>
+    <string name="menu_lookup">Посмотреть в словаре</string>
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
     <string name="new_deck">Создать колоду</string>
-    <string name="create" comment="Button to create a filtered deck">Создать</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="night_mode">Ночной режим</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -161,10 +162,10 @@
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
     <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
-    <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
+    <string name="custom_study_deck_name">Дополнительное занятие</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Поиск колод</string>
     <string name="empty_deck_add_note">Добавить карточку</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_empty">Эта колода пуста. Нажмите кнопку +, чтобы добавить что-нибудь.</string>
@@ -223,4 +224,18 @@
     <string name="open_tag_not_closed">Отсутствует \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Найдено \'{{/%1$s}}\', но ожидалось \'{{/%2$s}}\'</string>
     <string name="filter_error">Ошибка в фильтре %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите сохранить?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Заменить коллекцию на AnkiDroid коллекцией из AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Заменить коллекцию на AnkiWeb коллекцией из AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Выберите коллекцию для сохранения</string>
+    <string name="sync_conflict_replace_title">Заменить коллекцию</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

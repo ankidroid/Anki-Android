@@ -1,7 +1,6 @@
 package com.ichi2.async;
 
 import com.ichi2.libanki.CollectionGetter;
-import com.ichi2.libanki.Collection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +21,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ProgressBackground, ResultBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -33,15 +32,21 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTaskConcrete(
-            @NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-            @Nullable TaskListener<ProgressListener, ResultListener> listener) {
+    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(
+            @NonNull TaskDelegate<Progress, Result> task,
+            @Nullable TaskListener<? super Progress, ? super Result> listener) {
+        return executeTaskWithListener(task, listener, mColGetter);
+    }
+
+    public static <Progress, Result> CollectionTask<Progress, Result> executeTaskWithListener(
+            @NonNull TaskDelegate<Progress, Result> task,
+            @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
-        final ResultBackground res;
+        final Result res;
         try {
-            res = task.task(mColGetter.getCol(), new MockTaskManager<>(listener));
+            res = task.task(colGetter.getCol(), new MockTaskManager<>(listener));
         } catch (Exception e) {
             Timber.w(e, "A new failure may have something to do with running in the foreground.");
             throw e;
@@ -79,12 +84,12 @@ public class ForegroundTaskManager extends TaskManager {
         return true;
     }
 
-    public class MockTaskManager<ProgressListener, ProgressBackground extends ProgressListener> implements ProgressSenderAndCancelListener<ProgressBackground> {
+    public static class MockTaskManager<ProgressListener, Progress extends ProgressListener> implements ProgressSenderAndCancelListener<Progress> {
 
-        private final @Nullable TaskListener<ProgressListener, ?> mTaskListener;
+        private final @Nullable TaskListener<? super Progress, ?> mTaskListener;
 
 
-        public MockTaskManager(@Nullable TaskListener<ProgressListener, ?> listener) {
+        public MockTaskManager(@Nullable TaskListener<? super Progress, ?> listener) {
             mTaskListener = listener;
         }
 
@@ -96,15 +101,15 @@ public class ForegroundTaskManager extends TaskManager {
 
 
         @Override
-        public void doProgress(@Nullable ProgressBackground value) {
+        public void doProgress(@Nullable Progress value) {
             mTaskListener.onProgressUpdate(value);
         }
     }
 
-    public class EmptyTask<ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> extends
-            CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> {
+    public static class EmptyTask<Progress, Result> extends
+            CollectionTask<Progress, Result> {
 
-        protected EmptyTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener) {
+        protected EmptyTask(TaskDelegate<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
             super(task, listener, null);
         }
     }

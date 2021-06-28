@@ -102,17 +102,17 @@
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
     <string name="card_info_average_time">Average Time</string>
     <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
+    <string name="card_info_card_type">कार्ड प्रकार</string>
+    <string name="card_info_note_type">नोट प्रकार</string>
+    <string name="card_info_deck_name">डेक का नाम</string>
+    <string name="card_info_card_id">कार्ड की पहचान</string>
+    <string name="card_info_note_id">नोट की पहचान</string>
     <string name="card_info_revlog_time">समय</string>
     <string name="card_info_revlog_date">दिनांक</string>
     <string name="card_info_revlog_rating">Rating</string>
     <string name="card_info_revlog_type">प्रकार</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_review">समीक्षा</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>

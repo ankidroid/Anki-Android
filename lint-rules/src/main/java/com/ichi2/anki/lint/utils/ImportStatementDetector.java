@@ -20,8 +20,8 @@ import com.android.tools.lint.client.api.UElementHandler;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.JavaContext;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.android.annotations.NonNull;
+import com.android.annotations.Nullable;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UImportStatement;
 
@@ -30,7 +30,7 @@ import java.util.List;
 
 public abstract class ImportStatementDetector extends Detector {
 
-    public abstract void visitImportStatement(@NotNull JavaContext context, @NotNull UImportStatement node);
+    public abstract void visitImportStatement(@NonNull JavaContext context, @NonNull UImportStatement node);
 
 
     @Nullable
@@ -41,10 +41,10 @@ public abstract class ImportStatementDetector extends Detector {
 
     @Nullable
     @Override
-    public UElementHandler createUastHandler(@NotNull JavaContext context) {
+    public UElementHandler createUastHandler(@NonNull JavaContext context) {
         return new UElementHandler() {
             @Override
-            public void visitImportStatement(@NotNull UImportStatement node) {
+            public void visitImportStatement(@NonNull UImportStatement node) {
                 // do not call super
                 ImportStatementDetector.this.visitImportStatement(context, node);
             }

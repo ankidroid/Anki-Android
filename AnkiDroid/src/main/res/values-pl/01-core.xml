@@ -105,6 +105,7 @@
     <string name="unbury">Odkop</string>
     <string name="rename_deck">Zmień nazwę talii</string>
     <string name="create_shortcut">Utwórz skrót</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj notatkę</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizacja konta</string>
@@ -126,12 +127,12 @@
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_select">Zaznacz tekst</string>
+    <string name="menu_lookup">Tekst do wyszukania</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
     <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="new_deck">Stwórz talię</string>
-    <string name="create" comment="Button to create a filtered deck">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
     <string name="night_mode">Tryb nocny</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
@@ -164,7 +165,7 @@
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Przeszukaj talię</string>
     <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
@@ -223,4 +224,18 @@
     <string name="open_tag_not_closed">Brakuje \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Znaleziono \'{{/%1$s}}\', ale oczekiwano \'{{/%2$s}}\'</string>
     <string name="filter_error">Błąd w filtrze %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Kolekcje nie mogą zostać połączone.\nKtórą kolekcję chcesz zachować?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Czy zastąpić twoją kolekcję AnkiDroid kolekcją z twojego AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Czy zastąpić twoją kolekcję AnkiWeb kolekcją z twojego AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Wybierz kolekcje którą chcesz zachować</string>
+    <string name="sync_conflict_replace_title">Zastąp kolekcję</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

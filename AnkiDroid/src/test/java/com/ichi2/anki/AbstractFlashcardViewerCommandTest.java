@@ -146,7 +146,7 @@ public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
     }
 
-    private void testDoubleTapUnsets(int command) {
+    private void testDoubleTapUnsets(ViewerCommand command) {
         CommandTestCardViewer viewer = getViewer();
 
         viewer.executeCommand(command);

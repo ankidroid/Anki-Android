@@ -95,6 +95,7 @@
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
     <string name="create_shortcut">Snelkoppeling maken</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
@@ -116,12 +117,12 @@
     <string name="menu_edit_tags">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_select">Tekst selecteren</string>
+    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Opzoeken in %1$s</string>
     <string name="menu_mark_note">Memo markeren</string>
     <string name="menu_unmark_note">Memo onmarkeren</string>
     <string name="menu_toggle_mic_tool_bar">Uitspraak controleren</string>
     <string name="new_deck">Leerset aanmaken</string>
-    <string name="create" comment="Button to create a filtered deck">Maak</string>
     <string name="new_dynamic_deck">Gefilterde set maken</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
@@ -154,7 +155,7 @@
     <string name="custom_study_deck_name">Aangepaste studiesessie</string>
     <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="empty_deck">Deze leerset is leeg</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Leerset zoeken</string>
     <string name="empty_deck_add_note">Kaart toevoegen</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
     <string name="studyoptions_empty">Deze leerset is leeg. Druk op de + knop om nieuwe inhoud toe te voegen.</string>
@@ -211,4 +212,16 @@
     <string name="open_tag_not_closed">\'{{%s }}\' ontbreekt.</string>
     <string name="wrong_tag_closed">{{/%1$s}}\' gevonden, maar \'{{/%2$s }}\' verwacht</string>
     <string name="filter_error">Fout in filters %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>
