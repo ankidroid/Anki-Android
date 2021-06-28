@@ -417,10 +417,10 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private void addPreferences(@NonNull Collection col) {
         this.addPreferencesFromResource(R.xml.cram_deck_options);
 
-        this.second_filter_listener();
         if (col.schedVer() != 1) {
             Timber.d("sched v2: removing filtered deck custom study steps");
             // getPreferenceScreen.removePreference didn't return true, so remove from the category
+            this.setupSecondFilterListener();
             android.preference.PreferenceCategory category = (android.preference.PreferenceCategory) this.findPreference("studyOptions");
             removePreference(category, "stepsOn");
             removePreference(category, "steps");
@@ -571,25 +571,25 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     }
 
     @SuppressWarnings("deprecation")
-    private void second_filter_listener()
+    private void setupSecondFilterListener()
     {
-        android.preference.CheckBoxPreference second_filter_sign = (android.preference.CheckBoxPreference) this.findPreference("filter_second");
-        android.preference.PreferenceCategory second_filter = (android.preference.PreferenceCategory) this.findPreference("second_filter");
+        android.preference.CheckBoxPreference secondFilterSign = (android.preference.CheckBoxPreference) this.findPreference("filterSecond");
+        android.preference.PreferenceCategory secondFilter = (android.preference.PreferenceCategory) this.findPreference("secondFilter");
         if (mPref.mSecondFilter) {
-            second_filter.setEnabled(true);
-            second_filter_sign.setChecked(true);
+            secondFilter.setEnabled(true);
+            secondFilterSign.setChecked(true);
         }
-        second_filter_sign.setOnPreferenceChangeListener((preference, newValue) -> {
+        secondFilterSign.setOnPreferenceChangeListener((preference, newValue) -> {
             if (newValue instanceof Boolean){
                 Boolean boolVal = (Boolean)newValue;
 
                 if (!boolVal) {
                     mDeck.getJSONArray("terms").remove(1);
-                    second_filter.setEnabled(false);
+                    secondFilter.setEnabled(false);
                 } else {
 
-                    second_filter.setEnabled(true);
-                    JSONArray narr = new JSONArray(Arrays.asList("\"deck:*\"", 20, 5));
+                    secondFilter.setEnabled(true);
+                    JSONArray narr = new JSONArray(Arrays.asList("", 20, 5));
                     mDeck.getJSONArray("terms").put(1, narr);
                 }
             }
