@@ -58,11 +58,13 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
@@ -81,7 +83,7 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -92,7 +94,6 @@ import java.util.Collections;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -131,7 +132,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
+    class ScheduleCollectionTaskListener extends NextCardHandler<Computation<Card[]>> {
 
         private final @PluralsRes int mToastResourceId;
 
@@ -142,10 +143,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(PairWithBoolean<Card[]> result) {
+        public void onPostExecute(Computation<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.other.length;
+            int cardCount = result.getValue().length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }
@@ -545,6 +546,34 @@ public class Reviewer extends AbstractFlashcardViewer {
         startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        new Handler().post(() -> {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                shouldUseDefaultColor(menuItem);
+            }
+        });
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    /**
+     * This Method changes the color of icon if user taps in overflow button.
+     */
+    private void shouldUseDefaultColor(MenuItem menuItem) {
+        Drawable drawable = menuItem.getIcon();
+
+        if (drawable != null && !menuItem.hasSubMenu() && !isFlagResource(menuItem.getItemId())) {
+            drawable.mutate();
+            drawable.setTint(ResourcesCompat.getColor(getResources(), R.color.material_blue_600, null));
+        }
+    }
+
+
+    @Override
+    public void onPanelClosed(int featureId, @NonNull Menu menu) {
+        new Handler().postDelayed(this::refreshActionBar, 100);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -552,6 +581,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
 
         displayIconsOnTv(menu);
+        displayIcons(menu);
 
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -688,6 +718,19 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @SuppressLint("RestrictedApi")
+    private void displayIcons(Menu menu) {
+        try {
+            if (menu instanceof MenuBuilder) {
+                MenuBuilder m = (MenuBuilder) menu;
+                m.setOptionalIconsVisible(true);
+            }
+        }catch (Exception | Error e) {
+            Timber.w(e, "Failed to display icons in Over flow menu");
+        }
     }
 
 
@@ -1201,18 +1244,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void disableDrawerSwipeOnConflicts() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
-        if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            if (gestureSwipeUp != COMMAND_NOTHING ||
-                    gestureSwipeDown != COMMAND_NOTHING ||
-                    gestureSwipeRight != COMMAND_NOTHING) {
-                mHasDrawerSwipeConflicts = true;
-                super.disableDrawerSwipe();
-            }
+        if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
+            mHasDrawerSwipeConflicts = true;
+            super.disableDrawerSwipe();
         }
     }
 
@@ -1267,6 +1301,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public AudioView getAudioView() {
         return mMicToolBar;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public boolean hasDrawerSwipeConflicts() {
+        return mHasDrawerSwipeConflicts;
     }
 
     /**

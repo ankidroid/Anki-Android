@@ -85,57 +85,31 @@
                     android:animateLayoutChanges="true"
                     android:paddingVertical="@dimen/keyline_1"
                     android:paddingHorizontal="6dip" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    <LinearLayout
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorTagButton"
-                        style="?android:attr/buttonStyleSmall"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center" >
-
-                        <com.ichi2.ui.FixedTextView
-                            android:id="@+id/CardEditorTagText"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dip"
-                            android:layout_marginRight="5dip"
-                            android:clickable="false"
-                            android:gravity="start|center_vertical"
-                            tools:text="Tags: AnkiDroid"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    <LinearLayout
+                        android:layout_height="40dp"
+                        tools:text="Tags: AnkiDroid"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="15dip"
+                        android:paddingEnd="15dip"
+                        android:elevation="50dip"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/button_background"/>
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorCardsButton"
-                        style="?android:attr/buttonStyleSmall"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center" >
-
-                        <com.ichi2.ui.FixedTextView
-                            android:id="@+id/CardEditorCardsText"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dip"
-                            android:layout_marginRight="5dip"
-                            android:clickable="false"
-                            tools:text="Cards: Card 1"
-                            android:gravity="start|center_vertical" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
+                        android:layout_height="40dp"
+                        tools:text="Cards: Card 1"
+                        android:textAllCaps="false"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="15dip"
+                        android:paddingEnd="15dip"
+                        android:elevation="50dip"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/button_background"/>
+                 </LinearLayout>
         </ScrollView>
     </LinearLayout>
 

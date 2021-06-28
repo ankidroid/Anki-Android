@@ -40,7 +40,7 @@ public class PeripheralKeymapTest {
     @Test
     public void testNumpadAction() {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
-        List<Integer> processed = new ArrayList<>();
+        List<ViewerCommand> processed = new ArrayList<>();
 
         PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), processed::add);
         peripheralKeymap.setup();

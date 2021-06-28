@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nenhum card criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve usar Ocultar em algum termo</string>
-    <string name="note_editor_set_field_language">Definir idioma do campo.</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum card.\nPor favor, escolha outro tipo de nota, ou clique em \'Cards\' e adicione uma substituição de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
     <string name="saving_facts">Salvando nota</string>

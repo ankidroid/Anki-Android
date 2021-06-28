@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">リンク用やヒント表示用の文字列・画像をタップした場合は、タップジェスチャーに割り当てたアクションを実行せず、単にリンク先やヒントを表示します</string>
     <string name="gestures_corner_touch" maxLength="41">タップを９種類にする</string>
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
     <string name="gestures_swipe_right" maxLength="41">右にスワイプ</string>
     <string name="gestures_double_tap" maxLength="41">ダブルタップ</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">上をタップ</string>
     <string name="gestures_tap_left" maxLength="41">左をタップ</string>
     <string name="gestures_tap_right" maxLength="41">右をタップ</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>

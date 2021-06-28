@@ -95,6 +95,7 @@
     <string name="unbury">ಅನ್ಬರಿ</string>
     <string name="rename_deck">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ಸೇರಿಸಿ </string>
     <string name="menu_add_note">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">ಆಂಕಿಡ್ರಾಯ್ಡ್‌ನಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹದೊಂದಿಗೆ ಅಂಕಿವೆಬ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಬೇಕೆ?</string>
     <string name="sync_conflict_title_new">ಇರಿಸಿಕೊಳ್ಳಲು ಸಂಗ್ರಹವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="sync_conflict_replace_title">ಸಂಗ್ರಹಣೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

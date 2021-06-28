@@ -1,4 +1,4 @@
-
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki;
 
 import android.app.Activity;
@@ -140,11 +140,16 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Timber.i("Home button pressed");
-            finishWithoutAnimation();
-            return true;
+            return onActionBarBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected boolean onActionBarBackPressed() {
+        finishWithoutAnimation();
+        return true;
+    }
+
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
@@ -401,7 +406,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
+        int toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary);
         int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =

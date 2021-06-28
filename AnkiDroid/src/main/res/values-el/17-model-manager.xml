@@ -20,12 +20,12 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Manage note types</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Διαχείριση τύπων σημειώσεων</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Διαχείριση πεδίων</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Δεν μπορείτε να διαγράψετε τον τύπο της τελευταίας σημείωσης</string>
     <string name="toast_last_field">Note types must have at least one field</string>
-    <string name="toast_empty_name">You must enter a name</string>
+    <string name="toast_empty_name">Πρέπει να εισαγάγετε ένα όνομα</string>
     <string name="toast_duplicate_field">Field name already used</string>
     <string name="toast_out_of_range">You must enter a valid value</string>
     <!--Plurals-->
@@ -38,33 +38,33 @@
         <item quantity="other">%d σημειώσεις</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Delete note type</string>
+    <string name="model_browser_delete">Διαγραφή τύπου σημείωσης</string>
     <string name="model_browser_rename" comment="Rename a note type">Μετονομασία</string>
     <string name="model_browser_template">Επεξεργασία καρτών</string>
-    <string name="model_browser_add">Add note type</string>
+    <string name="model_browser_add">Προσθήκη τύπου σημείωσης</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Μετονομασία τύπου σημείωσης</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Edit fields</string>
-    <string name="model_field_editor_add">Add field</string>
-    <string name="model_field_editor_delete">Delete field</string>
-    <string name="model_field_editor_rename">Rename field</string>
+    <string name="model_field_editor_title">Επεξεργασία πεδίων</string>
+    <string name="model_field_editor_add">Προσθήκη πεδίου</string>
+    <string name="model_field_editor_delete">Διαγραφή πεδίου</string>
+    <string name="model_field_editor_rename">Μετονομασία πεδίου</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
-    <string name="model_field_editor_changing">Updating fields</string>
+    <string name="model_field_editor_changing">Ενημέρωση πεδίων</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
     <string name="model_clone_suffix">copy</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
-    <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+    <string name="model_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό τον τύπο σημείωσης;</string>
+    <string name="field_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό το πεδίο;</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s </string>
+    <string name="model_browser_add_add">Προσθήκη: %1$s </string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s </string>
+    <string name="model_browser_add_clone">Κλώνος: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Μορφή ερώτησης</string>

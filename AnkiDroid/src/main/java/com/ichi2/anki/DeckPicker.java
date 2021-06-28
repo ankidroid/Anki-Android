@@ -132,9 +132,8 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
-import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.ImportUtils;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
@@ -223,6 +222,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // flag keeping track of when the app has been paused
     private boolean mActivityPaused = false;
+
+    // Flag to keep track of startup error
+    private boolean mStartupError = false;
 
     private String mExportFileName;
 
@@ -363,20 +365,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private ImportReplaceListener importReplaceListener() {
         return new ImportReplaceListener(this);
     }
-    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, BooleanGetter>{
+    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, Computation<?>>{
         public ImportReplaceListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<?> result) {
             Timber.i("Import: Replace Task Completed");
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
             Resources res = deckPicker.getResources();
-            if (result.getBoolean()) {
+            if (result.succeeded()) {
                 deckPicker.updateDeckList();
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
@@ -468,6 +470,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // set protected variable from NavigationDrawerActivity
         mFragmented = mStudyoptionsFrame != null && mStudyoptionsFrame.getVisibility() == View.VISIBLE;
 
+        // Open StudyOptionsFragment if in fragmented mode
+        if (mFragmented && !mStartupError) {
+            loadStudyOptionsFragment(false);
+        }
+
         registerExternalStorageListener();
 
         // create inherited navigation drawer layout here so that it can be used by parent class
@@ -542,10 +549,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // Show any necessary dialogs (e.g. changelog, special messages, etc)
                 SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
                 showStartupScreensAndDialogs(sharedPrefs, 0);
+                mStartupError = false;
             } else {
                 // Show error dialogs
                 StartupFailure failure = InitialActivity.getStartupFailureType(this);
                 handleStartupFailure(failure);
+                mStartupError = true;
             }
         } else {
             requestStoragePermission();
@@ -1130,10 +1139,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 getDialogHandler().sendMessage(handlerMessage);
             }
         }
-        // Open StudyOptionsFragment if in fragmented mode
-        if (mFragmented) {
-            loadStudyOptionsFragment(false);
-        }
+
         automaticSync();
     }
 
@@ -1398,7 +1404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, BooleanGetter> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, Computation<?>> {
         private final boolean mIsreview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1420,7 +1426,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<?> voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (mIsreview) {
@@ -1611,7 +1617,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private MediaCheckListener mediaCheckListener() {
         return new MediaCheckListener(this);
     }
-    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker, Void, PairWithBoolean<List<List<String>>>>{
+    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker, Void, Computation<List<List<String>>>>{
         public MediaCheckListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1624,13 +1630,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<List<List<String>>> result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<List<List<String>>> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result.bool) {
+            if (result.succeeded()) {
                 @SuppressWarnings("unchecked")
-                List<List<String>> checkList = result.other;
+                List<List<String>> checkList = result.getValue();
                 deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
             } else {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.check_media_failed));
@@ -1820,13 +1826,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @Override
         public void onProgressUpdate(Object... values) {
             Resources res = getResources();
-            if (values[0] instanceof Boolean) {
-                // This is the part Download missing media of syncing
-                int total = (Integer) values[1];
-                int done = (Integer) values[2];
-                values[0] = (values[3]);
-                values[1] = res.getString(R.string.sync_downloading_media, done, total);
-            } else if (values[0] instanceof Integer) {
+            if (values[0] instanceof Integer) {
                 int id = (Integer) values[0];
                 if (id != 0) {
                     mCurrentMessage = res.getString(id);
@@ -1843,7 +1843,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                // mProgressDialog.setTitle((String) values[0]);
                 mProgressDialog.setContent(mCurrentMessage + "\n"
                         + res
                         .getString(R.string.sync_up_down_size, mCountUp / 1024, mCountDown / 1024));
@@ -2493,7 +2492,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
                 }
                 if (due != null && getSupportActionBar() != null) {
-                    getSupportActionBar().setSubtitle(res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                    String subTitle;
+                    if (due == 0) {
+                        subTitle = res.getQuantityString(R.plurals.deckpicker_title_zero_due, getCol().cardCount(), getCol().cardCount());
+                    } else {
+                        subTitle = res.getQuantityString(R.plurals.deckpicker_title, due, due, time);
+                    }
+                    getSupportActionBar().setSubtitle(subTitle);
                 }
             }
         } catch (RuntimeException e) {

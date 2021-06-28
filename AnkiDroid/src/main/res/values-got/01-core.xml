@@ -95,6 +95,7 @@
     <string name="unbury">Unnawistr</string>
     <string name="rename_deck">Aftra gif namo du kartahuzda</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Biauk</string>
     <string name="menu_add_note">Biauk melein</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Galeik kawtsjon</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

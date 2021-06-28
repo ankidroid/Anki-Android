@@ -90,6 +90,7 @@
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
@@ -206,11 +207,14 @@
     <string name="wrong_tag_closed">Đã tìm thấy \'{{/%1$s}}\', nhưng phải là \'{{/%2$s}}\'</string>
     <string name="filter_error">Lỗi trong bộ lọc %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">bộ sưu tập</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">Piss off</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">Nguyên</string>
+    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

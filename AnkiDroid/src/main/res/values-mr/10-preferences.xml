@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">दुवा / इशारा दाबल्यास स्पर्श जेश्चरवर प्रक्रिया केली जाणार नाही.</string>
     <string name="gestures_corner_touch" maxLength="41">9-बिंदू स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोपर्यात स्पर्श जेश्चरला अनुमती द्या</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">स्वाइप अप</string>
     <string name="gestures_swipe_down" maxLength="41">खाली स्वाइप करा</string>
     <string name="gestures_swipe_left" maxLength="41">डावीकडे स्वाइप करा</string>
     <string name="gestures_swipe_right" maxLength="41">उजवीकडे स्वाइप करा</string>
     <string name="gestures_double_tap" maxLength="41">दुहेरी स्पर्श</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">शीर्षस्थानी स्पर्श करा</string>
     <string name="gestures_tap_left" maxLength="41">डावीकडे स्पर्श करा</string>
     <string name="gestures_tap_right" maxLength="41">उजवीकडे स्पर्श करा</string>
@@ -162,8 +165,12 @@
     <string name="vertical_centering" maxLength="41">मध्यभागी संरेखित करा</string>
     <string name="vertical_centering_summ">कार्डेची सामग्री अनुलंब मध्यभागी ठेवा</string>
     <string name="pref_backup_max" maxLength="41">बॅकअपची कमाल संख्या</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">बटण वेळ दर्शवा</string>
     <string name="show_estimates_summ">उत्तर बटणावर पुढील पुनरावलोकन वेळ दर्शवा</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">शीर्ष बार दर्शवा</string>
     <string name="show_top_bar_summ">शीर्ष पट्टीमध्ये कार्डची संख्या, ध्वजांकन आणि चिन्ह दर्शवा</string>
     <string name="show_progress" maxLength="41">उर्वरित दर्शवा</string>

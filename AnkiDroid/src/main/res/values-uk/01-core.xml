@@ -105,6 +105,7 @@
     <string name="unbury">Повернути</string>
     <string name="rename_deck">Переназвати колоду</string>
     <string name="create_shortcut">Створити значок</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додати</string>
     <string name="menu_add_note">Додати запис</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
@@ -231,4 +232,10 @@
     <string name="sync_conflict_local_confirm_new">Замінити вашу колекцію на AnkiWeb вашою колекцією з AnkiDroid?</string>
     <string name="sync_conflict_title_new">Обрати колекцію для збереження</string>
     <string name="sync_conflict_replace_title">Замінити колекцію</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

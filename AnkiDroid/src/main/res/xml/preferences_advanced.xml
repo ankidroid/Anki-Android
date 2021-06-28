@@ -39,15 +39,13 @@
             android:key="custom_sync_server_link"
             android:title="@string/custom_sync_server_title"/>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <com.ichi2.ui.SeekBarPreference
+            <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:defaultValue="8"
                 android:key="backupMax"
-                android:max="10"
                 android:summary="@string/preference_summary_literal"
-                android:text=""
                 android:title="@string/pref_backup_max"
-                app:interval="1"
-                app:min="0" />
+                app:min="0"
+                app:max="99" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_workarounds"

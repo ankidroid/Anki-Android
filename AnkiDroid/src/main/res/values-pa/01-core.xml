@@ -38,41 +38,41 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ਹਾ</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="decks">ਡੇਕ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ਕਾਰਡ ਬਰਾਉਜ਼ਰ</string>
+    <string name="statistics">ਅੰਕੜੇ</string>
+    <string name="settings">ਸੈਟਿੰਗ</string>
+    <string name="help">ਮਦਦ</string>
+    <string name="send_feedback">ਫ਼ੀਡਬੈਕ ਭੇਜੋ</string>
+    <string name="studyoptions_due_today">ਅੱਜ ਕਰਨ ਵਾਲੇ</string>
+    <string name="studyoptions_new_total">ਕੁੱਲ ਨਵੇਂ ਕਾਰਡ</string>
+    <string name="studyoptions_total_cards">ਕੁੱਲ ਕਾਰਡ</string>
+    <string name="studyoptions_eta">ਅਨੁਮਾਨਿਤ ਸਮਾਂ (ਮਿੰਟ)</string>
+    <string name="studyoptions_start">ਪੜ੍ਹਾਈ</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
+    <string name="expand">ਫੈਲਾਓ</string>
     <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="study_more">ਹੋਰ ਅਧਿਐਨ ਕਰੋ</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d ਕਾਰਡ ਬਕਾਇਆ (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d ਮਿੰਟ ਬਾਕੀ</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d ਘੰਟੇ ਬਾਕੀ</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d ਦਿਨ%d ਬਾਕੀ</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">ਸੰਗ੍ਰਹਿ ਖਾਲੀ ਹੈ</string>
+    <string name="no_cards_placeholder_description">ਕਾਰਡ ਸ਼ਾਮਲ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰੋ\N ਆਈਕਨ ਦੀ ਵਰਤੋਂ ਕਰਕੇ.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -95,6 +95,7 @@
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -24,13 +24,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
-    protected <Progress, Result> Result execute(CollectionTask.Task<Progress, Result> task) {
+    protected <Progress, Result> Result execute(TaskDelegate<Progress, Result> task) {
         CollectionTask<Progress, Result> collectionTask = TaskManager.launchCollectionTask(task);
         try {
             return collectionTask.get();
@@ -39,7 +38,7 @@ public abstract class AbstractCollectionTaskTest extends RobolectricTest {
         }
     }
 
-    protected <Progress, Result> void waitForTask(CollectionTask.Task<Progress, Result> task, TaskListener<Progress, Result> listener) {
+    protected <Progress, Result> void waitForTask(TaskDelegate<Progress, Result> task, TaskListener<Progress, Result> listener) {
         TaskManager.launchCollectionTask(task, listener);
 
         waitForAsyncTasksToComplete();

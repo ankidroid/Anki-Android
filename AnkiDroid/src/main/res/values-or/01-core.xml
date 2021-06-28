@@ -95,6 +95,7 @@
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
     <string name="rename_deck">ଡେକ୍ କୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
@@ -166,7 +167,7 @@
     <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, \"ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ\" ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
-    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସଂପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
+    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync">ସିଙ୍କ୍</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
@@ -191,7 +192,7 @@
     <string name="invalid_template">ଗୋଟିଏ କାର୍ଡ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ</string>
     <string name="card_template_editor_would_delete_note">ଏହି କାର୍ଡ ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ କାର୍ଡ ପ୍ରକାର ସୃଷ୍ଟି ଏବଂ ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">କାର୍ଡ ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
-    <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ କାର୍ଡ ପାଇଁ କାର୍ଡ ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି। </string>
+    <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ କାର୍ଡ ପାଇଁ କାର୍ଡ ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ବ୍ରାଉଜର ରୂପ</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb ରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଆପଣଙ୍କ AnkiDroid ର ସଂଗ୍ରହ ସହିତ ବଦଳାଇବେ କି?</string>
     <string name="sync_conflict_title_new">ରଖିବାକୁ ସଂଗ୍ରହ ଚୟନ କରନ୍ତୁ</string>
     <string name="sync_conflict_replace_title">ସଂଗ୍ରହକୁ ବଦଳାନ୍ତୁ</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$dଟିଏ ପତ୍ର (0 ବାକି)</item>
+        <item quantity="other">%1$dଟି ପତ୍ର (0 ବାକି)</item>
+    </plurals>
 </resources>

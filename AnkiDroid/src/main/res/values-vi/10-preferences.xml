@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">Các thao tác chạm sẽ không được xử lý nếu nhấn một liên kết / gợi ý.</string>
     <string name="gestures_corner_touch" maxLength="41">Chạm 9 điểm</string>
     <string name="gestures_corner_touch_summary">Cho phép cử chỉ chạm ở các góc màn hình</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Kéo lên</string>
     <string name="gestures_swipe_down" maxLength="41">Kéo xuống</string>
     <string name="gestures_swipe_left" maxLength="41">Kéo trái</string>
     <string name="gestures_swipe_right" maxLength="41">Vuốt sang phải</string>
     <string name="gestures_double_tap" maxLength="41">Chạm hai lần</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Chạm vào phần đầu</string>
     <string name="gestures_tap_left" maxLength="41">Chạm bên trái</string>
     <string name="gestures_tap_right" maxLength="41">Chạm bên phải</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">Chọn Center align</string>
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
     <string name="pref_backup_max" maxLength="41">Tối đa số lượng bản sao lưu</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Hiển thị nút thời gian</string>
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Hiển thị thanh trên cùng</string>
     <string name="show_top_bar_summ">Hiển thị số lượng thẻ, gắn cờ và đánh dấu trên thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>

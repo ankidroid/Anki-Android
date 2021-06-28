@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.text.Editable;
@@ -107,8 +108,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.CheckCameraPermission;
-import com.ichi2.utils.ContentResolverUtil;
-import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
@@ -120,9 +119,6 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -137,7 +133,6 @@ import java.util.Set;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
-import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
@@ -218,10 +213,12 @@ public class NoteEditor extends AnkiActivity implements
 
     private LinearLayout mFieldsLayoutContainer;
 
+    private MediaRegistration mMediaRegistration;
+
     private TagsDialogFactory mTagsDialogFactory;
 
-    private TextView mTagsButton;
-    private TextView mCardsButton;
+    private AppCompatButton mTagsButton;
+    private AppCompatButton mCardsButton;
     private Spinner mNoteTypeSpinner;
     private DeckSpinnerSelection mDeckSpinnerSelection;
 
@@ -409,6 +406,7 @@ public class NoteEditor extends AnkiActivity implements
         Timber.d("onCreate()");
 
         mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
+        mMediaRegistration =  new MediaRegistration(this);
 
         super.onCreate(savedInstanceState);
         mFieldState.setInstanceState(savedInstanceState);
@@ -510,8 +508,8 @@ public class NoteEditor extends AnkiActivity implements
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mTagsButton = findViewById(R.id.CardEditorTagText);
-        mCardsButton = findViewById(R.id.CardEditorCardsText);
+        mTagsButton = findViewById(R.id.CardEditorTagButton);
+        mCardsButton = findViewById(R.id.CardEditorCardsButton);
         mCardsButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor");
             showCardTemplateEditor();
@@ -1062,20 +1060,6 @@ public class NoteEditor extends AnkiActivity implements
 
 
     @Override
-    protected void onPause() {
-        dismissAllDialogFragments(); //remove the "field language" as it can't be reshown without a field reference
-        super.onPause();
-    }
-
-
-    @Override
-    protected void onResume() {
-        dismissAllDialogFragments(); // dismiss "tags" as it may have been attached after onPause is called
-        super.onResume();
-    }
-
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
@@ -1555,87 +1539,12 @@ public class NoteEditor extends AnkiActivity implements
     }
 
     private boolean onImagePaste(EditText editText, Uri uri) {
-        try {
-            if (!mPastedImageCache.containsKey(uri.toString())) {
-                mPastedImageCache.put(uri.toString(), loadImageIntoCollection(uri));
-            }
-            String imageTag = mPastedImageCache.get(uri.toString());
-            if (imageTag == null) {
-                return false;
-            }
-            insertStringInField(editText, imageTag);
-            return true;
-        } catch (SecurityException ex) {
-            // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
-            // This typically works if the user copies again - don't know the exact cause
-
-            //  java.lang.SecurityException: Permission Denial: opening provider
-            //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
-            //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste image");
-            return false;
-        } catch (Exception e) {
-            // NOTE: This is happy path coding which works on Android 9.
-            AnkiDroidApp.sendExceptionReport("File is invalid issue:8880", "NoteEditor:onImagePaste URI of file:" + uri);
-            Timber.w(e, "Failed to paste image");
-            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
+        String imageTag = mMediaRegistration.onImagePaste(uri);
+        if (imageTag == null) {
             return false;
         }
-    }
-
-
-    /**
-     * Loads an image into the collection.media folder and returns a HTML reference
-     * @param uri The uri of the image to load
-     * @return HTML referring to the loaded image
-     */
-    @Nullable
-    private String loadImageIntoCollection(Uri uri) throws IOException {
-        //noinspection PointlessArithmeticExpression
-        String fileName;
-        final int oneMegabyte = 1 * 1000 * 1000;
-        String filename = ContentResolverUtil.getFileName(getContentResolver(), uri);
-        InputStream fd = getContentResolver().openInputStream(uri);
-
-        Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
-
-        if (checkFilename(fileNameAndExtension)) {
-            fileName = String.format("%s-name", fileNameAndExtension.getKey());
-        } else {
-            fileName = fileNameAndExtension.getKey();
-        }
-
-        File clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
-        String tempFilePath = clipCopy.getAbsolutePath();
-        long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
-
-        Timber.d("File was %d bytes", bytesWritten);
-        if (bytesWritten > oneMegabyte) {
-            Timber.w("File was too large: %d bytes", bytesWritten);
-            UIUtils.showThemedToast(this, getString(R.string.note_editor_paste_too_large), false);
-            new File(tempFilePath).delete();
-            return null;
-        }
-
-
-        MultimediaEditableNote noteNew = new MultimediaEditableNote();
-        noteNew.setNumFields(1);
-        ImageField field = new ImageField();
-        field.setHasTemporaryMedia(true);
-        field.setImagePath(tempFilePath);
-        noteNew.setField(0, field);
-        NoteService.saveMedia(getCol(), noteNew);
-
-        return field.getFormattedValue();
-    }
-
-    /**
-     * Checks the Image name length. Implemented this to avoid IllegalArgumentException
-     * @param fileNameAndExtension Map.Entry of file name and extension.
-     * @return true if image name is incorrect and false if image name is correct.
-     */
-    private boolean checkFilename(Map.Entry<String, String> fileNameAndExtension) {
-        return fileNameAndExtension.getKey().length() <= 3;
+        insertStringInField(editText, imageTag);
+        return true;
     }
 
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
@@ -2313,12 +2222,6 @@ public class NoteEditor extends AnkiActivity implements
                 menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                // This should be after "Paste as Plain Text"
-                menu.add(Menu.NONE, mSetLanguageId, 99, R.string.note_editor_set_field_language);
-            }
-
-
             return initialSize != menu.size();
         }
 
@@ -2330,20 +2233,9 @@ public class NoteEditor extends AnkiActivity implements
                 convertSelectedTextToCloze(mTextBox, AddClozeType.INCREMENT_NUMBER);
                 mode.finish();
                 return true;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanguageId) {
-                displaySelectInputLanguage();
-                mode.finish();
-                return true;
             } else {
                 return false;
             }
-        }
-
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private void displaySelectInputLanguage() {
-            DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
-            showDialogFragment(dialogFragment);
         }
 
 

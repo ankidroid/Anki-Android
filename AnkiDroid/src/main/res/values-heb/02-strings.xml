@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
-    <string name="note_editor_set_field_language">הגדר שפה לשדה</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
     <string name="saving_facts">שמירת הערה</string>
@@ -341,9 +340,9 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
@@ -361,19 +360,19 @@
     <string name="before_text">HTML לפני הבחירה</string>
     <string name="after_text">HTML אחרי הבחירה</string>
     <string name="add_toolbar_item">יצירת פריט סרגל כלים</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">הזן HTML שיוכנס לפני ואחרי הטקסט שנבחר \n\n לחץ לחיצה ארוכה על פריט בסרגל הכלים כדי להסיר אותו</string>
     <string name="remove_toolbar_item">להסיר פריט סרגל כלים?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">התמונה גדולה מדי להדבקה, אנא הכנס את התמונה ידנית</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ייתכן שיהיה עליך להשתמש ב- iManager כדי לאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">מסך הבית שלך אינו מאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
+    <string name="create_shortcut_error">שגיאה בהוספת קיצור הדרך: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="email_id_empty">נדרשת כתובת אימייל.</string>
+    <string name="password_empty">דרושה סיסמא</string>
+    <string name="back_pressed_once">לחץ \'חזור\' פעם נוספת כדי לצאת</string>
 </resources>

@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">Az érintő gesztusok nem lesznek feldolgozva ha egy link/segítség le van nyomva.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down" maxLength="41">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left" maxLength="41">Balra csúsztatás</string>
     <string name="gestures_swipe_right" maxLength="41">Jobbra csúsztatás</string>
     <string name="gestures_double_tap" maxLength="41">Dupla érintés</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Felső rész érintése</string>
     <string name="gestures_tap_left" maxLength="41">Baloldali rész érintése</string>
     <string name="gestures_tap_right" maxLength="41">Jobboldali rész érintése</string>
@@ -162,8 +165,12 @@
     <string name="vertical_centering" maxLength="41">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
     <string name="pref_backup_max" maxLength="41">Biztonsági másolatok maximális száma</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
+    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
+    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Felső Bár mutatása</string>
     <string name="show_top_bar_summ">Kártya számlálók, jelölők és jelölések mutatása a felső bárban,</string>
     <string name="show_progress" maxLength="41">Hátralévő mutatása</string>

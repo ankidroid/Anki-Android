@@ -92,6 +92,9 @@
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
+        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonRippleColor">#BABABA</item>
+        <item name="buttonForegroundColor">#757575</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
@@ -104,7 +107,6 @@
         <item name="md_dark_theme">true</item>
         <item name="md_background_color">@color/theme_black_primary_light</item>
         <!--Custom Tabs colors-->
-        <item name="customTabToolbarColor">#000000</item>
         <item name="customTabNavBarColor">#070707</item>
     </style>
 

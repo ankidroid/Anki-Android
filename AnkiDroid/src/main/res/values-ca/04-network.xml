@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">S\'està pujant...</string>
     <string name="sync_downloading_message">S\'està baixant...</string>
     <string name="sync_title">Sincronització</string>
-    <string name="sync_downloading_media">S\'està baixant els media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
     <string name="sync_log_clocks_unsynchronized">El rellotge del vostre dispositiu mostra un error de %1$d segons%2$s; Per sincronitzar cal que el vostre rellotge i la vostra zona horària siguin correctes per tal d\'evitar errors. Si us plau assegureu-vos que la data, hora i zona horària del vostre telèfon són correctes, i torneu a sincronitzar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">Sembla que la zona horària del dispositiu és incorrecta</string>

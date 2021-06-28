@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Nahrávání...</string>
     <string name="sync_downloading_message">Stahování...</string>
     <string name="sync_title">Synchronizace</string>
-    <string name="sync_downloading_media">Stahování multimédií %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Úplná synchronizace z místního úložiště</string>
     <string name="sync_log_clocks_unsynchronized">Čas na vašem zařízení je rozdílný o %1$d sekund %2$s. Ujistěte se, že datum, čas a časové pásmo jsou na telefonu nastaveny správně, pak znovu synchronizujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo je možná špatné</string>

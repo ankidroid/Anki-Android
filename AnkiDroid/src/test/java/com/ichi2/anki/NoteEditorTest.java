@@ -59,7 +59,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void verifyCardsList() {
         NoteEditor n = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
-        assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsText)).getText().toString(), is("Cards: Card 1"));
+        assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsButton)).getText().toString(), is("Cards: Card 1"));
     }
 
     @Test

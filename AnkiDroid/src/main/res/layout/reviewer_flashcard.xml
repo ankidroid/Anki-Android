@@ -49,8 +49,8 @@
         android:layout_height="fill_parent" />
     <ImageView
         android:id="@+id/lookup_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="end"
         android:clickable="true"
         android:padding="5dip"

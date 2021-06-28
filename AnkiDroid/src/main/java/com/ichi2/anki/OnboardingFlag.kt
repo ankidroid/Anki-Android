@@ -1,5 +1,6 @@
 /****************************************************************************************
- * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ *                                                                                      *
+ * Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>                           *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -14,18 +15,22 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.anki
 
-public class PairWithBoolean<U> implements BooleanGetter {
-    public final boolean bool;
-    public final U other;
+/**
+ * Enumeration related to onboarding to use fixed integral values for enum constants
+ * instead of using ordinals and ensuring that the used values are distinct. Implement this
+ * interface whenever an onboarding related enum is needed.
+ *
+ * For removing constants, comment out the constant instead of removing it so that older values
+ * are not used again.
+ */
+interface OnboardingFlag {
 
-    public boolean getBoolean() {
-        return bool;
-    }
-
-    public PairWithBoolean(boolean bool, U other) {
-        this.bool = bool;
-        this.other = other;
-    }
+    /**
+     * Distinct values should be used in a particular onboarding enum class.
+     * The returned value should be between 0 and 63, the position range of bits in Long.
+     */
+    fun getOnboardingEnumValue(): Int
+    // TODO: Add lint check.
 }

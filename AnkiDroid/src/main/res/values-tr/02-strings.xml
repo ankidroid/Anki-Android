@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_first_field">İlk alan boş</string>
     <string name="note_editor_no_cloze_delations">Bu not türü boşluk doldurma içermelidir</string>
-    <string name="note_editor_set_field_language">Alanın dilini belirle</string>
     <string name="note_editor_no_cards_created_all_fields">Seçili not türü hiç kart çıkarmadı.\nLütfen başka bir not türü seçin, veya \"Kartlar\"a basıp alan değişikliği ekleyin.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Boşluk doldurma sadece Boşluklu not türünde çalışır</string>
     <string name="saving_facts">Not kaydediliyor</string>

@@ -16,15 +16,23 @@
 
 package com.ichi2.anki;
 
+import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
+import com.ichi2.anki.cardviewer.Gesture;
+import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Consts;
 
+import net.ankiweb.rsdroid.database.NotImplementedException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -167,6 +175,131 @@ public class ReviewerNoParamTest extends RobolectricTest {
         assertThat("Hide should be called after answering a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
     }
 
+    @Test
+    public void defaultDrawerConflictIsTrueIfGesturesEnabled() {
+        enableGestureSetting();
+        ReviewerExt reviewer = startReviewerFullScreen();
+
+        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+    }
+
+
+    @Test
+    public void noDrawerConflictsBeforeOnCreate() {
+        enableGestureSetting();
+        ActivityController<Reviewer> controller = Robolectric.buildActivity(Reviewer.class, new Intent());
+        try {
+            assertThat("no conflicts before onCreate", controller.get().hasDrawerSwipeConflicts(), is(false));
+        } finally {
+            try {
+                enableGesture(Gesture.SWIPE_UP);
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+    }
+
+    @Test
+    public void noDrawerConflictsIfGesturesDisabled() {
+        disableGestureSetting();
+        enableGesture(Gesture.SWIPE_UP);
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat("gestures should be disabled", getGestureProcessor().isEnabled(), is(false));
+        assertThat(reviewer.hasDrawerSwipeConflicts(), is(false));
+    }
+
+
+    @Test
+    public void noDrawerConflictsIfNoGestures() {
+        enableGestureSetting();
+        disableConflictGestures();
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
+        assertThat("no conflicts, so no conflicts detected", reviewer.hasDrawerSwipeConflicts(), is(false));
+    }
+
+    @Test
+    public void drawerConflictsIfUp() {
+        enableGestureSetting();
+        disableConflictGestures();
+        enableGesture(Gesture.SWIPE_UP);
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
+        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+    }
+
+
+    @Test
+    public void drawerConflictsIfDown() {
+        enableGestureSetting();
+        disableConflictGestures();
+        enableGesture(Gesture.SWIPE_DOWN);
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
+        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+    }
+
+    @Test
+    public void drawerConflictsIfRight() {
+        enableGestureSetting();
+        disableConflictGestures();
+        enableGesture(Gesture.SWIPE_RIGHT);
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
+        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+    }
+
+
+    protected GestureProcessor getGestureProcessor() {
+        GestureProcessor gestureProcessor = new GestureProcessor(null);
+        gestureProcessor.init(AnkiDroidApp.getSharedPrefs(this.getTargetContext()));
+        return gestureProcessor;
+    }
+
+    protected void disableConflictGestures() {
+        disableGestures(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT);
+    }
+
+    private void enableGestureSetting() {
+        setGestureSetting(true);
+    }
+
+    private void disableGestureSetting() {
+        setGestureSetting(false);
+    }
+
+    private void setGestureSetting(boolean value) {
+        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
+        settings.putBoolean("gestures", value);
+        settings.apply();
+    }
+
+    private void disableGestures(Gesture... gestures) {
+        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
+        for (Gesture g: gestures) {
+            String k = getKey(g);
+            settings.putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString());
+        }
+        settings.apply();
+    }
+
+    /** Enables a gesture (without changing the overall setting of whether gestures are allowed) */
+    private void enableGesture(Gesture gesture) {
+        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
+        String k = getKey(gesture);
+        settings.putString(k, ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON.toPreferenceString());
+        settings.apply();
+    }
+
+    private String getKey(Gesture gesture) {
+        switch (gesture) {
+            case SWIPE_UP: return "gestureSwipeUp";
+            case SWIPE_DOWN: return "gestureSwipeDown";
+            case SWIPE_LEFT: return "gestureSwipeLeft";
+            case SWIPE_RIGHT: return "gestureSwipeRight";
+            default: throw new NotImplementedException(gesture.toString());
+        }
+    }
 
     private ReviewerExt startReviewerFullScreen() {
         AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("fullscreenMode", "1").apply();

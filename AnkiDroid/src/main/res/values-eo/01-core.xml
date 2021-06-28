@@ -80,7 +80,7 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">enigu respondon</string>
-    <string name="show_answer">montri respondon</string>
+    <string name="show_answer">Montri respondon</string>
     <string name="hide_answer">Kaŝi respondon</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
@@ -95,6 +95,7 @@
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
     <string name="create_shortcut">Krei simbolan ligilon</string>
+    <string name="browse_cards">Foliumi kartojn</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">Ĉu anstataŭigi vian foran kolekton AnkiWeb per via loka kolekto el AnkiDroid?</string>
     <string name="sync_conflict_title_new">Elektu kolekton por konservi</string>
     <string name="sync_conflict_replace_title">Anstataŭigi kolekton</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d karto (0 lernenda)</item>
+        <item quantity="other">%1$d kartoj (0 lernenda)</item>
+    </plurals>
 </resources>

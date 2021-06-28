@@ -349,7 +349,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 .positiveText(R.string.dialog_ok)
                                 .negativeText(R.string.reset_custom_buttons)
                                 .onPositive((dialog, which) -> dialog.dismiss())
-                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory()))
+                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(this)))
                                 .show();
                         return false;
                     }

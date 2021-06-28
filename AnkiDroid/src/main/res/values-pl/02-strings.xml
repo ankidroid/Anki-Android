@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
     <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
     <string name="note_editor_no_cloze_delations">Ten typ notatki musi zawierać luki do wypełnienia</string>
-    <string name="note_editor_set_field_language">Ustaw język tego pola</string>
     <string name="note_editor_no_cards_created_all_fields">Obecny typ notatki nie wygenerował żadnych kart. Wybierz inny typ notatki, lub kliknij \'Karty\' i dodaj substytucję pola.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Luki do wypełnienia będą działały tylko w typie notatki \"luka\"</string>
     <string name="saving_facts">Zapisywanie notatki</string>

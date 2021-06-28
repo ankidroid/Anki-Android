@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch" maxLength="41">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">hallo</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Navigationsleiste öffnen, wenn rechts von überall auf dem Bildschirm gewischt wird</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
     <string name="gestures_swipe_left" maxLength="41">Nach links wischen</string>
     <string name="gestures_swipe_right" maxLength="41">Nach rechts wischen</string>
     <string name="gestures_double_tap" maxLength="41">Doppelt antippen</string>
+    <string name="gestures_long_tap" maxLength="41">Long tap</string>
     <string name="gestures_tap_top" maxLength="41">Oben antippen</string>
     <string name="gestures_tap_left" maxLength="41">Links antippen</string>
     <string name="gestures_tap_right" maxLength="41">Rechts antippen</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_backup_max" maxLength="41">Maximale Anzahl an Sicherungen</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
+    <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
+    <string name="show_large_answer_buttons_summ">Antwortschaltfläche in 2 Zeilen anzeigen</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
     <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
@@ -293,8 +300,8 @@
     <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
     <string name="no_code_formatting" maxLength="41">Einfache Formatierung von Antworten</string>
     <string name="no_code_formatting_summ">Behebt das Erscheinen von  »􏿾« in eingetippten Antworten</string>
-    <string name="type_in_answer_focus" maxLength="41">Auf \"Antwort eingeben\" fokussieren</string>
-    <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf \"Antwort eingeben\" fokussieren</string>
+    <string name="type_in_answer_focus" maxLength="41">Auf »Antwort eingeben« fokussieren</string>
+    <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf »Antwort eingeben« fokussieren</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
 </resources>

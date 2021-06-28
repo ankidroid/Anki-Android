@@ -75,7 +75,7 @@
     <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%2$s में %1$d पत्ते का अध्ययन किया</item>
+        <item quantity="one">आज %2$s में %1$d कार्ड का अध्ययन किया</item>
         <item quantity="other">%2$s में %1$d पत्तों का अध्ययन किया</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
@@ -95,6 +95,7 @@
     <string name="unbury">स्थगित से वापस लाएं</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
+    <string name="browse_cards">कार्ड ढुंढे</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
@@ -219,4 +220,8 @@
     <string name="sync_conflict_local_confirm_new">AnkiDroid पर अपने संग्रह को AnkiWeb के अपने संग्रह से बदलें?</string>
     <string name="sync_conflict_title_new">रखने के लिए संग्रह का चयन करें</string>
     <string name="sync_conflict_replace_title">संग्रह बदलें</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>
