@@ -431,7 +431,7 @@ In Anki, your email is listed under `Tools - Preferences - Network`.
 
 ## Otherwise
 
-Search all your email accounts for an email from `ankiweb.net`. The query typically looks like `from:ankiweb.net`, but depends on your email provider. If you find an email, then you logged on using that email address.
+Search all your email accounts for an email from `ankiweb.net`. The query typically looks like `from:ankiweb.net`, but depends on your email provider. If you find an email, then you signed up to AnkiWeb using that email address.
 
 
 # Other questions
