@@ -21,6 +21,7 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MaterialEditTextDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -43,7 +44,6 @@ public class CreateDeckDialog {
     private final MaterialDialog.Builder mBuilder;
     private final Context mContext;
     private final int mTitle;
-    private final AnkiActivity mAnkiActivity;
     private final Long mParentId;
     private String mPreviousDeckName;
     private final DeckDialogType mDeckDialogType;
@@ -63,7 +63,6 @@ public class CreateDeckDialog {
         this.mParentId = parentId;
         this.mDeckDialogType = deckDialogType;
         this.mDialogEditText = new FixedEditText(context);
-        mAnkiActivity = new AnkiActivity();
         mBuilder = new MaterialEditTextDialog.Builder(context, mDialogEditText);
     }
 
@@ -74,7 +73,7 @@ public class CreateDeckDialog {
 
     public void showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog");
-        List<String> names = mAnkiActivity.getCol().getDecks().allNames();
+        List<String> names = CollectionHelper.getInstance().getCol(mContext).getDecks().allNames();
         int n = 1;
         String namePrefix = mContext.getResources().getString(R.string.filtered_deck_name) + " ";
         while (names.contains(namePrefix + n)) {
@@ -105,7 +104,7 @@ public class CreateDeckDialog {
     }
 
     public void createSubDeck(@NonNull long did, @Nullable String deckName) {
-        String deckNameWithParentName = mAnkiActivity.getCol().getDecks().getSubdeckName(did, deckName);
+        String deckNameWithParentName = CollectionHelper.getInstance().getCol(mContext).getDecks().getSubdeckName(did, deckName);
         createDeck(deckNameWithParentName);
     }
 
@@ -123,7 +122,7 @@ public class CreateDeckDialog {
         try {
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...");
-            long newDeckId = mAnkiActivity.getCol().getDecks().newDyn(deckName);
+            long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().newDyn(deckName);
             mOnNewDeckCreated.accept(newDeckId);
         } catch (FilteredAncestor filteredAncestor) {
             UIUtils.showThemedToast(mContext, mContext.getString(R.string.decks_rename_filtered_nosubdecks), false);
@@ -136,7 +135,7 @@ public class CreateDeckDialog {
         try {
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck");
-            long newDeckId = mAnkiActivity.getCol().getDecks().id(deckName);
+            long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().id(deckName);
             mOnNewDeckCreated.accept(newDeckId);
         } catch (FilteredAncestor filteredAncestor) {
             Timber.w(filteredAncestor);
@@ -177,7 +176,7 @@ public class CreateDeckDialog {
             UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
         } else if (!newName.equals(mPreviousDeckName)) {
             try {
-                Collection col = mAnkiActivity.getCol();
+                Collection col = CollectionHelper.getInstance().getCol(mContext);
                 Long deckId = col.getDecks().id(mPreviousDeckName);
                 col.getDecks().rename(col.getDecks().get(deckId), newName);
                 mOnNewDeckCreated.accept(deckId);
