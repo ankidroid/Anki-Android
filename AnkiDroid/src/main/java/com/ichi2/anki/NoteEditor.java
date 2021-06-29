@@ -1150,6 +1150,10 @@ public class NoteEditor extends AnkiActivity implements
             item.setChecked(!item.isChecked()); // Needed for Android 9
             toggleCapitalize(item.isChecked());
             return true;
+        } else if (itemId == R.id.action_scroll_toolbar) {
+            item.setChecked(!item.isChecked());
+            AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("noteEditorScrollToolbar", item.isChecked()).apply();
+            updateToolbar();
         }
         return super.onOptionsItemSelected(item);
     }

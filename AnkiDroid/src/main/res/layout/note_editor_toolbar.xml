@@ -16,14 +16,27 @@
   -->
 
 
-<LinearLayout
+<HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    
-    android:id="@+id/toolbar_layout"
+
+    android:id="@+id/toolbar_scrollview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar_layout"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"
+        android:layout_gravity="center_horizontal"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/editor_toolbar_internal"
@@ -31,7 +44,7 @@
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp"
         app:contentInsetRight="0dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="?android:attr/selectableItemBackground"
@@ -97,4 +110,5 @@
             app:srcCompat="@drawable/ic_cloze_black_24dp"
             style="@style/note_editor_toolbar_button" />
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</HorizontalScrollView>

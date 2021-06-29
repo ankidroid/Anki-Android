@@ -115,6 +115,8 @@ public class CustomToolbarButton {
     public int getIndex() {
         return mIndex;
     }
+
+
     public String getTitle() {
         return mTitle;
     }

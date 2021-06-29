@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ViewGroupUtils;
@@ -198,14 +199,28 @@ public class Toolbar extends FrameLayout {
         button.setLayoutParams(params);
 
 
-        int fourDp = (int) Math.ceil(4 / context.getResources().getDisplayMetrics().density);
+        int twoDp = (int) Math.ceil(2 / context.getResources().getDisplayMetrics().density);
 
-        button.setPadding(fourDp, fourDp, fourDp, fourDp);
+        button.setPadding(twoDp, twoDp, twoDp, twoDp);
         // end apply style
 
-        addViewToToolbar(button);
+        if (shouldScrollToolbar()){
+            this.mToolbar.addView(button, mToolbar.getChildCount());
+        } else {
+            addViewToToolbar(button);
+        }
+
         mCustomButtons.add(button);
         button.setOnClickListener(l -> runnable.run());
+
+        // Hack - items are truncated from the scrollview
+        View v = findViewById(R.id.toolbar_layout);
+
+        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(44 + 2 * 2); //width + 2dp padding on both sides
+        int width = getScreenWidth();
+        LayoutParams p = new LayoutParams(v.getLayoutParams());
+        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.START : Gravity.CENTER_HORIZONTAL);
+        v.setLayoutParams(p);
 
         return button;
     }
@@ -287,17 +302,15 @@ public class Toolbar extends FrameLayout {
 
 
     private void addViewToToolbar(AppCompatImageButton button){
-        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48); //width
+        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(44 + 2 * 2); //width + 2dp padding on both sides
         int width = getScreenWidth();
         if (expectedWidth <= width) {
-            mToolbar.setGravity(Gravity.CENTER_HORIZONTAL);
             this.mToolbar.addView(button, mToolbar.getChildCount());
         } else {
-            mToolbar.setGravity(Gravity.START);
             boolean spaceLeft = false;
             if (!mRows.isEmpty()) {
                 LinearLayout row = mRows.get(mRows.size() - 1);
-                int expectedRowWidth = getVisibleItemCount(row) * dpToPixels(48);
+                int expectedRowWidth = getVisibleItemCount(row) * dpToPixels(44 + 2 * 2);
                 if (expectedRowWidth <= width) {
                     row.addView(button, row.getChildCount());
                     spaceLeft = true;
@@ -341,6 +354,9 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setColor(color);
     }
 
+    protected static boolean shouldScrollToolbar() {
+        return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorScrollToolbar", true);
+    }
 
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);

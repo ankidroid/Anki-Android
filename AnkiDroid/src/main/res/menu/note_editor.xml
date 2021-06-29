@@ -35,4 +35,10 @@
         android:title="@string/menu_show_toolbar"
         android:checkable="true"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_scroll_toolbar"
+        android:title="@string/menu_scroll_toolbar"
+        android:checkable="true"
+        android:checked="true"
+        ankidroid:showAsAction="never"/>
 </menu>
