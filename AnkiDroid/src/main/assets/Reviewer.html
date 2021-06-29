@@ -1,0 +1,253 @@
+<!--
+  ~
+  ~ Copyright (c) 2021 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+
+<head>
+    <title>Reviewer</title>
+    <style>
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .action-bar {
+            background-color: rgb(61, 146, 226);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            box-shadow: 0 1vw 2vw rgb(214, 214, 214);
+        }
+
+        #hamburger {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 1;
+            flex: 0 0 auto;
+        }
+
+        .ham-line {
+            position: relative;
+            width: 5vw;
+            height: .5vw;
+            margin: .5vw;
+            border-radius: .5vw;
+            background-color: white;
+        }
+
+        .deck-selector {
+            display: flex;
+        }
+
+        #actionbar-title {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 2;
+            flex: 3 0 auto;
+        }
+
+        #deck-name {
+            margin-top: 5%;
+            color: white;
+            font-size: 5vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #time-left {
+            margin-top: -5%;
+            margin-bottom: 3%;
+            color: white;
+            font-size: 3vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #overflow-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 1vw 6vw 0 0;
+            order: 5;
+            flex: 0 0 auto;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            border-radius: 0.5vw;
+            margin-top: 1vw;
+            background-color: white;
+        }
+
+        .deck-stats {
+            background-color: rgba(61, 146, 226, 0.212);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        #total-card {
+            padding: .5vw;
+            color: blue;
+            font-family: 'Source Sans Pro', sans-serif;
+            order: 1;
+            font-size: 3.5vw;
+            margin: 0 0 0 2vw;
+            flex-grow: 0;
+        }
+
+        #repeat-card {
+            padding: .5vw;
+            color: red;
+            font-family: 'Source Sans Pro', sans-serif;
+            order: 2;
+            font-size: 3.5vw;
+            flex-grow: 0;
+            margin: 0 0 0 1vw;
+        }
+
+        #correct-card {
+            padding: 0.5vw;
+            color: green;
+            font-size: 3.5vw;
+            text-decoration: underline;
+            font-family: 'Source Sans Pro', sans-serif;
+            order: 3;
+            flex-grow: 1;
+            margin: 0 0 0 1vw;
+        }
+
+        #card-time {
+            padding: .5vw;
+            font-size: 3.5vw;
+            margin: 0 2vw 0 5vw;
+            color: red;
+            font-family: 'Source Sans Pro', sans-serif;
+            order: 4;
+            flex-grow: 0;
+        }
+
+        .regular {
+            font-size: 4vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #divider {
+            background-color: rgb(95, 93, 93);
+            width: auto;
+            height: .5vw;
+            margin: 0 5vw 0 5vw;
+        }
+
+        .answer-footer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: auto;
+        }
+
+        #again {
+            background-color: rgb(211, 1, 1);
+            order: 1;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+
+        #hard {
+            background-color: rgb(141, 141, 141);
+            order: 2;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+
+        #good {
+            background-color: rgb(4, 161, 4);
+            order: 3;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+
+        #easy {
+            background-color: rgb(61, 146, 226);
+            order: 4;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .text {
+            font-size: 3vw;
+            padding: 2vw;
+            color: white;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Action bar -->
+
+<div class="action-bar">
+    <div id="hamburger">
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+    </div>
+    <div id="actionbar-title">
+        <p id="deck-name">English Deck</p>
+        <p id="time-left">2 minutes left</p>
+    </div>
+    <div id="overflow-icon">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</div>
+
+<!-- deck card stats -->
+<div class="deck-stats">
+    <p id="total-card">0</p>
+    <p id="repeat-card">0</p>
+    <p id="correct-card">4</p>
+    <p id="card-time">01:00</p>
+</div>
+
+<div class="card">
+    <p class="regular" align="center" id="question">Meaning of Commute</p>
+    <div id="divider"></div>
+    <p class="regular" align="center" id="answer">To commute is to travel a long distance to get to work.</p>
+</div>
+
+<div class="answer-footer">
+    <div id="again" class="text">10min<br>AGAIN</div>
+    <div id="hard" class="text">22d<br>HARD</div>
+    <div id="good" class="text">3.2mo<br>GOOD</div>
+    <div id="easy" class="text">8.1mo<br>EASY</div>
+</div>
+</body>
+
+</html>
