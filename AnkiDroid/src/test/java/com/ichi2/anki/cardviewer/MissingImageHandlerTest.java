@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -113,11 +114,61 @@ public class MissingImageHandlerTest {
         mSut.processFailure(invalidRequest, consumer);
     }
 
+    private void processMissingSound(File file, @NonNull FunctionalInterfaces.Consumer<String> onFailure) {
+        mSut.processMissingSound(file, onFailure);
+    }
+
+    private void processInefficientImage(Runnable onFailure) {
+        mSut.processInefficientImage(onFailure);
+    }
+
 
     @Test
     public void uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg"), (f) -> { throw new RuntimeException("expected"); });
         assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
+    }
+
+
+    @Test
+    public void testMissingSound_NullFile() {
+        processMissingSound(null, defaultHandler());
+        assertThat(mTimesCalled, is(0));
+    }
+
+    @Test
+    public void testMissingSound_Ignored() {
+        FunctionalInterfaces.Consumer<String> handler = defaultHandler();
+        processMissingSound(new File("example.wav"), handler);
+        mSut.onCardSideChange();
+        processMissingSound(new File("example2.wav"), handler);
+        mSut.onCardSideChange();
+        processMissingSound(new File("example3.wav"), handler);
+
+        assertThat(mTimesCalled, is(2));
+        assertThat(mFileNames, contains("example.wav", "example2.wav"));
+    }
+
+    @Test
+    public void testMissingSound_ExceptionCaught() {
+        processMissingSound(new File("example.wav"), (f) -> { throw new RuntimeException("expected"); });
+        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
+    }
+
+    @Test
+    public void testInefficientImage() {
+        class runTest implements Runnable {
+            private int nTimesRun = 0;
+            @Override
+            public void run() {
+                nTimesRun++;
+            }
+            public int getNTimesRun() {return nTimesRun;}
+        }
+        runTest runnableTest = new runTest();
+        processInefficientImage(runnableTest);
+        processInefficientImage(runnableTest);
+        assertThat(runnableTest.getNTimesRun(), is(1));
     }
 
 
