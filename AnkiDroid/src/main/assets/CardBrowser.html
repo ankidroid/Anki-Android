@@ -1,0 +1,242 @@
+<!--
+  ~
+  ~ Copyright (c) 2021 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+
+<head>
+    <title>Card Browser</title>
+    <style>
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .action-bar {
+            background-color: rgb(61, 146, 226);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            box-shadow: 0 1vw 2vw rgb(214, 214, 214);
+        }
+
+        #hamburger {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 1;
+            flex: 0 0 auto;
+        }
+
+        .ham-line {
+            position: relative;
+            width: 5vw;
+            height: .5vw;
+            margin: .5vw;
+            border-radius: .5vw;
+            background-color: white;
+        }
+
+        .deck-selector {
+            display: flex;
+        }
+
+        #actionbar-title {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 2;
+            flex: 3 0 auto;
+        }
+
+        #deck-name {
+            margin-top: 5%;
+            color: white;
+            font-size: 5vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #stats {
+            margin-top: -5%;
+            margin-bottom: 3%;
+            color: white;
+            font-size: 3vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .triangle {
+            width: 0vw;
+            height: 0vw;
+            margin: 8% 0 0 2vw;
+            border-left: 1vw solid transparent;
+            border-right: 1vw solid transparent;
+            border-bottom: 2vw solid white;
+            transform: rotate(180deg);
+        }
+
+        .line {
+            width: 3vw;
+            height: .5vw;
+            background-color: white;
+        }
+
+        #plus-b {
+            transform: rotate(90deg) translate(-.4vw, 0vw);
+        }
+
+        .add-card {
+            align-self: center;
+            order: 3;
+            margin: auto 5vw auto auto;
+        }
+
+        #search-icon {
+            width: 5vw;
+            height: 5vw;
+            align-self: center;
+            order: 4;
+            margin: 0 5vw 0 0;
+        }
+
+        #overflow-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 5vw 0 0;
+            order: 5;
+            flex: 0 0 auto;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            border-radius: 0.5vw;
+            margin-top: 1vw;
+            background-color: white;
+        }
+
+        .triangle {
+            width: 0vw;
+            height: 0vw;
+            border-left: 1vw solid transparent;
+            border-right: 1vw solid transparent;
+            border-bottom: 2vw solid white;
+        }
+
+        table {
+            font-family: 'Source Sans Pro', sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            font-size: 3.5vw;
+            font-weight:700;
+        }
+
+        td {
+            font-size: 3vw;
+            font-weight: normal;
+        }
+
+        td,
+        th {
+            border: .3vw solid #dddddd;
+            text-align: left;
+            padding: 1vw 1vw 1vw 2vw;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Action Bar -->
+
+<div class="action-bar">
+    <div id="hamburger">
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+    </div>
+    <div id="actionbar-title">
+        <div class="deck-selector">
+            <p id="deck-name">All decks</p>
+            <div class="triangle"></div>
+        </div>
+    </div>
+    <div class="add-card">
+        <div class="line" id="plus-a"></div>
+        <div class="line" id="plus-b"></div>
+    </div>
+
+    <!-- Search svg -->
+    <div id="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 15.5 14 L 14.71 14 L 14.43 13.73 C 15.41 12.59 16 11.11 16 9.5 C 16 5.91 13.09 3 9.5 3 C 5.91 3 3 5.91 3 9.5 C 3 13.09 5.91 16 9.5 16 C 11.11 16 12.59 15.41 13.73 14.43 L 14 14.71 L 14 15.5 L 19 20.49 L 20.49 19 L 15.5 14 Z M 9.5 14 C 7.01 14 5 11.99 5 9.5 C 5 7.01 7.01 5 9.5 5 C 11.99 5 14 7.01 14 9.5 C 14 11.99 11.99 14 9.5 14 Z"
+                  fill="#ffffff" />
+        </svg>
+    </div>
+    <div id="overflow-icon">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</div>
+
+<!-- Table  -->
+
+<div class="card-table">
+    <table>
+        <tr id="heading-row">
+            <th id="question-heading">
+                Question
+            </th>
+            <th id="answer-heading">
+                Answer
+            </th>
+        </tr>
+        <tr>
+            <td>24*84</td>
+            <td>2016</td>
+        </tr>
+        <tr>
+            <td>10!</td>
+            <td>3628800</td>
+        </tr>
+        <tr>
+            <td>1000 / 10</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td>2^8</td>
+            <td>256</td>
+        </tr>
+        <tr>
+            <td>0!</td>
+            <td>1</td>
+        </tr>
+    </table>
+</div>
+</body>
+
+</html>
