@@ -424,10 +424,15 @@ The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanc
 
 search terms: _nightmode night-mode, invert, colour_
 # Forgotten AnkiWeb Email Instructions
-## If you're logged in on Anki, follow step 1.
-Step-1 Go, on Anki under **Tools->Preferences->Network**.
-## If you've signed up on Anki then follow step-2.
-Step-2 Go to your email account and search for the ankiweb using the search operator for a specific provider as **from:ankiweb.net** and you'll find an email which you have received while signing up for the first time.
+
+## If you're logged in on Anki Desktop
+
+In Anki, your email is listed under `Tools - Preferences - Network`.
+
+## Otherwise
+
+Search all your email accounts for an email from `ankiweb.net`. The query typically looks like `from:ankiweb.net`, but depends on your email provider. If you find an email, then you logged on using that email address.
+
 
 # Other questions
 
