@@ -1,0 +1,125 @@
+<!--
+  ~
+  ~ Copyright (c) 2021 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnkiDroid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            background-color: rgb(61, 146, 226);
+            font-family: 'Oswald', sans-serif;
+            color: white;
+        }
+
+        @media screen and (orientation:landscape) {
+
+            body {
+                overflow: hidden;
+            }
+
+            .image img {
+                float: left;
+                margin: 3% 0 0 10%;
+                width: 25%;
+                height: 25%;
+            }
+
+            .heading h4 {
+                text-align: center;
+                width: 50%;
+                font-size: 5vw;
+                margin-left: 50%;
+                overflow-wrap: break-word;
+            }
+
+            .heading {
+                margin: 8vh 5% 0 5%;
+            }
+
+            .text p {
+                width: 50%;
+                font-size: 2vw;
+                text-align: left;
+                margin-left: 50%;
+                overflow-wrap: break-word;
+            }
+
+            .text {
+                margin: 10% 5% 8vh 5%;
+            }
+        }
+
+        @media screen and (orientation:portrait) {
+
+            .heading h4 {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                font-size: 4vh;
+            }
+
+            .image img {
+                display: flex;
+                justify-content: center;
+                max-width: 80%;
+                max-height: 80%;
+                margin: 8vh auto auto auto;
+                height: auto;
+                width: auto;
+            }
+
+            .text p {
+                display: flex;
+                margin: 0 25px 8vh 25px;
+                font-size: 2.5vh;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+        <div class="image">
+            <img src="https://firebasestorage.googleapis.com/v0/b/jic-android.appspot.com/o/icon.svg?alt=media&token=7dcd6a3a-26c1-4965-82f2-e92ec3a1cbff"
+                alt="">
+        </div>
+
+        <div class="heading">
+            <h4> Welcome to AnkiDroid!</h4>
+        </div>
+
+        <div class="text">
+            <p> AnkiDroid is a spaced repetition flashcard app.
+                Memorize anything with AnkiDroid! </p>
+        </div>
+</body>
+
+</html>
