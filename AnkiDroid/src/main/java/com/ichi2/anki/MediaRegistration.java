@@ -19,6 +19,8 @@ package com.ichi2.anki;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import com.ichi2.anki.multimediacard.fields.ImageField;
@@ -28,6 +30,7 @@ import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.FileUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -76,10 +79,28 @@ public class MediaRegistration {
             fileName = fileNameAndExtension.getKey();
         }
 
-        File clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
-        String tempFilePath = clipCopy.getAbsolutePath();
-        long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
+        File clipCopy;
+        long bytesWritten;
 
+        if (!".png".equals(fileNameAndExtension.getValue()) && CollectionHelper.getInstance().getCol(mContext).getConf().optBoolean("pastePNG")) {
+            clipCopy = File.createTempFile(fileName, ".png");
+            bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
+            Bitmap bm = BitmapFactory.decodeFile(clipCopy.getAbsolutePath());
+            try (FileOutputStream outStream = new FileOutputStream(clipCopy.getAbsolutePath())) {
+                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                outStream.flush();
+            } catch (IOException e) {
+                Timber.w("MediaRegistration : Unable to convert file to png format");
+                AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format");;
+                UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_png_paste_error, e.getMessage()), true);
+                return null;
+            }
+        } else {
+            clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
+            bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
+        }
+
+        String tempFilePath = clipCopy.getAbsolutePath();
         // register media for webView
         if (!registerMediaForWebView(tempFilePath)) {
             return null;
@@ -110,8 +131,7 @@ public class MediaRegistration {
             if (!mPastedImageCache.containsKey(uri.toString())) {
                 mPastedImageCache.put(uri.toString(), loadImageIntoCollection(uri));
             }
-            String imageTag = mPastedImageCache.get(uri.toString());
-            return imageTag;
+            return mPastedImageCache.get(uri.toString());
         } catch (NullPointerException | SecurityException ex) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
