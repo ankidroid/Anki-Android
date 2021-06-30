@@ -33,6 +33,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -137,7 +138,8 @@ public class MissingImageHandlerTest {
     }
 
     @Test
-    public void testMissingSound_Ignored() {
+    public void testThirdSoundIsIgnored() {
+        //Tests that the third call to processMissingSound is ignored
         FunctionalInterfaces.Consumer<String> handler = defaultHandler();
         processMissingSound(new File("example.wav"), handler);
         mSut.onCardSideChange();
@@ -151,19 +153,19 @@ public class MissingImageHandlerTest {
 
     @Test
     public void testMissingSound_ExceptionCaught() {
-        processMissingSound(new File("example.wav"), (f) -> { throw new RuntimeException("expected"); });
-        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
+        assertDoesNotThrow(() -> processMissingSound(new File("example.wav"), (f) -> { throw new RuntimeException("expected");}));
     }
 
     @Test
     public void testInefficientImage() {
+        //Tests that the runnable passed to processInefficientImage only runs once
         class runTest implements Runnable {
             private int nTimesRun = 0;
             @Override
             public void run() {
                 nTimesRun++;
             }
-            public int getNTimesRun() {return nTimesRun;}
+            public int getNTimesRun() { return nTimesRun; }
         }
         runTest runnableTest = new runTest();
         processInefficientImage(runnableTest);
