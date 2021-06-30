@@ -134,26 +134,21 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
                     Timber.i("Change value for key '%s': %s", entry.getKey(), entry.getValue());
+                    JSONArray ar = mDeck.getJSONArray("terms");
                     if (mPref.mSecondFilter) {
                         if ("search_2".equals(entry.getKey())) {
-                            JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(1).put(0, entry.getValue());
                         } else if ("limit_2".equals(entry.getKey())) {
-                            JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(1).put(1, entry.getValue());
                         } else if ("order_2".equals(entry.getKey())) {
-                            JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(1).put(2, Integer.parseInt((String) entry.getValue()));
                         }
                     }
                     if ("search".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
                     } else if ("limit".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(1, entry.getValue());
                     } else if ("order".equals(entry.getKey())) {
-                        JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
                     } else if ("resched".equals(entry.getKey())) {
                         mDeck.put("resched", entry.getValue());
@@ -173,11 +168,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         int i = Integer.parseInt((String) entry.getValue());
                         if (i > 0) {
                             JSONObject presetValues = new JSONObject(mDynExamples[i]);
-                            JSONArray ar = presetValues.names();
-                            if (ar == null) {
+                            JSONArray arr = presetValues.names();
+                            if (arr == null) {
                                 continue;
                             }
-                            for (String name: ar.stringIterable()) {
+                            for (String name: arr.stringIterable()) {
                                 if ("steps".equals(name)) {
                                     mUpdate.put("stepsOn", true);
                                 }
@@ -548,7 +543,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         newOrderPref.setValue(mPref.getString("order", "0"));
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels);
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values);
-        newOrderPrefSecond.setValue(mPref.getString("order_2", "0"));
+        newOrderPrefSecond.setValue(mPref.getString("order_2", "5"));
     }
 
     /**
@@ -580,7 +575,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             secondFilterSign.setChecked(true);
         }
         secondFilterSign.setOnPreferenceChangeListener((preference, newValue) -> {
-            if (newValue instanceof Boolean){
+            if (!(newValue instanceof Boolean)) {
+                return true;
+            }
                 Boolean boolVal = (Boolean)newValue;
 
                 if (!boolVal) {
@@ -589,13 +586,16 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 } else {
 
                     secondFilter.setEnabled(true);
+                    /**Link to the defaults used in AnkiDesktop
+                     * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
+                     */
                     JSONArray narr = new JSONArray(Arrays.asList("", 20, 5));
                     mDeck.getJSONArray("terms").put(1, narr);
+                    android.preference.ListPreference newOrderPrefSecond = (android.preference.ListPreference) findPreference("order_2");
+                    newOrderPrefSecond.setValue("5");
                 }
-            }
             return true;
         });
-
     }
 
 }
