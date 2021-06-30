@@ -30,19 +30,23 @@ public class GestureMapper {
     private int mSwipeMinDistance = -1;
     private int mSwipeThresholdVelocity = -1;
 
-    private static final int DEFAULT_SWIPE_MIN_DISTANCE;
-    private static final int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
-
-    static {
-        // Set good default values for swipe detection
-        final ViewConfiguration vc = ViewConfiguration.get(AnkiDroidApp.getInstance());
-        DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
-        DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
-    }
+    private static ViewConfiguration VIEW_CONFIGURATION = null;
+    private static int DEFAULT_SWIPE_MIN_DISTANCE;
+    private static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
     public void init(SharedPreferences preferences) {
         int sensitivity = preferences.getInt("swipeSensitivity", 100);
         boolean useCornerTouch = preferences.getBoolean("gestureCornerTouch", false);
+
+        // ViewConfiguration can be used statically but it must be initialized during Android application lifecycle
+        // Else, when Robolectric executes in the CI it accesses AnkiDroidApp.getInstance before it exists #9173
+        if (VIEW_CONFIGURATION == null) {
+            // Set good default values for swipe detection
+            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.getInstance());
+            DEFAULT_SWIPE_MIN_DISTANCE = VIEW_CONFIGURATION.getScaledPagingTouchSlop();
+            DEFAULT_SWIPE_THRESHOLD_VELOCITY = VIEW_CONFIGURATION.getScaledMinimumFlingVelocity();
+        }
+
         if (sensitivity != 100) {
             float sens = 100.0f/sensitivity;
             mSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
