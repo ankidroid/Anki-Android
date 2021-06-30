@@ -23,9 +23,9 @@ public class Counts {
     }
 
     public Counts(int new_, int lrn, int rev) {
-        mNew = new_;
-        mLrn = lrn;
-        mRev = rev;
+        mNew = Math.max(new_, 0);
+        mLrn = Math.max(lrn, 0);
+        mRev = Math.max(rev, 0);
     }
 
     public int getLrn() {
@@ -46,13 +46,13 @@ public class Counts {
     public void changeCount(@NonNull Queue index, int number) {
         switch (index) {
             case NEW:
-                mNew += number;
+                addNew(number);
                 break;
             case LRN:
-                mLrn += number;
+                addLrn(number);
                 break;
             case REV:
-                mRev += number;
+                addRev(number);
                 break;
             default:
                 throw new RuntimeException("Index " + index + " does not exists.");
@@ -60,15 +60,15 @@ public class Counts {
     }
 
     public void addNew(int new_) {
-        mNew += new_;
+        mNew = Math.max(mNew + new_, 0);
     }
 
     public void addLrn(int lrn) {
-        mLrn += lrn;
+        mLrn = Math.max(mLrn + lrn, 0);
     }
 
     public void addRev(int rev) {
-        mRev += rev;
+        mRev = Math.max(mRev + rev, 0);
     }
 
 
