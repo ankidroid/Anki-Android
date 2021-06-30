@@ -247,7 +247,8 @@ public class AnkiStatsTaskHandler {
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
                 int minutes;
-                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
+                String query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                "sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
                 Timber.d("DeckPreviewStatistics query: %s", query);
 
                 try (Cursor cur = collection.getDb()

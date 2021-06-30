@@ -132,7 +132,8 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        String query = "select count(), sum(time)/1000, "+
+        String query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                "sum(time)/1000, "+ /*time*/
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
@@ -140,7 +141,7 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
                 "from revlog "+
                 "where ease > 0 "+  // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "and id > " + ((mCol.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -159,9 +160,10 @@ public class Stats {
 
 
         }
-        query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
+        query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                "sum(case when ease = 1 then 0 else 1 end) from revlog " +
                 "where ease > 0 "+ // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
