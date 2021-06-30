@@ -92,7 +92,7 @@ public class MediaRegistration {
             } catch (IOException e) {
                 Timber.w("MediaRegistration : Unable to convert file to png format");
                 AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format");;
-                UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_something_wrong_details, e.getMessage()), true);
+                UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_png_paste_error, e.getMessage()), true);
                 return null;
             }
         } else {
