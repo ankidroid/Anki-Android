@@ -611,28 +611,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
-        // Crop on Android 11 broke completely. We will transition to CropImage in general for everyone but first
-        // for Android 11 only we try CropImage. Worst case, it was already broken for them
-        if (CompatHelper.getSdkVersion() > Build.VERSION_CODES.Q) { // We don't compile against 30 yet, so R symbol does not exist
-            CropImage.activity(viewModel.mImageUri).start(mActivity);
-        } else {
-            // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
-            // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            intent.setDataAndType(mPreviousImageUri, "image/*");
-            intent.putExtra("return-data", false);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
-            intent.putExtra("noFaceDetection", true); // no face detection
-            try {
-                mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
-            } catch (Exception e) {
-                Timber.w(e, "requestCrop unable to start cropping activity for Uri %s", mPreviousImageUri);
-                showSomethingWentWrong();
-                onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
-            }
-        }
+        CropImage.activity(viewModel.mImageUri).start(mActivity);
         return ret;
     }
 
