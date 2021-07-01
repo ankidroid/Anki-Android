@@ -12,13 +12,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.android.tools.lint:lint-api:27.2.1"
-    compileOnly "com.android.tools.lint:lint:27.2.1"
+    compileOnly "com.android.tools.lint:lint-api:$lint_version"
+    compileOnly "com.android.tools.lint:lint:$lint_version"
 
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testImplementation "junit:junit:4.13.2"
-    testImplementation "com.android.tools.lint:lint:27.2.1"
-    testImplementation "com.android.tools.lint:lint-tests:27.2.1"
+    testImplementation "com.android.tools.lint:lint:$lint_version"
+    testImplementation "com.android.tools.lint:lint-tests:$lint_version"
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
