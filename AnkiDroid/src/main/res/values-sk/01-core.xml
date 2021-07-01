@@ -194,6 +194,8 @@
     <string name="card_template_editor_styling">Štýl</string>
     <string name="card_template_editor_menu_card_browser_appearance">Vzhľad prehliadača kartičiek</string>
     <string name="card_template_editor_deck_override">Prepísanie balíčka</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Vyžaduje sa aspoň jeden typ kartičky</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Vymazať “%2$s” typ kartičky a jeho %1$d kartičku?</item>

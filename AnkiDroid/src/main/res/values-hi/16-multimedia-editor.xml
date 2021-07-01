@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">प्रतीक्षा करें</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">कुछ गलत हो गया</string>
+    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s फ़ील्ड में मल्टीमीडिया सामग्री अनुलग्न करें</string>
     <string name="multimedia_editor_attach_media">मीडिया अनुलग्न करें</string>
     <!-- Audio view -->

@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">ವಿನ್ಯಾಸ</string>
     <string name="card_template_editor_menu_card_browser_appearance">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಗೋಚರತೆ</string>
     <string name="card_template_editor_deck_override">ಡೆಕ್ ಅತಿಕ್ರಮಿಸಿ</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">ಕನಿಷ್ಠ ಒಂದು ಕಾರ್ಡ್ ಪ್ರಕಾರದ ಅಗತ್ಯವಿದೆ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>

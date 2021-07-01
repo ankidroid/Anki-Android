@@ -180,6 +180,8 @@
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
     <string name="card_template_editor_deck_override">牌組覆蓋</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
