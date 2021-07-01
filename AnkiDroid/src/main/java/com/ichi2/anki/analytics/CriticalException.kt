@@ -50,7 +50,7 @@ class CriticalException(exception: Throwable, issue: KnownIssue) {
 
     companion object {
         @JvmStatic
-        private val sPendingExceptionReports: ArrayList<CriticalException> = ArrayList()
+        private var sPendingExceptionReport: CriticalException? = null
 
         @JvmStatic
         private val sRegisteredExceptions: HashSet<CriticalException> = HashSet()
@@ -61,6 +61,9 @@ class CriticalException(exception: Throwable, issue: KnownIssue) {
             val issue = KnownIssue.from(e)
             return CriticalException(e, issue)
         }
+
+        @JvmStatic
+        fun get() = sPendingExceptionReport
 
         /** Registers a critical exception to be accessed after startup
          * We do this because it's not feasible to immediately show a dialog
@@ -78,7 +81,20 @@ class CriticalException(exception: Throwable, issue: KnownIssue) {
                 return
             }
 
-            sPendingExceptionReports.add(ex)
+            sPendingExceptionReport = ex
+        }
+
+        @JvmStatic
+        fun onDisplayedToUser() {
+            sPendingExceptionReport = null
+        }
+
+        fun ignore(criticalException: CriticalException) {
+        }
+
+        fun reset() {
+            sPendingExceptionReport = null
+            sRegisteredExceptions.clear()
         }
     }
 

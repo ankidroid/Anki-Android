@@ -263,4 +263,17 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+
+    <!-- Critical Exception Dialog -->
+    <string name="critical_error_occurred">Critical Error</string>
+    <string name="critical_error_general_content">AnkiDroid has encountered a critical error. Please contact the developers to resolve this</string>
+    <string name="enable_crash_reporting">Enable crash reporting</string>
+    <string name="enable_analytics">Enable analytics</string>
+    <string name="contact">Contact Developers</string>
+    <string name="ignore">Ignore</string>
+    <string name="crash_reports_enalbed">A crash report will be generated when you close this screen</string>
+
+    <string name="open_known_github_issue">Please see the first comment for instructions</string>
+    <string name="open_unknown_github_issue">Please create an account and raise an issue. Check back for instructions</string>
+
 </resources>
