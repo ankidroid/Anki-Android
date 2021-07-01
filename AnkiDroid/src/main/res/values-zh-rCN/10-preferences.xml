@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">查看使用 AnkiDroid API 的应用程序清单，如字典、实用工具。</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
+    <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>

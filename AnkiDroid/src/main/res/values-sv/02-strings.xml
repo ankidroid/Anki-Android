@@ -73,8 +73,8 @@
     <string name="webview_crash_oom_details">WebView avslutades av systemet. Detta händer vanligtvis när programmet tar slut på minne, ofta på grund av stora teckensnitt eller media.</string>
     <string name="webview_crash_nonfatal">WebView renderare kraschade. Orsak: %s</string>
     <string name="webview_crash_fatal">Kritiskt fel: WebView renderare kraschade. Orsak: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView Rendering Misslyckades</string>
+    <string name="webview_crash_loop_dialog_content">System WebView kunde inte rendera kortet \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Fråga</item>
@@ -93,8 +93,8 @@
         <item>Ease</item>
         <item>Due</item>
         <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Skapad</item>
+        <item>Anteckning ändrad</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
@@ -108,7 +108,7 @@
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_first_field">Det första fältet är tomt</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
@@ -132,7 +132,7 @@
         <item quantity="other">%1$d minuter</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Kopiera anteckning</string>
     <string name="card_editor_reposition_card">Ompositionera</string>
     <string name="card_editor_reset_card">Återställ framsteg</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Omplanera</string>
@@ -239,7 +239,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s sekunder</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -257,7 +257,7 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">Misslyckades med att ladda \'%s\'</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
@@ -266,11 +266,11 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">Bakgrund</string>
     <string name="choose_an_image">Choose an Image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>

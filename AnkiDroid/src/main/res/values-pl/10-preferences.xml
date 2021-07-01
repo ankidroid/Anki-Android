@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
     <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Zaawansowane statystyki</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Włącz zaawansowane statystyki</string>

@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନ୍ ଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହାକି AnkiDroid API ଯେପରିକି ଅଭିଧାନ,ଉପଯୋଗିତା ବ୍ୟବହାର କରେ</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
     <string name="html_javascript_debugging_summ">ସୁଦୂର ୱେବଭ୍ୟୁ ସଂଯୋଗଗୁଡ଼ିକୁ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
