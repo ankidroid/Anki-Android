@@ -2693,7 +2693,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return dismiss(new CollectionTask.BuryNote(mCurrentCard));
     }
 
-    public boolean executeCommand(ViewerCommand which) {
+    public boolean executeCommand(@NonNull ViewerCommand which) {
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }
