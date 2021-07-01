@@ -19,6 +19,6 @@ dependencies {
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.android.tools.lint:lint:27.2.1"
-    testImplementation "com.android.tools.lint:lint-tests:27.2.1"
+    testImplementation "com.android.tools.lint:lint-tests:27.2.2"
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
