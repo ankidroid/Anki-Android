@@ -345,8 +345,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Gesture Allocation
      */
-    private ViewerCommand mGestureVolumeUp;
-    private ViewerCommand mGestureVolumeDown;
+    @NonNull
+    private ViewerCommand mGestureVolumeUp = COMMAND_NOTHING;
+    @NonNull
+    private ViewerCommand mGestureVolumeDown = COMMAND_NOTHING;
     protected final GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
