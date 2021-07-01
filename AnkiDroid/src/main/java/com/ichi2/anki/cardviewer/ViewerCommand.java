@@ -20,6 +20,7 @@ import com.ichi2.anki.R;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
@@ -99,6 +100,6 @@ public enum ViewerCommand {
           * <p>example failure: answering an ease on the front of the card</p>
          */
         @SuppressWarnings("UnusedReturnValue")
-        boolean executeCommand(ViewerCommand which);
+        boolean executeCommand(@NonNull ViewerCommand which);
     }
 }

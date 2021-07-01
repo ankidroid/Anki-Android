@@ -224,7 +224,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    public boolean executeCommand(ViewerCommand which) {
+    public boolean executeCommand(@NonNull ViewerCommand which) {
         /* do nothing */
         return false;
     }
