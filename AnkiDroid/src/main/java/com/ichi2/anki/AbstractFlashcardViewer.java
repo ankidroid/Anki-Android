@@ -2696,6 +2696,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public boolean executeCommand(@NonNull ViewerCommand which) {
+        //noinspection ConstantConditions - remove this once we move to kotlin
+        if (which == null) {
+            Timber.w("command should not be null");
+            which = COMMAND_NOTHING;
+        }
         if (isControlBlocked() && which != COMMAND_EXIT) {
             return false;
         }
