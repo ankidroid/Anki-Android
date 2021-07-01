@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">ଶୈଳିକରଣ</string>
     <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ଦୃଶ୍ୟ</string>
     <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟିଏ କାର୍ଡ ପ୍ରକାର ଆବଶ୍ୟକ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟେ କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>

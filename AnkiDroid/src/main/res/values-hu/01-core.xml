@@ -95,7 +95,7 @@
     <string name="unbury">Félretétel megszüntetése</string>
     <string name="rename_deck">Pakli átnevezése</string>
     <string name="create_shortcut">Kezdőképernyőre</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">Stílus</string>
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
     <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>

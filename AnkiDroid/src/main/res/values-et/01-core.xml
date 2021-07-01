@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">Stiil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kaardibrauseri välimus</string>
     <string name="card_template_editor_deck_override">Kaardipaki pealejäämine</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Vähemalt üks kaardi tüüp peab olema valitud</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kustutada “%2$s” kaarditüüp ja selle %1$d kaart?</item>

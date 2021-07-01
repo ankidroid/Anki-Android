@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">طراحی</string>
     <string name="card_template_editor_menu_card_browser_appearance">ظاهر مروگر کارت</string>
     <string name="card_template_editor_deck_override">بازنویسی دسته</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>

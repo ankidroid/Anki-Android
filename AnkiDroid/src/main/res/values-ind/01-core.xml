@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Iya</string>
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Peramban kartu</string>
@@ -76,7 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Ketik jawaban</string>
     <string name="show_answer">Tampilkan jawaban</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Sembunyikan jawaban</string>
     <string name="ease_button_again">Ulang</string>
     <string name="ease_button_hard">Sulit</string>
     <string name="ease_button_good">Baik</string>
@@ -89,8 +89,8 @@
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
     <string name="rename_deck">Ubah nama dek</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">Buat shortcut</string>
+    <string name="browse_cards">Telusuri kartu</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronisasi akun</string>
@@ -112,7 +112,7 @@
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_select">Pilih teks</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Cari teks</string>
     <string name="menu_search">Pencarian di %1$s</string>
     <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
@@ -142,16 +142,16 @@
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Sedang membuat dek yang telah difilter</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Mengosongkan dek yang telah difilter</string>
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah nama dek belajar kustom yang ada</string>
     <string name="empty_deck">Dek ini kosong</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="search_deck">Mencari Dek</string>
+    <string name="empty_deck_add_note">Tambah kartu</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>
     <string name="studyoptions_limit_reached">Batas belajar harian tercapai</string>
@@ -179,6 +179,8 @@
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_card_browser_appearance">Tampilan Peramban Kartu</string>
     <string name="card_template_editor_deck_override">Paksa Lokasi Dek</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Setidaknya satu tipe kartu diperlukan.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>
@@ -191,30 +193,31 @@
     <string name="card_template_browser_appearance_title">Tampilan Peramban </string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Info kartu</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Peramban Kartu</string>
     <string name="context_menu_anki_card_label">Kartu Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s memiliki masalah:<br/>%2$s</string>
+    <string name="more_information">Info lebih lanjut</string>
+    <string name="no_field">Ditemukan \'{{%1$s}}\', tapi tidak ada bagian yang disebut \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Ditemukan \'{{/%1$s}}\', tapi tidak ada \'{{#%1$s}}\' atau \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Tidak ada \'}}\' di \'%s\'.</string>
+    <string name="open_tag_not_closed">Tidak ada  \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Ditemukan \'{{/%1$s}}\', tapi yang dicari \'{{/%2$s}}\' </string>
+    <string name="filter_error">Terjadi kesalahan di filter %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Koleksi tidak dapat digabungkan. \nBagian mana yang ingin anda pertahankan?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Ganti koleksi anda di AnkiDroid dengan koleksi yang berasal dari AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Ganti koleksi anda yang ada di AnkiWeb dengan koleksi anda dari AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Pilih koleksi untuk dipertahankan</string>
+    <string name="sync_conflict_replace_title">Ganti koleksi</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d kartu (0 jatuh tempo)
+%1$d kartu (0 jatuh tempo)</item>
     </plurals>
 </resources>

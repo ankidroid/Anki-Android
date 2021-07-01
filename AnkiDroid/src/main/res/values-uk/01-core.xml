@@ -57,9 +57,9 @@
     <string name="study_more">Вчити ще</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d картка до (%2$s)</item>
-        <item quantity="few">%1$d картки до (%2$s)</item>
+        <item quantity="few">%1$d картки для перегляду (%2$s)</item>
         <item quantity="many">%1$d карток до (%2$s)</item>
-        <item quantity="other">%1$d картки до (%2$s)</item>
+        <item quantity="other">%1$d картокк для перегляду (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Залишилася %d хвилина</item>
@@ -71,7 +71,7 @@
         <item quantity="one">%d година %d залишилася</item>
         <item quantity="few">залишилося %d години %d </item>
         <item quantity="many">залишилося %d годин %d </item>
-        <item quantity="other">%d годин %d залишилося</item>
+        <item quantity="other">Залишилася %d годин %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">залишилась %d доба, %d </item>
@@ -105,7 +105,7 @@
     <string name="unbury">Повернути</string>
     <string name="rename_deck">Переназвати колоду</string>
     <string name="create_shortcut">Створити значок</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Переглянути картки</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додати</string>
     <string name="menu_add_note">Додати запис</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
@@ -194,6 +194,8 @@
     <string name="card_template_editor_styling">Стиль</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вигляд переглядача карток</string>
     <string name="card_template_editor_deck_override">Перевизначення колоди</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Необхідно хоча б один тип карток</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Видалити тип картки «%2$s» та його %1$d картку?</item>
@@ -233,9 +235,9 @@
     <string name="sync_conflict_title_new">Обрати колекцію для збереження</string>
     <string name="sync_conflict_replace_title">Замінити колекцію</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="few">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d картка (0 для перегляду)</item>
+        <item quantity="few">%1$d картки (0 для перегляду)</item>
+        <item quantity="many">%1$d карток (0 для перегляду)</item>
+        <item quantity="other">%1$d карток (0 для перегляду)</item>
     </plurals>
 </resources>
