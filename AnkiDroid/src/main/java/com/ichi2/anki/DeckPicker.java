@@ -56,6 +56,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
@@ -85,10 +86,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.InitialActivity.StartupFailure;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
+import com.ichi2.anki.analytics.CriticalException;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
+import com.ichi2.anki.dialogs.CriticalExceptionDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
@@ -142,6 +145,8 @@ import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
 
+import net.ankiweb.rsdroid.RustBackendFailedException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -160,7 +165,7 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener,
-        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener {
+        ActivityCompat.OnRequestPermissionsResultCallback, CustomStudyDialog.CustomStudyListener, CriticalExceptionDialog.CriticalExceptionDialogClosedListener {
 
 
     /**
@@ -256,6 +261,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SearchView mToolbarSearchView;
 
     private CustomStudyDialogFactory mCustomStudyDialogFactory;
+    private CriticalExceptionDialog.Factory mCriticalExceptionDialogFactory;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -326,6 +332,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private final ImportAddListener mImportAddListener = new ImportAddListener(this);
+
+
+    @Override
+    public void onCriticalExceptionDialogClosed() {
+
+    }
+
+
     private static class ImportAddListener extends TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String>> {
         public ImportAddListener(DeckPicker deckPicker) {
             super(deckPicker);
@@ -458,6 +472,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
+        mCriticalExceptionDialogFactory = new CriticalExceptionDialog.Factory(this, this::getCol, this::openUrl).attachToActivity(this);
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
@@ -1158,6 +1173,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+
+        // TODO: CriticalException.register(CriticalException.from(new RustBackendFailedException(new UnsatisfiedLinkError(".dynamic section header was not found"))));
+        if (mCriticalExceptionDialogFactory.hasDataForDialog()) {
+            DialogFragment d = mCriticalExceptionDialogFactory.newCriticalExceptionDialog();
+            showDialogFragment(d);
+            return;
+        }
 
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
         if (CompatHelper.getSdkVersion() == Build.VERSION_CODES.O ||

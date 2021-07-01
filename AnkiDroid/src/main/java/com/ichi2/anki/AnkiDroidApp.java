@@ -42,6 +42,7 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.analytics.CriticalException;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
@@ -227,6 +228,16 @@ public class AnkiDroidApp extends Application {
             return defaultValue;
         }
         return !getSharedPrefs(context).getBoolean(ACRA.PREF_DISABLE_ACRA, true);
+    }
+
+
+
+    public static void registerCriticalException(@NonNull Throwable e, String origin) {
+        Timber.i("Registering critical exception: %s", e.getMessage());
+        AnkiDroidApp.sendExceptionReport(e, origin);
+        CriticalException ex = CriticalException.from(e);
+        UsageAnalytics.sendAnalyticsCriticalException(ex);
+        CriticalException.register(ex);
     }
 
 
