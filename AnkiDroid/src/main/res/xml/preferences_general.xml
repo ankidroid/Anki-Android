@@ -66,6 +66,12 @@
             android:key="analyticsOptIn"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:title="@string/paste_as_png"
+            android:summary="@string/paste_as_png_summary"
+            android:maxLength="41"
+            android:key="pastePNG"/>
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/error_reporting_choice_labels"

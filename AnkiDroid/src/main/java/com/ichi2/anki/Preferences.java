@@ -107,8 +107,58 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     // Other variables
     private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
-    private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
-            "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer", "newTimezoneHandling"};
+    /**
+     * Represents in Android preferences the collections configuration "estTime": i.e. whether the buttons should indicate the duration of the interval if we click on them.
+     */
+    private static final String SHOW_ESTIMATE = "showEstimates";
+    /**
+     * Represents in Android preferences the collections configuration "dueCounts": i.e.
+     * whether the remaining number of cards should be shown.
+     */
+    private static final String SHOW_PROGRESS = "showProgress";
+    /**
+     * Represents in Android preferences the collections configuration "collapseTime": i.e.
+     * if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
+     * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+     */
+    private static final String LEARN_CUTOFF = "learnCutoff";
+    /**
+     * Represents in Android preferences the collections configuration "timeLim": i.e.
+     * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
+     * Note that "timeLim" is in second while TIME_LIMIT is in minute.
+     */
+    private static final String TIME_LIMIT = "timeLimit";
+    /**
+     * Represents in Android preferences the collections configuration "addToCur": i.e.
+     * if true, then add note to current decks, otherwise let the note type's configuration decide
+     * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
+     */
+    private static final String USE_CURRENT = "useCurrent";
+    /**
+     * Represents in Android preferences the collections configuration "newSpread": i.e.
+     * whether the new cards are added at the end of the queue or randomly in it.
+     * It seems not to be implemented in Ankidroid and only used in anki.
+     * TODO: port sched v2 from upstream
+     */
+    private static final String NEW_SPREAD = "newSpread";
+    /**
+     * Represents in Android preference the collection's configuration "rollover"
+     * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
+     */
+    private static final String DAY_OFFSET = "dayOffset";
+    /**
+     * Represents in Android preference the collection's configuration "pastePNG" , i.e.
+     * whether to convert clipboard uri to png format or not.
+     * TODO: convert to png if a image file has transparency, or at least if it supports it.
+     */
+    private static final String PASTE_PNG = "pastePNG";
+    /**
+     * Represents in Android preferences whether the scheduler should use version 1 or 2.
+     */
+    private static final String SCHED_VER = "schedVer";
+    private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
+    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
 
     private static final int RESULT_LOAD_IMG = 111;
     private android.preference.CheckBoxPreference mBackgroundImage;
@@ -590,28 +640,31 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 try {
                     JSONObject conf = col.getConf();
                     switch (pref.getKey()) {
-                        case "showEstimates":
+                        case SHOW_ESTIMATE:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
                             break;
-                        case "showProgress":
+                        case SHOW_PROGRESS:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
                             break;
-                        case "learnCutoff":
+                        case LEARN_CUTOFF:
                             ((NumberRangePreference)pref).setValue(conf.getInt("collapseTime") / 60);
                             break;
-                        case "timeLimit":
+                        case TIME_LIMIT:
                             ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
                             break;
-                        case "useCurrent":
+                        case USE_CURRENT:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
                             break;
-                        case "newSpread":
+                        case NEW_SPREAD:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
-                        case "dayOffset":
+                        case DAY_OFFSET:
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
-                        case "newTimezoneHandling":
+                        case PASTE_PNG:
+                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optBoolean("pastePNG"));
+                            break;
+                        case NEW_TIMEZONE_HANDLING:
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
                             checkBox.setChecked(col.getSched()._new_timezone_enabled());
                             if (col.schedVer() <= 1 || !col.isUsingRustBackend()) {
@@ -619,7 +672,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 checkBox.setEnabled(false);
                             }
                             break;
-                        case "schedVer":
+                        case SCHED_VER:
                             ((android.preference.CheckBoxPreference)pref).setChecked(col.schedVer() == 2);
                     }
                 } catch (NumberFormatException e) {
@@ -711,34 +764,38 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case LANGUAGE:
                     closePreferences();
                     break;
-                case "showProgress":
+                case SHOW_PROGRESS:
                     getCol().getConf().put("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
-                case "showEstimates":
+                case SHOW_ESTIMATE:
                     getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
-                case "newSpread":
+                case NEW_SPREAD:
                     getCol().getConf().put("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
-                case "timeLimit":
+                case TIME_LIMIT:
                     getCol().getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
-                case "learnCutoff":
+                case LEARN_CUTOFF:
                     getCol().getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
                     getCol().setMod();
                     break;
-                case "useCurrent":
+                case USE_CURRENT:
                     getCol().getConf().put("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
                     getCol().setMod();
                     break;
-                case "dayOffset": {
+                case DAY_OFFSET: {
                     setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
+                case PASTE_PNG:
+                    getCol().getConf().put("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
+                    break;
                 case "minimumCardsDueForNotification": {
                     android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
@@ -790,7 +847,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
                     break;
                 }
-                case "newTimezoneHandling" : {
+                case NEW_TIMEZONE_HANDLING : {
                     if (getCol().schedVer() != 1 && getCol().isUsingRustBackend()) {
                         AbstractSched sched = getCol().getSched();
                         boolean was_enabled = sched._new_timezone_enabled();
@@ -809,7 +866,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                     break;
                 }
-                case "schedVer": {
+                case SCHED_VER: {
                     boolean wantNew = ((android.preference.CheckBoxPreference) pref).isChecked();
                     boolean haveNew = getCol().schedVer() == 2;
                     // northing to do?

@@ -303,6 +303,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:process=":acra"
@@ -341,11 +346,6 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             >
         </activity>
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"/>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
             android:label="@string/title_activity_translation"

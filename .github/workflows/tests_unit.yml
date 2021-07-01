@@ -60,7 +60,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v1
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v2
 
       - name: Gradle Dependency Download
         uses: nick-invision/retry@v2
