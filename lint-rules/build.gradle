@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.android.tools.lint:lint-api:27.2.1"
+    compileOnly "com.android.tools.lint:lint-api:27.2.2"
     compileOnly "com.android.tools.lint:lint:27.2.1"
 
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
