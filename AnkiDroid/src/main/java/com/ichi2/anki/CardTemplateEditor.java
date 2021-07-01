@@ -434,6 +434,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             mEditorEditText = mainView.findViewById(R.id.editor_editText);
             mEditorPosition = getArguments().getInt(EDITOR_POSITION_KEY);
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mEditorEditText.setCustomInsertionActionModeCallback(new ActionModeCallback());
+            }
+
 
             BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
             bottomNavigation.setOnNavigationItemSelectedListener(item -> {
@@ -482,6 +486,58 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Enable menu
             setHasOptionsMenu(true);
             return mainView;
+        }
+
+
+
+        /**
+         * Custom ActionMode.Callback implementation for adding new field action
+         * button in the text selection menu.
+         */
+        @TargetApi(23)
+        private class ActionModeCallback implements ActionMode.Callback {
+            @RequiresApi(Build.VERSION_CODES.N)
+            private final int mInsertFieldId = 1;
+
+            private ActionModeCallback() {
+                super();
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mInsertFieldId) != null) {
+                    return false;
+                }
+                int initialSize = menu.size();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mCurrentEditorViewId != R.id.styling_edit) {
+                    menu.add(Menu.FIRST, mInsertFieldId, 0, R.string.card_template_editor_insert_field);
+                }
+
+                return initialSize != menu.size();
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                int itemId = item.getItemId();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mInsertFieldId) {
+                    showInsertFieldDialog();
+                    mode.finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                // Left empty on purpose
+            }
         }
 
         private void showInsertFieldDialog() {
