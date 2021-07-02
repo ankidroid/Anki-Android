@@ -389,7 +389,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             this.buildLists();
             this.updateSummaries();
         }
-
+        
         // Set the activity title to include the name of the deck
         String title = getResources().getString(R.string.deckpreferences_title);
         if (title.contains("XXX")) {
