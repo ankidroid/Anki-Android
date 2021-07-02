@@ -210,7 +210,7 @@
     <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Tempel gambar di papan klip sebagai PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">Anki menempel gambar papan klip berbentuk file JPG agar hemat penyimpanan. Gunakan opsi ini untuk menempel gambar sebagai file PNG.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistik lanjutan</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktifkan statistik lanjutan</string>
@@ -290,6 +290,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Langkah kustom(dalam menit)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktifkan notifikasi pengingat untuk dek di grup dek ini</string>

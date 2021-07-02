@@ -289,6 +289,7 @@
     <string name="deck_conf_cram_order" maxLength="41">抽出されたカードの並べ方</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
     <string name="deck_conf_cram_reschedule_summ">解答結果を元のデッキでのスケジュールに反映させます</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">独自の学習ステップを設定</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">このグループのデッキをリマインダー通知</string>

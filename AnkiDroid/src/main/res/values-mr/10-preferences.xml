@@ -292,6 +292,7 @@
     <string name="deck_conf_cram_order" maxLength="41">द्वारे निवडलेली कार्डे</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">रीशेड्यूल</string>
     <string name="deck_conf_cram_reschedule_summ">या डेकमधील माझ्या उत्तरावर आधारित कार्ड रीशेड्यूल करा</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">सानुकूल चरण (मिनिटात)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">सानुकूल चरण परिभाषित करा</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">सानुकूल चरण परिभाषित करा</string>

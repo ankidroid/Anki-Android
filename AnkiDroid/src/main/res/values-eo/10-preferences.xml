@@ -291,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kartoj elektitaj laŭ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>

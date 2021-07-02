@@ -291,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kaarten geselecteerd door</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Opnieuw inplannen</string>
     <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Aangepaste stappen (in minuten)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Aangepaste stapgroottes definiëren</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Herinnering meldingen voor sets in deze setgroep inschakelen</string>

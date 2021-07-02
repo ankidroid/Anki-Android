@@ -291,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">carte selezionate per</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ripianifica</string>
     <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passi personalizzati (in minuti)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definisci passi personalizzati</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Abilita notifiche di promemoria per i mazzi in questo gruppo di mazzi</string>

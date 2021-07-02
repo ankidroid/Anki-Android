@@ -292,6 +292,7 @@
     <string name="deck_conf_cram_order" maxLength="41">కార్డులు ఎంపిక చేశాయి</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">అనుకూల దశలు (నిమిషాల్లో)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">అనుకూల దశలను నిర్వచించండి</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
