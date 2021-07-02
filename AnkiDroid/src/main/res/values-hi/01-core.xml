@@ -184,7 +184,7 @@
     <string name="card_template_editor_styling">स्टाइल</string>
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउज़र का दिखाव</string>
     <string name="card_template_editor_deck_override">डेक ओवरराइड</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_insert_field">फ़ील्ड डालें</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
     <plurals name="card_template_editor_confirm_delete">

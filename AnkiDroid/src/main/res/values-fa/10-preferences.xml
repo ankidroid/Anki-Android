@@ -291,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">کارتهای انتخاب شده بوسیله</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">فعال‌سازی اعلان‌های یادآوری برای دسته‌هایی که از این گروه اختیارات استفاده می‌کنند</string>
