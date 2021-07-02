@@ -296,6 +296,7 @@
     <string name="deck_conf_cram_order" maxLength="41">картки вибрані за</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Власні кроки (в хвилинах)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Увімкнути нагадувальне сповіщення для колод у цій групі</string>

@@ -291,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Cartes sélectionnées par</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replanifier</string>
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Étapes personnalisées (en minute)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Définir le pas personnalisé</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Activer les notifications de rappel pour les paquets de cartes dans ce groupe de paquets</string>

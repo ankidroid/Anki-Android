@@ -295,6 +295,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Отобрать</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Включает напоминания для колод в этой группе</string>

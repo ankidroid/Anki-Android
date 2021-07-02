@@ -292,6 +292,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kártyák kiválasztása után</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Add meg az egyéni lépéseket</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>

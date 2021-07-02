@@ -296,6 +296,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Kortelių atrinkimo tvarka</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Keisti mokymosi dieną</string>
     <string name="deck_conf_cram_reschedule_summ">Keisti kortelių mokymosi dieną, remiantis mano atsakymais šiame rinkinyje</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Individualūs veiksmai (minutėmis)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Apibrėžti individualius veiksmus</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
