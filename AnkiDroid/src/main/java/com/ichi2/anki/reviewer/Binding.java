@@ -60,12 +60,10 @@ public class Binding {
 
     /** 
      * Specifies a unicode binding from an unknown input device
-     * Should be due to the "default" key bindings and never from user input
-     * When we know the device, we can know whether shift is, or isn't pressed.
-     * If we don't, then a star could be mapped to a button, OR shift + button
+     * See {@link AppDefinedModifierKeys}
      * */
     public static Binding unicode(char unicodeChar) {
-        return unicode(ModifierKeys.allowShift(), unicodeChar);
+        return unicode(AppDefinedModifierKeys.allowShift(), unicodeChar);
     }
 
     public static Binding unicode(ModifierKeys modifierKeys, char unicodeChar) {
@@ -100,15 +98,12 @@ public class Binding {
 
     public static class ModifierKeys {
         // null == true/false works.
-        @Nullable
-        private final Boolean mShift;
-        @Nullable
-        private final Boolean mCtrl;
-        @Nullable
-        private final Boolean mAlt;
+        private final boolean mShift;
+        private final boolean mCtrl;
+        private final boolean mAlt;
 
 
-        private ModifierKeys(@Nullable Boolean shift, @Nullable Boolean ctrl, @Nullable Boolean alt) {
+        private ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
             this.mShift = shift;
             this.mCtrl = ctrl;
             this.mAlt = alt;
@@ -127,17 +122,63 @@ public class Binding {
             return new ModifierKeys(true, false, false);
         }
 
-        /** Allows shift, but not Ctrl/Alt */
-        public static ModifierKeys allowShift() {
-            return new ModifierKeys(null, false, false);
-        }
-
 
         public boolean matches(KeyEvent event) {
             // return false if Ctrl+1 is pressed and 1 is expected
-            return (mShift == null || mShift == event.isShiftPressed()) &&
-                    (mCtrl == null || mCtrl == event.isCtrlPressed()) &&
-                    (mAlt == null || mAlt == event.isAltPressed());
+            return shiftMatches(event) && ctrlMatches(event) && altMatches(event);
+        }
+
+        private boolean shiftMatches(KeyEvent event) {
+            return mShift == event.isShiftPressed();
+        }
+
+        private boolean ctrlMatches(KeyEvent event) {
+            return mCtrl == event.isCtrlPressed();
+        }
+
+        private boolean altMatches(KeyEvent event) {
+            return altMatches(event.isAltPressed());
+        }
+
+        protected boolean shiftMatches(boolean shiftPressed) {
+            return mShift == shiftPressed;
+        }
+
+        protected boolean ctrlMatches(boolean ctrlPressed) {
+            return mCtrl == ctrlPressed;
+        }
+
+        protected boolean altMatches(boolean altPressed) {
+            return mAlt == altPressed;
+        }
+    }
+
+    /** Modifier keys which cannot be defined by a binding */
+    private static class AppDefinedModifierKeys extends ModifierKeys {
+
+        /**
+         * Specifies a keycode combination binding from an unknown input device
+         * Should be due to the "default" key bindings and never from user input
+         *
+         * If we do not know what the device is, "*" could be a key on the keyboard or Shift + 8
+         *
+         * So we need to ignore shift, rather than match it to a value
+         *
+         * If we have bindings in the app, then we know whether we need shift or not (in actual fact, we should
+         * be fine to use keycodes).
+         * */
+        public static ModifierKeys allowShift() {
+            return new AppDefinedModifierKeys();
+        }
+
+        private AppDefinedModifierKeys() {
+            super(false, false, false); // shift doesn't matter: alt and ctrl are off.
+        }
+
+
+        @Override
+        protected boolean shiftMatches(boolean shiftPressed) {
+            return true;
         }
     }
 }
