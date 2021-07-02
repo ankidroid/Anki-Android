@@ -30,11 +30,6 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.Binding.*;
 
 public class PeripheralCommand {
-    @Nullable
-    private final Integer mKeyCode;
-
-    @Nullable
-    private final Character mUnicodeCharacter;
 
     @NonNull
     private final CardSide mCardSide;
@@ -42,21 +37,12 @@ public class PeripheralCommand {
     @NonNull
     private final ViewerCommand mCommand;
 
-    private final ModifierKeys mModifierKeys;
+    @NonNull
+    private final Binding mBinding;
 
 
-    private PeripheralCommand(int keyCode, @NonNull ViewerCommand command, @NonNull CardSide side, ModifierKeys modifierKeys) {
-        this.mKeyCode = keyCode;
-        this.mUnicodeCharacter = null;
-        this.mCommand = command;
-        this.mCardSide = side;
-        this.mModifierKeys = modifierKeys;
-    }
-
-    private PeripheralCommand(@Nullable Character unicodeCharacter, @NonNull ViewerCommand command, @NonNull CardSide side, ModifierKeys modifierKeys) {
-        this.mModifierKeys = modifierKeys;
-        this.mKeyCode = null;
-        this.mUnicodeCharacter = unicodeCharacter;
+    public PeripheralCommand(@NonNull Binding binding, @NonNull ViewerCommand command, @NonNull CardSide side) {
+        this.mBinding = binding;
         this.mCommand = command;
         this.mCardSide = side;
     }
@@ -66,12 +52,14 @@ public class PeripheralCommand {
         return mCommand;
     }
 
+    @Nullable
     public Character getUnicodeCharacter() {
-        return mUnicodeCharacter;
+        return mBinding.getUnicodeCharacter();
     }
 
+    @Nullable
     public Integer getKeycode() {
-        return mKeyCode;
+        return mBinding.getKeycode();
     }
 
     public boolean isQuestion() {
@@ -82,78 +70,76 @@ public class PeripheralCommand {
         return mCardSide == CardSide.ANSWER || mCardSide == CardSide.BOTH;
     }
 
-    public static PeripheralCommand unicode(char unicodeChar, @NonNull ViewerCommand command, CardSide side) {
-        return unicode(unicodeChar, command, side, ModifierKeys.allowShift());
+
+    private static PeripheralCommand keyCode(int keycode, @NonNull ViewerCommand command, CardSide side, ModifierKeys modifiers) {
+        return new PeripheralCommand(Binding.keyCode(modifiers, keycode), command, side);
     }
 
-    private static PeripheralCommand unicode(char unicodeChar, @NonNull ViewerCommand command, CardSide side, ModifierKeys modifierKeys) {
-        // Note: cast is needed to select the correct constructor
-        return new PeripheralCommand((Character) unicodeChar, command, side, modifierKeys);
+
+    private static PeripheralCommand unicode(char c, @NonNull ViewerCommand command, CardSide side) {
+        return new PeripheralCommand(Binding.unicode(c), command, side);
     }
 
-    public static PeripheralCommand keyCode(int keyCode, @NonNull ViewerCommand command, CardSide side) {
-        return keyCode(keyCode, command, side, ModifierKeys.none());
-    }
 
-    private static PeripheralCommand keyCode(int keyCode, @NonNull ViewerCommand command, CardSide side, ModifierKeys modifiers) {
-        return new PeripheralCommand(keyCode, command, side, modifiers);
+    private static PeripheralCommand keyCode(int keycode, @NonNull ViewerCommand command, CardSide side) {
+        return new PeripheralCommand(Binding.keyCode(keycode), command, side);
     }
 
     public static List<PeripheralCommand> getDefaultCommands() {
         List<PeripheralCommand> ret = new ArrayList<>(28); // Number of elements below
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_ANSWER_THIRD_BUTTON, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_ANSWER_FOURTH_BUTTON, CardSide.ANSWER));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_Y, COMMAND_FLIP_OR_ANSWER_EASE1, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_X, COMMAND_FLIP_OR_ANSWER_EASE2, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_B, COMMAND_FLIP_OR_ANSWER_EASE3, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_BUTTON_A, COMMAND_FLIP_OR_ANSWER_EASE4, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_BUTTON_Y, COMMAND_FLIP_OR_ANSWER_EASE1, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_BUTTON_X, COMMAND_FLIP_OR_ANSWER_EASE2, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_BUTTON_B, COMMAND_FLIP_OR_ANSWER_EASE3, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_BUTTON_A, COMMAND_FLIP_OR_ANSWER_EASE4, CardSide.BOTH));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_SPACE, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_SPACE, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
         // See: 1643 - Unsure if this will work - nothing came through on the emulator.
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_DPAD_CENTER, COMMAND_FLIP_OR_ANSWER_RECOMMENDED, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_DPAD_CENTER, COMMAND_FLIP_OR_ANSWER_RECOMMENDED, CardSide.BOTH));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_E, COMMAND_EDIT, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_E, COMMAND_EDIT, CardSide.BOTH));
 
         // Using a char rather than "Ctrl + 1" is not ideal due to the potential need to handle Shift/Fn + character on
         // international layouts but is what Anki Desktop does
-        ret.add(PeripheralCommand.unicode('*', COMMAND_MARK, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('-', COMMAND_BURY_CARD, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('=', COMMAND_BURY_NOTE, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('@', COMMAND_SUSPEND_CARD, CardSide.BOTH));
-        ret.add(PeripheralCommand.unicode('!', COMMAND_SUSPEND_NOTE, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_R, COMMAND_PLAY_MEDIA, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_V, COMMAND_REPLAY_VOICE, CardSide.BOTH));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_V, COMMAND_RECORD_VOICE, CardSide.BOTH, ModifierKeys.shift()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_Z, COMMAND_UNDO, CardSide.BOTH));
+        ret.add(unicode('*', COMMAND_MARK, CardSide.BOTH));
+        ret.add(unicode('-', COMMAND_BURY_CARD, CardSide.BOTH));
+        ret.add(unicode('=', COMMAND_BURY_NOTE, CardSide.BOTH));
+        ret.add(unicode('@', COMMAND_SUSPEND_CARD, CardSide.BOTH));
+        ret.add(unicode('!', COMMAND_SUSPEND_NOTE, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_R, COMMAND_PLAY_MEDIA, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_V, COMMAND_REPLAY_VOICE, CardSide.BOTH));
+        ret.add(keyCode(KeyEvent.KEYCODE_V, COMMAND_RECORD_VOICE, CardSide.BOTH, ModifierKeys.shift()));
+        ret.add(keyCode(KeyEvent.KEYCODE_Z, COMMAND_UNDO, CardSide.BOTH));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
 
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
-        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_1, COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_2, COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_3, COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(keyCode(KeyEvent.KEYCODE_NUMPAD_4, COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
 
         return ret;
     }
 
 
     public boolean matchesModifier(KeyEvent event) {
-        return mModifierKeys.matches(event);
+        return mBinding.matchesModifier(event);
     }
 
 
