@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.reviewer.Binding.*;
 
 public class PeripheralCommand {
     @Nullable
@@ -161,49 +162,5 @@ public class PeripheralCommand {
         QUESTION,
         ANSWER,
         BOTH
-    }
-
-
-    public static class ModifierKeys {
-        // null == true/false works.
-        @Nullable
-        private final Boolean mShift;
-        @Nullable
-        private final Boolean mCtrl;
-        @Nullable
-        private final Boolean mAlt;
-
-
-        private ModifierKeys(@Nullable Boolean shift, @Nullable Boolean ctrl, @Nullable Boolean alt) {
-            this.mShift = shift;
-            this.mCtrl = ctrl;
-            this.mAlt = alt;
-        }
-
-
-        public static ModifierKeys none() {
-            return new ModifierKeys(false, false, false);
-        }
-
-        public static ModifierKeys ctrl() {
-            return new ModifierKeys(false, true, false);
-        }
-
-        public static ModifierKeys shift() {
-            return new ModifierKeys(true, false, false);
-        }
-
-        /** Allows shift, but not Ctrl/Alt */
-        public static ModifierKeys allowShift() {
-            return new ModifierKeys(null, false, false);
-        }
-
-
-        public boolean matches(KeyEvent event) {
-            // return false if Ctrl+1 is pressed and 1 is expected
-            return (mShift == null || mShift == event.isShiftPressed()) &&
-                    (mCtrl == null || mCtrl == event.isCtrlPressed()) &&
-                    (mAlt == null || mAlt == event.isAltPressed());
-        }
     }
 }
