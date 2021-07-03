@@ -107,11 +107,14 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -597,7 +600,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             mCurrentCard = card;
-            TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard()); // Tasks should always be launched from GUI. So in
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                try {
+                    col.getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
+                    col.getSched().preloadNextCard();
+                } catch (RuntimeException e) {
+                    Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
+                }
+                return null;
+            }); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -1362,7 +1373,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), new AnswerCardHandler(false));
         }
     }
 
@@ -1443,7 +1454,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
+                    final Card currentCard = mCurrentCard;
+                    dismiss(new CollectionTask.DismissNote(currentCard) {
+
+                        @Override
+                        protected void actualTask(Collection col) {
+                            final Card card = mCard;
+                            Note note = mCard.note();
+                            // collect undo information
+                            ArrayList<Card> allCs = note.cards();
+                            col.markUndo(new UndoAction(R.string.menu_delete_note) {
+                                @Nullable
+                                @Override
+                                public Card undo(@NonNull Collection col) {
+                                    Timber.i("Undo: Delete note");
+                                    ArrayList<Long> ids = new ArrayList<>(allCs.size() + 1);
+                                    note.flush(note.getMod(), false);
+                                    ids.add(note.getId());
+                                    for (Card c : allCs) {
+                                        c.flush(false);
+                                        ids.add(c.getId());
+                                    }
+                                    col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
+                                    return card;
+                                }
+                            });
+                            // delete note
+                            col.remNotes(new long[] {note.getId()});
+                        }
+
+                    });
                 })
                 .build().show();
     }
@@ -1469,7 +1509,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void answerCard(@Consts.BUTTON_TYPE int ease) {
+    public static class GetCard implements TaskDelegate<Card, Computation<?>> {
+        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+            AbstractSched sched = col.getSched();
+            Timber.i("Obtaining card");
+            Card newCard = sched.getCard();
+            if (newCard != null) {
+                // render cards before locking database
+                newCard._getQA(true);
+            }
+            collectionTask.doProgress(newCard);
+            return Computation.OK;
+        }
+    }
+
+    protected void answerCard(final @Consts.BUTTON_TYPE int ease) {
         if (mInAnswer) {
             return;
         }
@@ -1512,8 +1566,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTimerHandler.postDelayed(mRemoveChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
+        final Card oldCard = mCurrentCard;
 
-        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
+        TaskDelegate<Card, Computation<?>> answerAndGetCard = new GetCard (){
+                public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
+                    Timber.i("Answering card %d", oldCard.getId());
+                    col.getSched().answerCard(oldCard, ease);
+                    return super.task(col, collectionTask);
+                }
+            };
+        TaskManager.launchCollectionTask(answerAndGetCard, new AnswerCardHandler(true));
     }
 
 
@@ -3906,7 +3968,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new GetCard(), new AnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {

@@ -27,12 +27,12 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.PartialSearch;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
@@ -1201,7 +1201,7 @@ public class Collection implements CollectionGetter {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
+    public List<Long> findCards(String search, boolean order, PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 

@@ -40,6 +40,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
@@ -87,6 +88,32 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
+
+    public static boolean confChange(@NonNull Collection col, DeckConfig conf, Deck deck) {
+        Timber.d("doInBackgroundConfChange");
+        try {
+            long newConfId = conf.getLong("id");
+            // If new config has a different sorting order, reorder the cards
+            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
+            int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
+            if (oldOrder != newOrder) {
+                switch (newOrder) {
+                    case 0:
+                        col.getSched().randomizeCards(deck.getLong("id"));
+                        break;
+                    case 1:
+                        col.getSched().orderCards(deck.getLong("id"));
+                        break;
+                }
+            }
+            col.getDecks().setConf(deck, newConfId);
+            col.save();
+            return true;
+        } catch (JSONException e) {
+            Timber.w(e);
+            return false;
+        }
+    }
 
     public class DeckPreferenceHack implements SharedPreferences {
 
@@ -175,7 +202,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return DeckConfig.parseTimerOpt(options, true);
         }
 
-
         public class Editor implements SharedPreferences.Editor {
 
             private ContentValues mUpdate = new ContentValues();
@@ -212,7 +238,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldOrder = mOptions.getJSONObject("new").getInt("order");
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder);
-                                    TaskManager.launchCollectionTask(new CollectionTask.Reorder(mOptions), confChangeHandler());
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundReorder");
+                                        col.getSched().resortConf(options);
+                                        return true;
+                                    }, confChangeHandler());
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
@@ -303,8 +334,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
-                                mOptions = mCol.getDecks().getConf(newConfId);
-                                TaskManager.launchCollectionTask(new CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler());
+                                Deck deck = mDeck;
+                                DeckConfig options = mOptions = mCol.getDecks().getConf(newConfId);
+                                TaskManager.launchCollectionTask(
+                                        (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> confChange(col, options, deck),
+                                        confChangeHandler());
                                 break;
                             }
                             case "confRename": {
@@ -316,7 +350,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfReset(mOptions), confChangeHandler());
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask(
+                                            (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundConfReset");
+                                        col.getDecks().restoreToDefault(options);
+                                        col.save();
+                                        return null;
+                                    }, confChangeHandler());
                                 }
                                 break;
                             case "confAdd": {
@@ -362,7 +403,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    TaskManager.launchCollectionTask(new CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler());
+                                    final Deck deck = mDeck;
+                                    final DeckConfig options = mOptions;
+                                    TaskManager.launchCollectionTask(
+                                            (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                                        Timber.d("doInBackgroundConfSetSubdecks");
+                                        try {
+                                            TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
+                                            for (long childDid : children.values()) {
+                                                Deck child = col.getDecks().get(childDid);
+                                                if (child.isDyn()) {
+                                                    continue;
+                                                }
+                                                boolean changed = confChange(col, options, child);
+                                                if (!changed) {
+                                                    return false;
+                                                }
+                                            }
+                                            return true;
+                                        } catch (JSONException e) {
+                                            Timber.w(e);
+                                            return false;
+                                        }
+                                    }, confChangeHandler());
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -532,8 +595,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             private void remConf() throws ConfirmModSchemaException {
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
+                final DeckConfig options = mOptions;
                 // Run the CPU intensive re-sort operation in a background thread
-                TaskManager.launchCollectionTask(new CollectionTask.ConfRemove(mOptions), confChangeHandler());
+                TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundConfRemove");
+                    try {
+                        // Note: We do the actual removing of the options group in the main thread so that we
+                        // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
+                        // When a conf is deleted, all decks using it revert to the default conf.
+                        // Cards must be reordered according to the default conf.
+                        int order = options.getJSONObject("new").getInt("order");
+                        int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
+                        if (order != defaultOrder) {
+                            options.getJSONObject("new").put("order", defaultOrder);
+                            col.getSched().resortConf(options);
+                        }
+                        col.save();
+                        return true;
+                    } catch (JSONException e) {
+                        Timber.w(e);
+                        return false;
+                    }
+                }, confChangeHandler());
                 mDeck.put("conf", 1);
             }
         }

@@ -18,6 +18,7 @@ package com.ichi2.async;
 
 import android.util.Pair;
 
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
@@ -33,7 +34,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         lockDatabase();
 
         advanceRobolectricLooper();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = super.execute(new CollectionTask.CheckDatabase());
+        Pair<Boolean, Collection.CheckDatabaseResult> result = super.execute(new DeckPicker.CheckDatabase());
 
         assertThat("The result should specify a failure", result.first, is(false));
         Collection.CheckDatabaseResult checkDbResult = result.second;

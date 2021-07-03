@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki;
 
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -48,7 +49,7 @@ public class CheckMediaTest extends RobolectricTest {
 
         assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
 
-        CollectionTask<Void, Computation<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
+        CollectionTask<Void, Computation<List<List<String>>>> task = TaskManager.launchCollectionTask(new DeckPicker.CheckMedia());
 
         task.get();
 

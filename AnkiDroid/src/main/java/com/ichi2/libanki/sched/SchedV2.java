@@ -34,6 +34,7 @@ import android.util.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -198,7 +199,10 @@ public class SchedV2 extends AbstractSched {
         }
         if (!mHaveCounts) {
             // Need to reset queues once counts are reset
-            TaskManager.launchCollectionTask(new CollectionTask.Reset());
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                col.getSched().reset();
+                return null;
+            });
         }
         return card;
     }

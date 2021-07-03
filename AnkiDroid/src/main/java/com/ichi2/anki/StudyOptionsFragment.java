@@ -45,14 +45,19 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.FragmentFactoryUtils;
@@ -326,7 +331,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoListener);
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), mUndoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");
@@ -515,6 +520,38 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         refreshInterface(resetSched, false);
     }
 
+    public static StudyOptionsFragment.DeckStudyData updateValuesFromDeck(@NonNull Collection col, boolean reset) {
+        Timber.d("doInBackgroundUpdateValuesFromDeck");
+        try {
+            AbstractSched sched = col.getSched();
+            if (reset) {
+                // reset actually required because of counts, which is used in getCollectionTaskListener
+                sched.resetCounts();
+            }
+            Counts counts = sched.counts();
+            int totalNewCount = sched.totalNewForCurrentDeck();
+            int totalCount = sched.cardCount();
+            return new StudyOptionsFragment.DeckStudyData(counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
+                    totalCount, sched.eta(counts));
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
+            return null;
+        }
+    }
+
+    public static class UpdateValuesFromDeck implements TaskDelegate<Void, DeckStudyData> {
+        private final boolean mReset;
+
+
+        public UpdateValuesFromDeck(boolean reset) {
+            this.mReset = reset;
+        }
+
+        public StudyOptionsFragment.DeckStudyData task(@NonNull Collection col, @Nullable ProgressSenderAndCancelListener<Void> collectionTask) {
+            return updateValuesFromDeck(col, mReset);
+        }
+    }
+
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
@@ -525,9 +562,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
-        TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
+        TaskManager.cancelAllTasks(UpdateValuesFromDeck.class);
         // Load the deck counts for the deck from Collection asynchronously
-        TaskManager.launchCollectionTask(new CollectionTask.UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist));
+        TaskManager.launchCollectionTask(new UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist));
     }
 
 
@@ -751,7 +788,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mToReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
-            TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
+            TaskManager.cancelAllTasks(UpdateValuesFromDeck.class);
         }
     }
 }

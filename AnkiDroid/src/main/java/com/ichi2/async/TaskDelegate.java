@@ -41,11 +41,11 @@ import androidx.annotation.NonNull;
  * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to dislay while remaining work is done; the progression of a counter.
  * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
  */
-public abstract class TaskDelegate<Progress, Result> {
-    protected abstract Result task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask);
+public interface TaskDelegate<Progress, Result> {
+    Result task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Progress> collectionTask);
 
 
-    protected boolean requiresOpenCollection() {
+    default boolean requiresOpenCollection() {
         return true;
     }
 }

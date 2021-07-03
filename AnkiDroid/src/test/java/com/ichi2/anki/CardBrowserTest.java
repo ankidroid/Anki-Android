@@ -785,7 +785,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne.class);
 
-        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+        CardBrowser.SearchCards task = new CardBrowser.SearchCards("", false, cardsToRender, 0, 0);
 
         TaskManager.launchCollectionTask(task, cardBrowser.new SearchCardsHandler(cardBrowser));
         CardBrowser.CardCollection<CardBrowser.CardCache> cards = cardBrowser.getCards();

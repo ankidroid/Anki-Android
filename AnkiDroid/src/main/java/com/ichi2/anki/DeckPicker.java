@@ -65,6 +65,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -107,6 +108,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -114,20 +116,29 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
@@ -142,9 +153,16 @@ import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import timber.log.Timber;
@@ -155,6 +173,8 @@ import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.Computation.ERR;
+import static com.ichi2.utils.Computation.OK;
 
 
 public class DeckPicker extends NavigationDrawerActivity implements
@@ -970,7 +990,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         /* Complete task and enqueue fetching nonessential data for
           startup. */
         if (colIsOpen()) {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadCollectionComplete());
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                if (col != null) {
+                    CollectionHelper.loadCollectionComplete(col);
+                }
+                return null;
+            });
         }
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
@@ -994,12 +1019,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    public static class LoadDeckCounts implements TaskDelegate<Void, List<DeckDueTreeNode>> {
+        // A named class because it should be cancellable.
+        public List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            Timber.d("doInBackgroundLoadDeckCounts");
+            try {
+                // Get due tree
+                return col.getSched().deckDueTree(collectionTask);
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundLoadDeckCounts - error");
+                return null;
+            }
+        }
+    }
+
     @Override
     protected void onPause() {
         Timber.d("onPause()");
         mActivityPaused = true;
         // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(CollectionTask.LoadDeckCounts.class);
+        TaskManager.cancelAllTasks(LoadDeckCounts.class);
         super.onPause();
     }
 
@@ -1442,7 +1481,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
+        TaskManager.launchCollectionTask(new UndoAction.Undo(), undoTaskListener(isReview));
     }
 
 
@@ -1584,10 +1623,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
+
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskManager.launchCollectionTask(new CollectionTask.RepairCollection(), repairCollectionTask());
+        TaskManager.launchCollectionTask(
+                new TaskDelegate<Void, Boolean>() {
+                    @Override
+                    public Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+                        Timber.d("doInBackgroundRepairCollection");
+                        if (col != null) {
+                            Timber.i("RepairCollection: Closing collection");
+                            col.close(false);
+                        }
+                        return BackupManager.repairCollection(col);
+                    }
+
+
+                    @Override
+                    public boolean requiresOpenCollection() {
+                        return false;
+                    }
+                }, repairCollectionTask());
     }
 
 
@@ -1610,10 +1667,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    @VisibleForTesting
+    public static class CheckDatabase implements TaskDelegate<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
+        public Pair<Boolean, Collection.CheckDatabaseResult> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+            Timber.d("doInBackgroundCheckDatabase");
+            // Don't proceed if collection closed
+            if (col == null) {
+                Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
+                return new Pair<>(false, null);
+            }
+
+            Collection.CheckDatabaseResult result = col.fixIntegrity(new TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()));
+            if (result.getFailed()) {
+                //we can fail due to a locked database, which requires knowledge of the failure.
+                return new Pair<>(false, result);
+            } else {
+                // Close the collection and we restart the app to reload
+                CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
+                return new Pair<>(true, result);
+            }
+        }
+    }
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        TaskManager.launchCollectionTask(new CollectionTask.CheckDatabase(), new CheckDatabaseListener());
+        TaskManager.launchCollectionTask(new CheckDatabase(), new CheckDatabaseListener());
     }
 
 
@@ -1646,9 +1724,35 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
+
+
+
+
+    /**
+     * @return The results list from the check, or false if any errors.
+     */
+    @VisibleForTesting
+    public static class CheckMedia implements TaskDelegate<Void, Computation<List<List<String>>>> {
+        @Override
+        public Computation<List<List<String>>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            Timber.d("doInBackgroundCheckMedia");
+            // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+            try {
+                col.getMedia().rebuildIfInvalid();
+            } catch (IOException e) {
+                Timber.w(e);
+                return ERR;
+            }
+            // A media check on AnkiDroid will also update the media db
+            col.getMedia().findChanges(true);
+            // Then do the actual check
+            return new Computation<>(col.getMedia().check());
+        }
+    }
+
     @Override
     public void mediaCheck() {
-        TaskManager.launchCollectionTask(new CollectionTask.CheckMedia(), mediaCheckListener());
+        TaskManager.launchCollectionTask(new CheckMedia(), mediaCheckListener());
     }
 
     private MediaDeleteListener mediaDeleteListener() {
@@ -1676,7 +1780,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     @Override
     public void deleteUnused(List<String> unused) {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteMedia(unused), mediaDeleteListener());
+        TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+            com.ichi2.libanki.Media m = col.getMedia();
+            for (String fname : unused) {
+                m.removeFile(fname);
+            }
+            return unused.size();
+        }, mediaDeleteListener());
     }
 
 
@@ -2106,14 +2216,178 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
+        TaskManager.<String, Triple<AnkiPackageImporter, Boolean, String>>launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) -> {
+            Timber.d("doInBackgroundImportAdd");
+            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+            AnkiPackageImporter imp = new AnkiPackageImporter(col, importPath);
+            imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
+            try {
+                imp.run();
+            } catch (ImportExportException e) {
+                Timber.w(e);
+                return new Triple(null, true, e.getMessage());
+            }
+            return new Triple<>(imp, false, null);
+        }, mImportAddListener);
     }
 
+
+
+    public static class ImportReplace implements TaskDelegate<String, Computation<?>> {
+        private final String mPath;
+
+
+        public ImportReplace(String path) {
+            this.mPath = path;
+        }
+
+
+        @Override
+        public boolean requiresOpenCollection() {
+            return false;
+        }
+
+
+        public Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+            Timber.d("doInBackgroundImportReplace");
+            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+            Context context = col.getContext();
+
+            // extract the deck from the zip file
+            String colPath = CollectionHelper.getCollectionPath(context);
+            File dir = new File(new File(colPath).getParentFile(), "tmpzip");
+            if (dir.exists()) {
+                BackupManager.removeDir(dir);
+            }
+
+            // from anki2.py
+            String colname = "collection.anki21";
+            ZipFile zip;
+            try {
+                zip = new ZipFile(new File(mPath));
+            } catch (IOException e) {
+                Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
+                return ERR;
+            }
+            try {
+                // v2 scheduler?
+                if (zip.getEntry(colname) == null) {
+                    colname = CollectionHelper.COLLECTION_FILENAME;
+                }
+                Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
+            } catch (IOException e) {
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
+                return ERR;
+            }
+            String colFile = new File(dir, colname).getAbsolutePath();
+            if (!(new File(colFile)).exists()) {
+                return ERR;
+            }
+
+            Collection tmpCol = null;
+            try {
+                tmpCol = Storage.Collection(context, colFile);
+                if (!tmpCol.validCollection()) {
+                    tmpCol.close();
+                    return ERR;
+                }
+            } catch (Exception e) {
+                Timber.e("Error opening new collection file... probably it's invalid");
+                try {
+                    tmpCol.close();
+                } catch (Exception e2) {
+                    Timber.w(e2);
+                    // do nothing
+                }
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
+                return ERR;
+            } finally {
+                if (tmpCol != null) {
+                    tmpCol.close();
+                }
+            }
+
+            collectionTask.doProgress(res.getString(R.string.importing_collection));
+
+            try {
+                CollectionHelper.getInstance().getCol(context);
+                // unload collection and trigger a backup
+                Time time = CollectionHelper.getInstance().getTimeSafe(context);
+                CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
+                CollectionHelper.getInstance().lockCollection();
+                BackupManager.performBackupInBackground(colPath, true, time);
+            } catch (Exception e) {
+                Timber.w(e);
+            }
+            // overwrite collection
+            File f = new File(colFile);
+            if (!f.renameTo(new File(colPath))) {
+                // Exit early if this didn't work
+                return ERR;
+            }
+            int addedCount = -1;
+            try {
+                CollectionHelper.getInstance().unlockCollection();
+
+                // because users don't have a backup of media, it's safer to import new
+                // data and rely on them running a media db check to get rid of any
+                // unwanted media. in the future we might also want to duplicate this step
+                // import media
+                HashMap<String, String> nameToNum = new HashMap<>();
+                HashMap<String, String> numToName = new HashMap<>();
+                File mediaMapFile = new File(dir.getAbsolutePath(), "media");
+                if (mediaMapFile.exists()) {
+                    JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+                    jr.beginObject();
+                    String name;
+                    String num;
+                    while (jr.hasNext()) {
+                        num = jr.nextName();
+                        name = jr.nextString();
+                        nameToNum.put(name, num);
+                        numToName.put(num, name);
+                    }
+                    jr.endObject();
+                    jr.close();
+                }
+                String mediaDir = Media.getCollectionMediaPath(colPath);
+                int total = nameToNum.size();
+                int i = 0;
+                for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
+                    String file = entry.getKey();
+                    String c = entry.getValue();
+                    File of = new File(mediaDir, file);
+                    if (!of.exists()) {
+                        Utils.unzipFiles(zip, mediaDir, new String[] {c}, numToName);
+                    }
+                    ++i;
+                    collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total));
+                }
+                zip.close();
+                // delete tmp dir
+                BackupManager.removeDir(dir);
+                return OK;
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
+                return ERR;
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
+                return ERR;
+            } catch (IOException e) {
+                Timber.e(e, "doInBackgroundImportReplace - IOException");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
+                return ERR;
+            }
+        }
+    }
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
+        TaskManager.launchCollectionTask(new ImportReplace(importPath), importReplaceListener());
     }
 
 
@@ -2138,7 +2412,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
+        String apkgPath = exportPath.getPath();
+        TaskManager.launchCollectionTask(
+                (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundExportApkg");
+
+                    try {
+                        AnkiPackageExporter exporter = new AnkiPackageExporter(col, did, includeSched, includeMedia);
+                        exporter.exportInto(apkgPath, col.getContext());
+                    } catch (FileNotFoundException e) {
+                        Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (IOException e) {
+                        Timber.e(e, "IOException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (JSONException e) {
+                        Timber.e(e, "JSOnException in doInBackgroundExportApkg");
+                        return new Pair<>(false, null);
+                    } catch (ImportExportException e) {
+                        Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
+                        return new Pair<>(true, e.getMessage());
+                    }
+                    return new Pair<>(false, apkgPath);
+                },
+                exportListener());
     }
 
 
@@ -2419,9 +2716,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void updateDeckList(boolean quick) {
         if (quick) {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeck(), updateDeckListListener());
+            TaskDelegate<Void, List<DeckTreeNode>> loadDeck =
+                    (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                        Timber.d("doInBackgroundLoadDeckCounts");
+                        try {
+                            // Get due tree
+                            return col.getSched().quickDeckDueTree();
+                        } catch (RuntimeException e) {
+                            Timber.w(e, "doInBackgroundLoadDeckCounts - error");
+                            return null;
+                        }
+                    };
+            TaskManager.launchCollectionTask(loadDeck, updateDeckListListener());
         } else {
-            TaskManager.launchCollectionTask(new CollectionTask.LoadDeckCounts(), updateDeckListListener());
+            TaskManager.launchCollectionTask(new LoadDeckCounts(), updateDeckListListener());
         }
     }
 
@@ -2681,7 +2989,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteDeck(did), deleteDeckListener(did));
+        TaskManager.launchCollectionTask((
+                @NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                    Timber.d("doInBackgroundDeleteDeck");
+                    col.getDecks().rem(did, true);
+                    // TODO: if we had "undo delete note" like desktop client then we won't need this.
+                    col.clearUndo();
+                    return null;
+                },
+                deleteDeckListener(did));
     }
     private DeleteDeckListener deleteDeckListener(long did) {
         return new DeleteDeckListener(did, this);
@@ -2806,7 +3122,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        mEmptyCardTask = TaskManager.launchCollectionTask(new CollectionTask.FindEmptyCards(), handlerEmptyCardListener());
+        mEmptyCardTask = TaskManager.launchCollectionTask(
+                (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) -> col.emptyCids(collectionTask),
+            handlerEmptyCardListener());
     }
     private HandleEmptyCardListener handlerEmptyCardListener() {
         return new HandleEmptyCardListener(this);

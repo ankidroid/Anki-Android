@@ -72,6 +72,9 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSender;
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.Compat;
@@ -80,8 +83,12 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Note;
+import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.WrongId;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
@@ -844,7 +851,42 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        TaskManager.launchCollectionTask(new CollectionTask.MarkNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new CollectionTask.DismissNotes<Void>(getSelectedCardIds()) {
+                                             protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+                                                 Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+                                                 // collect undo information
+                                                 List<Note> originalMarked = new ArrayList<>();
+                                                 List<Note> originalUnmarked = new ArrayList<>();
+
+                                                 for (Note n : notes) {
+                                                     if (n.hasTag("marked"))
+                                                         originalMarked.add(n);
+                                                     else
+                                                         originalUnmarked.add(n);
+                                                 }
+
+                                                 boolean hasUnmarked = !originalUnmarked.isEmpty();
+                                                 CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
+
+                                                 // mark undo for all at once
+                                                 col.markUndo(new UndoAction((hasUnmarked) ? R.string.card_browser_mark_card : R.string.card_browser_unmark_card) {
+                                                     @Nullable
+                                                     @Override
+                                                     public Card undo(@NonNull Collection col) {
+                                                         Timber.i("Undo: Mark notes");
+                                                         CardUtils.markAll(originalMarked, true);
+                                                         CardUtils.markAll(originalUnmarked, false);
+                                                         return null;  // don't fetch new card
+                                                     }
+                                                 });
+
+                                                 // reload cards because they'll be passed back to caller
+                                                 for (Card c : cards) {
+                                                     c.load();
+                                                 }
+                                                 return true;
+                                             }
+                                         },
                 markCardHandler());
     }
 
@@ -1080,6 +1122,39 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+
+    /**
+     * Goes through selected cards and checks selected and marked attribute
+     * @return If there are unselected cards, if there are unmarked cards
+     */
+    private static class CheckCardSelection implements TaskDelegate<Void, Pair<Boolean, Boolean>> {
+        private final @NonNull Set<CardBrowser.CardCache> mCheckedCards;
+
+
+        public CheckCardSelection(@NonNull Set<CardBrowser.CardCache> checkedCards) {
+            this.mCheckedCards = checkedCards;
+        }
+
+
+        public  @Nullable Pair<Boolean, Boolean> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+            boolean hasUnsuspended = false;
+            boolean hasUnmarked = false;
+            for (CardBrowser.CardCache c: mCheckedCards) {
+                if (collectionTask.isCancelled()) {
+                    Timber.v("doInBackgroundCheckCardSelection: cancelled.");
+                    return null;
+                }
+                Card card = c.getCard();
+                hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
+                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                if (hasUnsuspended && hasUnmarked)
+                    break;
+            }
+
+            return new Pair<>(hasUnsuspended, hasUnmarked);
+        }
+    }
+
     private void updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()");
         if (mActionBarMenu == null || mActionBarMenu.findItem(R.id.action_suspend_card) == null) {
@@ -1087,8 +1162,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         if (!mCheckedCards.isEmpty()) {
-            TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
-            TaskManager.launchCollectionTask(new CollectionTask.CheckCardSelection(mCheckedCards),
+            TaskManager.cancelAllTasks(CheckCardSelection.class);
+            TaskManager.launchCollectionTask(new CheckCardSelection(mCheckedCards),
                     mCheckSelectedCardsHandler);
         }
 
@@ -1111,8 +1186,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     public void flagTask (int flag) {
+        final List<Long> cardIds = getSelectedCardIds();
         TaskManager.launchCollectionTask(
-                new CollectionTask.Flag(getSelectedCardIds(), flag),
+                new CollectionTask.DismissNotes<Void>(cardIds) {
+                    protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+                        col.setUserFlag(flag, cardIds);
+                        for (Card c : cards) {
+                            c.load();
+                        }
+                        return true;
+                    }
+                },
                 flagCardHandler());
     }
 
@@ -1120,6 +1204,96 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void selectionWithFlagTask(int flag) {
         mCurrentFlag = flag;
         filterByFlag();
+    }
+
+    public static class SuspendCardMulti extends CollectionTask.DismissNotes<Void> {
+        public SuspendCardMulti(List<Long> cardIds) {
+            super(cardIds);
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+            AbstractSched sched = col.getSched();
+            // collect undo information
+            long[] cids = new long[cards.length];
+            boolean[] originalSuspended = new boolean[cards.length];
+            boolean hasUnsuspended = false;
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                cids[i] = card.getId();
+                if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
+                    hasUnsuspended = true;
+                    originalSuspended[i] = false;
+                } else {
+                    originalSuspended[i] = true;
+                }
+            }
+
+            // if at least one card is unsuspended -> suspend all
+            // otherwise unsuspend all
+            if (hasUnsuspended) {
+                sched.suspendCards(cids);
+            } else {
+                sched.unsuspendCards(cids);
+            }
+
+            // mark undo for all at once
+            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended));
+
+            // reload cards because they'll be passed back to caller
+            for (Card c : cards) {
+                c.load();
+            }
+
+            sched.deferReset();
+            return true;
+        }
+
+
+        protected static class UndoSuspendCardMulti extends UndoAction {
+            private final Card[] mCards;
+            private final boolean[] mOriginalSuspended;
+
+            /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
+             *                          otherwise the action was "Unsuspend")  */
+            public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
+                                        boolean hasUnsuspended) {
+                super((hasUnsuspended) ? R.string.menu_suspend_card : R.string.card_browser_unsuspend_card);
+                this.mCards = cards;
+                this.mOriginalSuspended = originalSuspended;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Suspend multiple cards");
+                int nbOfCards = mCards.length;
+                List<Long> toSuspendIds = new ArrayList<>(nbOfCards);
+                List<Long> toUnsuspendIds = new ArrayList<>(nbOfCards);
+                for (int i = 0; i < nbOfCards; i++) {
+                    Card card = mCards[i];
+                    if (mOriginalSuspended[i]) {
+                        toSuspendIds.add(card.getId());
+                    } else {
+                        toUnsuspendIds.add(card.getId());
+                    }
+                }
+
+                // unboxing
+                long[] toSuspendIdsArray = new long[toSuspendIds.size()];
+                long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
+                for (int i = 0; i < toSuspendIds.size(); i++) {
+                    toSuspendIdsArray[i] = toSuspendIds.get(i);
+                }
+                for (int i = 0; i < toUnsuspendIds.size(); i++) {
+                    toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                }
+
+                col.getSched().suspendCards(toSuspendIdsArray);
+                col.getSched().unsuspendCards(toUnsuspendIdsArray);
+
+                return null;  // don't fetch new card
+
+            }
+        }
     }
 
     @Override
@@ -1216,7 +1390,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             return true;
         } else if (itemId == R.id.action_suspend_card) {
-            TaskManager.launchCollectionTask(new CollectionTask.SuspendCardMulti(getSelectedCardIds()),
+            TaskManager.launchCollectionTask(new SuspendCardMulti(getSelectedCardIds()),
                     suspendCardHandler());
 
             return true;
@@ -1286,11 +1460,74 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    public static class DeleteNoteMulti extends CollectionTask.DismissNotes<Card[]> {
+        public DeleteNoteMulti(List<Long> cardIds) {
+            super(cardIds);
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card[]> collectionTask, Card[] cards) {
+            AbstractSched sched = col.getSched();
+            // list of all ids to pass to remNotes method.
+            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+            List<Card> allCards = CardUtils.getAllCards(notes);
+            // delete note
+            long[] uniqueNoteIds = new long[notes.size()];
+            Note[] notesArr = notes.toArray(new Note[notes.size()]);
+            int count = 0;
+            for (Note note : notes) {
+                uniqueNoteIds[count] = note.getId();
+                count++;
+            }
+
+
+
+            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+
+            col.remNotes(uniqueNoteIds);
+            sched.deferReset();
+            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+            collectionTask.doProgress(allCards.toArray(new Card[allCards.size()]));
+            return true;
+        }
+
+
+        private static class UndoDeleteNoteMulti extends UndoAction {
+            private final Note[] mNotesArr;
+            private final List<Card> mAllCards;
+
+
+            public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
+                super(R.string.card_browser_delete_card);
+                this.mNotesArr = notesArr;
+                this.mAllCards = allCards;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Delete notes");
+                // undo all of these at once instead of one-by-one
+                ArrayList<Long> ids = new ArrayList<>(mNotesArr.length + mAllCards.size());
+                for (Note n : mNotesArr) {
+                    n.flush(n.getMod(), false);
+                    ids.add(n.getId());
+                }
+                for (Card c : mAllCards) {
+                    c.flush(false);
+                    ids.add(c.getId());
+                }
+                col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
+                return null;  // don't fetch new card
+
+            }
+        }
+    }
+
     protected void deleteSelectedNote() {
         if (!mInMultiSelectMode) {
             return;
         }
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteNoteMulti(getSelectedCardIds()),
+        TaskManager.launchCollectionTask(new DeleteNoteMulti(getSelectedCardIds()),
                                             mDeleteNoteHandler);
 
         mCheckedCards.clear();
@@ -1302,7 +1539,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void onUndo() {
         if (getCol().undoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
+            TaskManager.launchCollectionTask(new UndoAction.Undo(), mUndoHandler);
         }
     }
 
@@ -1330,8 +1567,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void repositionCardsNoValidation(List<Long> cardIds, Integer position) {
-        TaskManager.launchCollectionTask(new CollectionTask.RepositionCards(cardIds, position),
-                                            repositionCardHandler());
+        TaskManager.launchCollectionTask(new CollectionTask.RescheduleRepositionReset(cardIds, R.string.card_editor_reposition_card) {
+            protected void actualActualTask(AbstractSched sched)  {
+            sched.sortCards(cardIds, position, 1, false, true);
+        }},
+        repositionCardHandler());
     }
 
 
@@ -1481,9 +1721,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void invalidate() {
-        TaskManager.cancelAllTasks(CollectionTask.SearchCards.class);
-        TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
-        TaskManager.cancelAllTasks(CollectionTask.CheckCardSelection.class);
+        TaskManager.cancelAllTasks(SearchCards.class);
+        TaskManager.cancelAllTasks(RenderBrowserQA.class);
+        TaskManager.cancelAllTasks(CheckCardSelection.class);
         mCards.clear();
         mCheckedCards.clear();
     }
@@ -1491,6 +1731,57 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** Currently unused - to be used in #7676 */
     private void forceRefreshSearch() {
         searchCards();
+    }
+
+
+    @VisibleForTesting
+    public static class SearchCards implements TaskDelegate<List<CardCache>, List<CardCache>> {
+        private final String mQuery;
+        private final boolean mOrder;
+        private final int mNumCardsToRender;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
+
+
+        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
+            this.mQuery = query;
+            this.mOrder = order;
+            this.mNumCardsToRender = numCardsToRender;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
+        }
+
+
+        public List<CardBrowser.CardCache> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
+            Timber.d("doInBackgroundSearchCards");
+            if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                return null;
+            }
+            List<CardBrowser.CardCache> searchResult = new ArrayList<>();
+            List<Long> searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
+            Timber.d("The search found %d cards", searchResult_.size());
+            int position = 0;
+            for (Long cid : searchResult_) {
+                CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
+                searchResult.add(card);
+            }
+            // Render the first few items
+            for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                    return null;
+                }
+                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+            }
+            // Finish off the task
+            if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null");
+                return null;
+            } else {
+                return searchResult;
+            }
+        }
     }
 
 
@@ -1519,7 +1810,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCardsAdapter.notifyDataSetChanged();
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
             // Perform database query to get all card ids
-            TaskManager.launchCollectionTask(new CollectionTask.SearchCards(searchText,
+            TaskManager.launchCollectionTask(new SearchCards(searchText,
                             (mOrder != CARD_ORDER_NONE),
                             numCardsToRender(),
                             mColumn1Index,
@@ -1736,7 +2027,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deckName = browser.getCol().getDecks().name(browser.mNewDid);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION,
-                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
+                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new UndoAction.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
         }
     }
 
@@ -1896,7 +2187,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION,
-                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler),
+                    R.string.undo, v -> TaskManager.launchCollectionTask(new UndoAction.Undo(), browser.mUndoHandler),
                     browser.mCardsListView, null);
             browser.searchCards();
         }
@@ -2225,7 +2516,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 long currentTime = SystemClock.elapsedRealtime();
                 if ((currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount)) {
                     mLastRenderStart = currentTime;
-                    TaskManager.cancelAllTasks(CollectionTask.RenderBrowserQA.class);
+                    TaskManager.cancelAllTasks(RenderBrowserQA.class);
                     TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler);
                 }
             }
@@ -2247,9 +2538,77 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+
+    public static class RenderBrowserQA implements TaskDelegate<Integer, Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>>> {
+        private final CardBrowser.CardCollection<CardBrowser.CardCache> mCards;
+        private final Integer mStartPos;
+        private final Integer mN;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
+
+
+        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index) {
+            this.mCards = cards;
+            this.mStartPos = mStartPos;
+            this.mN = n;
+            this.mColumn1Index = column1Index;
+            this.mColumn2Index = column2Index;
+        }
+
+
+        public Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, List<Long>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
+            Timber.d("doInBackgroundRenderBrowserQA");
+
+            List<Long> invalidCardIds = new ArrayList<>();
+            // for each specified card in the browser list
+            for (int i = mStartPos; i < mStartPos + mN; i++) {
+                // Stop if cancelled
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                    return null;
+                }
+                if (i < 0 || i >= mCards.size()) {
+                    continue;
+                }
+                CardBrowser.CardCache card;
+                try {
+                    card = mCards.get(i);
+                }
+                catch (IndexOutOfBoundsException e) {
+                    //even though we test against card.size() above, there's still a race condition
+                    //We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                    //we won't reach any more cards.
+                    continue;
+                }
+                if (card.isLoaded()) {
+                    //We've already rendered the answer, we don't need to do it again.
+                    continue;
+                }
+                // Extract card item
+                try {
+                    // Ensure that card still exists.
+                    card.getCard();
+                } catch (WrongId e) {
+                    //#5891 - card can be inconsistent between the deck browser screen and the collection.
+                    //Realistically, we can skip any exception as it's a rendering task which should not kill the
+                    //process
+                    long cardId = card.getId();
+                    Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId);
+                    invalidCardIds.add(cardId);
+                    continue;
+                }
+                // Update item
+                card.load(false, mColumn1Index, mColumn2Index);
+                float progress = (float) i / mN * 100;
+                collectionTask.doProgress((int) progress);
+            }
+            return new Pair<>(mCards, invalidCardIds);
+        }
+    }
+
     @NonNull
-    protected CollectionTask.RenderBrowserQA renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
-        return new CollectionTask.RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
+    protected RenderBrowserQA renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
+        return new RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
     }
 
 
@@ -2882,11 +3241,95 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return cardIds;
     }
 
+    public static class ChangeDeckMulti extends CollectionTask.DismissNotes<Void> {
+        private final long mNewDid;
+        public ChangeDeckMulti(List<Long> cardIds, long newDid) {
+            super(cardIds);
+            mNewDid = newDid;
+        }
+
+        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Void> collectionTask, Card[] cards) {
+            Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
+            Deck deckData = col.getDecks().get(mNewDid);
+
+            if (Decks.isDynamic(deckData)) {
+                //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
+                return false;
+            }
+
+            //Confirm that the deck exists (and is not the default)
+            try {
+                long actualId = deckData.getLong("id");
+                if (actualId != mNewDid) {
+                    Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                    return false;
+                }
+            } catch (Exception e) {
+                Timber.e(e, "failed to check deck");
+                return false;
+            }
+
+            long[] changedCardIds = new long[cards.length];
+            for (int i = 0; i < cards.length; i++) {
+                changedCardIds[i] = cards[i].getId();
+            }
+            col.getSched().remFromDyn(changedCardIds);
+
+            long[] originalDids = new long[cards.length];
+
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                // save original did for undo
+                originalDids[i] = card.getDid();
+                // then set the card ID to the new deck
+                card.setDid(mNewDid);
+                Note note = card.note();
+                note.flush();
+                // flush card too, in case, did has been changed
+                card.flush();
+            }
+
+            UndoAction changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
+            // mark undo for all at once
+            col.markUndo(changeDeckMulti);
+            return true;
+        }
+
+        private static class UndoChangeDeckMulti extends UndoAction {
+            private final Card[] mCards;
+            private final long[] mOriginalDids;
+
+
+            public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
+                super(R.string.undo_action_change_deck_multi);
+                this.mCards = cards;
+                this.mOriginalDids = originalDids;
+            }
+
+
+            public @Nullable Card undo(@NonNull Collection col) {
+                Timber.i("Undo: Change Decks");
+                // move cards to original deck
+                for (int i = 0; i < mCards.length; i++) {
+                    Card card = mCards[i];
+                    card.load();
+                    card.setDid(mOriginalDids[i]);
+                    Note note = card.note();
+                    note.flush();
+                    card.flush();
+                }
+                return null;  // don't fetch new card
+            }
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeCollectionTask(List<Long> ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
-                new CollectionTask.ChangeDeckMulti(ids, newDid),
+                new ChangeDeckMulti(ids, newDid),
                 new ChangeDeckHandler(this));
     }
 

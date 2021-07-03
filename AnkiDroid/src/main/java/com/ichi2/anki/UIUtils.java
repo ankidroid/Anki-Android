@@ -20,9 +20,13 @@ import com.ichi2.async.CollectionTask;
 import java.util.Calendar;
 
 import timber.log.Timber;
+
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.SyncStatus;
 
 public class UIUtils {
 
@@ -153,7 +157,21 @@ public class UIUtils {
                     Timber.d("saveCollectionInBackground: finished");
                 }
             };
-            TaskManager.launchCollectionTask(new CollectionTask.SaveCollection(syncIgnoresDatabaseModification), listener);
+            TaskManager.launchCollectionTask((@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) -> {
+                Timber.d("doInBackgroundSaveCollection");
+                if (col != null) {
+                    try {
+                        if (syncIgnoresDatabaseModification) {
+                            SyncStatus.ignoreDatabaseModification(col::save);
+                        } else {
+                            col.save();
+                        }
+                    } catch (RuntimeException e) {
+                        Timber.e(e, "Error on saving deck in background");
+                    }
+                }
+                return null;
+            }, listener);
         }
     }
 

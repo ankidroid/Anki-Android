@@ -92,11 +92,14 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -955,7 +958,23 @@ public class NoteEditor extends AnkiActivity implements
             getCol().getModels().current().put("tags", tags);
             getCol().getModels().setChanged();
             mReloadRequired = true;
-            TaskManager.launchCollectionTask(new CollectionTask.AddNote(mEditorNote), saveNoteHandler());
+            final Note note = mEditorNote;
+            TaskManager.launchCollectionTask(
+                    (@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) -> {
+                        Timber.d("doInBackgroundAddNote");
+                        try {
+                            DB db = col.getDb();
+                            db.executeInTransaction(() -> {
+                                int value = col.addNote(note, Models.AllowEmpty.ONLY_CLOZE);
+                                collectionTask.doProgress(value);
+                            });
+                        } catch (RuntimeException e) {
+                            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
+                            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
+                            return false;
+                        }
+                        return true;
+                    }, saveNoteHandler());
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
