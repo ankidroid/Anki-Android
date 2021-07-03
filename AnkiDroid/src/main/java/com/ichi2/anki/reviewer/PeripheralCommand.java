@@ -62,6 +62,11 @@ public class PeripheralCommand {
         return mBinding.getKeycode();
     }
 
+    @NonNull
+    public Binding getBinding() {
+        return mBinding;
+    }
+
     public boolean isQuestion() {
         return mCardSide == CardSide.QUESTION || mCardSide == CardSide.BOTH;
     }
@@ -116,7 +121,7 @@ public class PeripheralCommand {
         ret.add(unicode('*', COMMAND_MARK, CardSide.BOTH));
         ret.add(unicode('-', COMMAND_BURY_CARD, CardSide.BOTH));
         ret.add(unicode('=', COMMAND_BURY_NOTE, CardSide.BOTH));
-        ret.add(unicode('@', COMMAND_SUSPEND_CARD, CardSide.BOTH));
+        ret.add(unicode('@', COMMAND_SUSPEND_CARD, CardSide.BOTH)); //21
         ret.add(unicode('!', COMMAND_SUSPEND_NOTE, CardSide.BOTH));
         ret.add(keyCode(KeyEvent.KEYCODE_R, COMMAND_PLAY_MEDIA, CardSide.BOTH));
         ret.add(keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));

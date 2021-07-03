@@ -20,7 +20,12 @@ import android.view.KeyEvent;
 
 import com.ichi2.anki.cardviewer.Gesture;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 public class Binding {
 
@@ -58,6 +63,31 @@ public class Binding {
         return mGesture;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Nullable
+    public ModifierKeys getModifierKeys() {
+        return mModifierKeys;
+    }
+
+    /** This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is */
+    public static List<Binding> key(KeyEvent event) {
+        // convert to iterator when this is moved to Kotlin
+        ModifierKeys modifiers = new ModifierKeys(event.isShiftPressed(), event.isCtrlPressed(), event.isAltPressed());
+
+        List<Binding> ret = new ArrayList<>();
+        int keyCode = event.getKeyCode();
+        if (keyCode != 0) {
+            ret.add(Binding.keyCode(modifiers, keyCode));
+        }
+
+        // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
+        // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
+        int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
+
+        ret.add(Binding.unicode(modifiers, (char)unicodeChar));
+        return ret;
+    }
+
     /** 
      * Specifies a unicode binding from an unknown input device
      * See {@link AppDefinedModifierKeys}
@@ -91,13 +121,34 @@ public class Binding {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Binding binding = (Binding) o;
+        return Objects.equals(mKeyCode, binding.mKeyCode) &&
+                Objects.equals(mUnicodeCharacter, binding.mUnicodeCharacter) &&
+                Objects.equals(mGesture, binding.mGesture) &&
+                Objects.equals(mModifierKeys, binding.mModifierKeys);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mKeyCode, mUnicodeCharacter, mGesture, mModifierKeys);
+    }
+
+
     public boolean matchesModifier(KeyEvent event) {
         return mModifierKeys == null || mModifierKeys.matches(event);
     }
 
 
     public static class ModifierKeys {
-        // null == true/false works.
         private final boolean mShift;
         private final boolean mCtrl;
         private final boolean mAlt;
@@ -150,6 +201,37 @@ public class Binding {
 
         protected boolean altMatches(boolean altPressed) {
             return mAlt == altPressed;
+        }
+
+
+        @Override
+        public boolean equals(Object o) {
+            // equals allowing subclasses
+            if (this == o) {
+                return true;
+            }
+            if (!(o instanceof ModifierKeys)) {
+                return false;
+            }
+
+            ModifierKeys keys = (ModifierKeys) o;
+
+            // special case: easy comparison
+            if (keys.getClass() == ModifierKeys.class) {
+                return keys.mShift == mShift && keys.mCtrl == mCtrl && keys.mAlt == mAlt;
+            }
+
+            // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
+            return (shiftMatches(true) == keys.shiftMatches(true) || shiftMatches(false) == keys.shiftMatches(false)) &&
+                    (ctrlMatches(true) == keys.ctrlMatches(true) || ctrlMatches(false) == keys.ctrlMatches(false)) &&
+                    (altMatches(true) == keys.altMatches(true) || altMatches(false) == keys.altMatches(false));
+        }
+
+        @Override
+        public int hashCode() {
+            // AKA: use .equals to allow subclasses to work - this will be very inefficient if placed in a HashMap
+            // But we don't store data in a HashMap, so we're fine
+            return 0;
         }
     }
 
