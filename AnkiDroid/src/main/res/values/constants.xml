@@ -276,4 +276,8 @@
         <item>x-large</item>
         <item>xx-large</item>
     </string-array>
+
+    <!-- Onboarding -->
+    <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
+    <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
 </resources>
