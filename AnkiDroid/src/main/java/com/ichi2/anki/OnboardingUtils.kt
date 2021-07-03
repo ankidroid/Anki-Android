@@ -25,13 +25,18 @@ import java.util.BitSet
 class OnboardingUtils {
 
     companion object {
+        const val SHOW_ONBOARDING = "showOnboarding"
 
         /**
          * Check if the tutorial for a particular feature should be displayed or not.
          * If the bit at an index is set, then the corresponding tutorial has been seen.
          */
         fun <T> isVisited(featureIdentifier: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
-            val visitedFeatures = getAllVisited(featureIdentifier, context)
+            if (!AnkiDroidApp.getSharedPrefs(context).getBoolean(SHOW_ONBOARDING, false)) {
+                return true
+            }
+
+            val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
             return visitedFeatures.get(featureIdentifier.getOnboardingEnumValue())
         }
 
@@ -39,16 +44,16 @@ class OnboardingUtils {
          * Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
          */
         fun <T> setVisited(featureIdentifier: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
-            val visitedFeatures = getAllVisited(featureIdentifier, context)
+            val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
             visitedFeatures.set(featureIdentifier.getOnboardingEnumValue())
-            return AnkiDroidApp.getSharedPrefs(context).edit().putLong(featureIdentifier.declaringClass.simpleName, visitedFeatures.toLongArray()[0]).apply()
+            return AnkiDroidApp.getSharedPrefs(context).edit().putLong(featureIdentifier.getFeatureConstant(), visitedFeatures.toLongArray()[0]).apply()
         }
 
         /**
          * Returns a BitSet where the set bits indicate the visited screens.
          */
-        private fun <T> getAllVisited(featureIdentifier: T, context: Context): BitSet where T : Enum<T> {
-            val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureIdentifier.declaringClass.simpleName, 0)
+        private fun getAllVisited(context: Context, featureConstant: String): BitSet {
+            val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureConstant, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
         }
     }
