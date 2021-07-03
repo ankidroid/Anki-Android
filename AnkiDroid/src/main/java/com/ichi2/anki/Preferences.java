@@ -497,6 +497,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     });
                     screen.addPreference(lockDbPreference);
                 }
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, option for showing onboarding walkthrough");
+                    android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(this);
+                    onboardingPreference.setKey("showOnboarding");
+                    onboardingPreference.setTitle(R.string.show_onboarding);
+                    onboardingPreference.setSummary(R.string.show_onboarding_desc);
+                    screen.addPreference(onboardingPreference);
+                }
                 // Adding change logs in both debug and release builds
                 Timber.i("Adding open changelog");
                 android.preference.Preference changelogPreference = new android.preference.Preference(this);
