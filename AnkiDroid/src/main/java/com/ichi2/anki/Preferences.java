@@ -69,6 +69,7 @@ import com.ichi2.utils.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.annotation.Retention;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -81,11 +82,13 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringDef;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 interface PreferenceContext {
@@ -156,6 +159,29 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Represents in Android preferences whether the scheduler should use version 1 or 2.
      */
     private static final String SCHED_VER = "schedVer";
+
+    /**
+     * Whether the reviewer content should take the full screen. Its possible values are defined just below.
+     */
+    public static final String FULL_SCREEN_MODE = "fullscreenMode";
+
+    public static final String BUTTONS_AND_MENU = "0";
+    /**
+     * Remove the menu bar, keeps answer button.
+     */
+    public static final String BUTTONS_ONLY = "1";
+    /**
+     * Remove both menu bar and buttons. Can only be set if gesture is on.
+     */
+    public static final String FULLSCREEN_ALL_GONE = "2";
+
+    @Retention(SOURCE)
+    @StringDef({
+        BUTTONS_AND_MENU,
+            BUTTONS_ONLY,
+            FULLSCREEN_ALL_GONE
+    })
+    public @interface REVIEWER_SCREEN_MODE {}
 
     /**
      * The number of cards that should be due today in a deck to justify adding a notification.
@@ -296,10 +322,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 screen = listener.getPreferenceScreen();
                 // Show error toast if the user tries to disable answer button without gestures on
                 android.preference.ListPreference fullscreenPreference = (android.preference.ListPreference)
-                        screen.findPreference("fullscreenMode");
+                        screen.findPreference(FULL_SCREEN_MODE);
                 fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !"2".equals(newValue)) {
+                    if (prefs.getBoolean("gestures", false) || !FULL_SCREEN_MODE.equals(newValue)) {
                         return true;
                     } else {
                         UIUtils.showThemedToast(getApplicationContext(),

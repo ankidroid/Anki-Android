@@ -38,6 +38,8 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.anki.Preferences.BUTTONS_ONLY;
+import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -302,7 +304,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     private ReviewerExt startReviewerFullScreen() {
-        AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("fullscreenMode", "1").apply();
+        AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString(FULL_SCREEN_MODE, BUTTONS_ONLY).apply();
         ReviewerExt reviewer = ReviewerTest.startReviewer(this, ReviewerExt.class);
         return reviewer;
     }

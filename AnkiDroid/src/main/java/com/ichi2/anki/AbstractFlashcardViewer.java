@@ -161,6 +161,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.Preferences.BUTTONS_AND_MENU;
+import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
@@ -1906,7 +1908,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0"));
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString(FULL_SCREEN_MODE, BUTTONS_AND_MENU));
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
