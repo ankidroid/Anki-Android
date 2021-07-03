@@ -254,6 +254,8 @@ public class NoteEditor extends AnkiActivity implements
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
 
+    private final Onboarding.NoteEditor mOnboarding = new Onboarding.NoteEditor(this);
+
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
     }
@@ -431,6 +433,8 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         startLoadingCollection();
+
+        mOnboarding.onCreate();
     }
 
     @Override

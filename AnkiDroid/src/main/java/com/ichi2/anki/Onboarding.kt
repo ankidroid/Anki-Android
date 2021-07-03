@@ -54,6 +54,7 @@ class Onboarding {
         const val DECK_PICKER_ONBOARDING = "DeckPickerOnboarding"
         const val ABSTRACT_FLASHCARD_VIEWER_ONBOARDING = "AbstractFlashcardViewerOnboarding"
         const val REVIEWER_ONBOARDING = "ReviewerOnboarding"
+        const val NOTE_EDITOR_ONBOARDING = "NoteEditorOnboarding"
     }
 
     /**
@@ -245,6 +246,46 @@ class Onboarding {
 
             override fun getFeatureConstant(): String {
                 return REVIEWER_ONBOARDING
+            }
+        }
+    }
+
+    class NoteEditor(private val mActivityContext: com.ichi2.anki.NoteEditor) :
+        OnboardingImpl<NoteEditor.NoteEditorOnboardingEnum, com.ichi2.anki.NoteEditor>(mActivityContext, mutableListOf()) {
+
+        init {
+            mTutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
+            mTutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FORMATTING_TOOLS, this::showTutorialForFormattingTools))
+        }
+
+        private fun showTutorialForFrontAndBackIfNew() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, NoteEditorOnboardingEnum.FRONT_BACK)
+                .createRectangleWithDimmedBackground()
+                .setDismissedListener { onCreate() }
+                .setTarget(R.id.CardEditorEditFieldsLayout)
+                .setPrimaryText(R.string.card_contents)
+                .setSecondaryText(R.string.card_contents_desc)
+                .show()
+        }
+
+        private fun showTutorialForFormattingTools() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, NoteEditorOnboardingEnum.FORMATTING_TOOLS)
+                .createRectangleWithDimmedBackground()
+                .setTarget(R.id.editor_toolbar)
+                .setPrimaryText(R.string.format_content)
+                .setSecondaryText(R.string.format_content_desc)
+                .show()
+        }
+
+        enum class NoteEditorOnboardingEnum(var mValue: Int) : OnboardingFlag {
+            FRONT_BACK(0), FORMATTING_TOOLS(1);
+
+            override fun getOnboardingEnumValue(): Int {
+                return mValue
+            }
+
+            override fun getFeatureConstant(): String {
+                return NOTE_EDITOR_ONBOARDING
             }
         }
     }
