@@ -79,6 +79,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.i("AnkiActivity::onCreate - %s", mActivityName);
         // The hardware buttons should control the music volume
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
