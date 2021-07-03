@@ -18,7 +18,6 @@ package com.ichi2.anki.reviewer
 import android.view.KeyEvent
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.hasItem
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.kotlin.doReturn
@@ -48,32 +47,6 @@ class BindingTest {
         assertThat(binding.keycode, `is`(KeyEvent.KEYCODE_A))
     }
 
-    @Test
-    fun equalityTest() {
-        val allBindings = PeripheralCommand.getDefaultCommands().map { x -> x.binding }.toList()
-
-        assertThat(allBindings, hasItem(unicodeCharacter('@')))
-        assertThat(allBindings, hasItem(keyCode(KeyEvent.KEYCODE_1)))
-    }
-
-    private fun unicodeCharacter(c: Char): Binding {
-        val mock = mock<KeyEvent> {
-            on { getUnicodeChar(anyInt()) } doReturn c.code
-            on { unicodeChar } doReturn c.code
-        }
-
-        val binding = Binding.key(mock).first { x -> x.unicodeCharacter != null }
-        return binding
-    }
-
-    private fun keyCode(keyCode: Int): Binding {
-        val mock = mock<KeyEvent> {
-            on { getKeyCode() } doReturn keyCode
-        }
-
-        return Binding.key(mock).first { x -> x.keycode != null }
-    }
-
     private fun testModifierKeys(name: String, event: KFunction1<KeyEvent, Boolean>, getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>) {
         fun testModifierResult(event: KFunction1<KeyEvent, Boolean>, returnedFromMock: Boolean) {
             val mock = mock<KeyEvent> {
@@ -90,5 +63,24 @@ class BindingTest {
 
         testModifierResult(event, true)
         testModifierResult(event, false)
+    }
+
+    companion object {
+        fun unicodeCharacter(c: Char): Binding {
+            val mock = mock<KeyEvent> {
+                on { getUnicodeChar(anyInt()) } doReturn c.code
+                on { unicodeChar } doReturn c.code
+            }
+
+            return Binding.key(mock).first { x -> x.unicodeCharacter != null }
+        }
+
+        fun keyCode(keyCode: Int): Binding {
+            val mock = mock<KeyEvent> {
+                on { getKeyCode() } doReturn keyCode
+            }
+
+            return Binding.key(mock).first { x -> x.keycode != null }
+        }
     }
 }
