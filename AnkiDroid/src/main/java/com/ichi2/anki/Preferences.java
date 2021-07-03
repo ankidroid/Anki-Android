@@ -156,6 +156,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * Represents in Android preferences whether the scheduler should use version 1 or 2.
      */
     private static final String SCHED_VER = "schedVer";
+
+    /**
+     * The number of cards that should be due today in a deck to justify adding a notification.
+     */
+    public static final String MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification";
     private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
@@ -682,7 +687,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Disable Col preferences if Collection closed
                 pref.setEnabled(false);
             }
-        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
+        } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION.equals(pref.getKey())) {
             updateNotificationPreference((android.preference.ListPreference) pref);
         }
         // Set the value from the summary cache
@@ -796,8 +801,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     getCol().getConf().put("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
-                case "minimumCardsDueForNotification": {
-                    android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference("minimumCardsDueForNotification");
+                case MINIMUM_CARDS_DUE_FOR_NOTIFICATION: {
+                    android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
                         if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
@@ -1012,7 +1017,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             pref.setSummary(value);
         } else if ("".equals(value)) {
             pref.setSummary(oldSummary);
-        } else if ("minimumCardsDueForNotification".equals(pref.getKey())) {
+        } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION.equals(pref.getKey())) {
             pref.setSummary(replaceStringIfNumeric(oldSummary, value));
         } else {
             pref.setSummary(replaceString(oldSummary, value));
