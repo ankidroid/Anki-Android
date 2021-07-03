@@ -125,7 +125,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     /**
      * Represents in Android preferences the collections configuration "timeLim": i.e.
      * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-     * Note that "timeLim" is in second while TIME_LIMIT is in minute.
+     * Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
      */
     private static final String TIME_LIMIT = "timeLimit";
     /**
