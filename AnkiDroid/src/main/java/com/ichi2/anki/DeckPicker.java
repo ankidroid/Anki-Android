@@ -149,6 +149,9 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.Preferences.BUTTONS_AND_MENU;
+import static com.ichi2.anki.Preferences.BUTTONS_ONLY;
+import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -1391,11 +1394,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // clear fullscreen flag as we use a integer
             try {
                 boolean old = preferences.getBoolean("fullscreenReview", false);
-                preferences.edit().putString("fullscreenMode", old ? "1": "0").apply();
+                preferences.edit().putString(FULL_SCREEN_MODE, old ? BUTTONS_ONLY: BUTTONS_AND_MENU).apply();
             } catch (ClassCastException e) {
                 Timber.w(e);
                 // TODO:  can remove this catch as it was only here to fix an error in the betas
-                preferences.edit().remove("fullscreenMode").apply();
+                preferences.edit().remove(FULL_SCREEN_MODE).apply();
             }
             preferences.edit().remove("fullscreenReview").apply();
         }

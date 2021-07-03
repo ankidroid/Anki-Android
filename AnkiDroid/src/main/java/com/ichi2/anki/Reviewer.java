@@ -93,6 +93,9 @@ import java.util.Collections;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.Preferences.BUTTONS_AND_MENU;
+import static com.ichi2.anki.Preferences.FULLSCREEN_ALL_GONE;
+import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -953,7 +956,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
         this.mProcessor.setup();
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
+        mPrefFullscreenReview = Integer.parseInt(preferences.getString(FULL_SCREEN_MODE, BUTTONS_AND_MENU)) > 0;
         mActionButtons.setup(preferences);
         return preferences;
     }
@@ -1124,7 +1127,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    private static final int FULLSCREEN_ALL_GONE = 2;
 
     private void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
@@ -1139,7 +1141,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         );
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
-        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        final @Preferences.REVIEWER_SCREEN_MODE String fullscreenMode = prefs.getString(FULL_SCREEN_MODE, BUTTONS_AND_MENU);
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -1156,13 +1158,13 @@ public class Reviewer extends AbstractFlashcardViewer {
                     Timber.d("System UI visibility change. Visible: %b", visible);
                     if (visible) {
                         showViewWithAnimation(toolbar);
-                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                        if (fullscreenMode.equals(FULLSCREEN_ALL_GONE)) {
                             showViewWithAnimation(topbar);
                             showViewWithAnimation(answerButtons);
                         }
                     } else {
                         hideViewWithAnimation(toolbar);
-                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                        if (fullscreenMode.equals(FULLSCREEN_ALL_GONE)) {
                             hideViewWithAnimation(topbar);
                             hideViewWithAnimation(answerButtons);
                         }
