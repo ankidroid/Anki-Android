@@ -33,4 +33,10 @@ interface OnboardingFlag {
      */
     fun getOnboardingEnumValue(): Int
     // TODO: Add lint check.
+
+    /**
+     * Constant used to represent preference key for screens.
+     * Values once defined should not be changed.
+     */
+    fun getFeatureConstant(): String
 }

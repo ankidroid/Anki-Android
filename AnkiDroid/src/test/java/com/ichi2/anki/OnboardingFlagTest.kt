@@ -19,13 +19,25 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.OnboardingUtils.Companion.SHOW_ONBOARDING
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class OnboardingFlagTest : RobolectricTest() {
+
+    companion object {
+        const val FIRST_ENUM = "FirstEnum"
+        const val SECOND_ENUM = "SecondEnum"
+    }
+
+    @Before
+    fun setShowOnboardingPreference() {
+        AnkiDroidApp.getSharedPrefs(targetContext).edit().putBoolean(SHOW_ONBOARDING, true).apply()
+    }
 
     @Test
     fun verifyThatEnumsAreNotSet() {
@@ -74,6 +86,10 @@ class OnboardingFlagTest : RobolectricTest() {
         override fun getOnboardingEnumValue(): Int {
             return mValue
         }
+
+        override fun getFeatureConstant(): String {
+            return FIRST_ENUM
+        }
     }
 
     private enum class SecondEnum(var mValue: Int) : OnboardingFlag {
@@ -82,6 +98,10 @@ class OnboardingFlagTest : RobolectricTest() {
 
         override fun getOnboardingEnumValue(): Int {
             return mValue
+        }
+
+        override fun getFeatureConstant(): String {
+            return SECOND_ENUM
         }
     }
 
