@@ -11,11 +11,18 @@ Please add your app to this list if it supports the instant-add API
 [List of Third Party Apps which integrate with AnkiDroid](Third-Party-Apps)
 
 ### Gradle dependency
-First things first, you should add the following dependency to your module's `build.gradle` file:
+First things first, you should add the following repository to your root `build.gradle` file:
+```Gradle
+repositories {
+    maven { url "https://jitpack.io" }
+}
+```
+
+Then, add the following dependency to your module's `build.gradle` file:
 
 ```Gradle
 dependencies {
-    implementation 'com.ichi2.anki:api:1.1.0alpha6'
+    implementation 'com.github.ankidroid:Anki-Android:api-v1.1.0'
 }
 ```
 
