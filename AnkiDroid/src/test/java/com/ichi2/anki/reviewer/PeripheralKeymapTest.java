@@ -42,10 +42,11 @@ public class PeripheralKeymapTest {
         when(event.getUnicodeChar()).thenReturn(0);
         when(event.isCtrlPressed()).thenReturn(true);
         when(event.getUnicodeChar(0)).thenReturn(49);
+        when(event.getKeyCode()).thenReturn(KeyEvent.KEYCODE_1);
 
         assertThat((char) event.getUnicodeChar(), is('\0'));
         assertThat((char) event.getUnicodeChar(0), is('1'));
-        peripheralKeymap.onKeyDown(8, event);
+        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event);
 
         assertThat(processed, hasSize(1));
         assertThat(processed.get(0), is(ViewerCommand.COMMAND_TOGGLE_FLAG_RED));

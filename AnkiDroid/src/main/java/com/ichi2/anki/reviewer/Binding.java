@@ -63,7 +63,6 @@ public class Binding {
         return mGesture;
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @Nullable
     public ModifierKeys getModifierKeys() {
         return mModifierKeys;
@@ -119,29 +118,6 @@ public class Binding {
     public boolean isGesture() {
         return mGesture != null;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Binding binding = (Binding) o;
-        return Objects.equals(mKeyCode, binding.mKeyCode) &&
-                Objects.equals(mUnicodeCharacter, binding.mUnicodeCharacter) &&
-                Objects.equals(mGesture, binding.mGesture) &&
-                Objects.equals(mModifierKeys, binding.mModifierKeys);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mKeyCode, mUnicodeCharacter, mGesture, mModifierKeys);
-    }
-
 
     public boolean matchesModifier(KeyEvent event) {
         return mModifierKeys == null || mModifierKeys.matches(event);
@@ -201,37 +177,6 @@ public class Binding {
 
         protected boolean altMatches(boolean altPressed) {
             return mAlt == altPressed;
-        }
-
-
-        @Override
-        public boolean equals(Object o) {
-            // equals allowing subclasses
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof ModifierKeys)) {
-                return false;
-            }
-
-            ModifierKeys keys = (ModifierKeys) o;
-
-            // special case: easy comparison
-            if (keys.getClass() == ModifierKeys.class) {
-                return keys.mShift == mShift && keys.mCtrl == mCtrl && keys.mAlt == mAlt;
-            }
-
-            // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
-            return (shiftMatches(true) == keys.shiftMatches(true) || shiftMatches(false) == keys.shiftMatches(false)) &&
-                    (ctrlMatches(true) == keys.ctrlMatches(true) || ctrlMatches(false) == keys.ctrlMatches(false)) &&
-                    (altMatches(true) == keys.altMatches(true) || altMatches(false) == keys.altMatches(false));
-        }
-
-        @Override
-        public int hashCode() {
-            // AKA: use .equals to allow subclasses to work - this will be very inefficient if placed in a HashMap
-            // But we don't store data in a HashMap, so we're fine
-            return 0;
         }
     }
 
