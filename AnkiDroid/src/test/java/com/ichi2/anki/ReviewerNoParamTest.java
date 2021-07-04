@@ -305,7 +305,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
     private ReviewerExt startReviewerFullScreen() {
         AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString(FULL_SCREEN_MODE, BUTTONS_ONLY).apply();
-        ReviewerExt reviewer = ReviewerTest.startReviewer(this, ReviewerExt.class);
+        ReviewerExt reviewer = ReviewerForegroundTest.startReviewer(this, ReviewerExt.class);
         return reviewer;
     }
 
@@ -349,7 +349,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
 
     private Reviewer startReviewer() {
-        return ReviewerTest.startReviewer(this);
+        return ReviewerForegroundTest.startReviewer(this);
     }
 
     private static class ReviewerExt extends Reviewer {

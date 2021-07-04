@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class ReviewerTest extends RobolectricTest {
+public class ReviewerForegroundTest extends RobolectricTest {
 
 
     @ParameterizedRobolectricTestRunner.Parameter
@@ -79,25 +79,6 @@ public class ReviewerTest extends RobolectricTest {
         enableNullCollection();
         try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> assertNull("Collection should have been null", reviewer.getCol()));
-        }
-    }
-
-    @Test
-    public void verifyNormalStartup() {
-        try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
-            scenario.onActivity(reviewer -> assertNotNull("Collection should be non-null", reviewer.getCol()));
-        }
-    }
-
-    @Test
-    public void exitCommandWorksAfterControlsAreBlocked() {
-        ensureCollectionLoadIsSynchronous();
-        try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
-            scenario.onActivity(reviewer -> {
-                reviewer.blockControls(true);
-                reviewer.executeCommand(ViewerCommand.COMMAND_EXIT);
-            });
-            assertThat(scenario.getResult().getResultCode(), is(RESULT_DEFAULT));
         }
     }
 

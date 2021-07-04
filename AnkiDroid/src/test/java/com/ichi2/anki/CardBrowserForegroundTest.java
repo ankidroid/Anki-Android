@@ -7,9 +7,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -20,7 +17,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,12 +34,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
-import javax.annotation.CheckReturnValue;
-
 import androidx.annotation.StringRes;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import timber.log.Timber;
 
 import static java.util.Arrays.stream;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class CardBrowserTest extends RobolectricTest {
+public class CardBrowserForegroundTest extends RobolectricTest {
     private final CardBrowserTestDelegate mDelegate = new CardBrowserTestDelegate(this);
 
     @Test
@@ -86,31 +79,6 @@ public class CardBrowserTest extends RobolectricTest {
         CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
         assertThat(browser.cardCount(), greaterThan(0L));
         assertThat(browser.isShowingSelectAll(), is(true));
-    }
-
-    @Test
-    public void selectAllIsNotVisibleOnceCalled() {
-        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
-        mDelegate.selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooperWithSleep();
-        assertThat(browser.isShowingSelectAll(), is(false));
-    }
-
-    @Test
-    public void selectNoneIsVisibleOnceSelectAllCalled() {
-        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
-        mDelegate.selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooperWithSleep();
-        assertThat(browser.isShowingSelectNone(), is(true));
-    }
-
-    @Test
-    public void selectNoneIsVisibleWhenSelectingOne() {
-        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
-        advanceRobolectricLooperWithSleep();
-        mDelegate.selectOneOfManyCards(browser);
-        advanceRobolectricLooperWithSleep();
-        assertThat(browser.isShowingSelectNone(), is(true));
     }
 
     @Test
