@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewer;
 
 import android.content.Context;
+import android.util.Pair;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.cardviewer.Gesture;
@@ -27,6 +28,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
 
 import static java.util.Objects.requireNonNull;
 
@@ -181,6 +184,36 @@ public class Binding {
         return mModifierKeys == null || mModifierKeys.matches(event);
     }
 
+    @VisibleForTesting
+    static Binding unknown() {
+        return new Binding(ModifierKeys.none(), null, null, null);
+    }
+
+    public static Binding fromString(String from) {
+
+        try {
+            switch (from.charAt(0)) {
+                case GESTURE_PREFIX: {
+                    return gesture(Gesture.valueOf(Gesture.class, from.substring(1)));
+                }
+                case UNICODE_PREFIX: {
+                    Pair<ModifierKeys, String> parsed = ModifierKeys.parse(from.substring(1));
+                    return unicode(parsed.first, parsed.second.charAt(0));
+                }
+                case KEY_PREFIX: {
+                    Pair<ModifierKeys, String> parsed = ModifierKeys.parse(from.substring(1));
+                    int keyCode = Integer.parseInt(parsed.second);
+                    return keyCode(parsed.first, keyCode);
+                }
+                default:
+                    return unknown();
+            }
+        } catch (Exception ex) {
+            Timber.w(ex);
+        }
+
+        return unknown();
+    }
 
     public static class ModifierKeys {
         private final boolean mShift;
@@ -209,6 +242,22 @@ public class Binding {
 
         public static ModifierKeys alt() {
             return new ModifierKeys(false, false, true);
+        }
+
+
+        /**
+         * Parses a {@link ModifierKeys} from a string.
+         * @param s The string to parse
+         * @return The {@link ModifierKeys}, and the remainder of the string
+         */
+        public static Pair<ModifierKeys, String> parse(@NonNull String s) {
+            ModifierKeys modifiers = ModifierKeys.none();
+            int plus = s.lastIndexOf("+");
+            if (plus == -1) {
+                return new Pair<>(modifiers, s);
+            }
+            modifiers = ModifierKeys.fromString(s.substring(0, plus + 1));
+            return new Pair<>(modifiers, s.substring(plus + 1));
         }
 
         public boolean matches(KeyEvent event) {
@@ -256,6 +305,10 @@ public class Binding {
             }
 
             return string.toString();
+        }
+
+        public static ModifierKeys fromString(String from) {
+            return new ModifierKeys(from.contains("Shift"), from.contains("Ctrl"), from.contains("Alt"));
         }
     }
 

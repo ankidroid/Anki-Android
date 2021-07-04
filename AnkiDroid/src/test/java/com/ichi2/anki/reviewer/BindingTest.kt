@@ -63,6 +63,12 @@ class BindingTest {
         assertEquals(gesturePrefix + "TAP_TOP", Binding.gesture(Gesture.TAP_TOP).toString())
     }
 
+    @Test
+    fun testUnknownToString() {
+        // This seems sensible - serialising an unknown will mean that nothing is saved.
+        assertThat(Binding.unknown().toString(), `is`(""))
+    }
+
     private fun testModifierKeys(name: String, event: KFunction1<KeyEvent, Boolean>, getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>) {
         fun testModifierResult(event: KFunction1<KeyEvent, Boolean>, returnedFromMock: Boolean) {
             val mock = mock<KeyEvent> {

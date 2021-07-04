@@ -18,9 +18,9 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.reviewer.Binding.ModifierKeys.alt
-import com.ichi2.anki.reviewer.Binding.ModifierKeys.ctrl
-import com.ichi2.anki.reviewer.Binding.ModifierKeys.shift
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.*
+import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,5 +35,24 @@ class BindingAndroidTest {
         assertEquals(BindingTest.keyPrefix + "Ctrl+88", Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS).toString())
         assertEquals(BindingTest.keyPrefix + "Shift+25", Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN).toString())
         assertEquals(BindingTest.keyPrefix + "Alt+24", Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP).toString())
+    }
+
+    @Test
+    fun testFromString() {
+        assertBindingEquals(Binding.unicode('Ä'), Binding.fromString(BindingTest.unicodePrefix + "Ä"))
+        assertBindingEquals(Binding.unicode(ctrl(), 'Ä'), Binding.fromString(BindingTest.unicodePrefix + "Ctrl+Ä"))
+        assertBindingEquals(Binding.unicode(shift(), 'Ä'), Binding.fromString(BindingTest.unicodePrefix + "Shift+Ä"))
+        assertBindingEquals(Binding.unicode(alt(), 'Ä'), Binding.fromString(BindingTest.unicodePrefix + "Alt+Ä"))
+        assertBindingEquals(Binding.keyCode(KeyEvent.KEYCODE_MEDIA_NEXT), Binding.fromString(BindingTest.keyPrefix + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_NEXT)))
+        assertBindingEquals(Binding.keyCode(ctrl(), KeyEvent.KEYCODE_MEDIA_PREVIOUS), Binding.fromString(BindingTest.keyPrefix + "Ctrl+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_MEDIA_PREVIOUS)))
+        assertBindingEquals(Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN), Binding.fromString(BindingTest.keyPrefix + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)))
+        assertBindingEquals(Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP), Binding.fromString(BindingTest.keyPrefix + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)))
+        assertBindingEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.gesturePrefix + Gesture.TAP_TOP.name))
+    }
+
+    private fun assertBindingEquals(fst: Binding?, snd: Binding?) {
+        val first = MappableBinding.fromBinding(fst)
+        val second = MappableBinding.fromBinding(snd)
+        assertEquals(first, second)
     }
 }
