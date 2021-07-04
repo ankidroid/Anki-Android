@@ -875,6 +875,9 @@ public class Stats {
         long cut = cutoff - rolloverHour * 3600;
 
         ArrayList<double[]> list = new ArrayList<>(24); // number of hours
+        for (int i = 0; i < 24; i++) {
+            list.add(new double[] { i, 0, 0 });
+        }
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -886,7 +889,8 @@ public class Stats {
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
+                double[] hourData = new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) };
+                list.set((int)hourData[0], hourData);
             }
         }
 
