@@ -45,6 +45,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
+import com.ichi2.testutils.TaskSchedulerRule;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONException;
 
@@ -57,6 +58,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
@@ -94,8 +96,17 @@ public class RobolectricTest implements CollectionGetter {
         return true;
     }
 
+    @Rule
+    public final TaskSchedulerRule mTaskScheduler = new TaskSchedulerRule();
+
     @Before
     public void setUp() {
+        if (mTaskScheduler.shouldRunInForeground()) {
+            runTasksInForeground();
+        } else {
+            runTasksInBackground();
+        }
+
 
         RustBackendLoader.init();
 
@@ -172,8 +183,6 @@ public class RobolectricTest implements CollectionGetter {
             //called on each AnkiDroidApp.onCreate(), and spams the build
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
-
-            runTasksInBackground();
         }
     }
 
