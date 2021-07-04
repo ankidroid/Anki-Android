@@ -208,7 +208,7 @@ public class Finder {
             } else if (c == '-') {
                 if (token.length() != 0) {
                     token += c;
-                } else if (tokens.size() == 0 || !"-".equals(tokens.get(tokens.size() - 1))) {
+                } else if (tokens.isEmpty() || !"-".equals(tokens.get(tokens.size() - 1))) {
                     tokens.add("-");
                 }
                 // normal character
@@ -698,7 +698,7 @@ public class Finder {
                 }
             }
         }
-        if (ids == null || ids.size() == 0) {
+        if (ids == null || ids.isEmpty()) {
             return null;
         }
         String sids = Utils.ids2str(ids);

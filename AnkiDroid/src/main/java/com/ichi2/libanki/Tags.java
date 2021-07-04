@@ -248,7 +248,7 @@ public class Tags extends TagManager {
     /** {@inheritDoc} */
     @NonNull
     public String join(@NonNull java.util.Collection<String> tags) {
-        if (tags.size() == 0) {
+        if (tags.isEmpty()) {
             return "";
         } else {
             String joined = TextUtils.join(" ", tags);

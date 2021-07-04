@@ -354,7 +354,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         }
         // If the deck is not in our list, we search again using the immediate parent
         List<Deck> parents = mCol.getDecks().parents(did);
-        if (parents.size() == 0) {
+        if (parents.isEmpty()) {
             return 0;
         } else {
             return findDeckPosition(parents.get(parents.size() - 1).optLong("id", 0));

@@ -626,7 +626,7 @@ public class Collection implements CollectionGetter {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
-        if (cms.size() == 0) {
+        if (cms.isEmpty()) {
             return 0;
         }
         note.flush();
@@ -653,7 +653,7 @@ public class Collection implements CollectionGetter {
      * Bulk delete notes by ID. Don't call this directly.
      */
     public void _remNotes(java.util.Collection<Long> ids) {
-        if (ids.size() == 0) {
+        if (ids.isEmpty()) {
             return;
         }
         String strids = Utils.ids2str(ids);
@@ -981,7 +981,7 @@ public class Collection implements CollectionGetter {
     }
 
     public void remCards(java.util.Collection<Long> ids, boolean notes) {
-        if (ids.size() == 0) {
+        if (ids.isEmpty()) {
             return;
         }
         String sids = Utils.ids2str(ids);
@@ -1142,7 +1142,7 @@ public class Collection implements CollectionGetter {
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.isCloze()) {
-                if (Models._availClozeOrds(model, flist, false).size() == 0) {
+                if (Models._availClozeOrds(model, flist, false).isEmpty()) {
                     String link = String.format("<a href=\"%s\">%s</a>", mContext.getResources().getString(R.string.link_ankiweb_docs_cloze_deletion), "help");
                     System.out.println(link);
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
@@ -1302,7 +1302,7 @@ public class Collection implements CollectionGetter {
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
     public @Nullable UndoAction undoType() {
-        if (mUndo.size() > 0) {
+        if (!mUndo.isEmpty()) {
             return mUndo.getLast();
         }
         return null;
@@ -1317,7 +1317,7 @@ public class Collection implements CollectionGetter {
 
     public boolean undoAvailable() {
         Timber.d("undoAvailable() undo size: %s", mUndo.size());
-        return mUndo.size() > 0;
+        return !mUndo.isEmpty();
     }
 
     public @Nullable Card undo() {
@@ -1658,7 +1658,7 @@ public class Collection implements CollectionGetter {
         // reviews should have a reasonable due #
         ArrayList<Long> ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
         notifyProgress.run();
-        if (ids.size() > 0) {
+        if (!ids.isEmpty()) {
             problems.add("Reviews had incorrect due date.");
             mDb.execute("UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(ids), mSched.getToday(), getTime().intTime(), usn());
         }
@@ -1857,7 +1857,7 @@ public class Collection implements CollectionGetter {
             }
             Timber.i("deleteNotesWithWrongFieldCounts - completed successfully");
             notifyProgress.run();
-            if (ids.size() > 0) {
+            if (!ids.isEmpty()) {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                 _remNotes(ids);
             }
@@ -1880,7 +1880,7 @@ public class Collection implements CollectionGetter {
             ArrayList<Long> ids = mDb.queryLongList(
                     "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
                             "SELECT id FROM notes WHERE mid = ?)", m.getLong("id"));
-            if (ids.size() > 0) {
+            if (!ids.isEmpty()) {
                 problems.add("Deleted " + ids.size() + " card(s) with missing template.");
                 remCards(ids);
             }
@@ -1933,9 +1933,9 @@ public class Collection implements CollectionGetter {
      */
     private void logProblems(List<String> integrityCheckProblems) {
 
-        if (integrityCheckProblems.size() > 0) {
+        if (!integrityCheckProblems.isEmpty()) {
             StringBuffer additionalInfo = new StringBuffer();
-            for (int i = 0; ((i < 10) && (integrityCheckProblems.size() > i)); i++) {
+            for (int i = 0; ((i < 10) && (integrityCheckProblems.size()) > i); i++) {
                 additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
                 // log analytics event so we can see trends if user allows it
                 UsageAnalytics.sendAnalyticsEvent("DatabaseCorruption", integrityCheckProblems.get(i));
@@ -2393,7 +2393,7 @@ public class Collection implements CollectionGetter {
         }
 
         public boolean hasProblems() {
-            return mProblems.size() > 0;
+            return !mProblems.isEmpty();
         }
 
 
