@@ -45,9 +45,9 @@
     </plurals>
     <string name="card_browser_all_decks">सरे डेक</string>
     <string name="card_browser_delete_card">नोट मिटाएँ</string>
-    <string name="card_browser_suspend_card">पत्ता निलंबित करें</string>
+    <string name="card_browser_suspend_card">पत्ते निलंबित करें</string>
     <string name="card_browser_change_deck">डेक बदलें</string>
-    <string name="card_browser_unsuspend_card">पत्ता अनिलंबित करें</string>
+    <string name="card_browser_unsuspend_card">पत्ते अनिलंबित करें</string>
     <string name="card_browser_mark_card">नोट चिह्नित करें</string>
     <string name="card_browser_unmark_card">नोट अचिह्नित करें</string>
     <string name="delete_card_title">नोट मिटाएँ?</string>
@@ -72,8 +72,8 @@
         <item>कोई सॉर्टिंग (तेज़)</item>
         <item>क्रम फ़ील्ड से</item>
         <item>निर्माण के समय से</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>नोट संशोधन समय के अनुसार</item>
+        <item>पत्ता संशोधन समय के अनुसार</item>
         <item>नियत समय से</item>
         <item>अंतराल से</item>
         <item>आसानी से</item>
@@ -85,8 +85,8 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(नया)</string>
     <string name="card_browser_due_filtered_card">(छाना हुआ)</string>
     <string name="card_browser_interval_learning_card">(अध्ययन)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_no_cards_in_deck">‘%s’ डेक में कोई पत्ता नहीं मिला</string>
+    <string name="card_browser_search_all_decks">सभी डेक में खोजें</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d कार्ड हटाया गया</item>

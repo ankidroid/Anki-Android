@@ -208,8 +208,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
+    <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnout pokročilé statistiky</string>
@@ -295,7 +295,7 @@
     <string name="deck_conf_cram_order" maxLength="41">karty vybrané podle</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
     <string name="deck_conf_cram_steps" maxLength="41">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovat vlastní kroky</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Povolit upomínky pro balíčky v této skupině balíčků</string>

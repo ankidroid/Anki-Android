@@ -38,37 +38,37 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">បាទ/ចាស</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ស្វែងរកកាត</string>
+    <string name="statistics">ស្ថិតិ</string>
+    <string name="settings">ការ​កំណត់</string>
+    <string name="help">ជំនួយ</string>
+    <string name="send_feedback">ផ្ញើមតិ</string>
+    <string name="studyoptions_due_today">ដល់កំណត់ថ្ងៃនេះ៖</string>
+    <string name="studyoptions_new_total">កាតថ្មីសរុប៖</string>
+    <string name="studyoptions_total_cards">កាតសរុប៖</string>
+    <string name="studyoptions_eta">ពេលវេលា​ប៉ាន់​ស្មាន​ (នាទី)​៖</string>
+    <string name="studyoptions_start">រៀន</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">ពន្លាត</string>
+    <string name="collapse">បង្រួម</string>
+    <string name="study_more">រៀនបន្ថែម</string>
     <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">កាត​ ​%1$d ពេលកំណត់​ (%2$s) </item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">នៅសល់​ %d​ នាទី</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">នៅ​សល់​ %d ម៉ោង</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">នៅសល់​ %d ថ្ងៃ</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">ចាប់ផ្តើមដាក់កាត\nដោយចុចសញ្ញា +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Studied %1$d cards in %2$s today</item>

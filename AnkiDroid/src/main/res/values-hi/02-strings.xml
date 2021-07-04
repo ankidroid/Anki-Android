@@ -327,7 +327,7 @@
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">क्षैतिज रेखा डालें</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_heading">शीर्षक डालें</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
