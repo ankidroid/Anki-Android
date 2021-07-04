@@ -19,10 +19,12 @@ package com.ichi2.anki.dialogs.utils;
 import android.net.Uri;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+
+import static com.ichi2.anki.RobolectricAbstractTest.advanceRobolectricLooperWithSleep;
 
 public class FragmentTestActivity extends AnkiActivity {
 
@@ -47,8 +49,8 @@ public class FragmentTestActivity extends AnkiActivity {
         super.showDialogFragment(newFragment);
         mLastShownDialogFragment = newFragment;
         // Note: I saw a potential solution for this sleeping on StackOverflow - can't find the code again.
-        RobolectricTest.advanceRobolectricLooperWithSleep(); // 6 of normal advance wasn't enough
-        RobolectricTest.advanceRobolectricLooperWithSleep(); // 1 sleep wasn't enough :/
+        advanceRobolectricLooperWithSleep(); // 6 of normal advance wasn't enough
+        advanceRobolectricLooperWithSleep(); // 1 sleep wasn't enough :/
     }
 
 

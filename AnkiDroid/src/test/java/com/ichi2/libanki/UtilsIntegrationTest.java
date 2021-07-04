@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.testutils.NullApplication;
 
 import org.junit.Test;
@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 @Config(application = NullApplication.class, qualifiers = "en")
-public class UtilsIntegrationTest extends RobolectricTest {
+public class UtilsIntegrationTest extends RobolectricBackgroundTest {
 
     @Test
     public void deckPickerTimeOneAndHalfHours() {

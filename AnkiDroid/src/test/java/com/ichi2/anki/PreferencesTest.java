@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class PreferencesTest extends RobolectricTest {
+public class PreferencesTest extends RobolectricBackgroundTest {
 
     @Test
     public void testDayOffsetExhaustive() {

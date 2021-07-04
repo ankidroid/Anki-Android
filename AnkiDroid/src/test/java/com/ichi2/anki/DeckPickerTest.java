@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
-import android.database.SQLException;
-import android.os.Bundle;
 import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
@@ -50,7 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckPickerTest extends RobolectricTest {
+public class DeckPickerTest extends RobolectricBackgroundTest {
 
     @Test
     public void verifyCodeMessages() {

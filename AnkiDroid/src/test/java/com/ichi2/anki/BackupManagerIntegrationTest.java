@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class BackupManagerIntegrationTest extends RobolectricTest {
+public class BackupManagerIntegrationTest extends RobolectricBackgroundTest {
 
     @Test
     @Ignore("Fails on line: if (!f.renameTo(new File(colPath))) {")

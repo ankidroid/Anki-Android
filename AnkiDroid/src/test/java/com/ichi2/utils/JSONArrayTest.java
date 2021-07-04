@@ -21,8 +21,6 @@
  */
 package com.ichi2.utils;
 
-import com.ichi2.anki.RobolectricTest;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

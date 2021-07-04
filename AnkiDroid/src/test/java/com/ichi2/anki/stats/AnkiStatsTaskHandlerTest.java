@@ -20,7 +20,7 @@ import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.TextView;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.libanki.Collection;
 
 import org.junit.Before;
@@ -37,7 +37,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
-public class AnkiStatsTaskHandlerTest extends RobolectricTest {
+public class AnkiStatsTaskHandlerTest extends RobolectricBackgroundTest {
 
     @Mock
     private Collection col;

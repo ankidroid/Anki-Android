@@ -16,10 +16,8 @@
 
 package com.ichi2.libanki.template;
 
-import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,8 +30,6 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.libanki.template.Tokenizer.ALT_HANDLEBAR_DIRECTIVE;
-import static com.ichi2.libanki.template.Tokenizer.new_to_legacy;
 import static com.ichi2.libanki.template.TokenizerTest.new_to_legacy_template;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -45,7 +41,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class TemplateTest extends RobolectricTest {
+public class TemplateTest extends RobolectricBackgroundTest {
     private String render(String template, Map<String, String> fields) {
         return ParsedNode.parse_inner(template).render(fields, true, getTargetContext());
     }

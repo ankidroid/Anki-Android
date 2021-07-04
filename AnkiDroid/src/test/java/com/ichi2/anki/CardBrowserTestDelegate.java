@@ -19,14 +19,15 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-import static com.ichi2.anki.RobolectricTest.advanceRobolectricLooperWithSleep;
+import static com.ichi2.anki.RobolectricBackgroundTest.advanceRobolectricLooperWithSleep;
 import static org.robolectric.Shadows.shadowOf;
 
 public class CardBrowserTestDelegate {
-    private final @NonNull RobolectricTest mRobolectric;
+    private final @NonNull
+    RobolectricAbstractTest mRobolectric;
 
 
-    public CardBrowserTestDelegate(@NonNull RobolectricTest robolectric) {
+    public CardBrowserTestDelegate(@NonNull RobolectricAbstractTest robolectric) {
         mRobolectric = robolectric;
     }
 

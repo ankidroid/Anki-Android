@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
-public class CardBrowserBackgroundTest extends RobolectricTest {
+public class CardBrowserBackgroundTest extends RobolectricBackgroundTest {
     private final CardBrowserTestDelegate mDelegate = new CardBrowserTestDelegate(this);
 
     @Test

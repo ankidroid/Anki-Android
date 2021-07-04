@@ -36,7 +36,7 @@ import static com.ichi2.anki.TemporaryModel.ChangeType.ADD;
 import static com.ichi2.anki.TemporaryModel.ChangeType.DELETE;
 
 @RunWith(AndroidJUnit4.class)
-public class TemporaryModelTest extends RobolectricTest {
+public class TemporaryModelTest extends RobolectricBackgroundTest {
 
     @Test
     public void testTempModelStorage() throws Exception {

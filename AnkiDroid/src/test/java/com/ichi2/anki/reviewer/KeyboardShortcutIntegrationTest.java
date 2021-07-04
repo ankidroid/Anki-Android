@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.anki.multimediacard.AudioPlayer;
 import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class KeyboardShortcutIntegrationTest extends RobolectricTest {
+public class KeyboardShortcutIntegrationTest extends RobolectricBackgroundTest {
 
     private Reviewer reviewer;
 

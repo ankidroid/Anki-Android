@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.is;
 
 /** A non-parmaterized ReviewerTest - we should probably rename ReviewerTest in future */
 @RunWith(AndroidJUnit4.class)
-public class ReviewerNoParamTest extends RobolectricTest {
+public class ReviewerNoParamTest extends RobolectricBackgroundTest {
     public static final int DEFAULT_LIGHT_PEN_COLOR = Color.BLACK;
     public static final int ARBITRARY_PEN_COLOR_VALUE = 555;
 

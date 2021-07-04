@@ -16,8 +16,7 @@
 
 package com.ichi2.libanki.sched;
 
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.libanki.Collection;
+import com.ichi2.anki.RobolectricBackgroundTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +28,7 @@ import static org.hamcrest.Matchers.*;
 
 /** Issue 8926 */
 @RunWith(AndroidJUnit4.class)
-public class SchedUpgradeTest extends RobolectricTest {
+public class SchedUpgradeTest extends RobolectricBackgroundTest {
 
     @Override
     protected boolean useInMemoryDatabase() {

@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerTest extends RobolectricTest {
+public class AbstractFlashcardViewerTest extends RobolectricBackgroundTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
         public Integer mAnswered;

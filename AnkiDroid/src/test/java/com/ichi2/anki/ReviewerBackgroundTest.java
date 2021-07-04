@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class ReviewerBackgroundTest extends RobolectricTest {
+public class ReviewerBackgroundTest extends RobolectricBackgroundTest {
     @ParameterizedRobolectricTestRunner.Parameter
     public int schedVersion;
 

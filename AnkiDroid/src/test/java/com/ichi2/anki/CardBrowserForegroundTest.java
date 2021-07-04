@@ -53,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class CardBrowserForegroundTest extends RobolectricTest {
+public class CardBrowserForegroundTest extends RobolectricBackgroundTest {
     private final CardBrowserTestDelegate mDelegate = new CardBrowserTestDelegate(this);
 
     @Test

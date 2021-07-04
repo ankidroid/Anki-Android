@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class ReviewerForegroundTest extends RobolectricTest {
+public class ReviewerForegroundTest extends RobolectricBackgroundTest {
 
 
     @ParameterizedRobolectricTestRunner.Parameter
@@ -359,7 +359,7 @@ public class ReviewerForegroundTest extends RobolectricTest {
         return startReviewer(this);
     }
 
-    static Reviewer startReviewer(RobolectricTest testClass) {
+    static Reviewer startReviewer(RobolectricAbstractTest testClass) {
         return startReviewer(testClass, Reviewer.class);
     }
 
@@ -367,7 +367,7 @@ public class ReviewerForegroundTest extends RobolectricTest {
         return startReviewer(this, clazz);
     }
 
-    public static <T extends Reviewer> T startReviewer(RobolectricTest testClass, Class<T> clazz) {
+    public static <T extends Reviewer> T startReviewer(RobolectricAbstractTest testClass, Class<T> clazz) {
         T reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, new Intent());
         waitForAsyncTasksToComplete();
         return reviewer;

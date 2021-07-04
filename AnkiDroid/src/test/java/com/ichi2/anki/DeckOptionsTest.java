@@ -1,13 +1,8 @@
 package com.ichi2.anki;
 
-import android.content.SharedPreferences;
-
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Decks;
 import com.ichi2.utils.JSONObject;
 
-import org.apache.http.util.Asserts;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckOptionsTest extends RobolectricTest {
+public class DeckOptionsTest extends RobolectricBackgroundTest {
 
     @Test
     public void changeHardFactor() {

@@ -44,7 +44,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
 @Config(application = EmptyApplication.class) // no point in Application init if we don't use it
-public class ActivityStartupUnderBackupTest extends RobolectricTest {
+public class ActivityStartupUnderBackupTest extends RobolectricBackgroundTest {
     @Parameter
     public ActivityLaunchParam mLauncher;
 

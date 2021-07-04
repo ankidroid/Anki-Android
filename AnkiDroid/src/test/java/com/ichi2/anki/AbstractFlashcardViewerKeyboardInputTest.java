@@ -27,7 +27,7 @@ import timber.log.Timber;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerKeyboardInputTest extends RobolectricTest {
+public class AbstractFlashcardViewerKeyboardInputTest extends RobolectricBackgroundTest {
 
     @Test
     public void spaceShowsAnswer() {

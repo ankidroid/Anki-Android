@@ -17,7 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil;
 
@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class RecursivePictureMenuBackgroundTest extends RobolectricTest {
+public class RecursivePictureMenuBackgroundTest extends RobolectricBackgroundTest {
     private final @NonNull RecursivePictureMenuDelegate mDelegate = new RecursivePictureMenuDelegate(this);
 
     @Test

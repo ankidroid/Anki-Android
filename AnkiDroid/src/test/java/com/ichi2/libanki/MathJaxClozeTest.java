@@ -2,7 +2,7 @@ package com.ichi2.libanki;
 
 import android.content.Context;
 
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
-public class MathJaxClozeTest extends RobolectricTest {
+public class MathJaxClozeTest extends RobolectricBackgroundTest {
 
     @Test
     public void removeFormattingFromMathjax() {

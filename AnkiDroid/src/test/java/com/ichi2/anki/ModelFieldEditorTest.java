@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class ModelFieldEditorTest extends RobolectricTest {
+public class ModelFieldEditorTest extends RobolectricBackgroundTest {
     private static final String[] sForbiddenCharacters = new String[] {"#", "^", "/", " ", "\t"};
     private String mForbiddenCharacter;
 

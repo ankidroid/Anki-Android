@@ -3,7 +3,8 @@ package com.ichi2.anki.dialogs;
 import android.view.View;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricAbstractTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil;
@@ -15,12 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecursivePictureMenuDelegate {
-    private final @NonNull RobolectricTest mRobolectric;
+    private final @NonNull
+    RobolectricAbstractTest mRobolectric;
 
     private FragmentTestActivity mActivity;
 
 
-    public RecursivePictureMenuDelegate(@NonNull RobolectricTest robolectric) {
+    public RecursivePictureMenuDelegate(@NonNull RobolectricAbstractTest robolectric) {
         mRobolectric = robolectric;
     }
 

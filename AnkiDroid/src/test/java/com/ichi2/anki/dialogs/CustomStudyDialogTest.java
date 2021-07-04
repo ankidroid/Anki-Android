@@ -21,14 +21,13 @@ import android.os.Bundle;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RobolectricBackgroundTest;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.testutils.ParametersUtils;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -48,7 +47,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
-public class CustomStudyDialogTest extends RobolectricTest {
+public class CustomStudyDialogTest extends RobolectricBackgroundTest {
 
     CustomStudyListener mockListener;
 
