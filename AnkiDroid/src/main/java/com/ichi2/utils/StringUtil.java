@@ -75,4 +75,17 @@ public class StringUtil {
         return string.substring(start, end);
     }
 
+    /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase */
+    @Contract("null -> null; !null -> !null")
+    public static String toTitleCase(@Nullable String s) {
+        if (s == null) {
+            return null;
+        }
+
+        if (s.length() > 0) {
+            s = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        }
+
+        return s;
+    }
 }
