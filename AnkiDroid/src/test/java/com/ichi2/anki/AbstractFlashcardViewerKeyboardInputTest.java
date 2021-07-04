@@ -39,6 +39,7 @@ public class AbstractFlashcardViewerKeyboardInputTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void enterShowsAnswer() {
         KeyboardInputTestCardViewer underTest = KeyboardInputTestCardViewer.create();
 

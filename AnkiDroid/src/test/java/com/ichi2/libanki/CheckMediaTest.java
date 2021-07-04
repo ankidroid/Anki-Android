@@ -17,6 +17,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RunInBackground;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.utils.Computation;
@@ -42,6 +43,7 @@ public class CheckMediaTest extends RobolectricTest {
 
 
     @Test
+    @RunInBackground
     public void checkMediaWorksAfterMissingMetaTable() throws ExecutionException, InterruptedException {
         // 7421
         getCol().getMedia().getDb().getDatabase().execSQL("drop table meta");

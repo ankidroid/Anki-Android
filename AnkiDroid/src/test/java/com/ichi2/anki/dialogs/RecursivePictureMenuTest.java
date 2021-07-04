@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RunInBackground;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.HelpDialog.LinkItem;
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
@@ -49,6 +50,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
     private FragmentTestActivity mActivity;
 
     @Test
+    @RunInBackground
     public void testNormalStartupSelectingItem() {
         Item linkedItem = getItemLinkingTo(R.string.link_anki);
 
@@ -60,6 +62,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
 
 
     @Test
+    @RunInBackground
     public void testSelectingHeader() {
         int numberOfChildItems = 2;
         Item header = getHeaderWithSubItems(numberOfChildItems);
