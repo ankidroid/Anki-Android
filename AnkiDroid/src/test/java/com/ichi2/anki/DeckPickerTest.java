@@ -59,7 +59,7 @@ public class DeckPickerTest extends RobolectricTest {
 
     @Parameters
     public static java.util.Collection<String> initParameters() {
-        return Arrays.asList("normal"); //, "xlarge");
+        return Arrays.asList("normal", "xlarge");
     }
 
     @Before
