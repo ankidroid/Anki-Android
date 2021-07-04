@@ -183,6 +183,9 @@ public class RobolectricAbstractTest implements CollectionGetter {
      * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
      */
     public void runTasksInForeground() {
+        if (!mBackground) {
+            return;
+        }
         TaskManager.setTaskManager(new ForegroundTaskManager(this));
         mBackground = false;
     }
@@ -192,6 +195,9 @@ public class RobolectricAbstractTest implements CollectionGetter {
      * Set back the standard background process
      */
     public void runTasksInBackground() {
+        if (mBackground) {
+            return;
+        }
         TaskManager.setTaskManager(new SingleTaskManager());
         mBackground = true;
     }
