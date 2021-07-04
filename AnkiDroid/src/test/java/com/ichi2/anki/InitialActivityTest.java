@@ -40,7 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 @Config(application = EmptyApplication.class) // no point in Application init if we don't use it
-public class InitialActivityTest extends RobolectricBackgroundTest {
+public class InitialActivityTest extends RobolectricForegroundTest {
     @Before
     @Override
     public void setUp() {

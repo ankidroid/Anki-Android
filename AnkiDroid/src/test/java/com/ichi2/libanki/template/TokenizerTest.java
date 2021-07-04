@@ -1,6 +1,6 @@
 package com.ichi2.libanki.template;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ import static org.junit.Assert.fail;
 
 
 @RunWith(AndroidJUnit4.class)
-public class TokenizerTest extends RobolectricBackgroundTest {
+public class TokenizerTest extends RobolectricForegroundTest {
     private void test_text_token_is_null(@NonNull String template) {
         assertThat(text_token(template, false), is(nullValue()));
         assertThat(text_token(template, true), is(nullValue()));

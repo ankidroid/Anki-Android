@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class ReviewerForegroundTest extends RobolectricBackgroundTest {
+public class ReviewerForegroundTest extends RobolectricForegroundTest {
 
 
     @ParameterizedRobolectricTestRunner.Parameter

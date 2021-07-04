@@ -1,6 +1,6 @@
 package com.ichi2.libanki.template;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class ParserTest extends RobolectricBackgroundTest {
+public class ParserTest extends RobolectricForegroundTest {
     public void test_parsing(@NonNull String template, @NonNull ParsedNode node) {
         assertThat(ParsedNode.parse_inner(template), is(node));
         String legacy_template = new_to_legacy_template(template);

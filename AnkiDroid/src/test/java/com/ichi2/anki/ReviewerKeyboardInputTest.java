@@ -43,7 +43,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class ReviewerKeyboardInputTest extends RobolectricBackgroundTest {
+public class ReviewerKeyboardInputTest extends RobolectricForegroundTest {
 
     @Test
     public void whenDisplayingQuestionTyping1DoesNothing() {

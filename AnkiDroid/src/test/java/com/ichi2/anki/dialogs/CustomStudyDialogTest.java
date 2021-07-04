@@ -21,7 +21,7 @@ import android.os.Bundle;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
@@ -47,7 +47,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.*;
 
 @RunWith(AndroidJUnit4.class)
-public class CustomStudyDialogTest extends RobolectricBackgroundTest {
+public class CustomStudyDialogTest extends RobolectricForegroundTest {
 
     CustomStudyListener mockListener;
 

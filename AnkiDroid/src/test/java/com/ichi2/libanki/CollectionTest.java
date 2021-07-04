@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class CollectionTest extends RobolectricBackgroundTest {
+public class CollectionTest extends RobolectricForegroundTest {
 
     @Test
     public void editClozeGenerateCardsInSameDeck() {

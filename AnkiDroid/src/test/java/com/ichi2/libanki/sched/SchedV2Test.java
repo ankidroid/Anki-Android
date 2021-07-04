@@ -18,7 +18,7 @@ package com.ichi2.libanki.sched;
 
 import android.database.Cursor;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -86,7 +86,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 
 @RunWith(AndroidJUnit4.class)
-public class SchedV2Test extends RobolectricBackgroundTest {
+public class SchedV2Test extends RobolectricForegroundTest {
 
     protected static List<DeckDueTreeNode> expectedTree(Collection col, boolean addRev) {
         AbstractSched sched = col.getSched();

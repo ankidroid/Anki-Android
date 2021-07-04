@@ -17,7 +17,7 @@
 package com.ichi2.anki.dialogs;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Decks;
 
@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(RobolectricTestRunner.class)
-public class CreateDeckDialogTest extends RobolectricBackgroundTest {
+public class CreateDeckDialogTest extends RobolectricForegroundTest {
 
     private ActivityScenario<DeckPicker> mActivityScenario;
 

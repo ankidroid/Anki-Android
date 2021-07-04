@@ -36,7 +36,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @RunWith(AndroidJUnit4.class)
-public class ActivityStartupMetaTest extends RobolectricBackgroundTest {
+public class ActivityStartupMetaTest extends RobolectricForegroundTest {
 
     @Test
     public void ensureAllActivitiesAreTested() throws PackageManager.NameNotFoundException {

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.libanki.Collection;
 
 import org.junit.Test;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class ReminderServiceTest extends RobolectricBackgroundTest {
+public class ReminderServiceTest extends RobolectricForegroundTest {
 
     @Test
     public void testReminderServiceNothingDue() {

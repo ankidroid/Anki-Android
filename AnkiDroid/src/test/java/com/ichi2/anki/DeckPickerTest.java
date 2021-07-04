@@ -48,7 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class DeckPickerTest extends RobolectricBackgroundTest {
+public class DeckPickerTest extends RobolectricForegroundTest {
 
     @Test
     public void verifyCodeMessages() {

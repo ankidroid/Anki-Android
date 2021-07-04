@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.libanki.sched.Counts;
 
 import org.junit.Ignore;
@@ -25,7 +25,7 @@ import static org.junit.Assume.assumeThat;
 
 
 @RunWith(AndroidJUnit4.class)
-public class UndoTest extends RobolectricBackgroundTest {
+public class UndoTest extends RobolectricForegroundTest {
     /*****************
      ** Undo         *
      *****************/

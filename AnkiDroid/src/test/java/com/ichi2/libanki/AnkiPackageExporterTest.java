@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.exception.EmptyMediaException;
 
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class AnkiPackageExporterTest extends RobolectricBackgroundTest {
+public class AnkiPackageExporterTest extends RobolectricForegroundTest {
 
     @Override
     protected boolean useInMemoryDatabase() {

@@ -37,7 +37,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 
 @RunWith(RobolectricTestRunner.class)
-public class CardTemplatePreviewerTest extends RobolectricBackgroundTest {
+public class CardTemplatePreviewerTest extends RobolectricForegroundTest {
 
     @Test
     public void testPreviewUnsavedTemplate() {

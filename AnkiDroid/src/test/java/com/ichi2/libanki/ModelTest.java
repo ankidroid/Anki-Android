@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
-public class ModelTest extends RobolectricBackgroundTest {
+public class ModelTest extends RobolectricForegroundTest {
 
     @Test
     public void test_frontSide_field() {

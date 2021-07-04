@@ -4,7 +4,7 @@ import android.Manifest;
 import android.app.Application;
 import android.content.Intent;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
@@ -20,7 +20,7 @@ import androidx.test.core.app.ApplicationProvider;
 
 import static org.mockito.Mockito.when;
 
-public abstract class MultimediaEditFieldActivityTestBase extends RobolectricBackgroundTest {
+public abstract class MultimediaEditFieldActivityTestBase extends RobolectricForegroundTest {
 
     protected void grantCameraPermission() {
         Application application = ApplicationProvider.getApplicationContext();

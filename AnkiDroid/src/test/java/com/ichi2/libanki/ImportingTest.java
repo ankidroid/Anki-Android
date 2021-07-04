@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
-public class ImportingTest extends RobolectricBackgroundTest {
+public class ImportingTest extends RobolectricForegroundTest {
     @Test
     public void empty_test() {
         // A test should occurs in the file, otherwise travis rejects. This remains here until we can uncomment the real tests.

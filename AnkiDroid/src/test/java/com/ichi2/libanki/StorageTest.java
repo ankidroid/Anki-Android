@@ -19,7 +19,7 @@ package com.ichi2.libanki;
 import android.database.Cursor;
 
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.utils.JSONObject;
 
 import org.json.JSONException;
@@ -38,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /** Regression test for Rust */
 @RunWith(AndroidJUnit4.class)
-public class StorageTest extends RobolectricBackgroundTest {
+public class StorageTest extends RobolectricForegroundTest {
 
     @Override
     protected boolean useLegacyHelper() {

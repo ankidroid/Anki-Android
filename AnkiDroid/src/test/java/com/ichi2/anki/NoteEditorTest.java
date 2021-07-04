@@ -53,7 +53,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 @SuppressWarnings("SameParameterValue")
 @RunWith(AndroidJUnit4.class)
-public class NoteEditorTest extends RobolectricBackgroundTest {
+public class NoteEditorTest extends RobolectricForegroundTest {
 
     @Test
     @Config(qualifiers = "en")

@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-public class PreviewerTest extends RobolectricBackgroundTest {
+public class PreviewerTest extends RobolectricForegroundTest {
 
     @Test
     public void editingNoteDoesNotChangePreviewedCardId() {

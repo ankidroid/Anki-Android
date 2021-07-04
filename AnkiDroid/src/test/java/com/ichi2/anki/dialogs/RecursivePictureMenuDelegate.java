@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricAbstractTest;
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil;

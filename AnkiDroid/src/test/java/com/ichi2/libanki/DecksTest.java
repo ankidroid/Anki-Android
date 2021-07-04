@@ -1,6 +1,6 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.utils.JSONObject;
@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
 
 @RunWith(AndroidJUnit4.class)
-public class DecksTest extends RobolectricBackgroundTest {
+public class DecksTest extends RobolectricForegroundTest {
     // Used in other class to populate decks.
     public static final String[] TEST_DECKS = {
             "scxipjiyozczaaczoawo",

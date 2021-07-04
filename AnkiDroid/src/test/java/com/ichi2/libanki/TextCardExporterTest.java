@@ -13,7 +13,7 @@
 
 package com.ichi2.libanki;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class TextCardExporterTest extends RobolectricBackgroundTest {
+public class TextCardExporterTest extends RobolectricForegroundTest {
     private Collection col;
     private List<Note> noteList = new ArrayList<Note>();
 

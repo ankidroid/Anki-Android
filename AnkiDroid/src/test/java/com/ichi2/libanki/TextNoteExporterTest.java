@@ -15,7 +15,7 @@ package com.ichi2.libanki;
 
 import android.text.TextUtils;
 
-import com.ichi2.anki.RobolectricBackgroundTest;
+import com.ichi2.anki.RobolectricForegroundTest;
 import com.ichi2.anki.exception.FilteredAncestor;
 
 import org.junit.Before;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class TextNoteExporterTest extends RobolectricBackgroundTest {
+public class TextNoteExporterTest extends RobolectricForegroundTest {
 
     @Parameters(name = "{index} id:{0}\ttags:{1}\thtml:{2}")
     public static Iterable<Object[]> data() {
