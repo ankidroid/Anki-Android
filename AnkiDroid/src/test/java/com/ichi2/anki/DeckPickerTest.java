@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
-import android.database.SQLException;
-import android.os.Bundle;
 import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
@@ -20,18 +18,22 @@ import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.DbUtils;
 import com.ichi2.utils.ResourceLoader;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.ParameterizedRobolectricTestRunner;
+import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
+import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import org.robolectric.Robolectric;
-import org.robolectric.annotation.Config;
+import org.robolectric.RuntimeEnvironment;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,8 +51,21 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(ParameterizedRobolectricTestRunner.class)
 public class DeckPickerTest extends RobolectricTest {
+
+    @Parameter
+    public String mQualifiers;
+
+    @Parameters
+    public static java.util.Collection<String> initParameters() {
+        return Arrays.asList("normal"); //, "xlarge");
+    }
+
+    @Before
+    public void before() {
+        RuntimeEnvironment.setQualifiers(mQualifiers);
+    }
 
     @Test
     public void verifyCodeMessages() {
@@ -411,8 +426,8 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    @Config(qualifiers = "xlarge-port")
     public void checkDisplayOfStudyOptionsOnTablet() {
+        assumeTrue("We are running on a tablet", mQualifiers.contains("xlarge"));
         DeckPickerEx deckPickerEx = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
 
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
