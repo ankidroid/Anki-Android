@@ -98,7 +98,7 @@ public class ReadText {
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages();
         }
-        if (availableTtsLocales.size() == 0) {
+        if (availableTtsLocales.isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available");
             builder.content(res.getString(R.string.no_tts_available_message))
                     .iconAttr(R.attr.dialogErrorIcon)
@@ -276,7 +276,7 @@ public class ReadText {
             if (status == TextToSpeech.SUCCESS) {
                 // build list of available languages
                 buildAvailableLanguages();
-                if (availableTtsLocales.size() > 0) {
+                if (!availableTtsLocales.isEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found");
                     ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();

@@ -27,7 +27,7 @@ public final class TtsParser {
 
         Element elem = Jsoup.parseBodyFragment(html).body();
         parseTtsElements(elem, textsToRead);
-        if (textsToRead.size() == 0) {
+        if (textsToRead.isEmpty()) {
             // No <tts service="android"> elements found: return the text of the whole HTML fragment
             textsToRead.add(new LocalisedText(elem.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)));
         }

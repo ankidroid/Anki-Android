@@ -260,7 +260,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private final OnClickListener mDeckExpanderClickListener = view -> {
         Long did = (Long) view.getTag();
-        if (getCol().getDecks().children(did).size() > 0) {
+        if (!getCol().getDecks().children(did).isEmpty()) {
             getCol().getDecks().collapse(did);
             __renderPage();
             dismissAllDialogFragments();
@@ -2661,7 +2661,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (cids == null) {
                 return;
             }
-            if (cids.size() == 0) {
+            if (cids.isEmpty()) {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
             } else {
                 String msg = String.format(deckPicker.getResources().getString(R.string.empty_cards_count), cids.size());

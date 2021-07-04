@@ -603,7 +603,7 @@ public class NoteEditor extends AnkiActivity implements
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
                     contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
-                } else if (mEditFields.size() > 0) {
+                } else if (!mEditFields.isEmpty()) {
                     mEditFields.get(0).setText(mSourceText[0]);
                     if (mEditFields.size() > 1) {
                         mEditFields.get(1).setText(mSourceText[1]);

@@ -957,7 +957,7 @@ public class Media {
                 media.add(new Object[] {name, csum, _mtime(destPath), 0});
                 cnt += 1;
             }
-            if (media.size() > 0) {
+            if (!media.isEmpty()) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
             return cnt;

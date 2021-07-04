@@ -1303,7 +1303,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.action_view_card_info) {
             List<Long> selectedCardIds = getSelectedCardIds();
-            if (selectedCardIds.size() > 0) {
+            if (!selectedCardIds.isEmpty()) {
                 Intent intent = new Intent(this, CardInfo.class);
                 intent.putExtra("cardId", selectedCardIds.get(0));
                 startActivityWithAnimation(intent, FADE);
@@ -2114,7 +2114,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             List<Long> cardsIdsToHide = value.second;
             if (cardsIdsToHide != null) {
                     try {
-                        if (cardsIdsToHide.size() > 0) {
+                        if (!cardsIdsToHide.isEmpty()) {
                             Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
                             browser.removeNotesView(cardsIdsToHide, true);
                         }

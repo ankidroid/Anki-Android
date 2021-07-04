@@ -857,7 +857,7 @@ public class Utils {
         final Intent intent = new Intent(action);
         intent.setComponent(componentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**

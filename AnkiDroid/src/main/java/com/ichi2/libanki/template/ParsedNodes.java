@@ -46,7 +46,7 @@ public class ParsedNodes extends ParsedNode {
      * @return The list of node, as compactly as possible.
      */
     public static @NonNull ParsedNode create(List<ParsedNode> nodes) {
-        if (nodes.size() == 0) {
+        if (nodes.isEmpty()) {
             return new EmptyNode();
         } else if (nodes.size() == 1) {
             return nodes.get(0);
