@@ -23,7 +23,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class StringUtilTest {
 
@@ -84,5 +85,25 @@ public class StringUtilTest {
     @Test
     public void strip_does_nothing_on_stripped_string() {
         assertEquals("Java", StringUtil.strip("Java"));
+    }
+
+    @Test
+    public void toTitleCase_null_is_null() {
+        assertThat(StringUtil.toTitleCase(null), nullValue());
+    }
+
+    @Test
+    public void toTitleCase_single_letter() {
+        assertThat(StringUtil.toTitleCase("a"), is("A"));
+    }
+
+    @Test
+    public void toTitleCase_single_upper_letter() {
+        assertThat(StringUtil.toTitleCase("A"), is("A"));
+    }
+
+    @Test
+    public void toTitleCase_string() {
+        assertThat(StringUtil.toTitleCase("aB"), is("Ab"));
     }
 }
