@@ -35,6 +35,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -45,28 +46,27 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class RecursivePictureMenuTest extends RobolectricTest {
-
-    private FragmentTestActivity mActivity;
+    private final @NonNull RecursivePictureMenuDelegate mDelegate = new RecursivePictureMenuDelegate(this);
 
     @Test
     public void testNormalStartupSelectingItem() {
-        Item linkedItem = getItemLinkingTo(R.string.link_anki);
+        Item linkedItem = mDelegate.getItemLinkingTo(R.string.link_anki);
 
-        RecyclerView v = getRecyclerViewFor(linkedItem);
-        clickChildAtIndex(v, 0);
+        RecyclerView v = mDelegate.getRecyclerViewFor(linkedItem);
+        mDelegate.clickChildAtIndex(v, 0);
 
-        assertThat(mActivity.getLastUrlOpened(), is(getResourceString(R.string.link_anki)));
+        assertThat(mDelegate.getActivity().getLastUrlOpened(), is(getResourceString(R.string.link_anki)));
     }
 
 
     @Test
     public void testSelectingHeader() {
         int numberOfChildItems = 2;
-        Item header = getHeaderWithSubItems(numberOfChildItems);
-        RecyclerView v = getRecyclerViewFor(header);
-        clickChildAtIndex(v, 0);
+        Item header = mDelegate.getHeaderWithSubItems(numberOfChildItems);
+        RecyclerView v = mDelegate.getRecyclerViewFor(header);
+        mDelegate.clickChildAtIndex(v, 0);
 
-        RecursivePictureMenu currentMenu = (RecursivePictureMenu) mActivity.getLastShownDialogFragment();
+        RecursivePictureMenu currentMenu = (RecursivePictureMenu) mDelegate.getActivity().getLastShownDialogFragment();
 
         RecyclerView rv =  RecursivePictureMenuUtil.getRecyclerViewFor(currentMenu);
 
@@ -77,7 +77,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
     @Test
     @Ignore("Not implemented")
     public void removeFromRoot() {
-        Item header = getHeaderWithSubItems(1);
+        Item header = mDelegate.getHeaderWithSubItems(1);
 
 
         ArrayList<Item> allItems = ArrayUtil.toArrayList(new Item[] { header });
@@ -88,7 +88,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
 
     @Test
     public void removeChild() {
-        ItemHeader header = getHeaderWithSubItems(1);
+        ItemHeader header = mDelegate.getHeaderWithSubItems(1);
 
         Item child = header.getChildren().get(0);
 
@@ -100,42 +100,10 @@ public class RecursivePictureMenuTest extends RobolectricTest {
 
     @Test
     public void removeNotExisting() {
-        ItemHeader header = getHeaderWithSubItems(1);
+        ItemHeader header = mDelegate.getHeaderWithSubItems(1);
 
         ArrayList<Item> allItems = ArrayUtil.toArrayList(new Item[] { header });
-        assertDoesNotThrow(() -> RecursivePictureMenu.removeFrom(allItems, getItemLinkingTo(R.string.link_anki_manual)));
+        assertDoesNotThrow(() -> RecursivePictureMenu.removeFrom(allItems, mDelegate.getItemLinkingTo(R.string.link_anki_manual)));
     }
 
-    private RecyclerView getRecyclerViewFor(Item... items) {
-        ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));
-        RecursivePictureMenu menu = RecursivePictureMenu.createInstance(itemList, R.string.help);
-
-        mActivity = openDialogFragmentUsingActivity(menu);
-
-
-        return RecursivePictureMenuUtil.getRecyclerViewFor(menu);
-    }
-
-
-
-    protected void clickChildAtIndex(RecyclerView v, @SuppressWarnings("SameParameterValue") int index) {
-        advanceRobolectricLooperWithSleep();
-        View childAt = v.getChildAt(index); // This is null without appropriate looper calls
-        childAt.performClick();
-    }
-
-    private Item getItemLinkingTo(int linkLocation) {
-        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, linkLocation);
-    }
-
-
-    private ItemHeader getHeaderWithSubItems(int count) {
-
-        Item[] items = new Item[count];
-        for(int i = 0; i < count; i++) {
-            items[i] = getItemLinkingTo(R.string.link_anki);
-        }
-
-        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, items);
-    }
 }

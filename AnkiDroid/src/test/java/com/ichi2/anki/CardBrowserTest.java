@@ -61,92 +61,93 @@ import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
 public class CardBrowserTest extends RobolectricTest {
+    private final CardBrowserTestDelegate mDelegate = new CardBrowserTestDelegate(this);
 
     @Test
     public void browserIsNotInitiallyInMultiSelectModeWithNoCards() {
-        CardBrowser browser = getBrowserWithNoNewCards();
+        CardBrowser browser = mDelegate.getBrowserWithNoNewCards();
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
     @Test
     public void browserIsNotInitiallyInMultiSelectModeWithCards() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
     @Test
     public void selectAllIsNotVisibleWhenNoCardsInDeck() {
-        CardBrowser browser = getBrowserWithNoNewCards();
+        CardBrowser browser = mDelegate.getBrowserWithNoNewCards();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
     @Test
     public void selectAllIsVisibleWhenCardsInDeck() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
         assertThat(browser.cardCount(), greaterThan(0L));
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
     @Test
     public void selectAllIsNotVisibleOnceCalled() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectMenuItem(browser, R.id.action_select_all);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectMenuItem(browser, R.id.action_select_all);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
     @Test
     public void selectNoneIsVisibleOnceSelectAllCalled() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectMenuItem(browser, R.id.action_select_all);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectMenuItem(browser, R.id.action_select_all);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
     @Test
     public void selectNoneIsVisibleWhenSelectingOne() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
         advanceRobolectricLooperWithSleep();
-        selectOneOfManyCards(browser);
+        mDelegate.selectOneOfManyCards(browser);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
     @Test
     public void selectAllIsVisibleWhenSelectingOne() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectOneOfManyCards(browser);
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
     @Test
     public void browserIsInMultiSelectModeWhenSelectingOne() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectOneOfManyCards(browser);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectOneOfManyCards(browser);
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
 
     @Test
     public void browserIsInMultiSelectModeWhenSelectingAll() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectMenuItem(browser, R.id.action_select_all);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectMenuItem(browser, R.id.action_select_all);
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
 
     @Test
     public void browserIsNotInMultiSelectModeWhenSelectingNone() {
-        CardBrowser browser = getBrowserWithMultipleNotes();
-        selectMenuItem(browser, R.id.action_select_all);
-        selectMenuItem(browser, R.id.action_select_none);
+        CardBrowser browser = mDelegate.getBrowserWithMultipleNotes();
+        mDelegate.selectMenuItem(browser, R.id.action_select_all);
+        mDelegate.selectMenuItem(browser, R.id.action_select_none);
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
     @Test
     public void browserDoesNotFailWhenSelectingANonExistingCard() {
         //#5900
-        CardBrowser browser = getBrowserWithNotes(6);
+        CardBrowser browser = mDelegate.getBrowserWithNotes(6);
         //Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
-        deleteCardAtPosition(browser, 0);
+        mDelegate.deleteCardAtPosition(browser, 0);
         AnkiAssert.assertDoesNotThrow(browser::rerenderAllCards);
         advanceRobolectricLooperWithSleep();
         assertThat(browser.cardCount(), equalTo(5L));
@@ -156,10 +157,10 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
     public void selectionsAreCorrectWhenNonExistingCardIsRemoved() {
-        CardBrowser browser = getBrowserWithNotes(7);
+        CardBrowser browser = mDelegate.getBrowserWithNotes(7);
         browser.checkCardsAtPositions(1, 3, 5, 6);
-        deleteCardAtPosition(browser, 2); //delete non-selected
-        deleteCardAtPosition(browser, 3); //delete selected, ensure it's not still selected
+        mDelegate.deleteCardAtPosition(browser, 2); //delete non-selected
+        mDelegate.deleteCardAtPosition(browser, 3); //delete selected, ensure it's not still selected
 
         //ACT
         browser.rerenderAllCards();
@@ -174,7 +175,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void canChangeDeckToRegularDeck() {
         addDeck("Hello");
-        CardBrowser b = getBrowserWithNotes(5);
+        CardBrowser b = mDelegate.getBrowserWithNotes(5);
 
         List<Deck> decks = b.getValidDecksForChangeDeck();
 
@@ -190,7 +191,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void cannotChangeDeckToDynamicDeck() {
         //5932 - dynamic decks are meant to have cards added to them through "Rebuild".
         addDynamicDeck("World");
-        CardBrowser b = getBrowserWithNotes(5);
+        CardBrowser b = mDelegate.getBrowserWithNotes(5);
 
         List<Deck> decks = b.getValidDecksForChangeDeck();
 
@@ -211,7 +212,7 @@ public class CardBrowserTest extends RobolectricTest {
         validNames.add("Default");
         validNames.add("Hello");
 
-        CardBrowser b = getBrowserWithNotes(5);
+        CardBrowser b = mDelegate.getBrowserWithNotes(5);
 
         List<Deck> decks = b.getValidDecksForChangeDeck();
         for (Deck d : decks) {
@@ -226,8 +227,8 @@ public class CardBrowserTest extends RobolectricTest {
         addDynamicDeck("Bar");
         long deckIdToChangeTo = addDeck("Hello");
         addDeck("ZZ");
-        selectDefaultDeck();
-        CardBrowser b = getBrowserWithNotes(5);
+        mDelegate.selectDefaultDeck();
+        CardBrowser b = mDelegate.getBrowserWithNotes(5);
         b.checkCardsAtPositions(0, 2);
 
         advanceRobolectricLooperWithSleep();
@@ -253,8 +254,8 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void changeDeckViaTaskIsHandledCorrectly() {
         long dynId = addDynamicDeck("World");
-        selectDefaultDeck();
-        CardBrowser b = getBrowserWithNotes(5);
+        mDelegate.selectDefaultDeck();
+        CardBrowser b = mDelegate.getBrowserWithNotes(5);
         b.checkCardsAtPositions(0, 2);
 
         List<Long> cardIds = b.getCheckedCardIds();
@@ -270,7 +271,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void flagsAreShownInBigDecksTest() {
         int numberOfNotes = 75;
-        CardBrowser cardBrowser = getBrowserWithNotes(numberOfNotes);
+        CardBrowser cardBrowser = mDelegate.getBrowserWithNotes(numberOfNotes);
 
         // select a random card
         Random random = new Random(1);
@@ -313,11 +314,11 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void flagValueIsShownOnCard() {
         Note n = addNoteUsingBasicModel("1", "back");
-        flagCardForNote(n, 1);
+        mDelegate.flagCardForNote(n, 1);
 
         long cardId = n.cids().get(0);
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         int actualFlag = getCardFlagAfterFlagChangeDone(b, cardId);
 
@@ -360,7 +361,7 @@ public class CardBrowserTest extends RobolectricTest {
         n.addTag("sketchy::(1)");
         n.flush();
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
         b.filterByTag("sketchy::(1)");
         advanceRobolectricLooperWithSleep();
 
@@ -370,15 +371,15 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void filterByFlagDisplaysProperly() {
         Note cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse");
-        flagCardForNote(cardWithRedFlag, 1);
+        mDelegate.flagCardForNote(cardWithRedFlag, 1);
 
         Note cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse");
-        flagCardForNote(cardWithGreenFlag, 3);
+        mDelegate.flagCardForNote(cardWithGreenFlag, 3);
 
         Note anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse");
-        flagCardForNote(anotherCardWithRedFlag, 1);
+        mDelegate.flagCardForNote(anotherCardWithRedFlag, 1);
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
         b.filterByFlag(1);
         advanceRobolectricLooperWithSleep();
 
@@ -391,7 +392,7 @@ public class CardBrowserTest extends RobolectricTest {
         long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();
         long cid2 = addNoteUsingBasicModel("Hello2", "World2").cards().get(0).getId();
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(0));
         assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(1));
@@ -418,7 +419,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() {
         addDeck("NotDefault");
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         assertThat("All decks should not be selected", b.hasSelectedAllDecks(), is(false));
 
@@ -436,7 +437,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void addCardDeckISetIfDeckIsSelected() {
         long targetDid = addDeck("NotDefault");
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
 
@@ -456,7 +457,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         getCol().getDecks().select(initialDid);
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         assertThat("The initial deck should be selected", b.getLastDeckId(), is(initialDid));
 
@@ -468,7 +469,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void repositionDataTest() {
-        CardBrowser b = getBrowserWithNotes(1);
+        CardBrowser b = mDelegate.getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);
 
@@ -492,7 +493,7 @@ public class CardBrowserTest extends RobolectricTest {
         c.setType(Consts.CARD_TYPE_REV);
         c.flush();
 
-        CardBrowser b = getBrowserWithNoNewCards();
+        CardBrowser b = mDelegate.getBrowserWithNoNewCards();
 
         b.checkCardsAtPositions(0);
 
@@ -510,7 +511,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     @Config(qualifiers = "en")
     public void rescheduleDataTest() {
-        CardBrowser b = getBrowserWithNotes(1);
+        CardBrowser b = mDelegate.getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);
 
@@ -528,7 +529,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     @Ignore("Doesn't work - but should")
     public void dataUpdatesAfterUndoReposition() {
-        CardBrowser b = getBrowserWithNotes(1);
+        CardBrowser b = mDelegate.getBrowserWithNotes(1);
 
         b.checkCardsAtPositions(0);
 
@@ -553,7 +554,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     @Ignore("FLAKY: Robolectric getOptionsMenu does not require supportInvalidateOptionsMenu - so would not fail")
     public void rescheduleUndoTest() {
-        CardBrowser b = getBrowserWithNotes(1);
+        CardBrowser b = mDelegate.getBrowserWithNotes(1);
 
         assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule);
 
@@ -576,7 +577,7 @@ public class CardBrowserTest extends RobolectricTest {
         c2.setDid(deck);
         c2.flush();
 
-        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        CardBrowser cardBrowser = mDelegate.getBrowserWithNoNewCards();
         cardBrowser.searchCards("world or hello");
         advanceRobolectricLooperWithSleep();
 
@@ -620,9 +621,9 @@ public class CardBrowserTest extends RobolectricTest {
     @Test
     public void checkIfLongSelectChecksAllCardsInBetween() {
         // #8467 - selecting cards outside the view pane (20) caused a crash as we were using view-based positions
-        CardBrowser browser = getBrowserWithNotes(25);
-        selectOneOfManyCards(browser, 7); // HACK: Fix a bug in tests by choosing a value < 8
-        selectOneOfManyCards(browser, 24);
+        CardBrowser browser = mDelegate.getBrowserWithNotes(25);
+        mDelegate.selectOneOfManyCards(browser, 7); // HACK: Fix a bug in tests by choosing a value < 8
+        mDelegate.selectOneOfManyCards(browser, 24);
         assertThat(browser.checkedCardCount(), is(18));
     }
 
@@ -635,7 +636,7 @@ public class CardBrowserTest extends RobolectricTest {
         c2.setDid(deck);
         c2.flush();
 
-        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+        CardBrowser cardBrowser = mDelegate.getBrowserWithNoNewCards();
         cardBrowser.searchCards("Hello");
         advanceRobolectricLooperWithSleep();
         assertThat("Card browser should have Test Deck as the selected deck", cardBrowser.getSelectedDeckNameForUi(), is("Test Deck"));
@@ -645,6 +646,7 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
         assertThat("Result should contain one card", cardBrowser.getCardCount(), is(1));
     }
+
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
@@ -667,112 +669,10 @@ public class CardBrowserTest extends RobolectricTest {
         return b.getPropertiesForCardId(ids.get(0));
     }
 
-
-    private void flagCardForNote(Note n, int flag) {
-        Card c = n.firstCard();
-        c.setUserFlag(flag);
-        c.flush();
-    }
-
-
-    private void selectDefaultDeck() {
-        getCol().getDecks().select(1);
-    }
-
-    private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
-        removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
-        browser.clearCardData(positionToCorrupt);
-    }
-
-    private void selectOneOfManyCards(CardBrowser cardBrowser) {
-        selectOneOfManyCards(cardBrowser, 0);
-    }
-
-    private void selectOneOfManyCards(CardBrowser browser, int position) {
-        Timber.d("Selecting single card");
-        ShadowActivity shadowActivity = shadowOf(browser);
-        ListView toSelect = shadowActivity.getContentView().findViewById(R.id.card_browser_list);
-
-        // Robolectric doesn't easily seem to allow us to fire an onItemLongClick
-        AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
-        if (listener == null) {
-            throw new IllegalStateException("no listener found");
-        }
-
-        View childAt = toSelect.getChildAt(position);
-        if (childAt == null) {
-            Timber.w("Can't use childAt on position " + position + " for a single click as it is not visible");
-        }
-        listener.onItemLongClick(null, childAt,
-                position, toSelect.getItemIdAtPosition(position));
-    }
-
-
-    private void selectMenuItem(CardBrowser browser, int action_select_all) {
-        Timber.d("Selecting menu item");
-        //select seems to run an infinite loop :/
-        ShadowActivity shadowActivity = shadowOf(browser);
-        shadowActivity.clickMenuItem(action_select_all);
-    }
-
-    //There has to be a better way :(
-    private long[] toLongArray(List<Long> list){
-        long[] ret = new long[list.size()];
-        for(int i = 0; i < ret.length; i++) {
-            ret[i] = list.get(i);
-        }
-        return ret;
-    }
-
-
-    private CardBrowser getBrowserWithMultipleNotes() {
-        return getBrowserWithNotes(3);
-    }
-
-    private static class CardBrowserSizeOne extends CardBrowser {
-        @Override
-        protected int numCardsToRender() {
-            return 1;
-        }
-    }
-
-    private CardBrowser getBrowserWithNotes(int count) {
-        return getBrowserWithNotes(count, CardBrowser.class);
-    }
-
-    private CardBrowser getBrowserWithNotes(int count, Class<? extends CardBrowser> cardBrowserClass) {
-        ensureCollectionLoadIsSynchronous();
-        for(int i = 0; i < count; i ++) {
-            addNoteUsingBasicModel(Integer.toString(i), "back");
-        }
-        ActivityController<? extends CardBrowser> multimediaController = Robolectric.buildActivity(cardBrowserClass, new Intent())
-                .create().start();
-        multimediaController.resume().visible();
-        saveControllerForCleanup(multimediaController);
-        advanceRobolectricLooperWithSleep();
-        return multimediaController.get();
-    }
-
-    private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(Collections.singletonList(cardId));
-    }
-
-    @CheckReturnValue
-    private CardBrowser getBrowserWithNoNewCards() {
-        ensureCollectionLoadIsSynchronous();
-        ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
-                .create().start();
-        multimediaController.resume().visible();
-        saveControllerForCleanup(multimediaController);
-        advanceRobolectricLooperWithSleep();
-        return multimediaController.get();
-    }
-
-
     // Regression test for #8821
     @Test
     public void emptyScroll() {
-        CardBrowser cardBrowser = getBrowserWithNotes(2);
+        CardBrowser cardBrowser = mDelegate.getBrowserWithNotes(2);
 
         CardBrowser.RenderOnScroll renderOnScroll = cardBrowser.new RenderOnScroll();
         renderOnScroll.onScroll(cardBrowser.mCardsListView, 0, 0, 2);
@@ -783,7 +683,7 @@ public class CardBrowserTest extends RobolectricTest {
         int cardsToRender = 1;
 
 
-        CardBrowser cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne.class);
+        CardBrowser cardBrowser = mDelegate.getBrowserWithNotes(2, CardBrowserTestDelegate.CardBrowserSizeOne.class);
 
         CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
 

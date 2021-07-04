@@ -510,7 +510,7 @@ public class RobolectricTest implements CollectionGetter {
 
     @NonNull
     @CheckResult
-    protected FragmentTestActivity openDialogFragmentUsingActivity(DialogFragment menu) {
+    public FragmentTestActivity openDialogFragmentUsingActivity(DialogFragment menu) {
         Intent startActivityIntent = new Intent(getTargetContext(), FragmentTestActivity.class);
 
         FragmentTestActivity activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity.class, startActivityIntent);
