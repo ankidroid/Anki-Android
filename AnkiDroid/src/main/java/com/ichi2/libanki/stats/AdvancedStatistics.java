@@ -274,7 +274,7 @@ public class AdvancedStatistics {
 
         metaInfo.setmSeriesList(mSeriesList);
 
-        metaInfo.setDataAvailable(dues.size() > 0);
+        metaInfo.setDataAvailable(!dues.isEmpty());
 
         return metaInfo;
     }
@@ -336,7 +336,7 @@ public class AdvancedStatistics {
         }
 
         // small adjustment for a proper chartbuilding
-        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+        if (dues.isEmpty() || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0, 0, 0 });
         }
         if (type == Stats.AxisType.TYPE_LIFE && dues.size() < 2) {

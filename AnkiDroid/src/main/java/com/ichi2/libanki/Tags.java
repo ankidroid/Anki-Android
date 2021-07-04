@@ -281,7 +281,7 @@ public class Tags {
 
     /** Join tags into a single string, with leading and trailing spaces. */
     public String join(java.util.Collection<String> tags) {
-        if (tags == null || tags.size() == 0) {
+        if (tags == null || tags.isEmpty()) {
             return "";
         } else {
             String joined = TextUtils.join(" ", tags);

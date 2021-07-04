@@ -334,7 +334,7 @@ public class Anki2Importer extends Importer {
 
             if (dupes > 0) {
                 mLog.add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
-                if (dupesIgnored.size() > 0) {
+                if (!dupesIgnored.isEmpty()) {
                     mLog.add(getRes().getString(R.string.import_update_ignored));
                 }
             }

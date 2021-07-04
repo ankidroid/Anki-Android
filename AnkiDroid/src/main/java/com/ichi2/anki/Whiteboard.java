@@ -520,7 +520,7 @@ public class Whiteboard extends View {
         }
 
         public boolean empty() {
-            return mList.size() == 0;
+            return mList.isEmpty();
         }
     }
 

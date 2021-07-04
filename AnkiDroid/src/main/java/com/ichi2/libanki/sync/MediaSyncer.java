@@ -189,7 +189,7 @@ public class MediaSyncer {
                 File zip = changesZip.first;
                 try {
                     List<String> fnames = changesZip.second;
-                    if (fnames.size() == 0) {
+                    if (fnames.isEmpty()) {
                         break;
                     }
 
@@ -239,7 +239,7 @@ public class MediaSyncer {
 
     private void _downloadFiles(List<String> fnames) {
         mCol.log(fnames.size() + " files to fetch");
-        while (fnames.size() > 0) {
+        while (!fnames.isEmpty()) {
             try {
                 List<String> top = fnames.subList(0, Math.min(fnames.size(), Consts.SYNC_ZIP_COUNT));
                 mCol.log("fetch " + top);

@@ -283,7 +283,7 @@ public class CsvSniffer {
             double consistency = 1.0;
             // minimum consistency threshold
             double threshold = 0.9;
-            while (delims.size() == 0 && consistency >= threshold) {
+            while (delims.isEmpty() && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
                     Tuple value = entry.getValue();
                     if (value.first > 0 && value.second > 0) {
