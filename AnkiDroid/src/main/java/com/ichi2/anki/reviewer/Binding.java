@@ -16,18 +16,32 @@
 
 package com.ichi2.anki.reviewer;
 
+import android.content.Context;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.cardviewer.Gesture;
+import com.ichi2.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
+
+import static java.util.Objects.requireNonNull;
 
 public class Binding {
+
+    /** https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard) */
+    public static final char KEY_PREFIX = '\u2328';
+
+    /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger) */
+    public static final char GESTURE_PREFIX = '\u235D';
+
+    /** https://www.fileformat.info/info/unicode/char/2705/index.htm - checkmark (often used in URLs for unicode)
+     * Only used for serialisation. {@link #KEY_PREFIX} is used for display.
+     */
+    public static final char UNICODE_PREFIX = '\u2705';
 
     @Nullable
     private final ModifierKeys mModifierKeys;
@@ -111,6 +125,50 @@ public class Binding {
         return new Binding(null, null, null, gesture);
     }
 
+    public String toDisplayString(Context context) {
+        StringBuilder string = new StringBuilder();
+
+        if (mKeyCode != null) {
+            string.append(KEY_PREFIX);
+            string.append(' ');
+            string.append(requireNonNull(mModifierKeys).toString());
+            String keyCodeString = KeyEvent.keyCodeToString(mKeyCode);
+            string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace('_', ' ')));
+        } else if (mUnicodeCharacter != null) {
+            string.append(KEY_PREFIX);
+            string.append(' ');
+            string.append(requireNonNull(mModifierKeys).toString());
+            string.append(mUnicodeCharacter);
+        } else if (mGesture != null) {
+            string.append(GESTURE_PREFIX);
+            string.append(' ');
+            string.append(context.getString(mGesture.getResourceId()));
+        }
+
+        return string.toString();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+
+        if (mKeyCode != null) {
+            string.append(KEY_PREFIX);
+            string.append(requireNonNull(mModifierKeys).toString());
+            string.append(mKeyCode);
+        } else if (mUnicodeCharacter != null) {
+            string.append(UNICODE_PREFIX);
+            string.append(requireNonNull(mModifierKeys).toString());
+            string.append(mUnicodeCharacter);
+        } else if (mGesture != null) {
+            string.append(GESTURE_PREFIX);
+            string.append(mGesture);
+        }
+
+        return string.toString();
+    }
+
     public boolean isKey() {
         return mKeyCode != null || mUnicodeCharacter != null;
     }
@@ -130,7 +188,7 @@ public class Binding {
         private final boolean mAlt;
 
 
-        private ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
+        ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
             this.mShift = shift;
             this.mCtrl = ctrl;
             this.mAlt = alt;
@@ -149,6 +207,9 @@ public class Binding {
             return new ModifierKeys(true, false, false);
         }
 
+        public static ModifierKeys alt() {
+            return new ModifierKeys(false, false, true);
+        }
 
         public boolean matches(KeyEvent event) {
             // return false if Ctrl+1 is pressed and 1 is expected
@@ -177,6 +238,24 @@ public class Binding {
 
         protected boolean altMatches(boolean altPressed) {
             return mAlt == altPressed;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            StringBuilder string = new StringBuilder();
+
+            if (mCtrl) {
+                string.append("Ctrl+");
+            }
+            if (mAlt) {
+                string.append("Alt+");
+            }
+            if (mShift) {
+                string.append("Shift+");
+            }
+
+            return string.toString();
         }
     }
 
