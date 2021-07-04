@@ -102,7 +102,7 @@
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
     <string name="menu_bury_card">पत्ता स्थगित करें</string>
     <string name="menu_bury_note">नोट स्थगित करें</string>
-    <string name="menu_suspend_card">कार्ड को निलंबित</string>
+    <string name="menu_suspend_card">पत्ता निलंबित करें</string>
     <string name="menu_suspend_note">नोट निलंबित करें</string>
     <string name="menu_bury">स्थगित करें</string>
     <string name="menu_suspend">निलंबित</string>
@@ -191,7 +191,7 @@
         <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटाएं?</item>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
-    <string name="invalid_template">कोई कार्ड जनरेट नहीं किया जा सका</string>
+    <string name="invalid_template">एक पत्ता उत्पन्न नहीं किया जा सका</string>
     <string name="card_template_editor_would_delete_note">इस कार्ड के प्रकार को हटाने से एक या अधिक नोट हटा दिए जाएंगे। कृपया पहले एक नया कार्ड बनाएं और सहेजें।</string>
     <string name="card_template_editor_save_error">कार्ड टेम्प्लेट परिवर्तन सहेजने में असमर्थ: %s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>

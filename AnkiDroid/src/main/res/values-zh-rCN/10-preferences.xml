@@ -289,7 +289,7 @@
     <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
     <string name="deck_conf_cram_steps" maxLength="41">自定义步伐(以分钟计)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">自定义步伐</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>
