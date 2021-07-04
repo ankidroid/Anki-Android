@@ -16,8 +16,10 @@
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
+import com.ichi2.anki.cardviewer.Gesture
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.kotlin.doReturn
@@ -47,6 +49,20 @@ class BindingTest {
         assertThat(binding.keycode, `is`(KeyEvent.KEYCODE_A))
     }
 
+    @Test
+    fun testUnicodeToString() {
+        assertEquals(unicodePrefix + "Ä", Binding.unicode('Ä').toString())
+        assertEquals(unicodePrefix + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
+        assertEquals(unicodePrefix + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
+        assertEquals(unicodePrefix + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
+        assertEquals(unicodePrefix + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
+    }
+
+    @Test
+    fun testGestureToString() {
+        assertEquals(gesturePrefix + "TAP_TOP", Binding.gesture(Gesture.TAP_TOP).toString())
+    }
+
     private fun testModifierKeys(name: String, event: KFunction1<KeyEvent, Boolean>, getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>) {
         fun testModifierResult(event: KFunction1<KeyEvent, Boolean>, returnedFromMock: Boolean) {
             val mock = mock<KeyEvent> {
@@ -66,6 +82,12 @@ class BindingTest {
     }
 
     companion object {
+        const val gesturePrefix = '\u235D'
+        const val keyPrefix = '\u2328'
+        const val unicodePrefix = '\u2705'
+
+        fun allModifierKeys() = Binding.ModifierKeys(true, true, true)
+
         fun unicodeCharacter(c: Char): Binding {
             val mock = mock<KeyEvent> {
                 on { getUnicodeChar(anyInt()) } doReturn c.code
