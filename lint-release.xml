@@ -26,7 +26,7 @@
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
-    <issue id="UnusedResources" severity="fatal">
+    <issue id="UnusedResources" severity="ignore">
         <!-- Ignore as they'll be used for #7526 -->
         <ignore regexp="content_picture\.png|device_access_mic\.png" />
         <ignore path="res/values/12-dont-translate.xml" />
@@ -47,6 +47,8 @@
     <issue id="RtlHardcoded" severity="fatal" />
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
+
+    <issue id="MissingDefaultResource" severity="ignore" />
 
     <!-- This come from Timber and we need to also ignore them  -->
     <issue id="BinaryOperationInTimber" severity="ignore" />
