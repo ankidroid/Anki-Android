@@ -32,16 +32,17 @@ import androidx.test.rule.GrantPermissionRule;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.ichi2.anki.TestUtils.clickChildViewWithId;
 import static com.ichi2.anki.TestUtils.getActivityInstance;
 import static com.ichi2.anki.TestUtils.isScreenSw600dp;
-import static com.ichi2.anki.TestUtils.withIndex;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
@@ -101,14 +102,20 @@ public class DeckPickerTest {
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
         onView(withId(R.id.files)).perform(RecyclerViewActions.actionOnItem(hasDescendant(withText("TestDeck" + testString)), clickChildViewWithId(R.id.counts_layout)));
 
-        // Create a card belonging to the new deck
+        // Create a card belonging to the new deck, using Basic type (guaranteed to exist)
         onView(withId(R.id.fab_main)).perform(click());
         onView(withId(R.id.add_note_action)).perform(click());
-        onView(withIndex(withId(R.id.id_note_editText), 0)).perform(typeText("SampleText" + testString));
+
+        // Close the keyboard, it auto-focuses and obscures enough of the screen
+        // on some devices that espresso complains about global visibility being <90%
+        closeSoftKeyboard();
+
+        onView(withId(R.id.note_type_spinner)).perform(click());
+        onView(withText("Basic")).perform(click());
+        onView(withContentDescription("Front")).perform(typeText("SampleText" + testString));
         onView(withId(R.id.action_save)).perform(click());
 
-        // Close the keyboard
-        pressBack();
+        closeSoftKeyboard();
 
         // Go back to Deck Picker
         pressBack();
