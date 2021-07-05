@@ -178,6 +178,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting();
         ReviewerExt reviewer = startReviewerFullScreen();
@@ -221,6 +222,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void drawerConflictsIfUp() {
         enableGestureSetting();
         disableConflictGestures();
@@ -232,6 +234,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
 
     @Test
+    @RunInBackground
     public void drawerConflictsIfDown() {
         enableGestureSetting();
         disableConflictGestures();
@@ -242,6 +245,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void drawerConflictsIfRight() {
         enableGestureSetting();
         disableConflictGestures();
