@@ -257,6 +257,7 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void databaseLockedNoPermissionIntegrationTest() {
         // no permissions -> grant permissions -> db locked
         try {
@@ -298,6 +299,7 @@ public class DeckPickerTest extends RobolectricTest {
 
 
     @Test
+    @RunInBackground
     public void doNotShowOptionsMenuWhenCollectionInaccessible() {
         try {
             enableNullCollection();
@@ -320,6 +322,7 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void doNotShowSyncBadgeWhenCollectionInaccessible() {
         try {
             enableNullCollection();
@@ -342,6 +345,7 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void onResumeLoadCollectionFailureWithInaccessibleCollection() {
         try {
             InitialActivityTest.revokeWritePermissions();
