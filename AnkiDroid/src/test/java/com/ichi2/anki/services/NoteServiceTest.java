@@ -38,7 +38,7 @@ public class NoteServiceTest extends RobolectricTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    //tests if the names of the notes are the same after calling updateJsonNoteFromMultimediaNote
+    //tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     public void updateJsonNoteTest() {
         Model testModel = testCol.getModels().byName("Basic");
