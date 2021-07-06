@@ -179,6 +179,8 @@
     <string name="card_template_editor_styling">样式</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
     <string name="card_template_editor_deck_override">牌组覆盖</string>
+    <string name="card_template_editor_insert_field">插入字段</string>
+    <string name="card_template_editor_select_field">选择字段</string>
     <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>

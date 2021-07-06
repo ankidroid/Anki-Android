@@ -73,6 +73,14 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
     /**
      * Tests that each activity can handle {@link AnkiDroidApp#getInstance()} returning null
      * This happens during a backup, for details, see {@link AnkiActivity#showedActivityFailedScreen(Bundle)}
+     *
+     * Note: If you ran this test and it failed, please check to make sure that any new onCreate methods
+     * have the following code snippet at the start:
+     * <code>
+     * if (showedActivityFailedScreen(savedInstanceState)) {
+     *     return;
+     * }
+     * </code>
      */
     @Test
     public void activityHandlesRestoreBackup() {

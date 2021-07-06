@@ -20,9 +20,11 @@ import android.view.KeyEvent;
 
 import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer. */
@@ -74,43 +76,27 @@ public class PeripheralKeymap {
     }
 
     private static class KeyMap {
-        public final HashMap<Integer, List<PeripheralCommand>> mKeyCodeToCommand = new HashMap<>();
-        public final HashMap<Integer, List<PeripheralCommand>> mUnicodeToCommand = new HashMap<>();
+        public final HashMap<MappableBinding, PeripheralCommand> mBindingMap = new HashMap<>();
         private final CommandProcessor mProcessor;
 
         private KeyMap(CommandProcessor commandProcessor) {
             this.mProcessor = commandProcessor;
         }
 
+        @SuppressWarnings( {"unused", "RedundantSuppression"})
         public boolean onKeyUp(int keyCode, KeyEvent event) {
             boolean ret = false;
 
-            {
-                List<PeripheralCommand> a = mKeyCodeToCommand.get(keyCode);
-                if (a != null) {
-                    for (PeripheralCommand command : a) {
-                        if (!command.matchesModifier(event)) {
-                            continue;
-                        }
+            List<Binding> bindings = Binding.key(event);
 
-                        ret |= mProcessor.executeCommand(command.getCommand());
-                    }
+            for (Binding b: bindings) {
+                MappableBinding binding = new MappableBinding(b);
+                PeripheralCommand command = mBindingMap.get(binding);
+                if (command == null) {
+                    continue;
                 }
-            }
-            {
-                // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
-                // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-                int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
-                List<PeripheralCommand> unicodeLookup = mUnicodeToCommand.get(unicodeChar);
-                if (unicodeLookup != null) {
-                    for (PeripheralCommand command : unicodeLookup) {
-                        if (!command.matchesModifier(event)) {
-                            continue;
-                        }
 
-                        ret |= mProcessor.executeCommand(command.getCommand());
-                    }
-                }
+                ret |= mProcessor.executeCommand(command.getCommand());
             }
 
             return ret;
@@ -118,25 +104,76 @@ public class PeripheralKeymap {
 
 
         public void addCommand(PeripheralCommand command) {
-            //COULD_BE_BETTER: DefaultDict
-            if (command.getUnicodeCharacter() != null) {
-                //NB: Int is correct here, the value from KeyCode is an int.
-                int unicodeChar = command.getUnicodeCharacter();
-                if (!mUnicodeToCommand.containsKey(unicodeChar)) {
-                    mUnicodeToCommand.put(unicodeChar, new ArrayList<>(0));
-                }
-                //noinspection ConstantConditions
-                mUnicodeToCommand.get(unicodeChar).add(command);
+            MappableBinding key = new MappableBinding(command.getBinding());
+            mBindingMap.put(key, command);
+        }
+    }
+
+    /**
+     * Custom class to use for a custom equals/hashcode implementation in a HashMap/set
+     * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
+     * */
+    public static class MappableBinding {
+        @NonNull
+        private final Binding mBinding;
+
+        public MappableBinding(@NonNull Binding binding) {
+            mBinding = binding;
+        }
+
+        @NonNull
+        public static MappableBinding fromBinding(Binding b) {
+            return new MappableBinding(b);
+        }
+
+        @NonNull
+        public Binding getBinding() {
+            return mBinding;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            MappableBinding mappableBinding = (MappableBinding) o;
+            Binding binding = mappableBinding.mBinding;
+
+            return Objects.equals(mBinding.getKeycode(), binding.getKeycode()) &&
+                    Objects.equals(mBinding.getUnicodeCharacter(), binding.getUnicodeCharacter()) &&
+                    Objects.equals(mBinding.getGesture(), binding.getGesture()) &&
+                    modifierEquals(binding.getModifierKeys());
+        }
+
+
+        @Override
+        public int hashCode() {
+            // don't include the modifierKeys
+            return Objects.hash(mBinding.getKeycode(), mBinding.getUnicodeCharacter(), mBinding.getGesture());
+        }
+
+
+        protected boolean modifierEquals(Binding.ModifierKeys keys) {
+            // equals allowing subclasses
+            Binding.ModifierKeys thisKeys = mBinding.getModifierKeys();
+
+            if (thisKeys == keys) {
+                return true;
+            }
+            // one is null
+            if (keys == null || thisKeys == null) {
+                return false;
             }
 
-            if (command.getKeycode() != null) {
-                Integer c = command.getKeycode();
-                if (!mKeyCodeToCommand.containsKey(c)) {
-                    mKeyCodeToCommand.put(c, new ArrayList<>(0));
-                }
-                //noinspection ConstantConditions
-                mKeyCodeToCommand.get(c).add(command);
-            }
+            // Perf: Could get a slight improvement if we check that both instances are not subclasses
+
+            // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
+            return (thisKeys.shiftMatches(true) == keys.shiftMatches(true) || thisKeys.shiftMatches(false) == keys.shiftMatches(false)) &&
+                    (thisKeys.ctrlMatches(true) == keys.ctrlMatches(true) || thisKeys.ctrlMatches(false) == keys.ctrlMatches(false)) &&
+                    (thisKeys.altMatches(true) == keys.altMatches(true) || thisKeys.altMatches(false) == keys.altMatches(false));
         }
     }
 }

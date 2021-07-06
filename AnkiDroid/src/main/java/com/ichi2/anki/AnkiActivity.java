@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -57,6 +58,7 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
 
@@ -398,7 +400,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    public void openUrl(Uri url) {
+    public void openUrl(@NonNull Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
@@ -547,7 +549,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         // Show a notification unless all notifications have been totally disabled
-        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+        if (Integer.parseInt(prefs.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             String ticker = title;
             if (title.equals(getResources().getString(R.string.app_name))) {

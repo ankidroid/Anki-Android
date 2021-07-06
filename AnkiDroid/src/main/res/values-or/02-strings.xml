@@ -314,7 +314,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
     <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
-    <string name="cannot_load_http_resource">http ଉତ୍ସଗୁଡ଼ିକୁ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
+    <string name="cannot_load_http_resource">http ସମ୍ପଦ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
@@ -336,7 +336,7 @@
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="toolbar_item_explain_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବାକୁ HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଟୁଲବାର୍ ଆଇଟମ୍ କୁ ହଟାଇବା ପାଇଁ ତାହା ଉପରେ ଲମ୍ବା ଦବାନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ହଟାଇବେ?</string>
-    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ଛବି ବହୁତ ବଡ, ଦୟାକରି ଛବିକୁ ମାନୁଆଲରେ ଭର୍ତ୍ତି କରନ୍ତୁ </string>
+    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ, ଦୟାକରି ମାନୁଆଲ୍ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡିପାରେ </string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କର ହୋମ ସ୍କ୍ରିନ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ </string>

@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">نمایش لیست کامل از همۀ نرم‌افزارهایی که از ای پی آی آنکی‌دروید استفاده می‌کنند. (برای مثال نرم‌افزارهای فرهنگ لغت و ...)</string>
     <string name="html_javascript_debugging" maxLength="41">دیباگ کردن HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">فعال‌سازی اتصالات از بیرونی و ذخیرۀ اچ تی ام ال کارت‌ها در مسیر آنکی‌دروید</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">آمار پیشرفته</string>
     <string name="enable_advanced_statistics_title" maxLength="41">فعال کردن آمار پیشرفته</string>
@@ -288,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">کارتهای انتخاب شده بوسیله</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">فعال‌سازی اعلان‌های یادآوری برای دسته‌هایی که از این گروه اختیارات استفاده می‌کنند</string>

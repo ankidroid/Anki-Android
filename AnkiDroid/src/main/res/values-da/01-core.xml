@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">Design</string>
     <string name="card_template_editor_menu_card_browser_appearance">Udseende af kortoversigt</string>
     <string name="card_template_editor_deck_override">Overskriv dæk </string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Mindst én korttype er påkrævet </string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Slet korttypen “%2$s” og dens %1$d kort?</item>

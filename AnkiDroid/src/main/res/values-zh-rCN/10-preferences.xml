@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">查看使用 AnkiDroid API 的应用程序清单，如字典、实用工具。</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
+    <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
@@ -286,6 +289,7 @@
     <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
+    <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
     <string name="deck_conf_cram_steps" maxLength="41">自定义步伐(以分钟计)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">自定义步伐</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>

@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">查看一系列使用 AnkiDroid API 的應用程式，如字典，實用工具。</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 偵錯</string>
     <string name="html_javascript_debugging_summ">啟用控制 WebView 連線，並儲存卡片 HTML 到 AnkiDroid 資料夾</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高級統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">啟用高級統計</string>
@@ -286,6 +289,7 @@
     <string name="deck_conf_cram_order" maxLength="41">依條件選擇卡片</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">自訂步伐（以分鐘計）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">為此牌組群組的牌組啟用提醒通知</string>

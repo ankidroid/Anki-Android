@@ -30,4 +30,8 @@
         android:id="@+id/action_add_deck_override"
         android:title="@string/card_template_editor_deck_override"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_insert_field"
+        android:title="@string/card_template_editor_insert_field"
+        ankidroid:showAsAction="never"/>
 </menu>

@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
+    <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>
@@ -288,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kartoj elektitaj laŭ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
+    <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
     <string name="deck_conf_cram_steps" maxLength="41">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>

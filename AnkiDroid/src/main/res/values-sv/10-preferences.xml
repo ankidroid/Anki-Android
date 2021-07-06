@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">Se en lista över alla applikationer som använder AnkiDroids API, exempelvis ordböcker och händiga verktyg.</string>
     <string name="html_javascript_debugging" maxLength="41">Avlusning - HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktivera WebView fjärråtkomst, och spara korts HTML till AnkiDroid-katalogen</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Avancerad statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktivera avancerad statistik</string>
@@ -288,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kort valda efter</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Omplanera</string>
     <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserat på mina svar i denna kortlek</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Anpassade steg (i minuter)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definiera anpassade steg</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktivera påminnelsemeddelanden för kortlekar i denna kortleksgrupp</string>

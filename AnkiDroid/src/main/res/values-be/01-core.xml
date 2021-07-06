@@ -105,7 +105,7 @@
     <string name="unbury">Вярнуць</string>
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Праглядзець карткі</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Дадаць</string>
     <string name="menu_add_note">Дадаць запіс</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
@@ -194,6 +194,8 @@
     <string name="card_template_editor_styling">Знешні выгляд</string>
     <string name="card_template_editor_menu_card_browser_appearance">Выгляд аглядальніка картак</string>
     <string name="card_template_editor_deck_override">Перавызначэнне калоды</string>
+    <string name="card_template_editor_insert_field">Уставіць поле</string>
+    <string name="card_template_editor_select_field">Абраць поле</string>
     <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Выдаліць тып карткі \'%2$s\' і %1$d яе картку?</item>

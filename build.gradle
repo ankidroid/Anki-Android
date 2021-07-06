@@ -5,6 +5,7 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.5.20'
+    ext.lint_version = '27.2.1'
 
     repositories {
         google()
@@ -13,13 +14,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.0.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.1.0"
     }
 }
 

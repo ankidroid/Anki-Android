@@ -29,6 +29,8 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -44,7 +46,7 @@ public class GestureProcessorTest implements ViewerCommand.CommandProcessor {
     private final List<ViewerCommand> mExecutedCommands = new ArrayList<>();
 
     @Override
-    public boolean executeCommand(ViewerCommand which) {
+    public boolean executeCommand(@NonNull ViewerCommand which) {
         this.mExecutedCommands.add(which);
         return true;
     }

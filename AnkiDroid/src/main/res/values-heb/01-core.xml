@@ -195,6 +195,8 @@
     <string name="card_template_editor_styling">סגנון</string>
     <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הקלפים</string>
     <string name="card_template_editor_deck_override">שכתוב חפיסה</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>

@@ -35,6 +35,8 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
+
 /**
  * The status of the widget.
  */
@@ -58,7 +60,7 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        boolean notificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
+        boolean notificationEnabled = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")) < 1000000;
         boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
         if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");

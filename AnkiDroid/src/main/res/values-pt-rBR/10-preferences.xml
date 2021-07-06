@@ -207,6 +207,9 @@
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do card para o diretório do AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Habilitar estatísticas avançadas</string>
@@ -288,6 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">cards selecionados por</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Remarcar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar cards baseado em minhas respostas no baralho</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passos personalizados (em minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificações de lembretes para os decks neste grupo</string>

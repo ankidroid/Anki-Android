@@ -33,6 +33,8 @@ import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
+
 public class NotificationService extends BroadcastReceiver {
 
     /** The id of the notification for due cards. */
@@ -46,7 +48,7 @@ public class NotificationService extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
+        int minCardsDue = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification

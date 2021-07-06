@@ -184,6 +184,8 @@
     <string name="card_template_editor_styling">स्टाईलिंग</string>
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउझर स्वरूप</string>
     <string name="card_template_editor_deck_override">डेक ओव्हरराइड</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">कमीतकमी एक कार्ड प्रकार आवश्यक आहे</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
