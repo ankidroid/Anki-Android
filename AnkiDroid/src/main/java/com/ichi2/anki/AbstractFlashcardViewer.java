@@ -265,6 +265,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
+    private boolean mBackButtonPressedToReturn = false;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -389,6 +390,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Preference: Whether the user wants to focus "type in answer" */
     private boolean mFocusTypeAnswer;
 
+    /** Preference: Whether the user wants press back twice to return to the main screen" */
+    private boolean mDisablePressBack;
+
     private final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
 
     // ----------------------------------------------------------------------------
@@ -422,6 +426,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void onClick(View view) {
             Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
+            mBackButtonPressedToReturn = false;
             // Ignore what is most likely an accidental double-tap.
             if (getElapsedRealTime() - mLastClickTime < mDoubleTapTimeInterval) {
                 return;
@@ -1096,7 +1101,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            closeReviewer(RESULT_DEFAULT, false);
+            if (!mDisablePressBack) {
+                closeReviewer(RESULT_DEFAULT, false);
+                return;
+            }
+            if (mBackButtonPressedToReturn) {
+                closeReviewer(RESULT_DEFAULT, false);
+            } else {
+                UIUtils.showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true);
+            }
+            mBackButtonPressedToReturn = true;
         }
     }
 
@@ -1920,6 +1934,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
         mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
+        mDisablePressBack = preferences.getBoolean("disablePressBack", false);
 
         mGesturesEnabled = preferences.getBoolean("gestures", false);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);

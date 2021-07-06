@@ -96,6 +96,11 @@
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="useInputTag"
                 android:title="@string/type_in_answer_focus" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="disablePressBack"
+                android:summary="@string/disable_back_pressed_summ"
+                android:title="@string/disable_back_pressed" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"

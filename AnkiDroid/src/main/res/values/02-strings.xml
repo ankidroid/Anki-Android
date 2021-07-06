@@ -376,4 +376,5 @@
     <string name="password_empty">Password is required</string>
 
     <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>
