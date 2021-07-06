@@ -30,6 +30,7 @@ import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.FileUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +50,11 @@ import timber.log.Timber;
 public class MediaRegistration {
 
     private static final int MEDIA_MAX_SIZE = 5 * 1000 * 1000;
+    public final static int COLOR_GREY = 0;
+    public final static int COLOR_TRUE = 2;
+    public final static int COLOR_INDEX = 3;
+    public final static int COLOR_GREY_ALPHA = 4;
+    public final static int COLOR_TRUE_ALPHA = 6;
 
     // Use the same HTML if the same image is pasted multiple times.
     private final HashMap<String, String> mPastedImageCache = new HashMap<>();
@@ -69,7 +75,7 @@ public class MediaRegistration {
         String fileName;
 
         String filename = ContentResolverUtil.getFileName(mContext.getContentResolver(), uri);
-        InputStream fd = mContext.getContentResolver().openInputStream(uri);
+        InputStream fd = openInputStreamWithURI(uri);
 
         Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
 
@@ -82,22 +88,19 @@ public class MediaRegistration {
         File clipCopy;
         long bytesWritten;
 
-        if (!".png".equals(fileNameAndExtension.getValue()) && CollectionHelper.getInstance().getCol(mContext).getConf().optBoolean("pastePNG")) {
-            clipCopy = File.createTempFile(fileName, ".png");
-            bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
-            Bitmap bm = BitmapFactory.decodeFile(clipCopy.getAbsolutePath());
-            try (FileOutputStream outStream = new FileOutputStream(clipCopy.getAbsolutePath())) {
-                bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
-            } catch (IOException e) {
-                Timber.w("MediaRegistration : Unable to convert file to png format");
-                AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format");;
-                UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_png_paste_error, e.getMessage()), true);
-                return null;
+        try (InputStream copyFd = openInputStreamWithURI(uri)) {
+            // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
+            if (shouldConvertToJPG(fileNameAndExtension.getValue(), copyFd)) {
+                clipCopy = File.createTempFile(fileName, ".jpg");
+                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
+                // return null if jpg conversion false.
+                if (!convertToJPG(clipCopy)) {
+                    return null;
+                }
+            } else {
+                clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
+                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
             }
-        } else {
-            clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
-            bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
         }
 
         String tempFilePath = clipCopy.getAbsolutePath();
@@ -119,6 +122,64 @@ public class MediaRegistration {
         field.setHasTemporaryMedia(true);
         field.setImagePath(tempFilePath);
         return field.getFormattedValue();
+    }
+
+
+    private InputStream openInputStreamWithURI(Uri uri) throws FileNotFoundException {
+        return mContext.getContentResolver().openInputStream(uri);
+    }
+
+    private boolean convertToJPG(File file) {
+        Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
+        try (FileOutputStream outStream = new FileOutputStream(file.getAbsolutePath())) {
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            outStream.flush();
+        } catch (IOException e) {
+            Timber.w("MediaRegistration : Unable to convert file to png format");
+            AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format");;
+            UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_png_paste_error, e.getMessage()), true);
+            return false;
+        }
+        return true; // successful conversion to jpg.
+    }
+
+    private boolean shouldConvertToJPG(String fileNameExtension, InputStream fileStream) {
+        if (".jpg".equals(fileNameExtension)) {
+            return false; // we are already a jpg, no conversion
+        }
+        if (".gif".equals(fileNameExtension)) {
+            return false; // gifs may have animation, conversion would ruin them
+        }
+        if ((".png".equals(fileNameExtension) && doesInputStreamContainTransparency(fileStream))) {
+            return false; // pngs with transparency would be ruined by conversion
+        }
+        return true;
+    }
+
+    /**
+     * given an inputStream of a file,
+     * returns true if found that it has transparency (in its header)
+     * code: https://stackoverflow.com/a/31311718/14148406
+     */
+    private static boolean doesInputStreamContainTransparency(InputStream inputStream) {
+        try {
+            // skip: png signature,header chunk declaration,width,height,bitDepth :
+            inputStream.skip(12 + 4 + 4 + 4 + 1);
+            final byte colorType = (byte) inputStream.read();
+            switch (colorType) {
+                case COLOR_GREY_ALPHA:
+                case COLOR_TRUE_ALPHA:
+                    return true;
+                case COLOR_INDEX:
+                case COLOR_GREY:
+                case COLOR_TRUE:
+                    return false;
+            }
+            return true;
+        } catch (final Exception e) {
+            Timber.w(e, "Failed to check transparency of inputStream");
+        }
+        return false;
     }
 
     public boolean checkFilename(Map.Entry<String, String> fileNameAndExtension) {
