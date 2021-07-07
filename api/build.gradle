@@ -57,7 +57,7 @@ dependencies {
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
     testImplementation 'org.robolectric:robolectric:4.5.1'
 
-    lintPublish project(":lint-rules")
+    lintChecks project(":lint-rules")
 }
 
 task androidSourcesJar(type: Jar) {
