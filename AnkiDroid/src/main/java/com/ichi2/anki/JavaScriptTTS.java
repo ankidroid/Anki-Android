@@ -38,8 +38,9 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     private static boolean mTtsOk;
     private static final Bundle mTtsParams = new Bundle();
 
-    JavaScriptTTS(Context context) {
-        mTts = new TextToSpeech(context, this);
+    JavaScriptTTS() {
+        Context mContext = AnkiDroidApp.getInstance().getApplicationContext();
+        mTts = new TextToSpeech(mContext, this);
     }
 
     /** OnInitListener method to receive the TTS engine status */

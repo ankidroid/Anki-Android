@@ -393,7 +393,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mFocusTypeAnswer;
 
     /** Text to speech */
-    private JavaScriptTTS mTalker = new JavaScriptTTS(AbstractFlashcardViewer.this);
+    private JavaScriptTTS mTalker = new JavaScriptTTS();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
