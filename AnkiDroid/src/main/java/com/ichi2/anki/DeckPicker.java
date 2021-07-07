@@ -91,6 +91,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter;
+import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
@@ -1494,6 +1495,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     /**
+     *  Show simple dialog with a message and two buttons - check database and cancel.
+     */
+    private void showCheckDatabase(@Nullable String message){
+        String title = getResources().getString(R.string.sync_error);
+        AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, true);
+        try{
+            new MaterialDialog.Builder(this)
+                    .title(title)
+                    .content(message)
+                    .positiveText(R.string.check_db)
+                    .onPositive(((dialog, which) -> performIntegrityCheck()))
+                    .negativeText(R.string.dialog_cancel)
+                    .show();
+        }catch (IllegalStateException e){
+            Timber.w(e);
+            DialogHandler.storeMessage(newFragment.getDialogHandlerMessage());
+            showSimpleNotification(title, message, NotificationChannels.Channel.GENERAL);
+        }
+    }
+    /**
      *  Show a simple snackbar message or notification if the activity is not in foreground
      * @param messageResource String resource for message
      */
@@ -1919,7 +1940,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             break;
                         case BASIC_CHECK_FAILED:
                             dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            showCheckDatabase(joinSyncMessages(dialogMessage, syncMessage));
                             break;
                         case DB_ERROR:
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
