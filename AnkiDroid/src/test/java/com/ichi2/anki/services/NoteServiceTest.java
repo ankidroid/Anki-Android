@@ -68,8 +68,8 @@ public class NoteServiceTest extends RobolectricTest {
         testModel = new Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}");
         Note noteWithID45 = new Note(testCol, testModel);
 
-        assertThrows(RuntimeException.class, () -> NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45));
-
+        Throwable expectedException = assertThrows(RuntimeException.class, () -> NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45));
+        assertEquals(expectedException.getMessage(), "Source and Destination Note ID do not match.");
     }
 
     @Test
@@ -78,9 +78,9 @@ public class NoteServiceTest extends RobolectricTest {
         File mFile = folder.newFile("testaudio.wav");
 
         //writes a line in the file so the file's length isn't 0
-        FileWriter fileWriter = new FileWriter(mFile);
-        fileWriter.write("line1");
-        fileWriter.close();
+        try(FileWriter fileWriter = new FileWriter(mFile)) {
+            fileWriter.write("line1");
+        }
 
         MultimediaEditableNote testAudioClip = new MultimediaEditableNote();
         testAudioClip.setNumFields(1);
@@ -93,8 +93,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         File outFile = new File(testCol.getMedia().dir(), mFile.getName());
 
-        //now path should be equal to the new file made in NoteService.saveMedia
-        assertEquals(outFile.getAbsolutePath(), audioField.getAudioPath());
+        assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), audioField.getAudioPath());
 
     }
 
@@ -105,9 +104,9 @@ public class NoteServiceTest extends RobolectricTest {
         File mFile = folder.newFile("testimage.png");
 
         //writes a line in the file so the file's length isn't 0
-        FileWriter fileWriter = new FileWriter(mFile);
-        fileWriter.write("line1");
-        fileWriter.close();
+        try(FileWriter fileWriter = new FileWriter(mFile)) {
+            fileWriter.write("line1");
+        }
 
         MultimediaEditableNote testImage = new MultimediaEditableNote();
         testImage.setNumFields(1);
@@ -120,9 +119,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         File outFile = new File(testCol.getMedia().dir(), mFile.getName());
 
-        //now path should be equal to the new file made in NoteService.saveMedia
-        assertEquals(outFile.getAbsolutePath(), imgField.getImagePath());
-
+        assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), imgField.getImagePath());
     }
 
 
