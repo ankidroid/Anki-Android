@@ -372,6 +372,7 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
+    @RunInBackground
     public void version16CollectionOpens() {
         try {
             setupColV16();
