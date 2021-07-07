@@ -94,20 +94,20 @@ public class ClozeTest extends RobolectricTest {
                 "string}}</p>");
         f.flush();
         assertEquals(1, d.addNote(f));
-        assertThat(f.firstCard().q(), containsString("<p>Cloze in html tag with <span class=cloze>[...]</span>"));
-        assertThat(f.firstCard().a(), containsString("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
+        assertThat(f.firstCard().q(), containsString("Cloze in html tag with <span class=cloze>[...]</span>"));
+        assertThat(f.firstCard().a(), containsString("Cloze in html tag with <span class=cloze>multi-line\nstring</span>"));
 
         //make sure multiline cloze things aren't too greedy
-        f.setItem("Text", "<p>Cloze in html tag with {{c1::multi-line\n" +
+        f.setItem("Text", "Cloze in html tag with {{c1::multi-line\n" +
                 "string}} and then {{c2:another\n" +
-                "one}}</p>");
+                "one}}");
         f.flush();
         assertEquals(1, d.addNote(f));
-        assertThat(f.firstCard().q(), containsString("<p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
-                "one}}</p>"));
+        assertThat(f.firstCard().q(), containsString("Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another\n" +
+                "one}}"));
 
-        assertThat(f.firstCard().a(), containsString("<p>Cloze in html tag with <span class=cloze>multi-line\n" +
+        assertThat(f.firstCard().a(), containsString("Cloze in html tag with <span class=cloze>multi-line\n" +
                 "string</span> and then {{c2:another\n" +
-                "one}}</p>"));
+                "one}}"));
     }
 }
