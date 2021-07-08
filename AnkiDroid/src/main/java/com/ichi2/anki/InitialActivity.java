@@ -28,7 +28,7 @@ import net.ankiweb.rsdroid.RustBackendFailedException;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /** Utilities for launching the first activity (currently the DeckPicker) */
@@ -38,9 +38,21 @@ public class InitialActivity {
 
     }
 
-    @NonNull
+    /** Returns null on success */
+    @Nullable
     @CheckResult
     public static StartupFailure getStartupFailureType(Context context) {
+
+        // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
+        if (AnkiDroidApp.webViewFailedToLoad()) {
+            return StartupFailure.WEBVIEW_FAILED;
+        }
+
+        // If we're OK, return null
+        if (CollectionHelper.getInstance().getColSafe(context) != null) {
+            return null;
+        }
+
         if (!AnkiDroidApp.isSdCardMounted()) {
             return StartupFailure.SD_CARD_NOT_MOUNTED;
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
@@ -174,5 +186,7 @@ public class InitialActivity {
         DATABASE_DOWNGRADE_REQUIRED,
         DB_ERROR,
         DATABASE_LOCKED,
+        WEBVIEW_FAILED,
+        ;
     }
 }
