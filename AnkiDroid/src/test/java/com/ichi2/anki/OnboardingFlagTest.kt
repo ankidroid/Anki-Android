@@ -19,8 +19,6 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.OnboardingUtils.isVisited
-import com.ichi2.anki.OnboardingUtils.setVisited
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -88,10 +86,10 @@ class OnboardingFlagTest : RobolectricTest() {
     }
 
     private fun <T> isVisited(enum: T): Boolean where T : Enum<T>, T : OnboardingFlag {
-        return isVisited(enum, targetContext)
+        return OnboardingUtils.isVisited(enum, targetContext)
     }
 
     private fun <T> setVisited(enum: T) where T : Enum<T>, T : OnboardingFlag {
-        setVisited(enum, targetContext)
+        OnboardingUtils.setVisited(enum, targetContext)
     }
 }
