@@ -545,15 +545,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * */
     public void handleStartup() {
         if (Permissions.hasStorageAccessPermission(this)) {
-            boolean colOpen = firstCollectionOpen();
-            if (colOpen) {
+            StartupFailure failure = InitialActivity.getStartupFailureType(this);
+            if (failure == null) {
                 // Show any necessary dialogs (e.g. changelog, special messages, etc)
                 SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
                 showStartupScreensAndDialogs(sharedPrefs, 0);
                 mStartupError = false;
             } else {
                 // Show error dialogs
-                StartupFailure failure = InitialActivity.getStartupFailureType(this);
                 handleStartupFailure(failure);
                 mStartupError = true;
             }
@@ -588,6 +587,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // This has a callback to continue with handleStartup
                 InitialActivity.downgradeBackend(this);
                 break;
+            case WEBVIEW_FAILED:
+                new MaterialDialog.Builder(this)
+                        .title(R.string.ankidroid_init_failed_webview_title)
+                        .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
+                        .positiveText(R.string.close)
+                        .onPositive((d, w) -> exit())
+                        .cancelable(false)
+                        .show();
+                break;
             case DB_ERROR:
             default:
                 displayDatabaseFailure();
@@ -621,25 +629,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             view.setBackground(drawable);
             return true;
         }
-    }
-
-    /**
-     * Try to open the Collection for the first time
-     * @return whether or not we were successful
-     */
-    private boolean firstCollectionOpen() {
-        if (AnkiDroidApp.webViewFailedToLoad()) {
-            new MaterialDialog.Builder(this)
-                    .title(R.string.ankidroid_init_failed_webview_title)
-                    .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
-                    .positiveText(R.string.close)
-                    .onPositive((d, w) -> exit())
-                    .cancelable(false)
-                    .show();
-            return false;
-        }
-
-        return CollectionHelper.getInstance().getColSafe(this) != null;
     }
 
     public void requestStoragePermission() {
