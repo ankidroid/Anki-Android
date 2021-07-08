@@ -131,6 +131,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @VisibleForTesting
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    
+    private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     class ScheduleCollectionTaskListener extends NextCardHandler<Computation<Card[]>> {
@@ -666,6 +668,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
         }
 
+        if (undoEnabled) {
+            mOnboarding.onUndoButtonEnabled();
+        }
+
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
         MenuItem hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard);
         MenuItem change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color);
@@ -743,6 +749,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         suspend_icon.getIcon().mutate().setAlpha(alpha);
 
         setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
+        mOnboarding.onCreate();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -883,6 +890,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void displayAnswerBottomBar() {
         super.displayAnswerBottomBar();
+        mOnboarding.onAnswerShown();
         int buttonCount;
         try {
             buttonCount = mSched.answerButtons(mCurrentCard);
