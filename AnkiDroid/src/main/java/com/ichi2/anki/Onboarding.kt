@@ -20,6 +20,7 @@ package com.ichi2.anki
 import android.app.Activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.OnboardingUtils.Companion.isVisited
+import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 
 /**
  * Suppose a tutorial needs to be added for an activity called MyActivity.
@@ -51,6 +52,8 @@ class Onboarding {
 
     companion object {
         const val DECK_PICKER_ONBOARDING = "DeckPickerOnboarding"
+        const val ABSTRACT_FLASHCARD_VIEWER_ONBOARDING = "AbstractFlashcardViewerOnboarding"
+        const val REVIEWER_ONBOARDING = "ReviewerOnboarding"
     }
 
     /**
@@ -147,6 +150,101 @@ class Onboarding {
 
             override fun getFeatureConstant(): String {
                 return DECK_PICKER_ONBOARDING
+            }
+        }
+    }
+
+    class AbstractFlashcardViewer(private val mActivityContext: com.ichi2.anki.AbstractFlashcardViewer) :
+        OnboardingImpl<AbstractFlashcardViewer.AbstractFlashcardViewerOnboardingEnum, com.ichi2.anki.AbstractFlashcardViewer>(mActivityContext, mutableListOf()) {
+
+        init {
+            mTutorials.add(TutorialArguments(AbstractFlashcardViewerOnboardingEnum.SHOW_ANSWER, this::onQuestionShown))
+        }
+
+        private fun onQuestionShown() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, AbstractFlashcardViewerOnboardingEnum.SHOW_ANSWER)
+                .createRectangleWithDimmedBackground()
+                .setTarget(R.id.flip_card)
+                .setPrimaryText(R.string.see_answer)
+                .setSecondaryText(R.string.see_answer_desc)
+                .show()
+        }
+
+        /**
+         * Called when the difficulty buttons are displayed after clicking on 'Show Answer'.
+         */
+        fun onAnswerShown() {
+            if (isVisited(AbstractFlashcardViewerOnboardingEnum.DIFFICULTY_RATING, mActivityContext)) {
+                return
+            }
+
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, AbstractFlashcardViewerOnboardingEnum.DIFFICULTY_RATING)
+                .createRectangleWithDimmedBackground()
+                .setTarget(R.id.ease_buttons)
+                .setPrimaryText(R.string.select_difficulty)
+                .setSecondaryText(R.string.select_difficulty_desc)
+                .show()
+        }
+
+        enum class AbstractFlashcardViewerOnboardingEnum(var mValue: Int) : OnboardingFlag {
+            SHOW_ANSWER(0), DIFFICULTY_RATING(1);
+
+            override fun getOnboardingEnumValue(): Int {
+                return mValue
+            }
+
+            override fun getFeatureConstant(): String {
+                return ABSTRACT_FLASHCARD_VIEWER_ONBOARDING
+            }
+        }
+    }
+
+    class Reviewer(private val mActivityContext: com.ichi2.anki.Reviewer) :
+        OnboardingImpl<Reviewer.ReviewerOnboardingEnum, com.ichi2.anki.Reviewer>(mActivityContext, mutableListOf()) {
+
+        init {
+            mTutorials.add(TutorialArguments(ReviewerOnboardingEnum.FLAG, this::showTutorialForFlagIfNew))
+        }
+
+        private fun showTutorialForFlagIfNew() {
+            // Handler is required here to show feature prompt on menu items. Reference: https://github.com/sjwall/MaterialTapTargetPrompt/issues/73#issuecomment-320681655
+            executeFunctionUsingHandler {
+                CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.FLAG)
+                    .createCircle()
+                    .setFocalColourResource(R.color.material_blue_500)
+                    .setTarget(R.id.action_flag)
+                    .setPrimaryText(R.string.menu_flag_card)
+                    .setSecondaryText(R.string.flag_card_desc)
+                    .show()
+            }
+        }
+
+        /**
+         * Show after undo button goes into enabled state
+         */
+        fun onUndoButtonEnabled() {
+            if (isVisited(ReviewerOnboardingEnum.UNDO, mActivityContext)) {
+                return
+            }
+
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.UNDO)
+                .createCircleWithDimmedBackground()
+                .setFocalColourResource(R.color.material_blue_500)
+                .setTarget(R.id.action_undo)
+                .setPrimaryText(R.string.undo)
+                .setSecondaryText(R.string.undo_desc)
+                .show()
+        }
+
+        enum class ReviewerOnboardingEnum(var mValue: Int) : OnboardingFlag {
+            FLAG(0), UNDO(1);
+
+            override fun getOnboardingEnumValue(): Int {
+                return mValue
+            }
+
+            override fun getFeatureConstant(): String {
+                return REVIEWER_ONBOARDING
             }
         }
     }

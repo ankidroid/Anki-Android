@@ -395,6 +395,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
 
+    private Onboarding.AbstractFlashcardViewer mOnboarding = new Onboarding.AbstractFlashcardViewer(this);
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -952,6 +954,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        mOnboarding.onCreate();
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -1828,6 +1832,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mFlipCardLayout.setAlpha(1);
             mFlipCardLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
         }
+
+        mOnboarding.onAnswerShown();
     }
 
 

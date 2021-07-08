@@ -5,4 +5,10 @@
     <string name="start_studying">Click on a deck to start studying</string>
     <string name="start_studying_desc">Long press on a deck to get more options related to it</string>
     <string name="study_options_desc">Open study options to see card review details for a deck</string>
+    <string name="see_answer">See the answer</string>
+    <string name="see_answer_desc">When you are ready to view the answer, click here</string>
+    <string name="flag_card_desc">Select a coloured flag for this card</string>
+    <string name="undo_desc">Undo and go back to the previous card</string>
+    <string name="select_difficulty">Select the difficulty</string>
+    <string name="select_difficulty_desc">This will decide the time when this card will be displayed again</string>
 </resources>
