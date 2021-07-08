@@ -86,5 +86,5 @@ public abstract class FieldNamingPatternDetector extends Detector implements Det
     protected abstract boolean meetsNamingStandards(@NonNull String variableName);
 
     /** Report the problematic variable to the lint checker */
-    protected abstract void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName);
+    protected abstract void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, @NonNull String variableName);
 }

@@ -68,7 +68,7 @@ public class NonPublicNonStaticFieldDetector extends FieldNamingPatternDetector 
 
 
     @Override
-    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName) {
+    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, @NonNull String variableName) {
         if (variableName.length() < 2) {
             // cast the node as it's ambiguous between two interfaces
             UElement uNode = node;

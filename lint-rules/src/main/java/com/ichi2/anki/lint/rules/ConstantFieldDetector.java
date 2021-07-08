@@ -75,7 +75,7 @@ public class ConstantFieldDetector extends FieldNamingPatternDetector {
 
 
     @Override
-    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName) {
+    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, @NonNull String variableName) {
         StringBuilder replacement = new StringBuilder();
         // If the s prefix was accidentally applied, remove it.
         if ((variableName.startsWith("s") || variableName.startsWith("m")) && variableName.length() > 1 && Character.isUpperCase(variableName.charAt(1))) {
