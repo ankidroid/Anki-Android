@@ -32,6 +32,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -57,6 +58,9 @@ public class Storage {
     /** Helper method for when the collection can't be opened */
     public static int getDatabaseVersion(String path) throws UnknownDatabaseVersionException {
         try {
+            if (!new File(path).exists()) {
+                throw new UnknownDatabaseVersionException(new FileNotFoundException(path));
+            }
             DB db = new DB(path);
             int result = db.queryScalar("SELECT ver FROM col");
             db.close();
