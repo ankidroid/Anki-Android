@@ -30,25 +30,25 @@ class OnboardingUtils {
          * Check if the tutorial for a particular feature should be displayed or not.
          * If the bit at an index is set, then the corresponding tutorial has been seen.
          */
-        fun <T> isVisited(onboardingEnum: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
-            val visitedScreens = getAllVisited(onboardingEnum, context)
-            return visitedScreens.get(onboardingEnum.getOnboardingEnumValue())
+        fun <T> isVisited(featureIdentifier: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
+            val visitedFeatures = getAllVisited(featureIdentifier, context)
+            return visitedFeatures.get(featureIdentifier.getOnboardingEnumValue())
         }
 
         /**
          * Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
          */
-        fun <T> setVisited(onboardingEnum: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
-            val visitedScreens = getAllVisited(onboardingEnum, context)
-            visitedScreens.set(onboardingEnum.getOnboardingEnumValue())
-            return AnkiDroidApp.getSharedPrefs(context).edit().putLong(onboardingEnum.declaringClass.simpleName, visitedScreens.toLongArray()[0]).apply()
+        fun <T> setVisited(featureIdentifier: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
+            val visitedFeatures = getAllVisited(featureIdentifier, context)
+            visitedFeatures.set(featureIdentifier.getOnboardingEnumValue())
+            return AnkiDroidApp.getSharedPrefs(context).edit().putLong(featureIdentifier.declaringClass.simpleName, visitedFeatures.toLongArray()[0]).apply()
         }
 
         /**
          * Returns a BitSet where the set bits indicate the visited screens.
          */
-        private fun <T> getAllVisited(onboardingEnum: T, context: Context): BitSet where T : Enum<T> {
-            val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(onboardingEnum.declaringClass.simpleName, 0)
+        private fun <T> getAllVisited(featureIdentifier: T, context: Context): BitSet where T : Enum<T> {
+            val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureIdentifier.declaringClass.simpleName, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
         }
     }
