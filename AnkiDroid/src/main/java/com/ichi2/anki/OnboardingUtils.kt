@@ -17,36 +17,44 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import java.util.BitSet
 
-@SuppressLint("ConstantFieldName")
 class OnboardingUtils {
 
     companion object {
+        /**
+         * SHOW_ONBOARDING represents the preference key for checking if onboarding is enabled.
+         * Preference can be toggled by visiting 'Advanced' settings in the app.
+         */
         const val SHOW_ONBOARDING = "showOnboarding"
 
         /**
-         * Check if the tutorial for a particular feature should be displayed or not.
-         * If the bit at an index is set, then the corresponding tutorial has been seen.
+         * Check if the tutorial for a feature should be displayed or not.
          */
         fun <T> isVisited(featureIdentifier: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
+            // Return if onboarding is not enabled.
             if (!AnkiDroidApp.getSharedPrefs(context).getBoolean(SHOW_ONBOARDING, false)) {
                 return true
             }
 
             val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
+
+            // If the bit at an index is set, then the corresponding tutorial has been seen.
+            // Return true if seen, otherwise false.
             return visitedFeatures.get(featureIdentifier.getOnboardingEnumValue())
         }
 
         /**
-         * Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
+         * Set the tutorial for a feature as visited.
          */
         fun <T> setVisited(featureIdentifier: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
             val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
+
+            // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
             visitedFeatures.set(featureIdentifier.getOnboardingEnumValue())
-            return AnkiDroidApp.getSharedPrefs(context).edit().putLong(featureIdentifier.getFeatureConstant(), visitedFeatures.toLongArray()[0]).apply()
+
+            AnkiDroidApp.getSharedPrefs(context).edit().putLong(featureIdentifier.getFeatureConstant(), visitedFeatures.toLongArray()[0]).apply()
         }
 
         /**
