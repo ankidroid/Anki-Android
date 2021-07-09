@@ -1051,12 +1051,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mFloatingActionMenu.isFABOpen()) {
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                if (!preferences.getBoolean("disablePressBack", false)) {
-                    automaticSync();
-                    finishWithAnimation();
-                    return;
-                }
-                if (mBackButtonPressedToExit) {
+                if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
                     automaticSync();
                     finishWithAnimation();
                 } else {
