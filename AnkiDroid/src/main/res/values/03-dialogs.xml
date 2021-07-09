@@ -179,6 +179,7 @@
 
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="undo_done_msg">card review undo succeeded</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
 
