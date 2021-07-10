@@ -131,6 +131,15 @@ In some rare case, you might want to allow for the task to be executed with a cl
 
 In this case, you must add to the `TaskToDoInBackground`  `@Override protected boolean requiresOpenCollection() {return true;}`.
 
+## How to deal with exception and other failure
+
+As a general rule, you should Timber the cause of the failure, or at least what you know of it. If the failure is not normal, you can use `AnkiDroidApp.sendExceptionReport` to let the AnkiDroid team knows that something that should not occurs occurred. It's hard to give general ruse about when you should use it. If you failed to open an image that should be in the media folder, it's expected to occur and should not be reported to AnkiDroid team. If you fail to get to open the collection, it makes sens to do so as it should not occur. 
+
+As far as the UI is concerned, an exception or error is only another kind of potential returned result. That is, if you believe an exception could occur at some place in your background task, then you should catch it, deal with it the appropriate way, and if the UI needs to have an action regarding the exception, then the background task need to send some data to the UI, so that the UI can display whatever is necessary. For examples: 
+* If you only care about whether the computation is successful or not, and you return a result of type `T` then you should return `Computation<T>`, this type will encapsulate whether the computation failed or succeeded. 
+* If you care about the cause of the failure, you can either return the `Exception` (and `null` would mean "no exception"), or you could create an enum for the various kind of failures you except. 
+* Or the background return type could be `Object`, and the UI could use `instanceof` to check whether it's the expected result type or an exception in the UI to figure out what to do with it.
+
 
 # Architecture
 
