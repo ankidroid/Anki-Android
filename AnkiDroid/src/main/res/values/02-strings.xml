@@ -377,4 +377,19 @@
 
     <string name="back_pressed_once">Press back again to exit</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
+
+    <!-- for js addons, npnjs registry url to download addon package file -->
+    <string name="npmjs_registry" translatable="false">https://registry.npmjs.org/%s/latest</string>
+    <string name="ankidroid_js_addon_npm_search_url">https://www.npmjs.com/search?q=keywords:ankidroid-js-addon</string>
+    <string name="addon_installed">JavaScript Addon installed</string>
+    <string name="addons">Addons</string>
+    <string name="js_addons">JavaScript Addons</string>
+    <string name="install_js_addon">Install Addon</string>
+    <string name="get_more_addons">Get More Addons</string>
+    <string name="enter_npm_install_text">Enter name of Addon</string>
+    <string name="addon_download_hint_text">npm i ankidroid-js-addon…</string>
+    <string name="invalid_js_addon">Not a valid js addons package for AnkiDroid</string>
+    <string name="error_occur_downloading_addon">Error occur in downloading addon. Try again</string>
+    <string name="failed_to_extract_addon_package">Failed to extract the addon package</string>
+    <string name="addon_download" comment="Button text for downloading addons">Install</string>
 </resources>
