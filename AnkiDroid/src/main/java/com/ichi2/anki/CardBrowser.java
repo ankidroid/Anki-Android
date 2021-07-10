@@ -125,6 +125,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         long deckId = deck.getDeckId();
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.selectDeckById(deckId, true);
         selectDeckAndSave(deckId);
     }
 
@@ -759,14 +760,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (getLastDeckId() != null && getLastDeckId() == ALL_DECKS_ID) {
             selectAllDecks();
         } else  if (getLastDeckId() != null && getCol().getDecks().get(getLastDeckId(), false) != null) {
-            mDeckSpinnerSelection.selectDeckById(getLastDeckId());
+            mDeckSpinnerSelection.selectDeckById(getLastDeckId(), false);
         } else {
-            mDeckSpinnerSelection.selectDeckById(getCol().getDecks().selected());
+            mDeckSpinnerSelection.selectDeckById(getCol().getDecks().selected(), false);
         }
     }
 
     public void selectDeckAndSave(long deckId) {
-        mDeckSpinnerSelection.selectDeckById(deckId);
+        mDeckSpinnerSelection.selectDeckById(deckId, true);
         if (deckId == ALL_DECKS_ID) {
             mRestrictOnDeck = "";
         } else {
