@@ -15,7 +15,7 @@ The solution is to ask the program to do two things at once. One thing, on the U
 
 If the background task is long, it is current for it to indicate to the user that it has done N percent or that S seconds remain. Another role of the background task is to send those updates to the UI task. Usually, it serves to let the user know what to expect. However, it may have more creative use. For example, the background task can "update" the UI task with the downloaded image, so that the downloaded image can be shown immediately, and then put the image in a cache.
 
-# How to do asynchronous computation in AnkiDroid
+# How to do asynchronous computation in AnkiDroid
 
 The main method you want to use is `TaskManager.launchCollectionTask`. As it is usual with code, you should search for use of this method in the codebase to see how it is used. Once you have read the theoretical documentation, seeing actual use should be most helpful
 
