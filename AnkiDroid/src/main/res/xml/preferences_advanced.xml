@@ -96,6 +96,11 @@
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="useInputTag"
                 android:title="@string/type_in_answer_focus" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="exitViaDoubleTapBack"
+                android:summary="@string/exit_via_double_tap_back_summ"
+                android:title="@string/exit_via_double_tap_back" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"

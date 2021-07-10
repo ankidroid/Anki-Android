@@ -1032,6 +1032,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void onBackPressed() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (isDrawerOpen()) {
             super.onBackPressed();
         } else {
@@ -1039,7 +1040,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (mFloatingActionMenu.isFABOpen()) {
                 mFloatingActionMenu.closeFloatingActionMenu();
             } else {
-                if (mBackButtonPressedToExit) {
+                if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
                     automaticSync();
                     finishWithAnimation();
                 } else {

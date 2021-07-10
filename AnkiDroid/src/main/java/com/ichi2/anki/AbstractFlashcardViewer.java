@@ -265,6 +265,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
+    private boolean mBackButtonPressedToReturn = false;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -388,6 +389,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Preference: Whether the user wants to focus "type in answer" */
     private boolean mFocusTypeAnswer;
+
+    /** Preference: Whether the user wants press back twice to return to the main screen" */
+    private boolean mExitViaDoubleTapBack;
 
     private final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
 
@@ -1096,7 +1100,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             super.onBackPressed();
         } else {
             Timber.i("Back key pressed");
-            closeReviewer(RESULT_DEFAULT, false);
+            if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
+                closeReviewer(RESULT_DEFAULT, false);
+            } else {
+                UIUtils.showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true);
+            }
+            mBackButtonPressedToReturn = true;
         }
     }
 
@@ -1920,6 +1929,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
         mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
+        mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false);
 
         mGesturesEnabled = preferences.getBoolean("gestures", false);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
@@ -2118,6 +2128,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void displayCardQuestion(boolean reload) {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
+        mBackButtonPressedToReturn = false;
 
         setInterface();
 
@@ -2193,6 +2204,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         actualHideEaseButtons();
         Timber.d("displayCardAnswer()");
         mMissingImageHandler.onCardSideChange();
+        mBackButtonPressedToReturn = false;
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
