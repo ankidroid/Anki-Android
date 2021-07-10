@@ -149,6 +149,11 @@ After this you should find a coverage report that integrates unit and integratio
 
 **Note:** Some of the connected tests involve the deletion of models, which will force a full-sync, so it's not recommended to try running the tests on your main device.
 
+#### Run single unit test
+Change `com.ichi2.anki.NoteEditorTest` with test class name.
+```
+./gradlew AnkiDroid:testPlayDebugUnitTest --tests com.ichi2.anki.NoteEditorTest
+```
 
 ### Lint
 
