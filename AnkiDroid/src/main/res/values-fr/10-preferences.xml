@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">Faites glisser vers la gauche</string>
     <string name="gestures_swipe_right" maxLength="41">Faites glisser vers la droite</string>
     <string name="gestures_double_tap" maxLength="41">Double tap</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">Appui long</string>
     <string name="gestures_tap_top" maxLength="41">Toucher le haut</string>
     <string name="gestures_tap_left" maxLength="41">Toucher la gauche</string>
     <string name="gestures_tap_right" maxLength="41">Toucher la droite</string>
@@ -164,7 +164,7 @@
     <string name="vertical_centering" maxLength="41">Aligner au centre</string>
     <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
     <string name="pref_backup_max" maxLength="41">Nombre de sauvegarde max</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Temps d\'intervalle de l\'appui double (ms)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
@@ -208,7 +208,7 @@
     <string name="html_javascript_debugging" maxLength="41">Débogage HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiques avancées</string>

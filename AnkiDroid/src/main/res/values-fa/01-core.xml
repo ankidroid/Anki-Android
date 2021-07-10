@@ -95,7 +95,7 @@
     <string name="unbury">خروج از حالت مخفی</string>
     <string name="rename_deck">تغییر نام دسته</string>
     <string name="create_shortcut">ایجاد میانبر</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">جستجوی کارت‌ها</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
@@ -117,7 +117,7 @@
     <string name="menu_edit_tags">ویرایش تگ‌ها</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_select">انتخاب متن</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">جستجوی متن</string>
     <string name="menu_search">جستجو در %1$s</string>
     <string name="menu_mark_note">نشانه‌گذاری یادداشت</string>
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
@@ -155,7 +155,7 @@
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">جستجوی دسته‌ها </string>
     <string name="empty_deck_add_note">اضافه کردن کارت</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_empty">این دسته خالی است. دکمه + را فشار دهید تا مطلب جدید اضافه کنید.</string>
@@ -184,8 +184,8 @@
     <string name="card_template_editor_styling">طراحی</string>
     <string name="card_template_editor_menu_card_browser_appearance">ظاهر مروگر کارت</string>
     <string name="card_template_editor_deck_override">بازنویسی دسته</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">اضافه کردن فیلد</string>
+    <string name="card_template_editor_select_field">انتخاب فیلد</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
@@ -215,15 +215,15 @@
     <string name="wrong_tag_closed">به جای \'{{/%2$s}}\'، \'{{/%1$s}}\' به کار رفته</string>
     <string name="filter_error">خطا در فیلتر %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_message_new">مجموعه نمی‌تواند ترکیب شود\nکدام مجموعه را می‌خواهید نگه دارید؟</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">آنکی دروید</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">آنکی وب</string>
+    <string name="sync_conflict_remote_confirm_new">آیا می‌خواهید مجموعه موجود در آنکی وب را به جای مجموعه موجود در آنکی دروید قراردهید؟</string>
+    <string name="sync_conflict_local_confirm_new">آیا می‌خواهید مجموعه موجود در آنکی دروید را به جای مجموعه موجود در آنکی وب قراردهید؟</string>
+    <string name="sync_conflict_title_new">مجموعه‌ای که می‌خواهید نگه دارید را انتخاب کنید</string>
+    <string name="sync_conflict_replace_title">جابجا کردن مجموعه</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d کارت‌ها (0 موعد مرور)</item>
     </plurals>
 </resources>

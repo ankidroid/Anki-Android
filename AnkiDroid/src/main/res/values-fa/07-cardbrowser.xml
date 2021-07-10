@@ -55,7 +55,7 @@
     <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
     <string name="card_browser_show_suspended">فیلتر معلق شد</string>
     <string name="card_browser_search_by_tag">بوسیله برچسب فیلتر شد</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">فیلتر بوسیله برچسب</string>
     <string name="card_browser_list_my_searches">جستجو های من</string>
     <string name="card_browser_list_my_searches_save">ذخیره جستجو</string>
     <string name="card_browser_list_my_searches_title">انتخاب جستجوی ذخیره شده</string>
@@ -90,30 +90,30 @@
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d کارت حذف شده.</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">اضافه شده</string>
+    <string name="card_info_first_review">اولین بازبینی</string>
+    <string name="card_info_latest_review">آخرین بازبینی</string>
+    <string name="card_info_interval">بازه</string>
+    <string name="card_info_ease">سهولت</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">بازبینی‌ها</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">دفعات</string>
+    <string name="card_info_average_time">زمان متوسط</string>
+    <string name="card_info_total_time">زمان کلی</string>
+    <string name="card_info_card_type">نوع کارت</string>
+    <string name="card_info_note_type">نوع یادداشت</string>
+    <string name="card_info_deck_name">نام دسته کارت</string>
+    <string name="card_info_card_id">شماره کارت</string>
+    <string name="card_info_note_id">شماره یادداشت</string>
+    <string name="card_info_revlog_time">زمان</string>
+    <string name="card_info_revlog_date">تاریخ</string>
+    <string name="card_info_revlog_rating">امتیاز</string>
+    <string name="card_info_revlog_type">نوع</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">یادگیری</string>
+    <string name="card_info_revlog_review">بازبینی</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">بازآموزی</string>
+    <string name="card_info_revlog_filtered">فیلتر شده</string>
+    <string name="card_info_ease_not_applicable">نامشخص</string>
 </resources>

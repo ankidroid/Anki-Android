@@ -45,7 +45,7 @@
     <string tools:ignore="UnusedResources" name="drawer_open">فتح القائمة</string>
     <string tools:ignore="UnusedResources" name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
-    <string name="CardEditorNoteDeck">شَدّة أوراق:</string>
+    <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
     <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
@@ -83,7 +83,7 @@
     <string-array name="browser_column2_headings">
         <item>جواب</item>
         <item>بطاقة</item>
-        <item>شَدّة أوراق</item>
+        <item>رزمة</item>
         <item>ملحوظة</item>
         <item>سؤال</item>
         <item>وسوم</item>
@@ -209,12 +209,12 @@
     <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
     <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
-    <string name="menu__deck_options">خيارات شَدّة الأوراق</string>
+    <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
     <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
-    <string name="dyn_deck_desc">هذه قاعدة خاصة للدراسة خارج الجدول الزمني الاعتيادي. البطاقات سوف تعود الى شَداتها الأصلية تلقائياً بعد مراجعتها منك. حذف شَدّة الأوراق هذه من قائمة الشَّدّات سوف يعيد كل البطاقات المتبقية إلى حالة شَدّاتها الأصلية.</string>
+    <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
     <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
     <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
     <string name="sched_end">(النهاية)</string>
@@ -282,7 +282,7 @@
     <string name="less_than_time">&gt; %s</string>
     <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
     <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
-    <string name="filtered_deck_name">شَدّة الأوراق مُفلترة</string>
+    <string name="filtered_deck_name">رزمة مفلترة</string>
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
