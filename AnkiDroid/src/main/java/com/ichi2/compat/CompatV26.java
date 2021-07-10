@@ -23,15 +23,24 @@ import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import com.ichi2.async.ProgressSenderAndCancelListener;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import timber.log.Timber;
 
@@ -82,5 +91,56 @@ public class CompatV26 extends CompatV23 implements Compat {
     @Override
     public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    /**
+     * Copies directory represented by source to the directory represented by destination.
+     * Assumes that the App has access to the Legacy Storage Directory via WRITE_EXTERNAL_STORAGE.
+     * Sends progress in kilobytes via the listener, ioTask, after each file copy.
+     * <p><br>
+     * Uses {@link Files#walkFileTree(Path, FileVisitor)} to visit all levels of the file tree and copy
+     * each directory and file to the destination.
+     * <p><br>
+     * @param source Abstract representation of source directory
+     * @param destination Abstract representation of destination directory
+     * @param ioTask Listener used to send progress updates
+     * @return <code>true</code> if directory copied to destination
+     */
+    @Override
+    public boolean copyDirectory(@NonNull File source, @NonNull File destination, ProgressSenderAndCancelListener<Integer> ioTask) {
+        Path sourceDirPath = source.toPath();
+        Path destinationDirPath = destination.toPath();
+
+        try {
+            Files.walkFileTree(sourceDirPath, new SimpleFileVisitor<Path>() {
+
+                @Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                    Files.createDirectories(destinationDirPath.resolve(sourceDirPath.relativize(dir)));
+                    return FileVisitResult.CONTINUE;
+                }
+
+
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    File destination = destinationDirPath.resolve(sourceDirPath.relativize(file)).toFile();
+
+                    // Copy if source file and destination file aren't of the same length
+                    // i.e., copy if destination file wasn't copied completely
+                    if (file.toFile().length() != destination.length()) {
+                        OutputStream outputStream = new FileOutputStream(destination, false);
+                        long bytesCopied = copyFile(file.toString(), outputStream);
+                        ioTask.doProgress((int) bytesCopied / 1024);
+                        outputStream.close();
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            Timber.w(e);
+            return false;
+        }
+
+        return true;
     }
 }

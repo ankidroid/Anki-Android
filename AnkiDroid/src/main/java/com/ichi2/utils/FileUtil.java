@@ -104,4 +104,26 @@ public class FileUtil {
 
         return new AbstractMap.SimpleEntry<>(fileName.substring(0, index), fileName.substring(index));
     }
+
+
+    /**
+     * Calculates the size of a directory by recursively exploring the directory tree and summing the length of each
+     * file.
+     * @param f Abstract representation of the directory whose size needs to be calculated
+     * @return Size of the directory in bytes
+     */
+    public static long getDirectorySize(File f) {
+        if (!f.isDirectory()) {
+            return f.length();
+        }
+
+        long size = 0;
+        File[] children = f.listFiles();
+        if (children != null) {
+            for (File file : children) {
+                size += getDirectorySize(file);
+            }
+        }
+        return size;
+    }
 }

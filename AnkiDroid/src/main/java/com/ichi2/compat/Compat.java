@@ -21,6 +21,9 @@ import android.content.pm.PackageInfo;
 import android.text.Spanned;
 import android.widget.TimePicker;
 
+import com.ichi2.async.ProgressSenderAndCancelListener;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -58,5 +61,31 @@ public interface Compat {
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
+
+    /**
+     * Copies directory represented by source to the directory represented by destination. For instance, if source is
+     * /sdcard/AnkiDroid and destination is /sdcard/com.ichi2.anki, then after migration, the source will have been
+     * copied to /sdcard/com.ichi2.anki/AnkiDroid.
+     * Sends progress updates in kilobytes via the listener, ioTask.
+     *
+     * @param source Abstract representation of source directory
+     * @param destination Abstract representation of destination directory
+     * @param ioTask Listener used to send progress updates
+     * @return <code>true</code> if directory copied to destination
+     */
+    boolean copyDirectory(File source, File destination, ProgressSenderAndCancelListener<Integer> ioTask);
+
+    /**
+     * Moves directory represented by source to the directory represented by destination. For instance, if source is
+     * /sdcard/AnkiDroid and destination is /sdcard/com.ichi2.anki, then after migration, the source will now have the
+     * path /sdcard/com.ichi2.anki/AnkiDroid.
+     * Sends progress updates in kilobytes via the listener, ioTask.
+     *
+     * @param source Abstract representation of source directory
+     * @param destination Abstract representation of destination directory
+     * @param ioTask Listener used to send progress updates
+     * @return <code>true</code> if directory moved to destination
+     */
+    boolean moveDirectory(File source, File destination, ProgressSenderAndCancelListener<Integer> ioTask);
 }
 

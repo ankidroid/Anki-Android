@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.widget.TimePicker;
 
+import com.ichi2.async.ProgressSenderAndCancelListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -105,6 +107,95 @@ public class CompatV21 implements Compat {
         }
         target.flush();
         return count;
+    }
+
+
+    /**
+     * Copies directory represented by source to the directory represented by destination.
+     * Assumes that the App has access to the Legacy Storage Directory via WRITE_EXTERNAL_STORAGE.
+     * Sends progress in kilobytes via the listener, ioTask, after each file copy.
+     * <p><br>
+     * Explores the directory tree recursively and copies each directory and file to the destination.
+     * <p><br>
+     * @param source Abstract representation of source directory
+     * @param destination Abstract representation of destination directory
+     * @param ioTask Listener used to send progress updates
+     * @return <code>true</code> if directory copied to destination
+     */
+    @Override
+    public boolean copyDirectory(@NonNull File source, @NonNull File destination, ProgressSenderAndCancelListener<Integer> ioTask) {
+        if (source.isDirectory()) {
+            // Create destination directory
+            if (!destination.exists()) {
+                destination.mkdirs();
+            }
+
+            String[] files = source.list();
+
+            // Directory is empty and has already been created at the destination
+            if (files == null) {
+                return true;
+            }
+
+            // Copy directory contents
+            for (String file : files) {
+                File srcFile = new File(source, file);
+                File destFile = new File(destination, file);
+
+                // Copy if source file and destination file aren't of the same length
+                // i.e., copy if destination file wasn't copied completely
+                if (srcFile.length() != destFile.length()) {
+                    if (!copyDirectory(srcFile, destFile, ioTask)) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            try {
+                OutputStream out = new FileOutputStream(destination, false);
+                ioTask.doProgress((int) copyFile(source.getAbsolutePath(), out) / 1024);
+                out.close();
+            } catch (IOException e) {
+                Timber.w(e);
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Moves directory represented by source to the directory represented by destination.
+     * Assumes that the App has access to the Legacy Storage Directory via WRITE_EXTERNAL_STORAGE.
+     * Sends progress in kilobytes via the listener, ioTask, after each file copy.
+     * <p><br>
+     * Attempts to move the directory by renaming its path. This is the fastest approach but it is only possible if the
+     * source & destination directories are on the same storage partition.
+     * <p><br>
+     * If renaming the path isn't possible, it explores the directory tree and copies each directory and file
+     * to the destination.
+     * <p><br>
+     * @param source Abstract representation of source directory
+     * @param destination Abstract representation of destination directory
+     * @param ioTask Listener used to send progress updates
+     * @return <code>true</code> if directory moved to destination
+     */
+    @Override
+    public boolean moveDirectory(@NonNull File source, @NonNull File destination, ProgressSenderAndCancelListener<Integer> ioTask) {
+        // Try renaming the file's paths - faster way to move a directory
+        boolean directoryCopied = source.renameTo(destination);
+
+        // If it doesn't work, resort to exploring the directory tree manually and copying files
+        if (!directoryCopied) {
+            directoryCopied = copyDirectory(source, destination, ioTask);
+        }
+
+        if (directoryCopied) {
+            source.delete();
+            return true;
+        }
+
+        return false;
     }
 
     // Until API 23 the methods have "current" in the name
