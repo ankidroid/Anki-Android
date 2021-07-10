@@ -336,4 +336,5 @@
     <string name="email_id_empty">Bắt buộc có địa chỉ email</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
     <string name="back_pressed_once">Nhấn trở lại lần nữa để thoát ứng dụng</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

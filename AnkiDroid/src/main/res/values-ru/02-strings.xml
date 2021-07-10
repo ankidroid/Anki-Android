@@ -374,4 +374,5 @@
     <string name="email_id_empty">Требуется адрес электронной почты</string>
     <string name="password_empty">Требуется пароль</string>
     <string name="back_pressed_once">Нажмите «Назад» ещё раз, чтобы выйти</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

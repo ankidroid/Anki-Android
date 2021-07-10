@@ -349,4 +349,5 @@
     <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

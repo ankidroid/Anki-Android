@@ -210,6 +210,8 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Tarkat statistiikat</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Ota tarkat statistiikat käyttöön</string>

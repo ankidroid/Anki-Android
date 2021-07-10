@@ -210,6 +210,8 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
     <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
