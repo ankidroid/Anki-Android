@@ -90,7 +90,7 @@
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">カードをブラウズ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -179,8 +179,8 @@
     <string name="card_template_editor_styling">書式</string>
     <string name="card_template_editor_menu_card_browser_appearance">カードの表示設定</string>
     <string name="card_template_editor_deck_override">デッキの上書き</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">フィールドを挿入</string>
+    <string name="card_template_editor_select_field">フィールドを選択</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>

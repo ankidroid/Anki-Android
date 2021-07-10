@@ -105,7 +105,7 @@
     <string name="unbury">Odkop</string>
     <string name="rename_deck">Zmień nazwę talii</string>
     <string name="create_shortcut">Utwórz skrót</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Przeglądaj karty</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj notatkę</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizacja konta</string>
@@ -194,8 +194,8 @@
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_card_browser_appearance">Wygląd przeglądarki kart</string>
     <string name="card_template_editor_deck_override">Nadpisanie talii</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">wstaw pole</string>
+    <string name="card_template_editor_select_field">wybierz pole</string>
     <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
@@ -235,7 +235,7 @@
     <string name="sync_conflict_title_new">Wybierz kolekcje którą chcesz zachować</string>
     <string name="sync_conflict_replace_title">Zastąp kolekcję</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="one">%1$d karta (0 do przejrzenia)</item>
         <item quantity="few">%1$d cards (0 due)</item>
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>

@@ -62,7 +62,7 @@
         <item quantity="other">%d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d jam %d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="other">%d hari %d jam tinggal</item>
@@ -77,10 +77,10 @@
     <string name="type_answer_hint">Taip jawapan</string>
     <string name="show_answer">Tunjuk jawapan</string>
     <string name="hide_answer">Sembunyi jawapan</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
+    <string name="ease_button_again">Ulang</string>
+    <string name="ease_button_hard">Susah</string>
+    <string name="ease_button_good">Baik</string>
+    <string name="ease_button_easy">Senang</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>

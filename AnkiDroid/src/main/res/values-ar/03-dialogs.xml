@@ -42,7 +42,7 @@
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
     <string name="check_db_acknowledge">تم فحص قاعدة البيانات</string>
     <string name="check_db_acknowledge_shrunk">تم فحص قاعدة البيانات وتحسينها.\nقُلِّصت بـ %d ميجابايت.</string>
-    <string name="contextmenu_deckpicker_delete_deck">احذف شَدّة الأوراق</string>
+    <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
     <string name="delete_deck_default_deck">لا يمكن حذف الرزمة الافتراضية</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <plurals name="delete_deck_message">
@@ -122,12 +122,12 @@
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
     <string name="custom_study_new_total_new">البطاقات الجديدة في شَدة الأورق: %d</string>
-    <string name="custom_study_rev_total_rev">المراجعات المستحقة في شَدّة الأوراق: %d</string>
+    <string name="custom_study_rev_total_rev">المراجعات المستحقة في الرزمة: %d</string>
     <string name="custom_study_new_extend">رفع/إنقاص (“-3”) الحد اليومي للبطاقات الجديدة بـ</string>
     <string name="custom_study_rev_extend">رفع/إنقاص (“-3”) الحد اليومي للمراجعات بـ</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
-    <string name="custom_study_random">اختر س بطاقة من شَدّة الأوراق عشوائيًا:</string>
+    <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء شَدّة الدراسة المخصصة</string>
     <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
@@ -226,7 +226,7 @@
     <string name="error_selecting_image">فشل تحديد الصورة. الرجاء الاطلاع على دليل الاستخدام. %s</string>
     <string name="error_deleting_image">فشل حذف الصورة</string>
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
-    <string name="background_image_too_large">خلفية منتقي شَدّة الأوراق كبيرة جداً</string>
+    <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
     <string name="image_max_size_allowed">الحد الأقصى لحجم الصورة المسموح به هو %d ميجابايت</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

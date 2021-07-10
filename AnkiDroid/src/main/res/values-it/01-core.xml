@@ -184,8 +184,8 @@
     <string name="card_template_editor_styling">Stile</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspetto del browser delle carte</string>
     <string name="card_template_editor_deck_override">Sovrascrittura Mazzo</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Inserisci campo</string>
+    <string name="card_template_editor_select_field">Seleziona campo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminare il tipo di carta «%2$s», e la sua carta %1$d?</item>

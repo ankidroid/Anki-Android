@@ -215,13 +215,13 @@
     <string name="wrong_tag_closed">\'{{/%1$s}}\' सापडला, परंतु अपेक्षित \'{{/%2$s}}\'</string>
     <string name="filter_error">%s फिल्टरमध्ये त्रुटी</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_message_new">संग्रह एकत्रित करू शकत नाही. कुठला संग्रह तुम्हाला ठेवायला आवडेल ?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">एन्कीड्रॉंड</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">एन्कीवेब</string>
+    <string name="sync_conflict_remote_confirm_new">तुमचा एंकिवेब  वरील संग्रह पुर्नस्तीत करा एंकिड्रॉइड वर.</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_title_new">संग्रहाला  निवडा ठेवण्यासाठी </string>
+    <string name="sync_conflict_replace_title">संग्रह पून्हास्तित करा</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>

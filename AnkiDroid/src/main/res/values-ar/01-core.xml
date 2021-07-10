@@ -110,10 +110,10 @@
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_change_deck_multi">تغيير شَدّات الأوراق</string>
-    <string name="move_all_to_deck">نقل الكل إلى شَدّة الأوراق</string>
+    <string name="undo_action_change_deck_multi">تغيير الرزم</string>
+    <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
-    <string name="rename_deck">إعادة تسمية شَدّة الأوراق</string>
+    <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
@@ -142,8 +142,8 @@
     <string name="menu_mark_note">تعليم الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
-    <string name="new_deck">إنشاء شَدّة أوراق</string>
-    <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
+    <string name="new_deck">إنشاء رزمة</string>
+    <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -167,10 +167,10 @@
     <string name="time_quantity_months">%.1f ش</string>
     <string name="time_quantity_years">%.1f ع</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">إعادة انشئ شَدّة أوراق مُفَلتَرة...</string>
+    <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
     <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>
-    <string name="create_subdeck">إنشاء شَدّة أوراق فرغية</string>
+    <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_filtered_deck">إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
@@ -204,8 +204,8 @@
     <string name="card_template_editor_styling">التنسيق</string>
     <string name="card_template_editor_menu_card_browser_appearance">مظهر متصفح البطاقات</string>
     <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">إدراج حقل</string>
+    <string name="card_template_editor_select_field">تحديد حقل</string>
     <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
@@ -247,11 +247,11 @@
     <string name="sync_conflict_title_new">حدد مجموعة للإبقاء عليها</string>
     <string name="sync_conflict_replace_title">استبدال المجموعة</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="zero">%1$d cards (0 due)</item>
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="two">%1$d cards (0 due)</item>
-        <item quantity="few">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="zero">%1$d بطاقة (ولا واحدة مستحقة)</item>
+        <item quantity="one">%1$d بطاقة (ولا واحدة مستحقة)</item>
+        <item quantity="two">%1$d بطاقة (ولا واحدة مستحقة)</item>
+        <item quantity="few">%1$d بطاقات (ولا واحدة مستحقة)</item>
+        <item quantity="many">%1$d بطاقة (ولا واحدة مستحقة)</item>
+        <item quantity="other">%1$d بطاقة (ولا واحدة مستحقة)</item>
     </plurals>
 </resources>
