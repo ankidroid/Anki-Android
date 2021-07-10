@@ -129,7 +129,7 @@ In this case, you'll need to implement the methods `actualOnPreExecute(MyActivit
 ## Allow for closed collection
 In some rare case, you might want to allow for the task to be executed with a closed collection. It might be useful for backup, for cleaning the database, etc...
 
-In this case, you must add to the ``TaskToDoInBackground`  `@Override protected boolean requiresOpenCollection() {return true;}`.
+In this case, you must add to the `TaskToDoInBackground`  `@Override protected boolean requiresOpenCollection() {return true;}`.
 
 
 # Architecture
