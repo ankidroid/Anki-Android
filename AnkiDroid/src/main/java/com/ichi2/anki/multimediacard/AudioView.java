@@ -286,7 +286,7 @@ public class AudioView extends LinearLayout {
                         // -> Play, start from beginning
                         mStatus = Status.PLAYING;
                         setImageResource(mResPauseImage);
-                        mPlayer.stop();
+                        mPlayer.stop(getAudioPath());
                         mPlayer.start();
                         notifyPlay();
                         break;
@@ -340,7 +340,7 @@ public class AudioView extends LinearLayout {
             switch (mStatus) {
                 case PAUSED:
                 case PLAYING:
-                    mPlayer.stop();
+                    mPlayer.stop(getAudioPath());
                     mStatus = Status.STOPPED;
                     notifyStop();
                     break;

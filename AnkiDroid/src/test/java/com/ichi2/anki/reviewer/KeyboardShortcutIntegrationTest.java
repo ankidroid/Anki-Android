@@ -134,7 +134,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
         // now we're set up and recording, pressing Shift + V should move us to recording
         pressShiftAndVThenRelease();
 
-        verify(player, times(1)).stop();
+        verify(player, times(1)).stop(anyString());
         verify(recorder, times(1)).startRecording(anyString());
         verifyNoMoreInteractions(recorder, player);
         assertStatus(AudioView.Status.RECORDING);

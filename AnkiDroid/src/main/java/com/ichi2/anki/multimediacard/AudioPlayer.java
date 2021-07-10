@@ -39,11 +39,16 @@ public class AudioPlayer {
         mPlayer.setDataSource(audioPath);
         mPlayer.setOnCompletionListener(mp -> {
             onStopping();
-            mPlayer.stop();
+            stop(audioPath);
             onStopped();
         });
+        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.start();
+            }
+        });
         mPlayer.prepare();
-        mPlayer.start();
     }
 
 
@@ -67,10 +72,12 @@ public class AudioPlayer {
         mPlayer.start();
     }
 
-
-    public void stop() {
+    
+    public void stop(String audioPath) {
         try {
+            mPlayer.setDataSource(audioPath);
             mPlayer.prepare();
+            mPlayer.pause();
             mPlayer.seekTo(0);
         } catch (Exception e) {
             Timber.e(e);
