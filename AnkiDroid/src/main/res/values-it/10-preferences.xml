@@ -208,8 +208,8 @@
     <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
+    <string name="paste_as_png_summary">Di default Anki incolla le immagini sugli appunti come file JPG per salvare lo spazio su disco. Puoi usare quest\'opzione per incollare invece come immagini PNG.</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiche avanzate</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Attiva le statistiche avanzate</string>
@@ -291,7 +291,7 @@
     <string name="deck_conf_cram_order" maxLength="41">carte selezionate per</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ripianifica</string>
     <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Abilita il secondo filtro</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passi personalizzati (in minuti)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definisci passi personalizzati</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Abilita notifiche di promemoria per i mazzi in questo gruppo di mazzi</string>
