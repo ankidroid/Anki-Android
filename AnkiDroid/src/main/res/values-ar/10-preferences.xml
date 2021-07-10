@@ -210,6 +210,8 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">لصق صور الحافظة كـ PNG</string>
     <string name="paste_as_png_summary">بشكل افتراضي يلصق أنكي الصور في الحافظة بصيغة JPG لتوفير مساحة القرص. تستطيع استخدام هذا الخيار للصق الصور بصيعة PNG بدلًا من ذلك.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">إحصائيات متقدمة</string>
     <string name="enable_advanced_statistics_title" maxLength="41">تفعيل الإحصائيات المتقدمة</string>

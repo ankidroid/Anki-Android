@@ -348,4 +348,5 @@
     <string name="email_id_empty">E-posta adresi gereklidir</string>
     <string name="password_empty">Parola gereklidir</string>
     <string name="back_pressed_once">Çıkmak için tekrar geriye basın</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

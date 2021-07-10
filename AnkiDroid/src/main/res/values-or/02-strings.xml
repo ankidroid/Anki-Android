@@ -349,4 +349,5 @@
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
     <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁନର୍ବାର ଦବାନ୍ତୁ</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

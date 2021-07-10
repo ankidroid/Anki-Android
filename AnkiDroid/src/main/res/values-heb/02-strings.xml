@@ -375,4 +375,5 @@
     <string name="email_id_empty">נדרשת כתובת אימייל.</string>
     <string name="password_empty">דרושה סיסמא</string>
     <string name="back_pressed_once">לחץ \'חזור\' פעם נוספת כדי לצאת</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

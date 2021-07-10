@@ -336,4 +336,5 @@
     <string name="email_id_empty">Alamat surel diperlukan</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
     <string name="back_pressed_once">Mohon tekan sekali lagi untuk keluar</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>
