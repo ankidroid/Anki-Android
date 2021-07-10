@@ -174,21 +174,32 @@ public class DeckSpinnerSelection {
         return mSpinner;
     }
 
-    // Iterates the drop down decks, and selects the one matching the given id
-    public boolean selectDeckById(long deckId) {
+    /**
+     * Iterates the drop down decks, and selects the one matching the given id.
+     * @param deckId The deck id to be selected.
+     * @param setAsCurrentDeck If true, deckId will be set as the current deck id of Collection
+     * (this means the deck selected here will continue to appear in any future Activity whose
+     * display data is loaded from Collection's current deck). If false, deckId will not be set as
+     * the current deck id of Collection.
+     * @return True if a deck with deckId exists, false otherwise.
+     */
+    public boolean selectDeckById(long deckId, boolean setAsCurrentDeck) {
         if (deckId == ALL_DECKS_ID) {
             selectAllDecks();
             return true;
         }
-        return searchInList(deckId);
+        return searchInList(deckId, setAsCurrentDeck);
     }
 
 
-    private boolean searchInList(long deckId) {
+    private boolean searchInList(long deckId, boolean setAsCurrentDeck) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
                 int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
                 selectDropDownItem(position);
+                if (setAsCurrentDeck) {
+                    mContext.getCol().getDecks().select(deckId);
+                }
                 return true;
             }
         }

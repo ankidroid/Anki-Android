@@ -266,7 +266,7 @@ public class NoteEditor extends AnkiActivity implements
         }
         mCurrentDid = deck.getDeckId();
         mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
-        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), false);
     }
 
     @Override
@@ -1822,7 +1822,7 @@ public class NoteEditor extends AnkiActivity implements
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();
         }
-        mDeckSpinnerSelection.selectDeckById(mCurrentDid);
+        mDeckSpinnerSelection.selectDeckById(mCurrentDid, false);
     }
 
 

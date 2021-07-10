@@ -132,7 +132,7 @@ public class Statistics extends NavigationDrawerActivity implements
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         mDeckSpinnerSelection.setShowAllDecks(true);
-        mDeckSpinnerSelection.selectDeckById(deckId);
+        mDeckSpinnerSelection.selectDeckById(deckId, false);
         mTaskHandler.setDeckId(deckId);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
@@ -235,7 +235,7 @@ public class Statistics extends NavigationDrawerActivity implements
             return;
         }
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
-        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), true);
         mTaskHandler.setDeckId(deck.getDeckId());
         mViewPager.getAdapter().notifyDataSetChanged();
     }
