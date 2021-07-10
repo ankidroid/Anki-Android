@@ -892,7 +892,7 @@ public class Stats {
                     .query(query)) {
             while (cur.moveToNext()) {
                 double[] hourData = new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) };
-                list.set((int)hourData[0], hourData);
+                list.set(((((int)hourData[0] % 24) + 24) % 24), hourData); // Force the data to be positive int in 0-23 range
             }
         }
 
