@@ -13,11 +13,11 @@ The problem is that, sometime, you want to show the user something that you don'
 
 The solution is to ask the program to do two things at once. One thing, on the UI thread, is to continue to show the screen to the user and listen to its action. The other task, done by the background thread, is to download, to access the database, or whatever they have to do to get the data, or save the data, etc... then when the data is available, when the action is done, the background thread sends everything required (image, sound, the computed average) to the UI thread so that the UI thread can show it. In between the UI thread had to deal with the fact that the information is unknown and potentially let the user know that the background task is doing the work.
 
-If the background task is long, it is current for it to indicate to the user that it has done N percent or that S seconds remain. Another role of the background task is to send those updates to the UI task. Usually, it serves to let the user know what to expect. However, it may have more creative use. For example, the background task can "update" the UI task with the downloaded image, so that the downloaded image can be shown immediately, and then put the image in a cache. 
+If the background task is long, it is current for it to indicate to the user that it has done N percent or that S seconds remain. Another role of the background task is to send those updates to the UI task. Usually, it serves to let the user know what to expect. However, it may have more creative use. For example, the background task can "update" the UI task with the downloaded image, so that the downloaded image can be shown immediately, and then put the image in a cache.
 
 # How to do asynchronous computation in AnkiDroid
 
-The main method you want to use is `TaskManager.launchCollectionTask`.
+The main method you want to use is `TaskManager.launchCollectionTask`. As it is usual with code, you should search for use of this method in the codebase to see how it is used. Once you have read the theoretical documentation, seeing actual use should be most helpful
 
 You can do
 ```java
