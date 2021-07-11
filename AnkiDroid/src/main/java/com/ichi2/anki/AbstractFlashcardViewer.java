@@ -1363,6 +1363,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void undo() {
         if (isUndoAvailable()) {
             TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
+            UIUtils.showThemedToast(getApplicationContext(), getApplicationContext().getString(R.string.undo_done_msg) , false);
         }
     }
 
