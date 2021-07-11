@@ -31,6 +31,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
@@ -233,6 +234,14 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         TaskManager.removeTask(this);
         if (mListener != null) {
             mListener.onCancelled();
+        }
+    }
+
+    public static class MigrateToScoped extends TaskDelegate<Integer, Boolean> {
+
+        @Override
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
+            return DeckPicker.migrateToScopedStorage(col.getContext(), collectionTask);
         }
     }
 
