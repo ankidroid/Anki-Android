@@ -348,6 +348,7 @@
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
 
+    <string name="button_text">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -365,6 +366,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll Toolbar</string>
 
 
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->

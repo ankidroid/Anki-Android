@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -1069,6 +1070,13 @@ public class NoteEditor extends AnkiActivity implements
 
 
     @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateToolbar();
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_editor, menu);
         if (mAddNote) {
@@ -1142,6 +1150,10 @@ public class NoteEditor extends AnkiActivity implements
             item.setChecked(!item.isChecked()); // Needed for Android 9
             toggleCapitalize(item.isChecked());
             return true;
+        } else if (itemId == R.id.action_scroll_toolbar) {
+            item.setChecked(!item.isChecked());
+            AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("noteEditorScrollToolbar", item.isChecked()).apply();
+            updateToolbar();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1900,7 +1912,7 @@ public class NoteEditor extends AnkiActivity implements
 
             // 0th button shows as '1' and is Ctrl + 1
             int visualIndex = b.getIndex() + 1;
-            String text = Integer.toString(visualIndex);
+            String text = b.getTitle().isEmpty() ? Integer.toString(visualIndex) : b.getTitle().substring(0, 1);
             Drawable bmp = mToolbar.createDrawableForString(text);
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
@@ -1933,14 +1945,14 @@ public class NoteEditor extends AnkiActivity implements
                 .apply();
     }
 
-    private void addToolbarButton(String prefix, String suffix) {
+    private void addToolbarButton(String prefix, String suffix, String text) {
         if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
             return;
         }
 
         ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
 
-        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix));
+        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix, text));
         saveToolbarButtons(toolbarButtons);
 
         updateToolbar();
@@ -1977,8 +1989,9 @@ public class NoteEditor extends AnkiActivity implements
                     View view = m.getView();
                     EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
                     EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
+                    EditText et3 = view.findViewById(R.id.note_editor_toolbar_button_text);
 
-                    addToolbarButton(et.getText().toString(), et2.getText().toString());
+                    addToolbarButton(et.getText().toString(), et2.getText().toString(), et3.getText().toString());
                 })
                 .show();
     }
