@@ -217,6 +217,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private static final String MARK_CARD = "markCard";
     private static final String TOGGLE_FLAG = "toggleFlag";
+    private static final String BURY_CARD = "buryCard";
+    private static final String TAG_CARD = "tagCard";
+    private static final String BURY_NOTE = "buryNote";
+    private static final String SUSPEND_CARD = "suspendCard";
+    private static final String SUSPEND_NOTE = "suspendNote";
 
     // JS API ERROR CODE
     private static final int ankiJsErrorCodeDefault = 0;
@@ -3669,6 +3674,77 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             }
 
+            // bury current card using js api
+            if (url.startsWith("signal:anki_bury_card")) {
+                if (isAnkiApiNull(BURY_CARD)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(BURY_CARD)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+                buryCard();
+                return true;
+            }
+
+            // bury current note using js api
+            if (url.startsWith("signal:anki_bury_note")) {
+                if (isAnkiApiNull(BURY_NOTE)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(BURY_NOTE)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+                buryNote();
+                return true;
+            }
+
+            // suspend current card using js api
+            if (url.startsWith("signal:anki_suspend_card")) {
+                if (isAnkiApiNull(SUSPEND_CARD)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(SUSPEND_CARD)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+                suspendCard();
+                return true;
+            }
+
+            // suspend current note using js api
+            if (url.startsWith("signal:anki_suspend_note")) {
+                if (isAnkiApiNull(SUSPEND_NOTE)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(SUSPEND_NOTE)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+                suspendNote();
+                return true;
+            }
+
+            // add tag to the current card
+            if (url.startsWith("signal:anki_add_tag")) {
+                if (isAnkiApiNull(TAG_CARD)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(TAG_CARD)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+
+                showTagsDialog();
+                return true;
+            }
+
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
@@ -3983,7 +4059,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     // list of api that can be accessed
-    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD};
+    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD, BURY_CARD, BURY_NOTE, SUSPEND_CARD, SUSPEND_NOTE, TAG_CARD};
     // JS api list enable/disable status
     private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
