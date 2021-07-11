@@ -17,8 +17,11 @@
 package com.ichi2.async;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.utils.Computation;
 
 import org.junit.runner.RunWith;
+
+import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -30,7 +33,7 @@ import static org.hamcrest.Matchers.notNullValue;
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
     protected <Progress, Result> Result execute(TaskDelegate<Progress, Result> task) {
-        CollectionTask<Progress, Result> collectionTask = TaskManager.launchCollectionTask(task);
+        CollectionTask<Progress, Result> collectionTask = (CollectionTask<Progress, Result>)TaskManager.launchCollectionTask(task);
         try {
             return collectionTask.get();
         } catch (Exception e) {

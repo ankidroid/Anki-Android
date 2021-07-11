@@ -75,7 +75,7 @@ public class SingleTaskManager extends TaskManager {
      * @return the newly created task
      */
     @Override
-    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
         return launchCollectionTask(task, null);
     }
 
@@ -92,7 +92,7 @@ public class SingleTaskManager extends TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public <Progress, Result> CollectionTask<Progress, Result>
+    public <Progress, Result> Cancellable
     launchCollectionTaskConcrete(@NonNull TaskDelegate<Progress, Result> task,
                          @Nullable TaskListener<? super Progress, ? super Result> listener) {
         // Start new task
