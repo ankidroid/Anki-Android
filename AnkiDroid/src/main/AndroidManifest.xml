@@ -380,6 +380,12 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <activity
+            android:name="com.ichi2.anki.AddonBrowser"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:parentActivityName=".DeckPicker"
+            />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />

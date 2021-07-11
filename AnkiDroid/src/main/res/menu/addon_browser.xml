@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_install_addon"
+        android:title="@string/install_js_addon"/>
+    <item
+        android:id="@+id/action_get_more_addons"
+        android:title="@string/get_more_addons"/>
+</menu>
