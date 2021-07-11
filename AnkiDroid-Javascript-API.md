@@ -159,6 +159,30 @@ In full screen, a button can be added to show side navigation drawer.
 <button onclick="ankiShowNavDrawer()">Show Navigation Drawer</button>
 ```
 
+## Show Toast
+* #### Name
+```ankiShowToast(message)```
+* #### Info
+Show Android Toast message 
+* #### Usage
+```javascript
+ankiShowToast("This message will shown in reveiwer");
+```
+
+
+## Get status if showing question or answer
+* #### Name
+```AnkiDroidJS.ankiIsDisplayingAnswer()```
+* #### Type of return value
+```Boolean```
+* #### Info
+Return `true` if reviewer showing answer else `false`
+* #### Usage
+```javascript
+console.log(AnkiDroidJS.ankiIsDisplayingAnswer());
+```
+
+
 ## Get fullscreen status
 * #### Name
 ```AnkiDroidJS.ankiIsInFullscreen()```
@@ -330,6 +354,18 @@ Returns the ID of the deck which contains the card. Example: ```1595967594978```
 console.log(AnkiDroidJS.ankiGetCardDid());
 ```
 
+
+## Get deck name
+* #### Name
+```AnkiDroidJS.ankiGetDeckName()```
+* #### Type of return value
+```String```
+* #### Info
+Return deck name currently showing in webview/reviewer
+* #### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetDeckName());
+```
 
 ## Last modified time of card
 * #### Name 
@@ -714,3 +750,6 @@ The implementation of above functionality can be found in this github repo.
 <br>[#6567 Night mode status in Card](https://github.com/ankidroid/Anki-Android/pull/6567)
 <br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)
 <br>[#6886 Automatically flip card if there is no cloze hint + detect ankidroid](https://github.com/ankidroid/Anki-Android/issues/6886)
+<br>[#6386 Show Toast using JavaScript function in WebView](https://github.com/ankidroid/Anki-Android/pull/6386)
+<br>[#8199 JS API to know if answer is displaying or question](https://github.com/ankidroid/Anki-Android/pull/8199)
+<br>[#8500 Get deck name using JS API](https://github.com/ankidroid/Anki-Android/pull/8500)
