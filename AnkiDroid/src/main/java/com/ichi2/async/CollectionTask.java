@@ -691,7 +691,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         private final Card[] mCardsCopied;
 
 
-        public UndoRepositionRescheduleResetCards(@StringRes int undoNameId, Card[] cards_copied) {
+        public UndoRepositionRescheduleResetCards(@StringRes @UNDO_NAME_ID int undoNameId, Card[] cards_copied) {
             super(undoNameId);
             this.mCardsCopied = cards_copied;
         }
@@ -943,8 +943,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
     private abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
-        @StringRes private final int mUndoNameId;
-        public RescheduleRepositionReset(List<Long> cardIds, @StringRes int undoNameId) {
+        @StringRes @UNDO_NAME_ID private final int mUndoNameId;
+        public RescheduleRepositionReset(List<Long> cardIds, @StringRes @UNDO_NAME_ID int undoNameId) {
             super(cardIds);
             mUndoNameId = undoNameId;
         }
