@@ -50,7 +50,7 @@ public class CheckMediaTest extends RobolectricTest {
 
         assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
 
-        CollectionTask<Void, Computation<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
+        CollectionTask<Void, Computation<List<List<String>>>> task = (CollectionTask<Void, Computation<List<List<String>>>>) TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
 
         task.get();
 

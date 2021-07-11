@@ -21,7 +21,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -32,13 +32,13 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <Progress, Result> CollectionTask<Progress, Result> launchCollectionTaskConcrete(
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(
             @NonNull TaskDelegate<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
-    public static <Progress, Result> CollectionTask<Progress, Result> executeTaskWithListener(
+    public static <Progress, Result> Cancellable executeTaskWithListener(
             @NonNull TaskDelegate<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
         if (listener != null) {

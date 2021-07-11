@@ -105,7 +105,7 @@ import static com.ichi2.utils.Computation.ERR;
  * @param <Progress> The type of progress that is sent by the TaskDelegate. E.g. a Card, a pairWithBoolean.
  * @param <Result>   The type of result that the TaskDelegate sends. E.g. a tree of decks, counts of a deck.
  */
-public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progress, Result> {
+public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progress, Result> implements Cancellable {
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
