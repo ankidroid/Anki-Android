@@ -152,5 +152,9 @@
         <item name="android:layout_margin">5dp</item>
     </style>
 
-
+    <style name="accessible_checkbox">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

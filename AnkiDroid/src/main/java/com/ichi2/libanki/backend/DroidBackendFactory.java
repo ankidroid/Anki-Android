@@ -56,7 +56,7 @@ public class DroidBackendFactory {
                 backendFactory = BackendFactory.createInstance();
             } catch (RustBackendFailedException e) {
                 Timber.w(e, "Rust backend failed to load - falling back to Java");
-                AnkiDroidApp.sendExceptionReport(e, "DroidBackendFactory::getInstance");
+                AnkiDroidApp.registerCriticalException(e, "DroidBackendFactory::getInstance");
             }
         }
 
