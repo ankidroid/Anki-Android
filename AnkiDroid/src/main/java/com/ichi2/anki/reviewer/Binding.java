@@ -143,9 +143,7 @@ public class Binding {
             string.append(requireNonNull(mModifierKeys).toString());
             string.append(mUnicodeCharacter);
         } else if (mGesture != null) {
-            string.append(GESTURE_PREFIX);
-            string.append(' ');
-            string.append(context.getString(mGesture.getResourceId()));
+            string.append(mGesture.toDisplayString(context));
         }
 
         return string.toString();

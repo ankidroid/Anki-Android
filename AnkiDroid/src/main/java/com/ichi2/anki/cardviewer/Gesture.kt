@@ -15,8 +15,12 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.ichi2.anki.R
+
+/** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
+const val GESTURE_PREFIX = "\u235D"
 
 // TODO: Code and preference defaults are inconsistent: #8066
 enum class Gesture(
@@ -48,5 +52,9 @@ enum class Gesture(
         val valueAsInt = Integer.parseInt(value)
 
         return ViewerCommand.fromInt(valueAsInt) ?: mPreferenceDefault
+    }
+
+    fun toDisplayString(context: Context): String {
+        return GESTURE_PREFIX + ' ' + context.getString(mResourceId)
     }
 }
