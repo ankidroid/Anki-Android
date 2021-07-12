@@ -35,7 +35,7 @@ import java.nio.file.StandardCopyOption;
 
 import timber.log.Timber;
 
-/** Implementation of {@link Compat} for SDK level 26 */
+/** Implementation of {@link Compat} for SDK level 26 and higher. Check  {@link Compat}'s for more detail. */
 @TargetApi(26)
 public class CompatV26 extends CompatV23 implements Compat {
 

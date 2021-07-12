@@ -30,7 +30,7 @@ import java.io.OutputStream;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-/** Baseline implementation of {@link Compat} with implementations for older APIs */
+/** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
 public class CompatV21 implements Compat {
 
     // Until API26, ignore notification channels
