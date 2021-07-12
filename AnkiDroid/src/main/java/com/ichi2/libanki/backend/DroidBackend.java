@@ -20,7 +20,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 
 import net.ankiweb.rsdroid.RustV1Cleanup;
@@ -52,7 +51,7 @@ public interface DroidBackend {
      * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
      * @return Timing information for the current day. See {@link SchedTimingToday}.
      */
-    SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) throws BackendNotSupportedException;
+    SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour);
 
     /**
      * For the given timestamp, return minutes west of UTC in the local timezone.<br/><br/>
@@ -63,7 +62,7 @@ public interface DroidBackend {
      * @param timestampSeconds The timestamp in seconds
      * @return minutes west of UTC in the local timezone
      */
-    int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException;
+    int local_minutes_west(long timestampSeconds);
 
     @RustV1Cleanup("backend.newDeckConfigLegacy")
     default DeckConfig new_deck_config_legacy() {

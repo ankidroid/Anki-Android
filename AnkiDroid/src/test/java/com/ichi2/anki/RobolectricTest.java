@@ -115,8 +115,6 @@ public class RobolectricTest implements CollectionGetter {
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(getHelperFactory());
-        // But, don't use the helper unless useLegacyHelper is true
-        Storage.setUseBackend(!useLegacyHelper());
         Storage.setUseInMemory(useInMemoryDatabase());
 
         //Reset static variable for custom tabs failure.
@@ -127,11 +125,6 @@ public class RobolectricTest implements CollectionGetter {
 
         // BUG: We do not reset the MetaDB
         MetaDB.closeDB();
-    }
-
-
-    protected boolean useLegacyHelper() {
-        return false;
     }
 
 

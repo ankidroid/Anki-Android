@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
 import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.RustCleanup;
 import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class DB {
     private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
+    @RustCleanup("Aim to use DB(string, BackendFactory)")
     public DB(String ankiFilename) {
         this(ankiFilename, null);
     }

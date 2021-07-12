@@ -18,7 +18,6 @@ package com.ichi2.libanki.backend;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 
@@ -88,10 +87,6 @@ public class RustDroidBackend implements DroidBackend {
     @Override
     public void useNewTimezoneCode(Collection col) {
         // enable the new timezone code on a new collection
-        try {
-            col.getSched().set_creation_offset();
-        } catch (BackendNotSupportedException e) {
-            throw e.alreadyUsingRustBackend();
-        }
+        col.getSched().set_creation_offset();
     }
 }

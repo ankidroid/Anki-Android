@@ -16,11 +16,12 @@
 
 package com.ichi2.libanki.backend.exception;
 
-import net.ankiweb.rsdroid.RustCleanup;
+import net.ankiweb.rsdroid.RustBackendFailedException;
 
-@RustCleanup("All of these should be removed when JavaBackend is removed")
-public class BackendNotSupportedException extends Exception {
-    public RuntimeException alreadyUsingRustBackend() {
-        return new RuntimeException("A BackendNotSupportedException should not occur when using Rust backend", this);
+/** The backend cannot be loaded, so the app cannot start */
+public class BackendNotSupportedException extends RuntimeException {
+
+    public BackendNotSupportedException(RustBackendFailedException e) {
+        super(e);
     }
 }

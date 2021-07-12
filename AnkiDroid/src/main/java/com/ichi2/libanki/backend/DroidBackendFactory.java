@@ -17,14 +17,13 @@
 package com.ichi2.libanki.backend;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 
 import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.RustBackendFailedException;
 import net.ankiweb.rsdroid.RustCleanup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
@@ -34,7 +33,7 @@ public class DroidBackendFactory {
     private static DroidBackend sBackendForTesting;
 
 
-    /** Intentionally private - use {@link DroidBackendFactory#getInstance(boolean)}} */
+    /** Intentionally private - use {@link #getInstance()}} */
     private DroidBackendFactory() {
 
     }
@@ -45,33 +44,23 @@ public class DroidBackendFactory {
      */
     @NonNull
     @RustCleanup("Change back to a constant SYNC_VER")
-    public static DroidBackend getInstance(boolean useBackend) {
+    public static DroidBackend getInstance() {
         if (sBackendForTesting != null) {
             return sBackendForTesting;
         }
 
-        BackendFactory backendFactory = null;
-        if (useBackend) {
-            try {
-                backendFactory = BackendFactory.createInstance();
-            } catch (RustBackendFailedException e) {
-                Timber.w(e, "Rust backend failed to load - falling back to Java");
-                AnkiDroidApp.sendExceptionReport(e, "DroidBackendFactory::getInstance");
-            }
+        try {
+            BackendFactory backendFactory = BackendFactory.createInstance();
+            return getInstance(backendFactory);
+        } catch (RustBackendFailedException e) {
+            Timber.w(e, "Rust backend failed to load - falling back to Java");
+            AnkiDroidApp.sendExceptionReport(e, "DroidBackendFactory::getInstance");
+            throw new BackendNotSupportedException(e);
         }
-
-        DroidBackend instance = getInstance(backendFactory);
-        // Update the Sync version if we can load the Rust
-        Consts.SYNC_VER = backendFactory == null ? 9 : 10;
-        return instance;
     }
 
-    private static DroidBackend getInstance(@Nullable BackendFactory backendFactory) {
-        if (backendFactory == null) {
-            return new JavaDroidBackend();
-        } else {
-            return new RustDroidBackend(backendFactory);
-        }
+    private static DroidBackend getInstance(@NonNull BackendFactory backendFactory) {
+        return new RustDroidBackend(backendFactory);
     }
 
     @VisibleForTesting
