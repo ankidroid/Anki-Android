@@ -33,17 +33,27 @@ import androidx.annotation.NonNull;
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
  * can be used. For example, see {@link CompatV21}.
  * <p>
- * Each implementation should extend the previous implementation and implement this interface.
+ * Each implementation {@code CompatVn} should extend the implementation {@code CompatVm} for the greatest m<n such that
+ * {@code CompatVm} exists. E.g. as of July 2021 {@code CompatV23} extends {@code CompatV21} because there is no {@code CompatV22}.
+ * If {@code CompatV22} were to be created one day, it will extends {@code CompatV22} and be extended by {@code CompatV23}.
  * <p>
- * Each implementation should only override the methods that first become available in its own version, use @Override.
+ * Each method {@code method} must be implemented in the lowest Compat implementation (right now {@code CompatV21}, but
+ * it will change when min sdk change). It must also be implemented in {@code CompatVn} if, in version {@code n} and higher,
+ * a different implementation must be used. This can be done either because some method used in the API {@code n} got
+ * deprecated, changed its behavior, or because the implementation of {@code method} can be more efficient.
  * <p>
- * Methods not supported by its API will default to the empty implementations of CompatV8.  Methods first supported
- * by lower APIs will default to those implementations since we extended them.
+ * When you call method {@code method} from some device with API {@code n}, it will uses the implementation in {@code CompatVm},
+ * for {@code m < n} as great as possible. The value of {@code m} being at least the current min SDK. The method may be empty,
+ * for example {@code setupNotificationChannel}'s implementation in {@code CompatV21} is empty since
+ * notification channels were introduced in API 26.
  * <p>
- * Example: CompatV21 extends CompatV19. This means that the setSelectableBackground function using APIs only available
- * in API 21, should be implemented properly in CompatV19 with @Override annotation. On the other hand a method
- * like showViewWithAnimation that first becomes available in API 19 need not be implemented again in CompatV21,
- * unless the behaviour is supposed to be different there.
+ * Example: {@code CompatV26} extends {@code CompatV23} which extends {@code CompatV21}. The method {@code vibrate} is
+ * defined in {@code CompatV21} where only the number of seconds of vibration is taken into consideration, and is
+ * redefined in {@code CompatV26} - using {@code @Override} - where the style of vibration is also taken into
+ * consideration. It meas that  on devices using APIs 21 to 25 included, the implementation of {@code CompatV21} is
+ * used, and on devices using API 26 and higher, the implementation of {@code CompatV26} is used.
+ * On the other hand a method like {@code setTime} that got defined in {@code CompatV21} and redefined in
+ * {@code CompatV23} due to a change of API, need not be implemented again in CompatV26.
  */
 public interface Compat {
 
