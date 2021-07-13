@@ -102,7 +102,7 @@ public class TagsDialogTest {
 
             dialog.getActionButton(DialogAction.POSITIVE).callOnClick();
 
-            verify(mockListener, times(1)).onSelectedTags(new ArrayList<>(), expectedOption);
+            verify(mockListener, times(1)).onSelectedTags(new ArrayList<>(), new ArrayList<>(), expectedOption);
         });
     }
 
@@ -135,7 +135,7 @@ public class TagsDialogTest {
 
             f.getParentFragmentManager().setFragmentResultListener(ON_SELECTED_TAGS_KEY, mockLifecycleOwner(),
                     (requestKey, bundle) -> {
-                        returnedList.set(bundle.getStringArrayList(ON_SELECTED_TAGS__TAGS));
+                        returnedList.set(bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS));
                         returnedOption.set(bundle.getInt(ON_SELECTED_TAGS__OPTION));
                     });
 
@@ -162,7 +162,7 @@ public class TagsDialogTest {
     // test for #8763
     @Test
     public void test_AddNewTag_shouldBeVisibleInRecyclerView_andSortedCorrectly() {
-        final DialogType type = DialogType.ADD_TAG;
+        final DialogType type = DialogType.EDIT_TAGS;
         final List<String> allTags = Arrays.asList("a", "b", "d", "e");
         final List<String> checkedTags = Arrays.asList("a", "b");
 
@@ -210,7 +210,7 @@ public class TagsDialogTest {
     // test for #8763
     @Test
     public void test_AddNewTag_existingTag_shouldBeSelectedAndSorted() {
-        final DialogType type = DialogType.ADD_TAG;
+        final DialogType type = DialogType.EDIT_TAGS;
         final List<String> allTags = Arrays.asList("a", "b", "d", "e");
         final List<String> checkedTags = Arrays.asList("a", "b");
 
@@ -251,6 +251,75 @@ public class TagsDialogTest {
 
             assertNotEquals(EXISTING_TAG, lastItem.getText());
             assertFalse(lastItem.isChecked());
+        });
+    }
+
+
+    @Test
+    public void test_checked_unchecked_indeterminate() {
+        final DialogType type = DialogType.EDIT_TAGS;
+        final List<String> expectedAllTags = Arrays.asList("a", "b", "d", "e");
+        final List<String> checkedTags = Arrays.asList("a", "b");
+        final List<String> uncheckedTags = Arrays.asList("b", "d");
+
+        final List<String> expectedCheckedTags = Arrays.asList("a");
+        final List<String> expectedUncheckedTags = Arrays.asList("d", "e");
+        final List<String> expectedIndeterminate = Arrays.asList("b");
+
+        Bundle args = new TagsDialog(whatever())
+                .withArguments(type, checkedTags, uncheckedTags, expectedAllTags)
+                .getArguments();
+
+        final TagsDialogListener mockListener = mock(TagsDialogListener.class);
+
+        TagsDialogFactory factory = new TagsDialogFactory(mockListener);
+        FragmentScenario<TagsDialog> scenario = FragmentScenario.launch(TagsDialog.class, args, R.style.Theme_AppCompat, factory);
+
+        scenario.moveToState(Lifecycle.State.STARTED);
+
+        scenario.onFragment((f) -> {
+            MaterialDialog dialog = (MaterialDialog) f.getDialog();
+            assertThat(dialog, notNullValue());
+
+            final View body = dialog.getCustomView();
+            RecyclerView recycler = body.findViewById(R.id.tags_dialog_tags_list);
+
+
+            // workaround robolectric recyclerView issue
+            // update recycler
+            recycler.measure(0, 0);
+            recycler.layout(0, 0, 100, 1000);
+
+
+            int itemCount = recycler.getAdapter().getItemCount();
+
+            final List<String> foundAllTags = new ArrayList<>();
+            final List<String> foundCheckedTags = new ArrayList<>();
+            final List<String> foundUncheckedTags = new ArrayList<>();
+            final List<String> foundIndeterminate = new ArrayList<>();
+
+
+            for (int i = 0; i < itemCount; i++) {
+                TagsArrayAdapter.ViewHolder vh = RecyclerViewUtils.viewHolderAt(recycler, i);
+                String tag = vh.getText();
+                foundAllTags.add(tag);
+                switch (vh.getCheckboxState()) {
+                    case INDETERMINATE:
+                        foundIndeterminate.add(tag);
+                        break;
+                    case UNCHECKED:
+                        foundUncheckedTags.add(tag);
+                        break;
+                    case CHECKED:
+                        foundCheckedTags.add(tag);
+                        break;
+                }
+            }
+
+            assertListEquals(expectedAllTags, foundAllTags);
+            assertListEquals(expectedCheckedTags, foundCheckedTags);
+            assertListEquals(expectedUncheckedTags, foundUncheckedTags);
+            assertListEquals(expectedIndeterminate, foundIndeterminate);
         });
     }
 
