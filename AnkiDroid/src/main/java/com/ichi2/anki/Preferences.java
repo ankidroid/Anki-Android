@@ -409,8 +409,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     edit.remove("customButtonClearWhiteboard");
                     edit.remove("customButtonShowHideWhiteboard");
                     edit.apply();
-                    //finish();
-                    //TODO: Should reload the preferences screen on completion
+                    // #9263: refresh the screen to display the changes
+                    screen.removeAll();
+                    initSubscreen("com.ichi2.anki.prefs.custom_buttons", listener);
                     return true;
                 });
                 break;
