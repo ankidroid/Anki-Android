@@ -18,6 +18,8 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import android.content.SharedPreferences
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.TapGestureMode.FOUR_POINT
+import com.ichi2.anki.cardviewer.TapGestureMode.NINE_POINT
 
 /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
 const val GESTURE_PREFIX = "\u235D"
@@ -56,5 +58,36 @@ enum class Gesture(
 
     fun toDisplayString(context: Context): String {
         return GESTURE_PREFIX + ' ' + context.getString(mResourceId)
+    }
+}
+
+/**
+ * How the screen is segmented for tap gestures.
+ * The modes are incompatible ([NINE_POINT] defines points which are ambiguous in [FOUR_POINT]).
+ * @see FOUR_POINT
+ */
+enum class TapGestureMode {
+    /**
+     * The cardinal directions: up, down, left & right.
+     * Draw a line from corner to corner diagonally, each touch target fully handles the
+     * edge which it is associated with
+     * four-point and nine-point are thus incompatible because the four-point center and corners
+     * are ambiguous in a nine-point system and thus not interchangeable
+     */
+    FOUR_POINT,
+    /**
+     * Divide the screen into 9 equally sized squares for touch targets.
+     * Better for tablets
+     * See: #7537
+     */
+    NINE_POINT;
+
+    companion object {
+        @JvmStatic
+        fun fromPreference(preferences: SharedPreferences): TapGestureMode =
+            when (preferences.getBoolean("gestureCornerTouch", false)) {
+                true -> NINE_POINT
+                false -> FOUR_POINT
+            }
     }
 }
