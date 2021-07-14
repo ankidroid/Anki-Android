@@ -20,6 +20,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.widget.Spinner
 
 object UiUtil {
     @JvmStatic
@@ -34,5 +35,13 @@ object UiUtil {
         val str = SpannableStringBuilder(s)
         str.setSpan(ForegroundColorSpan(color), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return str
+    }
+
+    fun Spinner.setSelectedValue(value: Any?) {
+        for (position in 0 until this.adapter.count) {
+            if (this.adapter.getItem(position) != value) continue
+            this.setSelection(position)
+            return
+        }
     }
 }
