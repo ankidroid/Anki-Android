@@ -2,21 +2,15 @@ package com.ichi2.anki.stats;
 
 import android.webkit.WebView;
 
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.dialogs.ContextMenuHelper;
-import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.stats.Stats;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static junit.framework.TestCase.assertEquals;
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class OverviewStatsBuilderTest extends RobolectricTest {
