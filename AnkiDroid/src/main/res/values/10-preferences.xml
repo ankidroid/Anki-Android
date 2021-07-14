@@ -301,4 +301,5 @@
 
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>
