@@ -17,12 +17,19 @@ package com.ichi2.anki.cardviewer
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode.FOUR_POINT
 import com.ichi2.anki.cardviewer.TapGestureMode.NINE_POINT
 
-/** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
+/**
+ * https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)
+ * Supported on API 23
+ */
 const val GESTURE_PREFIX = "\u235D"
+
+/** Supported on API 21: https://emojipedia.org/google/android-5.0/backhand-index-pointing-up/ */
+const val LEGACY_GESTURE_PREFIX = "\uD83D\uDC46"
 
 // TODO: Code and preference defaults are inconsistent: #8066
 enum class Gesture(
@@ -56,9 +63,11 @@ enum class Gesture(
         return ViewerCommand.fromInt(valueAsInt) ?: mPreferenceDefault
     }
 
-    fun toDisplayString(context: Context): String {
-        return GESTURE_PREFIX + ' ' + context.getString(mResourceId)
-    }
+    fun toDisplayString(context: Context): String =
+        getDisplayPrefix() + ' ' + context.getString(mResourceId)
+
+    private fun getDisplayPrefix(): String =
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) LEGACY_GESTURE_PREFIX else GESTURE_PREFIX
 }
 
 /**

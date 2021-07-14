@@ -18,15 +18,17 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.*
 import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class BindingAndroidTest {
+class BindingAndroidTest : RobolectricTest() {
 
     @Test
     fun testKeycodeToString() {
@@ -48,6 +50,23 @@ class BindingAndroidTest {
         assertBindingEquals(Binding.keyCode(shift(), KeyEvent.KEYCODE_VOLUME_DOWN), Binding.fromString(BindingTest.keyPrefix + "Shift+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_DOWN)))
         assertBindingEquals(Binding.keyCode(alt(), KeyEvent.KEYCODE_VOLUME_UP), Binding.fromString(BindingTest.keyPrefix + "Alt+" + KeyEvent.keyCodeToString(KeyEvent.KEYCODE_VOLUME_UP)))
         assertBindingEquals(Binding.gesture(Gesture.TAP_TOP), Binding.fromString(BindingTest.gesturePrefix + Gesture.TAP_TOP.name))
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun gesture_toDisplayString() {
+        assertEquals("${BindingTest.gesturePrefix} Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
+    }
+
+    @Test
+    @Config(sdk = [21, 22], qualifiers = "en")
+    fun gesture_toDisplayString_legacy() {
+        // Use an emoji as a prefix as the newer unicode character doesn't display
+        assertEquals("\uD83D\uDC46 Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
+    }
+
+    private fun Binding.toDisplayString(): String {
+        return this.toDisplayString(targetContext)
     }
 
     private fun assertBindingEquals(fst: Binding?, snd: Binding?) {
