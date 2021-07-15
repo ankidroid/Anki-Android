@@ -631,9 +631,15 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             int itemId = item.getItemId();
             if (itemId == R.id.action_add) {
                 Timber.i("CardTemplateEditor:: Add template button pressed");
-                // TODO in Anki Desktop, they have a popup first with "This will create %d cards. Proceed?"
-                //      AnkiDroid never had this so it isn't a regression but it is a miss for AnkiDesktop parity
-                addNewTemplateWithCheck(tempModel.getModel());
+                // Show confirmation dialog
+                int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
+                int numAffectedCards = 0;
+                // isOrdinalPendingAdd method will check if there are any new card types added or not,
+                // if TempModel has new card type then numAffectedCards will be 0 by default.
+                if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
+                    numAffectedCards = col.getModels().tmplUseCount(tempModel.getModel(), ordinal);
+                }
+                confirmAddCards(tempModel.getModel(), numAffectedCards);
                 return true;
             } else if (itemId == R.id.action_insert_field) {
                 showInsertFieldDialog();
@@ -894,6 +900,22 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                             numAffectedCards), numAffectedCards, tmpl.optString("name"));
             d.setArgs(msg);
             Runnable confirm = () -> deleteTemplateWithCheck(tmpl, model);
+            d.setConfirm(confirm);
+            mTemplateEditor.showDialogFragment(d);
+        }
+
+        /**
+         * Confirm if the user wants to add new card template
+         * @param model model to add new template and modified in place by reference
+         * @param numAffectedCards number of cards which will be affected
+         */
+        private void confirmAddCards(final Model model, int numAffectedCards) {
+            ConfirmationDialog d = new ConfirmationDialog();
+            Resources res = getResources();
+            String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_add,
+                    numAffectedCards), numAffectedCards);
+            d.setArgs(msg);
+            Runnable confirm = () -> addNewTemplateWithCheck(model);
             d.setConfirm(confirm);
             mTemplateEditor.showDialogFragment(d);
         }
