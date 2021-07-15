@@ -17,7 +17,9 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.ThumbnailUtils;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.widget.TimePicker;
 
 import java.io.File;
@@ -116,4 +118,10 @@ public class CompatV21 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasVideoThumbnail(@NonNull String path) {
+        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    }
 }

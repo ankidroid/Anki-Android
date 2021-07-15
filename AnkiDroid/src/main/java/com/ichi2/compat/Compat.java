@@ -17,13 +17,13 @@
 package com.ichi2.compat;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.text.Spanned;
 import android.widget.TimePicker;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import androidx.annotation.NonNull;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -31,7 +31,7 @@ import java.io.OutputStream;
  * A set of implementations for the supported platforms are available.
  * <p>
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
- * can be used. For example, see {@link CompatV16}.
+ * can be used. For example, see {@link CompatV21}.
  * <p>
  * Each implementation should extend the previous implementation and implement this interface.
  * <p>
@@ -58,5 +58,6 @@ public interface Compat {
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
+    boolean hasVideoThumbnail(@NonNull String path);
 }
 

@@ -24,9 +24,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.provider.MediaStore;
 
 import android.view.Display;
 import android.view.WindowManager;
@@ -36,6 +34,7 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -390,7 +389,6 @@ public class Sound {
     }
 
 
-    @SuppressWarnings("deprecation") // createVideoThumbnail
     private boolean hasVideoThumbnail(@Nullable Uri soundUri) {
         if (soundUri == null) {
             return false;
@@ -400,7 +398,7 @@ public class Sound {
             return false;
         }
 
-        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+        return CompatHelper.getCompat().hasVideoThumbnail(path);
     }
 
 
