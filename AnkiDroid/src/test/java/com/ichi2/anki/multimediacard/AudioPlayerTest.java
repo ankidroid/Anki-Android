@@ -12,7 +12,6 @@ import org.robolectric.shadows.ShadowMediaPlayer;
 import org.robolectric.shadows.util.DataSource;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,22 +25,17 @@ import static org.mockito.Mockito.verify;
 @RunWith(AndroidJUnit4.class)
 public class AudioPlayerTest extends RobolectricTest {
 
-    ShadowMediaPlayer testPlayer;
-    AudioPlayer mAudioPlayer;
-    File mFile;
+    private AudioPlayer mAudioPlayer;
+    private File mFile;
 
     @Before
     public void before() throws IOException {
         mAudioPlayer = new AudioPlayer();
         mFile = tempFolder.newFile("testaudio.wav");
-        try(FileWriter testWriter = new FileWriter(mFile)) {
-            testWriter.write("line1");
-        }
 
-        testPlayer = new ShadowMediaPlayer();
+        ShadowMediaPlayer testPlayer = new ShadowMediaPlayer();
         DataSource mFileSource = DataSource.toDataSource(mFile.getAbsolutePath());
         ShadowMediaPlayer.MediaInfo mFileInfo = new ShadowMediaPlayer.MediaInfo();
-        //mFileInfo.duration = 1000;
         testPlayer.addMediaInfo(mFileSource, mFileInfo);
     }
 
