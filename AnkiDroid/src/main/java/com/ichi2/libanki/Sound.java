@@ -339,8 +339,7 @@ public class Sound {
                 isVideo = (guessedType != null) && guessedType.startsWith("video/");
             }
             // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
-            isVideo = isVideo &&
-                ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+            isVideo = isVideo && hasVideoThumbnail(soundUri);
             // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
@@ -389,6 +388,12 @@ public class Sound {
             }
         }
     }
+
+    @SuppressWarnings("deprecation") // createVideoThumbnail
+    private boolean hasVideoThumbnail(Uri soundUri) {
+        return ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    }
+
 
     public String getCurrentAudioUri() {
         if (mCurrentAudioUri == null) {
