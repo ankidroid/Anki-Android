@@ -60,7 +60,7 @@ public class PeripheralKeymap {
 
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (!mHasSetup) {
+        if (!mHasSetup || event.getRepeatCount() > 0) {
             return false;
         }
         if (mReviewerUI.isDisplayingAnswer()) {
