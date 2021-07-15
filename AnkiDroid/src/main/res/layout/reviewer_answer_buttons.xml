@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/bottom_area_layout"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +10,7 @@
     <!-- "Type in the answer" bar -->
     <com.ichi2.ui.FixedEditText
         android:id="@+id/answer_field"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/type_answer_hint"
         android:imeOptions="actionDone"
@@ -63,13 +63,13 @@
 
     <FrameLayout
         android:id="@+id/answer_options_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/ease_buttons"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:focusable="false"
             android:orientation="horizontal">
@@ -163,7 +163,7 @@
 
         <LinearLayout
             android:id="@+id/flashcard_layout_flip"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
             android:orientation="vertical"
             android:focusable="true"
@@ -174,8 +174,8 @@
                 android:duplicateParentState="true"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flip_card"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:clickable="false"
                 android:text="@string/show_answer"
                 android:textColor="?attr/answerButtonTextColor" />
