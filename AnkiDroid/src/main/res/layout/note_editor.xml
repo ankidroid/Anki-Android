@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <LinearLayout
             android:id="@+id/note_editor_layout"
@@ -19,19 +19,19 @@
         <ScrollView
             android:id="@+id/CardEditorScroll"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:padding="5dp" >
 
             <LinearLayout
                 android:id="@+id/CardEditorLayout"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
                 <!-- Note type selector -->
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
                     <com.ichi2.ui.FixedTextView
@@ -47,14 +47,14 @@
                         android:text="@string/CardEditorModel" />
                     <Spinner
                         android:id="@+id/note_type_spinner"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/touch_target"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
                 <!-- Deck selector -->
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
                     <com.ichi2.ui.FixedTextView
@@ -70,7 +70,7 @@
                         android:text="@string/CardEditorNoteDeck" />
                     <Spinner
                         android:id="@+id/note_deck_spinner"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/touch_target"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
@@ -78,7 +78,7 @@
                 <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->
                 <LinearLayout
                     android:id="@+id/CardEditorEditFieldsLayout"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:focusable="true"
@@ -87,7 +87,7 @@
                     android:paddingHorizontal="6dip" />
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorTagButton"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         tools:text="Tags: AnkiDroid"
                         android:gravity="start|center_vertical"
@@ -99,7 +99,7 @@
                         android:background="@drawable/button_background"/>
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorCardsButton"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         tools:text="Cards: Card 1"
                         android:textAllCaps="false"

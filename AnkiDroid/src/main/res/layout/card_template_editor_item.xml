@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
@@ -12,26 +12,26 @@
     <!-- Editor -->
     <com.ichi2.ui.FixedTextView
         android:id="@+id/title_edit"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:focusable="true"
         android:text="@string/card_template_editor_front" />
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false"
         android:fillViewport="true" >
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical" >
             <com.ichi2.ui.FixedEditText
                 android:id="@+id/editor_editText"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_gravity="top"
                 android:gravity="top"

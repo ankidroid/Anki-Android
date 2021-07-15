@@ -9,7 +9,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <include layout="@layout/reviewer_topbar"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"/>
         <include
@@ -18,8 +18,8 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_height="wrap_content"
             android:layout_below="@id/top_bar" />
         <include layout="@layout/reviewer_flashcard_fullscreen"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/mic_tool_bar_layer"/>
         <include
             layout="@layout/reviewer_whiteboard_editor"
@@ -35,7 +35,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
         <include layout="@layout/toolbar"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"/>
     </FrameLayout>
