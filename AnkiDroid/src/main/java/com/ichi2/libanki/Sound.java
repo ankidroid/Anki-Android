@@ -389,9 +389,18 @@ public class Sound {
         }
     }
 
+
     @SuppressWarnings("deprecation") // createVideoThumbnail
-    private boolean hasVideoThumbnail(Uri soundUri) {
-        return ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    private boolean hasVideoThumbnail(@Nullable Uri soundUri) {
+        if (soundUri == null) {
+            return false;
+        }
+        String path = soundUri.getPath();
+        if (path == null) {
+            return false;
+        }
+
+        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
     }
 
 
