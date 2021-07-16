@@ -7,6 +7,7 @@ import com.ichi2.libanki.stats.Stats;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -32,6 +33,7 @@ public class OverviewStatsBuilderTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void testInfoHtmlStringMonth() {
         OverviewStatsBuilder statsTester = new OverviewStatsBuilder(
                 new WebView(getTargetContext()),
@@ -48,6 +50,7 @@ public class OverviewStatsBuilderTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void testInfoHtmlStringYear() {
         OverviewStatsBuilder statsTester = new OverviewStatsBuilder(
                 new WebView(getTargetContext()),
@@ -64,6 +67,7 @@ public class OverviewStatsBuilderTest extends RobolectricTest {
     }
 
     @Test
+    @Config(qualifiers = "en")
     public void testInfoHtmlStringLife() {
         OverviewStatsBuilder statsTester = new OverviewStatsBuilder(
                 new WebView(getTargetContext()),
