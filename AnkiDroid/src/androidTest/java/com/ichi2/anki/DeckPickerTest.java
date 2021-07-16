@@ -45,6 +45,7 @@ import static com.ichi2.anki.TestUtils.getActivityInstance;
 import static com.ichi2.anki.TestUtils.isScreenSw600dp;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
 public class DeckPickerTest {
@@ -59,6 +60,7 @@ public class DeckPickerTest {
     public void checkIfClickOnCountsLayoutOpensStudyOptionsOnMobile() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.isCI());
 
         // For mobile. If it is not a mobile, then test will be ignored.
         assumeTrue(!isScreenSw600dp());
@@ -81,6 +83,7 @@ public class DeckPickerTest {
     public void checkIfStudyOptionsIsDisplayedOnTablet() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.isCI());
 
         // For tablet. If it is not a tablet, then test will be ignored.
         assumeTrue(isScreenSw600dp());

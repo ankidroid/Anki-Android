@@ -107,4 +107,12 @@ public class TestUtils {
             }
         };
     }
+
+    /**
+     * Detect if we are running in CI or not, via the convention/standard that all CI systems
+     * put the environment variable "CI" into the system environment, set to true
+     */
+    public static boolean isCI() {
+        return "true".equals(System.getenv("CI"));
+    }
 }
