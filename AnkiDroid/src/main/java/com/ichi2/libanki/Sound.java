@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
@@ -312,7 +313,7 @@ public class Sound {
     }
 
     /** Plays a sound without ensuring that the playAllListener will release the audio */
-    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
+    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
     private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
@@ -369,7 +370,11 @@ public class Sound {
                 mMediaPlayer.setOnErrorListener((mp, which, extra) -> errorHandler.onError(mp, which, extra, soundPath));
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mMediaPlayer.setAudioAttributes(
+                        new AudioAttributes
+                                .Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build());
                 mMediaPlayer.setOnPreparedListener(mp -> {
                     Timber.d("Starting media player");
                     mMediaPlayer.start();
@@ -379,8 +384,7 @@ public class Sound {
                 }
                 mMediaPlayer.prepareAsync();
                 Timber.d("Requesting audio focus");
-                mAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC,
-                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+                CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
@@ -498,7 +502,6 @@ public class Sound {
     /**
      * Releases the sound.
      */
-    @SuppressWarnings("deprecation") // Tracked on github as #5022
     private void releaseSound() {
         Timber.d("Releasing sounds and abandoning audio focus");
         if (mMediaPlayer != null) {
@@ -509,7 +512,7 @@ public class Sound {
             mMediaPlayer = null;
         }
         if (mAudioManager != null) {
-            mAudioManager.abandonAudioFocus(afChangeListener);
+            CompatHelper.getCompat().abandonAudioFocus(mAudioManager, afChangeListener);
             mAudioManager = null;
         }
     }

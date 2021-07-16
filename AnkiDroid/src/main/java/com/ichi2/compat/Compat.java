@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.widget.TimePicker;
 
 import java.io.IOException;
@@ -69,5 +70,7 @@ public interface Compat {
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
     boolean hasVideoThumbnail(@NonNull String path);
+    void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener);
+    void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener);
 }
 
