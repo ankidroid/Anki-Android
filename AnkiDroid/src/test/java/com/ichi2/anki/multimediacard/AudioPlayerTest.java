@@ -50,6 +50,7 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.setOnStoppingListener(stoppingListener);
         mAudioPlayer.setOnStoppedListener(stoppedListener);
 
+        runTasksInBackground();
         mAudioPlayer.play(mFile.getAbsolutePath());
         advanceRobolectricLooper();
         //audio should play and finish, with each listener only running once
@@ -66,6 +67,7 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.setOnStoppingListener(stoppingListener);
         mAudioPlayer.setOnStoppedListener(stoppedListener);
 
+        runTasksInBackground();
         mAudioPlayer.play(mFile.getAbsolutePath());
         advanceRobolectricLooper();
         mAudioPlayer.play(mFile.getAbsolutePath());
@@ -86,6 +88,7 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.setOnStoppingListener(stoppingListener);
         mAudioPlayer.setOnStoppedListener(stoppedListener);
 
+        runTasksInBackground();
         mAudioPlayer.play(mFile.getAbsolutePath());
         mAudioPlayer.pause();
         advanceRobolectricLooper();
@@ -108,6 +111,7 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.setOnStoppingListener(stoppingListener);
         mAudioPlayer.setOnStoppedListener(stoppedListener);
 
+        runTasksInBackground();
         mAudioPlayer.play(mFile.getAbsolutePath());
         mAudioPlayer.stop();
         advanceRobolectricLooper();
@@ -122,7 +126,9 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.setOnStoppedListener(null);
         assertDoesNotThrow(() -> {
             try {
+                runTasksInBackground();
                 mAudioPlayer.play(mFile.getAbsolutePath());
+                advanceRobolectricLooper();
             } catch (IOException e) {
                 assert false; //shouldn't have an IOException
             }
