@@ -326,7 +326,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         screen.findPreference(FULL_SCREEN_MODE);
                 fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !FULL_SCREEN_MODE.equals(newValue)) {
+                    if (prefs.getBoolean("gestures", false) || !FULLSCREEN_ALL_GONE.equals(newValue)) {
                         return true;
                     } else {
                         UIUtils.showThemedToast(getApplicationContext(),
