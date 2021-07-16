@@ -953,6 +953,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
+    @NonNull
+    protected FullScreenMode getFullscreenMode() {
+        return mPrefFullscreenReview;
+    }
+
     protected int getContentViewAttr(FullScreenMode fullscreenMode) {
         return R.layout.reviewer;
     }

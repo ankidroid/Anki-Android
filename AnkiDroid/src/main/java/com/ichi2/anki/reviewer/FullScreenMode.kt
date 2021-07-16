@@ -29,6 +29,7 @@ enum class FullScreenMode(private val mPrefValue: String) {
     FULLSCREEN_ALL_GONE("2");
 
     fun getPreferenceValue() = mPrefValue
+    fun isFullScreenReview() = this != BUTTONS_AND_MENU
 
     companion object {
         const val PREF_KEY = "fullscreenMode"
@@ -43,7 +44,7 @@ enum class FullScreenMode(private val mPrefValue: String) {
 
         @JvmStatic
         fun isFullScreenReview(prefs: SharedPreferences): Boolean =
-            fromPreference(prefs) != BUTTONS_AND_MENU
+            fromPreference(prefs).isFullScreenReview()
 
         @JvmStatic
         fun upgradeFromLegacyPreference(preferences: SharedPreferences) {

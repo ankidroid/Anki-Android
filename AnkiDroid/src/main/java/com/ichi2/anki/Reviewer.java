@@ -266,6 +266,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    protected boolean fitsSystemWindows() {
+        return getFullscreenMode().isFullScreenReview();
+    }
+
+    @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         // Load the first card and start reviewing. Uses the answer card
