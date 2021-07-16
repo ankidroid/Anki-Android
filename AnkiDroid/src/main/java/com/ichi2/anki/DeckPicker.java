@@ -114,6 +114,7 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -132,6 +133,7 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
@@ -541,25 +543,200 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
+
     /**
-     * The first call in showing dialogs for startup - error or success.
-     * Attempts startup if storage permission has been acquired, else, it requests the permission
+     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
+     * This directory is stored under the key deckPath in SharedPreferences
+     * @return true if AnkiDroid is storing user data in a Legacy Storage Directory.
+     */
+    private boolean isLegacyStorage() {
+        String currentDirPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+        String externalScopedDirPath =  CollectionHelper.getAppSpecificExternalAnkiDroidDirectory(this);
+        String internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(this);
+
+        File currentDir = new File(currentDirPath);
+        File externalScopedDir = new File(externalScopedDirPath);
+        File internalScopedDir = new File(internalScopedDirPath);
+
+        Timber.i("isLegacyStorage(): current dir: %s\nscoped external dir: %s\nscoped internal dir: %s",
+                currentDirPath, externalScopedDirPath, internalScopedDirPath);
+
+        // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
+        // for app-specific external or internal storage - the only directories which will be accessible without
+        // permissions under scoped storage
+        File currentDirParent = currentDir;
+        while (currentDirParent != null) {
+            if (currentDirParent.compareTo(externalScopedDir) == 0 || currentDirParent.compareTo(internalScopedDir) == 0) {
+                return false;
+            }
+            currentDirParent = currentDirParent.getParentFile();
+        }
+
+        // If the current AnkiDroid directory isn't a sub directory of the app-specific exteral or internal storage
+        // directories, then it must be in a legacy storage directory
+        return true;
+    }
+
+    /*
+     * @return Storage space used by the contents of the AnkiDroid-specific  Storage Directory in bytes
+     */
+    private long getAnkiDroidDirectorySize() {
+        return FileUtil.getDirectorySize(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this)));
+    }
+
+    /**
+     * Migrates user data from the current Legacy Storage Directory to the default Scoped Storage Directory given by
+     * {@link CollectionHelper#getDefaultAnkiDroidDirectory(Context)}.
+     * Assumes user data is stored in a Legacy Storage Directory before this function is called.
+     * <p><br>
+     * If data is migrated successfully, the deckPath preference is updated with the absolute path to the new directory
+     * for the AnkiDroid folder. This new directory will be accessible without any permissions under Scoped Storage.
+     * The updated deckPath preference is used to access user data everytime AnkiDroid is launched.
+     * <p><br>
+     * TODO: Use move directory instead of copying once AnkiDroid is fully functional under Scoped Storage.
+     *  Extract the preference key 'deckPath' to String resource / constant
+     * @param context Context used to access scoped storage directories & preferences
+     * @param migrationProgressListener Listener interface for sending progress updates
+     * @return true if migration was successful
+     */
+    public static boolean migrateToScopedStorage(Context context, ProgressSenderAndCancelListener<Integer> migrationProgressListener) {
+        File sourceDir = new File(CollectionHelper.getCurrentAnkiDroidDirectory(context));
+
+        // To get the new path for the AnkiDroid folder, take the current name of the AnkiDroid folder and append it
+        // to the root path of the default, app-specific directory.
+        File destinationDir = new File(CollectionHelper.getDefaultAnkiDroidDirectory(context), sourceDir.getName());
+
+        Timber.i("Starting Migration %s to %s", sourceDir.getAbsolutePath(), destinationDir.getAbsolutePath());
+        boolean migrationComplete = CompatHelper.getCompat().copyDirectory(sourceDir, destinationDir, migrationProgressListener);
+        Timber.i("Completed Migration %b", migrationComplete);
+
+        if (migrationComplete) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+            preferences.edit().putString("deckPath", destinationDir.getAbsolutePath()).apply();
+        }
+
+        return migrationComplete;
+    }
+
+
+    private MigrateToScopedListener migrateToScopedListener(long sourceSize) {
+        return new MigrateToScopedListener(this, sourceSize);
+    }
+    private static class MigrateToScopedListener extends TaskListenerWithContext<DeckPicker, Integer, Boolean> {
+        // All integer variables store data size in kilobytes
+        private final int mSourceSize;
+        private int mCurrentProgress;
+        private final int mOnePercent;
+        private int mIncreaseSinceLastUpdate;
+
+        public MigrateToScopedListener(DeckPicker deckPicker, long sourceSize) {
+            super(deckPicker);
+
+            // Convert source size from bytes to kilobytes
+            this.mSourceSize = (int) (sourceSize / 1024);
+            mOnePercent = mSourceSize / 100;
+            mCurrentProgress = 0;
+            mIncreaseSinceLastUpdate = 0;
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
+                    .title(deckPicker.getResources().getString(R.string.migrating_data_message))
+                    .content(deckPicker.getResources().getString(R.string.migration_transferred_size, 0f, mSourceSize / 1024f))
+                    .progress(false, mSourceSize)
+                    .cancelable(false)
+                    .show();
+        }
+
+
+        @Override
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, Integer value) {
+            super.actualOnProgressUpdate(deckPicker, value);
+
+            // Convert progress in bytes to kilobytes
+            mIncreaseSinceLastUpdate += value;
+
+            // Update Progress Bar progress if progress > 1% of max
+            if (mIncreaseSinceLastUpdate > mOnePercent) {
+                mCurrentProgress += mIncreaseSinceLastUpdate;
+                mIncreaseSinceLastUpdate = 0;
+                deckPicker.mProgressDialog.setProgress(mCurrentProgress);
+                // Display progress in Megabytes
+                deckPicker.mProgressDialog.setContent(deckPicker.getResources().getString(R.string.migration_transferred_size,
+                        mCurrentProgress / 1024f, mSourceSize / 1024f));
+            }
+        }
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Boolean successful) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
+            }
+            if (successful) {
+                UIUtils.showThemedToast(deckPicker, R.string.migration_successful_message, true);
+            } else {
+                UIUtils.showThemedToast(deckPicker, R.string.migration_failed_message, true);
+            }
+            deckPicker.onMigrationComplete();
+        }
+    }
+
+    /*
+     * Ensures app is in correct state after migration to scoped storage. It houses similar functionality to onPause()
+     * and onResume(), i.e., it cancels all LoadDeckCount tasks before migration, and updates the deck list post-migration
+     * */
+    private void onMigrationComplete() {
+        // Cancel tasks that use legacy storage collection & refresh collection
+        TaskManager.cancelAllTasks(CollectionTask.LoadDeckCounts.class);
+        CollectionHelper.getInstance().closeCollection(false, "refresh");
+
+        // Set up collection & update Deck List if successful
+        handleStartupScenarios();
+        if (!mStartupError) {
+            updateDeckList();
+        }
+    }
+
+    /**
+     * Attempts to set up access to device storage: migrating to scoped storage and acquiring permissions if needed.
+     * Upon success, it uses {@link DeckPicker#handleStartupScenarios()} to show dialogs for startup - error or success
      * */
     public void handleStartup() {
-        if (Permissions.hasStorageAccessPermission(this)) {
-            StartupFailure failure = InitialActivity.getStartupFailureType(this);
-            if (failure == null) {
-                // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-                showStartupScreensAndDialogs(sharedPrefs, 0);
-                mStartupError = false;
-            } else {
-                // Show error dialogs
-                handleStartupFailure(failure);
-                mStartupError = true;
-            }
-        } else {
+        // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
+        if (!isLegacyStorage()) {
+            handleStartupScenarios();
+            return;
+        }
+
+        // If Legacy Storage is being used, ensure storage permission is obtained in order to access Legacy Directories
+        if (!Permissions.hasStorageAccessPermission(this)) {
             requestStoragePermission();
+            return;
+        }
+
+        // Migrate user data to Scoped Storage Directory if Scoped Storage is being tested
+        if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
+            TaskManager.launchCollectionTask(new CollectionTask.MigrateToScoped(), migrateToScopedListener(getAnkiDroidDirectorySize()));
+            return;
+        }
+        handleStartupScenarios();
+    }
+
+    /*
+     * Shows startup screens if everything the app needs to function is in order. If not, handles errors
+     * */
+    private void handleStartupScenarios() {
+        StartupFailure failure = InitialActivity.getStartupFailureType(this);
+        if (failure == null) {
+            // Show any necessary dialogs (e.g. changelog, special messages, etc)
+            SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
+            showStartupScreensAndDialogs(sharedPrefs, 0);
+            mStartupError = false;
+        } else {
+            // Show error dialogs
+            handleStartupFailure(failure);
+            mStartupError = true;
         }
     }
 
