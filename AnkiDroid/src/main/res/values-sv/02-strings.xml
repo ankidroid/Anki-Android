@@ -92,12 +92,12 @@
         <item>Intervall</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>Kort Modifierat</item>
         <item>Skapad</item>
         <item>Anteckning ändrad</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Repetera glömda kort</string>
     <string name="custom_study_review_ahead">Repetera i förväg</string>
@@ -107,13 +107,13 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
+    <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_first_field">Det första fältet är tomt</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Sparar not</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Sparar anteckningstyp</string>
     <string name="save">Spara</string>
     <string name="close">Stäng</string>
     <string name="select">Välj</string>
@@ -121,7 +121,7 @@
     <string name="reordering_cards">Ändrar ordning på korten...</string>
     <string name="field_remapping">%1$s (från \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Alla kort som inte mappar till något kommer att tas bort. Om en not inte har några kvarvarande kort, kommer den att tas bort. Är du säker på att du vill fortsätta?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Tidsruta har uppnåtts</string>
     <plurals name="timebox_reached">
         <item quantity="one">Studera %1$d kort i %2$s</item>
         <item quantity="other">Studera %1$d kort i %2$s</item>
@@ -161,17 +161,17 @@
     <string name="import_log_no_apkg">Detta är ingen giltig Anki-paketfil</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_log_failed_validate">apkg misslyckades validering</string>
     <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
+    <string name="import_error_exception">Det gick inte att importera paket\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() misslyckades (möjligen slut på lagringsutrymme)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Ersätter samling&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
@@ -287,67 +287,67 @@
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="csv_importer_error_exception">Avbruten: %s</string>
+    <string name="user_is_a_robot">Upptäckte automatiskt test. Om du är en människa, kontakta AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d anteckning tillagd</item>
+        <item quantity="other">%d anteckningar tillagda</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d anteckning uppdaterad</item>
+        <item quantity="other">%d anteckningar uppdaterade</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d anteckning oförändrad</item>
+        <item quantity="other">%d anteckningar oförändrade</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Detta kort använder AnkiDroid-funktioner som inte stöds. Kontakta utvecklaren %1$s, eller visa wiki. %2$s</string>
+    <string name="invalid_json_data">Kortet angav ogiltig data. %s</string>
+    <string name="valid_js_api_version">Ogiltig version av AnkiDroid JS API. Kontakta utvecklare %s, eller visa wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API uppdatering tillgänglig. Kontakta utvecklare %s, eller visa wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Visa</string>
+    <string name="anki_js_error_code">(Felkod: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Kopierade felsökningsinformation till urklipp</string>
+    <string name="about_ankidroid_error_copy_debug_info">Fel vid kopiering av felsökningsinformation till urklipp</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Kort innehållsfel: Medierapportering krävs</string>
+    <string name="cannot_load_http_resource">Laddning av http-resurser stöds inte längre</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="deck_picker_failed_deck_load">Det gick inte att läsa in kortleken ‘%s’</string>
+    <string name="search_decks">Sök kortlekar</string>
+    <string name="ankidroid_init_failed_webview_title">Kritiskt fel</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid använder sig av System WebView vilket inte är tillgängligt. Detta kan hända om systemet håller på att installera uppdateringar. Försök igen om några minuter.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="menu_font_size">Teckenstorlek</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Visa verktygsfält</string>
     <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
+    <string name="format_insert_italic">Formatera som kursiv</string>
+    <string name="format_insert_underline">Formatera som understruken</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="format_font_size">Ändra teckenstorlek</string>
+    <string name="insert_mathjax">Infoga MathJax ekvation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="add_toolbar_item">Skapa objekt i verktygsfältet</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
+    <string name="note_editor_paste_too_large">Bilden är för stor för att klistra in, vänligen infoga bilden manuellt</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Säkerhetskopiering av Android pågår. Försök igen</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Du kan behöva använda iManager för att tillåta AnkiDroid att lägga till genvägar</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error">Kunde inte lägga till genväg: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="email_id_empty">E-postadress krävs</string>
+    <string name="password_empty">Lösenord krävs</string>
+    <string name="back_pressed_once">Tryck tillbaka igen för att avsluta</string>
+    <string name="back_pressed_once_reviewer">Tryck tillbaka igen för att återvända</string>
 </resources>

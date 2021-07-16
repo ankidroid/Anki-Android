@@ -62,13 +62,13 @@
         <item quantity="other">còn %d phút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d giờ %d còn lại</item>
+        <item quantity="other">Còn %d giờ %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d ngày %d còn lại</item>
+        <item quantity="other">Còn %d ngày %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Bộ sưu tập đang trống</string>
-    <string name="no_cards_placeholder_description">Bắt đầu thêm các thẻ\nsử dụng icon +</string>
+    <string name="no_cards_placeholder_title">Bộ sưu tập trống</string>
+    <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Đã học %1$d thẻ trong %2$s hôm nay</item>
@@ -85,8 +85,8 @@
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
     <string name="undo_action_review">lần ôn tập trước</string>
-    <string name="undo_action_change_deck_multi">thay đổi các bộ thẻ</string>
-    <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
+    <string name="undo_action_change_deck_multi">đổi bộ thẻ</string>
+    <string name="move_all_to_deck">Chuyển hết sang bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
@@ -103,13 +103,13 @@
     <string name="menu_suspend">Tạm hoãn</string>
     <string name="menu_delete_note">Xoá ghi chú</string>
     <string name="menu_flag">Gắn cờ</string>
-    <string name="menu_flag_card">Thẻ có gắn cờ</string>
+    <string name="menu_flag_card">Gắn cờ thẻ</string>
     <string name="menu_flag_card_zero">Không gắn cờ</string>
     <string name="menu_flag_card_one">Cờ đỏ</string>
     <string name="menu_flag_card_two">Cờ cam</string>
-    <string name="menu_flag_card_three">Cờ xanh</string>
+    <string name="menu_flag_card_three">Cờ xanh lá</string>
     <string name="menu_flag_card_four">Cờ xanh dương</string>
-    <string name="menu_edit_tags">Chỉnh sửa các tag</string>
+    <string name="menu_edit_tags">Sửa đuôi</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>
     <string name="menu_lookup">Tra cứu văn bản</string>
@@ -125,7 +125,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Vui lòng cấp cho AnkiDroid quyền \'Bộ nhớ\' để tiếp tục</string>
+    <string name="startup_no_storage_permission">Vui lòng cấp cho AnkiDroid quyền \"Bộ nhớ\" để tiếp tục</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.

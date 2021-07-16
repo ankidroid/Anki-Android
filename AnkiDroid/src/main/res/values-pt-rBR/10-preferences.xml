@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">Deslizar à esquerda</string>
     <string name="gestures_swipe_right" maxLength="41">Deslizar à direita</string>
     <string name="gestures_double_tap" maxLength="41">Toque duplo</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">Long touch</string>
     <string name="gestures_tap_top" maxLength="41">Toque acima</string>
     <string name="gestures_tap_left" maxLength="41">Toque à esquerda</string>
     <string name="gestures_tap_right" maxLength="41">Toque à direita</string>
@@ -310,4 +310,5 @@
     <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Abrir Changelog</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

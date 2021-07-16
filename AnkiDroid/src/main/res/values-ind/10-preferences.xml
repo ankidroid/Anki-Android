@@ -309,4 +309,5 @@
     <string name="type_in_answer_focus_summ">Fokuskan bagian \'ketik di jawaban\' secara otomatis di reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Buka Changelog</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

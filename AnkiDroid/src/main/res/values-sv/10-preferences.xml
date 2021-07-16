@@ -75,8 +75,8 @@
     <string name="image_zoom" maxLength="41">Bild-zoom</string>
     <string name="button_size" maxLength="41">Storlek på svarsknapp</string>
     <string name="card_browser_font_size" maxLength="41">Typsnittsstorlek i kortbläddrare</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media" maxLength="41">Visa filnamn i kortbläddraren</string>
+    <string name="card_browser_hide_media_summary">Visa mediefilnamn i kortläsarens fråga/svarsfält</string>
     <string name="col_path" maxLength="41">AnkiDroid sökväg</string>
     <string name="fullscreen_review" maxLength="41">Fullskärmsläge</string>
     <string name="full_screen_off">Av</string>
@@ -90,36 +90,36 @@
     </string-array>
     <string name="gestures" maxLength="41">Aktivera gester</string>
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links" maxLength="41">Ignorera tryckgester på länkar</string>
+    <string name="gestures_allow_links_summary">Tryckgester kommer inte att bearbetas om en länk/ledtråd trycks in.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_corner_touch_summary">Tillåt tryckgester i skärmhörnen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Fullskärm navigationsmeny</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Öppna navigationsmeny när du swipar höger var som helst på skärmen</string>
     <string name="gestures_swipe_up" maxLength="41">Svep uppåt</string>
     <string name="gestures_swipe_down" maxLength="41">Svep nedåt</string>
     <string name="gestures_swipe_left" maxLength="41">Svep vänster</string>
     <string name="gestures_swipe_right" maxLength="41">Svep höger</string>
     <string name="gestures_double_tap" maxLength="41">Dubbelklick</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">Långtryck</string>
     <string name="gestures_tap_top" maxLength="41">Klicka upptill</string>
     <string name="gestures_tap_left" maxLength="41">Klicka till vänster</string>
     <string name="gestures_tap_right" maxLength="41">Klicka till höger</string>
     <string name="gestures_tap_bottom" maxLength="41">Klicka nertill</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Tryck högst upp till vänster</string>
+    <string name="gestures_corner_tap_top_center">Tryck överst i mitten</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Tryck längst upp till höger</string>
+    <string name="gestures_corner_tap_middle_left">Tryck mitt till vänster</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Tryck vid mitten</string>
+    <string name="gestures_corner_tap_middle_right">Tryck på mitten till höger</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Tryck längst ner till vänster</string>
+    <string name="gestures_corner_tap_bottom_center">Tryck längst ned i mitten</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Tryck längst ner till höger</string>
+    <string name="gestures_volume_up" maxLength="41">Höj volymen</string>
+    <string name="gestures_volume_down" maxLength="41">Sänk volymen</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Använd även Kanji/Katakana, Emoji/Kao-moji-knapparna för att scrolla</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Meny</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Dubbelrullning</string>
     <string name="double_scrolling_gap_summ">Aktivera detta om du vill dubbla scroll gap med eReader</string>
@@ -133,8 +133,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatisk synkronering</string>
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge" maxLength="41">Visa synkroniseringsstatus</string>
+    <string name="sync_status_badge_summ">Ändra synkroniseringsikon när ändringar kan laddas upp</string>
     <string name="day_theme" maxLength="41">Dags-tema</string>
     <string name="night_theme" maxLength="41">Natt-tema</string>
     <string name="default_font" maxLength="41">Standardteckensnitt</string>
@@ -154,22 +154,22 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tid för att visa nästa fråga</string>
     <string name="select_locale_title">Välj språk</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Inaktivera kort hårdvarurendering</string>
+    <string name="software_render_summ">Hårdvarurendering är snabbare men kan få problem, särskilt på Android 8/8.1. Om du inte kan se delar av kortgranskningsgränssnittet, prova den här inställningen.</string>
     <string name="safe_display" maxLength="41">Säkert visningsläge</string>
     <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-bläckenheter kan kräva detta.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Inaktivera redigeringsläge för enfald</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Centrera</string>
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
     <string name="pref_backup_max" maxLength="41">Max antal säkerhetskopior</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall (millisekunder)</string>
+    <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
     <string name="show_estimates" maxLength="41">Visa tid på knappar</string>
     <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
+    <string name="show_large_answer_buttons_summ">Visa svarsknappen i 2 rader</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>
@@ -181,13 +181,13 @@
     <string name="learn_cutoff" maxLength="41">Gräns för att lära i förväg</string>
     <string name="time_limit" maxLength="41">Tidsgräns</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="new_timezone" maxLength="41">Ny hantering av tidszoner</string>
+    <string name="day_offset_with_description" maxLength="41">Början av nästa dag</string>
     <string name="day_offset_summ">XXX timmar efter midnatt</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnatt</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11:00</string>
+    <string name="sched_v2" maxLength="41">V2 schemaläggare</string>
+    <string name="sched_v2_summ">Aktivera den nya schemaläggaren. Vilket tvingar ändringar i en riktning vid nästa synkronisering</string>
     <string name="sched_ver_toggle_title">Bekräfta</string>
     <string name="sched_ver_2to1">Detta kommer att återställa alla kort i nyinlärda-kön, rensa bort alla filtrerade kortlekar och ändra schemaläggarens version. Vill du fortsätta?</string>
     <string name="sched_ver_1to2">Den experimentella schemaläggaren kan komma att orsaka felakting schemaläggning. Försäkra dig om att du först har läst dokumentationen. Vill du fortsätta?</string>
@@ -208,10 +208,10 @@
     <string name="html_javascript_debugging" maxLength="41">Avlusning - HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktivera WebView fjärråtkomst, och spara korts HTML till AnkiDroid-katalogen</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
+    <string name="paste_as_png_summary">Som standard klistrar Anki in bilder från urklipp som JPG-filer för att spara diskutrymme. Du kan använda den här inställningen för att klistra in bilder som PNG-filer istället.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">För att undvika att av misstag lämna granskaren eller appen</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Avancerad statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktivera avancerad statistik</string>
@@ -224,9 +224,9 @@
     <string name="custom_sync_server_enable_title" maxLength="41">Använd annan synkroniseringsserver</string>
     <string name="custom_sync_server_enable_summary">Om du inte vill använda den proprietära AnkiWeb-tjänsten kan du ange en alternativ server här</string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synkroniseringsurl</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Synkroniserings URL är ogiltig</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediasynkroniseringsurl</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Media sync URL är ogiltig</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ändringar till kortleksgruppsinställningar kommer att påverka flera kortlekar. Om du bara vill ändra nuvarande kortlek, var då vänlig och lägg först till en ny konfigurationsgrupp</string>
     <string name="studyoptions_limit_select_tags">Välj etiketter</string>
@@ -254,10 +254,10 @@
     <string name="deck_conf_new_bury_summ">Relaterade nya kort döljs till påföljande dag</string>
     <string name="deck_conf_rev_bury" maxLength="41">Dölj relaterade repetitioner</string>
     <string name="deck_conf_rev_bury_summ">Relaterade repetitioner döljs till påföljande dag</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Använd allmänna inställningar</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Lätt bonus</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Hård intervall</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Intervallmodifikator</string>
     <string name="deck_conf_max_ivl" maxLength="41">Största intervall</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Nytt intervall</string>
@@ -272,7 +272,7 @@
     <string name="deck_conf_replayq" maxLength="41">Spela upp fråga igen</string>
     <string name="deck_conf_replayq_summ">När svar visats, spela upp både fråge- och svarsljud igen</string>
     <string name="deck_conf_manage" maxLength="41">Grupphantering</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Lägg till och ändra inställningsgrupper</string>
     <string name="deck_conf_current_group" maxLength="41">Nuvarande grupp</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Byt namn</string>
     <string name="deck_conf_reset" maxLength="41">Återställ standardinställningar</string>
@@ -293,7 +293,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kort valda efter</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Omplanera</string>
     <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserat på mina svar i denna kortlek</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Aktivera sekundär filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Anpassade steg (i minuter)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definiera anpassade steg</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktivera påminnelsemeddelanden för kortlekar i denna kortleksgrupp</string>
@@ -306,8 +306,9 @@
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus" maxLength="41">Fokusera på ‘skriv in svar’</string>
+    <string name="type_in_answer_focus_summ">Fokusera automatiskt på fältet ‘skriv in svar’ i granskaren</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Öppna ändringslogg</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>
