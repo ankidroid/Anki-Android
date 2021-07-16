@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.ThumbnailUtils;
 import android.os.Vibrator;
 import android.provider.MediaStore;
@@ -123,5 +124,18 @@ public class CompatV21 implements Compat {
     @SuppressWarnings("deprecation")
     public boolean hasVideoThumbnail(@NonNull String path) {
         return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    }
+    
+    @Override
+    @SuppressWarnings("deprecation")
+    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+        audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+        audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
 }

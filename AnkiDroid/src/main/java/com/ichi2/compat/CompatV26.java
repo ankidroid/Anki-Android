@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
@@ -82,5 +84,21 @@ public class CompatV26 extends CompatV23 implements Compat {
     @Override
     public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @Override
+    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+        AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build();
+        audioManager.requestAudioFocus(audioFocusRequest);
+    }
+
+    @Override
+    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+        AudioFocusRequest audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build();
+        audioManager.abandonAudioFocusRequest(audioFocusRequest);
     }
 }
