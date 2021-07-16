@@ -28,6 +28,9 @@ public class AudioPlayerTest extends RobolectricTest {
     private AudioPlayer mAudioPlayer;
     private File mFile;
 
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
     @Before
     public void before() throws IOException {
         mAudioPlayer = new AudioPlayer();
@@ -38,9 +41,6 @@ public class AudioPlayerTest extends RobolectricTest {
         ShadowMediaPlayer.MediaInfo mFileInfo = new ShadowMediaPlayer.MediaInfo();
         testPlayer.addMediaInfo(mFileSource, mFileInfo);
     }
-
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
     public void testPlayOnce() throws IOException {
