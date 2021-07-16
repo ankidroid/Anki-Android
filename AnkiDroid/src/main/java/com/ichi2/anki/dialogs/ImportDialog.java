@@ -90,7 +90,7 @@ public class ImportDialog extends AsyncDialogFragment {
             case DIALOG_IMPORT_SELECT: {
                 // Allow user to choose from the list of available APKG files
                 List<File> fileList = Utils.getImportableDecks(getActivity());
-                if (fileList.size() == 0) {
+                if (fileList.isEmpty()) {
                     UIUtils.showThemedToast(getActivity(),
                             getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
                     return builder.showListener(DialogInterface::cancel).show();

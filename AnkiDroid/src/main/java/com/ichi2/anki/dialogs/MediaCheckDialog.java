@@ -74,16 +74,16 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
                 // Generate report
                 String report = "";
-                if (invalid.size() > 0) {
+                if (!invalid.isEmpty()) {
                     report += String.format(res().getString(R.string.check_media_invalid), invalid.size());
                 }
-                if (unused.size() > 0) {
+                if (!unused.isEmpty()) {
                     if (report.length() > 0) {
                         report += "\n";
                     }
                     report += String.format(res().getString(R.string.check_media_unused), unused.size());
                 }
-                if (nohave.size() > 0) {
+                if (!nohave.isEmpty()) {
                     if (report.length() > 0) {
                         report += "\n";
                     }
@@ -102,7 +102,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
                 // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
                 // needs to acknowledge the results, so show only an OK dialog.
-                if (unused.size() > 0) {
+                if (!unused.isEmpty()) {
                     builder.positiveText(res().getString(R.string.dialog_ok))
                             .negativeText(res().getString(R.string.check_media_delete_unused))
                             .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity())

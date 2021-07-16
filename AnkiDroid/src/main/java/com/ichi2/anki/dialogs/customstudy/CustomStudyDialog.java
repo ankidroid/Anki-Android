@@ -358,7 +358,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 break;
         }
         List<String> arr = new ArrayList<>(selectedTags.size());
-        if (selectedTags.size() > 0) {
+        if (!selectedTags.isEmpty()) {
             for (String tag : selectedTags) {
                 arr.add(String.format("tag:'%s'", tag));
             }

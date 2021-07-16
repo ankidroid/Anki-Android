@@ -459,7 +459,7 @@ public class Stats {
             }
         }
         // small adjustment for a proper chartbuilding with achartengine
-        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+        if (dues.isEmpty() || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0 });
         }
         if (end == -1 && dues.size() < 2) {
@@ -517,7 +517,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return dues.size() > 0;
+        return !dues.isEmpty();
     }
 
 
@@ -574,7 +574,7 @@ public class Stats {
         if (lim.length() > 0) {
             lims.add(lim);
         }
-        if (lims.size() > 0) {
+        if (!lims.isEmpty()) {
             lim = "WHERE ";
             while (lims.size() > 1) {
                 lim += lims.remove(0) + " AND ";
@@ -624,9 +624,9 @@ public class Stats {
 
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (type != AxisType.TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
+        if (type != AxisType.TYPE_LIFE && (list.isEmpty() || list.get(0)[0] > -num)) {
             list.add(0, new double[] { -num, 0, 0, 0, 0, 0 });
-        } else if (type == AxisType.TYPE_LIFE && list.size() == 0) {
+        } else if (type == AxisType.TYPE_LIFE && list.isEmpty()) {
             list.add(0, new double[] { -12, 0, 0, 0, 0, 0 });
         }
         if (list.get(list.size() - 1)[0] < 0) {
@@ -712,7 +712,7 @@ public class Stats {
             mFirstElement = -10;
             mLastElement = 0;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 
@@ -792,7 +792,7 @@ public class Stats {
         }
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0 || list.get(0)[0] > 0) {
+        if (list.isEmpty() || list.get(0)[0] > 0) {
             list.add(0, new double[] { 0, 0, 0 });
         }
         if (num == -1 && list.size() < 2) {
@@ -850,7 +850,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**
@@ -898,7 +898,7 @@ public class Stats {
 
         //TODO adjust for breakdown, for now only copied from intervals
         //small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
@@ -972,7 +972,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**
@@ -1020,7 +1020,7 @@ public class Stats {
 
         //TODO adjust for breakdown, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0 ) {
+        if (list.isEmpty() ) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
@@ -1082,7 +1082,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 
@@ -1102,7 +1102,7 @@ public class Stats {
 
         //TODO adjust for AnswerButton, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             list.add(0, new double[]{0, 1, 0});
         }
 
@@ -1134,7 +1134,7 @@ public class Stats {
         if(mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 

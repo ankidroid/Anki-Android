@@ -118,7 +118,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
                     mButtonItemAdapter.remove(searchName);
                     mButtonItemAdapter.notifyAdapterDataSetChanged();
                     dialog.dismiss();
-                    if (mSavedFilters.size() == 0) {
+                    if (mSavedFilters.isEmpty()) {
                         getDialog().dismiss();
                     }
                 }).show();
