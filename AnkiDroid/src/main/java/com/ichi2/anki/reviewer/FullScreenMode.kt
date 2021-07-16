@@ -53,15 +53,9 @@ enum class FullScreenMode(private val mPrefValue: String) {
             Timber.i("Old version of Anki - Fixing Fullscreen")
             // clear fullscreen flag as we use a integer
             val fullScreenModeKey = PREF_KEY
-            try {
-                val old = preferences.getBoolean("fullscreenReview", false)
-                val newValue = if (old) BUTTONS_ONLY else BUTTONS_AND_MENU
-                preferences.edit().putString(fullScreenModeKey, newValue.getPreferenceValue()).apply()
-            } catch (e: ClassCastException) {
-                Timber.w(e)
-                // TODO: can remove this catch as it was only here to fix an error in the betas
-                preferences.edit().remove(fullScreenModeKey).apply()
-            }
+            val old = preferences.getBoolean("fullscreenReview", false)
+            val newValue = if (old) BUTTONS_ONLY else BUTTONS_AND_MENU
+            preferences.edit().putString(fullScreenModeKey, newValue.getPreferenceValue()).apply()
             preferences.edit().remove("fullscreenReview").apply()
         }
 
