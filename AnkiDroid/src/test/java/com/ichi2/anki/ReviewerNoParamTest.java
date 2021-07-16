@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
@@ -24,6 +25,7 @@ import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.model.WhiteboardPenColor;
+import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.libanki.Consts;
 
 import net.ankiweb.rsdroid.database.NotImplementedException;
@@ -38,8 +40,6 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.anki.Preferences.BUTTONS_ONLY;
-import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -308,7 +308,8 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
     private ReviewerExt startReviewerFullScreen() {
-        AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString(FULL_SCREEN_MODE, BUTTONS_ONLY).apply();
+        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(getTargetContext());
+        FullScreenMode.setPreference(sharedPrefs, FullScreenMode.BUTTONS_ONLY);
         ReviewerExt reviewer = ReviewerTest.startReviewer(this, ReviewerExt.class);
         return reviewer;
     }
