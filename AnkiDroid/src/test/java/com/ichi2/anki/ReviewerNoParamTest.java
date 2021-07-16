@@ -256,6 +256,18 @@ public class ReviewerNoParamTest extends RobolectricTest {
     }
 
 
+    @Test
+    public void normalReviewerFitsSystemWindows() {
+        Reviewer reviewer = startReviewer();
+        assertThat(reviewer.fitsSystemWindows(), is(true));
+    }
+
+    @Test
+    public void fullscreenDoesNotFitSystemWindow() {
+        ReviewerExt reviewer = startReviewerFullScreen();
+        assertThat(reviewer.fitsSystemWindows(), is(false));
+    }
+
     protected GestureProcessor getGestureProcessor() {
         GestureProcessor gestureProcessor = new GestureProcessor(null);
         gestureProcessor.init(AnkiDroidApp.getSharedPrefs(this.getTargetContext()));

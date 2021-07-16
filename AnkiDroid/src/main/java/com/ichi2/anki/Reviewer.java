@@ -267,7 +267,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected boolean fitsSystemWindows() {
-        return getFullscreenMode().isFullScreenReview();
+        return !getFullscreenMode().isFullScreenReview();
     }
 
     @Override
