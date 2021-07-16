@@ -72,7 +72,7 @@
     <string name="reset_languages_question">Скінуць усе моўныя прызначэнні?</string>
     <string name="reset_confirmation">Усе налады скінутыя</string>
     <string name="card_zoom" maxLength="41">Маштаб картак</string>
-    <string name="image_zoom" maxLength="41">Маштаб відарысаў</string>
+    <string name="image_zoom" maxLength="41">Маштаб ваяваў</string>
     <string name="button_size" maxLength="41">Памер кнопкі адказу</string>
     <string name="card_browser_font_size" maxLength="41">Маштаб шрыфту аглядальніка картак</string>
     <string name="card_browser_hide_media" maxLength="41">Адлюстроўваць назвы файлаў</string>
@@ -166,7 +166,7 @@
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
     <string name="pref_backup_max" maxLength="41">Колькасць рэзервовых копій</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку (мілісек.)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">Другі націск на кнопку адказу будзе праігнараваны, калі час не мінуў. Гэта прадухіляе выпадковы двайны націск</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
     <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>
@@ -209,10 +209,10 @@
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену выявы як PNG</string>
+    <string name="paste_as_png_summary">Па змаўчанні, праграма ўстаўляе выявы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі выяваў PNG замест JPG.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
+    <string name="exit_via_double_tap_back_summ">Для прадухілення нечаканага выхаду з праграмы</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Пашыраная статыстыка</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Уключыць пашыраную статыстыку</string>
@@ -298,7 +298,7 @@
     <string name="deck_conf_cram_order" maxLength="41">карткі выбраныя па</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перапланаваць</string>
     <string name="deck_conf_cram_reschedule_summ">Перапланаваць карткі на падставе маіх адказаў у гэтай калодзе</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Уключыць другі фільтр</string>
     <string name="deck_conf_cram_steps" maxLength="41">Уласныя крокі (у хвілінах)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Вызначыць уласныя крокі</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Уключыць апавяшчэнні для калод у групе</string>
@@ -315,4 +315,5 @@
     <string name="type_in_answer_focus_summ">Падчас паўтарэння аўтаматычна пераключацца на поле \"Увесці адказ\"</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Адкрыць спіс змен</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

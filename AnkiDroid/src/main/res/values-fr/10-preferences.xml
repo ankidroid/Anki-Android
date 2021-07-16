@@ -310,4 +310,5 @@
     <string name="type_in_answer_focus_summ">Mettre automatiquement en évidence le champ « Saisir la réponse » dans le vérificateur</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

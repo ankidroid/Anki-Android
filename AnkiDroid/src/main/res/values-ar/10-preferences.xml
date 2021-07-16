@@ -318,4 +318,5 @@
     <string name="type_in_answer_focus_summ">التركيز التلقائي على حقل «أدخل الإجابة» في شاشة المراجعة</string>
     <!-- Open Changelog-->
     <string name="open_changelog">فتح سجل التغييرات</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

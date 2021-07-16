@@ -105,7 +105,7 @@
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Список карточек</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -194,8 +194,8 @@
     <string name="card_template_editor_styling">Стилизация</string>
     <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Вставить поле</string>
+    <string name="card_template_editor_select_field">Выбрать поле</string>
     <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Удалить тип “%2$s” и его %1$d карточку?</item>
@@ -235,9 +235,9 @@
     <string name="sync_conflict_title_new">Выберите коллекцию для сохранения</string>
     <string name="sync_conflict_replace_title">Заменить коллекцию</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="few">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d карточка (0 к просмотру)</item>
+        <item quantity="few">%1$d карточки (0 к просмотру)</item>
+        <item quantity="many">%1$d карточек (0 к просмотру)</item>
+        <item quantity="other">%1$d карточек (0 к просмотру)</item>
     </plurals>
 </resources>

@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">Leret ke kiri</string>
     <string name="gestures_swipe_right" maxLength="41">Sapu tepat</string>
     <string name="gestures_double_tap" maxLength="41">Double sentuh</string>
-    <string name="gestures_long_tap" maxLength="41">Long tap</string>
+    <string name="gestures_long_tap" maxLength="41">Long touch</string>
     <string name="gestures_tap_top" maxLength="41">Sentuh atas</string>
     <string name="gestures_tap_left" maxLength="41">Sentuh kekunci</string>
     <string name="gestures_tap_right" maxLength="41">Menyentuh hak</string>
@@ -309,4 +309,5 @@ minit yang lalu.</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
+    <string name="binding_add_gesture">Add gesture</string>
 </resources>

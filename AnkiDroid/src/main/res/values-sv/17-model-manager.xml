@@ -23,7 +23,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Hantera nottyper</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Hantera fält</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Du kan inte ta bort din senaste anteckningstyp</string>
     <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
     <string name="toast_empty_name">Du måste ange ett namn</string>
     <string name="toast_duplicate_field">Fältnamnet används redan</string>
@@ -59,7 +59,7 @@
     <string name="model_field_editor_sort_field">Sortera efter detta fält</string>
     <string name="model_clone_suffix">kopiera</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Är du säker på att du vill ta bort denna anteckningstyp?</string>
     <string name="field_delete_warning">Är du säker på att du vill ta bort detta fält?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Lägg till: %1$s </string>
@@ -67,9 +67,9 @@
     <string name="model_browser_add_clone">Klona: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
+    <string name="card_template_browser_appearance_question_format">Frågeformat</string>
+    <string name="card_template_browser_appearance_answer_format">Svarsformat</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Återställ standardvärden?</string>
     <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
@@ -77,5 +77,5 @@
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="deck_picker_dialog_filter_decks">Filtrera kortlekar</string>
 </resources>

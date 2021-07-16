@@ -57,7 +57,7 @@
     <string name="no_tags">Et ole vielä lisännyt tunnisteita</string>
     <string name="updated_version">Päivitetty versioon %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Tallenna tussitaulu</string>
     <string name="enable_whiteboard">Ota kirjoitustaulu käyttöön</string>
     <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
     <string name="show_whiteboard">Näytä kirjoitustaulu</string>
@@ -68,13 +68,13 @@
     <string name="leech_notification">Kortti on merkitty vaikeaksi</string>
     <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
     <string name="webview_crash_unknown">Tuntematon virhe</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknwon_detailed">Tämän aiheutti sisäinen virhe WebViewissä.</string>
+    <string name="webview_crash_oom">Muisti ei riitä</string>
+    <string name="webview_crash_oom_details">Järjestelmä keskeytti WebViewin. Tämä tapahtuu tyypillisesti silloin kun sovelluksen muisti loppuu, usein suurten fonttien tai median vuoksi.</string>
+    <string name="webview_crash_nonfatal">WebView-renderöijä kaatui. Syy: %s</string>
+    <string name="webview_crash_fatal">Kriittinen virhe: WebView-renderöijä kaatui. Syy: %s</string>
+    <string name="webview_crash_loop_dialog_title">Järjestelmän WebView Renderöinti Epäonnistui</string>
+    <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Kysymys</item>
@@ -90,15 +90,15 @@
         <item>Virheet</item>
         <item>Kertaukset</item>
         <item>Kertausväli</item>
-        <item>Ease</item>
+        <item>Helppous</item>
         <item>Erääntynyt</item>
         <item>Korttia Muokattu</item>
         <item>Luotu</item>
-        <item>Note Modified</item>
+        <item>Muistilappua muokattu</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Muuta tämän päivän uusien korttien määrän ylärajaa</string>
+    <string name="custom_study_increase_review_limit">Muuta tänään kerrattavien korttien määrän ylärajaa</string>
     <string name="custom_study_review_forgotten">Kertaa unohdettuja kortteja</string>
     <string name="custom_study_review_ahead">Kertaa etukäteen</string>
     <string name="custom_study_random_selection">Opiskele satunnaisia kortteja</string>
@@ -107,8 +107,8 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Muokkaa merkintää</string>
     <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cards_created">Kortteja ei luotu. Täytä lisää kenttiä</string>
+    <string name="note_editor_no_first_field">Ensimmäinen kenttä on tyhjä</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
