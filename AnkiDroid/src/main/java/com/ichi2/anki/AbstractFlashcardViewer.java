@@ -103,6 +103,7 @@ import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.cardviewer.CardTemplate;
+import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
@@ -161,8 +162,6 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-import static com.ichi2.anki.Preferences.BUTTONS_AND_MENU;
-import static com.ichi2.anki.Preferences.FULL_SCREEN_MODE;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
@@ -237,7 +236,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mPrefShowTopbar;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
-    private int mPrefFullscreenReview;
+    private FullScreenMode mPrefFullscreenReview = FullScreenMode.getDEFAULT();
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
@@ -954,7 +953,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
-    protected int getContentViewAttr(int fullscreenMode) {
+    protected int getContentViewAttr(FullScreenMode fullscreenMode) {
         return R.layout.reviewer;
     }
 
@@ -1917,7 +1916,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString(FULL_SCREEN_MODE, BUTTONS_AND_MENU));
+        mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
