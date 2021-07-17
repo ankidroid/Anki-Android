@@ -302,4 +302,10 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
 </resources>
