@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.ThumbnailUtils;
 import android.os.Vibrator;
@@ -31,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
@@ -128,14 +130,16 @@ public class CompatV21 implements Compat {
     
     @Override
     @SuppressWarnings("deprecation")
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener) {
+    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
 }

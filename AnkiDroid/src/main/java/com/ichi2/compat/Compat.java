@@ -17,6 +17,7 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.widget.TimePicker;
 
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -70,7 +72,7 @@ public interface Compat {
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
     boolean hasVideoThumbnail(@NonNull String path);
-    void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener);
-    void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener);
+    void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+    void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
 }
 
