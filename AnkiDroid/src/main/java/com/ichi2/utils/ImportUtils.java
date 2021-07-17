@@ -92,6 +92,10 @@ public class ImportUtils {
     public static boolean isInvalidViewIntent(@NonNull Intent intent) {
         return intent.getData() == null && intent.getClipData() == null;
     }
+    
+    public static boolean isFileAValidDeck(String fileName) {
+        return FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg");
+    }
 
 
     @SuppressWarnings("WeakerAccess")

@@ -380,6 +380,11 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <activity
+            android:name=".SharedDecksActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:label="@string/download_deck"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
