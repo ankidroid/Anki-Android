@@ -146,12 +146,4 @@ public class PeripheralCommand {
     public boolean matchesModifier(KeyEvent event) {
         return mBinding.matchesModifier(event);
     }
-
-
-    private enum CardSide {
-        NONE,
-        QUESTION,
-        ANSWER,
-        BOTH
-    }
 }
