@@ -31,29 +31,19 @@ import androidx.annotation.NonNull;
 public class PeripheralKeymap {
 
     private final ReviewerUi mReviewerUI;
-    private final KeyMap mAnswerKeyMap;
-    private final KeyMap mQuestionKeyMap;
+    private final KeyMap mKeyMap;
 
     private boolean mHasSetup = false;
 
     public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
         this.mReviewerUI = reviewerUi;
-        this.mQuestionKeyMap = new KeyMap(commandProcessor);
-        this.mAnswerKeyMap = new KeyMap(commandProcessor);
+        this.mKeyMap = new KeyMap(commandProcessor);
     }
 
     public void setup() {
-        List<PeripheralCommand> commands = PeripheralCommand.getDefaultCommands();
-
-        for (PeripheralCommand command : commands) {
-            //NOTE: Can be both
-            if (command.isQuestion()) {
-                mQuestionKeyMap.addCommand(command);
-            }
-            if (command.isAnswer()) {
-                mAnswerKeyMap.addCommand(command);
-            }
-         }
+        for (PeripheralCommand command : PeripheralCommand.getDefaultCommands()) {
+            mKeyMap.addCommand(command, command.getSide());
+        }
 
         mHasSetup = true;
     }
@@ -63,11 +53,8 @@ public class PeripheralKeymap {
         if (!mHasSetup || event.getRepeatCount() > 0) {
             return false;
         }
-        if (mReviewerUI.isDisplayingAnswer()) {
-            return mAnswerKeyMap.onKeyUp(keyCode, event);
-        } else {
-            return mQuestionKeyMap.onKeyUp(keyCode, event);
-        }
+
+        return mKeyMap.onKeyUp(keyCode, event);
     }
 
     @SuppressWarnings( {"unused", "RedundantSuppression"})
@@ -75,7 +62,7 @@ public class PeripheralKeymap {
         return false;
     }
 
-    private static class KeyMap {
+    private class KeyMap {
         public final HashMap<MappableBinding, PeripheralCommand> mBindingMap = new HashMap<>();
         private final CommandProcessor mProcessor;
 
@@ -88,9 +75,11 @@ public class PeripheralKeymap {
             boolean ret = false;
 
             List<Binding> bindings = Binding.key(event);
+            CardSide side = mReviewerUI.isDisplayingAnswer() ? CardSide.ANSWER : CardSide.QUESTION;
 
             for (Binding b: bindings) {
-                MappableBinding binding = new MappableBinding(b);
+
+                MappableBinding binding = new MappableBinding(b, side);
                 PeripheralCommand command = mBindingMap.get(binding);
                 if (command == null) {
                     continue;
@@ -103,27 +92,32 @@ public class PeripheralKeymap {
         }
 
 
-        public void addCommand(PeripheralCommand command) {
-            MappableBinding key = new MappableBinding(command.getBinding());
+        public void addCommand(PeripheralCommand command, CardSide side) {
+            MappableBinding key = new MappableBinding(command.getBinding(), side);
             mBindingMap.put(key, command);
         }
     }
 
     /**
-     * Custom class to use for a custom equals/hashcode implementation in a HashMap/set
+     * Binding + additional contextual information
+     * Also defines equality over bindings.
      * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
      * */
     public static class MappableBinding {
         @NonNull
         private final Binding mBinding;
+        @NonNull
+        private final CardSide mSide;
 
-        public MappableBinding(@NonNull Binding binding) {
+
+        public MappableBinding(@NonNull Binding binding, @NonNull CardSide side) {
             mBinding = binding;
+            mSide = side;
         }
 
         @NonNull
-        public static MappableBinding fromBinding(Binding b) {
-            return new MappableBinding(b);
+        public static MappableBinding fromGesture(Binding b) {
+            return new MappableBinding(b, CardSide.BOTH);
         }
 
         @NonNull
@@ -142,6 +136,10 @@ public class PeripheralKeymap {
             MappableBinding mappableBinding = (MappableBinding) o;
             Binding binding = mappableBinding.mBinding;
 
+            if (mSide != CardSide.BOTH && mappableBinding.mSide != CardSide.BOTH && mSide != mappableBinding.mSide) {
+                return false;
+            }
+
             return Objects.equals(mBinding.getKeycode(), binding.getKeycode()) &&
                     Objects.equals(mBinding.getUnicodeCharacter(), binding.getUnicodeCharacter()) &&
                     Objects.equals(mBinding.getGesture(), binding.getGesture()) &&
@@ -151,7 +149,7 @@ public class PeripheralKeymap {
 
         @Override
         public int hashCode() {
-            // don't include the modifierKeys
+            // don't include the modifierKeys or mSide
             return Objects.hash(mBinding.getKeycode(), mBinding.getUnicodeCharacter(), mBinding.getGesture());
         }
 

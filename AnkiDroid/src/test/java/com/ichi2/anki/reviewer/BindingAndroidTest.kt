@@ -69,9 +69,9 @@ class BindingAndroidTest : RobolectricTest() {
         return this.toDisplayString(targetContext)
     }
 
-    private fun assertBindingEquals(fst: Binding?, snd: Binding?) {
-        val first = MappableBinding.fromBinding(fst)
-        val second = MappableBinding.fromBinding(snd)
+    private fun assertBindingEquals(fst: Binding, snd: Binding) {
+        val first = MappableBinding(fst, CardSide.BOTH)
+        val second = MappableBinding(snd, CardSide.BOTH)
         assertEquals(first, second)
     }
 }
