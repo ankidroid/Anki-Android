@@ -115,7 +115,9 @@ public class AudioPlayerTest extends RobolectricTest {
         mAudioPlayer.play(mFile.getAbsolutePath());
         mAudioPlayer.stop();
         advanceRobolectricLooper();
-        //audio has immediately stopped, and the stop listeners should not have run
+        // audio was stopped prior to completion, and on investigation of the "stop" listeners,
+        // it appears they are hooked to the *completion* of the audio, so it appears correct that
+        // no "stop" listeners were called as the audio did not in fact complete
         verify(stoppingListener, times(0)).run();
         verify(stoppedListener, times(0)).run();
     }
