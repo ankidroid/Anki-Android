@@ -79,7 +79,7 @@ public class DeckPickerFloatingActionMenu {
         View.OnClickListener addSharedListener = addSharedButtonView -> {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck");
             closeFloatingActionMenu();
-            deckPicker.addSharedDeck();
+            deckPicker.openAnkiWebSharedDecks();
         };
         addSharedButton.setOnClickListener(addSharedListener);
         addSharedLabel.setOnClickListener(addSharedListener);

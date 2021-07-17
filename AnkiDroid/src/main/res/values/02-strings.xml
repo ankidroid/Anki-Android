@@ -377,4 +377,17 @@
 
     <string name="back_pressed_once">Press back again to exit</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
+
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%d %%</string>
+    
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel Download</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="cannot_import">Cannot import since file is not a deck</string>
+    <string name="download_failed">Download failed</string>
+    <string name="previous_download_running_message">Download will start when the previous download completes.</string>
+    <string name="deck_download_progress_message">You can close this screen and the download will keep running in the background. Once the download completes, a dialog would open to let you import the deck.</string>
 </resources>
