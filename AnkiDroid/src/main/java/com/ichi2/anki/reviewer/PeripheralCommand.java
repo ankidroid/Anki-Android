@@ -67,6 +67,10 @@ public class PeripheralCommand {
         return mBinding;
     }
 
+    public CardSide getSide() {
+        return mCardSide;
+    }
+
     public boolean isQuestion() {
         return mCardSide == CardSide.QUESTION || mCardSide == CardSide.BOTH;
     }
