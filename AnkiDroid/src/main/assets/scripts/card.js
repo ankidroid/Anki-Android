@@ -140,6 +140,12 @@ function ankiShowToast(message) {
     window.location.href = "signal:anki_show_toast:" + msg;
 }
 
+// search card using query if allDecks is boolean
+function ankiSearchCard(query) {
+    var encodedQ = encodeURI(query);
+    window.location.href = "signal:anki_search_card:" + encodedQ;
+}
+
 /* Tell the app the text in the input box when it loses focus */
 function taBlur(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.

@@ -428,6 +428,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);
         }
+        intent.putExtra("called_from_js_api", false);
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
+    }
+
+    protected void openCardBrowser(String query) {
+        Intent intent = new Intent(NavigationDrawerActivity.this, CardBrowser.class);
+        Long currentCardId = getCurrentCardId();
+        if (currentCardId != null) {
+            intent.putExtra("currentCard", currentCardId);
+        }
+        intent.putExtra("called_from_js_api", true);
+        intent.putExtra("search_query", query);
         startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
     }
 

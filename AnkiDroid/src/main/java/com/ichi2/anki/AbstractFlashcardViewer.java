@@ -216,6 +216,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private static final String MARK_CARD = "markCard";
     private static final String TOGGLE_FLAG = "toggleFlag";
+    private static final String SEARCH_CARD = "searchCard";
 
     // JS API ERROR CODE
     private static final int ankiJsErrorCodeDefault = 0;
@@ -3673,6 +3674,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             }
 
+            // search card during review using JS API with query
+            if (url.startsWith("signal:anki_search_card")) {
+                if (isAnkiApiNull(SEARCH_CARD)) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get(SEARCH_CARD)) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+
+                String query = url.replaceFirst("signal:anki_search_card:", "");
+                openCardBrowser(decodeUrl(query));
+                return true;
+            }
+
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
                 case WebViewSignalParserUtils.SIGNAL_UNHANDLED:
@@ -3987,7 +4004,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     // list of api that can be accessed
-    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD};
+    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD, SEARCH_CARD};
     // JS api list enable/disable status
     private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
