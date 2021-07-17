@@ -21,12 +21,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 
+import android.os.Build;
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
@@ -127,6 +129,8 @@ public class Sound {
      */
     private static final AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
     };
+    
+    private AudioFocusRequest mAudioFocusRequest;
 
 
     // Clears current sound paths; call before parseSounds() calls
@@ -384,7 +388,14 @@ public class Sound {
                 }
                 mMediaPlayer.prepareAsync();
                 Timber.d("Requesting audio focus");
-                CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener);
+
+                // Set mAudioFocusRequest for API 26 and above.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                            .setOnAudioFocusChangeListener(afChangeListener)
+                            .build();
+                }
+                CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
@@ -512,7 +523,8 @@ public class Sound {
             mMediaPlayer = null;
         }
         if (mAudioManager != null) {
-            CompatHelper.getCompat().abandonAudioFocus(mAudioManager, afChangeListener);
+            // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
+            CompatHelper.getCompat().abandonAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
             mAudioManager = null;
         }
     }
