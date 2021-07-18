@@ -39,14 +39,14 @@ class BindingTest {
     fun unicodeKeyIsLoaded() {
         val binding = unicodeCharacter('a')
 
-        assertThat(binding.unicodeCharacter, `is`('a'))
+        assertThat(binding.getUnicodeCharacter(), `is`('a'))
     }
 
     @Test
     fun keycodeIsLoaded() {
         val binding = keyCode(KeyEvent.KEYCODE_A)
 
-        assertThat(binding.keycode, `is`(KeyEvent.KEYCODE_A))
+        assertThat(binding.getKeycode(), `is`(KeyEvent.KEYCODE_A))
     }
 
     @Test
@@ -78,8 +78,8 @@ class BindingTest {
             val bindings = Binding.key(mock)
 
             for (binding in bindings) {
-                assertThat("Should match when '$name:$returnedFromMock': ", getValue(binding.modifierKeys!!, true), `is`(returnedFromMock))
-                assertThat("Should match when '$name:${!returnedFromMock}': ", getValue(binding.modifierKeys!!, false), `is`(!returnedFromMock))
+                assertThat("Should match when '$name:$returnedFromMock': ", getValue(binding.getModifierKeys()!!, true), `is`(returnedFromMock))
+                assertThat("Should match when '$name:${!returnedFromMock}': ", getValue(binding.getModifierKeys()!!, false), `is`(!returnedFromMock))
             }
         }
 
@@ -100,7 +100,7 @@ class BindingTest {
                 on { unicodeChar } doReturn c.code
             }
 
-            return Binding.key(mock).first { x -> x.unicodeCharacter != null }
+            return Binding.key(mock).first { x -> x.getUnicodeCharacter() != null }
         }
 
         fun keyCode(keyCode: Int): Binding {
@@ -108,7 +108,7 @@ class BindingTest {
                 on { getKeyCode() } doReturn keyCode
             }
 
-            return Binding.key(mock).first { x -> x.keycode != null }
+            return Binding.key(mock).first { x -> x.getKeycode() != null }
         }
     }
 }
