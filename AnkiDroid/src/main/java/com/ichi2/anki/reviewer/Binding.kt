@@ -16,6 +16,7 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Pair
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
@@ -168,6 +169,8 @@ class Binding private constructor(private val mModifierKeys: ModifierKeys?, priv
     }
 
     companion object {
+        const val FORBIDDEN_UNICODE_CHAR = MappableBinding.PREF_SEPARATOR
+
         /** https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard)  */
         const val KEY_PREFIX = '\u2328'
 
@@ -204,8 +207,10 @@ class Binding private constructor(private val mModifierKeys: ModifierKeys?, priv
         fun unicode(unicodeChar: Char): Binding =
             unicode(AppDefinedModifierKeys.allowShift(), unicodeChar)
 
-        fun unicode(modifierKeys: ModifierKeys?, unicodeChar: Char): Binding =
-            Binding(modifierKeys, null, unicodeChar, null)
+        fun unicode(modifierKeys: ModifierKeys?, unicodeChar: Char): Binding {
+            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return unknown()
+            return Binding(modifierKeys, null, unicodeChar, null)
+        }
 
         @JvmStatic
         fun keyCode(keyCode: Int): Binding = keyCode(ModifierKeys.none(), keyCode)
@@ -220,6 +225,7 @@ class Binding private constructor(private val mModifierKeys: ModifierKeys?, priv
         fun unknown(): Binding = Binding(ModifierKeys.none(), null, null, null)
 
         fun fromString(from: String): Binding {
+            if (TextUtils.isEmpty(from)) return unknown()
             try {
                 return when (from[0]) {
                     GESTURE_PREFIX -> {
