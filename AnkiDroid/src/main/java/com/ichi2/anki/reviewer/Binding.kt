@@ -13,329 +13,233 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
+import android.content.Context
+import android.util.Pair
+import android.view.KeyEvent
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.utils.StringUtil
+import timber.log.Timber
+import java.util.*
 
-import android.content.Context;
-import android.util.Pair;
-import android.view.KeyEvent;
-
-import com.ichi2.anki.cardviewer.Gesture;
-import com.ichi2.utils.StringUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
-import static java.util.Objects.requireNonNull;
-
-public class Binding {
-
-    /** https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard) */
-    public static final char KEY_PREFIX = '\u2328';
-
-    /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger) */
-    public static final char GESTURE_PREFIX = '\u235D';
-
-    /** https://www.fileformat.info/info/unicode/char/2705/index.htm - checkmark (often used in URLs for unicode)
-     * Only used for serialisation. {@link #KEY_PREFIX} is used for display.
-     */
-    public static final char UNICODE_PREFIX = '\u2705';
-
-    @Nullable
-    private final ModifierKeys mModifierKeys;
-
-    @Nullable
-    private final Integer mKeyCode;
-
-    @Nullable
-    private final Character mUnicodeCharacter;
-
-    @Nullable
-    private final Gesture mGesture;
-
-    private Binding(@Nullable ModifierKeys modifierKeys, @Nullable Integer keyCode, @Nullable Character unicodeCharacter, @Nullable Gesture gesture) {
-        this.mModifierKeys = modifierKeys;
-        this.mKeyCode = keyCode;
-        this.mUnicodeCharacter = unicodeCharacter;
-        this.mGesture = gesture;
-    }
-
-    @Nullable
-    public Character getUnicodeCharacter() {
-        return mUnicodeCharacter;
-    }
-
-    @Nullable
-    public Integer getKeycode() {
-        return mKeyCode;
-    }
-
-    @Nullable
-    public Gesture getGesture() {
-        return mGesture;
-    }
-
-    @Nullable
-    public ModifierKeys getModifierKeys() {
-        return mModifierKeys;
-    }
-
-    /** This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is */
-    public static List<Binding> key(KeyEvent event) {
-        // convert to iterator when this is moved to Kotlin
-        ModifierKeys modifiers = new ModifierKeys(event.isShiftPressed(), event.isCtrlPressed(), event.isAltPressed());
-
-        List<Binding> ret = new ArrayList<>();
-        int keyCode = event.getKeyCode();
-        if (keyCode != 0) {
-            ret.add(Binding.keyCode(modifiers, keyCode));
-        }
-
-        // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
-        // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-        int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
-
-        ret.add(Binding.unicode(modifiers, (char)unicodeChar));
-        return ret;
-    }
-
-    /** 
-     * Specifies a unicode binding from an unknown input device
-     * See {@link AppDefinedModifierKeys}
-     * */
-    public static Binding unicode(char unicodeChar) {
-        return unicode(AppDefinedModifierKeys.allowShift(), unicodeChar);
-    }
-
-    public static Binding unicode(ModifierKeys modifierKeys, char unicodeChar) {
-        return new Binding(modifierKeys, null, (Character) unicodeChar, null);
-    }
-
-    public static Binding keyCode(int keyCode) {
-        return keyCode(ModifierKeys.none(), keyCode);
-    }
-
-    public static Binding keyCode(ModifierKeys modifiers, int keyCode) {
-        return new Binding(modifiers, keyCode, null, null);
-    }
-
-    public static Binding gesture(Gesture gesture) {
-        return new Binding(null, null, null, gesture);
-    }
-
-    public String toDisplayString(Context context) {
-        StringBuilder string = new StringBuilder();
-
-        if (mKeyCode != null) {
-            string.append(KEY_PREFIX);
-            string.append(' ');
-            string.append(requireNonNull(mModifierKeys).toString());
-            String keyCodeString = KeyEvent.keyCodeToString(mKeyCode);
-            string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace('_', ' ')));
-        } else if (mUnicodeCharacter != null) {
-            string.append(KEY_PREFIX);
-            string.append(' ');
-            string.append(requireNonNull(mModifierKeys).toString());
-            string.append(mUnicodeCharacter);
-        } else if (mGesture != null) {
-            string.append(mGesture.toDisplayString(context));
-        }
-
-        return string.toString();
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        StringBuilder string = new StringBuilder();
-
-        if (mKeyCode != null) {
-            string.append(KEY_PREFIX);
-            string.append(requireNonNull(mModifierKeys).toString());
-            string.append(mKeyCode);
-        } else if (mUnicodeCharacter != null) {
-            string.append(UNICODE_PREFIX);
-            string.append(requireNonNull(mModifierKeys).toString());
-            string.append(mUnicodeCharacter);
-        } else if (mGesture != null) {
-            string.append(GESTURE_PREFIX);
-            string.append(mGesture);
-        }
-
-        return string.toString();
-    }
-
-    public boolean isKey() {
-        return mKeyCode != null || mUnicodeCharacter != null;
-    }
-
-    public boolean isGesture() {
-        return mGesture != null;
-    }
-
-    public boolean matchesModifier(KeyEvent event) {
-        return mModifierKeys == null || mModifierKeys.matches(event);
-    }
-
-    @VisibleForTesting
-    static Binding unknown() {
-        return new Binding(ModifierKeys.none(), null, null, null);
-    }
-
-    public static Binding fromString(String from) {
-
-        try {
-            switch (from.charAt(0)) {
-                case GESTURE_PREFIX: {
-                    return gesture(Gesture.valueOf(Gesture.class, from.substring(1)));
-                }
-                case UNICODE_PREFIX: {
-                    Pair<ModifierKeys, String> parsed = ModifierKeys.parse(from.substring(1));
-                    return unicode(parsed.first, parsed.second.charAt(0));
-                }
-                case KEY_PREFIX: {
-                    Pair<ModifierKeys, String> parsed = ModifierKeys.parse(from.substring(1));
-                    int keyCode = Integer.parseInt(parsed.second);
-                    return keyCode(parsed.first, keyCode);
-                }
-                default:
-                    return unknown();
+class Binding private constructor(private val mModifierKeys: ModifierKeys?, private val mKeycode: Int?, private val mUnicodeCharacter: Char?, private val mGesture: Gesture?) {
+    fun toDisplayString(context: Context?): String {
+        val string = StringBuilder()
+        when {
+            mKeycode != null -> {
+                string.append(KEY_PREFIX)
+                string.append(' ')
+                string.append(Objects.requireNonNull(mModifierKeys).toString())
+                val keyCodeString = KeyEvent.keyCodeToString(mKeycode)
+                string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace('_', ' ')))
             }
-        } catch (Exception ex) {
-            Timber.w(ex);
+            mUnicodeCharacter != null -> {
+                string.append(KEY_PREFIX)
+                string.append(' ')
+                string.append(Objects.requireNonNull(mModifierKeys).toString())
+                string.append(mUnicodeCharacter)
+            }
+            mGesture != null -> {
+                string.append(mGesture.toDisplayString(context!!))
+            }
         }
-
-        return unknown();
+        return string.toString()
     }
 
-    public static class ModifierKeys {
-        private final boolean mShift;
-        private final boolean mCtrl;
-        private final boolean mAlt;
+    fun getKeycode() = mKeycode
+    fun getModifierKeys() = mModifierKeys
+    fun getUnicodeCharacter() = mUnicodeCharacter
+    fun getGesture() = mGesture
 
-
-        ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
-            this.mShift = shift;
-            this.mCtrl = ctrl;
-            this.mAlt = alt;
-        }
-
-
-        public static ModifierKeys none() {
-            return new ModifierKeys(false, false, false);
-        }
-
-        public static ModifierKeys ctrl() {
-            return new ModifierKeys(false, true, false);
-        }
-
-        public static ModifierKeys shift() {
-            return new ModifierKeys(true, false, false);
-        }
-
-        public static ModifierKeys alt() {
-            return new ModifierKeys(false, false, true);
-        }
-
-
-        /**
-         * Parses a {@link ModifierKeys} from a string.
-         * @param s The string to parse
-         * @return The {@link ModifierKeys}, and the remainder of the string
-         */
-        public static Pair<ModifierKeys, String> parse(@NonNull String s) {
-            ModifierKeys modifiers = ModifierKeys.none();
-            int plus = s.lastIndexOf("+");
-            if (plus == -1) {
-                return new Pair<>(modifiers, s);
+    override fun toString(): String {
+        val string = StringBuilder()
+        when {
+            mKeycode != null -> {
+                string.append(KEY_PREFIX)
+                string.append(Objects.requireNonNull(mModifierKeys).toString())
+                string.append(mKeycode)
             }
-            modifiers = ModifierKeys.fromString(s.substring(0, plus + 1));
-            return new Pair<>(modifiers, s.substring(plus + 1));
+            mUnicodeCharacter != null -> {
+                string.append(UNICODE_PREFIX)
+                string.append(Objects.requireNonNull(mModifierKeys).toString())
+                string.append(mUnicodeCharacter)
+            }
+            mGesture != null -> {
+                string.append(GESTURE_PREFIX)
+                string.append(mGesture)
+            }
         }
+        return string.toString()
+    }
 
-        public boolean matches(KeyEvent event) {
+    val isKey: Boolean
+        get() = mKeycode != null || mUnicodeCharacter != null
+
+    fun isGesture(): Boolean = mGesture != null
+
+    fun matchesModifier(event: KeyEvent): Boolean {
+        return mModifierKeys == null || mModifierKeys.matches(event)
+    }
+
+    open class ModifierKeys internal constructor(private val mShift: Boolean, private val mCtrl: Boolean, private val mAlt: Boolean) {
+        fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected
-            return shiftMatches(event) && ctrlMatches(event) && altMatches(event);
+            return shiftMatches(event) && ctrlMatches(event) && altMatches(event)
         }
 
-        private boolean shiftMatches(KeyEvent event) {
-            return mShift == event.isShiftPressed();
-        }
+        private fun shiftMatches(event: KeyEvent): Boolean = mShift == event.isShiftPressed
 
-        private boolean ctrlMatches(KeyEvent event) {
-            return mCtrl == event.isCtrlPressed();
-        }
+        private fun ctrlMatches(event: KeyEvent): Boolean = mCtrl == event.isCtrlPressed
 
-        private boolean altMatches(KeyEvent event) {
-            return altMatches(event.isAltPressed());
-        }
+        private fun altMatches(event: KeyEvent): Boolean = altMatches(event.isAltPressed)
 
-        protected boolean shiftMatches(boolean shiftPressed) {
-            return mShift == shiftPressed;
-        }
+        open fun shiftMatches(shiftPressed: Boolean): Boolean = mShift == shiftPressed
 
-        protected boolean ctrlMatches(boolean ctrlPressed) {
-            return mCtrl == ctrlPressed;
-        }
+        fun ctrlMatches(ctrlPressed: Boolean): Boolean = mCtrl == ctrlPressed
 
-        protected boolean altMatches(boolean altPressed) {
-            return mAlt == altPressed;
-        }
+        fun altMatches(altPressed: Boolean): Boolean = mAlt == altPressed
 
-        @NonNull
-        @Override
-        public String toString() {
-            StringBuilder string = new StringBuilder();
-
+        override fun toString(): String {
+            val string = StringBuilder()
             if (mCtrl) {
-                string.append("Ctrl+");
+                string.append("Ctrl+")
             }
             if (mAlt) {
-                string.append("Alt+");
+                string.append("Alt+")
             }
             if (mShift) {
-                string.append("Shift+");
+                string.append("Shift+")
             }
-
-            return string.toString();
+            return string.toString()
         }
 
-        public static ModifierKeys fromString(String from) {
-            return new ModifierKeys(from.contains("Shift"), from.contains("Ctrl"), from.contains("Alt"));
+        companion object {
+            fun none(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = false, mAlt = false)
+
+            @JvmStatic
+            fun ctrl(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = true, mAlt = false)
+
+            @JvmStatic
+            fun shift(): ModifierKeys = ModifierKeys(mShift = true, mCtrl = false, mAlt = false)
+
+            @JvmStatic
+            fun alt(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = false, mAlt = true)
+
+            /**
+             * Parses a [ModifierKeys] from a string.
+             * @param s The string to parse
+             * @return The [ModifierKeys], and the remainder of the string
+             */
+            fun parse(s: String): Pair<ModifierKeys, String> {
+                var modifiers = none()
+                val plus = s.lastIndexOf("+")
+                if (plus == -1) {
+                    return Pair(modifiers, s)
+                }
+                modifiers = fromString(s.substring(0, plus + 1))
+                return Pair(modifiers, s.substring(plus + 1))
+            }
+
+            fun fromString(from: String): ModifierKeys =
+                ModifierKeys(from.contains("Shift"), from.contains("Ctrl"), from.contains("Alt"))
         }
     }
 
-    /** Modifier keys which cannot be defined by a binding */
-    private static class AppDefinedModifierKeys extends ModifierKeys {
+    /** Modifier keys which cannot be defined by a binding  */
+    private class AppDefinedModifierKeys private constructor() : ModifierKeys(false, false, false) {
+        override fun shiftMatches(shiftPressed: Boolean): Boolean = true
+
+        companion object {
+            /**
+             * Specifies a keycode combination binding from an unknown input device
+             * Should be due to the "default" key bindings and never from user input
+             *
+             * If we do not know what the device is, "*" could be a key on the keyboard or Shift + 8
+             *
+             * So we need to ignore shift, rather than match it to a value
+             *
+             * If we have bindings in the app, then we know whether we need shift or not (in actual fact, we should
+             * be fine to use keycodes).
+             */
+            fun allowShift(): ModifierKeys = AppDefinedModifierKeys()
+        }
+    }
+
+    companion object {
+        /** https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard)  */
+        const val KEY_PREFIX = '\u2328'
+
+        /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
+        const val GESTURE_PREFIX = '\u235D'
+
+        /** https://www.fileformat.info/info/unicode/char/2705/index.htm - checkmark (often used in URLs for unicode)
+         * Only used for serialisation. [.KEY_PREFIX] is used for display.
+         */
+        const val UNICODE_PREFIX = '\u2705'
+
+        /** This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is  */
+        @JvmStatic
+        fun key(event: KeyEvent): List<Binding> {
+            val modifiers = ModifierKeys(event.isShiftPressed, event.isCtrlPressed, event.isAltPressed)
+            val ret: MutableList<Binding> = ArrayList()
+            val keyCode = event.keyCode
+            if (keyCode != 0) {
+                ret.add(keyCode(modifiers, keyCode))
+            }
+
+            // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
+            // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
+            val unicodeChar = event.getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
+            ret.add(unicode(modifiers, unicodeChar.toChar()))
+            return ret
+        }
 
         /**
-         * Specifies a keycode combination binding from an unknown input device
-         * Should be due to the "default" key bindings and never from user input
-         *
-         * If we do not know what the device is, "*" could be a key on the keyboard or Shift + 8
-         *
-         * So we need to ignore shift, rather than match it to a value
-         *
-         * If we have bindings in the app, then we know whether we need shift or not (in actual fact, we should
-         * be fine to use keycodes).
-         * */
-        public static ModifierKeys allowShift() {
-            return new AppDefinedModifierKeys();
-        }
+         * Specifies a unicode binding from an unknown input device
+         * See [AppDefinedModifierKeys]
+         */
+        @JvmStatic
+        fun unicode(unicodeChar: Char): Binding =
+            unicode(AppDefinedModifierKeys.allowShift(), unicodeChar)
 
-        private AppDefinedModifierKeys() {
-            super(false, false, false); // shift doesn't matter: alt and ctrl are off.
-        }
+        fun unicode(modifierKeys: ModifierKeys?, unicodeChar: Char): Binding =
+            Binding(modifierKeys, null, unicodeChar, null)
 
+        @JvmStatic
+        fun keyCode(keyCode: Int): Binding = keyCode(ModifierKeys.none(), keyCode)
 
-        @Override
-        protected boolean shiftMatches(boolean shiftPressed) {
-            return true;
+        @JvmStatic
+        fun keyCode(modifiers: ModifierKeys?, keyCode: Int): Binding =
+            Binding(modifiers, keyCode, null, null)
+
+        fun gesture(gesture: Gesture?): Binding = Binding(null, null, null, gesture)
+
+        @VisibleForTesting
+        fun unknown(): Binding = Binding(ModifierKeys.none(), null, null, null)
+
+        fun fromString(from: String): Binding {
+            try {
+                return when (from[0]) {
+                    GESTURE_PREFIX -> {
+                        gesture(Gesture.valueOf(from.substring(1)))
+                    }
+                    UNICODE_PREFIX -> {
+                        val parsed = ModifierKeys.parse(from.substring(1))
+                        unicode(parsed.first, parsed.second[0])
+                    }
+                    KEY_PREFIX -> {
+                        val parsed = ModifierKeys.parse(from.substring(1))
+                        val keyCode = parsed.second.toInt()
+                        keyCode(parsed.first, keyCode)
+                    }
+                    else -> unknown()
+                }
+            } catch (ex: Exception) {
+                Timber.w(ex)
+            }
+            return unknown()
         }
     }
 }
