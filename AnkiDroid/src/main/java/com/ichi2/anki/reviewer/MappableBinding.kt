@@ -16,6 +16,13 @@
 
 package com.ichi2.anki.reviewer
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.text.TextUtils
+import androidx.annotation.CheckResult
+import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.ViewerCommand
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -24,6 +31,9 @@ import java.util.*
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
 class MappableBinding(private val mBinding: Binding, private val mSide: CardSide) {
+    val isKey: Boolean
+        get() = mBinding.isKey
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -64,7 +74,66 @@ class MappableBinding(private val mBinding: Binding, private val mSide: CardSide
         // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
     }
 
+    fun toDisplayString(context: Context): String {
+        val formatString = when (mSide) {
+            CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
+            CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
+            else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+        }
+        return String.format(formatString, mBinding.toDisplayString(context))
+    }
+
+    fun toPreferenceString(): String? {
+        val s = StringBuilder()
+        s.append(mBinding.toString())
+        // don't serialise problematic bindings
+        if (s.isEmpty()) {
+            return null
+        }
+        when (mSide) {
+            CardSide.QUESTION -> s.append('0')
+            CardSide.ANSWER -> s.append('1')
+            CardSide.BOTH -> s.append('2')
+        }
+        return s.toString()
+    }
+
     companion object {
+        const val PREF_SEPARATOR = '|'
+
+        @CheckResult
         fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, CardSide.BOTH)
+
+        @CheckResult
+        fun List<MappableBinding>.toPreferenceString(): String = TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
+
+        @CheckResult
+        fun fromString(s: String): MappableBinding? {
+            return try {
+                val binding = s.substring(0, s.length - 1)
+                val b = Binding.fromString(binding)
+                val side = when (s[s.length - 1]) {
+                    '0' -> CardSide.QUESTION
+                    '1' -> CardSide.ANSWER
+                    else -> CardSide.BOTH
+                }
+                MappableBinding(b, side)
+            } catch (e: Exception) {
+                Timber.w(e, "failed to deserialize binding")
+                null
+            }
+        }
+
+        @CheckResult
+        fun fromPreferenceString(string: String?): MutableList<MappableBinding> {
+            if (TextUtils.isEmpty(string)) return ArrayList()
+            return string!!.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
+        }
+
+        @CheckResult
+        fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
+            val value = prefs.getString(command.preferenceKey, "") ?: return mutableListOf()
+            return fromPreferenceString(value)
+        }
     }
 }
