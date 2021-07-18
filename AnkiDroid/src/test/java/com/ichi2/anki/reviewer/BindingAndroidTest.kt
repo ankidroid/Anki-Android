@@ -23,7 +23,6 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
-import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

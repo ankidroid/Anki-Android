@@ -16,7 +16,6 @@
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
-import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.junit.Test
