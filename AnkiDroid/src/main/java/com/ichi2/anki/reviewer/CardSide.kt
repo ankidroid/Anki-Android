@@ -20,4 +20,10 @@ enum class CardSide {
     QUESTION,
     ANSWER,
     BOTH;
+
+    companion object {
+        @JvmStatic
+        fun fromAnswer(displayingAnswer: Boolean): CardSide =
+            if (displayingAnswer) ANSWER else QUESTION
+    }
 }
