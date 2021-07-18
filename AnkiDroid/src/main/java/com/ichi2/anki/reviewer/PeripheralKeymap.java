@@ -18,23 +18,25 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
 
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer. */
 public class PeripheralKeymap {
 
-    private final ReviewerUi mReviewerUI;
     private final KeyMap mKeyMap;
 
     private boolean mHasSetup = false;
 
     public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
-        this.mReviewerUI = reviewerUi;
-        this.mKeyMap = new KeyMap(commandProcessor);
+        this.mKeyMap = new KeyMap(commandProcessor, reviewerUi);
     }
 
     public void setup() {
@@ -59,12 +61,15 @@ public class PeripheralKeymap {
         return false;
     }
 
-    private class KeyMap {
-        public final HashMap<MappableBinding, PeripheralCommand> mBindingMap = new HashMap<>();
+    public static class KeyMap {
+        public final HashMap<MappableBinding, ViewerCommand> mBindingMap = new HashMap<>();
         private final CommandProcessor mProcessor;
+        private final ReviewerUi mReviewerUI;
 
-        private KeyMap(CommandProcessor commandProcessor) {
+
+        public KeyMap(CommandProcessor commandProcessor, ReviewerUi mReviewerUi) {
             this.mProcessor = commandProcessor;
+            this.mReviewerUI = mReviewerUi;
         }
 
         @SuppressWarnings( {"unused", "RedundantSuppression"})
@@ -72,26 +77,37 @@ public class PeripheralKeymap {
             boolean ret = false;
 
             List<Binding> bindings = Binding.key(event);
-            CardSide side = mReviewerUI.isDisplayingAnswer() ? CardSide.ANSWER : CardSide.QUESTION;
+            CardSide side = CardSide.fromAnswer(mReviewerUI.isDisplayingAnswer());
 
             for (Binding b: bindings) {
 
                 MappableBinding binding = new MappableBinding(b, side);
-                PeripheralCommand command = mBindingMap.get(binding);
+                ViewerCommand command = mBindingMap.get(binding);
                 if (command == null) {
                     continue;
                 }
 
-                ret |= mProcessor.executeCommand(command.getCommand());
+                ret |= mProcessor.executeCommand(command);
             }
 
             return ret;
         }
 
 
-        public void addCommand(PeripheralCommand command, CardSide side) {
+        public void addCommand(@NonNull PeripheralCommand command, CardSide side) {
             MappableBinding key = new MappableBinding(command.getBinding(), side);
-            mBindingMap.put(key, command);
+            set(key, command.getCommand());
+        }
+
+
+        public void set(@NonNull MappableBinding key, @NonNull ViewerCommand value) {
+            mBindingMap.put(key, value);
+        }
+
+
+        @Nullable
+        public ViewerCommand get(MappableBinding key) {
+            return mBindingMap.get(key);
         }
     }
 }
