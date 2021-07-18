@@ -31,8 +31,8 @@ import java.util.*
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
 class MappableBinding(private val mBinding: Binding, private val mSide: CardSide) {
-    val isKey: Boolean
-        get() = mBinding.isKey
+    val isKey: Boolean get() = mBinding.isKey
+    val isKeyCode: Boolean get() = mBinding.isKeyCode
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

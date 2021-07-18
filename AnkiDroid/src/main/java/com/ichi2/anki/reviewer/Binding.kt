@@ -75,8 +75,10 @@ class Binding private constructor(private val mModifierKeys: ModifierKeys?, priv
         return string.toString()
     }
 
+    val isKeyCode: Boolean get() = mKeycode != null
+
     val isKey: Boolean
-        get() = mKeycode != null || mUnicodeCharacter != null
+        get() = isKeyCode || mUnicodeCharacter != null
 
     fun isGesture(): Boolean = mGesture != null
 
@@ -195,7 +197,14 @@ class Binding private constructor(private val mModifierKeys: ModifierKeys?, priv
             // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
             // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
             val unicodeChar = event.getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
-            ret.add(unicode(modifiers, unicodeChar.toChar()))
+            if (unicodeChar != 0) {
+                try {
+                    ret.add(unicode(modifiers, unicodeChar.toChar()))
+                } catch (e: Exception) {
+                    Timber.w(e)
+                }
+            }
+
             return ret
         }
 

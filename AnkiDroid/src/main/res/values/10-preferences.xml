@@ -302,6 +302,8 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
 
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
