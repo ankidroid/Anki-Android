@@ -96,7 +96,6 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 interface PreferenceContext {
-    void addPreferencesFromResource(int preferencesResId);
     android.preference.PreferenceScreen getPreferenceScreen();
 }
 
@@ -269,31 +268,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // ----------------------------------------------------------------------------
     // Class methods
     // ----------------------------------------------------------------------------
-
-    private static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
-        return SpecificSettingsFragment.getSubscreenIntent(context, subscreen, "Preferences$SettingsFragment");
-    }
-
-    private void initSubscreen(String action, PreferenceContext listener) {
-        android.preference.PreferenceScreen screen;
-        switch (action) {
-
-        }
-    }
-
-    /**
-     * Returns a non-null context object
-     * @throws IllegalStateException if the base context has not been attached
-     * This exists temporarily until initSubscreen() has been removed
-     */
-    @NonNull
-    private Context requireContext() {
-        Context context = getBaseContext();
-        if (context == null) {
-            throw new IllegalStateException("no context was associated with the activity.");
-        }
-        return context;
-    }
 
 
     /**
@@ -732,20 +706,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // ----------------------------------------------------------------------------
 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
-    public static class SettingsFragment extends android.preference.PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
+    public abstract static class SettingsFragment extends android.preference.PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             String subscreen = getArguments().getString("subscreen");
             UsageAnalytics.sendAnalyticsScreenView(subscreen.replaceFirst("^com.ichi2.anki.", ""));
-            initSubscreen(subscreen);
+            initSubscreen();
             ((Preferences) getActivity()).initAllPreferences(getPreferenceScreen());
         }
 
-
-        protected void initSubscreen(String subscreen) {
-            ((Preferences) getActivity()).initSubscreen(subscreen, this);
-        }
+        /**
+         * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
+         * Called by base class, do not call directly.
+         */
+        protected abstract void initSubscreen();
 
 
         @Override
@@ -786,12 +761,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         /** @return The XML file which defines the preferences displayed by this PreferenceFragment */
         @XmlRes
         public abstract int getPreferenceResource();
-
-
-        @Override
-        protected void initSubscreen(String subscreen) {
-            initSubscreen();
-        }
 
         /**
          * Refreshes all values on the screen
@@ -1099,6 +1068,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
     public static class AdvancedSettingsFragment extends SpecificSettingsFragment {
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_advanced;
