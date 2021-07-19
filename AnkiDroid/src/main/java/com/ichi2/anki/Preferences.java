@@ -281,7 +281,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
                 screen = listener.getPreferenceScreen();
-                updateGestureCornerTouch(this, screen);
+                GesturesSettingsFragment.updateGestureCornerTouch(this, screen);
 
                 break;
             case "com.ichi2.anki.prefs.custom_buttons":
@@ -832,7 +832,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
                     break;
                 case "gestureCornerTouch": {
-                    updateGestureCornerTouch(this, screen);
+                    GesturesSettingsFragment.updateGestureCornerTouch(this, screen);
                 }
             }
             // Update the summary text to reflect new value
@@ -841,22 +841,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-
-    public static void updateGestureCornerTouch(Context context, android.preference.PreferenceScreen screen) {
-        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false);
-        if (gestureCornerTouch) {
-            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
-            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
-            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right);
-            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center);
-        } else {
-            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_tap_top);
-            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_tap_left);
-            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_tap_right);
-            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_tap_bottom);
         }
     }
 
@@ -1279,6 +1263,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_gestures;
+        }
+
+        public static void updateGestureCornerTouch(Context context, android.preference.PreferenceScreen screen) {
+            boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false);
+            if (gestureCornerTouch) {
+                screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
+                screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
+                screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right);
+                screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center);
+            } else {
+                screen.findPreference("gestureTapTop").setTitle(R.string.gestures_tap_top);
+                screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_tap_left);
+                screen.findPreference("gestureTapRight").setTitle(R.string.gestures_tap_right);
+                screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_tap_bottom);
+            }
         }
     }
 
