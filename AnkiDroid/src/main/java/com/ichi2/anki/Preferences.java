@@ -281,7 +281,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
                 screen = listener.getPreferenceScreen();
-                updateGestureCornerTouch(screen);
+                updateGestureCornerTouch(this, screen);
 
                 break;
             case "com.ichi2.anki.prefs.custom_buttons":
@@ -832,7 +832,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
                     break;
                 case "gestureCornerTouch": {
-                    updateGestureCornerTouch(screen);
+                    updateGestureCornerTouch(this, screen);
                 }
             }
             // Update the summary text to reflect new value
@@ -845,8 +845,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
-        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(this).getBoolean("gestureCornerTouch", false);
+    public static void updateGestureCornerTouch(Context context, android.preference.PreferenceScreen screen) {
+        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false);
         if (gestureCornerTouch) {
             screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
             screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
