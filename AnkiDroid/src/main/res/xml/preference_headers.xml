@@ -63,7 +63,7 @@
 
     <!-- Advanced Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">
