@@ -345,8 +345,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
-                setupContextMenuPreference(requireContext(), screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
-                setupContextMenuPreference(requireContext(), screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
+                AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
+                AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
                 if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
@@ -478,16 +478,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         return context;
     }
 
-
-    public static void setupContextMenuPreference(Context context, android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
-        // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
-        //  different than the app language
-        android.preference.CheckBoxPreference cardBrowserContextMenuPreference = (android.preference.CheckBoxPreference) screen.findPreference(key);
-        String menuName = context.getString(contextMenuName);
-        // Note: The below format strings are generic, not card browser specific despite the name
-        cardBrowserContextMenuPreference.setTitle(context.getString(R.string.card_browser_enable_external_context_menu, menuName));
-        cardBrowserContextMenuPreference.setSummary(context.getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
-    }
 
     private void addThirdPartyAppsListener(android.preference.PreferenceScreen screen) {
         //#5864 - some people don't have a browser so we can't use <intent>
@@ -1301,6 +1291,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         @NonNull
         public static Intent getSubscreenIntent(Context context) {
             return Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.advanced");
+        }
+
+        public static void setupContextMenuPreference(Context context, android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
+            // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
+            //  different than the app language
+            android.preference.CheckBoxPreference cardBrowserContextMenuPreference = (android.preference.CheckBoxPreference) screen.findPreference(key);
+            String menuName = context.getString(contextMenuName);
+            // Note: The below format strings are generic, not card browser specific despite the name
+            cardBrowserContextMenuPreference.setTitle(context.getString(R.string.card_browser_enable_external_context_menu, menuName));
+            cardBrowserContextMenuPreference.setSummary(context.getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
         }
     }
 
