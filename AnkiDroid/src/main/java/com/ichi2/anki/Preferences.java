@@ -278,12 +278,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.gestures":
-                listener.addPreferencesFromResource(R.xml.preferences_gestures);
-                screen = listener.getPreferenceScreen();
-                GesturesSettingsFragment.updateGestureCornerTouch(this, screen);
-
-                break;
             case "com.ichi2.anki.prefs.custom_buttons":
                 getSupportActionBar().setTitle(R.string.custom_buttons);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_buttons);
@@ -1259,10 +1253,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class GesturesSettingsFragment extends SpecificSettingsFragment {
+    public static class GesturesSettingsFragment extends SpecificSettingsFragment {
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_gestures;
+        }
+
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_gestures);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            updateGestureCornerTouch(screen);
+        }
+
+        private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
+            updateGestureCornerTouch(requireContext(), screen);
         }
 
         public static void updateGestureCornerTouch(Context context, android.preference.PreferenceScreen screen) {
