@@ -20,6 +20,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -422,7 +423,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 // Workaround preferences
                 AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
-                addThirdPartyAppsListener(screen);
+                addThirdPartyAppsListener(this, screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
@@ -479,7 +480,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    private void addThirdPartyAppsListener(android.preference.PreferenceScreen screen) {
+    public static void addThirdPartyAppsListener(Activity activity, android.preference.PreferenceScreen screen) {
         //#5864 - some people don't have a browser so we can't use <intent>
         //and need to handle the keypress ourself.
         android.preference.Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
@@ -487,12 +488,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         showThirdParty.setOnPreferenceClickListener((preference) -> {
             try {
                 Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
-                super.startActivity(openThirdPartyAppsIntent);
+                activity.startActivity(openThirdPartyAppsIntent);
             } catch (ActivityNotFoundException e) {
                 Timber.w(e);
                 //We use a different message here. We have limited space in the snackbar
-                String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
-                UIUtils.showSimpleSnackbar(this, error, false);
+                String error = activity.getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                UIUtils.showSimpleSnackbar(activity, error, false);
             }
             return true;
         });
@@ -1284,7 +1285,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             cardBrowserContextMenuPreference.setTitle(context.getString(R.string.card_browser_enable_external_context_menu, menuName));
             cardBrowserContextMenuPreference.setSummary(context.getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
         }
-        
+
         public static void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
             android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
             // Disable the emoji/kana buttons to scroll preference if those keys don't exist
