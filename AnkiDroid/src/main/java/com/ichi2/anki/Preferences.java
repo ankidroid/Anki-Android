@@ -310,10 +310,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     return true;
                 });
                 break;
-            case "com.ichi2.anki.prefs.advanced_statistics":
-                getSupportActionBar().setTitle(R.string.advanced_statistics_title);
-                listener.addPreferencesFromResource(R.xml.preferences_advanced_statistics);
-                break;
         }
     }
 
@@ -1182,8 +1178,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // Advanced statistics option
             android.preference.Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
             advancedStatisticsPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = getPreferenceSubscreenIntent(requireContext(),
-                        "com.ichi2.anki.prefs.advanced_statistics");
+                Intent i = AdvancedStatisticsSettingsFragment.getSubscreenIntent(requireContext());
                 startActivity(i);
                 return true;
             });
@@ -1367,10 +1362,22 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class AdvancedStatisticsSettingsFragment extends SpecificSettingsFragment {
+    public static class AdvancedStatisticsSettingsFragment extends SpecificSettingsFragment {
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_advanced_statistics;
+        }
+
+        @NonNull
+        public static Intent getSubscreenIntent(Context context) {
+            return getSubscreenIntent(context, "com.ichi2.anki.prefs.advanced_statistics", AdvancedStatisticsSettingsFragment.class.getSimpleName());
+        }
+
+        @Override
+        protected void initSubscreen() {
+            setTitle(R.string.advanced_statistics_title);
+            addPreferencesFromResource(R.xml.preferences_advanced_statistics);
         }
     }
 
