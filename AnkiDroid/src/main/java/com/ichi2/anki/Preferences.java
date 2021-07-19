@@ -913,7 +913,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    private void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
+    public static void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
         android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
         // Disable the emoji/kana buttons to scroll preference if those keys don't exist
         if (!CompatHelper.hasKanaAndEmojiKeys()) {
