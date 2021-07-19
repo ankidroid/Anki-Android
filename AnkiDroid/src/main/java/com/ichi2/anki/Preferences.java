@@ -71,7 +71,6 @@ import com.ichi2.utils.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.annotation.Retention;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -84,13 +83,12 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringDef;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.annotation.XmlRes;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 interface PreferenceContext {
@@ -1160,9 +1158,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             super.onCreate(savedInstanceState);
             String subscreen = getArguments().getString("subscreen");
             UsageAnalytics.sendAnalyticsScreenView(subscreen.replaceFirst("^com.ichi2.anki.", ""));
-            ((Preferences) getActivity()).initSubscreen(subscreen, this);
+            initSubscreen(subscreen);
             ((Preferences) getActivity()).initAllPreferences(getPreferenceScreen());
         }
+
+
+        protected void initSubscreen(String subscreen) {
+            ((Preferences) getActivity()).initSubscreen(subscreen, this);
+        }
+
 
         @Override
         public void onResume() {
@@ -1186,6 +1190,35 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             ((Preferences) getActivity()).updatePreference(sharedPreferences, key, this);
         }
+    }
+
+    /**
+     * Temporary abstraction
+     * Due to deprecation, we need to move from all Preference code in the Preference activity
+     * into separate fragments.
+     *
+     * Fragments will inherit from this class
+     *
+     * This class adds methods which were previously in Preferences, and are now shared between Settings Fragments
+     * To be merged with SettingsFragment once it can be made abstract
+     */
+    public abstract static class SpecificSettingsFragment extends SettingsFragment {
+        /** @return The XML file which defines the preferences displayed by this PreferenceFragment */
+        @XmlRes
+        public abstract int getPreferenceResource();
+
+
+        @Override
+        protected void initSubscreen(String subscreen) {
+            initSubscreen();
+        }
+
+
+        /**
+         * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
+         * Called by base class, do not call directly.
+         */
+        protected abstract void initSubscreen();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
