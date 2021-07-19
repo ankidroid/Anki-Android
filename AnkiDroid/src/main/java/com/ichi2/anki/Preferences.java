@@ -421,7 +421,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     UIUtils.showThemedToast(getApplicationContext(), android.R.string.ok, true);
                 });
                 // Workaround preferences
-                removeUnnecessaryAdvancedPrefs(screen);
+                AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
                 addThirdPartyAppsListener(screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
@@ -913,24 +913,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
-        android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
-        // Disable the emoji/kana buttons to scroll preference if those keys don't exist
-        if (!CompatHelper.hasKanaAndEmojiKeys()) {
-            android.preference.CheckBoxPreference emojiScrolling = (android.preference.CheckBoxPreference) screen.findPreference("scrolling_buttons");
-            if (emojiScrolling != null && plugins != null) {
-                plugins.removePreference(emojiScrolling);
-            }
-        }
-        // Disable the double scroll preference if no scrolling keys
-        if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
-            android.preference.CheckBoxPreference doubleScrolling = (android.preference.CheckBoxPreference) screen.findPreference("double_scrolling");
-            if (doubleScrolling != null && plugins != null) {
-                plugins.removePreference(doubleScrolling);
-            }
-        }
-    }
-
 
     private void closePreferences() {
         finish();
@@ -1301,6 +1283,24 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // Note: The below format strings are generic, not card browser specific despite the name
             cardBrowserContextMenuPreference.setTitle(context.getString(R.string.card_browser_enable_external_context_menu, menuName));
             cardBrowserContextMenuPreference.setSummary(context.getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+        }
+        
+        public static void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
+            android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
+            // Disable the emoji/kana buttons to scroll preference if those keys don't exist
+            if (!CompatHelper.hasKanaAndEmojiKeys()) {
+                android.preference.CheckBoxPreference emojiScrolling = (android.preference.CheckBoxPreference) screen.findPreference("scrolling_buttons");
+                if (emojiScrolling != null && plugins != null) {
+                    plugins.removePreference(emojiScrolling);
+                }
+            }
+            // Disable the double scroll preference if no scrolling keys
+            if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
+                android.preference.CheckBoxPreference doubleScrolling = (android.preference.CheckBoxPreference) screen.findPreference("double_scrolling");
+                if (doubleScrolling != null && plugins != null) {
+                    plugins.removePreference(doubleScrolling);
+                }
+            }
         }
     }
 
