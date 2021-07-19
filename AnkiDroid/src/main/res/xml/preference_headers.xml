@@ -42,7 +42,7 @@
 
     <!-- Appearance Prefrences  -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance">
