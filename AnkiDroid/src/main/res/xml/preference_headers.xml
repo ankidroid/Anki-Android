@@ -32,7 +32,7 @@
 
     <!-- Reviewing Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
         android:title="@string/pref_cat_reviewing">
         <extra
