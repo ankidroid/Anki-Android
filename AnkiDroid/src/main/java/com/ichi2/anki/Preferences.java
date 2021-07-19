@@ -270,47 +270,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // Class methods
     // ----------------------------------------------------------------------------
 
-    public static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
+    private static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
         return SpecificSettingsFragment.getSubscreenIntent(context, subscreen, "Preferences$SettingsFragment");
     }
+
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.custom_buttons":
-                getSupportActionBar().setTitle(R.string.custom_buttons);
-                listener.addPreferencesFromResource(R.xml.preferences_custom_buttons);
-                screen = listener.getPreferenceScreen();
-                // Reset toolbar button customizations
-                android.preference.Preference reset_custom_buttons = screen.findPreference("reset_custom_buttons");
-                reset_custom_buttons.setOnPreferenceClickListener(preference -> {
-                    SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(getBaseContext()).edit();
-                    edit.remove("customButtonUndo");
-                    edit.remove("customButtonScheduleCard");
-                    edit.remove("customButtonEditCard");
-                    edit.remove("customButtonTags");
-                    edit.remove("customButtonAddCard");
-                    edit.remove("customButtonReplay");
-                    edit.remove("customButtonCardInfo");
-                    edit.remove("customButtonSelectTts");
-                    edit.remove("customButtonDeckOptions");
-                    edit.remove("customButtonMarkCard");
-                    edit.remove("customButtonToggleMicToolBar");
-                    edit.remove("customButtonBury");
-                    edit.remove("customButtonSuspend");
-                    edit.remove("customButtonFlag");
-                    edit.remove("customButtonDelete");
-                    edit.remove("customButtonEnableWhiteboard");
-                    edit.remove("customButtonSaveWhiteboard");
-                    edit.remove("customButtonWhiteboardPenColor");
-                    edit.remove("customButtonClearWhiteboard");
-                    edit.remove("customButtonShowHideWhiteboard");
-                    edit.apply();
-                    // #9263: refresh the screen to display the changes
-                    screen.removeAll();
-                    initSubscreen("com.ichi2.anki.prefs.custom_buttons", listener);
-                    return true;
-                });
-                break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
@@ -1337,14 +1303,56 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             });
         }
     }
-    public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
+
+    public static class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
+
+        @NonNull
         public static Intent getSubscreenIntent(Context context) {
-            return Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.custom_buttons");
+            return getSubscreenIntent(context,  "com.ichi2.anki.prefs.custom_buttons", CustomButtonsSettingsFragment.class.getSimpleName());
         }
+
 
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_custom_buttons;
+        }
+
+
+        @Override
+        protected void initSubscreen() {
+            setTitle(R.string.custom_buttons);
+            addPreferencesFromResource(R.xml.preferences_custom_buttons);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            // Reset toolbar button customizations
+            android.preference.Preference reset_custom_buttons = screen.findPreference("reset_custom_buttons");
+            reset_custom_buttons.setOnPreferenceClickListener(preference -> {
+                SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit();
+                edit.remove("customButtonUndo");
+                edit.remove("customButtonScheduleCard");
+                edit.remove("customButtonEditCard");
+                edit.remove("customButtonTags");
+                edit.remove("customButtonAddCard");
+                edit.remove("customButtonReplay");
+                edit.remove("customButtonCardInfo");
+                edit.remove("customButtonSelectTts");
+                edit.remove("customButtonDeckOptions");
+                edit.remove("customButtonMarkCard");
+                edit.remove("customButtonToggleMicToolBar");
+                edit.remove("customButtonBury");
+                edit.remove("customButtonSuspend");
+                edit.remove("customButtonFlag");
+                edit.remove("customButtonDelete");
+                edit.remove("customButtonEnableWhiteboard");
+                edit.remove("customButtonSaveWhiteboard");
+                edit.remove("customButtonWhiteboardPenColor");
+                edit.remove("customButtonClearWhiteboard");
+                edit.remove("customButtonShowHideWhiteboard");
+                edit.apply();
+                // #9263: refresh the screen to display the changes
+                screen.removeAll();
+                initSubscreen();
+                return true;
+            });
         }
     }
 
