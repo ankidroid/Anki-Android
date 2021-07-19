@@ -267,13 +267,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // ----------------------------------------------------------------------------
 
     public static Intent getPreferenceSubscreenIntent(Context context, String subscreen) {
-        Intent i = new Intent(context, Preferences.class);
-        i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$SettingsFragment");
-        Bundle extras = new Bundle();
-        extras.putString("subscreen", subscreen);
-        i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
-        i.putExtra(android.preference.PreferenceActivity.EXTRA_NO_HEADERS, true);
-        return i;
+        return SpecificSettingsFragment.getSubscreenIntent(context, subscreen, "Preferences$SettingsFragment");
     }
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
@@ -1041,6 +1035,17 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 throw new IllegalStateException("no context was associated with the activity.");
             }
             return context;
+        }
+
+        @NonNull
+        protected static Intent getSubscreenIntent(Context context, String subscreen, String className) {
+            Intent i = new Intent(context, Preferences.class);
+            i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$" + className);
+            Bundle extras = new Bundle();
+            extras.putString("subscreen", subscreen);
+            i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
+            i.putExtra(android.preference.PreferenceActivity.EXTRA_NO_HEADERS, true);
+            return i;
         }
 
         /**
