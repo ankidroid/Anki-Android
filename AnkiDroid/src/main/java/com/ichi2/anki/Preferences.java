@@ -20,6 +20,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -87,6 +88,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.XmlRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -887,6 +890,30 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, extras);
             i.putExtra(android.preference.PreferenceActivity.EXTRA_NO_HEADERS, true);
             return i;
+        }
+
+        /** Sets the title of the window to the provided string */
+        protected void setTitle(@StringRes int stringRes) {
+            Activity activity = getActivity();
+
+            ActionBar supportActionBar = null;
+            if (activity instanceof AppCompatActivity) {
+                AppCompatActivity acActivity = (AppCompatActivity) activity;
+                acActivity.getSupportActionBar();
+            } else if (activity instanceof AppCompatPreferenceActivity) {
+                AppCompatPreferenceActivity apActivity = (AppCompatPreferenceActivity) activity;
+                supportActionBar = apActivity.getSupportActionBar();
+            } else {
+                Timber.w("Activity was of the wrong type");
+                return;
+            }
+
+            if (supportActionBar == null) {
+                Timber.w("No action bar detected");
+                return;
+            }
+
+            supportActionBar.setTitle(stringRes);
         }
 
         /**
