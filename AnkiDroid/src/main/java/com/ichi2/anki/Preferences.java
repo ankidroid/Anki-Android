@@ -423,7 +423,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 });
                 // Workaround preferences
                 AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
-                addThirdPartyAppsListener(this, screen);
+                AdvancedSettingsFragment.addThirdPartyAppsListener(this, screen);
                 break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
@@ -477,26 +477,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             throw new IllegalStateException("no context was associated with the activity.");
         }
         return context;
-    }
-
-
-    public static void addThirdPartyAppsListener(Activity activity, android.preference.PreferenceScreen screen) {
-        //#5864 - some people don't have a browser so we can't use <intent>
-        //and need to handle the keypress ourself.
-        android.preference.Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
-        final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
-        showThirdParty.setOnPreferenceClickListener((preference) -> {
-            try {
-                Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
-                activity.startActivity(openThirdPartyAppsIntent);
-            } catch (ActivityNotFoundException e) {
-                Timber.w(e);
-                //We use a different message here. We have limited space in the snackbar
-                String error = activity.getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
-                UIUtils.showSimpleSnackbar(activity, error, false);
-            }
-            return true;
-        });
     }
 
 
@@ -1303,9 +1283,28 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
             }
         }
-    }
 
+        public static void addThirdPartyAppsListener(Activity activity, android.preference.PreferenceScreen screen) {
+            //#5864 - some people don't have a browser so we can't use <intent>
+            //and need to handle the keypress ourself.
+            android.preference.Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
+            final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
+            showThirdParty.setOnPreferenceClickListener((preference) -> {
+                try {
+                    Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
+                    activity.startActivity(openThirdPartyAppsIntent);
+                } catch (ActivityNotFoundException e) {
+                    Timber.w(e);
+                    //We use a different message here. We have limited space in the snackbar
+                    String error = activity.getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                    UIUtils.showSimpleSnackbar(activity, error, false);
+                }
+                return true;
+            });
+        }
+    }
     public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_custom_buttons;
