@@ -277,39 +277,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.custom_sync_server":
-                getSupportActionBar().setTitle(R.string.custom_sync_server_title);
-                listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
-                screen = listener.getPreferenceScreen();
-                android.preference.Preference syncUrlPreference = screen.findPreference("syncBaseUrl");
-                android.preference.Preference mSyncUrlPreference = screen.findPreference("syncMediaUrl");
-                syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    String newUrl = newValue.toString();
-                    if (!URLUtil.isValidUrl(newUrl)) {
-                         new AlertDialog.Builder(this)
-                                .setTitle(R.string.custom_sync_server_base_url_invalid)
-                                .setPositiveButton(R.string.dialog_ok, null)
-                                .show();
 
-                        return false;
-                    }
-
-                    return true;
-                });
-                mSyncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    String newUrl = newValue.toString();
-                    if (!URLUtil.isValidUrl(newUrl)) {
-                        new AlertDialog.Builder(this)
-                                .setTitle(R.string.custom_sync_server_media_url_invalid)
-                                .setPositiveButton(R.string.dialog_ok, null)
-                                .show();
-
-                        return false;
-                    }
-
-                    return true;
-                });
-                break;
         }
     }
 
@@ -1167,8 +1135,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // Custom sync server option
             android.preference.Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
             customSyncServerPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = getPreferenceSubscreenIntent(requireContext(),
-                        "com.ichi2.anki.prefs.custom_sync_server");
+                Intent i = CustomSyncServerSettingsFragment.getSubscreenIntent(requireContext());
                 startActivity(i);
                 return true;
             });
@@ -1378,10 +1345,51 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class CustomSyncServerSettingsFragment extends SpecificSettingsFragment {
+    public static class CustomSyncServerSettingsFragment extends SpecificSettingsFragment {
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_custom_sync_server;
+        }
+
+        @NonNull
+        public static Intent getSubscreenIntent(Context context) {
+            return getSubscreenIntent(context, "com.ichi2.anki.prefs.custom_sync_server", CustomSyncServerSettingsFragment.class.getSimpleName());
+        }
+
+        @Override
+        protected void initSubscreen() {
+            setTitle(R.string.custom_sync_server_title);
+            addPreferencesFromResource(R.xml.preferences_custom_sync_server);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            android.preference.Preference syncUrlPreference = screen.findPreference("syncBaseUrl");
+            android.preference.Preference mSyncUrlPreference = screen.findPreference("syncMediaUrl");
+            syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                String newUrl = newValue.toString();
+                if (!URLUtil.isValidUrl(newUrl)) {
+                    new AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.custom_sync_server_base_url_invalid)
+                            .setPositiveButton(R.string.dialog_ok, null)
+                            .show();
+
+                    return false;
+                }
+
+                return true;
+            });
+            mSyncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                String newUrl = newValue.toString();
+                if (!URLUtil.isValidUrl(newUrl)) {
+                    new AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.custom_sync_server_media_url_invalid)
+                            .setPositiveButton(R.string.dialog_ok, null)
+                            .show();
+
+                    return false;
+                }
+
+                return true;
+            });
         }
     }
 
