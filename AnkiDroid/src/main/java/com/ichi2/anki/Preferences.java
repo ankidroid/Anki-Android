@@ -84,6 +84,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.XmlRes;
@@ -988,6 +989,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 throw new IllegalStateException("no context was associated with the activity.");
             }
             return context;
+        }
+
+        @Nullable
+        protected Collection getCol() {
+            return CollectionHelper.getInstance().getCol(requireContext());
         }
 
         @NonNull
