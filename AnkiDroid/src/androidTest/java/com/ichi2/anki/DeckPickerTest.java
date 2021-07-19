@@ -60,7 +60,7 @@ public class DeckPickerTest {
     public void checkIfClickOnCountsLayoutOpensStudyOptionsOnMobile() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
-        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.isCI());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
 
         // For mobile. If it is not a mobile, then test will be ignored.
         assumeTrue(!isScreenSw600dp());
@@ -83,7 +83,7 @@ public class DeckPickerTest {
     public void checkIfStudyOptionsIsDisplayedOnTablet() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
-        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.isCI());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
 
         // For tablet. If it is not a tablet, then test will be ignored.
         assumeTrue(isScreenSw600dp());

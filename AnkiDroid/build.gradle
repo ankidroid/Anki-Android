@@ -29,6 +29,7 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki"
+        buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
