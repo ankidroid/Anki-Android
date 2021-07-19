@@ -293,7 +293,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     mCategory.removePreference(mCheckBoxPref_Blink);
                 }
                 // Build languages
-                initializeLanguageDialog(screen, requireContext());
+                GeneralSettingsFragment.initializeLanguageDialog(screen, requireContext());
                 break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
@@ -1063,30 +1063,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static void initializeLanguageDialog(android.preference.PreferenceScreen screen, Context context) {
-        android.preference.ListPreference languageSelection = (android.preference.ListPreference) screen.findPreference(LANGUAGE);
-        if (languageSelection != null) {
-            Map<String, String> items = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-            for (String localeCode : LanguageUtil.APP_LANGUAGES) {
-                Locale loc = LanguageUtil.getLocale(localeCode);
-                items.put(loc.getDisplayName(loc), loc.toString());
-            }
-            CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
-            CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
-            languageDialogLabels[0] = context.getResources().getString(R.string.language_system);
-            languageDialogValues[0] = "";
-            int i = 1;
-            for (Map.Entry<String, String> e : items.entrySet()) {
-                languageDialogLabels[i] = e.getKey();
-                languageDialogValues[i] = e.getValue();
-                i++;
-            }
-
-            languageSelection.setEntries(languageDialogLabels);
-            languageSelection.setEntryValues(languageDialogValues);
-        }
-    }
-
     private void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
         android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
         // Disable the emoji/kana buttons to scroll preference if those keys don't exist
@@ -1252,6 +1228,30 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_general;
+        }
+
+        public static void initializeLanguageDialog(android.preference.PreferenceScreen screen, Context context) {
+            android.preference.ListPreference languageSelection = (android.preference.ListPreference) screen.findPreference(LANGUAGE);
+            if (languageSelection != null) {
+                Map<String, String> items = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+                for (String localeCode : LanguageUtil.APP_LANGUAGES) {
+                    Locale loc = LanguageUtil.getLocale(localeCode);
+                    items.put(loc.getDisplayName(loc), loc.toString());
+                }
+                CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
+                CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
+                languageDialogLabels[0] = context.getResources().getString(R.string.language_system);
+                languageDialogValues[0] = "";
+                int i = 1;
+                for (Map.Entry<String, String> e : items.entrySet()) {
+                    languageDialogLabels[i] = e.getKey();
+                    languageDialogValues[i] = e.getValue();
+                    i++;
+                }
+
+                languageSelection.setEntries(languageDialogLabels);
+                languageSelection.setEntryValues(languageDialogValues);
+            }
         }
     }
 
