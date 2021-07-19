@@ -309,123 +309,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     return true;
                 });
                 break;
-            case "com.ichi2.anki.prefs.advanced":
-                listener.addPreferencesFromResource(R.xml.preferences_advanced);
-                screen = listener.getPreferenceScreen();
-                // Check that input is valid before committing change in the collection path
-                android.preference.EditTextPreference collectionPathPreference = (android.preference.EditTextPreference) screen.findPreference("deckPath");
-                collectionPathPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    final String newPath = (String) newValue;
-                    try {
-                        CollectionHelper.initializeAnkiDroidDirectory(newPath);
-                        return true;
-                    } catch (StorageAccessException e) {
-                        Timber.e(e, "Could not initialize directory: %s", newPath);
-                        MaterialDialog materialDialog = new MaterialDialog.Builder(requireContext())
-                                .title(R.string.dialog_collection_path_not_dir)
-                                .positiveText(R.string.dialog_ok)
-                                .negativeText(R.string.reset_custom_buttons)
-                                .onPositive((dialog, which) -> dialog.dismiss())
-                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())))
-                                .show();
-                        return false;
-                    }
-                });
-                // Custom sync server option
-                android.preference.Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
-                customSyncServerPreference.setOnPreferenceClickListener(preference -> {
-                    Intent i = getPreferenceSubscreenIntent(requireContext(),
-                            "com.ichi2.anki.prefs.custom_sync_server");
-                    startActivity(i);
-                    return true;
-                });
-                // Advanced statistics option
-                android.preference.Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
-                advancedStatisticsPreference.setOnPreferenceClickListener(preference -> {
-                    Intent i = getPreferenceSubscreenIntent(requireContext(),
-                            "com.ichi2.anki.prefs.advanced_statistics");
-                    startActivity(i);
-                    return true;
-                });
-                AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
-                AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
-
-                // Make it possible to test crash reporting, but only for DEBUG builds
-                if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
-                    Timber.i("Debug mode, allowing for test crashes");
-                    android.preference.Preference triggerTestCrashPreference = new android.preference.Preference(requireContext());
-                    triggerTestCrashPreference.setKey("trigger_crash_preference");
-                    triggerTestCrashPreference.setTitle("Trigger test crash");
-                    triggerTestCrashPreference.setSummary("Touch here for an immediate test crash");
-                    triggerTestCrashPreference.setOnPreferenceClickListener(preference -> {
-                        Timber.w("Crash triggered on purpose from advanced preferences in debug mode");
-                        throw new RuntimeException("This is a test crash");
-                    });
-                    screen.addPreference(triggerTestCrashPreference);
-                }
-                // Make it possible to test analytics, but only for DEBUG builds
-                if (BuildConfig.DEBUG) {
-                    Timber.i("Debug mode, allowing for dynamic analytics config");
-                    android.preference.Preference analyticsDebugMode = new android.preference.Preference(requireContext());
-                    analyticsDebugMode.setKey("analytics_debug_preference");
-                    analyticsDebugMode.setTitle("Switch Analytics to dev mode");
-                    analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
-                    analyticsDebugMode.setOnPreferenceClickListener(preference -> {
-                        if (UsageAnalytics.isEnabled()) {
-                            UIUtils.showThemedToast(requireContext(), "Analytics set to dev mode", true);
-                        } else {
-                            UIUtils.showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true);
-                        }
-                        UsageAnalytics.setDevMode();
-                        return true;
-                    });
-                    screen.addPreference(analyticsDebugMode);
-                }
-                if (BuildConfig.DEBUG) {
-                    Timber.i("Debug mode, allowing database lock preference");
-                    android.preference.Preference lockDbPreference = new android.preference.Preference(requireContext());
-                    lockDbPreference.setKey("debug_lock_database");
-                    lockDbPreference.setTitle("Lock Database");
-                    lockDbPreference.setSummary("Touch here to lock the database (all threads block in-process, exception if using second process)");
-                    lockDbPreference.setOnPreferenceClickListener(preference -> {
-                        DatabaseLock.engage(requireContext());
-                        return true;
-                    });
-                    screen.addPreference(lockDbPreference);
-                }
-                if (BuildConfig.DEBUG) {
-                    Timber.i("Debug mode, option for showing onboarding walkthrough");
-                    android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(requireContext());
-                    onboardingPreference.setKey("showOnboarding");
-                    onboardingPreference.setTitle(R.string.show_onboarding);
-                    onboardingPreference.setSummary(R.string.show_onboarding_desc);
-                    screen.addPreference(onboardingPreference);
-                }
-                // Adding change logs in both debug and release builds
-                Timber.i("Adding open changelog");
-                android.preference.Preference changelogPreference = new android.preference.Preference(requireContext());
-                changelogPreference.setTitle(R.string.open_changelog);
-                Intent infoIntent = new Intent(requireContext(), Info.class);
-                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-                changelogPreference.setIntent(infoIntent);
-                screen.addPreference(changelogPreference);
-                // Force full sync option
-                ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
-                fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
-                fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
-                fullSyncPreference.setOkHandler(() -> {
-                    if (getCol() == null) {
-                        UIUtils.showThemedToast(requireContext(), R.string.directory_inaccessible, false);
-                        return;
-                    }
-                    getCol().modSchemaNoCheck();
-                    getCol().setMod();
-                    UIUtils.showThemedToast(requireContext(), android.R.string.ok, true);
-                });
-                // Workaround preferences
-                AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
-                AdvancedSettingsFragment.addThirdPartyAppsListener(this, screen);
-                break;
             case "com.ichi2.anki.prefs.custom_sync_server":
                 getSupportActionBar().setTitle(R.string.custom_sync_server_title);
                 listener.addPreferencesFromResource(R.xml.preferences_custom_sync_server);
@@ -1251,7 +1134,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class AdvancedSettingsFragment extends SpecificSettingsFragment {
+    public static class AdvancedSettingsFragment extends SpecificSettingsFragment {
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_advanced;
@@ -1259,7 +1142,126 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
         @NonNull
         public static Intent getSubscreenIntent(Context context) {
-            return Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.advanced");
+            return getSubscreenIntent(context, "com.ichi2.anki.prefs.advanced", AdvancedSettingsFragment.class.getSimpleName());
+        }
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_advanced);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            // Check that input is valid before committing change in the collection path
+            android.preference.EditTextPreference collectionPathPreference = (android.preference.EditTextPreference) screen.findPreference("deckPath");
+            collectionPathPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                final String newPath = (String) newValue;
+                try {
+                    CollectionHelper.initializeAnkiDroidDirectory(newPath);
+                    return true;
+                } catch (StorageAccessException e) {
+                    Timber.e(e, "Could not initialize directory: %s", newPath);
+                    MaterialDialog materialDialog = new MaterialDialog.Builder(requireContext())
+                            .title(R.string.dialog_collection_path_not_dir)
+                            .positiveText(R.string.dialog_ok)
+                            .negativeText(R.string.reset_custom_buttons)
+                            .onPositive((dialog, which) -> dialog.dismiss())
+                            .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())))
+                            .show();
+                    return false;
+                }
+            });
+            // Custom sync server option
+            android.preference.Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
+            customSyncServerPreference.setOnPreferenceClickListener(preference -> {
+                Intent i = getPreferenceSubscreenIntent(requireContext(),
+                        "com.ichi2.anki.prefs.custom_sync_server");
+                startActivity(i);
+                return true;
+            });
+            // Advanced statistics option
+            android.preference.Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
+            advancedStatisticsPreference.setOnPreferenceClickListener(preference -> {
+                Intent i = getPreferenceSubscreenIntent(requireContext(),
+                        "com.ichi2.anki.prefs.advanced_statistics");
+                startActivity(i);
+                return true;
+            });
+            AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
+            AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
+
+            // Make it possible to test crash reporting, but only for DEBUG builds
+            if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
+                Timber.i("Debug mode, allowing for test crashes");
+                android.preference.Preference triggerTestCrashPreference = new android.preference.Preference(requireContext());
+                triggerTestCrashPreference.setKey("trigger_crash_preference");
+                triggerTestCrashPreference.setTitle("Trigger test crash");
+                triggerTestCrashPreference.setSummary("Touch here for an immediate test crash");
+                triggerTestCrashPreference.setOnPreferenceClickListener(preference -> {
+                    Timber.w("Crash triggered on purpose from advanced preferences in debug mode");
+                    throw new RuntimeException("This is a test crash");
+                });
+                screen.addPreference(triggerTestCrashPreference);
+            }
+            // Make it possible to test analytics, but only for DEBUG builds
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, allowing for dynamic analytics config");
+                android.preference.Preference analyticsDebugMode = new android.preference.Preference(requireContext());
+                analyticsDebugMode.setKey("analytics_debug_preference");
+                analyticsDebugMode.setTitle("Switch Analytics to dev mode");
+                analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
+                analyticsDebugMode.setOnPreferenceClickListener(preference -> {
+                    if (UsageAnalytics.isEnabled()) {
+                        UIUtils.showThemedToast(requireContext(), "Analytics set to dev mode", true);
+                    } else {
+                        UIUtils.showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true);
+                    }
+                    UsageAnalytics.setDevMode();
+                    return true;
+                });
+                screen.addPreference(analyticsDebugMode);
+            }
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, allowing database lock preference");
+                android.preference.Preference lockDbPreference = new android.preference.Preference(requireContext());
+                lockDbPreference.setKey("debug_lock_database");
+                lockDbPreference.setTitle("Lock Database");
+                lockDbPreference.setSummary("Touch here to lock the database (all threads block in-process, exception if using second process)");
+                lockDbPreference.setOnPreferenceClickListener(preference -> {
+                    DatabaseLock.engage(requireContext());
+                    return true;
+                });
+                screen.addPreference(lockDbPreference);
+            }
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, option for showing onboarding walkthrough");
+                android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(requireContext());
+                onboardingPreference.setKey("showOnboarding");
+                onboardingPreference.setTitle(R.string.show_onboarding);
+                onboardingPreference.setSummary(R.string.show_onboarding_desc);
+                screen.addPreference(onboardingPreference);
+            }
+            // Adding change logs in both debug and release builds
+            Timber.i("Adding open changelog");
+            android.preference.Preference changelogPreference = new android.preference.Preference(requireContext());
+            changelogPreference.setTitle(R.string.open_changelog);
+            Intent infoIntent = new Intent(requireContext(), Info.class);
+            infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+            changelogPreference.setIntent(infoIntent);
+            screen.addPreference(changelogPreference);
+            // Force full sync option
+            ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
+            fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
+            fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
+            fullSyncPreference.setOkHandler(() -> {
+                if (getCol() == null) {
+                    UIUtils.showThemedToast(requireContext(), R.string.directory_inaccessible, false);
+                    return;
+                }
+                getCol().modSchemaNoCheck();
+                getCol().setMod();
+                UIUtils.showThemedToast(requireContext(), android.R.string.ok, true);
+            });
+            // Workaround preferences
+            AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
+            AdvancedSettingsFragment.addThirdPartyAppsListener(getActivity(), screen);
         }
 
         public static void setupContextMenuPreference(Context context, android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
