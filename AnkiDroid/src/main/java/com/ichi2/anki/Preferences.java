@@ -320,12 +320,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     } catch (StorageAccessException e) {
                         Timber.e(e, "Could not initialize directory: %s", newPath);
-                        MaterialDialog materialDialog = new MaterialDialog.Builder(Preferences.this)
+                        MaterialDialog materialDialog = new MaterialDialog.Builder(requireContext())
                                 .title(R.string.dialog_collection_path_not_dir)
                                 .positiveText(R.string.dialog_ok)
                                 .negativeText(R.string.reset_custom_buttons)
                                 .onPositive((dialog, which) -> dialog.dismiss())
-                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(this)))
+                                .onNegative((dialog, which) -> collectionPathPreference.setText(CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())))
                                 .show();
                         return false;
                     }
@@ -333,7 +333,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Custom sync server option
                 android.preference.Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
                 customSyncServerPreference.setOnPreferenceClickListener(preference -> {
-                    Intent i = getPreferenceSubscreenIntent(Preferences.this,
+                    Intent i = getPreferenceSubscreenIntent(requireContext(),
                             "com.ichi2.anki.prefs.custom_sync_server");
                     startActivity(i);
                     return true;
@@ -341,7 +341,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Advanced statistics option
                 android.preference.Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
                 advancedStatisticsPreference.setOnPreferenceClickListener(preference -> {
-                    Intent i = getPreferenceSubscreenIntent(Preferences.this,
+                    Intent i = getPreferenceSubscreenIntent(requireContext(),
                             "com.ichi2.anki.prefs.advanced_statistics");
                     startActivity(i);
                     return true;
@@ -352,7 +352,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Make it possible to test crash reporting, but only for DEBUG builds
                 if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
                     Timber.i("Debug mode, allowing for test crashes");
-                    android.preference.Preference triggerTestCrashPreference = new android.preference.Preference(this);
+                    android.preference.Preference triggerTestCrashPreference = new android.preference.Preference(requireContext());
                     triggerTestCrashPreference.setKey("trigger_crash_preference");
                     triggerTestCrashPreference.setTitle("Trigger test crash");
                     triggerTestCrashPreference.setSummary("Touch here for an immediate test crash");
@@ -365,15 +365,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 // Make it possible to test analytics, but only for DEBUG builds
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, allowing for dynamic analytics config");
-                    android.preference.Preference analyticsDebugMode = new android.preference.Preference(this);
+                    android.preference.Preference analyticsDebugMode = new android.preference.Preference(requireContext());
                     analyticsDebugMode.setKey("analytics_debug_preference");
                     analyticsDebugMode.setTitle("Switch Analytics to dev mode");
                     analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
                     analyticsDebugMode.setOnPreferenceClickListener(preference -> {
                         if (UsageAnalytics.isEnabled()) {
-                            UIUtils.showThemedToast(this, "Analytics set to dev mode", true);
+                            UIUtils.showThemedToast(requireContext(), "Analytics set to dev mode", true);
                         } else {
-                            UIUtils.showThemedToast(this, "Done! Enable Analytics in 'General' settings to use.", true);
+                            UIUtils.showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true);
                         }
                         UsageAnalytics.setDevMode();
                         return true;
@@ -382,19 +382,19 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, allowing database lock preference");
-                    android.preference.Preference lockDbPreference = new android.preference.Preference(this);
+                    android.preference.Preference lockDbPreference = new android.preference.Preference(requireContext());
                     lockDbPreference.setKey("debug_lock_database");
                     lockDbPreference.setTitle("Lock Database");
                     lockDbPreference.setSummary("Touch here to lock the database (all threads block in-process, exception if using second process)");
                     lockDbPreference.setOnPreferenceClickListener(preference -> {
-                        DatabaseLock.engage(this);
+                        DatabaseLock.engage(requireContext());
                         return true;
                     });
                     screen.addPreference(lockDbPreference);
                 }
                 if (BuildConfig.DEBUG) {
                     Timber.i("Debug mode, option for showing onboarding walkthrough");
-                    android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(this);
+                    android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(requireContext());
                     onboardingPreference.setKey("showOnboarding");
                     onboardingPreference.setTitle(R.string.show_onboarding);
                     onboardingPreference.setSummary(R.string.show_onboarding_desc);
@@ -402,9 +402,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 // Adding change logs in both debug and release builds
                 Timber.i("Adding open changelog");
-                android.preference.Preference changelogPreference = new android.preference.Preference(this);
+                android.preference.Preference changelogPreference = new android.preference.Preference(requireContext());
                 changelogPreference.setTitle(R.string.open_changelog);
-                Intent infoIntent = new Intent(this, Info.class);
+                Intent infoIntent = new Intent(requireContext(), Info.class);
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
                 changelogPreference.setIntent(infoIntent);
                 screen.addPreference(changelogPreference);
@@ -414,12 +414,12 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
                 fullSyncPreference.setOkHandler(() -> {
                     if (getCol() == null) {
-                        UIUtils.showThemedToast(getApplicationContext(), R.string.directory_inaccessible, false);
+                        UIUtils.showThemedToast(requireContext(), R.string.directory_inaccessible, false);
                         return;
                     }
                     getCol().modSchemaNoCheck();
                     getCol().setMod();
-                    UIUtils.showThemedToast(getApplicationContext(), android.R.string.ok, true);
+                    UIUtils.showThemedToast(requireContext(), android.R.string.ok, true);
                 });
                 // Workaround preferences
                 AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
