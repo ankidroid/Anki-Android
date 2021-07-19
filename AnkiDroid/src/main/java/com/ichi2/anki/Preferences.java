@@ -282,31 +282,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.reviewing":
-                listener.addPreferencesFromResource(R.xml.preferences_reviewing);
-                screen = listener.getPreferenceScreen();
-                // Show error toast if the user tries to disable answer button without gestures on
-                android.preference.ListPreference fullscreenPreference = (android.preference.ListPreference)
-                        screen.findPreference(FullScreenMode.PREF_KEY);
-                fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(Preferences.this);
-                    if (prefs.getBoolean("gestures", false) || !FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue().equals(newValue)) {
-                        return true;
-                    } else {
-                        UIUtils.showThemedToast(getApplicationContext(),
-                                R.string.full_screen_error_gestures, false);
-                        return false;
-                    }
-                });
-                // Custom buttons options
-                android.preference.Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
-                customButtonsPreference.setOnPreferenceClickListener(preference -> {
-                    Intent i = getPreferenceSubscreenIntent(Preferences.this,
-                            "com.ichi2.anki.prefs.custom_buttons");
-                    startActivity(i);
-                    return true;
-                });
-                break;
             case "com.ichi2.anki.prefs.appearance":
                 listener.addPreferencesFromResource(R.xml.preferences_appearance);
                 screen = listener.getPreferenceScreen();
@@ -1257,10 +1232,37 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class ReviewingSettingsFragment extends SpecificSettingsFragment {
+    public static class ReviewingSettingsFragment extends SpecificSettingsFragment {
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_reviewing;
+        }
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_reviewing);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            // Show error toast if the user tries to disable answer button without gestures on
+            android.preference.ListPreference fullscreenPreference = (android.preference.ListPreference)
+                    screen.findPreference(FullScreenMode.PREF_KEY);
+            fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(requireContext());
+                if (prefs.getBoolean("gestures", false) || !FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue().equals(newValue)) {
+                    return true;
+                } else {
+                    UIUtils.showThemedToast(requireContext(),
+                            R.string.full_screen_error_gestures, false);
+                    return false;
+                }
+            });
+            // Custom buttons options
+            android.preference.Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
+            customButtonsPreference.setOnPreferenceClickListener(preference -> {
+                Intent i = getPreferenceSubscreenIntent(requireContext(),
+                        "com.ichi2.anki.prefs.custom_buttons");
+                startActivity(i);
+                return true;
+            });
         }
     }
 
