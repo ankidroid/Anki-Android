@@ -282,19 +282,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.general":
-                listener.addPreferencesFromResource(R.xml.preferences_general);
-                screen = listener.getPreferenceScreen();
-                if (AdaptionUtil.isRestrictedLearningDevice()) {
-                    android.preference.CheckBoxPreference mCheckBoxPref_Vibrate = (android.preference.CheckBoxPreference) screen.findPreference("widgetVibrate");
-                    android.preference.CheckBoxPreference mCheckBoxPref_Blink = (android.preference.CheckBoxPreference) screen.findPreference("widgetBlink");
-                    android.preference.PreferenceCategory mCategory = (android.preference.PreferenceCategory) screen.findPreference("category_general_notification_pref");
-                    mCategory.removePreference(mCheckBoxPref_Vibrate);
-                    mCategory.removePreference(mCheckBoxPref_Blink);
-                }
-                // Build languages
-                GeneralSettingsFragment.initializeLanguageDialog(screen, requireContext());
-                break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
                 screen = listener.getPreferenceScreen();
@@ -1224,10 +1211,25 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         protected abstract void initSubscreen();
     }
 
-    public static abstract class GeneralSettingsFragment extends SpecificSettingsFragment {
+    public static class GeneralSettingsFragment extends SpecificSettingsFragment {
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_general;
+        }
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_general);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            if (AdaptionUtil.isRestrictedLearningDevice()) {
+                android.preference.CheckBoxPreference mCheckBoxPref_Vibrate = (android.preference.CheckBoxPreference) screen.findPreference("widgetVibrate");
+                android.preference.CheckBoxPreference mCheckBoxPref_Blink = (android.preference.CheckBoxPreference) screen.findPreference("widgetBlink");
+                android.preference.PreferenceCategory mCategory = (android.preference.PreferenceCategory) screen.findPreference("category_general_notification_pref");
+                mCategory.removePreference(mCheckBoxPref_Vibrate);
+                mCategory.removePreference(mCheckBoxPref_Blink);
+            }
+            // Build languages
+            GeneralSettingsFragment.initializeLanguageDialog(screen, requireContext());
         }
 
         public static void initializeLanguageDialog(android.preference.PreferenceScreen screen, Context context) {

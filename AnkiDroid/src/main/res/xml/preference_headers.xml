@@ -22,7 +22,7 @@
 
     <!--  General Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/app_name">
         <extra
