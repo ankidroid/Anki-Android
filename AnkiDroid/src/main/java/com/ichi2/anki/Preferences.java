@@ -311,7 +311,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     }
                     return true;
                 });
-                initializeCustomFontsDialog(requireContext(), screen);
+                AppearanceSettingsFragment.initializeCustomFontsDialog(requireContext(), screen);
                 break;
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
@@ -1044,46 +1044,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    /** Initializes the list of custom fonts shown in the preferences. */
-    public static void initializeCustomFontsDialog(Context context, android.preference.PreferenceScreen screen) {
-        android.preference.ListPreference defaultFontPreference = (android.preference.ListPreference) screen.findPreference("defaultFont");
-        if (defaultFontPreference != null) {
-            defaultFontPreference.setEntries(getCustomFonts(context, "System default"));
-            defaultFontPreference.setEntryValues(getCustomFonts(context, ""));
-        }
-        android.preference.ListPreference browserEditorCustomFontsPreference = (android.preference.ListPreference) screen.findPreference("browserEditorFont");
-        browserEditorCustomFontsPreference.setEntries(getCustomFonts(context, "System default"));
-        browserEditorCustomFontsPreference.setEntryValues(getCustomFonts(context, "", true));
-    }
-
-
-    /** Returns a list of the names of the installed custom fonts. */
-    private static String[] getCustomFonts(Context context, String defaultValue) {
-        return getCustomFonts(context, defaultValue, false);
-    }
-
-
-    private static String[] getCustomFonts(Context context, String defaultValue, boolean useFullPath) {
-        List<AnkiFont> mFonts = Utils.getCustomFonts(context);
-        int count = mFonts.size();
-        Timber.d("There are %d custom fonts", count);
-        String[] names = new String[count + 1];
-        names[0] = defaultValue;
-        if (useFullPath) {
-            for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index - 1).getPath();
-                Timber.d("Adding custom font: %s", names[index]);
-            }
-        } else {
-            for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index - 1).getName();
-                Timber.d("Adding custom font: %s", names[index]);
-            }
-        }
-        return names;
-    }
-
-
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, FADE);
@@ -1270,6 +1230,45 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_appearance;
+        }
+
+        /** Initializes the list of custom fonts shown in the preferences. */
+        public static void initializeCustomFontsDialog(Context context, android.preference.PreferenceScreen screen) {
+            android.preference.ListPreference defaultFontPreference = (android.preference.ListPreference) screen.findPreference("defaultFont");
+            if (defaultFontPreference != null) {
+                defaultFontPreference.setEntries(getCustomFonts(context, "System default"));
+                defaultFontPreference.setEntryValues(getCustomFonts(context, ""));
+            }
+            android.preference.ListPreference browserEditorCustomFontsPreference = (android.preference.ListPreference) screen.findPreference("browserEditorFont");
+            browserEditorCustomFontsPreference.setEntries(getCustomFonts(context, "System default"));
+            browserEditorCustomFontsPreference.setEntryValues(getCustomFonts(context, "", true));
+        }
+
+
+        /** Returns a list of the names of the installed custom fonts. */
+        private static String[] getCustomFonts(Context context, String defaultValue) {
+            return getCustomFonts(context, defaultValue, false);
+        }
+
+
+        private static String[] getCustomFonts(Context context, String defaultValue, boolean useFullPath) {
+            List<AnkiFont> mFonts = Utils.getCustomFonts(context);
+            int count = mFonts.size();
+            Timber.d("There are %d custom fonts", count);
+            String[] names = new String[count + 1];
+            names[0] = defaultValue;
+            if (useFullPath) {
+                for (int index = 1; index < count + 1; ++index) {
+                    names[index] = mFonts.get(index - 1).getPath();
+                    Timber.d("Adding custom font: %s", names[index]);
+                }
+            } else {
+                for (int index = 1; index < count + 1; ++index) {
+                    names[index] = mFonts.get(index - 1).getName();
+                    Timber.d("Adding custom font: %s", names[index]);
+                }
+            }
+            return names;
         }
     }
 
