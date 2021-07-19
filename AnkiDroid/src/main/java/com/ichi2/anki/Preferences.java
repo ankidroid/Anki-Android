@@ -549,6 +549,20 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
+    /**
+     * Returns a non-null context object
+     * @throws IllegalStateException if the base context has not been attached
+     * This exists temporarily until initSubscreen() has been removed
+     */
+    @NonNull
+    private Context requireContext() {
+        Context context = getBaseContext();
+        if (context == null) {
+            throw new IllegalStateException("no context was associated with the activity.");
+        }
+        return context;
+    }
+
 
     private void setupContextMenuPreference(android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
         // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
@@ -1214,6 +1228,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             initSubscreen();
         }
 
+        /**
+         * Returns a non-null context object
+         * @throws IllegalStateException if the fragment is not attached to an activity
+         */
+        @NonNull
+        protected Context requireContext() {
+            Context context = getActivity();
+            if (context == null) {
+                throw new IllegalStateException("no context was associated with the activity.");
+            }
+            return context;
+        }
 
         /**
          * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
