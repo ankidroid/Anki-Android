@@ -212,7 +212,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
-        return SettingsFragment.class.getName().equals(fragmentName);
+        // Fragments are valid if they are inner classes of Preferences.java
+        return fragmentName.startsWith("com.ichi2.anki.Preferences$");
     }
 
 
@@ -1219,6 +1220,62 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
          * Called by base class, do not call directly.
          */
         protected abstract void initSubscreen();
+    }
+
+    public static abstract class GeneralSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_general;
+        }
+    }
+
+    public static abstract class ReviewingSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_reviewing;
+        }
+    }
+
+    public static abstract class AppearanceSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_appearance;
+        }
+    }
+
+    public static abstract class GesturesSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_gestures;
+        }
+    }
+
+    public static abstract class AdvancedSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_advanced;
+        }
+    }
+
+    public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_custom_buttons;
+        }
+    }
+
+    public static abstract class AdvancedStatisticsSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_advanced_statistics;
+        }
+    }
+
+    public static abstract class CustomSyncServerSettingsFragment extends SpecificSettingsFragment {
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_custom_sync_server;
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
