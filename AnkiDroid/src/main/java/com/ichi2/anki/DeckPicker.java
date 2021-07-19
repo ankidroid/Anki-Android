@@ -571,7 +571,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 break;
             case DIRECTORY_NOT_ACCESSIBLE:
                 Timber.i("AnkiDroid directory inaccessible");
-                Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                Intent i = Preferences.AdvancedSettingsFragment.getSubscreenIntent(this);
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                 UIUtils.showThemedToast(this, R.string.directory_inaccessible, false);
                 break;

@@ -1297,6 +1297,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         public int getPreferenceResource() {
             return R.xml.preferences_advanced;
         }
+
+        @NonNull
+        public static Intent getSubscreenIntent(Context context) {
+            return Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.advanced");
+        }
     }
 
     public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
