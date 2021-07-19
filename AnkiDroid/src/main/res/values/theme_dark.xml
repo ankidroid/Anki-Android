@@ -115,6 +115,7 @@
         <item name="md_dark_theme">true</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
+        <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
     </style>
 
     <!-- Preferences screens -->
