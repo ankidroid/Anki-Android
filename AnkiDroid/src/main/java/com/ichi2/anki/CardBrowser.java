@@ -304,6 +304,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mShouldRestoreScroll = false;
     private boolean mPostAutoScroll = false;
 
+    private final Onboarding.CardBrowser mOnboarding = new Onboarding.CardBrowser(this);
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -598,8 +600,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
-    }
 
+        mOnboarding.onCreate();
+    }
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override

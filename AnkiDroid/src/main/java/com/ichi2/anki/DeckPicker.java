@@ -538,6 +538,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        new Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate();
     }
 
     /**
@@ -2960,6 +2962,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onProgressUpdate(String message) {
             mProgressDialog.setContent(message);
         }
+    }
+
+
+    /**
+     * Check if at least one deck is being displayed.
+     */
+    public boolean hasDecksBeingDisplayed() {
+        return mDeckListAdapter.getItemCount() > 0 && mRecyclerViewLayoutManager.getChildAt(0) != null;
     }
 
     private enum DeckSelectionType {
