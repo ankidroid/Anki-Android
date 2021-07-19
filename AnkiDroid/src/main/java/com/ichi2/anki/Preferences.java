@@ -20,7 +20,6 @@
 
 package com.ichi2.anki;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -1184,8 +1183,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 startActivity(i);
                 return true;
             });
-            AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
-            AdvancedSettingsFragment.setupContextMenuPreference(requireContext(), screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
+            setupContextMenuPreference(screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
+            setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
 
             // Make it possible to test crash reporting, but only for DEBUG builds
             if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
@@ -1260,21 +1259,21 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 UIUtils.showThemedToast(requireContext(), android.R.string.ok, true);
             });
             // Workaround preferences
-            AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs(screen);
-            AdvancedSettingsFragment.addThirdPartyAppsListener(getActivity(), screen);
+            removeUnnecessaryAdvancedPrefs(screen);
+            addThirdPartyAppsListener(screen);
         }
 
-        public static void setupContextMenuPreference(Context context, android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
+        private void setupContextMenuPreference(android.preference.PreferenceScreen screen, String key, @StringRes int contextMenuName) {
             // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
             //  different than the app language
             android.preference.CheckBoxPreference cardBrowserContextMenuPreference = (android.preference.CheckBoxPreference) screen.findPreference(key);
-            String menuName = context.getString(contextMenuName);
+            String menuName = getString(contextMenuName);
             // Note: The below format strings are generic, not card browser specific despite the name
-            cardBrowserContextMenuPreference.setTitle(context.getString(R.string.card_browser_enable_external_context_menu, menuName));
-            cardBrowserContextMenuPreference.setSummary(context.getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+            cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
+            cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
         }
 
-        public static void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
+        private void removeUnnecessaryAdvancedPrefs(android.preference.PreferenceScreen screen) {
             android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) screen.findPreference("category_plugins");
             // Disable the emoji/kana buttons to scroll preference if those keys don't exist
             if (!CompatHelper.hasKanaAndEmojiKeys()) {
@@ -1292,27 +1291,27 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             }
         }
 
-        public static void addThirdPartyAppsListener(Activity activity, android.preference.PreferenceScreen screen) {
-            //#5864 - some people don't have a browser so we can't use <intent>
-            //and need to handle the keypress ourself.
+
+        private void addThirdPartyAppsListener(android.preference.PreferenceScreen screen) {
+            // #5864 - some people don't have a browser so we can't use <intent>
+            // and need to handle the keypress ourself.
             android.preference.Preference showThirdParty = screen.findPreference("thirdpartyapps_link");
             final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
             showThirdParty.setOnPreferenceClickListener((preference) -> {
                 try {
                     Intent openThirdPartyAppsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl));
-                    activity.startActivity(openThirdPartyAppsIntent);
+                    super.startActivity(openThirdPartyAppsIntent);
                 } catch (ActivityNotFoundException e) {
                     Timber.w(e);
                     //We use a different message here. We have limited space in the snackbar
-                    String error = activity.getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
-                    UIUtils.showSimpleSnackbar(activity, error, false);
+                    String error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl);
+                    UIUtils.showSimpleSnackbar(getActivity(), error, false);
                 }
                 return true;
             });
         }
     }
     public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
-
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_custom_buttons;
