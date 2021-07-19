@@ -678,7 +678,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Null check to prevent crash when col inaccessible
-        if (!colIsOpen()) {
+        // #9081: sync leaves the collection closed, thus colIsOpen() is insufficient, carefully open the collection if possible
+        if (CollectionHelper.getInstance().getColSafe(this) == null) {
             return false;
         }
         return super.onPrepareOptionsMenu(menu);
