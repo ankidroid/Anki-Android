@@ -830,6 +830,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
 
         /**
+         * Refreshes all values on the screen
+         * Call if a large number of values are changed from one preference.
+         */
+        protected void refreshScreen() {
+            getPreferenceScreen().removeAll();
+            initSubscreen();
+        }
+
+        /**
          * Returns a non-null context object
          * @throws IllegalStateException if the fragment is not attached to an activity
          */
@@ -1349,8 +1358,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 edit.remove("customButtonShowHideWhiteboard");
                 edit.apply();
                 // #9263: refresh the screen to display the changes
-                screen.removeAll();
-                initSubscreen();
+                refreshScreen();
                 return true;
             });
         }
