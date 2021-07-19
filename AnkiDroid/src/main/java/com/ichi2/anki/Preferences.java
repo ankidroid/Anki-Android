@@ -293,7 +293,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     mCategory.removePreference(mCheckBoxPref_Blink);
                 }
                 // Build languages
-                initializeLanguageDialog(screen);
+                initializeLanguageDialog(screen, requireContext());
                 break;
             case "com.ichi2.anki.prefs.reviewing":
                 listener.addPreferencesFromResource(R.xml.preferences_reviewing);
@@ -1063,7 +1063,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    private void initializeLanguageDialog(android.preference.PreferenceScreen screen) {
+    public static void initializeLanguageDialog(android.preference.PreferenceScreen screen, Context context) {
         android.preference.ListPreference languageSelection = (android.preference.ListPreference) screen.findPreference(LANGUAGE);
         if (languageSelection != null) {
             Map<String, String> items = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
@@ -1073,7 +1073,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             }
             CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
             CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
-            languageDialogLabels[0] = getResources().getString(R.string.language_system);
+            languageDialogLabels[0] = context.getResources().getString(R.string.language_system);
             languageDialogValues[0] = "";
             int i = 1;
             for (Map.Entry<String, String> e : items.entrySet()) {
