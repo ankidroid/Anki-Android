@@ -968,8 +968,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             // Custom buttons options
             android.preference.Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
             customButtonsPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = getPreferenceSubscreenIntent(requireContext(),
-                        "com.ichi2.anki.prefs.custom_buttons");
+                Intent i = CustomButtonsSettingsFragment.getSubscreenIntent(requireContext());
                 startActivity(i);
                 return true;
             });
@@ -1312,6 +1311,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
     public static abstract class CustomButtonsSettingsFragment extends SpecificSettingsFragment {
+        public static Intent getSubscreenIntent(Context context) {
+            return Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.custom_buttons");
+        }
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_custom_buttons;
