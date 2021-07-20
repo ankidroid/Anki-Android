@@ -22,7 +22,7 @@
 
     <!--  General Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/app_name">
         <extra
@@ -32,7 +32,7 @@
 
     <!-- Reviewing Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
         android:title="@string/pref_cat_reviewing">
         <extra
@@ -42,7 +42,7 @@
 
     <!-- Appearance Prefrences  -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance">
@@ -53,7 +53,7 @@
 
     <!-- Navigation Prefrences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"
         android:title="@string/pref_cat_gestures">
         <extra
@@ -63,7 +63,7 @@
 
     <!-- Advanced Preferences -->
     <header
-        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">

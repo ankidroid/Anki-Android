@@ -31,7 +31,7 @@ public class PreferenceUtils {
 
     public static Set<String> getAllCustomButtonKeys(Context context) {
         AtomicReference<Set<String>> ret = new AtomicReference<>();
-        Intent i = Preferences.getPreferenceSubscreenIntent(context, "com.ichi2.anki.prefs.custom_buttons");
+        Intent i = Preferences.CustomButtonsSettingsFragment.getSubscreenIntent(context);
         try (ActivityScenario<Preferences> scenario = ActivityScenario.launch(i)) {
             scenario.moveToState(Lifecycle.State.STARTED);
             scenario.onActivity(a -> ret.set(a.getLoadedPreferenceKeys()));
