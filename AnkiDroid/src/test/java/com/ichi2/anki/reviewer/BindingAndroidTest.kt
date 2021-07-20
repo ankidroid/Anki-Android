@@ -20,8 +20,9 @@ import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.reviewer.Binding.ModifierKeys.*
-import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
+import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -69,9 +70,9 @@ class BindingAndroidTest : RobolectricTest() {
         return this.toDisplayString(targetContext)
     }
 
-    private fun assertBindingEquals(fst: Binding?, snd: Binding?) {
-        val first = MappableBinding.fromBinding(fst)
-        val second = MappableBinding.fromBinding(snd)
+    private fun assertBindingEquals(fst: Binding, snd: Binding) {
+        val first = MappableBinding(fst, CardSide.BOTH)
+        val second = MappableBinding(snd, CardSide.BOTH)
         assertEquals(first, second)
     }
 }

@@ -95,6 +95,11 @@ public enum ViewerCommand {
     }
 
 
+    public String getPreferenceKey() {
+        return "binding_" + name().replaceFirst("COMMAND_", "");
+    }
+
+
     public interface CommandProcessor {
         /**
           * <p>example failure: answering an ease on the front of the card</p>
