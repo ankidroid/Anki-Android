@@ -116,6 +116,7 @@
         <item name="android:drawSelectorOnTop">true</item>
         <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
+        <item name="android:colorBackground">?attr/popupBackgroundColor</item>
     </style>
 
     <style name="LargeButtonStyle">
