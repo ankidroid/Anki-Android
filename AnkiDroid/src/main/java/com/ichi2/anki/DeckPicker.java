@@ -2221,8 +2221,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    public void addSharedDeck() {
-        openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
+    public void openAnkiWebSharedDecks() {
+        Intent intent = new Intent(this, SharedDecksActivity.class);
+        startActivityWithoutAnimation(intent);
     }
 
 
