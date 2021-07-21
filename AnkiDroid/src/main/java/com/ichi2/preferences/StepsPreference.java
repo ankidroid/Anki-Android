@@ -99,9 +99,9 @@ public class StepsPreference extends android.preference.EditTextPreference {
         } else {
             StringBuilder sb = new StringBuilder();
             for (String step: stepsAr.stringIterable()) {
-                sb.append(step).append(" ");
+                sb.append(step).append(", ");
             }
-            return sb.toString().trim();
+            return sb.substring(0, sb.length() - 2).trim();
         }
     }
 
@@ -110,14 +110,20 @@ public class StepsPreference extends android.preference.EditTextPreference {
      * Convert steps format.
      * 
      * @param a JSONArray representation of steps.
-     * @return The steps as a space-separated string.
+     * @return The steps as a comma-separated string.
      */
     public static String convertFromJSON(JSONArray a) {
         StringBuilder sb = new StringBuilder();
         for (String s: a.stringIterable()) {
-            sb.append(s).append(" ");
+            sb.append(s).append(", ");
         }
-        return sb.toString().trim();
+        /**
+         * we only need to return substring from 0 to len - 2
+         * reason for this is ", " will be append at end of both strings
+         * for example take steps 3 10 : in this case ", " will be append to both steps string end
+         * and our result string will look like this "3, 10, " so we do not need last comma and spaces.
+         */
+        return sb.substring(0, sb.length() - 2).trim();
     }
 
 
@@ -135,7 +141,12 @@ public class StepsPreference extends android.preference.EditTextPreference {
             return stepsAr;
         }
         try {
-            for (String s : steps.split("\\s+")) {
+            /**
+             * [abc] : a, b, or c (simple class),
+             * \s : for detecting whitespaces,
+             * Greedy quantifiers a+ : will detect single or multiple occurrences of character mentioned in array[].
+             */
+            for (String s : steps.split("[\\s,]+")) {
                 double d = Double.parseDouble(s);
                 // 0 or less is not a valid step.
                 if (d <= 0) {
