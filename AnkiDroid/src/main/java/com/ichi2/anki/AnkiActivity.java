@@ -42,6 +42,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.jsaddons.DownloadAddonBroadcastReceiver;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -400,6 +401,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
+    /**
+     * Open url using custom tabs. It opens url in AnkiDroid if web browser supported devices. For some devices it is not
+     * possible to open the url inside AnkiDroid, so it toast to open the url manually in web browser
+     * Also if url starts with https://www.npmjs.com, then 'Install Addon' menu added to custom tabs for downloading
+     * npm package, see {@code DownloadAddonBroadcastReceiver}
+     * @param url
+     */
     public void openUrl(@NonNull Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
@@ -426,6 +434,16 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                         .setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_back_arrow_custom_tab))
                         .setColorScheme(getColorScheme())
                         .setDefaultColorSchemeParams(colorSchemeParams);
+
+        /**
+         * add Install addon to custom tab menu when url start with npmjs
+         */
+        if (url.toString().startsWith("https://www.npmjs.com/")) {
+            Intent intent = new Intent(this, DownloadAddonBroadcastReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addMenuItem(getString(R.string.install_js_addon), pendingIntent);
+            Timber.d("Install Addon button");
+        }
 
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);

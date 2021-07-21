@@ -380,6 +380,12 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <activity
+            android:name="com.ichi2.anki.AddonBrowser"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:parentActivityName=".DeckPicker"
+            />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
@@ -447,6 +453,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
+        </receiver>
+        <!-- For downloading npm package using menu 'Install Addon' added to Custom Tabs in openUrl() -->
+        <receiver
+            android:name=".jsaddons.DownloadAddonBroadcastReceiver"
+            android:enabled="true">
         </receiver>
 
         <!-- stuff for Samsung Multi-Window -->
