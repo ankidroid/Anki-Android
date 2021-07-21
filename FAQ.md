@@ -425,6 +425,8 @@ The [formatting wiki page](https://github.com/ankidroid/Anki-Android/wiki/Advanc
 search terms: _nightmode night-mode, invert, colour_
 # Forgotten AnkiWeb Email Instructions
 
+**keywords**: username
+
 ## If you're logged in on Anki Desktop
 
 In Anki, your email is listed under `Tools - Preferences - Network`.
