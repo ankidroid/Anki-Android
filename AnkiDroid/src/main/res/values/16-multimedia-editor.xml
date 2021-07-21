@@ -118,4 +118,28 @@
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
 
+    <string name="title_activity_visual_editor">Visual Editor</string>
+
+    <!-- Visual Editor -->
+    <string name="visual_editor_tooltip_bold">Text Bold</string>
+    <string name="visual_editor_tooltip_italic">Text Italic</string>
+    <string name="visual_editor_tooltip_underline">Text Underline</string>
+    <string name="visual_editor_tooltip_cloze">Deletion Cloze</string>
+    <string name="visual_editor_tooltip_clear_formatting">Formatting Clear</string>
+    <string name="visual_editor_tooltip_text_color">Text Color</string>
+    <string name="visual_editor_tooltip_background_color">Background Color</string>
+    <string name="visual_editor_tooltip_horizontal_line">Horizontal Line</string>
+    <string name="visual_editor_tooltip_align_left">Left Alignment</string>
+    <string name="visual_editor_tooltip_align_center">Center Alignment</string>
+    <string name="visual_editor_tooltip_align_right">Right Alignment</string>
+    <string name="visual_editor_tooltip_align_justify">Justify</string>
+    <string name="visual_editor_tooltip_view_source">View Source</string>
+    <string name="visual_editor_tooltip_add_image">Image Add</string>
+    <string name="visual_editor_tooltip_cut_image">Cut</string>
+    <string name="visual_editor_tooltip_delete_image">Image Delete</string>
+    <string name="visual_editor_tooltip_record_audio">Audio Record</string>
+    <string name="visual_editor_tooltip_mathjax">MathJax Equation Add</string>
+    <string name="visual_editor_white_board">Open WhiteBoard</string>
+    <string name="visual_editor_custom_buttons">Custom Buttons</string>
+
 </resources>

@@ -22,6 +22,7 @@
     -->
     <!-- App name -->
     <string name="app_name" comment="The name of the app">AnkiDroid</string>
+    <string name="drawing">Drawing</string>
     <!-- Text to be shown in preference summary -->
     <string name="preference_summary_literal">XXX</string>
     <!-- Used in deck preferences -->

@@ -28,6 +28,7 @@ import com.ichi2.anki.CardTemplateEditor;
 import com.ichi2.anki.CardTemplatePreviewer;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
@@ -44,6 +45,7 @@ import com.ichi2.anki.VideoPlayer;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
+import com.ichi2.anki.multimediacard.activity.VisualEditorActivity;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
@@ -90,6 +92,8 @@ public class ActivityList {
                 get(MultimediaEditFieldActivity.class),
                 get(TranslationActivity.class),
                 get(LoadPronounciationActivity.class),
+                get(VisualEditorActivity.class),
+                get(DrawingActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)

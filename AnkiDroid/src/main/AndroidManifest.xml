@@ -69,6 +69,11 @@
         android:resizeableActivity="true"
         android:supportsRtl="true"
         >
+        <activity android:name=".DrawingActivity"
+            android:label="@string/drawing"
+            android:exported="false"
+            android:configChanges="keyboardHidden|locale|orientation|screenSize"
+            />
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:label="@string/app_name"
@@ -204,6 +209,11 @@
                 android:value="com.ichi2.anki.DeckPicker"
                 />
         </activity>
+        <activity android:name="com.ichi2.anki.multimediacard.activity.VisualEditorActivity"
+            android:exported="false"
+            android:label="@string/title_activity_visual_editor"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".ModelBrowser"
             android:label="@string/model_browser_label"
