@@ -117,6 +117,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      */
     private static final String SHOW_ESTIMATE = "showEstimates";
     /**
+     * Represents in Android preferences the collections configuration "passFail": i.e. whether the buttons should only show pass and fail.
+     */
+    private static final String SHOW_PASS_FAIL = "showPassFail";
+    /**
      * Represents in Android preferences the collections configuration "dueCounts": i.e.
      * whether the remaining number of cards should be shown.
      */
@@ -167,7 +171,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      */
     public static final String MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification";
     private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
-    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
+    private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PASS_FAIL, SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
 
     private static final int RESULT_LOAD_IMG = 111;
@@ -662,6 +666,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         case SHOW_ESTIMATE:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
                             break;
+                        case SHOW_PASS_FAIL:
+                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optBoolean("passFail", false));
+                            break;
                         case SHOW_PROGRESS:
                             ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
                             break;
@@ -789,6 +796,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case SHOW_ESTIMATE:
                     getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
+                    getCol().setMod();
+                    break;
+                case SHOW_PASS_FAIL:
+                    getCol().getConf().put("passFail", ((android.preference.CheckBoxPreference) pref).isChecked());
                     getCol().setMod();
                     break;
                 case NEW_SPREAD:

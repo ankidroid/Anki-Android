@@ -63,6 +63,10 @@
             android:title="@string/pref_double_tap_time_interval"
             app:min="0"
             app:max="2000" />
+        <CheckBoxPreference
+            android:key="showPassFail"
+            android:summary="@string/show_pass_fail_summ"
+            android:title="@string/show_pass_fail" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >

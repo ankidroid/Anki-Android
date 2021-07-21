@@ -67,6 +67,8 @@
     <string name="type_answer_hint">Type answer</string>
     <string name="show_answer">Show answer</string>
     <string name="hide_answer">Hide answer</string>
+    <string name="ease_button_pass">Pass</string>
+    <string name="ease_button_fail">Fail</string>
     <string name="ease_button_again">Again</string>
     <string name="ease_button_hard">Hard</string>
     <string name="ease_button_good">Good</string>

@@ -268,6 +268,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
+    private boolean mShowPassFail;
 
     // Answer card & cloze deletion variables
     private String mTypeCorrect = null;
@@ -1601,6 +1602,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mEase4Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
         mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
 
+        if (mShowPassFail) {
+            mEase2Layout.setVisibility(View.GONE);
+            mEase4Layout.setVisibility(View.GONE);
+        }
+
         mNext1 = findViewById(R.id.nextTime1);
         mNext2 = findViewById(R.id.nextTime2);
         mNext3 = findViewById(R.id.nextTime3);
@@ -1764,6 +1770,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected boolean shouldShowNextReviewTime() {
         return mShowNextReviewTime;
+    }
+
+    protected boolean shouldShowPassFail() {
+        return mShowPassFail;
     }
 
     protected void displayAnswerBottomBar() {
@@ -1956,6 +1966,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
+            mShowPassFail = getCol().getConf().optBoolean("passFail", false);
 
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck

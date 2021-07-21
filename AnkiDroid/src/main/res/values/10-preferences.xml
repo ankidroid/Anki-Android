@@ -150,6 +150,8 @@
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">Show button time</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_pass_fail" maxLength="41">Show pass fail</string>
+    <string name="show_pass_fail_summ">Replace the answer buttons with simple "Pass" and "Fail"</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>

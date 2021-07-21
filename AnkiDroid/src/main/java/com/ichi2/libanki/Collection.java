@@ -151,7 +151,7 @@ public class Collection implements CollectionGetter {
             +
             // review options
             "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", "
-            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, "
+            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"passFail\": false, " + "\"dueCounts\": true, "
             +
             // other config
             "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", "

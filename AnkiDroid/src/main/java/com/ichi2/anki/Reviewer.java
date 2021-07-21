@@ -892,51 +892,63 @@ public class Reviewer extends AbstractFlashcardViewer {
                 R.attr.hardButtonTextColor,
                 R.attr.goodButtonTextColor,
                 R.attr.easyButtonTextColor});
+
+        mEase1.setText(shouldShowPassFail() ? R.string.ease_button_fail : R.string.ease_button_again);
         mEase1Layout.setVisibility(View.VISIBLE);
         mEase1Layout.setBackgroundResource(background[0]);
         mEase4Layout.setBackgroundResource(background[3]);
+
+        int goodButtonText = shouldShowPassFail() ? R.string.ease_button_pass : R.string.ease_button_good;
+        int nonPassFailVisibility = shouldShowPassFail() ? View.GONE : View.VISIBLE;
+
         switch (buttonCount) {
             case 2:
                 // Ease 2 is "good"
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
+                mEase2.setText(goodButtonText);
                 mEase2.setTextColor(textColor[2]);
                 mNext2.setTextColor(textColor[2]);
                 mEase2Layout.requestFocus();
+
                 break;
             case 3:
                 // Ease 2 is good
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
+                mEase2.setText(goodButtonText);
                 mEase2.setTextColor(textColor[2]);
                 mNext2.setTextColor(textColor[2]);
+
                 // Ease 3 is easy
-                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setVisibility(nonPassFailVisibility);
                 mEase3Layout.setBackgroundResource(background[3]);
                 mEase3.setText(R.string.ease_button_easy);
                 mEase3.setTextColor(textColor[3]);
                 mNext3.setTextColor(textColor[3]);
                 mEase2Layout.requestFocus();
+
                 break;
             default:
-                mEase2Layout.setVisibility(View.VISIBLE);
                 // Ease 2 is "hard"
-                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setVisibility(nonPassFailVisibility);
                 mEase2Layout.setBackgroundResource(background[1]);
                 mEase2.setText(R.string.ease_button_hard);
                 mEase2.setTextColor(textColor[1]);
                 mNext2.setTextColor(textColor[1]);
                 mEase2Layout.requestFocus();
+
                 // Ease 3 is good
                 mEase3Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.setBackgroundResource(background[2]);
-                mEase3.setText(R.string.ease_button_good);
+                mEase3.setText(goodButtonText);
                 mEase3.setTextColor(textColor[2]);
                 mNext3.setTextColor(textColor[2]);
-                mEase4Layout.setVisibility(View.VISIBLE);
+
+                // Ease 4 is easy
+                mEase4Layout.setVisibility(nonPassFailVisibility);
                 mEase3Layout.requestFocus();
+
                 break;
         }
 
