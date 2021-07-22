@@ -15,12 +15,14 @@
         android:icon="@drawable/ic_sync_white"
         android:title="@string/button_sync"
         ankidroid:showAsAction="always"/>
+
     <item
         android:id="@+id/action_undo"
         android:title="@string/undo_action_review"
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="never"
         android:visible="false"/>
+
     <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
