@@ -24,6 +24,7 @@
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
+    <string name="helper_title">Helper Page</string>
     <string name="help">Help</string>
     <string name="send_feedback">Send feedback</string>
 
@@ -192,6 +193,8 @@
 
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
+
+    <string name="learn_more">Learn more</string>
 
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>

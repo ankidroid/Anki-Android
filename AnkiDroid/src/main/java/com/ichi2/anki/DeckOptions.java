@@ -32,6 +32,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -698,12 +700,27 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     @Override
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             closeWithResult();
+            return true;
+        } else if (id == R.id.action_help) {
+            Intent intent = new Intent(this, HelperActivity.class);
+            intent.putExtra("questionId", R.array.deck_questions);
+            intent.putExtra("answerId", R.array.deck_answer);
+            startActivity(intent);
             return true;
         }
         return false;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.deck_option, menu);
+        return true;
+    }
+
 
 
     @Override

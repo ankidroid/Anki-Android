@@ -29,6 +29,7 @@ import com.ichi2.anki.CardTemplatePreviewer;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.FilteredDeckOptions;
+import com.ichi2.anki.HelperActivity;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.ModelBrowser;
@@ -86,6 +87,7 @@ public class ActivityList {
                 get(NoteEditor.class),
                 get(Statistics.class),
                 get(Previewer.class),
+                get(HelperActivity.class),
                 get(CardTemplatePreviewer.class),
                 get(MultimediaEditFieldActivity.class),
                 get(TranslationActivity.class),
