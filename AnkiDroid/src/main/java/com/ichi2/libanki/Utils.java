@@ -110,6 +110,7 @@ public class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("(?s)<.*?>");
+    private static final Pattern svgPattern = Pattern.compile("<svg\\s*.*>\\s*.*<\\/svg>");
     private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
     private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
@@ -1114,8 +1115,9 @@ public class Utils {
         Set<String> nonempty_fields = new HashSet<>(fields.size());
         for (Map.Entry<String, String> kv: fields.entrySet()) {
             String value = kv.getValue();
+            Matcher svgMatcher = svgPattern.matcher(value);
             value = Utils.stripHTMLMedia(value).trim();
-            if (!TextUtils.isEmpty(value)) {
+            if (!TextUtils.isEmpty(value) || svgMatcher.matches()) {
                 nonempty_fields.add(kv.getKey());
             }
         }

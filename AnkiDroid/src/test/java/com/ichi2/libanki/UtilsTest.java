@@ -118,6 +118,10 @@ public class UtilsTest {
         m.put("bar", " plop  ");
         s.add("bar");
         Assert.assertEquals(s, nonEmptyFields(m));
+        String svgElement = "<svg height=\"25\" width=\"25\"><line x1=\"0\" y1=\"0\" x2=\"200\" y2=\"200\" style=\"stroke:rgb(255,0,0);\"/></svg>";
+        m.put("svg", svgElement);
+        s.add("svg");
+        Assert.assertEquals(s, nonEmptyFields(m));
     }
 
 
