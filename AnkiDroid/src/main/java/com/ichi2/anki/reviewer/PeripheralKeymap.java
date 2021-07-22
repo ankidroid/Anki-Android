@@ -55,6 +55,7 @@ public class PeripheralKeymap {
         mHasSetup = true;
     }
 
+
     private void add(ViewerCommand command, SharedPreferences preferences) {
         List<MappableBinding> bindings = MappableBinding.fromPreference(preferences, command);
 
