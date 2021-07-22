@@ -50,7 +50,7 @@ public class PeripheralKeymapTest {
 
 
         assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON));
+        assertThat(processed.get(0), is(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1));
     }
 
 

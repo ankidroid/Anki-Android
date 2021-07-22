@@ -2813,16 +2813,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_UNSET_FLAG:
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
-            case COMMAND_ANSWER_FIRST_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_ONE);
-            case COMMAND_ANSWER_SECOND_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_TWO);
-            case COMMAND_ANSWER_THIRD_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_THREE);
-            case COMMAND_ANSWER_FOURTH_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_FOUR);
-            case COMMAND_ANSWER_RECOMMENDED:
-                return answerCardIfVisible(getRecommendedEase(false));
             case COMMAND_PAGE_UP:
                 onPageUp();
                 return true;
@@ -2929,14 +2919,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("Toggle flag: Setting flag to %d", flag);
             onFlag(mCurrentCard, flag);
         }
-    }
-
-    private boolean answerCardIfVisible(@Consts.BUTTON_TYPE int ease) {
-        if (!sDisplayAnswer) {
-            return false;
-        }
-        performClickWithVisualFeedback(ease);
-        return true;
     }
 
     protected void performClickWithVisualFeedback(int ease) {

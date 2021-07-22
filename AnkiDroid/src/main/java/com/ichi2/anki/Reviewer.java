@@ -845,9 +845,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (answerFieldIsFocused()) {
-            return super.onKeyUp(keyCode, event);
-        }
         if (mProcessor.onKeyUp(keyCode, event)) {
             return true;
         }

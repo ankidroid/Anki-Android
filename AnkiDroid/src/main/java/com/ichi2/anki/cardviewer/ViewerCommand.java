@@ -63,11 +63,6 @@ public enum ViewerCommand {
     COMMAND_TOGGLE_FLAG_TURQUOISE(R.string.gesture_flag_turquoise, 39),
     COMMAND_TOGGLE_FLAG_PURPLE(R.string.gesture_flag_purple, 40),
     COMMAND_UNSET_FLAG(R.string.gesture_flag_remove, 24),
-    COMMAND_ANSWER_FIRST_BUTTON(R.string.gesture_answer_1, 25),
-    COMMAND_ANSWER_SECOND_BUTTON(R.string.gesture_answer_2, 26),
-    COMMAND_ANSWER_THIRD_BUTTON(R.string.gesture_answer_3, 27),
-    COMMAND_ANSWER_FOURTH_BUTTON(R.string.gesture_answer_4, 28),
-    COMMAND_ANSWER_RECOMMENDED(R.string.gesture_answer_green, 29),
     COMMAND_PAGE_UP(R.string.gesture_page_up, 30),
     COMMAND_PAGE_DOWN(R.string.gesture_page_down, 31),
     COMMAND_TAG(R.string.add_tag, 32),
@@ -121,30 +116,23 @@ public enum ViewerCommand {
     public List<MappableBinding> getDefaultValue() {
         // If we use the serialised format, then this adds additional coupling to the properties.
         switch (this) {
-            case COMMAND_ANSWER_FIRST_BUTTON:
-                return from(keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER));
-            case COMMAND_ANSWER_SECOND_BUTTON:
-                return from(keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER));
-            case COMMAND_ANSWER_THIRD_BUTTON:
-                return from(keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER));
-            case COMMAND_ANSWER_FOURTH_BUTTON:
-                return from(keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER));
             case COMMAND_FLIP_OR_ANSWER_EASE1:
-                return from(keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH));
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER));
             case COMMAND_FLIP_OR_ANSWER_EASE2:
-                return from(keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH));
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER));
             case COMMAND_FLIP_OR_ANSWER_EASE3:
-                return from(keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH));
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER));
             case COMMAND_FLIP_OR_ANSWER_EASE4:
-                return from(keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH));
-            case COMMAND_ANSWER_RECOMMENDED:
-                return from(keyCode(KeyEvent.KEYCODE_SPACE, CardSide.BOTH),
-                        keyCode(KeyEvent.KEYCODE_ENTER, CardSide.BOTH),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.BOTH));
-
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER));
             case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
-                return from(keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH));
-
+                return from(keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
+                        keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER));
             case COMMAND_EDIT:
                 return from(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH));
             case COMMAND_MARK:

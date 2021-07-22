@@ -39,9 +39,7 @@ class ViewerCommandTest {
                 "binding_EXIT, binding_BURY_NOTE, binding_SUSPEND_NOTE, binding_TOGGLE_FLAG_RED, " +
                 "binding_TOGGLE_FLAG_ORANGE, binding_TOGGLE_FLAG_GREEN, binding_TOGGLE_FLAG_BLUE, " +
                 "binding_TOGGLE_FLAG_PINK, binding_TOGGLE_FLAG_TURQUOISE, binding_TOGGLE_FLAG_PURPLE, " +
-                "binding_UNSET_FLAG, binding_ANSWER_FIRST_BUTTON, binding_ANSWER_SECOND_BUTTON, " +
-                "binding_ANSWER_THIRD_BUTTON, binding_ANSWER_FOURTH_BUTTON, binding_ANSWER_RECOMMENDED, " +
-                "binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
+                "binding_UNSET_FLAG, binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
                 "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD",
             names
         )
