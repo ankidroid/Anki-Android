@@ -1245,7 +1245,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             //}
 
             //noinspection ConstantConditions
-            if ((!skipDbCheck && previous < upgradeDbVersion) || needsPreferenceUpgrade(previous)) {
+            if ((!skipDbCheck && previous < upgradeDbVersion) || InitialActivity.needsPreferenceUpgrade(previous)) {
                 boolean upgradedPreferences = upgradePreferences(this, previous);
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
@@ -1304,7 +1304,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** @return Whether any preferences were upgraded */
     private static boolean upgradePreferences(Context context, long previous) {
-        if (!needsPreferenceUpgrade(previous)) {
+        if (!InitialActivity.needsPreferenceUpgrade(previous)) {
             return false;
         }
         Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
@@ -1312,10 +1312,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return true;
     }
 
-
-    private static boolean needsPreferenceUpgrade(long previous) {
-        return previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
-    }
 
     public void displayDowngradeFailedNoSpace() {
         Timber.w("Not enough space to downgrade");

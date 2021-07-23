@@ -25,6 +25,15 @@ import com.ichi2.anki.reviewer.FullScreenMode;
 import timber.log.Timber;
 
 public class PreferenceUpgradeService {
+
+    /**
+     * The latest package version number that included changes to the preferences that requires handling. All
+     * collections being upgraded to (or after) this version must update preferences.
+     *
+     * #9309 Do not modify this variable - it no longer works
+     */
+    public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
+
     public static void upgradePreferences(Context context, long previousVersionCode) {
         upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode);
     }
@@ -51,5 +60,9 @@ public class PreferenceUpgradeService {
         }
 
         FullScreenMode.upgradeFromLegacyPreference(preferences);
+    }
+
+    public static boolean needsPreferenceUpgrade(long previous) {
+        return previous < CHECK_PREFERENCES_AT_VERSION;
     }
 }
