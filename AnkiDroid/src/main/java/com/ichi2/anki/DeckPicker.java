@@ -108,7 +108,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
@@ -1256,7 +1255,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
                 if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    upgradePreferences(previous);
+                    InitialActivity.upgradePreferences(this, previous);
                 }
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
@@ -1357,30 +1356,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return previous;
     }
 
-    private void upgradePreferences(long previousVersionCode) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        // clear all prefs if super old version to prevent any errors
-        if (previousVersionCode < 20300130) {
-            Timber.i("Old version of Anki - Clearing preferences");
-            preferences.edit().clear().apply();
-        }
-        // when upgrading from before 2.5alpha35
-        if (previousVersionCode < 20500135) {
-            Timber.i("Old version of Anki - Fixing Zoom");
-            // Card zooming behaviour was changed the preferences renamed
-            int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
-            int oldImageZoom = preferences.getInt("relativeImageSize", 100);
-            preferences.edit().putInt("cardZoom", oldCardZoom).apply();
-            preferences.edit().putInt("imageZoom", oldImageZoom).apply();
-            if (!preferences.getBoolean("useBackup", true)) {
-                preferences.edit().putInt("backupMax", 0).apply();
-            }
-            preferences.edit().remove("useBackup").apply();
-            preferences.edit().remove("intentAdditionInstantAdd").apply();
-        }
-
-        FullScreenMode.upgradeFromLegacyPreference(preferences);
-    }
 
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);

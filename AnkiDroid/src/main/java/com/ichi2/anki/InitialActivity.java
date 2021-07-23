@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.BackendFactory;
@@ -112,6 +113,11 @@ public class InitialActivity {
 
         Timber.d("Downgrading database to V11: '%s'", collectionPath);
         BackendFactory.createInstance().getBackend().downgradeBackend(collectionPath);
+    }
+
+
+    public static void upgradePreferences(Context context, long previousVersionCode) {
+        PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
     }
 
 
