@@ -63,6 +63,5 @@ object PreferenceUpgradeService {
         return true
     }
 
-    @JvmStatic
-    fun needsPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
+    internal fun needsPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
 }

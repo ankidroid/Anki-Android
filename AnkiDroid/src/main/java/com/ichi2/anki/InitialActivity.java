@@ -120,12 +120,6 @@ public class InitialActivity {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
     }
 
-
-    public static boolean needsPreferenceUpgrade(long previous) {
-        return PreferenceUpgradeService.needsPreferenceUpgrade(previous);
-    }
-
-
     // I disapprove, but it's best to keep consistency with the rest of the app
     private static class PerformDowngradeTask extends AsyncTask<Void, Void, Void> {
 

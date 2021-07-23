@@ -1244,56 +1244,55 @@ public class DeckPicker extends NavigationDrawerActivity implements
             //    skipDbCheck = true;
             //}
 
+            boolean upgradedPreferences = InitialActivity.upgradePreferences(this, previous);
+            // Integrity check loads asynchronously and then restart deck picker when finished
             //noinspection ConstantConditions
-            if ((!skipDbCheck && previous < upgradeDbVersion) || InitialActivity.needsPreferenceUpgrade(previous)) {
-                boolean upgradedPreferences = InitialActivity.upgradePreferences(this, previous);
-                // Integrity check loads asynchronously and then restart deck picker when finished
-                //noinspection ConstantConditions
-                if (!skipDbCheck && previous < upgradeDbVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    //#5852 - since we may have a warning about disk space, we don't want to force a check database
-                    //and show a warning before the user knows what is happening.
-                    new MaterialDialog.Builder(this)
-                            .title(R.string.integrity_check_startup_title)
-                            .content(R.string.integrity_check_startup_content)
-                            .positiveText(R.string.check_db)
-                            .negativeText(R.string.close)
-                            .onPositive((materialDialog, dialogAction) -> integrityCheck())
-                            .onNeutral((materialDialog, dialogAction) -> restartActivity())
-                            .onNegative((materialDialog, dialogAction) ->  restartActivity())
-                            .canceledOnTouchOutside(false)
-                            .cancelable(false)
-                            .build()
-                            .show();
+            if (!skipDbCheck && previous < upgradeDbVersion) {
+                Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
+                //#5852 - since we may have a warning about disk space, we don't want to force a check database
+                //and show a warning before the user knows what is happening.
+                new MaterialDialog.Builder(this)
+                        .title(R.string.integrity_check_startup_title)
+                        .content(R.string.integrity_check_startup_content)
+                        .positiveText(R.string.check_db)
+                        .negativeText(R.string.close)
+                        .onPositive((materialDialog, dialogAction) -> integrityCheck())
+                        .onNeutral((materialDialog, dialogAction) -> restartActivity())
+                        .onNegative((materialDialog, dialogAction) ->  restartActivity())
+                        .canceledOnTouchOutside(false)
+                        .cancelable(false)
+                        .build()
+                        .show();
+                return;
+            }
+            if (upgradedPreferences) {
+                Timber.i("Updated preferences with no integrity check - restarting activity");
+                // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
+                // proceed
+                restartActivity();
+                return;
+            }
 
-                } else if (upgradedPreferences) {
-                    Timber.i("Updated preferences with no integrity check - restarting activity");
-                    // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
-                    // proceed
-                    restartActivity();
+            // If no changes are required we go to the new features activity
+            // There the "lastVersion" is set, so that this code is not reached again
+            if (VersionUtils.isReleaseVersion()) {
+                Timber.i("Displaying new features");
+                Intent infoIntent = new Intent(this, Info.class);
+                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+
+                if (skip != 0) {
+                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
+                            START);
+                } else {
+                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
             } else {
-                // If no changes are required we go to the new features activity
-                // There the "lastVersion" is set, so that this code is not reached again
-                if (VersionUtils.isReleaseVersion()) {
-                    Timber.i("Displaying new features");
-                    Intent infoIntent = new Intent(this, Info.class);
-                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-
-                    if (skip != 0) {
-                        startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                                START);
-                    } else {
-                        startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
-                    }
-                } else {
-                    Timber.i("Dev Build - not showing 'new features'");
-                    // Don't show new features dialog for development builds
-                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
-                    UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
-                    showStartupScreensAndDialogs(preferences, 2);
-                }
+                Timber.i("Dev Build - not showing 'new features'");
+                // Don't show new features dialog for development builds
+                preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
+                UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
+                showStartupScreensAndDialogs(preferences, 2);
             }
         } else {
             // This is the main call when there is nothing special required
