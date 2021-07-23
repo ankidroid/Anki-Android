@@ -24,6 +24,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Binding + additional contextual information
@@ -158,10 +159,10 @@ class MappableBinding(private val binding: Binding, private val screen: Screen) 
         fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
-        fun List<MappableBinding>.toPreferenceString(): String = TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
+        fun List<MappableBinding>.toPreferenceString(): String = "1/" + TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
 
         @CheckResult
-        fun fromString(s: String): MappableBinding? {
+        fun fromString(s: String, v: Version = Version.ONE): MappableBinding? {
             if (s.isEmpty()) {
                 return null
             }
@@ -180,7 +181,14 @@ class MappableBinding(private val binding: Binding, private val screen: Screen) 
         @CheckResult
         fun fromPreferenceString(string: String?): MutableList<MappableBinding> {
             if (TextUtils.isEmpty(string)) return ArrayList()
-            return string!!.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
+
+            val version = string!!.takeWhile { x -> x != '/' }
+            val remainder = string.substring(version.length + 1) // skip the /
+            if (version != "1") {
+                Timber.w("cannot handle version '$version'")
+                return ArrayList()
+            }
+            return remainder.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
         }
 
         @CheckResult

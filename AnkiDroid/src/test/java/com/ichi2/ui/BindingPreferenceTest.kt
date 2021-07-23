@@ -44,7 +44,7 @@ class BindingPreferenceTest {
     fun test_serialisation_does_not_change() {
         // If this changes, we have introduced a breaking change in the serialization
         //
-        val expected = "r✅a2|r✅ 1|r⍝LONG_TAP2|r⌨122"
+        val expected = "1/r✅a2|r✅ 1|r⍝LONG_TAP2|r⌨122"
 
         assertEquals(expected, getSampleBindings().toPreferenceString())
     }
