@@ -1252,7 +1252,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             //}
 
             //noinspection ConstantConditions
-            if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
+            if ((!skipDbCheck && previous < upgradeDbVersion) || needsPreferenceUpgrade(previous)) {
                 if (previous < upgradePrefsVersion) {
                     Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
                     InitialActivity.upgradePreferences(this, previous);
@@ -1310,6 +1310,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.i("No startup screens required");
             onFinishedStartup();
         }
+    }
+
+    private static boolean needsPreferenceUpgrade(long previous) {
+        return previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
     }
 
     public void displayDowngradeFailedNoSpace() {
