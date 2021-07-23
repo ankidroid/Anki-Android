@@ -13,62 +13,56 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.servicelayer
 
-package com.ichi2.anki.servicelayer;
+import android.content.Context
+import android.content.SharedPreferences
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.reviewer.FullScreenMode
+import timber.log.Timber
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.reviewer.FullScreenMode;
-
-import timber.log.Timber;
-
-public class PreferenceUpgradeService {
-
+object PreferenceUpgradeService {
     /**
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      *
      * #9309 Do not modify this variable - it no longer works
      */
-    public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
+    const val CHECK_PREFERENCES_AT_VERSION = 20500225
+
+    @JvmStatic
+    fun upgradePreferences(context: Context?, previousVersionCode: Long): Boolean =
+        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */
-    public static boolean upgradePreferences(Context context, long previousVersionCode) {
-        return upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode);
-    }
-
-    protected static boolean upgradePreferences(SharedPreferences preferences, long previousVersionCode) {
+    internal fun upgradePreferences(preferences: SharedPreferences, previousVersionCode: Long): Boolean {
         if (!needsPreferenceUpgrade(previousVersionCode)) {
-            return false;
+            return false
         }
-        Timber.i("running upgradePreferences()");
+        Timber.i("running upgradePreferences()")
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
-            Timber.i("Old version of Anki - Clearing preferences");
-            preferences.edit().clear().apply();
+            Timber.i("Old version of Anki - Clearing preferences")
+            preferences.edit().clear().apply()
         }
         // when upgrading from before 2.5alpha35
         if (previousVersionCode < 20500135) {
-            Timber.i("Old version of Anki - Fixing Zoom");
+            Timber.i("Old version of Anki - Fixing Zoom")
             // Card zooming behaviour was changed the preferences renamed
-            int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
-            int oldImageZoom = preferences.getInt("relativeImageSize", 100);
-            preferences.edit().putInt("cardZoom", oldCardZoom).apply();
-            preferences.edit().putInt("imageZoom", oldImageZoom).apply();
+            val oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100)
+            val oldImageZoom = preferences.getInt("relativeImageSize", 100)
+            preferences.edit().putInt("cardZoom", oldCardZoom).apply()
+            preferences.edit().putInt("imageZoom", oldImageZoom).apply()
             if (!preferences.getBoolean("useBackup", true)) {
-                preferences.edit().putInt("backupMax", 0).apply();
+                preferences.edit().putInt("backupMax", 0).apply()
             }
-            preferences.edit().remove("useBackup").apply();
-            preferences.edit().remove("intentAdditionInstantAdd").apply();
+            preferences.edit().remove("useBackup").apply()
+            preferences.edit().remove("intentAdditionInstantAdd").apply()
         }
-
-        FullScreenMode.upgradeFromLegacyPreference(preferences);
-        return true;
+        FullScreenMode.upgradeFromLegacyPreference(preferences)
+        return true
     }
 
-    public static boolean needsPreferenceUpgrade(long previous) {
-        return previous < CHECK_PREFERENCES_AT_VERSION;
-    }
+    @JvmStatic
+    fun needsPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
 }
