@@ -1311,12 +1311,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** @return Whether any preferences were upgraded */
     private static boolean upgradePreferences(Context context, long previous) {
-        if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
-            Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-            InitialActivity.upgradePreferences(context, previous);
-            return true;
+        if (!needsPreferenceUpgrade(previous)) {
+            return false;
         }
-        return false;
+        Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
+        InitialActivity.upgradePreferences(context, previous);
+        return true;
     }
 
 
