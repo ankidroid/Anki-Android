@@ -26,7 +26,10 @@ import timber.log.Timber;
 
 public class PreferenceUpgradeService {
     public static void upgradePreferences(Context context, long previousVersionCode) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode);
+    }
+
+    protected static void upgradePreferences(SharedPreferences preferences, long previousVersionCode) {
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
             Timber.i("Old version of Anki - Clearing preferences");
