@@ -104,4 +104,21 @@ public class FileUtil {
 
         return new AbstractMap.SimpleEntry<>(fileName.substring(0, index), fileName.substring(index));
     }
+
+    /**
+     * Wraps {@link File#listFiles()} and throws an exception instead of returning <code>null</code> if dir does not
+     * denote an actual directory.
+     *
+     * @throws IOException if the contents of dir cannot be listed
+     * @param dir Abstract representation of a directory
+     * @return An array of abstract representations of the files / directories present in the directory represented
+     * by dir
+     */
+    public static @NonNull File[] listFiles(@NonNull File dir) throws IOException {
+        File[] children = dir.listFiles();
+        if (children == null) {
+            throw new IOException("Failed to list the contents of '" + dir + "'");
+        }
+        return children;
+    }
 }

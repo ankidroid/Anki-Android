@@ -16,15 +16,77 @@
 
 package com.ichi2.utils;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
+import static org.acra.util.IOUtils.writeStringToFile;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 public class FileUtilTest {
+
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+    private File createSrcFilesForTest(File temporaryRoot, String testDirName) throws Exception {
+        File grandParentDir = new File(temporaryRoot, testDirName);
+        File parentDir = new File(grandParentDir, "parent");
+        File childDir = new File(parentDir, "child");
+        final File childDir2 = new File(parentDir, "child2");
+        final File grandChildDir = new File(childDir, "grandChild");
+        final File grandChild2Dir = new File(childDir2, "grandChild2");
+
+        ArrayList<File> files = new ArrayList<>();
+        files.add(new File(grandParentDir, "file1.txt"));
+        files.add(new File(parentDir, "file2.txt"));
+        files.add(new File(childDir, "file3.txt"));
+        files.add(new File(childDir2, "file4.txt"));
+        files.add(new File(grandChildDir, "file5.txt"));
+        files.add(new File(grandChildDir, "file6.txt"));
+
+        grandChildDir.mkdirs();
+        grandChild2Dir.mkdirs();
+
+        for (int i = 0; i < files.size(); ++i) {
+            final File file = files.get(i);
+            writeStringToFile(file, "File " + (i + 1) + " called " + file.getName());
+        }
+
+        return grandParentDir;
+    }
+
+    @Test
+    public void listFilesTest() throws Exception {
+        // Create temporary root directory for holding test directories
+        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+
+        // Create valid input
+        File testDir = createSrcFilesForTest(temporaryRootDir ,"testDir");
+        ArrayList<File> expectedChildren = new ArrayList<>();
+        expectedChildren.add(new File(testDir, "parent"));
+        expectedChildren.add(new File(testDir, "file1.txt"));
+
+        File[] testDirChildren = FileUtil.listFiles(testDir);
+
+        // Check that listFiles lists all files in the directory
+        for (final File testDirChild : testDirChildren) {
+             assertTrue(expectedChildren.contains(testDirChild));
+        }
+        assertEquals(expectedChildren.size(), testDirChildren.length);
+
+        // Create invalid input
+        assertThrows(IOException.class, () -> FileUtil.listFiles(new File(testDir, "file1.txt")));
+    }
 
     @Test
     public void testFileNameNull() {
