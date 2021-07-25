@@ -37,6 +37,7 @@ public class FileUtilTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    long testFolderSize;
 
     private File createSrcFilesForTest(File temporaryRoot, String testDirName) throws Exception {
         File grandParentDir = new File(temporaryRoot, testDirName);
@@ -60,9 +61,23 @@ public class FileUtilTest {
         for (int i = 0; i < files.size(); ++i) {
             final File file = files.get(i);
             writeStringToFile(file, "File " + (i + 1) + " called " + file.getName());
+            testFolderSize += file.length();
         }
 
         return grandParentDir;
+    }
+
+    @Test
+    public void testDirectorySize() throws Exception {
+        // Create temporary root directory for holding test directories
+        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+
+        // Test for success scenario
+        File dir = createSrcFilesForTest(temporaryRootDir, "dir");
+        assertEquals(FileUtil.getDirectorySize(dir), testFolderSize);
+
+        // Test for failure scenario by passing a file as an argument instead of a directory
+        assertThrows(IOException.class, () -> FileUtil.getDirectorySize(new File(dir, "file1.txt")));
     }
 
     @Test
