@@ -1253,10 +1253,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             //noinspection ConstantConditions
             if ((!skipDbCheck && previous < upgradeDbVersion) || needsPreferenceUpgrade(previous)) {
-                if (previous < upgradePrefsVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    InitialActivity.upgradePreferences(this, previous);
-                }
+                boolean upgradedPreferences = upgradePreferences(this, previous);
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
                 if (!skipDbCheck && previous < upgradeDbVersion) {
@@ -1276,7 +1273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             .build()
                             .show();
 
-                } else if (previous < upgradePrefsVersion) {
+                } else if (upgradedPreferences) {
                     Timber.i("Updated preferences with no integrity check - restarting activity");
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
@@ -1311,6 +1308,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
             onFinishedStartup();
         }
     }
+
+    /** @return Whether any preferences were upgraded */
+    private static boolean upgradePreferences(Context context, long previous) {
+        if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+            Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
+            InitialActivity.upgradePreferences(context, previous);
+            return true;
+        }
+        return false;
+    }
+
 
     private static boolean needsPreferenceUpgrade(long previous) {
         return previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
