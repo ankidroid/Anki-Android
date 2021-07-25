@@ -16,6 +16,7 @@
 
 package com.ichi2.utils;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -78,6 +79,29 @@ public class FileUtilTest {
 
         // Test for failure scenario by passing a file as an argument instead of a directory
         assertThrows(IOException.class, () -> FileUtil.getDirectorySize(new File(dir, "file1.txt")));
+    }
+
+    @Test
+    public void ensureFileIsDirectoryTest() throws Exception {
+        // Create temporary root directory for holding test directories
+        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+
+        // Create test data
+        File testDir = createSrcFilesForTest(temporaryRootDir, "testDir");
+
+        // Test for file which exists but isn't a directory
+        org.junit.Assert.assertThrows(IOException.class, () -> FileUtil.ensureFileIsDirectory(new File(testDir, "file1.txt")));
+
+        // Test for file which exists and is a directory
+        FileUtil.ensureFileIsDirectory(new File(testDir, "parent"));
+
+        // Test for directory which doesn't exist, but can be created
+        FileUtil.ensureFileIsDirectory(new File(testDir, "parent2"));
+
+        // Test for directory which doesn't exist, and cannot be created
+        Assert.assertThrows(IOException.class, () -> FileUtil.ensureFileIsDirectory(
+                new File(testDir.getAbsolutePath() + File.separator + "file1.txt"
+                        + File.separator + "impossibleDir")));
     }
 
     @Test
