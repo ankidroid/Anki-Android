@@ -106,6 +106,30 @@ public class FileUtil {
     }
 
     /**
+     * Calculates the size of a directory by recursively exploring the directory tree and summing the length of each
+     * file. The time taken to calculate directory size is proportional to the number of files in the directory
+     * and all of its sub-directories.
+     * It is assumed that directory contains no symbolic links.
+     *
+     * @throws IOException if the directory argument doesn't denote a directory
+     * @param directory Abstract representation of the file/directory whose size needs to be calculated
+     * @return Size of the directory in bytes
+     */
+    public static long getDirectorySize(File directory) throws IOException {
+        long directorySize = 0;
+        File[] files = listFiles(directory);
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                directorySize += getDirectorySize(file);
+            } else {
+                directorySize += file.length();
+            }
+        }
+        return directorySize;
+    }
+
+    /**
      * Wraps {@link File#listFiles()} and throws an exception instead of returning <code>null</code> if dir does not
      * denote an actual directory.
      *
