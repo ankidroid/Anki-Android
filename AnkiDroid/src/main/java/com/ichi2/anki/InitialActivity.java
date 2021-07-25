@@ -115,9 +115,9 @@ public class InitialActivity {
         BackendFactory.createInstance().getBackend().downgradeBackend(collectionPath);
     }
 
-
-    public static void upgradePreferences(Context context, long previousVersionCode) {
-        PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
+    /** @return Whether any preferences were upgraded */
+    public static boolean upgradePreferences(Context context, long previousVersionCode) {
+        return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
     }
 
 

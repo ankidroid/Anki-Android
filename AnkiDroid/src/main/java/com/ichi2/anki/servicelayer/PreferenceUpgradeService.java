@@ -34,11 +34,16 @@ public class PreferenceUpgradeService {
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
-    public static void upgradePreferences(Context context, long previousVersionCode) {
-        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode);
+    /** @return Whether any preferences were upgraded */
+    public static boolean upgradePreferences(Context context, long previousVersionCode) {
+        return upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode);
     }
 
-    protected static void upgradePreferences(SharedPreferences preferences, long previousVersionCode) {
+    protected static boolean upgradePreferences(SharedPreferences preferences, long previousVersionCode) {
+        if (!needsPreferenceUpgrade(previousVersionCode)) {
+            return false;
+        }
+        Timber.i("running upgradePreferences()");
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
             Timber.i("Old version of Anki - Clearing preferences");
@@ -60,6 +65,7 @@ public class PreferenceUpgradeService {
         }
 
         FullScreenMode.upgradeFromLegacyPreference(preferences);
+        return true;
     }
 
     public static boolean needsPreferenceUpgrade(long previous) {

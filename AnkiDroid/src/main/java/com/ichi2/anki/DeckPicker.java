@@ -1246,7 +1246,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             //noinspection ConstantConditions
             if ((!skipDbCheck && previous < upgradeDbVersion) || InitialActivity.needsPreferenceUpgrade(previous)) {
-                boolean upgradedPreferences = upgradePreferences(this, previous);
+                boolean upgradedPreferences = InitialActivity.upgradePreferences(this, previous);
                 // Integrity check loads asynchronously and then restart deck picker when finished
                 //noinspection ConstantConditions
                 if (!skipDbCheck && previous < upgradeDbVersion) {
@@ -1301,17 +1301,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             onFinishedStartup();
         }
     }
-
-    /** @return Whether any preferences were upgraded */
-    private static boolean upgradePreferences(Context context, long previous) {
-        if (!InitialActivity.needsPreferenceUpgrade(previous)) {
-            return false;
-        }
-        Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-        InitialActivity.upgradePreferences(context, previous);
-        return true;
-    }
-
 
     public void displayDowngradeFailedNoSpace() {
         Timber.w("Not enough space to downgrade");
