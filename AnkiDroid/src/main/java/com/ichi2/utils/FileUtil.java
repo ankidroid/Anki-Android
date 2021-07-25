@@ -130,6 +130,22 @@ public class FileUtil {
     }
 
     /**
+     * If dir exists, it must be a directory.
+     * If not, it is created, along with any necessary parent directories (see {@link File#mkdirs()}).
+     * @param dir Abstract representation of a directory
+     * @throws IOException if dir is not a directory or could not be created
+     */
+    public static void ensureFileIsDirectory(@NonNull File dir) throws IOException {
+        if (dir.exists()) {
+            if (!dir.isDirectory()) {
+                throw new IOException(dir + " exists but is not a directory");
+            }
+        } else if (!dir.mkdirs() && !dir.isDirectory()) {
+            throw new IOException(dir + " directory cannot be created");
+        }
+    }
+
+    /**
      * Wraps {@link File#listFiles()} and throws an exception instead of returning <code>null</code> if dir does not
      * denote an actual directory.
      *
