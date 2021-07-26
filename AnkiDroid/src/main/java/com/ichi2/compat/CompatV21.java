@@ -24,6 +24,9 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.widget.TimePicker;
 
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.utils.FileUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -110,6 +113,34 @@ public class CompatV21 implements Compat {
         }
         target.flush();
         return count;
+    }
+
+    // Explores the source directory tree recursively and copies each directory and each file inside each directory
+    @Override
+    public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {
+        // If destDir exists, it must be a directory. If not, create it
+        FileUtil.ensureFileIsDirectory(destDir);
+
+        final File[] srcFiles = FileUtil.listFiles(srcDir);
+
+        // Copy the contents of srcDir to destDir
+        for (final File srcFile : srcFiles) {
+            final File destFile = new File(destDir, srcFile.getName());
+            if (srcFile.isDirectory()) {
+                copyDirectory(srcFile, destFile, ioTask, deleteAfterCopy);
+            } else if (srcFile.length() != destFile.length()) {
+                OutputStream out = new FileOutputStream(destFile, false);
+                ioTask.doProgress((int) copyFile(srcFile.getAbsolutePath(), out) / 1024);
+                out.close();
+            }
+            if (deleteAfterCopy) {
+                srcFile.delete();
+            }
+        }
+
+        if (deleteAfterCopy) {
+            srcDir.delete();
+        }
     }
 
     // Until API 23 the methods have "current" in the name

@@ -21,6 +21,9 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.widget.TimePicker;
 
+import com.ichi2.async.ProgressSenderAndCancelListener;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -71,6 +74,31 @@ public interface Compat {
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
+
+    /**
+     * Copies the directory represented by srcDir to the directory represented by destDir, and optionally makes a
+     * best-effort to delete srcDir if the deleteAfterCopy param is set to <code>true</code>. The source must be a
+     * directory. If the destination exists, it must be a directory. If it doesn't exist, then the destination directory
+     * and any necessary parent directories are created recursively (see {@link File#mkdirs()} for details).
+     * It is assumed that srcDir and destDir contain no symbolic links.
+     * <p><br>
+     * For instance, if the source directory, sdcard/AnkiDroid directory, contains 3 files, and
+     * com.ichi2.Anki/files is the destination directory, the 3 files will be copied inside the com.ichi2.Anki/files
+     * directory.
+     * <p><br>
+     * The destination may be empty or it may contain (partially or completely) content that is <em>probably</em> the
+     * same as the source. A file isn't copied to the destination if it already exists at the destination according to a
+     * simple heuristic.
+     * <p><br>
+     * This operation takes linear time - is proportional to the number of files in srcDir and its subdirectories
+     * @param srcDir Abstract representation of source file/directory
+     * @param destDir Abstract representation of destination directory
+     * @param ioTask Listener used to send how many kilobytes of data have been copied since the last update
+     * @param deleteAfterCopy If set to <code>true</code>, makes a best-effort to delete srcDir after it has been copied
+     * @throws IOException if an error occurs
+     */
+    void copyDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException;
+
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
