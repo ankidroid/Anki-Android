@@ -99,6 +99,39 @@ public interface Compat {
      */
     void copyDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException;
 
+    /**
+     * Moves the directory represented by source to the directory represented by destination.
+     * After completion, destDir will exist and will contain the contents of srcDir, and srcDir will not exist since it
+     * will have been moved.
+     * <p><br>
+     * srcDir must be a directory. If destDir exists, it must be a directory. If it doesn't exist, then the destination
+     * directory and any necessary parent directories are created recursively (see {@link File#mkdirs()} for details).
+     * It is assumed that srcDir and destDir contain no symbolic links.
+     * <p><br>
+     * For instance, if the source directory, sdcard/AnkiDroid directory, contains 3 files, and com.ichi2.Anki/files is
+     * the destination directory, the 3 files will be moved inside the com.ichi2.Anki/files directory.
+     * The source directory, sdcard/AnkiDroid will often be deleted after a successful operation.
+     * However, this method provides no guarantee that the entire srcDir will be deleted.
+     * <p><br>
+     * In case this operation is interrupted, srDir & destDir should satisfy the following properties:
+     * <ul>
+     *     <li>A subset of the srcDir files and directories have been moved to destDir</li>
+     *     <li>All the files/directories that have been moved to destDir have been deleted,
+     *     except for at most one file</li>
+     * </ul>
+     * The destination may be empty or it may contain (partially or completely) content that is <em>probably</em> the
+     * same as the source. A file isn't moved to the destination if it already exists at the destination according to a
+     * simple heuristic.
+     * <p><br>
+     * This operation takes constant time if srcDir and destDir are on the same partition. If not, it takes linear time
+     *  - is proportional to the number of files in srcDir and its subdirectories.
+     * @param srcDir Abstract representation of source file/directory
+     * @param destDir Abstract representation of destination directory
+     * @param ioTask Listener used to send how many kilobytes of data have been moved since the last update
+     * @throws IOException if an error occurs
+     */
+    void moveDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask) throws IOException;
+
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);

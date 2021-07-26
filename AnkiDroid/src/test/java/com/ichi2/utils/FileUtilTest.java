@@ -127,6 +127,33 @@ public class FileUtilTest {
         compareDirs(srcDir, unsuccessfulDestDir);
     }
 
+    @Config(sdk = { 21, 26 })
+    @Test
+    public void testMoveDirectory() throws Exception {
+        // Create temporary root directory for holding test directories
+        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+
+        // Test for successful move directory operation
+        File srcDirToBeMovedSuccessfully = createSrcFilesForTest(temporaryRootDir, "srcDirToBeMovedSuccessfully");
+        File srcDirForComparison = createSrcFilesForTest(temporaryRootDir, "srcDirForComparison");
+        File successfulDestDir = new File(temporaryRootDir, "successfulDestDir");
+        CompatHelper.getCompat().moveDirectory(srcDirToBeMovedSuccessfully, successfulDestDir, new DummyListener());
+        compareDirs(srcDirForComparison, successfulDestDir);
+
+        // Test for unsuccessful move directory operation
+        File srcDirToBeMovedUnsuccessfully = createSrcFilesForTest(temporaryRootDir, "srcDirToBeMovedUnsuccessfully");
+        File unsuccessfulDestDir = new File(temporaryRootDir, "unsuccessfulDestDir");
+        File unexpectedFile = addUnexpectedFileToDestination(unsuccessfulDestDir);
+        org.junit.Assert.assertThrows(IOException.class, () -> CompatHelper.getCompat().moveDirectory(srcDirToBeMovedUnsuccessfully,
+                unsuccessfulDestDir, new DummyListener()));
+
+        // Test for successful move directory operation after partial operation
+        // by removing the unexpected file from the destination directory and trying again
+        Assert.assertTrue(unexpectedFile.delete());
+        CompatHelper.getCompat().moveDirectory(srcDirToBeMovedUnsuccessfully, unsuccessfulDestDir, new DummyListener());
+        compareDirs(srcDirForComparison, unsuccessfulDestDir);
+    }
+
     private void compareDirs(File srcDir, File destDir) {
         org.junit.Assert.assertTrue(srcDir.isDirectory());
         org.junit.Assert.assertTrue(destDir.isDirectory());
