@@ -26,7 +26,10 @@ object PreferenceUpgradeService {
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      *
-     * #9309 Do not modify this variable - it no longer works
+     * #9309 Do not modify this variable - it no longer works.
+     *
+     * Instead, add an unconditional check for the old preference before the call to
+     * "needsPreferenceUpgrade", and perform the upgrade.
      */
     const val CHECK_PREFERENCES_AT_VERSION = 20500225
 
@@ -36,9 +39,15 @@ object PreferenceUpgradeService {
 
     /** @return Whether any preferences were upgraded */
     internal fun upgradePreferences(preferences: SharedPreferences, previousVersionCode: Long): Boolean {
-        if (!needsPreferenceUpgrade(previousVersionCode)) {
-            return false
+        var hasUpgradedPreferences = false
+
+        // perform any new preference upgrades here and set hasUpgradedPreferences
+
+        if (!needsLegacyPreferenceUpgrade(previousVersionCode)) {
+            return hasUpgradedPreferences
         }
+        hasUpgradedPreferences = true
+
         Timber.i("running upgradePreferences()")
         // clear all prefs if super old version to prevent any errors
         if (previousVersionCode < 20300130) {
@@ -60,8 +69,8 @@ object PreferenceUpgradeService {
             preferences.edit().remove("intentAdditionInstantAdd").apply()
         }
         FullScreenMode.upgradeFromLegacyPreference(preferences)
-        return true
+        return hasUpgradedPreferences
     }
 
-    internal fun needsPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
+    internal fun needsLegacyPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
 }
