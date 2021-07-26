@@ -143,6 +143,38 @@ public class CompatV21 implements Compat {
         }
     }
 
+    // Attempts to first rename the contents of the directory. This operation is instant, but it fails if the
+    // source and destination paths are not on the same storage partition.
+    // In case rename fails, it explores the directory tree recursively and copies, then deletes every directory & every
+    // file inside each directory.
+    @Override
+    public void moveDirectory(@NonNull final File srcDir, @NonNull final File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask) throws IOException {
+        // If destDir exists, attempt to move the contents of srcDir by renaming
+        // Otherwise, attempt to rename srcDir to destDir
+        boolean renameSuccessful = true;
+        if (destDir.exists()) {
+            final File[] srcFiles = FileUtil.listFiles(srcDir);
+
+            for (final File srcFile : srcFiles) {
+                final File destFile = new File(destDir, srcFile.getName());
+                if (!srcFile.renameTo(destFile)) {
+                    renameSuccessful = false;
+                    break;
+                }
+            }
+            if (renameSuccessful) {
+                srcDir.delete();
+            }
+        } else {
+            renameSuccessful = srcDir.renameTo(destDir);
+        }
+
+        // If srcDir couldn't be moved by renaming, do a copy and delete
+        if (!renameSuccessful) {
+            copyDirectory(srcDir, destDir, ioTask, true);
+        }
+    }
+
     // Until API 23 the methods have "current" in the name
     @Override
     @SuppressWarnings("deprecation")
