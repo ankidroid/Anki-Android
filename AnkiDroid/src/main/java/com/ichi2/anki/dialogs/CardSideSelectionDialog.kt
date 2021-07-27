@@ -26,7 +26,7 @@ class CardSideSelectionDialog {
     companion object {
         fun displayInstance(ctx: Context, callback: (c: CardSide) -> Unit) {
             val items = listOf(
-                R.string.card_side_both,
+                R.string.card_side_question_and_answer,
                 R.string.card_side_question,
                 R.string.card_side_answer
             )
@@ -36,7 +36,7 @@ class CardSideSelectionDialog {
                 .items(items.map { ctx.getString(it) })
                 .itemsCallback { _, _, which, _ ->
                     when (items[which]) {
-                        R.string.card_side_both -> callback(CardSide.BOTH)
+                        R.string.card_side_question_and_answer -> callback(CardSide.BOTH)
                         R.string.card_side_question -> callback(CardSide.QUESTION)
                         R.string.card_side_answer -> callback(CardSide.ANSWER)
                     }
