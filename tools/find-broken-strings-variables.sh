@@ -52,7 +52,7 @@ if grep -RHn "CDATA " res/values*; then
   EXIT_STATUS=$((EXIT_STATUS + 1));
 fi
 
-${ANDROID_HOME}/tools/bin/lint --check StringFormatInvalid ./res
+${ANDROID_HOME}/cmdline-tools/latest/bin/lint --check StringFormatInvalid ./res
 popd > /dev/null || exit 1
 echo "Exiting with status $EXIT_STATUS"
 exit $EXIT_STATUS
