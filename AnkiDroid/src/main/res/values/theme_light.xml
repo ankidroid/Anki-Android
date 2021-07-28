@@ -129,6 +129,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="md_dark_theme">false</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
+        <item name="popupBackgroundColor">@android:color/white</item>
     </style>
 
     <!-- Preferences screens -->

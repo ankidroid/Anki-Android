@@ -192,6 +192,11 @@
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Potrebna je barem jedna vrsta kartice</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="few">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Izbrisati \"%2$s\" vrstu kartica i njezinu %1$d karticu?</item>
         <item quantity="few">Izbrisati \"%2$s\" vrstu kartica i njezine %1$d kartice?</item>

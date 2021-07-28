@@ -152,7 +152,7 @@
     <string name="time_quantity_minutes">%d хв</string>
     <string name="time_quantity_hours_minutes">%1$d гадз %2$d хв</string>
     <string name="time_quantity_hours">%d гадз</string>
-    <string name="time_quantity_days">%d дз</string>
+    <string name="time_quantity_days">%d дз/дні</string>
     <string name="time_quantity_days_hours">%1$d дз %2$d гадз</string>
     <string name="time_quantity_months">%.1f мес</string>
     <string name="time_quantity_years">%.1f г</string>
@@ -197,6 +197,12 @@
     <string name="card_template_editor_insert_field">Уставіць поле</string>
     <string name="card_template_editor_select_field">Абраць поле</string>
     <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Будзе створана %1$d картка. Працягнуць?</item>
+        <item quantity="few">Будзе створана %1$d карткі. Працягнуць?</item>
+        <item quantity="many">Будзе створана %1$d картак. Працягнуць?</item>
+        <item quantity="other">Будзе створана %1$d карткі. Працягнуць?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Выдаліць тып карткі \'%2$s\' і %1$d яе картку?</item>
         <item quantity="few">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>

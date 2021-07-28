@@ -197,6 +197,12 @@
     <string name="card_template_editor_insert_field">Vložit pole</string>
     <string name="card_template_editor_select_field">Vybrat pole</string>
     <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Bude vytvořena %1$d karta. Pokračovat?</item>
+        <item quantity="few">Budou vytvořeny %1$d karty. Pokračovat?</item>
+        <item quantity="many">Bude vytvořeno %1$d karty. Pokračovat?</item>
+        <item quantity="other">Bude vytvořeno %1$d karet. Pokračovat?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Odstranit typ karty „%2$s“ a jeho %1$d kartu?</item>
         <item quantity="few">Odstranit typ karty „%2$s“ a jeho %1$d karty?</item>

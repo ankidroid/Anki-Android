@@ -102,10 +102,10 @@
     <string name="gestures_swipe_right" maxLength="41">Tažení doprava</string>
     <string name="gestures_double_tap" maxLength="41">Dvojklepnutí</string>
     <string name="gestures_long_tap" maxLength="41">Dlouhý stisk</string>
-    <string name="gestures_tap_top" maxLength="41">Klepnutí nahoru</string>
+    <string name="gestures_tap_top" maxLength="41">Klepnutí nahoře</string>
     <string name="gestures_tap_left" maxLength="41">Klepnutí vlevo</string>
     <string name="gestures_tap_right" maxLength="41">Klepnutí vpravo</string>
-    <string name="gestures_tap_bottom" maxLength="41">Klepnutí dolů</string>
+    <string name="gestures_tap_bottom" maxLength="41">Klepnutí dole</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Klepnutí vlevo nahoře</string>
     <string name="gestures_corner_tap_top_center">Klepnutí nahoře uprostřed</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Klepnutí vpravo nahoře</string>
@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci.</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut.</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
@@ -314,5 +314,15 @@
     <string name="type_in_answer_focus_summ">Automaticky vybrat pole „napište odpověď“ při opakování</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Otevřít seznam změn</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">Přidat gesto</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

@@ -90,8 +90,8 @@
         <item>Felsvar</item>
         <item>Repetitioner</item>
         <item>Intervall</item>
-        <item>Ease</item>
-        <item>Due</item>
+        <item>Lätthet</item>
+        <item>Förfallodatum</item>
         <item>Kort Modifierat</item>
         <item>Skapad</item>
         <item>Anteckning ändrad</item>
@@ -159,22 +159,22 @@
     <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
     <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
     <string name="import_log_no_apkg">Detta är ingen giltig Anki-paketfil</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_unzip">Misslyckades med att packa upp apkg: %s</string>
+    <string name="import_log_failed_copy_to">Det gick inte att kopiera apkg till %s</string>
     <string name="import_log_failed_validate">apkg misslyckades validering</string>
     <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_unhandled_request">Det går inte att bearbeta importbegäran</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Det gick inte att importera paket\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() misslyckades (möjligen slut på lagringsutrymme)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Ohanterad import från: ”%s”</string>
     <string name="import_replacing">Ersätter samling&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">Importering avbruten: AnkiDroid stängdes ned</string>
     <string name="export_include_schedule">Inkludera schemaläggning</string>
     <string name="export_include_media">Inkludera media</string>
     <string name="confirm_apkg_export">Exportera samling som Anki-paket?</string>
@@ -197,8 +197,8 @@
     <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
     <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Kortleksalternativ</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>
     <string name="select_tts">Ställ in TTS-språk</string>
     <string name="custom_study">Anpassade studier</string>
     <string name="more_options">Mer</string>
@@ -258,16 +258,16 @@
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Misslyckades med att ladda \'%s\'</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed">Systemet saknar en installerad app som kan utföra denna handling.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerbilder kan ta upp mycket lagringsutrymme. Du kan vilja komprimera & ändra storleken på bilderna i media-mappen.]]></string>
+    <string name="no_browser_notification">Ingen webbläsare funnen, var god vänlig och besök webbsidan med dator eller mobil: </string>
+    <string name="web_page_error">Fel vid inläsning av sidan: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">Extern sidlänk i kort stöds inte.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrund</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="choose_an_image">Välj en bild</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
@@ -277,12 +277,12 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">Färg på whiteboardpenna</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_first_field_matched">Första fältet matchade: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
@@ -323,10 +323,10 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Teckenstorlek</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Visa verktygsfält</string>
-    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_bold">Formatera som fetstilt</string>
     <string name="format_insert_italic">Formatera som kursiv</string>
     <string name="format_insert_underline">Formatera som understruken</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_horizontal_line">Infoga horisontell linje</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Ändra teckenstorlek</string>
     <string name="insert_mathjax">Infoga MathJax ekvation</string>
@@ -341,7 +341,7 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Du kan behöva använda iManager för att tillåta AnkiDroid att lägga till genvägar</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Kunde inte lägga till genväg: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Versalisera meningar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

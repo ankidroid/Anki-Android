@@ -119,4 +119,6 @@
     <attr name="fab_item_background" format="reference"/>
     <!--Custom Tabs colors-->
     <attr name="customTabNavBarColor" format="color"/>
+    <!-- Popup menus' background color -->
+    <attr name="popupBackgroundColor" format="reference"/>
 </resources>

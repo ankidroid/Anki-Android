@@ -26,6 +26,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.multimediacard.AudioPlayer;
 import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
+import com.ichi2.testutils.KeyEventUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -190,7 +191,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
     private void pressAndHoldShiftV() {
         depressShiftKey();
 
-        KeyEvent vKey = getVKey();
+        KeyEvent vKey = KeyEventUtils.getVKey();
         when(vKey.isShiftPressed()).thenReturn(true);
         reviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey);
         when(vKey.getRepeatCount()).thenReturn(1);
@@ -227,16 +228,6 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
         when(mock.getUnicodeChar()).thenReturn((int) 'v');
         when(mock.getUnicodeChar(anyInt())).thenReturn((int) 'v');
         reviewer.onKeyDown(KeyEvent.KEYCODE_V, mock);
-    }
-
-
-    @NonNull
-    private KeyEvent getVKey() {
-        KeyEvent mock = mock(KeyEvent.class);
-        when(mock.getKeyCode()).thenReturn(KeyEvent.KEYCODE_V);
-        when(mock.getUnicodeChar()).thenReturn((int) 'v');
-        when(mock.getUnicodeChar(anyInt())).thenReturn((int) 'v');
-        return mock;
     }
 
 

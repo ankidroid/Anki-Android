@@ -267,7 +267,7 @@
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">ホワイトボードエディタ</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[空のカードが見つかりました。ツール>空のカードを実行してください。]]></string>
     <string name="note_importer_error_empty_first_field">最初のフィールドが空: %s</string>
@@ -332,8 +332,8 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">メールアドレスが必要です。</string>
+    <string name="password_empty">パスワードが必要</string>
     <string name="back_pressed_once">Press back again to exit</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

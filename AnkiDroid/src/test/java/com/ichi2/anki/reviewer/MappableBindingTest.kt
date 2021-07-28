@@ -16,8 +16,6 @@
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
-import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding
-import com.ichi2.anki.reviewer.PeripheralKeymap.MappableBinding.fromBinding
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.junit.Test
@@ -27,7 +25,7 @@ class MappableBindingTest {
     fun equalityTest() {
         val allBindings = PeripheralCommand.getDefaultCommands()
             .map { x -> x.binding }
-            .map(MappableBinding::fromBinding)
+            .map(this::fromBinding)
             .toList()
 
         assertThat(allBindings, hasItem(unicodeCharacter('@')))
@@ -39,4 +37,8 @@ class MappableBindingTest {
 
     @Suppress("SameParameterValue")
     private fun unicodeCharacter(char: Char) = fromBinding(BindingTest.unicodeCharacter(char))
+
+    private fun fromBinding(binding: Binding): Any {
+        return MappableBinding(binding, CardSide.BOTH)
+    }
 }

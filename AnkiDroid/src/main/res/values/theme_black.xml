@@ -108,6 +108,7 @@
         <item name="md_background_color">@color/theme_black_primary_light</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">#000000</item>
+        <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
     </style>
 
     <!-- Preferences screens -->

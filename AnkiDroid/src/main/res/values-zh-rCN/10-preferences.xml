@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帐户</string>
     <string name="sync_account_summ_logged_out">未登录</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
@@ -308,5 +308,15 @@
     <string name="type_in_answer_focus_summ">自动聚焦在复习者的“输入答案”字段</string>
     <!-- Open Changelog-->
     <string name="open_changelog">打开更新日志</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">添加手势</string>
+    <string name="binding_add_key">添加按键</string>
+    <string name="key_picker_default_press_key">按一个键</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">选择卡片正/反面</string>
+    <string name="card_side_question">问题</string>
+    <string name="card_side_answer">答案</string>
+    <string name="card_side_both">问题 &amp; 答案</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">问： %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答： %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

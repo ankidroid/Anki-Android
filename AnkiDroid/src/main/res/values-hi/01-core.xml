@@ -187,6 +187,10 @@
     <string name="card_template_editor_insert_field">फ़ील्ड डालें</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटाएं?</item>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
