@@ -83,7 +83,7 @@
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
     <string name="stats_overview_time_per_day_studydays">Genomsnitt för dagar med studier: &lt;b&gt;%1$.1f&lt;/b&gt; minuter/dag</string>
     <string name="stats_overview_time_per_day_all">Om du studerade varje dag: &lt;b&gt;%1$.1f&lt;/b&gt; minuter/dag</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
+    <string name="stats_overview_average_answer_time">Genomsnittlig svarstid: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kort/minut)</string>
     <string name="stats_overview_new_cards_per_day">Genomsnitt: &lt;b&gt;%1$.1f&lt;/b&gt; kort/dag</string>
     <string name="stats_overview_total_new_cards">Totalt: &lt;b&gt;%1$d&lt;/b&gt; kort</string>
     <string name="stats_overview_average_interval">"Genomsnittligt intervall: "</string>

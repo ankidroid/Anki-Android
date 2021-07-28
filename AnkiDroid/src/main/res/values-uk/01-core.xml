@@ -194,13 +194,13 @@
     <string name="card_template_editor_styling">Стиль</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вигляд переглядача карток</string>
     <string name="card_template_editor_deck_override">Перевизначення колоди</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Вставити поле</string>
+    <string name="card_template_editor_select_field">Виберіть поле</string>
     <string name="card_template_editor_cant_delete">Необхідно хоча б один тип карток</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="few">This will create %1$d cards. Proceed?</item>
-        <item quantity="many">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Це створить %1$d картку. Продовжити?</item>
+        <item quantity="few">Це створить %1$d картки. Продовжити?</item>
+        <item quantity="many">Це створить %1$d карток. Продовжити?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">

@@ -113,5 +113,5 @@
     <string name="gesture_abort_sync">Avbryt inlärning och synkronisera</string>
     <string name="gesture_toggle_whiteboard">Växla whiteboard</string>
     <string name="record_voice">Spela in röst</string>
-    <string name="replay_voice">Replay Voice</string>
+    <string name="replay_voice">Återuppspela röst</string>
 </resources>

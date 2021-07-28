@@ -94,8 +94,8 @@
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Tillagd</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
+    <string name="card_info_first_review">Första repetitionen</string>
+    <string name="card_info_latest_review">Senaste repetitionen</string>
     <string name="card_info_interval">Intervall</string>
     <string name="card_info_ease">Ease</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
@@ -104,16 +104,16 @@
     <string name="card_info_total_time">Total tid</string>
     <string name="card_info_card_type">Korttyp</string>
     <string name="card_info_note_type">Anteckningstyp</string>
-    <string name="card_info_deck_name">Deck Name</string>
+    <string name="card_info_deck_name">Kortleksnamn</string>
     <string name="card_info_card_id">Kort Id</string>
     <string name="card_info_note_id">Antecknings-Id</string>
     <string name="card_info_revlog_time">Tid</string>
     <string name="card_info_revlog_date">Datum</string>
     <string name="card_info_revlog_rating">Betyg</string>
     <string name="card_info_revlog_type">Typ</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Lärs</string>
     <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Lärs om</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
 </resources>
