@@ -52,8 +52,8 @@
     <string name="studyoptions_eta">Uppskattad tid (min):</string>
     <string name="studyoptions_start">Plugga nu</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Fäll ut</string>
-    <string name="collapse">Fäll ihop</string>
+    <string name="expand">Expandera</string>
+    <string name="collapse">Minimera</string>
     <string name="study_more">Studera mer</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d kort i kö (%2$s)</item>
@@ -155,7 +155,7 @@
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="empty_deck">Den här leken är tom</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">Kortlekssökning</string>
     <string name="empty_deck_add_note">Lägg till kort</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_empty">Den här leken är tom. Använd +-knappen för att lägga till nytt innehåll.</string>
@@ -183,10 +183,14 @@
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
     <string name="card_template_editor_menu_card_browser_appearance">Visning i kortbläddrare</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Kortleksöverskrivning</string>
     <string name="card_template_editor_insert_field">Lägg till fält</string>
     <string name="card_template_editor_select_field">Välj fält</string>
     <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">%1$d kort kommer att skapas. Vill du fortsätta?</item>
+        <item quantity="other">%1$d kort kommer att skapas. Vill du fortsätta?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>
         <item quantity="other">Ta bort korttypen \"%2$s\" och dess %1$d kort?</item>

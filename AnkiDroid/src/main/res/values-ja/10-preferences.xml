@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
     <string name="sync_account_summ_logged_out">ログインしていません</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
@@ -164,7 +164,7 @@
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップ時間間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
@@ -182,10 +182,10 @@
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="time_limit_summ">XXX 分</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">真夜中</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">午後 11:00</string>
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">確認</string>
@@ -307,6 +307,16 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">変更履歴を開く</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

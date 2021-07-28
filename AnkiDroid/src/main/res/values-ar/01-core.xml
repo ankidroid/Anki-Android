@@ -207,6 +207,14 @@
     <string name="card_template_editor_insert_field">إدراج حقل</string>
     <string name="card_template_editor_select_field">تحديد حقل</string>
     <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="zero">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
+        <item quantity="one">سيؤدي هذا إلى إنشاء بطاقة واحدة. هل تريد المتابعة؟</item>
+        <item quantity="two">سيؤدي هذا إلى إنشاء بطاقتان. هل تريد المتابعة؟</item>
+        <item quantity="few">سيؤدي هذا إلى إنشاء %1$d بطاقات. هل تريد المتابعة؟</item>
+        <item quantity="many">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
         <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>

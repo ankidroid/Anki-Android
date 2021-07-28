@@ -187,6 +187,10 @@
     <string name="card_template_editor_insert_field">اضافه کردن فیلد</string>
     <string name="card_template_editor_select_field">انتخاب فیلد</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
         <item quantity="other">حذف نوع کارت \"%2$s\" و %1$d کارت آن؟</item>

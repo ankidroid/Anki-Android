@@ -327,8 +327,8 @@
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_heading">افزودن سربرگ</string>
+    <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="before_text">HTML Before Selection</string>

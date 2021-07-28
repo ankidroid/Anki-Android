@@ -197,6 +197,12 @@
     <string name="card_template_editor_insert_field">Вставить поле</string>
     <string name="card_template_editor_select_field">Выбрать поле</string>
     <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Будет создана %d карточка. Продолжить?</item>
+        <item quantity="few">Будут созданы %d карточки. Продолжить?</item>
+        <item quantity="many">Будут созданы %d карточек. Продолжить?</item>
+        <item quantity="other">Будут создано %d карточек. Продолжить?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Удалить тип “%2$s” и его %1$d карточку?</item>
         <item quantity="few">Удалить тип “%2$s” и его %1$d карточки?</item>
@@ -218,7 +224,7 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s имеет проблему:<br/>%2$s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">В %1$s есть проблема:<br/>%2$s</string>
     <string name="more_information">Подробнее</string>
     <string name="no_field">Найдена \'{{%1$s}}\', но нет поля с названием \'%1$s\'.</string>
     <string name="closed_tag_not_open">Найдено \'{{/%1$s}}\', но отсутствует \'{{#%1$s}}\' или \'{{{^%1$s}}\'.</string>

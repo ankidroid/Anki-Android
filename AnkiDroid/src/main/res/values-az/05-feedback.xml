@@ -40,14 +40,14 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Səhv hesabat rejimi</string>
-    <string name="feedback_disclaimer">Disclaimer: E-poçt ünvanınız,telefon nömrəniz və ya IMEI telefonunuz kimi heç bir şəxsi məlumatı toplaymırıq. Cihazınız haqqında istehsalçı,model və Android versiyası,habelə bildirilən səhvlərin təbiəti və onlara gətirib çıxaran addımlar kimi bəzi məlumatları toplayırıq.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
-    <string name="feedback_default_text">Hesabat etdiyiniz hər hansı bir səhvin xarakterinə dair rəyinizi və ya məlumatınızı daxil edin.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid bir problemlə qarşılaşdı; inkişaf edənlərə bir hesabat göndərilir...</string>
-    <string name="feedback_manual_toast_text">AnkiDroid bir problemlə qarşılaşdı; bir hesabat çıxarılır...</string>
-    <string name="feedback_copy_debug">Debug məlumatını kopyalayın</string>
-    <string name="feedback_report">Hesabat</string>
-    <string name="feedback_report_automatically">Xəta hesabatlarını avtomatik olaraq göndərin</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="error_reporting_choice">Xəta hesabatı rejimi</string>
+    <string name="feedback_disclaimer">Xəbərdarlıq: E-poçt ünvanınız,telefon nömrəniz və ya telefonunuzun IMEI-si kimi heç bir şəxsi məlumatı toplamırıq. Cihazınız haqqında istehsalçı,model və Android versiyası, habelə bildirilən səhvlərin xüsusiyyəti və onlara gətirib çıxaran addımlar kimi bəzi məlumatları toplayırıq.</string>
+    <string name="feedback_title">AnkiDroid Rəy</string>
+    <string name="feedback_default_text">Bildirdiyiniz hər hansı xətaların xarakterinə dair rəyinizi və ya məlumatınızı daxil edin.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid bir problemlə qarşılaşdı; inkişaf etdiricilərə hesabat göndərilir...</string>
+    <string name="feedback_manual_toast_text">AnkiDroid bir problemlə qarşılaşdı; bir hesabat yaradılır...</string>
+    <string name="feedback_copy_debug">Xəta düzəltmə məlumatını kopyalayın</string>
+    <string name="feedback_report">Bildir</string>
+    <string name="feedback_report_automatically">Xəta hesabatlarını avtomatik göndər</string>
+    <string name="feedback_no_suitable_app_found">Uyğun tətbiqetmələr tapılmadı</string>
 </resources>

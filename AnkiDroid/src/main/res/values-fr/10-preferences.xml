@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Lors de la synchronisation, automatiquement télécharger les médias disparus.</string>
     <string name="sync_account" maxLength="41">Compte AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Pas connecté</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronisation automatique</string>
     <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
     <string name="sync_status_badge" maxLength="41">Afficher l\'état de la synchronisation</string>
@@ -165,7 +165,7 @@
     <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
     <string name="pref_backup_max" maxLength="41">Nombre de sauvegarde max</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Temps d\'intervalle de l\'appui double (ms)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">Un deusième appui sur le bouton de réponse va être ignoré si le temps est écoulé. Cela évite les appuis doubles involontaires.</string>
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_large_answer_buttons" maxLength="41">Afficher de gros boutons de réponse</string>
@@ -209,9 +209,9 @@
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png_summary">Par default Anki colle les images dans le presse-papier au format JPG (format léger). Vous pouvez changer cette option pour coller les images au format PNG.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Appuis double sur retour pour quitter</string>
+    <string name="exit_via_double_tap_back_summ">Pour éviter de quitter involontairement l\'application</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiques avancées</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Activer les statistiques avancées</string>
@@ -293,7 +293,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Cartes sélectionnées par</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replanifier</string>
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Activer le second filtrage</string>
     <string name="deck_conf_cram_steps" maxLength="41">Étapes personnalisées (en minute)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Définir le pas personnalisé</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Activer les notifications de rappel pour les paquets de cartes dans ce groupe de paquets</string>
@@ -310,5 +310,15 @@
     <string name="type_in_answer_focus_summ">Mettre automatiquement en évidence le champ « Saisir la réponse » dans le vérificateur</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">Ajouter un geste</string>
+    <string name="binding_add_key">Ajouter une touche</string>
+    <string name="key_picker_default_press_key">Appuyer sur une touche</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Sélectionner le côté de la carte</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Réponse</string>
+    <string name="card_side_both">Question &amp; Réponse</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q : %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R : %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

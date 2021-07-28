@@ -74,7 +74,7 @@
     <string name="webview_crash_nonfatal">Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
-    <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Otázka</item>

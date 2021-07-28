@@ -182,6 +182,9 @@
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Бер булса да кәрт төрен сайлау кирәк</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\"%2$s\" кәрт төрен hәм аның %1$d кәртен бетерергәме?</item>
     </plurals>

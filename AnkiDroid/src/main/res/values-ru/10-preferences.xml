@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Автоматически загружает медиафайлы при синхронизации</string>
     <string name="sync_account" maxLength="41">Учётная запись AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не вошли в учётную запись</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
@@ -165,7 +165,7 @@
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
     <string name="pref_backup_max" maxLength="41">Число резервных копий</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
@@ -182,7 +182,7 @@
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
     <string name="new_timezone" maxLength="41">Обработка нового часового пояса</string>
-    <string name="day_offset_with_description" maxLength="41">Начало следующего дня (0 — полночь, 23 — 11 вечера)</string>
+    <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
@@ -209,9 +209,9 @@
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">По умолчанию Anki вставляет изображения в формате JPG, чтобы сэкономить место. Эта настройка заменяет JPG на PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Нажмите «Назад» дважды, чтобы выйти</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">Предотвращает случайный выход</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Расширенная статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Включить расширенную статистику</string>
@@ -228,11 +228,11 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Изменения конфигурации затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новую конфигурацию</string>
+    <string name="deck_conf_group_summ">Изменения набора параметров затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новый набор</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">Описание колоды (влияет только на текущую)</string>
-    <string name="deck_conf_group" maxLength="41">Конфигурация</string>
+    <string name="deck_conf_group" maxLength="41">Набор параметров</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d колода использует эту группу</item>
         <item quantity="few">%1$s\n%2$d колоды использует эту группу</item>
@@ -274,14 +274,14 @@
     <string name="deck_conf_replayq" maxLength="41">Повторять вопрос</string>
     <string name="deck_conf_replayq_summ">Воспроизводит вопрос при показе ответа</string>
     <string name="deck_conf_manage" maxLength="41">Управление конфигурациями</string>
-    <string name="deck_conf_manage_summ">Добавить или изменить конфигурации</string>
+    <string name="deck_conf_manage_summ">Добавить или изменить набор параметров</string>
     <string name="deck_conf_current_group" maxLength="41">Текущая конфигурация</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Переименовать</string>
     <string name="deck_conf_reset" maxLength="41">Сбросить настройки</string>
-    <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
+    <string name="deck_conf_reset_message">Сбросить текущий набор параметров?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Добавить</string>
-    <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
-    <string name="deck_conf_remove_message">Удалить текущую конфигурацию?</string>
+    <string name="deck_conf_add_summ">Создать копию текущего набора опций</string>
+    <string name="deck_conf_remove_message">Удалить текущий набор параметров?</string>
     <string name="deck_conf_set_subdecks" maxLength="41">Установить для всех подколод</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s подколода задействует конфигурацию</item>
@@ -289,7 +289,7 @@
         <item quantity="many">%s подколод задействуют конфигурацию</item>
         <item quantity="other">%s подколод задействуют конфигурацию</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">Установить текущую конфигурацию для всех подколод этой колоды?</string>
+    <string name="deck_conf_set_subdecks_message">Установить текущий набор параметров для всех подколод этой колоды?</string>
     <string name="pref_browser_editor_font" maxLength="41">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Запрос</string>
@@ -314,5 +314,15 @@
     <string name="type_in_answer_focus_summ">При повторении автоматически переходит к полю «Ввести ответ»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Показать список изменений</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">Добавить жест</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

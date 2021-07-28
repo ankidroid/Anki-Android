@@ -187,6 +187,10 @@
     <string name="card_template_editor_insert_field">କ୍ଷେତ୍ର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="card_template_editor_select_field">କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>
     <string name="card_template_editor_cant_delete">ଅତିକମରେ ଗୋଟିଏ କାର୍ଡ ପ୍ରକାର ଆବଶ୍ୟକ</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">ଏହା %1$dଟିଏ ପତ୍ର ସୃଷ୍ଟି କରିବ। ଅଗ୍ରସର ହେବେ?</item>
+        <item quantity="other">ଏହା %1$dଟି ପତ୍ର ସୃଷ୍ଟି କରିବ। ଅଗ୍ରସର ହେବେ?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟେ କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
         <item quantity="other">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
