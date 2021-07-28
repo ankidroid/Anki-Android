@@ -108,7 +108,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
@@ -1228,16 +1227,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
 
             // Check if preference upgrade or database check required, otherwise go to new feature screen
-            int upgradePrefsVersion = AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION;
             int upgradeDbVersion = AnkiDroidApp.CHECK_DB_AT_VERSION;
 
             // Specifying a checkpoint in the future is not supported, please don't do it!
-            if (current < upgradePrefsVersion) {
-                Timber.e("Checkpoint in future produced.");
-                UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_PREFERENCES_AT_VERSION", false);
-                onFinishedStartup();
-                return;
-            }
             if (current < upgradeDbVersion) {
                 Timber.e("Invalid value for CHECK_DB_AT_VERSION");
                 UIUtils.showSimpleSnackbar(this, "Invalid value for CHECK_DB_AT_VERSION", false);
@@ -1252,59 +1244,55 @@ public class DeckPicker extends NavigationDrawerActivity implements
             //    skipDbCheck = true;
             //}
 
+            boolean upgradedPreferences = InitialActivity.upgradePreferences(this, previous);
+            // Integrity check loads asynchronously and then restart deck picker when finished
             //noinspection ConstantConditions
-            if ((!skipDbCheck && previous < upgradeDbVersion) || previous < upgradePrefsVersion) {
-                if (previous < upgradePrefsVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running upgradePreferences()");
-                    upgradePreferences(previous);
-                }
-                // Integrity check loads asynchronously and then restart deck picker when finished
-                //noinspection ConstantConditions
-                if (!skipDbCheck && previous < upgradeDbVersion) {
-                    Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
-                    //#5852 - since we may have a warning about disk space, we don't want to force a check database
-                    //and show a warning before the user knows what is happening.
-                    new MaterialDialog.Builder(this)
-                            .title(R.string.integrity_check_startup_title)
-                            .content(R.string.integrity_check_startup_content)
-                            .positiveText(R.string.check_db)
-                            .negativeText(R.string.close)
-                            .onPositive((materialDialog, dialogAction) -> integrityCheck())
-                            .onNeutral((materialDialog, dialogAction) -> restartActivity())
-                            .onNegative((materialDialog, dialogAction) ->  restartActivity())
-                            .canceledOnTouchOutside(false)
-                            .cancelable(false)
-                            .build()
-                            .show();
+            if (!skipDbCheck && previous < upgradeDbVersion) {
+                Timber.i("showStartupScreensAndDialogs() running integrityCheck()");
+                //#5852 - since we may have a warning about disk space, we don't want to force a check database
+                //and show a warning before the user knows what is happening.
+                new MaterialDialog.Builder(this)
+                        .title(R.string.integrity_check_startup_title)
+                        .content(R.string.integrity_check_startup_content)
+                        .positiveText(R.string.check_db)
+                        .negativeText(R.string.close)
+                        .onPositive((materialDialog, dialogAction) -> integrityCheck())
+                        .onNeutral((materialDialog, dialogAction) -> restartActivity())
+                        .onNegative((materialDialog, dialogAction) ->  restartActivity())
+                        .canceledOnTouchOutside(false)
+                        .cancelable(false)
+                        .build()
+                        .show();
+                return;
+            }
+            if (upgradedPreferences) {
+                Timber.i("Updated preferences with no integrity check - restarting activity");
+                // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
+                // proceed
+                restartActivity();
+                return;
+            }
 
-                } else if (previous < upgradePrefsVersion) {
-                    Timber.i("Updated preferences with no integrity check - restarting activity");
-                    // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
-                    // proceed
-                    restartActivity();
+            // If no changes are required we go to the new features activity
+            // There the "lastVersion" is set, so that this code is not reached again
+            if (VersionUtils.isReleaseVersion()) {
+                Timber.i("Displaying new features");
+                Intent infoIntent = new Intent(this, Info.class);
+                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+
+                if (skip != 0) {
+                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
+                            START);
+                } else {
+                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
             } else {
-                // If no changes are required we go to the new features activity
-                // There the "lastVersion" is set, so that this code is not reached again
-                if (VersionUtils.isReleaseVersion()) {
-                    Timber.i("Displaying new features");
-                    Intent infoIntent = new Intent(this, Info.class);
-                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-
-                    if (skip != 0) {
-                        startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                                START);
-                    } else {
-                        startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
-                    }
-                } else {
-                    Timber.i("Dev Build - not showing 'new features'");
-                    // Don't show new features dialog for development builds
-                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
-                    UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
-                    showStartupScreensAndDialogs(preferences, 2);
-                }
+                Timber.i("Dev Build - not showing 'new features'");
+                // Don't show new features dialog for development builds
+                preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
+                UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
+                showStartupScreensAndDialogs(preferences, 2);
             }
         } else {
             // This is the main call when there is nothing special required
@@ -1357,30 +1345,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return previous;
     }
 
-    private void upgradePreferences(long previousVersionCode) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        // clear all prefs if super old version to prevent any errors
-        if (previousVersionCode < 20300130) {
-            Timber.i("Old version of Anki - Clearing preferences");
-            preferences.edit().clear().apply();
-        }
-        // when upgrading from before 2.5alpha35
-        if (previousVersionCode < 20500135) {
-            Timber.i("Old version of Anki - Fixing Zoom");
-            // Card zooming behaviour was changed the preferences renamed
-            int oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100);
-            int oldImageZoom = preferences.getInt("relativeImageSize", 100);
-            preferences.edit().putInt("cardZoom", oldCardZoom).apply();
-            preferences.edit().putInt("imageZoom", oldImageZoom).apply();
-            if (!preferences.getBoolean("useBackup", true)) {
-                preferences.edit().putInt("backupMax", 0).apply();
-            }
-            preferences.edit().remove("useBackup").apply();
-            preferences.edit().remove("intentAdditionInstantAdd").apply();
-        }
-
-        FullScreenMode.upgradeFromLegacyPreference(preferences);
-    }
 
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);

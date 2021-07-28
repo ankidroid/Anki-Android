@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.BackendFactory;
@@ -114,6 +115,10 @@ public class InitialActivity {
         BackendFactory.createInstance().getBackend().downgradeBackend(collectionPath);
     }
 
+    /** @return Whether any preferences were upgraded */
+    public static boolean upgradePreferences(Context context, long previousVersionCode) {
+        return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
+    }
 
     // I disapprove, but it's best to keep consistency with the rest of the app
     private static class PerformDowngradeTask extends AsyncTask<Void, Void, Void> {
