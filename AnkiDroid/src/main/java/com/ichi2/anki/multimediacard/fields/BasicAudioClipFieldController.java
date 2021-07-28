@@ -62,7 +62,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         mBtnLibrary.setOnClickListener(v -> {
             Intent i = new Intent();
             i.setType("audio/*");
-            String[] extraMimeTypes = { "application/ogg" }; // #9226 allows ogg on Android 8
+            String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
             i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
             i.setAction(Intent.ACTION_GET_CONTENT);
             // Only get openable files, to avoid virtual files issues with Android 7+
