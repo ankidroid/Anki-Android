@@ -72,8 +72,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Återställ standardvärden?</string>
     <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
+    <string name="card_template_editor_deck_override_on">Kortleksöverskrivning (på)</string>
+    <string name="card_template_editor_deck_override_off">Kortleksöverskrivning (av)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>

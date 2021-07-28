@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Du är offline</string>
-    <string name="sync_even_if_offline">Prova ändå</string>
+    <string name="sync_even_if_offline">Försök ändå</string>
     <string name="sync_error">Synkroniseringsfel</string>
     <string name="vague_error">Fel</string>
     <string name="retry">Försök igen</string>
@@ -100,7 +100,7 @@
     <string name="sync_media_downloaded_count">%d mediafiler nedladdade</string>
     <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>
     <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med antalet på servern. Nästa mediasynkronisering kommer bli en fullständig synkronisering för att rätta till det som är fel.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">Mediasynkronisering misslyckades då den aktuella databasen är korrumperad. En mediakontroll rekommenderas.</string>
     <string name="sync_media_error">Fel vid synkronisering av medieinformation.</string>
     <string name="sync_media_error_check">Fel när media skulle synkas. En mediakontroll rekommenderas.</string>
     <!-- Please run ‘Check database’ before syncing -->
@@ -120,6 +120,6 @@
     <string name="sync_error_504_gateway_timeout">504 tidsgränsfel för gateway erhållet.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Synkronisera (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_no_account">Synkronisera (logga in)</string>
     <string name="sync_error_unknown_host_readable">Kunde inte ansluta till AnkiWeb. Fungerar ditt internet?\n\n%s</string>
 </resources>

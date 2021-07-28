@@ -47,40 +47,40 @@
     <string name="help">დახმარება</string>
     <string name="send_feedback">უკუკავშირი</string>
     <string name="studyoptions_due_today">დღეისთვის:</string>
-    <string name="studyoptions_new_total">ახალი ბარათი ჯამში:</string>
-    <string name="studyoptions_total_cards">ბარათი ჯამში:</string>
-    <string name="studyoptions_eta">განსაზღვრული დრო (წუთი):</string>
+    <string name="studyoptions_new_total">ახალი ბარათები ჯამში:</string>
+    <string name="studyoptions_total_cards">ბარათები ჯამში:</string>
+    <string name="studyoptions_eta">მიახლოებითი დრო (წუთი):</string>
     <string name="studyoptions_start">სწავლა</string>
     <!-- DeckPicker.java -->
     <string name="expand">გაშლა</string>
-    <string name="collapse">დაკეცვა</string>
+    <string name="collapse">ჩაკეცვა</string>
     <string name="study_more">მეტის სწავლა</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">დარჩენილია %1$d ბარათი (%2$s)</item>
+        <item quantity="other">დარჩენილია %1$d ბარათი (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d წუთი დარჩა</item>
-        <item quantity="other">%d წუთები დარჩა</item>
+        <item quantity="one">დარჩა %d წუთი</item>
+        <item quantity="other">დარჩა %d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">დარჩა %d საათი</item>
-        <item quantity="other">დარჩა %d საათი</item>
+        <item quantity="one">დარჩა %d საათი %d</item>
+        <item quantity="other">დარჩა %d საათი %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">დარჩა %d დღე</item>
-        <item quantity="other">დარჩა %d დღე</item>
+        <item quantity="one">დარჩა %d დღე %d</item>
+        <item quantity="other">დარჩა %d დღე %d</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
-    <string name="no_cards_placeholder_description">დაიწყეთ ბარათების დამატება\n+ნიშნის გამოყენებით</string>
+    <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
         <item quantity="other">დღეს ნასწავლია %1$d ბარათი %2$s-ში</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">პასუხის დაწერა</string>
-    <string name="show_answer">აჩვენე პასუხი</string>
+    <string name="type_answer_hint">პასუხის ჩაწერა</string>
+    <string name="show_answer">პასუხის ჩვენება</string>
     <string name="hide_answer">პასუხის დამალვა</string>
     <string name="ease_button_again">თავიდან</string>
     <string name="ease_button_hard">რთული</string>
@@ -94,8 +94,8 @@
     <string name="move_all_to_deck">ყველას გადატანა დასტაში</string>
     <string name="unbury">გამოჩენა</string>
     <string name="rename_deck">დასტის სახელის შეცვლა</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">shortcut-ის შექმნა</string>
+    <string name="browse_cards">ბარათების ძიება</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">დამატება</string>
     <string name="menu_add_note">დაამატე შენიშვნა</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">აქაუნთის სინქრონიზაცია</string>
@@ -106,9 +106,9 @@
     <string name="menu_suspend_note">ჩანიშვნის შეჩერება</string>
     <string name="menu_bury">დამალვა</string>
     <string name="menu_suspend">შეჩერება</string>
-    <string name="menu_delete_note">წაშალე შენიშვნა</string>
+    <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
-    <string name="menu_flag_card">დროშა</string>
+    <string name="menu_flag_card">დროშის მიმაგრება</string>
     <string name="menu_flag_card_zero">დროშის გარეშე</string>
     <string name="menu_flag_card_one">წითელი დროშა</string>
     <string name="menu_flag_card_two">სტაფილოსფერი დროშა</string>
@@ -119,13 +119,13 @@
     <string name="menu_select">აირჩიე ტექსტი</string>
     <string name="menu_lookup">ტექსტის მონახულება</string>
     <string name="menu_search">მონახულება %1$s-ში</string>
-    <string name="menu_mark_note">მონიშნე შენიშვნა</string>
-    <string name="menu_unmark_note">გააუქმე შენიშვნა</string>
+    <string name="menu_mark_note">ჩანიშვნა</string>
+    <string name="menu_unmark_note">ჩანიშვნის გაუქმება</string>
     <string name="menu_toggle_mic_tool_bar">გამოთქმის შემოწმება</string>
-    <string name="new_deck">შექმენი დასტა</string>
+    <string name="new_deck">დასტის შექმნა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
     <string name="night_mode">ღამის რეჟიმი</string>
-    <string name="directory_inaccessible">AnkiDroid ბიბლიოთეკა მიუწვდომელია</string>
+    <string name="directory_inaccessible">AnkiDroid-ის ბიბლიოთეკა მიუწვდომელია</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -138,10 +138,10 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d წამი</string>
-    <string name="time_quantity_minutes">%d წუთი</string>
+    <string name="time_quantity_seconds">%d წმ</string>
+    <string name="time_quantity_minutes">%d წთ</string>
     <string name="time_quantity_hours_minutes">%1$d სთ %2$d წთ</string>
-    <string name="time_quantity_hours">%d საათი</string>
+    <string name="time_quantity_hours">%d სთ</string>
     <string name="time_quantity_days">%d დღე</string>
     <string name="time_quantity_days_hours">%1$d დღე %2$d სთ</string>
     <string name="time_quantity_months">%.1f თვე</string>
@@ -166,7 +166,7 @@
     <string name="studyoptions_congrats_more_new">დღეის ლიმიტი მიღწეულია. კიდევ არის ახალი ბარათები; ლიმიტი შეგიძლიათ პარამეტრებიდან გაზარდოთ, მაგრამ ეს გაზრდის თქვენს მოკლევადიანი გადახედვის დატვირთვას.</string>
     <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ქასთომ სწავლის\" ღილაკს</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
+    <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync">სინქრონიზაცია</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
@@ -184,28 +184,28 @@
     <string name="card_template_editor_styling">სტილი</string>
     <string name="card_template_editor_menu_card_browser_appearance">ბარათის საძიებელის გარეგნობა</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">ველის ჩასმა</string>
+    <string name="card_template_editor_select_field">ველის არჩევა</string>
     <string name="card_template_editor_cant_delete">სულ მცირე ერთი ბარათი მაინც არის საჭირო</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">შეიქმნება %1$d ბარათი. გავაგრძელო?</item>
+        <item quantity="other">შეიქმნება %1$d ბარათები. გავაგრძელო?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
         <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათები?</item>
     </plurals>
     <string name="invalid_template">ბარათი ვერ გენერირდება</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">კარტის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე ჩანიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
+    <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
+    <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">საძიებლის გარეგნობა</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">ბარათის ინფო</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_label">წაკითხვა და ჩაწერა AnkiDroid-ის მონაცემთა ბაზაში</string>
     <string name="read_write_permission_description">წვდომა არსებულ ჩანიშვნებთან, ბარათებთან, ჩანიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
@@ -215,15 +215,15 @@
     <string name="no_field">\"{{%1$s}}\" ნაპოვნია, მაგრამ ველი \"%1$s\" არ არის</string>
     <string name="closed_tag_not_open">\"{{/%1$s}}\" ნაპოვნია, მაგრამ აკლია \"{{#%1$s}}\" ან \"{{^%1$s}}\".</string>
     <string name="missing_closing_bracket">გამოტოვებულია \"}}\" \"%s\"-ში.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="open_tag_not_closed">დაკარგულია \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">ნაპოვნია \'{{/%1$s}}\', მარა მოსალოდნელი იყო \'{{/%2$s}}\'</string>
+    <string name="filter_error">შეცდომა ფილტრში %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">კოლექციები ვერ შეერთდება.\nრომელი კოლექციის დატოვება გსურთ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">Ankiweb</string>
     <string name="sync_conflict_remote_confirm_new">ჩავანაცვლოთ თქვენი კოლექცია Ankidroid-ზე თქვენი AnkiWeb-ის კოლექციით? </string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_local_confirm_new">ჩანაცვლდეს თქვენი კოლექცია AnkiWeb-ზე თქვენი AnkiDroid-ის კოლექციით? </string>
     <string name="sync_conflict_title_new">აირჩიეთ კოლექცია რომ დარჩეს</string>
     <string name="sync_conflict_replace_title">კოლექციის ჩანაცვლება</string>
     <plurals name="deckpicker_title_zero_due">

@@ -192,7 +192,7 @@
         <item quantity="other">Cela va créer %1$d cartes. Continuer ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Supprimer le type de carte « %2$s » et la carte qu\'il contient ?</item>
+        <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
     <string name="invalid_template">Une carte n\'a pas pu être générée</string>
