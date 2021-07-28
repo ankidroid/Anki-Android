@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">Deslizar à esquerda</string>
     <string name="gestures_swipe_right" maxLength="41">Deslizar à direita</string>
     <string name="gestures_double_tap" maxLength="41">Toque duplo</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Toque longo</string>
     <string name="gestures_tap_top" maxLength="41">Toque acima</string>
     <string name="gestures_tap_left" maxLength="41">Toque à esquerda</string>
     <string name="gestures_tap_right" maxLength="41">Toque à direita</string>
@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Busca mídia faltando automaticamente durante a sincronização.</string>
     <string name="sync_account" maxLength="41">Conta AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Não está logado</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Exibir status da sincronização</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering" maxLength="41">Alinhar no centro</string>
     <string name="vertical_centering_summ">Centralizar o conteúdo dos cards verticalmente</string>
     <string name="pref_backup_max" maxLength="41">Número máximo de backups</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de toque duplo (milissegundos)</string>
+    <string name="pref_double_tap_time_interval_summary">Um segundo toque nos botões de resposta será ignorado se esse intervalo não tiver decorrido. Isso evita toques duplos acidentais</string>
     <string name="show_estimates" maxLength="41">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
@@ -208,8 +208,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do card para o diretório do AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">Colar imagens como PNG</string>
+    <string name="paste_as_png_summary">Por padrão, o Anki cola imagens na área de transferência como arquivos JPG para economizar espaço em disco. Você pode usar esta opção para colar como imagens PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
@@ -311,4 +311,14 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Abrir Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

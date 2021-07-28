@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Aŭtomate elŝuti mankajn aŭdvidaĵojn dum sinkronigado</string>
     <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
@@ -310,5 +310,15 @@
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">Aldoni geston</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

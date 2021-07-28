@@ -187,6 +187,10 @@
     <string name="card_template_editor_insert_field">Inserisci campo</string>
     <string name="card_template_editor_select_field">Seleziona campo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminare il tipo di carta «%2$s», e la sua carta %1$d?</item>
         <item quantity="other">Eliminare il tipo di carta «%2$s», e le sue carte %1$d?</item>

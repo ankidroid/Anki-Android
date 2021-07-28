@@ -187,6 +187,10 @@
     <string name="card_template_editor_insert_field">Lisää kenttä</string>
     <string name="card_template_editor_select_field">Valitse kenttä</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>

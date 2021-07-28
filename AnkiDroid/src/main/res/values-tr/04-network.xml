@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Yine de deneyin</string>
+    <string name="sync_even_if_offline">Tekrar dene</string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error">Hata</string>
     <string name="retry">Yeniden Dene</string>

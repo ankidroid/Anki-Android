@@ -197,6 +197,12 @@
     <string name="card_template_editor_insert_field">wstaw pole</string>
     <string name="card_template_editor_select_field">wybierz pole</string>
     <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Spowoduje to utworzenie %1$d karty. Kontynuować?</item>
+        <item quantity="few">Spowoduje to utworzenie %1$d kart. Kontynuować?</item>
+        <item quantity="many">Spowoduje to utworzenie %1$d kart. Kontynuować?</item>
+        <item quantity="other">Spowoduje to utworzenie %1$d kart. Kontynuować?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
         <item quantity="few">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
@@ -236,8 +242,8 @@
     <string name="sync_conflict_replace_title">Zastąp kolekcję</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d karta (0 do przejrzenia)</item>
-        <item quantity="few">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="few">%1$d karty (0 do przejrzenia)</item>
+        <item quantity="many">%1$d kart (0 do przejrzenia)</item>
+        <item quantity="other">%1$d kart (0 do przejrzenia)</item>
     </plurals>
 </resources>

@@ -197,6 +197,12 @@
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="few">This will create %1$d cards. Proceed?</item>
+        <item quantity="many">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusią %1$d kortelę?</item>
         <item quantity="few">Ar tikrai ištrinti “%2$s” kortelių tipus ir su jais susijusias %1$d korteles?</item>

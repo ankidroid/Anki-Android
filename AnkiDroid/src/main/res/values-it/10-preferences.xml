@@ -130,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Recupera automaticamente i contenuti multimediali durante la sincronizzazione.</string>
     <string name="sync_account" maxLength="41">Account AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non connesso</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
@@ -311,4 +311,14 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Apri il registro dei cambiamenti</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

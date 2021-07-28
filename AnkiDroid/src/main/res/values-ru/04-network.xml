@@ -62,7 +62,7 @@
     <string name="reset_password">Сбросить пароль</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Настройки</string>
-    <string name="deckpreferences_title">Опции для XXX</string>
+    <string name="deckpreferences_title">Параметры для XXX</string>
     <string name="sync_prepare_syncing">Подготавливается синхронизация&#8230;</string>
     <string name="sync_preparing_full_sync_message">Подготавливается полная синхронизация&#8230;</string>
     <string name="sync_uploading_message">Выгружается&#8230;</string>
@@ -119,7 +119,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
     <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
-    <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
+    <string name="sync_menu_title_full_sync">Синхро (полностью)</string>
+    <string name="sync_menu_title_no_account">Синхро (войти)</string>
     <string name="sync_error_unknown_host_readable">Не удалось подключиться к AnkiWeb. Ваш интернет работает?\n\n%s</string>
 </resources>

@@ -49,12 +49,12 @@
     <string name="statistics_cram">Šprtané</string>
     <string name="stats_cards">Karty</string>
     <string name="stats_cards_intervals">Karty s daným intervalem</string>
-    <string name="stats_cumulative_cards">Karet kumulativně</string>
-    <string name="stats_cumulative_answers">Odpovědí kumulativně</string>
-    <string name="stats_cumulative_time_minutes">Minut kumulativně</string>
-    <string name="stats_cumulative_time_hours">Hodin kumulativně</string>
+    <string name="stats_cumulative_cards">Karty kumulativně</string>
+    <string name="stats_cumulative_answers">Odpovědi kumulativně</string>
+    <string name="stats_cumulative_time_minutes">Minuty kumulativně</string>
+    <string name="stats_cumulative_time_hours">Hodiny kumulativně</string>
     <string name="stats_cumulative">Kumulativně</string>
-    <string name="stats_cumulative_percentage">Procent kumulativně</string>
+    <string name="stats_cumulative_percentage">Procenta kumulativně</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">Správně % kumulativně</string>
     <string name="stats_answers">Odpovědi</string>
     <string name="stats_minutes">Minuty</string>
