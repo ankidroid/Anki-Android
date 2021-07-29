@@ -40,6 +40,7 @@ object DisplayUtils {
 
     /** Allow the window to be resized when an input method is shown,
      * so that its contents are not covered by the input method */
+    @Suppress("DEPRECATION") // 7110: SOFT_INPUT_ADJUST_RESIZE
     @JvmStatic
     fun resizeWhenSoftInputShown(window: Window) {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
