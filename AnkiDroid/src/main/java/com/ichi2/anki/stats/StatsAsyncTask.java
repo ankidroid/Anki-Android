@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.stats;
 
-import android.os.AsyncTask;
 import android.view.View;
 
 import timber.log.Timber;
@@ -24,7 +23,7 @@ import timber.log.Timber;
 /**
  * Async task which handles cancellation (#6192)
  */
-public abstract class StatsAsyncTask<TResult> extends AsyncTask<View, Void, TResult> {
+public abstract class StatsAsyncTask<TResult> extends android.os.AsyncTask<View, Void, TResult> {
 
     @Override
     protected final TResult doInBackground(View... views) {

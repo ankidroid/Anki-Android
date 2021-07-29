@@ -17,7 +17,6 @@ package com.ichi2.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Pair;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -43,7 +42,7 @@ import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
-    private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
+    private static android.os.AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
     /** This class should not be instantiated. */
@@ -61,7 +60,7 @@ public final class WidgetStatus {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
         boolean notificationEnabled = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")) < 1000000;
-        boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
+        boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == android.os.AsyncTask.Status.FINISHED));
         if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();

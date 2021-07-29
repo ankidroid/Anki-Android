@@ -19,17 +19,14 @@
 
 package com.ichi2.anki.runtimetools;
 
-import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
-
 public class TaskOperations {
 
     /**
      * Gently killing AsyncTask
      */
-    public static void stopTaskGracefully(AsyncTask<?, ?, ?> t) {
+    public static void stopTaskGracefully(android.os.AsyncTask<?, ?, ?> t) {
         if (t != null) {
-            if (t.getStatus() == Status.RUNNING) {
+            if (t.getStatus() == android.os.AsyncTask.Status.RUNNING) {
                 t.cancel(true);
             }
         }

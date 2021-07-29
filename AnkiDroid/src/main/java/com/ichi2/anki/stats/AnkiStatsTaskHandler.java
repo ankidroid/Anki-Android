@@ -17,7 +17,6 @@ package com.ichi2.anki.stats;
 
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.View;
 import android.webkit.WebView;
@@ -217,7 +216,7 @@ public class AnkiStatsTaskHandler {
     }
 
 
-    private static class DeckPreviewStatistics extends AsyncTask<Pair<Collection, TextView>, Void, String> {
+    private static class DeckPreviewStatistics extends android.os.AsyncTask<Pair<Collection, TextView>, Void, String> {
         private WeakReference<TextView> mTextView;
 
         private boolean mIsRunning = true;

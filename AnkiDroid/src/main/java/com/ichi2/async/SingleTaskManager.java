@@ -16,8 +16,6 @@
 
 package com.ichi2.async;
 
-import android.os.AsyncTask;
-
 import com.ichi2.utils.ThreadUtil;
 
 import java.util.ArrayList;
@@ -118,7 +116,7 @@ public class SingleTaskManager extends TaskManager {
     @Override
     public boolean waitToFinishConcrete(Integer timeoutSeconds) {
         try {
-            if ((mLatestInstance != null) && (mLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((mLatestInstance != null) && (mLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", mLatestInstance.getTask().getClass());
                 if (timeoutSeconds != null) {
                     mLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);

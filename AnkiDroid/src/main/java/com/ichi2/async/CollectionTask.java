@@ -20,7 +20,6 @@ package com.ichi2.async;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.util.Pair;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -117,7 +116,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      * @return whether cancelling did occur.*/
     public boolean safeCancel() {
         try {
-            if (getStatus() != AsyncTask.Status.FINISHED) {
+            if (getStatus() != android.os.AsyncTask.Status.FINISHED) {
                 return cancel(true);
             }
         } catch (Exception e) {
@@ -166,7 +165,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     protected Result actualDoInBackground() {
         super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
-        if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (mPreviousTask != null && mPreviousTask.getStatus() != android.os.AsyncTask.Status.FINISHED) {
             Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mTask, mTask.getClass());
             try {
                 mPreviousTask.get();
