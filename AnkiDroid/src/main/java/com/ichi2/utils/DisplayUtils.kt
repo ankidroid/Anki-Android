@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.content.Context
 import android.graphics.Point
+import android.view.Window
 import android.view.WindowManager
 
 object DisplayUtils {
@@ -35,5 +36,12 @@ object DisplayUtils {
     fun getDisplayDimensions(context: Context): Point {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         return getDisplayDimensions(wm)
+    }
+
+    /** Allow the window to be resized when an input method is shown,
+     * so that its contents are not covered by the input method */
+    @JvmStatic
+    fun resizeWhenSoftInputShown(window: Window) {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 }

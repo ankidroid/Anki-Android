@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -36,6 +35,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.ui.RecyclerSingleTouchAdapter;
+import com.ichi2.utils.DisplayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,7 +96,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
                 }
                 this.mDialogHandler = (LocaleSelectionDialogHandler) context;
             }
-            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            DisplayUtils.resizeWhenSoftInputShown(activity.getWindow());
         }
     }
 
@@ -124,7 +124,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
         Window window = mDialog.getWindow();
         if (window != null) {
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            DisplayUtils.resizeWhenSoftInputShown(window);
         }
         return mDialog;
     }
