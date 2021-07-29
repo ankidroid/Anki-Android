@@ -109,7 +109,7 @@ public class FixedPreferencesTitleLengthTest {
                 .run()
                 .expectErrorCount(3)
                 .expect("res/values/10-preferences.xml:12: Error: Preference title 'more_characters_than_limit' must be less than 41 characters (currently 48) [FixedPreferencesTitleLength]\n" +
-                        "    <string name=\"more_characters_than_limit\"  maxLength=\"41\">This String contains character more than limit £</string>\n" +
+                        "    <string name=\"more_characters_than_limit\"  maxLength=\"41\">This String contains character more than limit \u00A3</string>\n" +
                         "    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                         "res/values/10-preferences.xml:3: Error: Preference title 'app_name' is missing \"maxLength=41\" attribute [PreferencesTitleMaxLengthAttr]\n" +
                         "    <string name=\"app_name\">app_name</string>\n" +
