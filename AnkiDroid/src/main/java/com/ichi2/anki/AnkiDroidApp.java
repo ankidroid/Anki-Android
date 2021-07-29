@@ -321,15 +321,7 @@ public class AnkiDroidApp extends Application {
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
-        try {
-            CookieManager.setAcceptFileSchemeCookies(true);
-        } catch (Throwable e) {
-            // 5794: Errors occur if the WebView fails to load
-            // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
-            // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
-            this.mWebViewError = e;
-            sendExceptionReport(e, "setAcceptFileSchemeCookies");
-            Timber.e(e, "setAcceptFileSchemeCookies");
+        if (!acceptFileSchemeCookies()) {
             return;
         }
 
@@ -358,6 +350,22 @@ public class AnkiDroidApp extends Application {
         NotificationService ns = new NotificationService();
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
         lbm.registerReceiver(ns, new IntentFilter(NotificationService.INTENT_ACTION));
+    }
+
+    @SuppressWarnings("deprecation") // 7109: setAcceptFileSchemeCookies
+    protected boolean acceptFileSchemeCookies() {
+        try {
+            CookieManager.setAcceptFileSchemeCookies(true);
+            return true;
+        } catch (Throwable e) {
+            // 5794: Errors occur if the WebView fails to load
+            // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
+            // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
+            this.mWebViewError = e;
+            sendExceptionReport(e, "setAcceptFileSchemeCookies");
+            Timber.e(e, "setAcceptFileSchemeCookies");
+            return false;
+        }
     }
 
 
