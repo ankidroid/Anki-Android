@@ -29,8 +29,6 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 
 import android.os.Build;
-import android.view.Display;
-import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.VideoView;
 
@@ -38,6 +36,7 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.DisplayUtils;
 import com.ichi2.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -427,12 +426,9 @@ public class Sound {
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
         // get the display
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
         // adjust the size of the video so it fits on the screen
         float videoProportion = (float) videoWidth / (float) videoHeight;
-        Point point = new Point();
-        display.getSize(point);
+        Point point = DisplayUtils.getDisplayDimensions(context);
         int screenWidth = point.x;
         int screenHeight = point.y;
         float screenProportion = (float) screenWidth / (float) screenHeight;
