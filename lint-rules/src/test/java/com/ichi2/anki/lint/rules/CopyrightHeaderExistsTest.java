@@ -73,6 +73,7 @@ public class CopyrightHeaderExistsTest {
     public void fileWithNoCopyrightHeaderFails() {
         lint()
                 .allowMissingSdk()
+                .allowCompilationErrors() // import failures
                 .files(create(mNoCopyrightHeader))
                 .issues(CopyrightHeaderExists.ISSUE)
                 .run()
