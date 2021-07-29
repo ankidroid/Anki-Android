@@ -92,6 +92,7 @@ public class InitialActivity {
     /**
      * Downgrades the database at the currently selected collection path from V16 to V11 in a background task
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void downgradeBackend(DeckPicker deckPicker) {
         // Note: This method does not require a backend pointer or an open collection
         Timber.i("Downgrading backend");
@@ -120,6 +121,7 @@ public class InitialActivity {
     }
 
     // I disapprove, but it's best to keep consistency with the rest of the app
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private static class PerformDowngradeTask extends android.os.AsyncTask<Void, Void, Void> {
 
         private final WeakReference<DeckPicker> mDeckPicker;

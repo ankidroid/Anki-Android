@@ -24,6 +24,7 @@ public class TaskOperations {
     /**
      * Gently killing AsyncTask
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void stopTaskGracefully(android.os.AsyncTask<?, ?, ?> t) {
         if (t != null) {
             if (t.getStatus() == android.os.AsyncTask.Status.RUNNING) {

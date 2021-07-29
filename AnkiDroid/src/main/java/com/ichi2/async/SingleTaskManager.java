@@ -90,6 +90,7 @@ public class SingleTaskManager extends TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public <Progress, Result> Cancellable
     launchCollectionTaskConcrete(@NonNull TaskDelegate<Progress, Result> task,
                          @Nullable TaskListener<? super Progress, ? super Result> listener) {
@@ -114,6 +115,7 @@ public class SingleTaskManager extends TaskManager {
      * @return whether or not the previous task was successful or not
      */
     @Override
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public boolean waitToFinishConcrete(Integer timeoutSeconds) {
         try {
             if ((mLatestInstance != null) && (mLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {

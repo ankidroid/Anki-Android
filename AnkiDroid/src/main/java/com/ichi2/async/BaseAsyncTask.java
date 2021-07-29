@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
 
+@SuppressWarnings("deprecation") // #7108: AsyncTask
 public class BaseAsyncTask<Params, Progress, Result> extends android.os.AsyncTask<Params, Progress, Result> implements ProgressSenderAndCancelListener<Progress> {
 
     /** Set this to {@code true} to enable detailed debugging for this class. */
