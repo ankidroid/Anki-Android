@@ -203,6 +203,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         return true;
     }
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private class BackgroundPost extends android.os.AsyncTask<Void, Void, String> {
 
         @Override
@@ -221,6 +222,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     }
 
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     protected void translate() {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));

@@ -161,6 +161,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     /**
      * @param v Start of the story.
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     protected void onLoadPronunciation(View v) {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));
@@ -190,6 +191,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
      * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
      *         translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private class BackgroundPost extends android.os.AsyncTask<Void, Void, String> {
 
         private String mAddress;
@@ -243,6 +245,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     /**
      * @author zaur This is to load finally the MP3 file with pronunciation.
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private class DownloadFileTask extends android.os.AsyncTask<Void, Void, String> {
 
         private String mAddress;
@@ -267,6 +270,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     protected void processPostFinished(BackgroundPost post, String result) {
 
         if (mStopped) {
@@ -433,6 +437,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         finish();
     }
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private void stopAllTasks() {
         android.os.AsyncTask<?, ?, ?> t = mPostTranslation;
         TaskOperations.stopTaskGracefully(t);

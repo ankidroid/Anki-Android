@@ -23,6 +23,7 @@ import timber.log.Timber;
 /**
  * Async task which handles cancellation (#6192)
  */
+@SuppressWarnings("deprecation") // #7108: AsyncTask
 public abstract class StatsAsyncTask<TResult> extends android.os.AsyncTask<View, Void, TResult> {
 
     @Override

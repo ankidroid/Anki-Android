@@ -42,6 +42,7 @@ import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     private static android.os.AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -56,6 +57,7 @@ public final class WidgetStatus {
      *             and replacing it with an alarm we set so device doesn't wake to update the widget, see:
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);

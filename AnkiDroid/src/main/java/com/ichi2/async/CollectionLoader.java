@@ -25,6 +25,8 @@ import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
 
+
+@SuppressWarnings("deprecation") // #7108: AsyncTask
 public final class CollectionLoader extends android.os.AsyncTask<Void, Void, Collection> {
     private final LifecycleOwner mLifecycleOwner;
     private final Callback mCallback;

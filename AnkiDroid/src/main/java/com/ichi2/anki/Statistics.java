@@ -268,7 +268,9 @@ public class Statistics extends NavigationDrawerActivity implements
 
         //track current settings for each individual fragment
         protected long mDeckId;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
         protected android.os.AsyncTask mStatisticsTask;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
         protected android.os.AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;

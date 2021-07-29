@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     protected <Progress, Result> Result execute(TaskDelegate<Progress, Result> task) {
         CollectionTask<Progress, Result> collectionTask = (CollectionTask<Progress, Result>)TaskManager.launchCollectionTask(task);
         try {

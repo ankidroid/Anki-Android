@@ -51,6 +51,7 @@ public class AnkiStatsTaskHandlerTest extends RobolectricTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void testCreateReviewSummaryStatistics() throws ExecutionException, InterruptedException {
         Mockito.verify(col, atMost(0)).getDb();
         android.os.AsyncTask<Pair<Collection, TextView>, Void, String> result = AnkiStatsTaskHandler

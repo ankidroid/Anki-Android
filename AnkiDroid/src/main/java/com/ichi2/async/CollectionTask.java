@@ -114,6 +114,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
     /** Cancel the current task.
      * @return whether cancelling did occur.*/
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public boolean safeCancel() {
         try {
             if (getStatus() != android.os.AsyncTask.Status.FINISHED) {
@@ -152,6 +153,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         mPreviousTask = previousTask;
     }
 
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     @Override
     protected Result doInBackground(Void... params) {
         try {
@@ -162,6 +164,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
     // This method and those that are called here are executed in a new thread
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     protected Result actualDoInBackground() {
         super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
