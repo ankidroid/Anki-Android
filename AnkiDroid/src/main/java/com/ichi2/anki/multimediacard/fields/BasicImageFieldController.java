@@ -320,7 +320,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return mActivity.getText(id).toString();
     }
 
-
+    @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     private DisplayMetrics getDisplayMetrics() {
         if (mMetrics == null) {
             mMetrics = new DisplayMetrics();

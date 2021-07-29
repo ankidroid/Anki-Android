@@ -21,8 +21,10 @@ import android.graphics.Point
 import android.view.WindowManager
 
 object DisplayUtils {
+
+    @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
     @JvmStatic
-    fun getDisplaySize(wm: WindowManager): Point {
+    fun getDisplayDimensions(wm: WindowManager): Point {
         val display = wm.defaultDisplay
         val point = Point()
         display.getSize(point)
@@ -32,6 +34,6 @@ object DisplayUtils {
     @JvmStatic
     fun getDisplayDimensions(context: Context): Point {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        return getDisplaySize(wm)
+        return getDisplayDimensions(wm)
     }
 }
