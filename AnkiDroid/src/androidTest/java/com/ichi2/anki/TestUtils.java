@@ -77,6 +77,7 @@ public class TestUtils {
     /**
      * Returns true if device is a tablet
      */
+    @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     public static boolean isScreenSw600dp() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivityInstance().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
