@@ -131,7 +131,7 @@ public class ReadText {
         showDialogAfterDelay(builder, 500);
     }
 
-
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected static void showDialogAfterDelay(MaterialDialog.Builder builder, int delayMillis) {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
