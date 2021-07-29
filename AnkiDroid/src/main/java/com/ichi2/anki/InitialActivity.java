@@ -17,7 +17,6 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
@@ -121,7 +120,7 @@ public class InitialActivity {
     }
 
     // I disapprove, but it's best to keep consistency with the rest of the app
-    private static class PerformDowngradeTask extends AsyncTask<Void, Void, Void> {
+    private static class PerformDowngradeTask extends android.os.AsyncTask<Void, Void, Void> {
 
         private final WeakReference<DeckPicker> mDeckPicker;
         private Exception mException;

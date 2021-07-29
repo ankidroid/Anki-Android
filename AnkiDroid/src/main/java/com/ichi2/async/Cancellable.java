@@ -17,8 +17,6 @@
 
 package com.ichi2.async;
 
-import android.os.AsyncTask;
-
 public interface Cancellable {
     /**
      * <p>Attempts to cancel execution of this task.  This attempt will
@@ -30,13 +28,13 @@ public interface Cancellable {
      * whether the thread executing this task should be interrupted in
      * an attempt to stop the task.</p>
      *
-     * <p>Calling this method will result in {@link AsyncTask#onCancelled(Object)} being
-     * invoked on the UI thread after {@link AsyncTask#doInBackground(Object[])} returns.
+     * <p>Calling this method will result in {@link android.os.AsyncTask#onCancelled(Object)} being
+     * invoked on the UI thread after {@link android.os.AsyncTask#doInBackground(Object[])} returns.
      * Calling this method guarantees that onPostExecute(Object) is never
      * subsequently invoked, even if <tt>cancel</tt> returns false, but
-     * {@link AsyncTask#onPostExecute} has not yet run.  To finish the
-     * task as early as possible, check {@link AsyncTask#isCancelled()} periodically from
-     * {@link AsyncTask#doInBackground(Object[])}.</p>
+     * {@link android.os.AsyncTask#onPostExecute} has not yet run.  To finish the
+     * task as early as possible, check {@link android.os.AsyncTask#isCancelled()} periodically from
+     * {@link android.os.AsyncTask#doInBackground(Object[])}.</p>
      *
      * <p>This only requests cancellation. It never waits for a running
      * background task to terminate, even if <tt>mayInterruptIfRunning</tt> is
@@ -50,8 +48,8 @@ public interface Cancellable {
      *         typically because it has already completed normally;
      *         <tt>true</tt> otherwise
      *
-     * @see AsyncTask#isCancelled()
-     * @see AsyncTask#onCancelled(Object)
+     * @see android.os.AsyncTask#isCancelled()
+     * @see android.os.AsyncTask#onCancelled(Object)
      */
     boolean cancel(boolean mayInterruptIfRunning);
 

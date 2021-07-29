@@ -23,7 +23,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.Pair;
@@ -101,7 +100,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
 
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sInstance != null) && (sInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 sInstance.get();
             }
         } catch (Exception e) {

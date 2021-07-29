@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
@@ -269,8 +268,8 @@ public class Statistics extends NavigationDrawerActivity implements
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected AsyncTask mStatisticsTask;
-        protected AsyncTask mStatisticsOverviewTask;
+        protected android.os.AsyncTask mStatisticsTask;
+        protected android.os.AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;
