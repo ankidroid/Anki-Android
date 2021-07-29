@@ -398,6 +398,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // LISTENERS
     // ----------------------------------------------------------------------------
 
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     private final Handler mLongClickHandler = new Handler();
     private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
@@ -911,6 +912,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     private final Handler mTimerHandler = new Handler();
 
     private final Runnable mRemoveChosenAnswerText = new Runnable() {
@@ -2039,6 +2041,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Handler for the delay in auto showing question and/or answer One toggle for both question and answer, could set
      * longer delay for auto next question
      */
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected final Handler mTimeoutHandler = new Handler();
 
     protected final Runnable mShowQuestionTask = new Runnable() {
@@ -3076,6 +3079,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return null;
         }
 
+        @SuppressWarnings("deprecation") //  #7111: new Handler()
         private final Handler mScrollHandler = new Handler();
         private final Runnable mScrollXRunnable = () -> mIsXScrolling = false;
         private final Runnable mScrollYRunnable = () -> mIsYScrolling = false;

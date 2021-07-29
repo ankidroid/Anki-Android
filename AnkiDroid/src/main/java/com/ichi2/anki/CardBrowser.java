@@ -2745,6 +2745,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * The views expand / contract when switching between multi-select mode so we manually
      * adjust so that the vertical position of the given view is maintained
      */
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     private void recenterListView(@NonNull View view) {
         final int position = mCardsListView.getPositionForView(view);
         // Get the current vertical position of the top of the selected view

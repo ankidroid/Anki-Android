@@ -553,6 +553,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public boolean onMenuOpened(int featureId, Menu menu) {
         new Handler().post(() -> {
             for (int i = 0; i < menu.size(); i++) {
@@ -577,6 +578,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public void onPanelClosed(int featureId, @NonNull Menu menu) {
         new Handler().postDelayed(this::refreshActionBar, 100);
     }
@@ -1104,7 +1106,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

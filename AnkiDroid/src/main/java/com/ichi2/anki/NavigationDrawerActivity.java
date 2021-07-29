@@ -148,6 +148,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
             @Override
+            @SuppressWarnings("deprecation") //  #7111: new Handler()
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
