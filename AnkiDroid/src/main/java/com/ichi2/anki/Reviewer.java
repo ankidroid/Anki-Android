@@ -1132,7 +1132,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
         a.getWindow().getDecorView().setSystemUiVisibility(
@@ -1199,6 +1199,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 });
     }
 
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
