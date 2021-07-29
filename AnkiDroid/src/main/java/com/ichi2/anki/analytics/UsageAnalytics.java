@@ -20,8 +20,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
-import android.view.Display;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
@@ -32,6 +30,7 @@ import com.brsanthu.googleanalytics.request.EventHit;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.R;
+import com.ichi2.utils.DisplayUtils;
 import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
@@ -316,10 +315,7 @@ public class UsageAnalytics {
 
             // Are we running on really large screens or small screens? Send raw screen size
             try {
-                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
+                Point size = DisplayUtils.getDisplayDimensions(context);
                 this.screenResolution(size.x + "x" + size.y);
             } catch (RuntimeException e) {
                 Timber.w(e);

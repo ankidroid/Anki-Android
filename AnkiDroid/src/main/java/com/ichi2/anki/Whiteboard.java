@@ -20,7 +20,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -33,16 +32,15 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Environment;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.utils.DisplayUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -382,11 +380,7 @@ public class Whiteboard extends View {
     }
 
     private static Point getDisplayDimensions() {
-        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
-                getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        return point;
+        return DisplayUtils.getDisplayDimensions(AnkiDroidApp.getInstance().getApplicationContext());
     }
 
 
