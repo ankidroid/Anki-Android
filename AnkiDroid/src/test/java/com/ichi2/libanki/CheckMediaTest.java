@@ -43,6 +43,7 @@ public class CheckMediaTest extends RobolectricTest {
 
 
     @Test
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     @RunInBackground
     public void checkMediaWorksAfterMissingMetaTable() throws ExecutionException, InterruptedException {
         // 7421
