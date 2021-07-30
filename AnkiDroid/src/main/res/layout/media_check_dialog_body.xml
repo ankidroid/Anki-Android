@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingEnd="25dp"
+    android:paddingStart="25dp">
+
+    <TextView
+        android:id="@+id/reportTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fileListTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/material_blue_grey_050"
+        android:maxLines="7"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:scrollbars="vertical"
+        android:textColor="@color/material_grey_700"
+        android:textSize="12.5sp" />
+</LinearLayout>
