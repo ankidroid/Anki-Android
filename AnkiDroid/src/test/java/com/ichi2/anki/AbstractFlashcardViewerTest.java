@@ -58,7 +58,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
         @Override
         protected long getElapsedRealTime() {
-            lastTime += DOUBLE_TAP_IGNORE_THRESHOLD;
+            lastTime += AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
             return lastTime;
         }
 

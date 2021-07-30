@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.services;
 
 import android.app.AlarmManager;
@@ -25,6 +26,7 @@ import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.anki.DeckOptions.reminderToCalendar;
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
 public class BootService extends BroadcastReceiver {
 
@@ -126,7 +128,7 @@ public class BootService extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences sp = AnkiDroidApp.getSharedPrefs(context);
         // Don't schedule a notification if the due reminders setting is not enabled
-        if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))) >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+        if (Integer.parseInt(sp.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))) >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             return;
         }
 

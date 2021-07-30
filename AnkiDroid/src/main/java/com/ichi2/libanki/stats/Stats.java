@@ -132,7 +132,8 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        String query = "select count(), sum(time)/1000, "+
+        String query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                "sum(time)/1000, "+ /*time*/
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
@@ -140,7 +141,7 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
                 "from revlog "+
                 "where ease > 0 "+  // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "and id > " + ((mCol.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -159,9 +160,10 @@ public class Stats {
 
 
         }
-        query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
+        query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                "sum(case when ease = 1 then 0 else 1 end) from revlog " +
                 "where ease > 0 "+ // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "and lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
@@ -875,6 +877,9 @@ public class Stats {
         long cut = cutoff - rolloverHour * 3600;
 
         ArrayList<double[]> list = new ArrayList<>(24); // number of hours
+        for (int i = 0; i < 24; i++) {
+            list.add(new double[] { i, 0, 0 });
+        }
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -886,7 +891,8 @@ public class Stats {
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
+                double[] hourData = new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) };
+                list.set(((((int)hourData[0] % 24) + 24) % 24), hourData); // Force the data to be positive int in 0-23 range
             }
         }
 
@@ -994,9 +1000,9 @@ public class Stats {
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        ArrayList<double[]> list = new ArrayList<>(Collections.nCopies(7, new double[]{0,0,0})); // one by day of the week
-        String query = "SELECT cast(strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
-                " as int), 'unixepoch'))as int) as wd, " +
+        ArrayList<double[]> list = new ArrayList<>(7); // one by day of the week
+        String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
+                " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
                 "cast(count() as float) * 100, " +
                 "count() " +
@@ -1008,15 +1014,13 @@ public class Stats {
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
             while (cur.moveToNext()) {
-                int weekday = cur.getInt(0);
-                list.add(weekday, new double[] {weekday, cur.getDouble(1), cur.getDouble(2) });
+                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
             }
         }
 
         //TODO adjust for breakdown, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-
-        if (list.size() == 0 ) { // todo do I remove this because of Collections.nCopies()?
+        if (list.size() == 0 ) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 

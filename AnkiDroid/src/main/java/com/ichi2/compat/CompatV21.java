@@ -17,7 +17,11 @@
 package com.ichi2.compat;
 
 import android.content.Context;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.media.ThumbnailUtils;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.widget.TimePicker;
 
 import java.io.File;
@@ -28,9 +32,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-/** Baseline implementation of {@link Compat} with implementations for older APIs */
+/** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
 public class CompatV21 implements Compat {
 
     // Until API26, ignore notification channels
@@ -116,4 +121,25 @@ public class CompatV21 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasVideoThumbnail(@NonNull String path) {
+        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    }
+    
+    @Override
+    @SuppressWarnings("deprecation")
+    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
+        audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
+        audioManager.abandonAudioFocus(audioFocusChangeListener);
+    }
 }

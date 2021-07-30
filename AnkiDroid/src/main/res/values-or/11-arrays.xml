@@ -45,7 +45,7 @@
     </string-array>
     <string-array name="new_order_labels">
         <item>ଅନିୟମିତ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
-        <item>ଯୋଗ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
+        <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମରେ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>ସର୍ବପୁରାତନ ଆଗ </item>
@@ -53,7 +53,7 @@
         <item>ବଢ଼ୁଥିବା ବ୍ୟବଧାନ</item>
         <item>କମୁଥିବା ବ୍ୟବଧାନ</item>
         <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
-        <item>ଯୋଡ଼ାହେବା କ୍ରମାନୁସାରେ</item>
+        <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମାନୁସାରେ</item>
         <item>ବଳକା କ୍ରମାନୁସାରେ</item>
         <item>ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା ପ୍ରଥମେ</item>
         <item>ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</item>
@@ -64,8 +64,8 @@
     </string-array>
     <string-array name="new_spread_labels">
         <item>ନୂତନ କାର୍ଡ ଏବଂ ସମୀକ୍ଷା ମିଶ୍ରଣ କରନ୍ତୁ</item>
-        <item>ସମୀକ୍ଷା ପରେ ନୂତନ କାର୍ଡ</item>
-        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂତନ କାର୍ଡ</item>
+        <item>ସମୀକ୍ଷା ପରେ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
+        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</item>

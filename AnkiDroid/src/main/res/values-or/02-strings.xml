@@ -101,8 +101,8 @@
     <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
     <string name="custom_study_review_ahead">ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ</string>
-    <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକଙ୍କର ଏକ ଅନିୟମିତ ଚୟନ ପଢ଼ନ୍ତୁ</string>
-    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଙ୍କର ପୂର୍ବାବଲୋକନ</string>
+    <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
+    <string name="custom_study_preview_new">ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କର</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">କୌଣସି କାର୍ଡ ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
     <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ବିଲୋପ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
-    <string name="note_editor_set_field_language">ଭାଷା ନିର୍ଧାରଣ</string>
     <string name="note_editor_no_cards_created_all_fields">ଏହି ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କରି ନାହିଁ। \nଦୟାକରି ଅନ୍ୟ ଏକ ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ/‘ପତ୍ର’ କ୍ଲିକ୍ କରନ୍ତୁ ଏବଂ ଏକ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>
@@ -135,7 +134,7 @@
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ପତ୍ର</string>
     <string name="note_editor_copy_note">ନୋଟ୍ କପି କରନ୍ତୁ</string>
     <string name="card_editor_reposition_card">ଅବସ୍ଥାନ</string>
-    <string name="card_editor_reset_card">ଅଗ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="card_editor_reset_card">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଧାରଣ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="error_insufficient_memory">ଆପଣଙ୍କ ଡିଭାଇସରେ ଅପର୍ଯ୍ୟାପ୍ତ ମେମୋରୀ ଯୋଗୁ ଏହା ହେଇପାରିଲାନାହିଁ</string>
@@ -176,7 +175,7 @@
     <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଗଲା |</string>
-    <string name="export_include_schedule">କାର୍ଯ୍ୟସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
+    <string name="export_include_schedule">ଅନୁସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
@@ -281,7 +280,7 @@
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
     <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ର ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡିକ> ଖାଲି ପତ୍ରଗୁଡିକ ଚଲାନ୍ତୁ।]]></string>
+    <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ରଗୁଡ଼ିକ ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡ଼ିକ> ଖାଲି ପତ୍ରଗୁଡ଼ିକ ଚଲାନ୍ତୁ।]]></string>
     <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>
     <string name="note_importer_error_first_field_matched">ପ୍ରଥମ କ୍ଷେତ୍ର ମେଳ ହେଲା : %s</string>
     <string name="note_importer_error_added_duplicate_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ସହିତ ନକଲି ଯୋଡ଼ା ହେଲା : %s</string>
@@ -315,7 +314,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
     <string name="card_viewer_media_relative_protocol">କାର୍ଡ ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ</string>
-    <string name="cannot_load_http_resource">http ଉତ୍ସଗୁଡ଼ିକୁ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
+    <string name="cannot_load_http_resource">http ସମ୍ପଦ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
@@ -337,7 +336,7 @@
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="toolbar_item_explain_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବାକୁ HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଟୁଲବାର୍ ଆଇଟମ୍ କୁ ହଟାଇବା ପାଇଁ ତାହା ଉପରେ ଲମ୍ବା ଦବାନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ହଟାଇବେ?</string>
-    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ଛବି ବହୁତ ବଡ, ଦୟାକରି ଛବିକୁ ମାନୁଆଲରେ ଭର୍ତ୍ତି କରନ୍ତୁ </string>
+    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ, ଦୟାକରି ମାନୁଆଲ୍ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡିପାରେ </string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କର ହୋମ ସ୍କ୍ରିନ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ </string>
@@ -349,5 +348,6 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
     <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ</string>
-    <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁନର୍ବାର ଦବାନ୍ତୁ</string>
+    <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
+    <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
 </resources>

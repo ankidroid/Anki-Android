@@ -17,9 +17,9 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.BackendFactory;
@@ -28,7 +28,7 @@ import net.ankiweb.rsdroid.RustBackendFailedException;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /** Utilities for launching the first activity (currently the DeckPicker) */
@@ -38,9 +38,21 @@ public class InitialActivity {
 
     }
 
-    @NonNull
+    /** Returns null on success */
+    @Nullable
     @CheckResult
     public static StartupFailure getStartupFailureType(Context context) {
+
+        // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
+        if (AnkiDroidApp.webViewFailedToLoad()) {
+            return StartupFailure.WEBVIEW_FAILED;
+        }
+
+        // If we're OK, return null
+        if (CollectionHelper.getInstance().getColSafe(context) != null) {
+            return null;
+        }
+
         if (!AnkiDroidApp.isSdCardMounted()) {
             return StartupFailure.SD_CARD_NOT_MOUNTED;
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
@@ -80,6 +92,7 @@ public class InitialActivity {
     /**
      * Downgrades the database at the currently selected collection path from V16 to V11 in a background task
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void downgradeBackend(DeckPicker deckPicker) {
         // Note: This method does not require a backend pointer or an open collection
         Timber.i("Downgrading backend");
@@ -102,9 +115,14 @@ public class InitialActivity {
         BackendFactory.createInstance().getBackend().downgradeBackend(collectionPath);
     }
 
+    /** @return Whether any preferences were upgraded */
+    public static boolean upgradePreferences(Context context, long previousVersionCode) {
+        return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
+    }
 
     // I disapprove, but it's best to keep consistency with the rest of the app
-    private static class PerformDowngradeTask extends AsyncTask<Void, Void, Void> {
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
+    private static class PerformDowngradeTask extends android.os.AsyncTask<Void, Void, Void> {
 
         private final WeakReference<DeckPicker> mDeckPicker;
         private Exception mException;
@@ -174,5 +192,7 @@ public class InitialActivity {
         DATABASE_DOWNGRADE_REQUIRED,
         DB_ERROR,
         DATABASE_LOCKED,
+        WEBVIEW_FAILED,
+        ;
     }
 }

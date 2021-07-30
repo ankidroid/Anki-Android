@@ -95,6 +95,7 @@
     <string name="unbury"> അൺബറി</string>
     <string name="rename_deck">ഡെക്കിന്റെ പേരുമാറ്റുക</string>
     <string name="create_shortcut">കുറുക്കുവഴി സൃഷ്ടിക്കുക</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ചേർക്കുക</string>
     <string name="menu_add_note">കുറിപ്പ് ചേർക്കുക</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">അക്കൗണ്ട് സമന്വയിപ്പിക്കുക</string>
@@ -183,7 +184,13 @@
     <string name="card_template_editor_styling">സ്റ്റൈലിംഗ്</string>
     <string name="card_template_editor_menu_card_browser_appearance">കാർഡ്  ബ്രൗസർ  സർ രൂപം</string>
     <string name="card_template_editor_deck_override">ഡെക്ക് അസാധുവാക്കൽ</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">കുറഞ്ഞത് ഒരു കാർഡ് തരമെങ്കിലും ആവശ്യമാണ്</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡും ഇല്ലാതാക്കണോ?</item>
         <item quantity="other">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡുകളും ഇല്ലാതാക്കണോ?</item>
@@ -219,4 +226,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

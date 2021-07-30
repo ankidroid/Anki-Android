@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
     <string name="note_editor_no_first_field">Bidang teks pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Tipe catatan ini harus berisi titik-titik</string>
-    <string name="note_editor_set_field_language">Atur bahasa bidang</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>
@@ -122,7 +121,7 @@
     <string name="reordering_cards">Mengurutkan ulang kartu&#8230;</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Batas waktu telah tercapai</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
     </plurals>
@@ -164,13 +163,13 @@
     <string name="import_log_file_cache_cleared">Galat mengimpor berkas. Harap coba lagi</string>
     <string name="import_succeeded_but_check_database">Impor data berhasil namun pembersihan pasca impor gagal.Periksa basisdata nanti. Sebab: %s</string>
     <string name="import_error_unhandled_request">Tidak dapat memproses permintaan impor</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Terjadi kesalahan dengan file apkg. Tolong hapus dan unduh kembali.\n\nAkar penyebab: %s</string>
     <string name="import_error_exception">Gagal mengimpor paket\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama “%s” tidak memiliki ekstensi .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() gagal (mungkin karena ruang penyimpanan)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Impor belum terselesaikan dari: \"%s\"</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
@@ -195,8 +194,8 @@
     <string name="import_hint">Untuk mengimpor kartu, taruh berkas apkg ke dalam direktori “%s” dan tekan “OK”</string>
     <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
+    <string name="menu__deck_options">Opsi dek</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
     <string name="select_tts">Tetapkan bahasa TTS</string>
     <string name="custom_study">Belajar kustom</string>
     <string name="more_options">Lainnya</string>
@@ -231,7 +230,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s detik</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -252,7 +251,7 @@
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Gagal memuat halaman: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">tautan halaman eksternal dalam kartu tidak didukung.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Kartu dipulihkan</string>
@@ -269,7 +268,7 @@
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard. %s</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
     <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Editor papan tulis</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Kartu kosong ditemukan. Harap jalankan Alat>Kartu Kosong.]]></string>
     <string name="note_importer_error_empty_first_field">Bidang pertama kosong: %s</string>
@@ -300,41 +299,42 @@
     <string name="about_ankidroid_successfully_copied_debug">Informasi debug disalin ke papan klip</string>
     <string name="about_ankidroid_error_copy_debug_info">Galat menyalin informasi debug ke papan klip</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
+    <string name="card_viewer_media_relative_protocol">Isi Kartu Gagal: Pembaruan media diperlukan</string>
+    <string name="cannot_load_http_resource">Memuat sumber daya http sudah tidak didukung lagi</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
+    <string name="search_decks">Cari dek</string>
+    <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="menu_font_size">Ukuran font</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Tampilkan toolbar</string>
+    <string name="format_insert_bold">Atur sebagai bold</string>
+    <string name="format_insert_italic">Atur sebagai italic</string>
+    <string name="format_insert_underline">Atur sebagai garis bawah</string>
+    <string name="insert_horizontal_line">Tambahkan garis horizontal</string>
+    <string name="insert_heading">Tambahkan heading</string>
+    <string name="format_font_size">Ubah Ukuran Font</string>
+    <string name="insert_mathjax">Masukkan rumus MathJax</string>
+    <string name="insert_cloze">Masukkan Cloze Deletion</string>
+    <string name="before_text">HTML Sebelum Pilihan</string>
+    <string name="after_text">HTML Sesudah Pilihan</string>
+    <string name="add_toolbar_item">Buat Item Toolbar</string>
+    <string name="toolbar_item_explain_remove">Masukkan HTML untuk dimasukkan sebelum dan sesudah teks\n\n yang telah dipilih. Tekan toolbar item beberapa saat untuk mencopotnya.</string>
+    <string name="remove_toolbar_item">Copot Item Toolbar?</string>
+    <string name="note_editor_paste_too_large">Gambar ini terlalu besar untuk ditempel, mohon masukkan gambar secara manual.</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Pencadangan android sedang dalam proses. Mohon coba lagi.</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Anda mungkin perlu menggunakan iManager untuk memperbolehkan AnkiDroid menambah shortcut.</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Layar utama anda tidak memperbolehkan AnkiDroid untuk menambah shortcut.</string>
+    <string name="create_shortcut_error">Gagal menambah shortcut: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mengkapitalkan kalimat-kalimat</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="email_id_empty">Alamat surel diperlukan</string>
+    <string name="password_empty">Kata Sandi diperlukan</string>
+    <string name="back_pressed_once">Mohon tekan sekali lagi untuk keluar</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

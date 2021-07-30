@@ -30,7 +30,7 @@
 languages = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo',
              'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got',
              'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk',
-             'km', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'ml-IN', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no',
+             'km', 'kn', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'ml-IN', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no',
              'or', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sat', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE',
              'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK',
              'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
@@ -68,7 +68,7 @@ def replacechars(filename, fileExt, isCrowdin):
                 line = string.replace(line, '\'', '\\\'')
                 line = string.replace(line, '\\\\\'', '\\\'')
                 line = string.replace(line, '\n\s', '\\n')
-                line = string.replace(line, 'amp;', '')
+                # line = string.replace(line, 'amp;', '')
                 if re.search('%[0-9]\\s\\$|%[0-9]\\$\\s', line) != None:
                     errorOccured = True
 #           print line      

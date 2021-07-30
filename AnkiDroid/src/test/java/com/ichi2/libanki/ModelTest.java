@@ -1,12 +1,10 @@
 package com.ichi2.libanki;
 
-import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
@@ -27,18 +25,56 @@ import static com.ichi2.libanki.Models.REQ_ANY;
 import static com.ichi2.libanki.Utils.stripHTML;
 import static com.ichi2.utils.ListUtil.assertListEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class ModelTest extends RobolectricTest {
+
+    @Test
+    public void test_frontSide_field() {
+        // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
+        Collection col = getCol();
+        Model m = col.getModels().current();
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}");
+        col.getModels().save(m);
+        Note note = col.newNote();
+        note.setItem("Front", "helloworld");
+        col.addNote(note);
+        Card card = note.firstCard();
+        String q = card.q();
+        assertThat("field should be at the end of the template - empty string for front", q, endsWith("helloworld"));
+        assertThat("field should not have a problem", q, not(containsString("has a problem")));
+    }
+
+    @Test
+    public void test_field_named_frontSide() {
+        // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
+        Collection col = getCol();
+        Model m = col.getModels().current();
+
+        // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
+        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide"));
+        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide2"));
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}");
+        col.getModels().save(m);
+
+        Note note = col.newNote();
+        note.setItem("Front", "helloworld");
+        note.setItem("FrontSide", "1");
+        note.setItem("FrontSide2", "2");
+        col.addNote(note);
+        Card card = note.firstCard();
+        String q = card.q();
+        assertThat("FrontSide should be an empty string, even though it was set", q, endsWith("helloworld2"));
+    }
+
     /*****************
      ** Models       *
      *****************/

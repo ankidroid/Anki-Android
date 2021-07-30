@@ -20,22 +20,23 @@ package com.ichi2.libanki;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.provider.MediaStore;
 
-import android.view.Display;
-import android.view.WindowManager;
+import android.os.Build;
 import android.webkit.MimeTypeMap;
 import android.widget.VideoView;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
+import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.DisplayUtils;
 import com.ichi2.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -68,9 +69,14 @@ public class Sound {
     private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
-     * Media player used to play the sounds
+     * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playnig or paused, otherwise it is null.
      */
-    private MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer = null;
+
+    /**
+     * It's used to store the Uri of the current Audio in case of running or pausing.
+     */
+    private Uri mCurrentAudioUri = null;
 
     /**
      * AudioManager to request/release audio focus
@@ -122,6 +128,8 @@ public class Sound {
      */
     private static final AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
     };
+    
+    private AudioFocusRequest mAudioFocusRequest;
 
 
     // Clears current sound paths; call before parseSounds() calls
@@ -286,11 +294,33 @@ public class Sound {
         playSoundInternal(soundPath, completionListener, videoView, errorListener);
     }
 
+    /**
+     * Play or Pause the running sound. Called on pressing the content inside span tag.
+     */
+    public void playOrPauseSound() {
+        MediaPlayer mediaPlayer = mMediaPlayer;
+        if (mediaPlayer == null) {
+            return;
+        }
+        if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+        } else {
+            mMediaPlayer.start();
+        }
+    }
+
+    public boolean isCurrentAudioFinished() {
+        // When an audio finishes and I'm trying to replay it again, this method should check if the mMediaPlayer is null which means
+        // the audio finished to return true, so that I would be able to play the same sound again.
+        return mMediaPlayer == null;
+    }
+
     /** Plays a sound without ensuring that the playAllListener will release the audio */
-    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
+    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
     private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
+        mCurrentAudioUri = soundUri;
 
         final OnErrorListener errorHandler = errorListener == null ?
                 (mp, what, extra, path) -> {
@@ -312,8 +342,7 @@ public class Sound {
                 isVideo = (guessedType != null) && guessedType.startsWith("video/");
             }
             // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
-            isVideo = isVideo &&
-                ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+            isVideo = isVideo && hasVideoThumbnail(soundUri);
             // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
@@ -344,7 +373,11 @@ public class Sound {
                 mMediaPlayer.setOnErrorListener((mp, which, extra) -> errorHandler.onError(mp, which, extra, soundPath));
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mMediaPlayer.setAudioAttributes(
+                        new AudioAttributes
+                                .Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build());
                 mMediaPlayer.setOnPreparedListener(mp -> {
                     Timber.d("Starting media player");
                     mMediaPlayer.start();
@@ -354,8 +387,14 @@ public class Sound {
                 }
                 mMediaPlayer.prepareAsync();
                 Timber.d("Requesting audio focus");
-                mAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC,
-                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+
+                // Set mAudioFocusRequest for API 26 and above.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                            .setOnAudioFocusChangeListener(afChangeListener)
+                            .build();
+                }
+                CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
@@ -363,15 +402,33 @@ public class Sound {
         }
     }
 
+
+    private boolean hasVideoThumbnail(@Nullable Uri soundUri) {
+        if (soundUri == null) {
+            return false;
+        }
+        String path = soundUri.getPath();
+        if (path == null) {
+            return false;
+        }
+
+        return CompatHelper.getCompat().hasVideoThumbnail(path);
+    }
+
+
+    public String getCurrentAudioUri() {
+        if (mCurrentAudioUri == null) {
+            return null;
+        }
+        return mCurrentAudioUri.toString();
+    }
+
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
         // get the display
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
         // adjust the size of the video so it fits on the screen
         float videoProportion = (float) videoWidth / (float) videoHeight;
-        Point point = new Point();
-        display.getSize(point);
+        Point point = DisplayUtils.getDisplayDimensions(context);
         int screenWidth = point.x;
         int screenHeight = point.y;
         float screenProportion = (float) screenWidth / (float) screenHeight;
@@ -452,7 +509,6 @@ public class Sound {
     /**
      * Releases the sound.
      */
-    @SuppressWarnings("deprecation") // Tracked on github as #5022
     private void releaseSound() {
         Timber.d("Releasing sounds and abandoning audio focus");
         if (mMediaPlayer != null) {
@@ -463,7 +519,8 @@ public class Sound {
             mMediaPlayer = null;
         }
         if (mAudioManager != null) {
-            mAudioManager.abandonAudioFocus(afChangeListener);
+            // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
+            CompatHelper.getCompat().abandonAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
             mAudioManager = null;
         }
     }

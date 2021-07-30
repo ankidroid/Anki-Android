@@ -95,6 +95,7 @@
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
+    <string name="browse_cards">Turkcha</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
@@ -183,7 +184,13 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kart Listeleyici Görünümü</string>
     <string name="card_template_editor_deck_override">Desteyi Geçersiz Kılma</string>
+    <string name="card_template_editor_insert_field">Alan Ekle</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
         <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
@@ -219,4 +226,8 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb\'deki koleksiyonunuzun yerini AnkiDroid\'deki koleksiyonunuz alsın mı?</string>
     <string name="sync_conflict_title_new">Tutulacak koleksiyonu seç</string>
     <string name="sync_conflict_replace_title">Koleksiyonu değiştir</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

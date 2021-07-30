@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповність більше полів</string>
     <string name="note_editor_no_first_field">Перше поле порожнє</string>
     <string name="note_editor_no_cloze_delations">Цей тип запису повинен містити пропуски</string>
-    <string name="note_editor_set_field_language">Встановити мову поля</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Завдання з пропусками працюватиме лише у типі запису з завданнями з пропуском</string>
     <string name="saving_facts">Зберегти запис</string>
@@ -376,4 +375,5 @@
     <string name="email_id_empty">Необхідно вказати адресу електронної пошти</string>
     <string name="password_empty">Поле «Пароль» обов\'язкове до заповнення</string>
     <string name="back_pressed_once">Натисніть ще раз, щоб вийти</string>
+    <string name="back_pressed_once_reviewer">Натисніть ще раз, щоб повернутись</string>
 </resources>

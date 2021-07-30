@@ -16,18 +16,36 @@
 
 package com.ichi2.utils;
 
-import com.ichi2.libanki.Card;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-public class PairWithCard<U> implements CardGetter {
-    public final Card bool;
-    public final U other;
+/**
+ * Represents a computed value or a failure. Similar to c++ absl::StatusOr<U>, Rust Result<U>,
+ * and almost similar to Future<U>, except that `get` don't throws.
+ * @param <ComputedType> The value of a succesful computation
+ */
+// "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
+// `Result` would not be an acceptable type name.
+public class Computation<ComputedType> {
+    /**
+     * The computed value in case of success. Null in case of failure
+     */
+    private final @Nullable ComputedType mValue;
 
-    public Card getCard() {
-        return bool;
+    public boolean succeeded() {
+        return mValue != null;
+    }
+    public static final Computation ERR = new Computation();
+    public static final Computation OK = new Computation<>(new Object());
+
+    public ComputedType getValue() {
+        return mValue;
     }
 
-    public PairWithCard(Card bool, U other) {
-        this.bool = bool;
-        this.other = other;
+    private Computation() {
+        mValue = null;
+    }
+    public Computation(@NonNull ComputedType value) {
+        mValue = value;
     }
 }

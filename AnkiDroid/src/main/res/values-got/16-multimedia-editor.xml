@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Usbeidei</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Warþ airzei</string>
+    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->

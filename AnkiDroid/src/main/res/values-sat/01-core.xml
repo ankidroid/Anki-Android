@@ -95,6 +95,7 @@
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
     <string name="create_shortcut">ᱥᱚᱴᱠᱚᱴ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="browse_cards">ᱠᱟᱰ ᱠᱚ ᱵᱨᱟᱩᱡᱽ ᱢᱮ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ᱥᱮᱞᱮᱫ </string>
     <string name="menu_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
@@ -116,7 +117,7 @@
     <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_select">ᱚᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">ᱚᱞ ᱠᱚ ᱧᱮᱞ ᱵᱤᱲᱟᱹᱣ ᱢᱮ</string>
     <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
     <string name="menu_mark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
@@ -154,7 +155,7 @@
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>
@@ -183,7 +184,13 @@
     <string name="card_template_editor_styling">ᱦᱩᱱᱟᱹᱨ</string>
     <string name="card_template_editor_menu_card_browser_appearance">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="card_template_editor_deck_override">ᱰᱮᱠ ᱠᱟᱰ ᱢᱮ</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ </string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
         <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
@@ -219,4 +226,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

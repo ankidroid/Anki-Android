@@ -21,6 +21,7 @@ import android.net.Uri;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.RobolectricTest;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class FragmentTestActivity extends AnkiActivity {
@@ -35,7 +36,7 @@ public class FragmentTestActivity extends AnkiActivity {
 
 
     @Override
-    public void openUrl(Uri url) {
+    public void openUrl(@NonNull Uri url) {
         mLastUriOpened = url.toString();
         super.openUrl(url);
     }

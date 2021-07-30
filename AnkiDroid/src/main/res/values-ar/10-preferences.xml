@@ -44,7 +44,7 @@
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">إعدادات عامة</string>
     <string name="pref_cat_reviewing" maxLength="41">مراجعة</string>
-    <string name="pref_cat_reviewing_summ">إعدادات المراجعة غير المحصورة بشَدة أوراق محددة</string>
+    <string name="pref_cat_reviewing_summ">إعدادات المراجعة غير المحصورة برزمة محددة</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">السلوك</string>
     <string name="pref_cat_flashcard" maxLength="41">الشاشة</string>
     <string name="pref_cat_whiteboard" maxLength="41">السبورة</string>
@@ -68,7 +68,7 @@
     <string name="use_input_tag_summ">استخدام مربع إدخال نصي داخل البطاقة لكتابة الجواب</string>
     <string name="dictionary" maxLength="41">قاموس البحث</string>
     <string name="reset_languages" maxLength="41">إعادة تعيين اللغات</string>
-    <string name="reset_languages_summ">إعادة ضبط إعدادات اللغة (من أجل تحويل النص إلى كلام والقواميس) لجميع شَدّات الأوراق</string>
+    <string name="reset_languages_summ">إعادة ضبط إعدادات اللغة (من أجل تحويل النص إلى كلام والقواميس) لجميع الرزم</string>
     <string name="reset_languages_question">إعادة تعيين كافة تعيينات اللغة؟</string>
     <string name="reset_confirmation">تمت إعادة تعيين كل الإعدادات</string>
     <string name="card_zoom" maxLength="41">تكبير البطاقة</string>
@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">لن تُعالَج إيماءات اللمس إذا ضُغِط على رابط/تلميح.</string>
     <string name="gestures_corner_touch" maxLength="41">لمس بحجم 9 نقاط</string>
     <string name="gestures_corner_touch_summary">السماح بإيماءات اللمس في حواف الشاشة</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة تجول ملء الشاشة</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">فتح قائمة التجول عند السحب لليمين من أي مكان في الشاشة</string>
     <string name="gestures_swipe_up" maxLength="41">سحب للأعلى</string>
     <string name="gestures_swipe_down" maxLength="41">سحب للأسفل</string>
     <string name="gestures_swipe_left" maxLength="41">سحب لليسار</string>
     <string name="gestures_swipe_right" maxLength="41">سحب لليمين</string>
     <string name="gestures_double_tap" maxLength="41">نقر مزدوج</string>
+    <string name="gestures_long_tap" maxLength="41">نقر مطول</string>
     <string name="gestures_tap_top" maxLength="41">نقر في الأعلى</string>
     <string name="gestures_tap_left" maxLength="41">نقر في اليسار</string>
     <string name="gestures_tap_right" maxLength="41">نقر في اليمين</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائيًا عند المزامنة</string>
     <string name="sync_account" maxLength="41">حساب أنكي ويب</string>
     <string name="sync_account_summ_logged_out">لست مسجلًا الدخول</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">مزامنة تلقائية</string>
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
     <string name="sync_status_badge" maxLength="41">عرض حالة المزامنة</string>
@@ -161,15 +164,19 @@
     <string name="vertical_centering" maxLength="41">محاذاة للوسط</string>
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
     <string name="pref_backup_max" maxLength="41">عدد النسخ الاحتياطية الأقصى</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج (مللي ثانية)</string>
+    <string name="pref_double_tap_time_interval_summary">سيتم تجاهل نقرة ثانية على أزرار الإجابة إذا لم يمر الوقت. يمنع هذا النقر المزدوج غير المقصود</string>
     <string name="show_estimates" maxLength="41">إظهار وقت الأزرار</string>
     <string name="show_estimates_summ">إظهار وقت المراجعة التالية على أزرار الإجابة</string>
+    <string name="show_large_answer_buttons" maxLength="41">إظهار أزرار إجابة كبيرة</string>
+    <string name="show_large_answer_buttons_summ">إظهار زر الإجابة في صفين</string>
     <string name="show_top_bar" maxLength="41">إظهار الشريط العلوي</string>
     <string name="show_top_bar_summ">إظهار عدد البطاقات، والتأشير والتعليم في الشريط العلوي</string>
     <string name="show_progress" maxLength="41">إظهار المتبقي</string>
     <string name="show_progress_summ">إظهار عدد البطاقات المتبقية</string>
     <string name="show_eta" maxLength="41">إظهار الوقت التقديري المتبقي للدراسة</string>
     <string name="show_eta_summ">إظهار الوقت المتبقي</string>
-    <string name="use_current" maxLength="41">شَدّات الأوراق للبطاقات الجديدة</string>
+    <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
     <string name="new_spread" maxLength="41">موضع البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
@@ -200,6 +207,11 @@
     <string name="thirdparty_apps_summary">اطلع على قائمة تطبيقات تستخدم واجهة برمجة أنكيدرويد مثل القواميس، والأدوات.</string>
     <string name="html_javascript_debugging" maxLength="41">تصحيح أخطاء HTML / جافا سكريبت</string>
     <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">لصق صور الحافظة كـ PNG</string>
+    <string name="paste_as_png_summary">بشكل افتراضي يلصق أنكي الصور في الحافظة بصيغة JPG لتوفير مساحة القرص. تستطيع استخدام هذا الخيار للصق الصور بصيعة PNG بدلًا من ذلك.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">إحصائيات متقدمة</string>
     <string name="enable_advanced_statistics_title" maxLength="41">تفعيل الإحصائيات المتقدمة</string>
@@ -216,15 +228,15 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">رابط مزامنة الوسائط</string>
     <string name="custom_sync_server_media_url_invalid">رابط مزامنة الوسائط غير صالح</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة شَدّات الأوراق على عدة شَدّات أوراق. إذا كنت ترغب في تغيير شَدّة الأوراق الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
+    <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة الرزم على عدة رزم. إذا كنت ترغب في تغيير الرزمة الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">وصف شَدّة الأوراق (ينطبق على شَدّة الأوراق الحالية فقط)</string>
+    <string name="deck_conf_deck_description" maxLength="41">وصف الرزمة (ينطبق على الرزمة الحالية فقط)</string>
     <string name="deck_conf_group" maxLength="41">مجموعة الخيارات</string>
     <plurals name="deck_conf_group_summ">
-        <item quantity="zero">تستخدم %1$s\n%2$d شَدّة أوراق هذه المجموعة</item>
-        <item quantity="one">تستخدم %1$s\n%2$d شَدّة أوراق هذه المجموعة</item>
-        <item quantity="two">تستخدم %1$s\n%2$d شَدّة أوراق هذه المجموعة</item>
+        <item quantity="zero">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
+        <item quantity="one">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
+        <item quantity="two">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
         <item quantity="few">تستخدم %1$s\n%2$d رزمات هذه المجموعة</item>
         <item quantity="many">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
         <item quantity="other">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
@@ -272,16 +284,16 @@
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">إضافة</string>
     <string name="deck_conf_add_summ">إنشاء نسخة من مجموعة الخيارات الحالية</string>
     <string name="deck_conf_remove_message">هل تريد حذف مجموعة الخيارات الحالية؟</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">ضبط لكل شَدّات الأوراق الفرعية</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">ضبط لكل الرزم الفرعية</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="zero">تستخدم %s شَدّة أوراق فرعية هذه المجموعة</item>
-        <item quantity="one">تستخدم %s شَدّة أوراق فرعية هذه المجموعة</item>
-        <item quantity="two">تستخدم %s شَدّة أوراق فرعية هذه المجموعة</item>
-        <item quantity="few">تستخدم %s شَدّات أوراق فرعية هذه المجموعة</item>
-        <item quantity="many">تستخدم %s شَدّة أوراق فرعية هذه المجموعة</item>
-        <item quantity="other">تستخدم %s شَدّة أوراق فرعية هذه المجموعة</item>
+        <item quantity="zero">تستخدم %s رزمة فرعية هذه المجموعة</item>
+        <item quantity="one">تستخدم %s رزمة فرعية هذه المجموعة</item>
+        <item quantity="two">تستخدم %s رزمة فرعية هذه المجموعة</item>
+        <item quantity="few">تستخدم %s رزمات فرعية هذه المجموعة</item>
+        <item quantity="many">تستخدم %s رزمة فرعية هذه المجموعة</item>
+        <item quantity="other">تستخدم %s رزمة فرعية هذه المجموعة</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">هل تريد ضبط مجموعة الخيارات الحالية لكل شَدّات أوراق فرعية لشَدّة الأوراق هذه؟</string>
+    <string name="deck_conf_set_subdecks_message">هل تريد ضبط مجموعة الخيارات الحالية لكل الرزم الفرعية لهذه الرزمة؟</string>
     <string name="pref_browser_editor_font" maxLength="41">خط المتصفح والمحرر</string>
     <string name="deck_conf_cram_filter" maxLength="41">فلتر</string>
     <string name="deck_conf_cram_search" maxLength="41">البحث</string>
@@ -289,9 +301,10 @@
     <string name="deck_conf_cram_order" maxLength="41">بطاقة محددة حسب</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">إعادة جدولة</string>
     <string name="deck_conf_cram_reschedule_summ">إعادة جدولة البطاقات بناءً على أجوبتي في هذه الرزمة</string>
+    <string name="deck_conf_cram_filter_2_check">تفعيل الفلتر الثاني</string>
     <string name="deck_conf_cram_steps" maxLength="41">خطوات مخصصة (بالدقيقة)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ضبط خطوات مخصصة</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">تفعيل تنبيهات التذكير لكل الرزم في مجموعة شَدّات الأوراق هذه</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">تفعيل تنبيهات التذكير لكل الرزم في مجموعة الرزم هذه</string>
     <string name="deck_conf_reminders_time" maxLength="41">نبّه في</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
@@ -305,4 +318,15 @@
     <string name="type_in_answer_focus_summ">التركيز التلقائي على حقل «أدخل الإجابة» في شاشة المراجعة</string>
     <!-- Open Changelog-->
     <string name="open_changelog">فتح سجل التغييرات</string>
+    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

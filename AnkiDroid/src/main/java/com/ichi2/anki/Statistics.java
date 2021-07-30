@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
@@ -36,6 +35,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -105,6 +105,19 @@ public class Statistics extends NavigationDrawerActivity implements
         mViewPager.setOffscreenPageLimit(8);
         mSlidingTabLayout = findViewById(R.id.sliding_tabs);
 
+        // Fixes #8984: scroll to position 0 in RTL layouts
+        ViewTreeObserver tabObserver = mSlidingTabLayout.getViewTreeObserver();
+        tabObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            // Note: we can't use a lambda as we use 'this' to refer to the class.
+            @Override
+            public void onGlobalLayout() {
+                // we need this here: If we select tab 0 before in an RTL context the layout has been drawn,
+                // then it doesn't perform a scroll animation and selects the wrong element
+                mSlidingTabLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mSlidingTabLayout.selectTab(mSlidingTabLayout.getTabAt(0));
+            }
+        });
+
         // Setup Task Handler
         mTaskHandler = AnkiStatsTaskHandler.getInstance(col);
 
@@ -118,7 +131,7 @@ public class Statistics extends NavigationDrawerActivity implements
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
         mDeckSpinnerSelection.setShowAllDecks(true);
-        mDeckSpinnerSelection.selectDeckById(deckId);
+        mDeckSpinnerSelection.selectDeckById(deckId, false);
         mTaskHandler.setDeckId(deckId);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
@@ -221,7 +234,7 @@ public class Statistics extends NavigationDrawerActivity implements
             return;
         }
         mDeckSpinnerSelection.initializeActionBarDeckSpinner();
-        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), true);
         mTaskHandler.setDeckId(deck.getDeckId());
         mViewPager.getAdapter().notifyDataSetChanged();
     }
@@ -255,8 +268,10 @@ public class Statistics extends NavigationDrawerActivity implements
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected AsyncTask mStatisticsTask;
-        protected AsyncTask mStatisticsOverviewTask;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
+        protected android.os.AsyncTask mStatisticsTask;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
+        protected android.os.AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;

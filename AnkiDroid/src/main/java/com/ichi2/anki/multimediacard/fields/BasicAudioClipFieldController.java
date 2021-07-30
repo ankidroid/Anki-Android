@@ -39,6 +39,7 @@ import com.ichi2.ui.FixedTextView;
 import java.io.File;
 import java.io.InputStream;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class BasicAudioClipFieldController extends FieldControllerBase implements IFieldController {
@@ -61,6 +62,8 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         mBtnLibrary.setOnClickListener(v -> {
             Intent i = new Intent();
             i.setType("audio/*");
+            String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
+            i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
             i.setAction(Intent.ACTION_GET_CONTENT);
             // Only get openable files, to avoid virtual files issues with Android 7+
             i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -168,8 +171,9 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
      * @param audioClipFullName name of the file.
      * @return file name which is valid.
      */
-    private String checkFileName(String audioClipFullName) {
-        return audioClipFullName.replaceAll("\\W+", "_");
+    @VisibleForTesting
+    static String checkFileName(String audioClipFullName) {
+        return audioClipFullName.replaceAll("[^\\w.]+", "_");
     }
 
     @Override

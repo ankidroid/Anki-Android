@@ -47,7 +47,6 @@ import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -55,12 +54,13 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -1083,6 +1083,7 @@ public class Collection implements CollectionGetter {
     }
 
 
+    @RustCleanup("#8951 - Remove FrontSide added to the front")
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
@@ -1118,6 +1119,7 @@ public class Collection implements CollectionGetter {
             if ("q".equals(type)) {
                 format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+                fields.put("FrontSide", "");
             } else {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
@@ -1140,7 +1142,8 @@ public class Collection implements CollectionGetter {
             // empty cloze?
             if ("q".equals(type) && model.isCloze()) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
-                    String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                    String link = String.format("<a href=\"%s\">%s</a>", mContext.getResources().getString(R.string.link_ankiweb_docs_cloze_deletion), "help");
+                    System.out.println(link);
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
             }

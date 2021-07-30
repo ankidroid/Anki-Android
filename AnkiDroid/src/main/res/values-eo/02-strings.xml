@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
-    <string name="note_editor_set_field_language">Agordi lingvon de kampo</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
@@ -350,4 +349,5 @@
     <string name="email_id_empty">Retpoŝta adreso estas postulata</string>
     <string name="password_empty">Pasvorto estas postulata</string>
     <string name="back_pressed_once">Frapetu denove por eliri</string>
+    <string name="back_pressed_once_reviewer">Frapetu denove por reiri</string>
 </resources>

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Si</string>
     <!-- Navigation drawer items-->
     <string name="decks">Barallas</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de cartóns</string>
@@ -95,6 +95,7 @@
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralla</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Engadir</string>
     <string name="menu_add_note">Engadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
@@ -183,7 +184,13 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Cando menos un tipo de cartón é obrigatorio.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminar o tipo de cartón “%2$s” e o seu %1$d cartón?</item>
         <item quantity="other">Eliminar o tipo de cartón “%2$s” e os seus %1$d cartóns?</item>
@@ -219,4 +226,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

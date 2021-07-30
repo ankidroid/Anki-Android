@@ -91,6 +91,7 @@
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
     <string name="create_shortcut">建立捷徑</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
@@ -179,7 +180,12 @@
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
     <string name="card_template_editor_deck_override">牌組覆蓋</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
     </plurals>
@@ -210,8 +216,11 @@
     <string name="sync_conflict_message_new">收藏無法合併。 \n您想要保留哪個收藏？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">用來自你的 AnkiWeb 的收藏替換 AnkiWeb 上的收藏嗎？</string>
+    <string name="sync_conflict_remote_confirm_new">用來自你的 AnkiWeb 的收藏替換 AnkiDroid 上的收藏嗎？</string>
     <string name="sync_conflict_local_confirm_new">用來自你的 AnkiDroid 的收藏替換 AnkiWeb 上的收藏嗎？</string>
     <string name="sync_conflict_title_new">選擇要保留的收藏</string>
     <string name="sync_conflict_replace_title">取代收藏</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

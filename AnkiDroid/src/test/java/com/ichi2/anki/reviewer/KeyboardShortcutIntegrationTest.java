@@ -26,6 +26,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.multimediacard.AudioPlayer;
 import com.ichi2.anki.multimediacard.AudioRecorder;
 import com.ichi2.anki.multimediacard.AudioView;
+import com.ichi2.testutils.KeyEventUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,7 @@ import org.robolectric.Shadows;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -80,6 +82,23 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
         verify(recorder, times(1)).startRecording(anyString());
         verifyNoMoreInteractions(recorder);
     }
+
+    /**
+     * Press V
+     * Hold V
+     *
+     * Expected: Recording is triggered and is not untriggered
+     */
+    @Test
+    public void holdIsNotASecondAction() throws IOException {
+        AudioRecorder recorder = setupRecorderMock();
+
+        pressAndHoldShiftV();
+
+        verify(recorder, times(1)).startRecording(anyString());
+        verifyNoMoreInteractions(recorder);
+    }
+
 
     /**
      * Press "Shift + V"
@@ -169,6 +188,17 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
     }
 
 
+    private void pressAndHoldShiftV() {
+        depressShiftKey();
+
+        KeyEvent vKey = KeyEventUtils.getVKey();
+        when(vKey.isShiftPressed()).thenReturn(true);
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey);
+        when(vKey.getRepeatCount()).thenReturn(1);
+        reviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey);
+    }
+
+
     protected void pressShiftAndVThenRelease() {
         depressShiftKey();
         depressVKeyWithShiftHeld();
@@ -199,6 +229,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
         when(mock.getUnicodeChar(anyInt())).thenReturn((int) 'v');
         reviewer.onKeyDown(KeyEvent.KEYCODE_V, mock);
     }
+
 
     private void depressVKeyWithShiftHeld() {
         KeyEvent mock = mock(KeyEvent.class);

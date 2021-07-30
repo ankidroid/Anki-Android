@@ -60,16 +60,16 @@
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Enable whiteboard</string>
     <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="show_whiteboard">დაფის ჩვენება</string>
+    <string name="hide_whiteboard">დაფის დამალვა</string>
+    <string name="clear_whiteboard">დაფის წაშლა</string>
+    <string name="replay_audio">ხმის თავიდან ჩართვა</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_unknown">უცნობი შეცდომა</string>
+    <string name="webview_crash_unknwon_detailed">ეს იყო გამოწვეული WebWiew-ის შიდა შეცდომით</string>
+    <string name="webview_crash_oom">მეხსიერება აღარ არის</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -89,38 +89,37 @@
         <item>Tags</item>
         <item>Lapses</item>
         <item>Reviews</item>
-        <item>Interval</item>
+        <item>ინტერვალი</item>
         <item>Ease</item>
         <item>Due</item>
         <item>Card Modified</item>
-        <item>Created</item>
+        <item>შექმნილია</item>
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
+    <string name="custom_study_increase_new_limit">დღეის ახალი ბარათების ლიმიტის შეცვლა</string>
+    <string name="custom_study_increase_review_limit">დღეის გადასახედი ბარათების ლიმიტის შეცვლა</string>
+    <string name="custom_study_review_forgotten">დავიწყებული ბარათების გადახედვა</string>
+    <string name="custom_study_review_ahead">წინასწარ გადახედვა</string>
+    <string name="custom_study_random_selection">რანდომ ბარათების სწავლა</string>
+    <string name="custom_study_preview_new">ახალი ბარათების წინასწარ ნახვა</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
+    <string name="cardeditor_title_edit_card">შენიშვნის რედაქტირება</string>
+    <string name="discard_unsaved_changes">დაიხუროს და დაიკარგოს ეს მონაცემი?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
-    <string name="save">Save</string>
-    <string name="close">Close</string>
-    <string name="select">Select</string>
-    <string name="saving_changes">Saving changes&#8230;</string>
+    <string name="save">შენახვა</string>
+    <string name="close">დახურვა</string>
+    <string name="select">არჩევა</string>
+    <string name="saving_changes">ცვლილებების შენახვა&#8230;</string>
     <string name="reordering_cards">Reordering cards&#8230;</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
+    <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
@@ -133,13 +132,13 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">ჩანიშვნის კოპირება</string>
     <string name="card_editor_reposition_card">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
+    <string name="card_editor_reset_card">პროგრესის წაშლა</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
-    <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
+    <string name="error_insufficient_memory">ოპერაცია ვერ შესრულდება მოწყობილობაზე მეხსიერების არქონის გამო</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d card added</item>
@@ -147,8 +146,8 @@
     </plurals>
     <string name="check_db">Check database</string>
     <string name="check_media">Check media</string>
-    <string name="empty_cards">Empty cards</string>
-    <string name="check_db_message">Checking database&#8230;</string>
+    <string name="empty_cards">ცარიელი ბარათები</string>
+    <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
@@ -175,27 +174,27 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
+    <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Include media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
     <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
+    <string name="export_send_button">გაგზავნა</string>
+    <string name="export_save_button">ფაილში შენახვა</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
+    <string name="export_successful">ფაილი \"%s\" დაექსპორტდა. გინდათ გააგზავნოთ სხვა აპლიკაციით? </string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
-    <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
+    <string name="export_unsuccessful">შეცდომა apkg ფაილის ექსპორტში</string>
+    <string name="import_hint">განათავსეთ apkg ფაილი \"%s\" და დააჭირეთ \"OK\" ᲑᲐᲠᲐᲗᲔᲑᲘᲡ ᲘᲛᲞᲝᲠᲢᲘᲡᲗᲕᲘᲡ</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
@@ -350,4 +349,5 @@
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
     <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

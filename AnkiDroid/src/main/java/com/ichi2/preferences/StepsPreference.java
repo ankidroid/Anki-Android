@@ -20,6 +20,7 @@ import android.content.Context;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -135,17 +136,17 @@ public class StepsPreference extends android.preference.EditTextPreference {
         }
         try {
             for (String s : steps.split("\\s+")) {
-                float f = Float.parseFloat(s);
+                double d = Double.parseDouble(s);
                 // 0 or less is not a valid step.
-                if (f <= 0) {
+                if (d <= 0) {
                     return null;
                 }
                 // Use whole numbers if we can (but still allow decimals)
-                int i = (int) f;
-                if (i == f) {
+                int i = (int) d;
+                if (i == d) {
                     stepsAr.put(i);
                 } else {
-                    stepsAr.put(f);
+                    stepsAr.put(d);
                 }
             }
         } catch (NumberFormatException | JSONException e) {

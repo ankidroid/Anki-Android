@@ -61,6 +61,7 @@ public class LayoutValidationTest extends InstrumentedTest {
     @Test
     public void ensureLayout() throws Exception {
         // This should be fine to run on a device - but WebViews may be instantiated.
+        // TODO: GestureDisplay.kt - why was mSwipeView.drawable null
 
         Context targetContext = getTestContext();
         Themes.setTheme(targetContext);

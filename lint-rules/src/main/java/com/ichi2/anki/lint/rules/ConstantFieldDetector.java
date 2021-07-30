@@ -23,7 +23,6 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.ichi2.anki.lint.utils.Constants;
 
-import com.android.annotations.NonNull;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UVariable;
 import org.jetbrains.uast.UastVisibility;
@@ -53,7 +52,10 @@ public class ConstantFieldDetector extends FieldNamingPatternDetector {
         // For instance: the only thing that matters is final - are these constants:
         // public final int - no
         // private static final - maybe?
-        return variable.isStatic() && variable.getVisibility() == UastVisibility.PUBLIC && variable.isFinal();
+        return variable.isStatic()
+                && variable.getVisibility() == UastVisibility.PUBLIC
+                && variable.isFinal()
+                && !"Companion".equals(variable.getName()); // #9223 - fix for kotlin companion objects
     }
 
 
@@ -73,7 +75,7 @@ public class ConstantFieldDetector extends FieldNamingPatternDetector {
 
 
     @Override
-    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, String variableName) {
+    protected void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, @NonNull String variableName) {
         StringBuilder replacement = new StringBuilder();
         // If the s prefix was accidentally applied, remove it.
         if ((variableName.startsWith("s") || variableName.startsWith("m")) && variableName.length() > 1 && Character.isUpperCase(variableName.charAt(1))) {

@@ -37,7 +37,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locale_dialog_selection_list"
         android:scrollbars="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/locale_dialog_selection_toolbar"
         android:layout_above="@+id/locale_dialog_summary"

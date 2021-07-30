@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -14,18 +14,36 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.anki.dialogs;
+import com.ichi2.utils.ExtendedFragmentFactory;
+import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener;
+import java.io.Serializable;
 
-public class PairWithBoolean<U> implements BooleanGetter {
-    public final boolean bool;
-    public final U other;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-    public boolean getBoolean() {
-        return bool;
+public class InsertFieldDialogFactory extends ExtendedFragmentFactory implements Serializable {
+
+    final InsertFieldListener mInsertFieldListener;
+
+
+    public InsertFieldDialogFactory(InsertFieldListener insertFieldListener) {
+        this.mInsertFieldListener = insertFieldListener;
     }
 
-    public PairWithBoolean(boolean bool, U other) {
-        this.bool = bool;
-        this.other = other;
+
+    @NonNull
+    @Override
+    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
+        Class<? extends Fragment> cls = loadFragmentClass(classLoader, className);
+        if (cls == InsertFieldDialog.class) {
+            return newInsertFieldDialog();
+        }
+        return super.instantiate(classLoader, className);
+    }
+
+    @NonNull
+    public InsertFieldDialog newInsertFieldDialog() {
+        return new InsertFieldDialog(mInsertFieldListener);
     }
 }

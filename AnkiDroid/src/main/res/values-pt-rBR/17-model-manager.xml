@@ -23,11 +23,11 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Gerenciar tipos de nota</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Gerenciar campos</string>
     <!--Toasts-->
-    <string name="toast_last_model">Não foi possível excluir seu último modelo de notas</string>
+    <string name="toast_last_model">Você não pode excluir seu último tipo de nota</string>
     <string name="toast_last_field">Tipos de nota devem ter pelo menos um campo</string>
     <string name="toast_empty_name">Você deve digitar um nome</string>
     <string name="toast_duplicate_field">Nome do campo já utilizado</string>
-    <string name="toast_out_of_range">Você deve digitar um valor válido</string>
+    <string name="toast_out_of_range">Você deve colocar um valor válido</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d tipo de nota disponível</item>
@@ -40,7 +40,7 @@
     <!--Browser-->
     <string name="model_browser_delete">Excluir tipo de nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Renomear</string>
-    <string name="model_browser_template">Editar cards</string>
+    <string name="model_browser_template">Editar cartões</string>
     <string name="model_browser_add">Adicionar tipo de nota</string>
     <!--Rename-->
     <string name="rename_model">Renomear modelos de nota</string>

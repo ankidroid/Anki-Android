@@ -105,6 +105,7 @@
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
+    <string name="browse_cards">Список карточек</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -193,7 +194,15 @@
     <string name="card_template_editor_styling">Стилизация</string>
     <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
+    <string name="card_template_editor_insert_field">Вставить поле</string>
+    <string name="card_template_editor_select_field">Выбрать поле</string>
     <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Будет создана %d карточка. Продолжить?</item>
+        <item quantity="few">Будут созданы %d карточки. Продолжить?</item>
+        <item quantity="many">Будут созданы %d карточек. Продолжить?</item>
+        <item quantity="other">Будут создано %d карточек. Продолжить?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Удалить тип “%2$s” и его %1$d карточку?</item>
         <item quantity="few">Удалить тип “%2$s” и его %1$d карточки?</item>
@@ -215,7 +224,7 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s имеет проблему:<br/>%2$s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">В %1$s есть проблема:<br/>%2$s</string>
     <string name="more_information">Подробнее</string>
     <string name="no_field">Найдена \'{{%1$s}}\', но нет поля с названием \'%1$s\'.</string>
     <string name="closed_tag_not_open">Найдено \'{{/%1$s}}\', но отсутствует \'{{#%1$s}}\' или \'{{{^%1$s}}\'.</string>
@@ -224,11 +233,17 @@
     <string name="wrong_tag_closed">Найдено \'{{/%1$s}}\', но ожидалось \'{{/%2$s}}\'</string>
     <string name="filter_error">Ошибка в фильтре %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите сохранить?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Заменить коллекцию на AnkiDroid коллекцией из AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Заменить коллекцию на AnkiWeb коллекцией из AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Выберите коллекцию для сохранения</string>
+    <string name="sync_conflict_replace_title">Заменить коллекцию</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d карточка (0 к просмотру)</item>
+        <item quantity="few">%1$d карточки (0 к просмотру)</item>
+        <item quantity="many">%1$d карточек (0 к просмотру)</item>
+        <item quantity="other">%1$d карточек (0 к просмотру)</item>
+    </plurals>
 </resources>

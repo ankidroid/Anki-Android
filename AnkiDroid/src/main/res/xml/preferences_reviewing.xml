@@ -56,6 +56,13 @@
             android:key="newTimezoneHandling"
             android:title="@string/new_timezone"
             android:defaultValue="false" />
+        <com.ichi2.preferences.NumberRangePreference
+            android:defaultValue="200"
+            android:key="doubleTapTimeInterval"
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:title="@string/pref_double_tap_time_interval"
+            app:min="0"
+            app:max="2000" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
@@ -130,6 +137,11 @@
             android:defaultValue="true"
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
+        <CheckBoxPreference
+            android:key="showLargeAnswerButtons"
+            android:defaultValue="false"
+            android:summary="@string/show_large_answer_buttons_summ"
+            android:title="@string/show_large_answer_buttons"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
         <com.ichi2.ui.SeekBarPreference

@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener preguntas anidadas</string>
-    <string name="note_editor_set_field_language">Definir el idioma del campo</string>
     <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Las preguntas anidadas sólo funcionarán en un tipo de nota de Pregunta anidada (Cloze)</string>
     <string name="saving_facts">Guardando nota</string>
@@ -279,7 +278,7 @@
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_pen_color">Color del lápiz</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Hola</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Se han encontrado tarjetas vacías. Por favor, ejecute "Herramientas > Tarjetas vacías".]]></string>
     <string name="note_importer_error_empty_first_field">Primer campo vacío: %s</string>
@@ -350,4 +349,5 @@
     <string name="email_id_empty">Se requiere dirección de correo electrónico</string>
     <string name="password_empty">La contraseña es requerida</string>
     <string name="back_pressed_once">Presione atrás de nuevo para salir</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

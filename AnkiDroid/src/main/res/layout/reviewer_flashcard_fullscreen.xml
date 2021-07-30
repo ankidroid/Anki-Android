@@ -19,24 +19,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center"
     android:id="@+id/flashcard_frame"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/flashcard"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/touch_layer"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:longClickable="true" />
     <FrameLayout
         android:layout_gravity="center"
         android:id="@+id/whiteboard"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <ImageView
         android:id="@+id/lookup_button"
         android:layout_width="wrap_content"

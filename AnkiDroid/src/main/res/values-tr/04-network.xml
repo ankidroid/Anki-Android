@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Yine de deneyin</string>
+    <string name="sync_even_if_offline">Tekrar dene</string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error">Hata</string>
     <string name="retry">Yeniden Dene</string>
@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Karşıya yükleniyor...</string>
     <string name="sync_downloading_message">İndiriliyor...</string>
     <string name="sync_title">Senkronizasyon</string>
-    <string name="sync_downloading_media">Medya indiriliyor %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Yerelden tam senkronizasyon</string>
     <string name="sync_log_clocks_unsynchronized">Cihazınızdaki saat %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, zaman ve zaman diliminin doğru ayarlandığından emin olup yeniden senkronize edin.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, muhtemelen cihazınızın saat dilimi yanlış</string>

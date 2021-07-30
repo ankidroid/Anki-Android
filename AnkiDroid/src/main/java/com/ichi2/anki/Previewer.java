@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
@@ -195,7 +196,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void displayCardQuestion() {
+    public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
         updateButtonsState();
@@ -223,7 +224,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    public boolean executeCommand(int which) {
+    public boolean executeCommand(@NonNull ViewerCommand which) {
         /* do nothing */
         return false;
     }

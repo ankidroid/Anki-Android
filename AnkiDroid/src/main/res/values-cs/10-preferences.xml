@@ -94,15 +94,18 @@
     <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
     <string name="gestures_swipe_right" maxLength="41">Tažení doprava</string>
     <string name="gestures_double_tap" maxLength="41">Dvojklepnutí</string>
-    <string name="gestures_tap_top" maxLength="41">Klepnutí nahoru</string>
+    <string name="gestures_long_tap" maxLength="41">Dlouhý stisk</string>
+    <string name="gestures_tap_top" maxLength="41">Klepnutí nahoře</string>
     <string name="gestures_tap_left" maxLength="41">Klepnutí vlevo</string>
     <string name="gestures_tap_right" maxLength="41">Klepnutí vpravo</string>
-    <string name="gestures_tap_bottom" maxLength="41">Klepnutí dolů</string>
+    <string name="gestures_tap_bottom" maxLength="41">Klepnutí dole</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Klepnutí vlevo nahoře</string>
     <string name="gestures_corner_tap_top_center">Klepnutí nahoře uprostřed</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Klepnutí vpravo nahoře</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci.</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut.</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_backup_max" maxLength="41">Maximální počet záloh</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí (milisekundy)</string>
+    <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
     <string name="show_estimates" maxLength="41">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
+    <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
+    <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
@@ -174,7 +181,7 @@
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="time_limit_summ">XXX min</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
+    <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne (0 je půlnoc, 23 je 11 večer)</string>
     <string name="day_offset_summ">XXX hodin po půlnoci</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Půlnoc</string>
@@ -200,6 +207,11 @@
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
+    <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Pro návrat/ukončit stisknout zpět dvakrát</string>
+    <string name="exit_via_double_tap_back_summ">Vyhnout se nechtěnému opuštění opakování nebo ukončení aplikace</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnout pokročilé statistiky</string>
@@ -234,10 +246,10 @@
     <string name="deck_conf_reminders" maxLength="41">Upomínky</string>
     <string name="deck_conf_steps" maxLength="41">Kroky (v minutách)</string>
     <string name="deck_conf_order" maxLength="41">Pořadí</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nové karty / den</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Nové karty za den</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">Interval absolvování</string>
     <string name="deck_conf_days">XXX dní</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Snadný interval</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Interval pro snadné</string>
     <string name="deck_conf_start_ease" maxLength="41">Počáteční \'snadnost\'</string>
     <string name="deck_conf_max_rev" maxLength="41">Maximum opakovaných za den</string>
     <string name="deck_conf_new_bury" maxLength="41">Přeskočit související nové karty</string>
@@ -247,13 +259,13 @@
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Použít obecné nastavení</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Bonus pro snadné</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Těžký interval</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Interval pro těžké</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Modifikátor intervalu</string>
     <string name="deck_conf_max_ivl" maxLength="41">Maximální interval</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Nový interval</string>
     <string name="deck_conf_min_ivl" maxLength="41">Minimální interval</string>
     <string name="deck_conf_leech_thres" maxLength="41">Práh pro pijavice</string>
-    <string name="deck_conf_fails">XXX chybných</string>
+    <string name="deck_conf_fails">XXX chyb</string>
     <string name="deck_conf_leech_action" maxLength="41">Akce pro pijavice</string>
     <string name="deck_conf_max_time" maxLength="41">Maximální čas pro odpověď</string>
     <string name="deck_conf_seconds">XXX sekund</string>
@@ -285,6 +297,7 @@
     <string name="deck_conf_cram_order" maxLength="41">karty vybrané podle</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
+    <string name="deck_conf_cram_filter_2_check">Povolit druhý filtr</string>
     <string name="deck_conf_cram_steps" maxLength="41">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovat vlastní kroky</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Povolit upomínky pro balíčky v této skupině balíčků</string>
@@ -301,4 +314,15 @@
     <string name="type_in_answer_focus_summ">Automaticky vybrat pole „napište odpověď“ při opakování</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Otevřít seznam změn</string>
+    <string name="binding_add_gesture">Přidat gesto</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

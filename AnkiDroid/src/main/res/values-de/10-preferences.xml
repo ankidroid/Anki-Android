@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch" maxLength="41">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">hallo</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Navigationsleiste öffnen, wenn rechts von überall auf dem Bildschirm gewischt wird</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
     <string name="gestures_swipe_left" maxLength="41">Nach links wischen</string>
     <string name="gestures_swipe_right" maxLength="41">Nach rechts wischen</string>
     <string name="gestures_double_tap" maxLength="41">Doppelt antippen</string>
+    <string name="gestures_long_tap" maxLength="41">Langes Berühren</string>
     <string name="gestures_tap_top" maxLength="41">Oben antippen</string>
     <string name="gestures_tap_left" maxLength="41">Links antippen</string>
     <string name="gestures_tap_right" maxLength="41">Rechts antippen</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-Konto</string>
     <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische Synchronisierung</string>
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_backup_max" maxLength="41">Maximale Anzahl an Sicherungen</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen (ms)</string>
+    <string name="pref_double_tap_time_interval_summary">Ein zweites Antippen der Antworttasten wird ignoriert, wenn diese Zeit nicht verstrichen ist. Dies verhindert versehentliches doppeltes Antippen</string>
     <string name="show_estimates" maxLength="41">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
+    <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
+    <string name="show_large_answer_buttons_summ">Antwortschaltfläche in 2 Zeilen anzeigen</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
     <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
@@ -200,6 +207,11 @@
     <string name="thirdparty_apps_summary">Eine Liste von Anwendungen anzeigen, die die AnkiDroid-API verwenden (z. B. Wörterbücher, Werkzeuge etc.)</string>
     <string name="html_javascript_debugging" maxLength="41">HTML/Javascript-Debugging</string>
     <string name="html_javascript_debugging_summ">Remote-WebView-Verbindungen aktivieren und Karten-HTML ins AnkiDroid-Verzeichnis speichern</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
+    <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Option verwenden, um stattdessen PNG-Bilder einzufügen.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Zweimal Zurück drücken, um zurückzugehen</string>
+    <string name="exit_via_double_tap_back_summ">Um zu vermeiden, dass Sie den Rezensenten oder die App versehentlich verlassen</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Erweiterte Statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Erweiterte Statistik aktivieren</string>
@@ -281,6 +293,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Karten ausgewählt nach</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Neu planen</string>
     <string name="deck_conf_cram_reschedule_summ">Karten basierend auf meinen Antworten in diesem Stapel umplanen</string>
+    <string name="deck_conf_cram_filter_2_check">Zweiten Filter einschalten</string>
     <string name="deck_conf_cram_steps" maxLength="41">Personalisierte Schritte (in Minuten)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Personalisierte Schritte definieren</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Erinnerungsbenachrichtigungen für Stapel in dieser Stapelgruppe aktivieren</string>
@@ -293,8 +306,19 @@
     <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
     <string name="no_code_formatting" maxLength="41">Einfache Formatierung von Antworten</string>
     <string name="no_code_formatting_summ">Behebt das Erscheinen von  »􏿾« in eingetippten Antworten</string>
-    <string name="type_in_answer_focus" maxLength="41">Auf \"Antwort eingeben\" fokussieren</string>
-    <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf \"Antwort eingeben\" fokussieren</string>
+    <string name="type_in_answer_focus" maxLength="41">Auf »Antwort eingeben« fokussieren</string>
+    <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf »Antwort eingeben« fokussieren</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
+    <string name="binding_add_gesture">Geste hinzufügen</string>
+    <string name="binding_add_key">Schlüssel hinzufügen</string>
+    <string name="key_picker_default_press_key">Eine Taste drücken</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Kartenseite auswählen</string>
+    <string name="card_side_question">Frage</string>
+    <string name="card_side_answer">Antwort</string>
+    <string name="card_side_both">Frage &amp; Antwort</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

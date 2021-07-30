@@ -16,75 +16,95 @@
 
 package com.ichi2.anki.cardviewer;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import com.ichi2.anki.R;
 
-import androidx.annotation.IntDef;
+import java.util.Arrays;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /** Abstraction: Discuss moving many of these to 'Reviewer' */
-public class ViewerCommand {
-    public static final int COMMAND_NOTHING = 0;
-    public static final int COMMAND_SHOW_ANSWER = 1;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE1 = 2;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE2 = 3;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE3 = 4;
-    public static final int COMMAND_FLIP_OR_ANSWER_EASE4 = 5;
-    public static final int COMMAND_FLIP_OR_ANSWER_RECOMMENDED = 6;
-    public static final int COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED = 7;
-    public static final int COMMAND_UNDO = 8;
-    public static final int COMMAND_EDIT = 9;
-    public static final int COMMAND_MARK = 10;
-    public static final int COMMAND_LOOKUP = 11;
-    public static final int COMMAND_BURY_CARD = 12;
-    public static final int COMMAND_SUSPEND_CARD = 13;
-    public static final int COMMAND_DELETE = 14;
-    public static final int COMMAND_PLAY_MEDIA = 16;
-    public static final int COMMAND_EXIT = 17;
-    public static final int COMMAND_BURY_NOTE = 18;
-    public static final int COMMAND_SUSPEND_NOTE = 19;
-    public static final int COMMAND_TOGGLE_FLAG_RED = 20;
-    public static final int COMMAND_TOGGLE_FLAG_ORANGE = 21;
-    public static final int COMMAND_TOGGLE_FLAG_GREEN = 22;
-    public static final int COMMAND_TOGGLE_FLAG_BLUE = 23;
-    public static final int COMMAND_UNSET_FLAG = 24;
-    public static final int COMMAND_ANSWER_FIRST_BUTTON = 25;
-    public static final int COMMAND_ANSWER_SECOND_BUTTON = 26;
-    public static final int COMMAND_ANSWER_THIRD_BUTTON = 27;
-    public static final int COMMAND_ANSWER_FOURTH_BUTTON = 28;
-    /** Answer "Good" */
-    public static final int COMMAND_ANSWER_RECOMMENDED = 29;
-    public static final int COMMAND_PAGE_UP = 30;
-    public static final int COMMAND_PAGE_DOWN = 31;
+public enum ViewerCommand {
 
-    public static final int COMMAND_TAG = 32;
-    public static final int COMMAND_CARD_INFO = 33;
-    public static final int COMMAND_ABORT_AND_SYNC = 34;
-    public static final int COMMAND_RECORD_VOICE = 35;
-    public static final int COMMAND_REPLAY_VOICE = 36;
+    COMMAND_NOTHING(R.string.nothing, 0),
+    COMMAND_SHOW_ANSWER(R.string.show_answer, 1),
+    COMMAND_FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1, 2),
+    COMMAND_FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2, 3),
+    COMMAND_FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3, 4),
+    COMMAND_FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4, 5),
+    COMMAND_FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green, 6),
+    COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended, 7),
+    COMMAND_UNDO(R.string.undo, 8),
+    COMMAND_EDIT(R.string.cardeditor_title_edit_card, 9),
+    COMMAND_MARK(R.string.menu_mark_note, 10),
+    COMMAND_LOOKUP(R.string.lookup_button_content, 11),
+    COMMAND_BURY_CARD(R.string.menu_bury, 12),
+    COMMAND_SUSPEND_CARD(R.string.menu_suspend_card, 13),
+    COMMAND_DELETE(R.string.menu_delete_note, 14),
+    COMMAND_UNUSED_15(R.string.nothing, 15),
+    COMMAND_PLAY_MEDIA(R.string.gesture_play,16),
+    COMMAND_EXIT(R.string.nothing, 17),
+    COMMAND_BURY_NOTE(R.string.menu_bury_note, 18),
+    COMMAND_SUSPEND_NOTE(R.string.menu_suspend_note, 19),
+    COMMAND_TOGGLE_FLAG_RED(R.string.gesture_flag_red, 20),
+    COMMAND_TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange, 21),
+    COMMAND_TOGGLE_FLAG_GREEN(R.string.gesture_flag_green, 22),
+    COMMAND_TOGGLE_FLAG_BLUE(R.string.gesture_flag_blue, 23),
+    COMMAND_UNSET_FLAG(R.string.gesture_flag_remove, 24),
+    COMMAND_ANSWER_FIRST_BUTTON(R.string.gesture_answer_1, 25),
+    COMMAND_ANSWER_SECOND_BUTTON(R.string.gesture_answer_2, 26),
+    COMMAND_ANSWER_THIRD_BUTTON(R.string.gesture_answer_3, 27),
+    COMMAND_ANSWER_FOURTH_BUTTON(R.string.gesture_answer_4, 28),
+    COMMAND_ANSWER_RECOMMENDED(R.string.gesture_answer_green, 29),
+    COMMAND_PAGE_UP(R.string.gesture_page_up, 30),
+    COMMAND_PAGE_DOWN(R.string.gesture_page_down, 31),
+    COMMAND_TAG(R.string.add_tag, 32),
+    COMMAND_CARD_INFO(R.string.card_info_title, 33),
+    COMMAND_ABORT_AND_SYNC(R.string.gesture_abort_sync, 34),
+    COMMAND_RECORD_VOICE(R.string.record_voice, 35),
+    COMMAND_REPLAY_VOICE(R.string.replay_voice, 36),
+    COMMAND_TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard, 37);
 
-    public static final int COMMAND_TOGGLE_WHITEBOARD = 37;
+    private final int mResourceId;
+    private final int mPreferenceValue;
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
-            COMMAND_FLIP_OR_ANSWER_EASE3, COMMAND_FLIP_OR_ANSWER_EASE4, COMMAND_FLIP_OR_ANSWER_RECOMMENDED,
-            COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, COMMAND_UNDO, COMMAND_EDIT, COMMAND_MARK, COMMAND_LOOKUP,
-            COMMAND_BURY_CARD, COMMAND_SUSPEND_CARD, COMMAND_DELETE, COMMAND_PLAY_MEDIA, COMMAND_EXIT,
-            COMMAND_BURY_NOTE, COMMAND_SUSPEND_NOTE, COMMAND_TOGGLE_FLAG_RED, COMMAND_TOGGLE_FLAG_ORANGE,
-            COMMAND_TOGGLE_FLAG_GREEN, COMMAND_TOGGLE_FLAG_BLUE, COMMAND_UNSET_FLAG, COMMAND_ANSWER_FIRST_BUTTON,
-            COMMAND_ANSWER_SECOND_BUTTON, COMMAND_ANSWER_THIRD_BUTTON, COMMAND_ANSWER_FOURTH_BUTTON, COMMAND_ANSWER_RECOMMENDED,
-            COMMAND_PAGE_UP, COMMAND_PAGE_DOWN, COMMAND_TAG, COMMAND_CARD_INFO, COMMAND_ABORT_AND_SYNC, COMMAND_RECORD_VOICE,
-            COMMAND_REPLAY_VOICE, COMMAND_TOGGLE_WHITEBOARD
-    })
-    public @interface ViewerCommandDef {}
+
+    ViewerCommand(int resourceId, int preferenceValue) {
+        this.mResourceId = resourceId;
+        this.mPreferenceValue = preferenceValue;
+    }
+
+    public int getResourceId() {
+        return mResourceId;
+    }
+
+    @Nullable
+    public static ViewerCommand fromString(String value) {
+        return fromInt(Integer.parseInt(value));
+    }
+
+    @Nullable
+    public static ViewerCommand fromInt(int valueAsInt) {
+        // PERF: this is slow, but won't be used for long
+        return Arrays.stream(ViewerCommand.values()).filter(x -> x.mPreferenceValue == valueAsInt).findFirst().orElse(null);
+    }
+
+
+    public String toPreferenceString() {
+        return Integer.toString(mPreferenceValue);
+    }
+
+
+    public String getPreferenceKey() {
+        return "binding_" + name().replaceFirst("COMMAND_", "");
+    }
+
 
     public interface CommandProcessor {
         /**
-         *
-         * @param which The command (defined in {@code ViewerCommand}) to execute
-         * @return Whether the action was successfully processed.
-         * <p>example failure: answering an ease on the front of the card</p>
+          * <p>example failure: answering an ease on the front of the card</p>
          */
         @SuppressWarnings("UnusedReturnValue")
-        boolean executeCommand(@ViewerCommandDef int which);
+        boolean executeCommand(@NonNull ViewerCommand which);
     }
 }

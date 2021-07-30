@@ -34,30 +34,30 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
+    <string name="multimedia_editor_popup_image">Προσθήκη εικόνας</string>
+    <string name="multimedia_editor_popup_audio_clip">Προσθήκη κλιπ ήχου</string>
+    <string name="multimedia_editor_popup_audio">Ηχογράφηση</string>
     <string name="multimedia_editor_popup_text">Advanced editor</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Απαλοιφή πεδίου</string>
     <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
+    <string name="multimedia_editor_trans_poweredglosbe">Με την υποστήριξη του glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">From</string>
-    <string name="multimedia_editor_trans_to">To</string>
+    <string name="multimedia_editor_trans_from">Από</string>
+    <string name="multimedia_editor_trans_to">Σε</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Μετάφραση</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Translating online</string>
     <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
+    <string name="multimedia_editor_trans_pick_translation">Επιλογή μετάφρασης</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Pick dictionary</string>
+    <string name="multimedia_editor_trans_pick_translation_source">Επιλογή λεξικού</string>
     <!-- dialog asking to install ColorDict -->
     <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
+    <string name="multimedia_editor_pron_load">Φόρτωση</string>
     <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Wait</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
+    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">Επισύναψη πολυμέσων</string>
     <!-- Audio view -->
@@ -117,7 +118,7 @@
     <!-- Network failure -->
     <string name="network_no_connection">Χωρίς σύνδεση</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
+    <string name="crop_image">Θέλετε να περικόψετε αυτή την εικόνα;</string>
     <string name="crop_button">Περικοπή εικόνας</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>

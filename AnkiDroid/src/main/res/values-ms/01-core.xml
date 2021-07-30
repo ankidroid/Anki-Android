@@ -49,38 +49,38 @@
     <string name="studyoptions_due_today">Tamat hari ini:</string>
     <string name="studyoptions_new_total">Jumlah kad baharu:</string>
     <string name="studyoptions_total_cards">Jumlah kad:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_eta">Masa anggaran (min):</string>
+    <string name="studyoptions_start">Ulang kaji</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Kembangkan</string>
+    <string name="collapse">Tutupkan</string>
+    <string name="study_more">Ulangkaji lebih</string>
     <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d kad yang tinggal (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d jam %d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">%d hari %d jam tinggal</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Koleksi kosong</string>
+    <string name="no_cards_placeholder_description">Mula menambah kad\ndengan menggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">%1$d kad dipelajari dalam %2$s hari ini</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
+    <string name="type_answer_hint">Taip jawapan</string>
+    <string name="show_answer">Tunjuk jawapan</string>
+    <string name="hide_answer">Sembunyi jawapan</string>
+    <string name="ease_button_again">Ulang</string>
+    <string name="ease_button_hard">Susah</string>
+    <string name="ease_button_good">Baik</string>
+    <string name="ease_button_easy">Senang</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>
@@ -90,6 +90,7 @@
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
@@ -124,7 +125,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Sila berikan AnkiDroid kebenaran \'Storan\' untuk teruskan</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -178,7 +179,12 @@
     <string name="card_template_editor_styling">Styling</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Sekurang-kurangnya satu jenis kad diperlukan</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
@@ -213,4 +219,7 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -48,4 +48,39 @@ public class ExceptionUtilTest {
 
         assertThat(message, is(""));
     }
+
+    @Test
+    public void exceptionMessageNestedNull() {
+        // a single null should be displayed, a nested null shouldn't be
+        Exception inner = new Exception();
+        Exception e = new Exception("Hello", inner);
+
+        String message = ExceptionUtil.getExceptionMessage(e);
+
+        assertThat(message, is("Hello"));
+    }
+
+    @Test
+    public void containsCauseExact() {
+        Exception ex = new IllegalStateException();
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    }
+
+    @Test
+    public void containsCauseNested() {
+        Exception ex = new Exception(new IllegalStateException());
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    }
+
+    @Test
+    public void containsCauseMissing() {
+        Exception ex = new Exception();
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    }
+
+    @Test
+    public void containsCauseMissingNested() {
+        Exception ex = new Exception(new Exception());
+        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    }
 }

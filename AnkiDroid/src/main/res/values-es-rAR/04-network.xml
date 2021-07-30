@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Subiendo...</string>
     <string name="sync_downloading_message">Descargando&#8230;</string>
     <string name="sync_title">Sincronización</string>
-    <string name="sync_downloading_media">Descargando archivos multimedia %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Sincronización desde el dispositivo completa</string>
     <string name="sync_log_clocks_unsynchronized">El reloj de su dispositivo está errado por %1$d segundos%2$s; la sincronización requiere que tanto su reloj como la zona horaria estén correctamente configurados de modo de evitar errores. Por favor, asegúrese de que el día, la hora y la zona horaria de su teléfono está correctamente configurados, y luego intente nuevamente con la sincronización.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo está probablemente equivocada</string>

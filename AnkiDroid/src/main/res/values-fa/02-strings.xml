@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
     <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
     <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
-    <string name="note_editor_set_field_language">تنظیم زبان زمینه</string>
     <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ذخیره یادداشت</string>
@@ -328,8 +327,8 @@
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_heading">افزودن سربرگ</string>
+    <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="before_text">HTML Before Selection</string>
@@ -350,4 +349,5 @@
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
     <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
 </resources>

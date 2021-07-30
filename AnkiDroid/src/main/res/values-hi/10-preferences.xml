@@ -93,12 +93,15 @@
     <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">९-बिंदु स्पर्श</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch_summary">स्क्रीन कोनों में स्पर्श इशारों की अनुमति दें</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">फुल स्क्रीन नेविगेशन दराज</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">स्क्रीन पर कहीं से भी स्वाइप किए जाने पर नेविगेशन दराज खोलें</string>
     <string name="gestures_swipe_up" maxLength="41">ऊपर की ओर स्वाइप</string>
     <string name="gestures_swipe_down" maxLength="41">निचे की ओर स्वाइप</string>
     <string name="gestures_swipe_left" maxLength="41">बाएं स्वाइप करें</string>
     <string name="gestures_swipe_right" maxLength="41">दाएं स्वाइप करें</string>
     <string name="gestures_double_tap" maxLength="41">डबल टच</string>
+    <string name="gestures_long_tap" maxLength="41">Long touch</string>
     <string name="gestures_tap_top" maxLength="41">टच टॉप</string>
     <string name="gestures_tap_left" maxLength="41">बाएं स्पर्श करें</string>
     <string name="gestures_tap_right" maxLength="41">दाएं स्पर्श करें</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">सिंक्रनाइज़ करते समय गुम मीडिया स्वचालित रूप से लाएं</string>
     <string name="sync_account" maxLength="41">AnkiWeb खाता</string>
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
@@ -161,8 +164,12 @@
     <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
     <string name="pref_backup_max" maxLength="41">बैकअप की अधिकतम संख्या</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="show_estimates" maxLength="41">बटन समय दिखाएं</string>
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
+    <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
+    <string name="show_large_answer_buttons_summ">२ पंक्तियों में उत्तर बटन दिखाएं</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
@@ -176,10 +183,10 @@
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">अगले दिन की शुरुआत (0 आधी रात है, 23 11PM है)</string>
-    <string name="day_offset_summ">XXX घंटे पिछले आधी रात</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
+    <string name="day_offset_summ">मध्यरात्रि से XXX घंटे</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">मध्यरात्रि</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2" maxLength="41">V2 अनुसूचक</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">पुष्टि करें</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
@@ -200,6 +207,11 @@
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">उंनत सांख्यिकी</string>
     <string name="enable_advanced_statistics_title" maxLength="41">उंनत आंकड़े सक्षम करें</string>
@@ -281,6 +293,7 @@
     <string name="deck_conf_cram_order" maxLength="41">द्वारा चयनित कार्ड</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
+    <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>
     <string name="deck_conf_cram_steps" maxLength="41">कस्टम चरण (मिनटों में)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">कस्टम चरणों को परिभाषित करें</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
@@ -297,4 +310,15 @@
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
+    <string name="binding_add_gesture">इशारा जोड़ें</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

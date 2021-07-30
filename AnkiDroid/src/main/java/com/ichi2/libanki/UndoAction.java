@@ -18,27 +18,53 @@ package com.ichi2.libanki;
 
 import android.content.res.Resources;
 
+import com.ichi2.anki.R;
 import com.ichi2.utils.ArrayUtil;
 import com.ichi2.utils.LanguageUtil;
 
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import timber.log.Timber;
 
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
 public abstract class UndoAction {
-    @StringRes public final int mUndoNameId;
+    @StringRes @UNDO_NAME_ID public final int mUndoNameId;
+
+    @Retention(SOURCE)
+    @IntDef( {
+            R.string.undo_action_change_deck_multi,
+            R.string.menu_delete_note,
+            R.string.card_browser_delete_card,
+            R.string.card_browser_mark_card,
+            R.string.card_browser_unmark_card,
+            R.string.menu_suspend_card,
+            R.string.card_browser_unsuspend_card,
+            R.string.undo_action_review,
+            R.string.menu_bury_note,
+            R.string.menu_suspend_note,
+            R.string.card_editor_reposition_card,
+            R.string.card_editor_reschedule_card,
+            R.string.menu_bury_card,
+            R.string.card_editor_reset_card,
+
+    })
+    public @interface UNDO_NAME_ID {}
+
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
      * It's the caller reponsability to clone the object if necessary.*/
-    public UndoAction(@StringRes int undoNameId) {
+    public UndoAction(@StringRes @UNDO_NAME_ID int undoNameId) {
         mUndoNameId = undoNameId;
     }
 
@@ -61,7 +87,7 @@ public abstract class UndoAction {
      * @param card the card currently in the reviewer
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
-    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes int undoNameId, Card card){
+    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card){
         return revertToProvidedState(undoNameId, card, card.note().cards());
     }
 
@@ -71,7 +97,7 @@ public abstract class UndoAction {
      * @param card the card currently in the reviewer
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
-    public static @NonNull UndoAction revertCardToProvidedState(@StringRes int undoNameId, Card card){
+    public static @NonNull UndoAction revertCardToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card){
         return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()));
     }
 
@@ -83,7 +109,7 @@ public abstract class UndoAction {
      * @param cards The cards that must be reverted
      * @return An UndoAction which, if executed, put back the `card` in the state given here
      */
-    private static @NonNull UndoAction revertToProvidedState(@StringRes int undoNameId, Card card, Iterable<Card> cards){
+    private static @NonNull UndoAction revertToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card, Iterable<Card> cards){
         return new UndoAction(undoNameId) {
             public @Nullable
             Card undo(@NonNull Collection col) {

@@ -19,7 +19,7 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.widget.TimePicker;
 
-/** Implementation of {@link Compat} for SDK level 23 */
+/** Implementation of {@link Compat} for SDK level 23 and higher. Check  {@link Compat}'s for more detail. */
 @TargetApi(23)
 public class CompatV23 extends CompatV21 implements Compat {
 
