@@ -22,16 +22,12 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.CorruptModelException;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -49,6 +45,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
 
 import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
 import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
@@ -268,7 +267,10 @@ public class Models {
     public Model current(boolean forDeck) {
         Model m = null;
         if (forDeck) {
-            m = get(mCol.getDecks().current().optLong("mid", -1));
+            try {
+                m = get(mCol.getDecks().current().optLong("mid", -1));
+            } catch (CorruptModelException ignored) {
+            }
         }
         if (m == null) {
             m = get(mCol.getConf().optLong("curModel", -1));
