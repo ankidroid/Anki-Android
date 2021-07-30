@@ -3,6 +3,7 @@ package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -111,7 +112,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 if (!unused.isEmpty()) {
                     reportTextView.append(getString(R.string.unused_strings));
 
-                    fileListTextView.append(unused.stream().collect(Collectors.joining("\n")));
+                    fileListTextView.append(TextUtils.join("\n", unused));
 
                     fileListTextView.setScrollbarFadingEnabled(unused.size() <= fileListTextView.getMaxLines());
                     fileListTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
