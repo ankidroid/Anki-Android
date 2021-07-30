@@ -1,16 +1,21 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
@@ -73,36 +78,62 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 final ArrayList<String> unused = getArguments().getStringArrayList("unused");
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
                 // Generate report
-                String report = "";
+                final StringBuilder report = new StringBuilder();
                 if (invalid.size() > 0) {
-                    report += String.format(res().getString(R.string.check_media_invalid), invalid.size());
+                    report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size()));
                 }
                 if (unused.size() > 0) {
                     if (report.length() > 0) {
-                        report += "\n";
+                        report.append("\n");
                     }
-                    report += String.format(res().getString(R.string.check_media_unused), unused.size());
+                    report.append(String.format(res().getString(R.string.check_media_unused), unused.size()));
                 }
                 if (nohave.size() > 0) {
                     if (report.length() > 0) {
-                        report += "\n";
+                        report.append("\n");
                     }
-                    report += String.format(res().getString(R.string.check_media_nohave), nohave.size());
+                    report.append(String.format(res().getString(R.string.check_media_nohave), nohave.size()));
                 }
 
                 if (report.length() == 0) {
-                    report = res().getString(R.string.check_media_no_unused_missing);
+                    report.append(res().getString(R.string.check_media_no_unused_missing));
                 }
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
-                report = res().getString(R.string.check_media_db_updated) + "\n\n" + report;
-                builder.content(report)
-                        .cancelable(true);
+                final String reportStr = res().getString(R.string.check_media_db_updated) + "\n\n" + report.toString();
 
-                // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
-                // needs to acknowledge the results, so show only an OK dialog.
-                if (unused.size() > 0) {
+                LinearLayout contentLinearLayout = new LinearLayout(builder.getContext()) {{
+                    setOrientation(LinearLayout.VERTICAL);
+                    setPadding(50, 0, 50, 0);
+                }};
+
+                // add a textview at the start of dialog for overall report
+                new AppCompatTextView(builder.getContext()) {{
+                    setText(reportStr);
+                    setTextSize(15);
+                    setTypeface(null, Typeface.BOLD);
+                    append(unused.isEmpty() ? "" : getString(R.string.unused_strings));
+
+                    contentLinearLayout.addView(this);
+                }};
+
+                if (!unused.isEmpty()) {
+                    // add a scrollable text view at the end of dialog to show file list
+                    new AppCompatTextView(builder.getContext()) {{
+                        setText("\t");
+                        append(unused.stream().collect(Collectors.joining("\n\t")));
+                        setTextSize(12.5f);
+                        setVerticalScrollBarEnabled(true);
+                        setHorizontallyScrolling(true); // for long names
+                        setMovementMethod(new ScrollingMovementMethod());
+                        setMaxLines(7);
+
+                        contentLinearLayout.addView(this);
+                    }};
+
+                    // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
+                    // needs to acknowledge the results, so show only an OK dialog.
                     builder.positiveText(res().getString(R.string.dialog_ok))
                             .negativeText(res().getString(R.string.check_media_delete_unused))
                             .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity())
@@ -115,7 +146,10 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                     builder.positiveText(res().getString(R.string.dialog_ok))
                             .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
                 }
-                return builder.show();
+                return builder
+                        .customView(contentLinearLayout, false)
+                        .cancelable(true)
+                        .show();
             }
             default:
                 return null;
