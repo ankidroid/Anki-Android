@@ -33,6 +33,7 @@
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="initializing_tts">Initializing TTS…</string>
     <string name="tts_no_tts">Don’t speak</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
 
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]></item>
@@ -205,7 +206,7 @@
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
-    
+
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
