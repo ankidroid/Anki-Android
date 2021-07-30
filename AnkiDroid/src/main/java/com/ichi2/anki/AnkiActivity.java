@@ -542,33 +542,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showAsyncDialogFragment(newFragment);
     }
 
-
-    public boolean checkAndHandleDBCorrupt() {
-        if (getCol() != null && isDatabaseCorrupt(getCol())) {
-            showDbCorruptDialog();
-            return true;
-        }
-        return false;
-    }
-
-
-    public boolean isDatabaseCorrupt(Collection col) {
-        try (Cursor cursor = col.getDb().query("SELECT mid FROM notes")) {
-            boolean moveToFirst = cursor.moveToFirst();
-            if (moveToFirst) {
-                do {
-                    long mMid = cursor.getLong(0);
-                    if (col.getModels().get(mMid) == null) {
-                        return true;
-                    }
-                } while (cursor.moveToNext());
-            }
-        }
-
-        return false;
-    }
-
-
     public void showDbCorruptDialog() {
         Timber.d("showDbCorruptDialog()");
         if (this instanceof DeckPicker) {

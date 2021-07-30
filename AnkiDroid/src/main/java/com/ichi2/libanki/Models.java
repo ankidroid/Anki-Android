@@ -27,6 +27,7 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.CorruptModelException;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.utils.Assert;
@@ -292,7 +293,7 @@ public class Models {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
-            return null;
+            throw new CorruptModelException();
         }
     }
 

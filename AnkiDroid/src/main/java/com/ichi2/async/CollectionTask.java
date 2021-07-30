@@ -36,6 +36,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.exception.CorruptModelException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
@@ -334,7 +335,12 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
             Card newCard = sched.getCard();
             if (newCard != null) {
                 // render cards before locking database
-                newCard._getQA(true);
+                try {
+                    newCard._getQA(true);
+                } catch (CorruptModelException e) {
+                    Timber.w(e, "doInBackgroundGetCard - error");
+                    return FALSE;
+                }
             }
             collectionTask.doProgress(newCard);
             return TRUE;
@@ -1167,7 +1173,12 @@ public class CollectionTask<ProgressBackground, ResultBackground> extends BaseAs
                     Timber.d("doInBackgroundSearchCards was cancelled so return null");
                     return null;
                 }
-                searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+                try {
+                    searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
+                } catch (CorruptModelException e) {
+                    Timber.w(e, "doInBackgroundSearchCards - error");
+                    return null;
+                }
             }
             // Finish off the task
             if (collectionTask.isCancelled()) {

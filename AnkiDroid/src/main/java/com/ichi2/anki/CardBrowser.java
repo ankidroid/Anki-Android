@@ -1932,6 +1932,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 mCards.replaceWith(result);
                 updateList();
                 handleSearchResult();
+            } else {
+                browser.closeCardBrowser(DeckPicker.RESULT_MODEL_CORRUPT);
             }
             if (mShouldRestoreScroll) {
                 mShouldRestoreScroll = false;

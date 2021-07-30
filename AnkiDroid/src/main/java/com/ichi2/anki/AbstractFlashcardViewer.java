@@ -750,6 +750,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             super.onPreExecute();
             blockControls(mQuick);
         }
+
+
+        @Override
+        public void onPostExecute(BooleanGetter booleanGetter) {
+            if (!booleanGetter.getBoolean()) {
+                closeReviewer(DeckPicker.RESULT_MODEL_CORRUPT, false);
+            }
+        }
     }
 
 

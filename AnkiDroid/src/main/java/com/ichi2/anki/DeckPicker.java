@@ -166,6 +166,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     public static final int RESULT_MEDIA_EJECTED = 202;
     public static final int RESULT_DB_ERROR = 203;
+    public static final int RESULT_MODEL_CORRUPT = 204;
 
     protected static final String UPGRADE_VERSION_KEY = "lastUpgradeVersion";
 
@@ -529,12 +530,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        boolean dbIsCorrupt = getIntent().getBooleanExtra("corruptDB", false);
-        if (dbIsCorrupt) {
-            getIntent().putExtra("corruptDB", false); // to prevent opening dialog multiple times on top of eachother
-            showDbCorruptDialog();
-        }
     }
 
     /**
@@ -848,6 +843,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         } else if (resultCode == RESULT_DB_ERROR) {
             handleDbError();
+            return;
+        } else if (resultCode == RESULT_MODEL_CORRUPT) {
+            showDbCorruptDialog();
             return;
         }
 
