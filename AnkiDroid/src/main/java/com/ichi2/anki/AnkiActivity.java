@@ -9,28 +9,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabColorSchemeParams;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +39,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -565,26 +549,21 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showAsyncDialogFragment(newFragment);
     }
 
+
     public void showDbCorruptDialog() {
         Timber.d("showDbCorruptDialog()");
-        if (this instanceof DeckPicker) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Corrupt Database")
-                    .setMessage("It looks like your database is corrupt. Do you want to perform a database check?")
-                    .setPositiveButton("Check DB", (dialog, which) -> {
-                        Timber.i("performIntegrityCheck()");
-                        TaskManager.launchCollectionTask(
-                                new CollectionTask.CheckDatabase(),
-                                ((DeckPicker) this).new CheckDatabaseListener()
-                        );
-                    }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss())
-                    .create()
-                    .show();
-        } else {
-            Intent intent = new Intent(this, DeckPicker.class);
-            intent.putExtra("corruptDB", true);
-            startActivityWithoutAnimation(intent);
-        }
+        new AlertDialog.Builder(this)
+                .setTitle("Corrupt Database")
+                .setMessage("It looks like your database is corrupt. Do you want to perform a database check?")
+                .setPositiveButton("Check DB", (dialog, which) -> {
+                    Timber.i("performIntegrityCheck()");
+                    TaskManager.launchCollectionTask(
+                            new CollectionTask.CheckDatabase(),
+                            ((DeckPicker) this).new CheckDatabaseListener()
+                    );
+                }).setNegativeButton("Dismiss", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
 

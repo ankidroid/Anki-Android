@@ -153,7 +153,6 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
-import static com.ichi2.utils.BooleanGetter.FALSE;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two

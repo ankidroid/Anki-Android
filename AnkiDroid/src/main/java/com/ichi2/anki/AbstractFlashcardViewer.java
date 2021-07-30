@@ -39,18 +39,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.webkit.WebViewAssetLoader;
-
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -88,39 +76,40 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
+import com.github.zafarkhaja.semver.Version;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
-import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.template.MathJax;
 import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
@@ -134,7 +123,6 @@ import com.ichi2.utils.Computation;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -160,15 +148,38 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.webkit.WebViewAssetLoader;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
-import static com.ichi2.anki.cardviewer.ViewerCommand.*;
-import static com.ichi2.anki.reviewer.CardMarker.*;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EXIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_RED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNSET_FLAG;
+import static com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.anki.reviewer.CardMarker.FlagDef;
 import static com.ichi2.libanki.Sound.SoundSide;
-
-import com.github.zafarkhaja.semver.Version;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
@@ -746,8 +757,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(BooleanGetter booleanGetter) {
-            if (!booleanGetter.getBoolean()) {
+        public void onPostExecute(Computation<?> computation) {
+            if (computation == Computation.ERR) {
                 closeReviewer(DeckPicker.RESULT_MODEL_CORRUPT, false);
             }
         }

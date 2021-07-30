@@ -329,7 +329,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                     newCard._getQA(true);
                 } catch (CorruptModelException e) {
                     Timber.w(e, "doInBackgroundGetCard - error");
-                    return FALSE;
+                    return ERR;
                 }
             }
             collectionTask.doProgress(newCard);
