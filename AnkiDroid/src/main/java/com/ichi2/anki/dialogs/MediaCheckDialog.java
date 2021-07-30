@@ -1,11 +1,11 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 
 public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
@@ -103,37 +102,20 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 // we do a full media scan and update the db on each media check on AnkiDroid.
                 final String reportStr = res().getString(R.string.check_media_db_updated) + "\n\n" + report.toString();
 
-                LinearLayout contentLinearLayout = new LinearLayout(builder.getContext()) {{
-                    setOrientation(LinearLayout.VERTICAL);
-                    setPadding(50, 0, 50, 0);
-                }};
+                LinearLayout dialogBody = (LinearLayout) getLayoutInflater().inflate(R.layout.media_check_dialog_body, null);
+                TextView reportTextView = dialogBody.findViewById(R.id.reportTextView);
+                TextView fileListTextView = dialogBody.findViewById(R.id.fileListTextView);
 
-                // add a textview at the start of dialog for overall report
-                new AppCompatTextView(builder.getContext()) {{
-                    setText(reportStr);
-                    setTextSize(15);
-                    setTypeface(null, Typeface.BOLD);
-                    append(unused.isEmpty() ? "" : getString(R.string.unused_strings));
-
-                    contentLinearLayout.addView(this);
-                }};
+                reportTextView.setText(reportStr);
 
                 if (!unused.isEmpty()) {
-                    // add a scrollable text view at the end of dialog to show file list
-                    new AppCompatTextView(builder.getContext()) {{
-                        setText("\t");
-                        append(unused.stream().collect(Collectors.joining("\n\t")));
-                        setTextSize(12.5f);
-                        setVerticalScrollBarEnabled(true);
-                        setHorizontallyScrolling(true); // for long names
-                        setMovementMethod(new ScrollingMovementMethod());
-                        setMaxLines(7);
+                    reportTextView.append(getString(R.string.unused_strings));
 
-                        contentLinearLayout.addView(this);
-                    }};
+                    fileListTextView.append(unused.stream().collect(Collectors.joining("\n")));
 
-                    // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
-                    // needs to acknowledge the results, so show only an OK dialog.
+                    fileListTextView.setScrollbarFadingEnabled(unused.size() <= fileListTextView.getMaxLines());
+                    fileListTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
+
                     builder.positiveText(res().getString(R.string.dialog_ok))
                             .negativeText(res().getString(R.string.check_media_delete_unused))
                             .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity())
@@ -147,7 +129,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                             .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
                 }
                 return builder
-                        .customView(contentLinearLayout, false)
+                        .customView(dialogBody, false)
                         .cancelable(true)
                         .show();
             }
