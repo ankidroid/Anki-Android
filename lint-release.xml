@@ -350,4 +350,9 @@
     <issue id="SuspiciousImport" severity="ignore" />
     <issue id="WrongFolder" severity="ignore" />
     <issue id="WrongThreadInterprocedural" severity="ignore" />
+
+
+    <issue id="CustomX509TrustManager" severity="ignore" />
+    <!-- PERF: Could improve by not using notifyDataSetChanged() -->
+    <issue id="NotifyDataSetChanged" severity="ignore" />
 </lint>
