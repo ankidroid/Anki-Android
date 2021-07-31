@@ -32,6 +32,7 @@ import java.util.Collections;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.JSONUtilsTest.assertThrowsJSONExceptionEncapsulating;
 import static org.junit.Assert.*;
 
 /**
@@ -45,16 +46,10 @@ public class JSONArrayTest {
         JSONArray array = new JSONArray();
         assertEquals(0, array.length());
         assertEquals("", array.join(" AND "));
-        try {
-            array.get(0);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.getBoolean(0);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(0));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.getBoolean(0));
         assertEquals("[]", array.toString());
         assertEquals("[]", array.toString(4));
         // out of bounds is co-opted with defaulting
@@ -138,21 +133,12 @@ public class JSONArrayTest {
         assertEquals("[null,null,null,null]", array.toString());
         // there's 2 ways to represent null; each behaves differently!
         assertEquals(JSONObject.NULL, array.get(0));
-        try {
-            array.get(1);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.get(2);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.get(3);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(1));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(2));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(3));
         assertEquals(JSONObject.NULL, array.opt(0));
         assertEquals(null, array.opt(1));
         assertEquals(null, array.opt(2));
@@ -166,6 +152,7 @@ public class JSONArrayTest {
         assertEquals("", array.optString(2));
         assertEquals("", array.optString(3));
     }
+
     /**
      * Our behaviour is questioned by this bug:
      * http://code.google.com/p/android/issues/detail?id=7257
@@ -176,18 +163,12 @@ public class JSONArrayTest {
         array.put(null);
         assertEquals("null", array.get(0));
         assertEquals(JSONObject.NULL, array.get(1));
-        try {
-            array.get(2);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(2));
         assertEquals("null", array.getString(0));
         assertEquals("null", array.getString(1));
-        try {
-            array.getString(2);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.getString(2));
     }
     @Test
     public void testNumbers() throws JSONException {
@@ -271,11 +252,8 @@ public class JSONArrayTest {
         assertEquals(9.223372036854776E18, array.getDouble(2), 0);
         assertEquals(Integer.MAX_VALUE, array.getInt(2));
         assertFalse(array.isNull(3));
-        try {
-            array.getDouble(3);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.getDouble(3));
         assertEquals(Double.NaN, array.optDouble(3), 0);
         assertEquals(-1.0d, array.optDouble(3, -1.0d), 0);
     }
@@ -369,21 +347,12 @@ public class JSONArrayTest {
     @Test
     public void testPutUnsupportedNumbers() throws JSONException {
         JSONArray array = new JSONArray();
-        try {
-            array.put(Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.put(0, Double.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.put(0, Double.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.put(Double.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.put(0, Double.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.put(0, Double.POSITIVE_INFINITY));
     }
     @Test
     public void testPutUnsupportedNumbersAsObject() throws JSONException {
@@ -426,11 +395,8 @@ public class JSONArrayTest {
     }
     @Test
     public void testTokenerConstructorWrongType() throws JSONException {
-        try {
-            new JSONArray(new JSONTokener("{\"foo\": false}"));
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONArray(new JSONTokener("{\"foo\": false}")));
     }
     @Test
     public void testTokenerConstructorNull() throws JSONException {
@@ -458,11 +424,8 @@ public class JSONArrayTest {
     }
     @Test
     public void testStringConstructorWrongType() throws JSONException {
-        try {
-            new JSONArray("{\"foo\": false}");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONArray("{\"foo\": false}"));
     }
     @Test
     public void testStringConstructorNull() throws JSONException {
@@ -475,9 +438,8 @@ public class JSONArrayTest {
     @Test
     public void testStringConstructorParseFail() {
         try {
-            new JSONArray("[");
-            fail();
-        } catch (JSONException e) {
+            assertThrowsJSONExceptionEncapsulating(
+                    () -> new JSONArray("["));
         } catch (StackOverflowError e) {
             fail("Stack overflowed on input: \"[\"");
         }
@@ -498,25 +460,13 @@ public class JSONArrayTest {
         assertEquals(null, array.opt(-3));
         assertEquals("", array.optString(3));
         assertEquals("", array.optString(-3));
-        try {
-            array.get(3);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.get(-3);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.getString(3);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.getString(-3);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(3));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(-3));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.getString(3));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.getString(-3));
     }
 }
