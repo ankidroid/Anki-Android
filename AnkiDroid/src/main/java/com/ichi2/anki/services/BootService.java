@@ -13,6 +13,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
@@ -104,7 +105,7 @@ public class BootService extends BroadcastReceiver {
                 final JSONObject reminder = deckConfiguration.getJSONObject("reminder");
 
                 if (reminder.getBoolean("enabled")) {
-                    final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                    final PendingIntent reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
                                                                                     context,
                                                                                     (int) deckConfiguration.getLong("id"),
                                                                                     new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_OPTION_ID,
@@ -137,7 +138,7 @@ public class BootService extends BroadcastReceiver {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         final PendingIntent notificationIntent =
-                PendingIntent.getBroadcast(context, 0, new Intent(context, NotificationService.class), 0);
+                CompatHelper.getCompat().getImmutableBroadcastIntent(context, 0, new Intent(context, NotificationService.class), 0);
         alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),

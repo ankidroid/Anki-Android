@@ -35,6 +35,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.compat.CompatHelper;
 
 import timber.log.Timber;
 
@@ -207,7 +208,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             Intent ankiDroidIntent = new Intent(context, IntentHandler.class);
             ankiDroidIntent.setAction(Intent.ACTION_MAIN);
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
+            PendingIntent pendingAnkiDroidIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, ankiDroidIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
 

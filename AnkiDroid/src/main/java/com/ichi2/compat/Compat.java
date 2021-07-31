@@ -16,7 +16,9 @@
 
 package com.ichi2.compat;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.widget.TimePicker;
@@ -27,7 +29,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -135,5 +140,80 @@ public interface Compat {
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
+    @IntDef(flag = true,
+            value = {
+                    PendingIntent.FLAG_ONE_SHOT,
+                    PendingIntent.FLAG_NO_CREATE,
+                    PendingIntent.FLAG_CANCEL_CURRENT,
+                    PendingIntent.FLAG_UPDATE_CURRENT,
+                    // PendingIntent.FLAG_IMMUTABLE
+                    // PendingIntent.FLAG_MUTABLE
+
+                    Intent.FILL_IN_ACTION,
+                    Intent.FILL_IN_DATA,
+                    Intent.FILL_IN_CATEGORIES,
+                    Intent.FILL_IN_COMPONENT,
+                    Intent.FILL_IN_PACKAGE,
+                    Intent.FILL_IN_SOURCE_BOUNDS,
+                    Intent.FILL_IN_SELECTOR,
+                    Intent.FILL_IN_CLIP_DATA
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    @interface PendingIntentFlags {}
+
+    /**
+     * Retrieve a PendingIntent that will start a new activity, like calling
+     * {@link Context#startActivity(Intent) Context.startActivity(Intent)}.
+     * Note that the activity will be started outside of the context of an
+     * existing activity, so you must use the {@link Intent#FLAG_ACTIVITY_NEW_TASK
+     * Intent.FLAG_ACTIVITY_NEW_TASK} launch flag in the Intent.
+     *
+     * <p class="note">For security reasons, the {@link android.content.Intent}
+     * you supply here should almost always be an <em>explicit intent</em>,
+     * that is specify an explicit component to be delivered to through
+     * {@link Intent#setClass(android.content.Context, Class) Intent.setClass}</p>
+     *
+     * @param context The Context in which this PendingIntent should start
+     * the activity.
+     * @param requestCode Private request code for the sender
+     * @param intent Intent of the activity to be launched.
+     * @param flags May be {@link PendingIntent#FLAG_ONE_SHOT}, {@link PendingIntent#FLAG_NO_CREATE},
+     * {@link PendingIntent#FLAG_CANCEL_CURRENT}, {@link PendingIntent#FLAG_UPDATE_CURRENT},
+     * or any of the flags as supported by
+     * {@link Intent#fillIn Intent.fillIn()} to control which unspecified parts
+     * of the intent that can be supplied when the actual send happens.
+     *
+     * @return Returns an existing or new PendingIntent matching the given
+     * parameters.  May return null only if {@link PendingIntent#FLAG_NO_CREATE} has been
+     * supplied.
+     */
+    PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
+
+
+    /**
+     * Retrieve a PendingIntent that will perform a broadcast, like calling
+     * {@link Context#sendBroadcast(Intent) Context.sendBroadcast()}.
+     *
+     * <p class="note">For security reasons, the {@link android.content.Intent}
+     * you supply here should almost always be an <em>explicit intent</em>,
+     * that is specify an explicit component to be delivered to through
+     * {@link Intent#setClass(android.content.Context, Class) Intent.setClass}</p>
+     *
+     * @param context The Context in which this PendingIntent should perform
+     * the broadcast.
+     * @param requestCode Private request code for the sender
+     * @param intent The Intent to be broadcast.
+     * @param flags May be {@link PendingIntent#FLAG_ONE_SHOT}, {@link PendingIntent#FLAG_NO_CREATE},
+     * {@link PendingIntent#FLAG_CANCEL_CURRENT}, {@link PendingIntent#FLAG_UPDATE_CURRENT},
+     * {@link PendingIntent#FLAG_IMMUTABLE} or any of the flags as supported by
+     * {@link Intent#fillIn Intent.fillIn()} to control which unspecified parts
+     * of the intent that can be supplied when the actual send happens.
+     *
+     * @return Returns an existing or new PendingIntent matching the given
+     * parameters.  May return null only if {@link PendingIntent#FLAG_NO_CREATE} has been
+     * supplied.
+     */
+    PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
 }
 
