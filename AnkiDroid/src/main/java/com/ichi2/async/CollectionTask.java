@@ -1718,7 +1718,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
             // Then do the actual check
-            return new Computation<>(col.getMedia().check());
+            try {
+                return new Computation<>(col.getMedia().check());
+            } catch (CorruptModelException e) {
+                return ERR;
+            }
         }
     }
 
