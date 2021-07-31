@@ -23,6 +23,30 @@ import com.ichi2.utils.JSONObject;
 import androidx.annotation.CheckResult;
 
 public class Deck extends JSONObject {
+
+
+    /**
+     * @see  Deck#from(JSONObject)
+     */
+    @JsonCreator
+    protected Deck(ObjectNode node) {
+        super(node);
+    }
+
+
+    /**
+     * Creates a Deck object from the underlying
+     * {@link ObjectNode} in the passed {@link JSONObject}
+     *
+     * NOTE: The passed node will be used directly, so
+     * any change in the node will result in a change in
+     * this object
+     */
+    public static Deck from(JSONObject json) {
+        return new Deck(json.getRootJsonNode());
+    }
+
+
     /**
      * Creates a copy from {@link JSONObject} and use it as a string
      *

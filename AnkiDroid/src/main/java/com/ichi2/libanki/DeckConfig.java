@@ -24,6 +24,28 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class DeckConfig extends JSONObject{
+
+    /**
+     * @see  DeckConfig#from(JSONObject)
+     */
+    @JsonCreator
+    protected DeckConfig(ObjectNode node) {
+        super(node);
+    }
+
+
+    /**
+     * Creates a DeckConfig object from the underlying
+     * {@link ObjectNode} in the passed {@link JSONObject}
+     * *
+     * NOTE: The passed node will be used directly, so
+     * any change in the node will result in a change in
+     * this object
+     */
+    public static DeckConfig from(JSONObject json) {
+        return new DeckConfig(json.getRootJsonNode());
+    }
+
     /**
      * Creates a new empty deck config object
      */

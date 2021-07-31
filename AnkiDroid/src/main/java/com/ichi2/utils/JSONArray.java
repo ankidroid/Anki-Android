@@ -1,6 +1,7 @@
-/*  
+/*
  *  Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
- *  
+ *  Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
+ *
  *  This file is free software: you may copy, redistribute and/or modify it  
  *  under the terms of the GNU General Public License as published by the  
  *  Free Software Foundation, either version 3 of the License, or (at your  
@@ -42,98 +43,95 @@
 
 package com.ichi2.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+import com.ichi2.anki.AnkiSerialization;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class JSONArray extends org.json.JSONArray {
-    public JSONArray() {
-        super();
-    }
+import static com.ichi2.utils.JSONTypeConverters.checkDouble;
+import static java.lang.System.identityHashCode;
 
-    public JSONArray(org.json.JSONArray copyFrom) {
-        try {
-            for (int i = 0; i < copyFrom.length(); i++) {
-                put(i, copyFrom.get(i));
-            }
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
+/**
+ * An array of JSON elements that follows the api of {@link org.json.JSONArray}
+ * but backed by {@link ArrayNode} from Jackson serialization library.
+ *
+ * Some differences from {@link org.json.JSONArray}:
+ *
+ * Internal implementation using {@link ArrayNode} should be invisible to the user as long
+ * as they don't access the underlying node via {@link #getRootJsonNode()}.
+ *
+ *
+ * Databinding API:
+ *
+ * JSONArray support jackson databinding API, this is achieved {@link JsonCreator} and
+ * {@link JsonValue} annotations which tell jackson how to de/serialize it from json source.
+ *
+ * If a sub class wishes to enable databinding, it should create a constructor that delegates to
+ * {@link #JSONArray(ArrayNode)} and annotate it with {@link JsonCreator}.
+ */
+public class JSONArray extends JSONContainer<Integer, ArrayNode, JSONArray> {
 
     /**
-     * This method simply change the type.
+     * Creates instance from {@link ArrayNode}
      *
-     * See the comment of objectToObject to read about the problems met here.
-     *
-     * @param ar Actually a JSONArray
-     * @return the same element as input. But considered as a JSONArray.
+     * JSONArray is essentially is the same as the {@link ArrayNode} with a
+     * different API, so any changes to this class would result in changes
+     * in the passed node and vice versa.
      */
-    public static JSONArray arrayToArray(org.json.JSONArray ar){
-        return (JSONArray) ar;
+    @JsonCreator
+    public JSONArray(@NonNull ArrayNode node) {
+        super(node);
     }
 
-    public JSONArray(JSONTokener x) {
-        this();
-        try {
-            if (x.nextClean() != '[') {
-                throw x.syntaxError("A JSONArray text must start with '['");
-            }
-
-            char nextChar = x.nextClean();
-            if (nextChar == 0) {
-                // array is unclosed. No ']' found, instead EOF
-                throw x.syntaxError("Expected a ',' or ']'");
-            }
-            if (nextChar != ']') {
-                x.back();
-                for (; ; ) {
-                    if (x.nextClean() == ',') {
-                        x.back();
-                        put(JSONObject.NULL);
-                    } else {
-                        x.back();
-                        put(x.nextValue());
-                    }
-                    switch (x.nextClean()) {
-                        case 0:
-                            // array is unclosed. No ']' found, instead EOF
-                            throw x.syntaxError("Expected a ',' or ']'");
-                        case ',':
-                            nextChar = x.nextClean();
-                            if (nextChar == 0) {
-                                // array is unclosed. No ']' found, instead EOF
-                                throw x.syntaxError("Expected a ',' or ']'");
-                            }
-                            if (nextChar == ']') {
-                                return;
-                            }
-                            x.back();
-                            break;
-                        case ']':
-                            return;
-                        default:
-                            throw x.syntaxError("Expected a ',' or ']'");
-                    }
-                }
-            }
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+    /**
+     * Creates an empty json array using the default {@link ObjectMapper}
+     */
+    public JSONArray() {
+        // ObjectNode/ArrayNode require JsonNodeFactory to be created. So instead of hardcoding the JsonNodeFactory
+        // config about how to handle decimals, I use the globally created ObjectMapper and it will create
+        // object/array with the correct configured factory.
+        this(AnkiSerialization.getObjectMapper().createArrayNode());
     }
 
-    public JSONArray(String source) {
-        this(new JSONTokener(source));
+    /**
+     * Creates a deep copy from another {@link JSONArray}
+     * @param copyFrom instance to copy
+     */
+    public JSONArray(@NonNull JSONArray copyFrom) {
+        this(copyFrom.mNode.deepCopy());
     }
 
-    public JSONArray(Object array) {
+    /**
+     * Deserializes a string to to a {@link JSONArray} using the default {@link ObjectMapper}
+     * @param source the json string
+     *
+     * @throws JSONException if the string couldn't be parsed.
+     * the encapsulated exception is either {@link JsonProcessingException} or {@link JsonMappingException}
+     * @throws IllegalArgumentException if the source is null. (Differes from org.json which throws nullPointerException)
+     */
+    public JSONArray(@NonNull String source) {
+        super(source, ArrayNode.class);
+    }
+
+    /**
+     * Construct {@link JSONArray} filed with a given array
+     * @param array object that is an array (ex. int[], double[])
+     */
+    public JSONArray(@NonNull Object array) {
+        // array's type is object, as it's the only way to have a type encapsulating arrays of arbitrary native type
         this();
         if (array.getClass().isArray()) {
             int length = Array.getLength(array);
@@ -146,169 +144,177 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public JSONArray(Collection<?> copyFrom) {
+
+    /**
+     * Construct {@link JSONArray} filed with items in the given iterator
+     */
+    public JSONArray(@Nullable Iterator<?> iterator) {
         this();
-        if (copyFrom != null) {
-            for (Object o : copyFrom) {
-                put(o);
-            }
+        if (iterator == null) {
+            return;
+        }
+        while (iterator.hasNext()) {
+            this.put(iterator.next());
         }
     }
 
-    public JSONArray put(double value) {
-        try {
-            super.put(value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
+
+    /**
+     * Construct {@link JSONArray} filed with a given iterable
+     */
+    public JSONArray(@Nullable Iterable<?> iterable) {
+        this(iterable == null ? null : iterable.iterator());
+    }
+
+    protected JSONArray thisAsInheritedType() {
+        return this;
+    };
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(long value) {
+        return put(mNode.numberNode(value));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(int value) {
+        return put(mNode.numberNode(value));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(double value) throws JSONException {
+        return put(mNode.numberNode(checkDouble(value)));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(String value) {
+        return put(mNode.textNode(value));
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(@Nullable JSONContainer value) {
+        return put(value == null ?
+                JSONObject.NULL :
+                value.getRootJsonNode());
+    }
+
+    /**
+     * Appends {@code value} to the end of this array.
+     *
+     * @see JSONUtils#objectToJsonNode(Object) for supported types
+     */
+    @NonNull
+    public JSONArray put(@Nullable Object value) {
+        return put(JSONUtils.objectToJsonNode(value));
+    }
+
+    /**
+     * Appends {@code node} to the end of this array.
+     */
+    @NonNull
+    public JSONArray put(JsonNode node) {
+        mNode.add(node);
+        return this;
+    }
+
+    /**
+     * Sets the value at {@code index} to {@code node}, null padding this array
+     * to the required length if necessary. If a value already exists at {@code
+     * index}, it will be replaced.
+     *
+     * Null padding is done primarily to be somewhat compatible with the previous implementation
+     * which relied on {@link org.json.JSONArray}, there is no actual need for this feature
+     * in AnkiDroid.
+     * 
+     * org.json padds with actual null value, which cause the array to be invalid, and a get on the padded value fails.
+     */
+    @NonNull
+    public JSONArray put(Integer index, JsonNode node) {
+        int index_ = index;
+        while (length() <= index_) {
+            put(JSONObject.NULL);
+        }
+        mNode.set(index_, node);
+        return this;
+    }
+
+
+    /**
+     * This is used primarily to be compatible with the previous implementation
+     * which did wrap every exception inside {@link JSONException}
+     *
+     * @implNote note that jackson don't throw on out of bound exception
+     * when retrieving a value rather it returns null, so we need to
+     * manually check and throw
+     *
+     * @throws JSONException if index is out out bounds
+     */
+    protected void throwIfInvalidIndex(int index) {
+        if (isInvalidIndex(index)) {
+            throw new JSONException(new IndexOutOfBoundsException("Index: " + index + ", Size: " + length()));
         }
     }
 
-    public JSONArray put(int index, boolean value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+
+    /**
+     * @return true if index is out of bounds, false otherwise
+     */
+    protected boolean isInvalidIndex(int index) {
+        return (index < 0) || (index >= length());
     }
 
-    public JSONArray put(int index, double value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
+    /**
+     * @return node at index
+     * @throws JSONException if the index is out of bounds
+     */
+    protected JsonNode getJsonNode(Integer index) {
+        int index_ = index;
+        throwIfInvalidIndex(index_);
+        return mNode.get(index_);
+    }
+    /**
+     * @return node at index. null if out of bounds
+     */
+    protected JsonNode optNode(Integer index) {
+        int index_ = index;
+        if(isInvalidIndex(index_)) {
+            return null;
         }
+        return mNode.get(index_);
     }
 
-    public JSONArray put(int index, int value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public JSONArray put(int index, long value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public JSONArray put(int index, Object value) {
-        try {
-            super.put(index, value);
-            return this;
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public Object get(int index) {
-        try {
-            return super.get(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public boolean getBoolean(int index) {
-        try {
-            return super.getBoolean(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public double getDouble(int index) {
-        try {
-            return super.getDouble(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public int getInt(int index) {
-        try {
-            return super.getInt(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public long getLong(int index) {
-        try {
-            return super.getLong(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public String getString(int index) {
-        try {
-            return super.getString(index);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
-
-    public JSONArray getJSONArray(int pos) {
-        try {
-            return arrayToArray(super.getJSONArray(pos));
-        } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
-        }
-    }
-
-    public JSONObject getJSONObject(int pos) {
-        try {
-            return JSONObject.objectToObject(super.getJSONObject(pos));
-        } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
-        }
-    }
-
-    public String join(String separator) {
-        try {
-            return super.join(separator);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
-    }
 
     @Override
-    public String toString(int indentSpace) {
-        try {
-            return super.toString(indentSpace);
-        } catch (org.json.JSONException e) {
-            throw new JSONException(e);
-        }
+    protected JsonNode removeNode(Integer index) {
+        return mNode.remove(index);
     }
 
 
+    @NonNull
     public JSONArray deepClone() {
-        JSONArray clone = new JSONArray();
-        for (int i = 0; i < length(); i++) {
-            if (get(i) instanceof JSONObject) {
-                clone.put(getJSONObject(i).deepClone());
-            }
-            else if (get(i) instanceof JSONArray) {
-                clone.put(getJSONArray(i).deepClone());
-            } else {
-                clone.put(get(i));
-            }
-        }
-        return clone;
+        ArrayNode node = mNode.deepCopy();
+        return new JSONArray(node);
     }
 
+    @NonNull
     public Iterable<JSONArray> jsonArrayIterable() {
         return this::jsonArrayIterator;
     }
+    @NonNull
     public Iterator<JSONArray> jsonArrayIterator() {
         return new Iterator<JSONArray>() {
             private int mIndex = 0;
@@ -443,7 +449,7 @@ public class JSONArray extends org.json.JSONArray {
         }
         for (int i = 0; i < length; i++) {
             String name = JSON.toString(names.opt(i));
-            result.put(name, opt(i));
+            result.putSafe(name, opt(i));
         }
         return result;
     }

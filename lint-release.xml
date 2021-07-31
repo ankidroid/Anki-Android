@@ -74,7 +74,7 @@
     <issue id="AlwaysShowAction" severity="ignore" />
     <issue id="InvalidUsesTagAttribute" severity="ignore" />
     <issue id="MissingIntentFilterForMediaSearch" severity="ignore" />
-    <issue id="MissingMediaBrowserServiceIntentFilter" severity="ignore" />
+    <issue id="" severity="ignore" />
     <issue id="MissingOnPlayFromSearch" severity="ignore" />
     <issue id="ImpliedTouchscreenHardware" severity="ignore" />
     <issue id="MissingTvBanner" severity="ignore" />

@@ -435,7 +435,7 @@ public class SchedV2 extends AbstractSched {
         for (Deck g : list) {
             JSONArray a = g.getJSONArray(key);
             // add
-            a.put(1, a.getLong(1) + cnt);
+            a.put((Integer) 1, a.getLong(1) + cnt);
             mCol.getDecks().save(g);
         }
     }
@@ -451,9 +451,9 @@ public class SchedV2 extends AbstractSched {
         for (Deck g : decks) {
             // add
             JSONArray today = g.getJSONArray("newToday");
-            today.put(1, today.getInt(1) - newc);
+            today.put((Integer) 1, today.getInt(1) - newc);
             today = g.getJSONArray("revToday");
-            today.put(1, today.getInt(1) - rev);
+            today.put((Integer) 1, today.getInt(1) - rev);
             mCol.getDecks().save(g);
         }
     }
@@ -2294,8 +2294,8 @@ public class SchedV2 extends AbstractSched {
             String key = t + "Today";
             JSONArray tToday = g.getJSONArray(key);
             if (g.getJSONArray(key).getInt(0) != mToday) {
-                tToday.put(0, mToday);
-                tToday.put(1, 0);
+                tToday.put((Integer) 0, mToday);
+                tToday.put((Integer) 1, 0);
             }
         }
     }

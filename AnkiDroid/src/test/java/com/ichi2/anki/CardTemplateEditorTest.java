@@ -183,6 +183,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
         saveControllerForCleanup(templateEditorController);
         CardTemplateEditor testEditor = templateEditorController.get();
+        String original_model = testEditor.getTempModel().getModel().toString();
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
 
         // Try to add a template - click add, click confirm for card add, click confirm again for full sync
@@ -204,6 +205,8 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Previewer not started?", CardTemplatePreviewer.class.getName(), shadowIntent.getIntentClass().getName());
         Assert.assertNotNull("intent did not have model JSON filename?", startedIntent.getStringExtra(TemporaryModel.INTENT_MODEL_FILENAME));
         Assert.assertEquals("intent did not have ordinal?", 1, startedIntent.getIntExtra("ordinal", -1));
+        Assert.assertNotEquals("Model sent to Previewer is unchanged?", original_model, testEditor.getTempModel().getModel().toString());
+        Timber.e("DEBUG: Original is \n" +original_model+ "\n");
         Assert.assertNotEquals("Model sent to Previewer is unchanged?", testEditor.getTempModel().getModel(), TemporaryModel.getTempModel(startedIntent.getStringExtra(TemporaryModel.INTENT_MODEL_FILENAME)));
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 

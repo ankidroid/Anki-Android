@@ -189,7 +189,7 @@ public class TemporaryModel {
 
     /**
      * Get the model temporarily saved into the file represented by the given path
-     * @return JSONObject holding the model, or null if there was a problem
+     * @return Model holding the model, or null if there was a problem
      */
     public static Model getTempModel(@NonNull String tempModelFileName) throws IOException {
         Timber.d("getTempModel() fetching tempModel %s", tempModelFileName);

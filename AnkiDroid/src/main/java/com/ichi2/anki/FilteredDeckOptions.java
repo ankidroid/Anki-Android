@@ -141,7 +141,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         } else if ("limit_2".equals(entry.getKey())) {
                             ar.getJSONArray(1).put(1, entry.getValue());
                         } else if ("order_2".equals(entry.getKey())) {
-                            ar.getJSONArray(1).put(2, Integer.parseInt((String) entry.getValue()));
+                            ar.getJSONArray(1).put(new Integer(2), Integer.parseInt((String) entry.getValue()));
                         }
                     }
                     if ("search".equals(entry.getKey())) {
@@ -149,7 +149,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     } else if ("limit".equals(entry.getKey())) {
                         ar.getJSONArray(0).put(1, entry.getValue());
                     } else if ("order".equals(entry.getKey())) {
-                        ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
+                        ar.getJSONArray(0).put(new Integer(2), Integer.parseInt((String) entry.getValue()));
                     } else if ("resched".equals(entry.getKey())) {
                         mDeck.put("resched", entry.getValue());
                     } else if ("stepsOn".equals(entry.getKey())) {
