@@ -49,34 +49,21 @@ public class FileUtil {
     /**
      *
      * @param uri               uri to the content to be internalized, used if filePath not real/doesn't work.
-     * @param filePath          path to the file to be internalized.
      * @param internalFile      an internal cache temp file that the data is copied/internalized into.
      * @param contentResolver   this is needed to open an inputStream on the content uri.
      * @return  the internal file after copying the data across.
      * @throws IOException
      */
     @NonNull
-    public static File internalizeUri(
-            Uri uri, @Nullable String filePath, File internalFile, ContentResolver contentResolver
-    ) throws IOException {
-
+    public static File internalizeUri(Uri uri, File internalFile, ContentResolver contentResolver) throws IOException {
         // If we got a real file name, do a copy from it
         InputStream inputStream;
-        if (filePath != null) {
-            Timber.d("internalizeUri() got file path for direct copy from Uri %s", uri);
-            try {
-                inputStream = new FileInputStream(new File(filePath));
-            } catch (FileNotFoundException e) {
-                Timber.w(e, "internalizeUri() unable to open input stream on file %s", filePath);
-                throw e;
-            }
-        } else {
-            try {
-                inputStream = contentResolver.openInputStream(uri);
-            } catch (Exception e) {
-                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
-                throw e;
-            }
+
+        try {
+            inputStream = contentResolver.openInputStream(uri);
+        } catch (Exception e) {
+            Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
+            throw e;
         }
 
         try {

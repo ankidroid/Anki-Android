@@ -443,8 +443,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @Nullable File internalizeUri(Uri uri) {
         File internalFile;
         Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
-        String filePath = uriFileInfo.first;
-        String displayName = uriFileInfo.second;
 
         // Use the display name from the image info to create a new file with correct extension
         if (uriFileInfo.second == null) {
@@ -461,7 +459,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             return null;
         }
         try {
-            File returnFile = FileUtil.internalizeUri(uri, filePath, internalFile, mActivity.getContentResolver());
+            File returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.getContentResolver());
             Timber.d("internalizeUri successful. Returning internalFile.");
             return returnFile;
         } catch (Exception e) {
