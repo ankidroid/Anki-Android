@@ -58,6 +58,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.JSONUtilsTest.assertThrowsJSONExceptionEncapsulating;
 import static junit.framework.TestCase.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -80,46 +81,22 @@ public class JSONObjectTest {
         assertNull(object.toJSONArray(new JSONArray()));
         assertEquals("{}", object.toString());
         assertEquals("{}", object.toString(5));
-        try {
-            object.get("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getBoolean("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getDouble("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getInt("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getJSONArray("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getJSONObject("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getLong("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getString("foo");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.get("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getBoolean("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getDouble("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getInt("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getJSONArray("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getJSONObject("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getLong("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getString("foo"));
         assertFalse(object.has("foo"));
         assertTrue(object.isNull("foo")); // isNull also means "is not present"
         assertNull(object.opt("foo"));
@@ -132,7 +109,7 @@ public class JSONObjectTest {
         assertEquals(null, object.optJSONArray("foo"));
         assertEquals(null, object.optJSONObject("foo"));
         assertEquals(0, object.optLong("foo"));
-        assertEquals(Long.MAX_VALUE-1, object.optLong("foo", Long.MAX_VALUE-1));
+        assertEquals(Long.MAX_VALUE - 1, object.optLong("foo", Long.MAX_VALUE - 1));
         assertEquals("", object.optString("foo")); // empty string is default!
         assertEquals("bar", object.optString("foo", "bar"));
         assertNull(object.remove("foo"));
@@ -154,21 +131,12 @@ public class JSONObjectTest {
         object.put("bar", new Object());
         object.put("baz", new Object());
         assertSame(value, object.get("foo"));
-        try {
-            object.get("FOO");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put(null, value);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.get(null);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.get("FOO"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put(null, value));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.get(null));
     }
     @Test
     public void testPut() throws JSONException {
@@ -194,11 +162,8 @@ public class JSONObjectTest {
         object.put("foo", null);
         assertEquals(0, object.length());
         assertFalse(object.has("foo"));
-        try {
-            object.get("foo");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.get("foo"));
     }
     @Test
     public void testPutOpt() throws JSONException {
@@ -214,21 +179,12 @@ public class JSONObjectTest {
     @Test
     public void testPutOptUnsupportedNumbers() throws JSONException {
         JSONObject object = new JSONObject();
-        try {
-            object.putOpt("foo", Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.putOpt("foo", Double.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.putOpt("foo", Double.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.putOpt("foo", Double.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.putOpt("foo", Double.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.putOpt("foo", Double.POSITIVE_INFINITY));
     }
     @Test
     public void testRemove() throws JSONException {
@@ -327,21 +283,12 @@ public class JSONObjectTest {
     @Test
     public void testFloats() throws JSONException {
         JSONObject object = new JSONObject();
-        try {
-            object.put("foo", (Float) Float.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", (Float) Float.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", (Float) Float.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Float) Float.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Float) Float.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Float) Float.POSITIVE_INFINITY));
     }
     @Test
     public void testOtherNumbers() throws JSONException {
@@ -349,25 +296,32 @@ public class JSONObjectTest {
             public int intValue() {
                 throw new UnsupportedOperationException();
             }
+
+
             public long longValue() {
                 throw new UnsupportedOperationException();
             }
+
+
             public float floatValue() {
                 throw new UnsupportedOperationException();
             }
+
+
             public double doubleValue() {
                 return Double.NaN;
             }
-            @Override public String toString() {
+
+
+            @Override
+            public String toString() {
                 return "x";
             }
         };
         JSONObject object = new JSONObject();
-        try {
-            object.put("foo", nan);
-            fail("Object.put() accepted a NaN (via a custom Number class)");
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", nan),
+                "Object.put() accepted a NaN (via a custom Number class)");
     }
     @Test
     public void testForeignObjects() throws JSONException {
@@ -383,31 +337,16 @@ public class JSONObjectTest {
     }
     @Test
     public void testNullKeys() {
-        try {
-            new JSONObject().put(null, false);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            new JSONObject().put(null, 0.0d);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            new JSONObject().put(null, 5);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            new JSONObject().put(null, 5L);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            new JSONObject().put(null, "foo");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject().put(null, false));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject().put(null, 0.0d));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject().put(null, 5));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject().put(null, 5L));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject().put(null, "foo"));
     }
     @Test
     public void testStrings() throws JSONException {
@@ -444,11 +383,8 @@ public class JSONObjectTest {
         assertEquals(9.223372036854776E18, object.getDouble("baz"), 0);
         assertEquals(Integer.MAX_VALUE, object.getInt("baz"));
         assertFalse(object.isNull("quux"));
-        try {
-            object.getDouble("quux");
-            fail();
-        } catch (JSONException e) {
-        }
+                assertThrowsJSONExceptionEncapsulating(
+             () -> object.getDouble("quux"));
         assertEquals(Double.NaN, object.optDouble("quux"), 0);
         assertEquals(-1.0d, object.optDouble("quux", -1.0d), 0);
         object.put("foo", "TRUE");
@@ -463,16 +399,10 @@ public class JSONObjectTest {
         object.put("bar", b);
         assertSame(a, object.getJSONArray("foo"));
         assertSame(b, object.getJSONObject("bar"));
-        try {
-            object.getJSONObject("foo");
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.getJSONArray("bar");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getJSONObject("foo"));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getJSONArray("bar"));
         assertEquals(a, object.optJSONArray("foo"));
         assertEquals(b, object.optJSONObject("bar"));
         assertEquals(null, object.optJSONArray("bar"));
@@ -488,43 +418,28 @@ public class JSONObjectTest {
     public void testArrayCoercion() throws JSONException {
         JSONObject object = new JSONObject();
         object.put("foo", "[true]");
-        try {
-            object.getJSONArray("foo");
-            fail();
-        } catch (JSONException e) {
-        }
+                assertThrowsJSONExceptionEncapsulating(
+             () -> object.getJSONArray("foo"));
     }
 
     @Test
     public void testObjectCoercion() throws JSONException {
         JSONObject object = new JSONObject();
         object.put("foo", "{}");
-        try {
-            object.getJSONObject("foo");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.getJSONObject("foo"));
     }
     @Test
     public void testAccumulateValueChecking() throws JSONException {
         JSONObject object = new JSONObject();
-        try {
-            object.accumulate("foo", Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.accumulate("foo", Double.NaN));
         object.accumulate("foo", 1);
-        try {
-            object.accumulate("foo", Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(null,
+                () -> object.accumulate("foo", Double.NaN));
         object.accumulate("foo", 2);
-        try {
-            object.accumulate("foo", Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(null,
+                () -> object.accumulate("foo", Double.NaN));
     }
     @Test
     public void testToJSONArray() throws JSONException {
@@ -560,11 +475,8 @@ public class JSONObjectTest {
         assertEquals(4, array.length());
         assertEquals(5.0d, array.get(0));
         assertEquals(true, array.get(1));
-        try {
-            array.get(2);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> array.get(2));
         assertEquals(JSONObject.NULL, array.get(3));
     }
     @Test
@@ -605,40 +517,22 @@ public class JSONObjectTest {
     @Test
     public void testPutUnsupportedNumbers() throws JSONException {
         JSONObject object = new JSONObject();
-        try {
-            object.put("foo", Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", Double.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", Double.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", Double.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", Double.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", Double.POSITIVE_INFINITY));
     }
     @Test
     public void testPutUnsupportedNumbersAsObjects() throws JSONException {
         JSONObject object = new JSONObject();
-        try {
-            object.put("foo", (Double) Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", (Double) Double.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            object.put("foo", (Double) Double.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Double) Double.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Double) Double.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> object.put("foo", (Double) Double.POSITIVE_INFINITY));
     }
     /**
      * Although JSONObject is usually defensive about which numbers it accepts,
@@ -687,11 +581,8 @@ public class JSONObjectTest {
     }
     @Test
     public void testTokenerConstructorWrongType() throws JSONException {
-        try {
-            new JSONObject(new JSONTokener("[\"foo\", false]"));
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject(new JSONTokener("[\"foo\", false]")));
     }
     @Test
     public void testTokenerConstructorNull() throws JSONException {
@@ -703,11 +594,8 @@ public class JSONObjectTest {
     }
     @Test
     public void testTokenerConstructorParseFail() {
-        try {
-            new JSONObject(new JSONTokener("{"));
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject(new JSONTokener("{")));
     }
     @Test
     public void testStringConstructor() throws JSONException {
@@ -717,11 +605,8 @@ public class JSONObjectTest {
     }
     @Test
     public void testStringConstructorWrongType() throws JSONException {
-        try {
-            new JSONObject("[\"foo\", false]");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject("[\"foo\", false]"));
     }
     @Test
     public void testStringConstructorNull() throws JSONException {
@@ -733,11 +618,8 @@ public class JSONObjectTest {
     }
     @Test
     public void testStringonstructorParseFail() {
-        try {
-            new JSONObject("{");
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> new JSONObject("{"));
     }
     @Test
     public void testCopyConstructor() throws JSONException {
@@ -792,11 +674,8 @@ public class JSONObjectTest {
     @Test
     public void testAccumulateNull() {
         JSONObject object = new JSONObject();
-        try {
-            object.accumulate(null, 5);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(null,
+                () -> object.accumulate(null, 5));
     }
     @Test
     public void testEmptyStringKey() throws JSONException {
@@ -931,29 +810,17 @@ public class JSONObjectTest {
         assertEquals("9223372036854775806", JSONObject.numberToString(9223372036854775806L));
         assertEquals("4.9E-324", JSONObject.numberToString(Double.MIN_VALUE));
         assertEquals("1.7976931348623157E308", JSONObject.numberToString(Double.MAX_VALUE));
-        try {
-            JSONObject.numberToString(Double.NaN);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            JSONObject.numberToString(Double.NEGATIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            JSONObject.numberToString(Double.POSITIVE_INFINITY);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> JSONObject.numberToString(Double.NaN));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> JSONObject.numberToString(Double.NEGATIVE_INFINITY));
+        assertThrowsJSONExceptionEncapsulating(
+                () -> JSONObject.numberToString(Double.POSITIVE_INFINITY));
         assertEquals("0.001", JSONObject.numberToString(new BigDecimal("0.001")));
         assertEquals("9223372036854775806",
                 JSONObject.numberToString(new BigInteger("9223372036854775806")));
-        try {
-            JSONObject.numberToString(null);
-            fail();
-        } catch (JSONException e) {
-        }
+        assertThrowsJSONExceptionEncapsulating(
+                () -> JSONObject.numberToString(null));
     }
 
 
