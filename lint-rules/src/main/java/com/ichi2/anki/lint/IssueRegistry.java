@@ -19,6 +19,7 @@ import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector;
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage;
 
 import com.android.annotations.NonNull;
+import com.ichi2.anki.lint.rules.VariableNamingDetector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(ConstantJavaFieldDetector.ISSUE);
         issues.add(FixedPreferencesTitleLength.ISSUE_MAX_LENGTH);
         issues.add(FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH);
+        issues.add(VariableNamingDetector.ISSUE);
         return issues;
     }
 
