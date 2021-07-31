@@ -569,22 +569,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                String[] filePathColumn = { MediaStore.MediaColumns.SIZE };
                 try (Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null)) {
                     cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String imgPathString = cursor.getString(columnIndex);
-                    File sourceFile = new File(imgPathString);
-
                     // file size in MB
-                    long fileLength = sourceFile.length() / (1024 * 1024);
+                    long fileLength = cursor.getLong(0) / (1024 * 1024);
 
                     String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                     String imageName = "DeckPickerBackground.png";
                     File destFile = new File(currentAnkiDroidDirectory, imageName);
                     // Image size less than 10 MB copied to AnkiDroid folder
                     if (fileLength < 10) {
-                        try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
+                        try (FileChannel sourceChannel = ((FileInputStream) getContentResolver().openInputStream(selectedImage)).getChannel();
                              FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
                             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
                             UIUtils.showThemedToast(this, getString(R.string.background_image_applied), false);
