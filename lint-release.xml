@@ -49,6 +49,8 @@
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
 
+    <!-- Allows Timber issues defined for AnkiDroid without an api dependency on Timber -->
+    <issue id="UnknownIssueId" severity="ignore" />
     <!-- This come from Timber and we need to also ignore them  -->
     <!-- Ignored due to https://github.com/JakeWharton/timber/issues/408 -->
     <issue id="BinaryOperationInTimber" severity="ignore" />
