@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="theme_dark_primary">#3d3d3d</color>
-    <color name="theme_dark_primary_dark">@color/black</color>
+    <color name="theme_dark_primary_dark">@color/material_grey_900</color>
     <color name="theme_dark_primary_light">@color/material_grey_800</color>
     <color name="theme_dark_accent">@color/material_light_blue_700</color>
     <color name="theme_dark_primary_text">@color/white</color>
