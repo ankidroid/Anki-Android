@@ -1448,7 +1448,7 @@ public class CardContentProvider extends ContentProvider {
 
     private void throwSecurityException(String methodName, Uri uri) {
         String msg = String.format("Permission not granted for: %s", getLogMessage(methodName, uri));
-        Timber.e(msg);
+        Timber.e("%s", msg);
         throw new SecurityException(msg);
     }
 
