@@ -1108,7 +1108,7 @@ public class CardContentProvider extends ContentProvider {
                 return null;
             }
 
-            FileUtil.internalizeUri(fileUri, null, tempFile, cR);
+            FileUtil.internalizeUri(fileUri, tempFile, cR);
 
             String fname = media.addFile(tempFile);
             Timber.d("insert -> MEDIA: fname = %s", fname);
