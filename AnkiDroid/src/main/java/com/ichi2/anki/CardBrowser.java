@@ -1251,7 +1251,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // Only new cards may be repositioned
             List<Long> cardIds = getSelectedCardIds();
             for (long cardId : cardIds) {
-                if (getCol().getCard(cardId).getQueue() != Consts.CARD_TYPE_NEW) {
+                if (getCol().getCard(cardId).getQueue() != Consts.QUEUE_TYPE_NEW) {
                     SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
                             getString(R.string.vague_error),
                             getString(R.string.reposition_card_not_new_error),
