@@ -1705,6 +1705,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
+
+        // This setting toggles file system access within WebView
+        // The default configuration is already true in apps targeting API <= 29
+        // Hence, this setting is only useful for apps targeting API >= 30
+        webView.getSettings().setAllowFileAccess(true);
+
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
         webView.setFocusableInTouchMode(mUseInputTag);
         webView.setScrollbarFadingEnabled(true);
