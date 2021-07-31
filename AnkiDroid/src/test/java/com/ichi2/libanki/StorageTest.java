@@ -96,7 +96,7 @@ public class StorageTest extends RobolectricTest {
                     remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "id");
                 }
 
-                assertThat(actualJson.toString(4), is(expectedJson.toString(4)));
+                assertThat(actualJson.toString(), is(expectedJson.toString()));
                 continue;
             }
 
