@@ -818,7 +818,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
                             BootService.scheduleNotification(getCol().getTime(), this);
                         } else {
-                            PendingIntent intent = PendingIntent.getBroadcast(this, 0,
+                            PendingIntent intent = CompatHelper.getCompat().getImmutableBroadcastIntent(this, 0,
                                     new Intent(this, NotificationService.class), 0);
                             final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                             alarmManager.cancel(intent);

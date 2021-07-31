@@ -16,7 +16,9 @@
 
 package com.ichi2.compat;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.ThumbnailUtils;
@@ -40,6 +42,12 @@ import timber.log.Timber;
 
 /** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
 public class CompatV21 implements Compat {
+
+    // Update to PendingIntent.FLAG_MUTABLE once available (API 31)
+    @SuppressWarnings("unused")
+    public static final int FLAG_MUTABLE = 1 << 25;
+    // Update to PendingIntent.FLAG_IMMUTABLE once available (API 23)
+    public static final int FLAG_IMMUTABLE =  1 << 26;
 
     // Until API26, ignore notification channels
     @Override
@@ -204,5 +212,17 @@ public class CompatV21 implements Compat {
     public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
+    }
+
+    @Override
+    public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {
+        //noinspection WrongConstant
+        return PendingIntent.getActivity(context, requestCode, intent, flags | FLAG_IMMUTABLE);
+    }
+
+    @Override
+    public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
+        //noinspection WrongConstant
+        return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
 }
