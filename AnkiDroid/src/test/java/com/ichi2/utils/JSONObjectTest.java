@@ -125,8 +125,8 @@ public class JSONObjectTest {
         assertNull(object.opt("foo"));
         assertEquals(false, object.optBoolean("foo"));
         assertEquals(true, object.optBoolean("foo", true));
-        assertEquals(Double.NaN, object.optDouble("foo"));
-        assertEquals(5.0, object.optDouble("foo", 5.0));
+        assertEquals(Double.NaN, object.optDouble("foo"), 0);
+        assertEquals(5.0, object.optDouble("foo", 5.0), 0);
         assertEquals(0, object.optInt("foo"));
         assertEquals(5, object.optInt("foo", 5));
         assertEquals(null, object.optJSONArray("foo"));
@@ -295,10 +295,10 @@ public class JSONObjectTest {
         assertEquals(9223372036854775806L, object.get("bar"));
         assertEquals(Double.MAX_VALUE, object.get("baz"));
         assertEquals(-0d, object.get("quux"));
-        assertEquals(Double.MIN_VALUE, object.getDouble("foo"));
-        assertEquals(9.223372036854776E18, object.getDouble("bar"));
-        assertEquals(Double.MAX_VALUE, object.getDouble("baz"));
-        assertEquals(-0d, object.getDouble("quux"));
+        assertEquals(Double.MIN_VALUE, object.getDouble("foo"), 0);
+        assertEquals(9.223372036854776E18, object.getDouble("bar"), 0);
+        assertEquals(Double.MAX_VALUE, object.getDouble("baz"), 0);
+        assertEquals(-0d, object.getDouble("quux"), 0);
         assertEquals(0, object.getLong("foo"));
         assertEquals(9223372036854775806L, object.getLong("bar"));
         assertEquals(Long.MAX_VALUE, object.getLong("baz"));
@@ -309,13 +309,13 @@ public class JSONObjectTest {
         assertEquals(0, object.getInt("quux"));
         assertEquals(Double.MIN_VALUE, object.opt("foo"));
         assertEquals(9223372036854775806L, object.optLong("bar"));
-        assertEquals(Double.MAX_VALUE, object.optDouble("baz"));
+        assertEquals(Double.MAX_VALUE, object.optDouble("baz"), 0);
         assertEquals(0, object.optInt("quux"));
         assertEquals(Double.MIN_VALUE, object.opt("foo"));
         assertEquals(9223372036854775806L, object.optLong("bar"));
-        assertEquals(Double.MAX_VALUE, object.optDouble("baz"));
+        assertEquals(Double.MAX_VALUE, object.optDouble("baz"), 0);
         assertEquals(0, object.optInt("quux"));
-        assertEquals(Double.MIN_VALUE, object.optDouble("foo", 5.0d));
+        assertEquals(Double.MIN_VALUE, object.optDouble("foo", 5.0d), 0);
         assertEquals(9223372036854775806L, object.optLong("bar", 1L));
         assertEquals(Long.MAX_VALUE, object.optLong("baz", 1L));
         assertEquals(0, object.optInt("quux", -1));
@@ -434,14 +434,14 @@ public class JSONObjectTest {
         assertEquals(true, object.optBoolean("foo", false));
         assertEquals(0, object.optInt("foo"));
         assertEquals(-2, object.optInt("foo", -2));
-        assertEquals(5.5d, object.getDouble("bar"));
+        assertEquals(5.5d, object.getDouble("bar"), 0);
         assertEquals(5L, object.getLong("bar"));
         assertEquals(5, object.getInt("bar"));
         assertEquals(5, object.optInt("bar", 3));
         // The last digit of the string is a 6 but getLong returns a 7. It's probably parsing as a
         // double and then converting that to a long. This is consistent with JavaScript.
         assertEquals(9223372036854775807L, object.getLong("baz"));
-        assertEquals(9.223372036854776E18, object.getDouble("baz"));
+        assertEquals(9.223372036854776E18, object.getDouble("baz"), 0);
         assertEquals(Integer.MAX_VALUE, object.getInt("baz"));
         assertFalse(object.isNull("quux"));
         try {
@@ -449,8 +449,8 @@ public class JSONObjectTest {
             fail();
         } catch (JSONException e) {
         }
-        assertEquals(Double.NaN, object.optDouble("quux"));
-        assertEquals(-1.0d, object.optDouble("quux", -1.0d));
+        assertEquals(Double.NaN, object.optDouble("quux"), 0);
+        assertEquals(-1.0d, object.optDouble("quux", -1.0d), 0);
         object.put("foo", "TRUE");
         assertEquals(true, object.getBoolean("foo"));
     }
@@ -831,14 +831,14 @@ public class JSONObjectTest {
         object.put("foo", "bar");
         assertEquals(null, object.opt(null));
         assertEquals(false, object.optBoolean(null));
-        assertEquals(Double.NaN, object.optDouble(null));
+        assertEquals(Double.NaN, object.optDouble(null), 0);
         assertEquals(0, object.optInt(null));
         assertEquals(0L, object.optLong(null));
         assertEquals(null, object.optJSONArray(null));
         assertEquals(null, object.optJSONObject(null));
         assertEquals("", object.optString(null));
         assertEquals(true, object.optBoolean(null, true));
-        assertEquals(0.0d, object.optDouble(null, 0.0d));
+        assertEquals(0.0d, object.optDouble(null, 0.0d), 0);
         assertEquals(1, object.optInt(null, 1));
         assertEquals(1L, object.optLong(null, 1L));
         assertEquals("baz", object.optString(null, "baz"));
