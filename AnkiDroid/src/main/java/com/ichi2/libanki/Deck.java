@@ -16,19 +16,36 @@
 
 package com.ichi2.libanki;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.CheckResult;
 
 public class Deck extends JSONObject {
+    /**
+     * Creates a copy from {@link JSONObject} and use it as a string
+     *
+     * This function will perform deepCopy on the passed object
+     *
+     * @see Deck#from(JSONObject) if you want to create a
+     *                            Deck without deepCopy
+     */
     public Deck(JSONObject json) {
         super(json);
     }
 
+    /**
+     * Creates a deck object form a json string
+     */
     public Deck(String json) {
         super(json);
     }
 
+
+    /**
+     * Creates a new empty deck object
+     */
     public Deck() {
         super();
     }
@@ -36,8 +53,7 @@ public class Deck extends JSONObject {
     @Override
     @CheckResult
     public Deck deepClone() {
-        Deck clone = new Deck();
-        return deepClonedInto(clone);
+        return new Deck(this);
     }
 
     public boolean isDyn() {
