@@ -90,6 +90,9 @@
         <item name="flagOrange">@color/flag_orange</item>
         <item name="flagGreen">@color/flag_green</item>
         <item name="flagBlue">@color/flag_blue</item>
+        <item name="flagPink">@color/flag_pink</item>
+        <item name="flagTurquoise">@color/flag_turquoise</item>
+        <item name="flagPurple">@color/flag_purple</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <item name="editTextBackgroundColor">#EE5C5C5C</item>

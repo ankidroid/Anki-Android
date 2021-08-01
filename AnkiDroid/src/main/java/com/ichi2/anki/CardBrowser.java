@@ -1194,6 +1194,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_flag_four) {
             flagTask(4);
             return true;
+        } else if (itemId == R.id.action_flag_five) {
+            flagTask(5);
+            return true;
+        } else if (itemId == R.id.action_flag_six) {
+            flagTask(6);
+            return true;
+        } else if (itemId == R.id.action_flag_seven) {
+            flagTask(7);
+            return true;
         } else if (itemId == R.id.action_select_flag_zero) {
             selectionWithFlagTask(0);
             return true;
@@ -1208,6 +1217,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_select_flag_four) {
             selectionWithFlagTask(4);
+            return true;
+        } else if (itemId == R.id.action_select_flag_five) {
+            selectionWithFlagTask(5);
+            return true;
+        } else if (itemId == R.id.action_select_flag_six) {
+            selectionWithFlagTask(6);
+            return true;
+        } else if (itemId == R.id.action_select_flag_seven) {
+            selectionWithFlagTask(7);
             return true;
         } else if (itemId == R.id.action_delete_card) {
             deleteSelectedNote();
@@ -2577,6 +2595,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return R.attr.flagGreen;
                 case 4:
                     return R.attr.flagBlue;
+                case 5:
+                    return R.attr.flagPink;
+                case 6:
+                    return R.attr.flagTurquoise;
+                case 7:
+                    return R.attr.flagPurple;
                 default:
                     if (getCard().note().hasTag("marked")) {
                         return R.attr.markedColor;

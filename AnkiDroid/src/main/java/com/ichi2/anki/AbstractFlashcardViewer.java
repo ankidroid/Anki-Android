@@ -2802,6 +2802,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_TOGGLE_FLAG_BLUE:
                 toggleFlag(FLAG_BLUE);
                 return true;
+            case COMMAND_TOGGLE_FLAG_PINK:
+                toggleFlag(FLAG_PINK);
+                return true;
+            case COMMAND_TOGGLE_FLAG_TURQUOISE:
+                toggleFlag(FLAG_TURQUOISE);
+                return true;
+            case COMMAND_TOGGLE_FLAG_PURPLE:
+                toggleFlag(FLAG_PURPLE);
+                return true;
             case COMMAND_UNSET_FLAG:
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;

@@ -111,6 +111,9 @@
         <item>@string/gesture_flag_orange</item>
         <item>@string/gesture_flag_green</item>
         <item>@string/gesture_flag_blue</item>
+        <item>@string/gesture_flag_pink</item>
+        <item>@string/gesture_flag_turquoise</item>
+        <item>@string/gesture_flag_purple</item>
         <item>@string/gesture_flag_remove</item>
         <item>@string/gesture_page_up</item>
         <item>@string/gesture_page_down</item>
@@ -146,6 +149,9 @@
         <item>21</item> <!-- Orange Flag -->
         <item>22</item> <!-- Green Flag -->
         <item>23</item> <!-- Blue Flag -->
+        <item>38</item> <!-- Pink Flag -->
+        <item>39</item> <!-- Turquoise Flag -->
+        <item>40</item> <!-- Purple Flag -->
         <item>24</item> <!-- Unset Flag -->
         <item>30</item> <!-- Page Up -->
         <item>31</item> <!-- Page Down -->
