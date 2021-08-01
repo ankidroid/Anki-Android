@@ -42,7 +42,7 @@ import static org.junit.Assert.*;
 public class JSONArrayTest {
 
     @Test
-    public void testEmptyArray() throws JSONException {
+    public void testEmptyArray() {
         JSONArray array = new JSONArray();
         assertEquals(0, array.length());
         assertEquals("", array.join(" AND "));
@@ -62,7 +62,7 @@ public class JSONArrayTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() throws JSONException {
+    public void testEqualsAndHashCode() {
         JSONArray a = new JSONArray();
         JSONArray b = new JSONArray();
         assertTrue(a.equals(b));
@@ -78,7 +78,7 @@ public class JSONArrayTest {
         assertTrue(a.hashCode() != b.hashCode());
     }
     @Test
-    public void testBooleans() throws JSONException {
+    public void testBooleans() {
         JSONArray array = new JSONArray();
         array.put(true);
         array.put(false);
@@ -125,7 +125,7 @@ public class JSONArrayTest {
         assertEquals(false, other.getBoolean(3));
     }
     @Test
-    public void testNulls() throws JSONException {
+    public void testNulls() {
         JSONArray array = new JSONArray();
         array.put(3, null);
         array.put(0, JSONObject.NULL);
@@ -158,7 +158,7 @@ public class JSONArrayTest {
      * http://code.google.com/p/android/issues/detail?id=7257
      */
     @Test
-    public void testParseNullYieldsJSONObjectNull() throws JSONException {
+    public void testParseNullYieldsJSONObjectNull() {
         JSONArray array = new JSONArray("[\"null\",null]");
         array.put(null);
         assertEquals("null", array.get(0));
@@ -171,7 +171,7 @@ public class JSONArrayTest {
                 () -> array.getString(2));
     }
     @Test
-    public void testNumbers() throws JSONException {
+    public void testNumbers() {
         JSONArray array = new JSONArray();
         array.put(Double.MIN_VALUE);
         array.put(9223372036854775806L);
@@ -214,7 +214,7 @@ public class JSONArrayTest {
         assertFalse(array.equals(other));
     }
     @Test
-    public void testStrings() throws JSONException {
+    public void testStrings() {
         JSONArray array = new JSONArray();
         array.put("true");
         array.put("5.5");
@@ -258,7 +258,7 @@ public class JSONArrayTest {
         assertEquals(-1.0d, array.optDouble(3, -1.0d), 0);
     }
     @Test
-    public void testJoin() throws JSONException {
+    public void testJoin() {
         JSONArray array = new JSONArray();
         array.put(null);
         assertEquals("null", array.join(" & "));
@@ -274,17 +274,17 @@ public class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "));
     }
     @Test
-    public void testJoinWithNull() throws JSONException {
+    public void testJoinWithNull() {
         JSONArray array = new JSONArray(Arrays.asList(5, 6));
         assertEquals("5null6", array.join(null));
     }
     @Test
-    public void testJoinWithSpecialCharacters() throws JSONException {
+    public void testJoinWithSpecialCharacters() {
         JSONArray array = new JSONArray(Arrays.asList(5, 6));
         assertEquals("5\"6", array.join("\""));
     }
     @Test
-    public void testToJSONObject() throws JSONException {
+    public void testToJSONObject() {
         JSONArray keys = new JSONArray();
         keys.put("a");
         keys.put("b");
@@ -299,7 +299,7 @@ public class JSONArrayTest {
         assertEquals(5.5d, object.get("a"));
     }
     @Test
-    public void testToJSONObjectWithNulls() throws JSONException {
+    public void testToJSONObjectWithNulls() {
         JSONArray keys = new JSONArray();
         keys.put("a");
         keys.put("b");
@@ -313,7 +313,7 @@ public class JSONArrayTest {
         assertEquals("{\"a\":5.5}", object.toString());
     }
     @Test
-    public void testToJSONObjectMoreNamesThanValues() throws JSONException {
+    public void testToJSONObjectMoreNamesThanValues() {
         JSONArray keys = new JSONArray();
         keys.put("a");
         keys.put("b");
@@ -324,7 +324,7 @@ public class JSONArrayTest {
         assertEquals(5.5d, object.get("a"));
     }
     @Test
-    public void testToJSONObjectMoreValuesThanNames() throws JSONException {
+    public void testToJSONObjectMoreValuesThanNames() {
         JSONArray keys = new JSONArray();
         keys.put("a");
         JSONArray values = new JSONArray();
@@ -335,7 +335,7 @@ public class JSONArrayTest {
         assertEquals(5.5d, object.get("a"));
     }
     @Test
-    public void testToJSONObjectNullKey() throws JSONException {
+    public void testToJSONObjectNullKey() {
         JSONArray keys = new JSONArray();
         keys.put(JSONObject.NULL);
         JSONArray values = new JSONArray();
@@ -345,7 +345,7 @@ public class JSONArrayTest {
         assertEquals(5.5d, object.get("null"));
     }
     @Test
-    public void testPutUnsupportedNumbers() throws JSONException {
+    public void testPutUnsupportedNumbers() {
         JSONArray array = new JSONArray();
         assertThrowsJSONExceptionEncapsulating(
                 () -> array.put(Double.NaN));
@@ -355,7 +355,7 @@ public class JSONArrayTest {
                 () -> array.put(0, Double.POSITIVE_INFINITY));
     }
     @Test
-    public void testPutUnsupportedNumbersAsObject() throws JSONException {
+    public void testPutUnsupportedNumbersAsObject() {
         JSONArray array = new JSONArray();
         array.put(Double.valueOf(Double.NaN));
         array.put(Double.valueOf(Double.NEGATIVE_INFINITY));
@@ -367,39 +367,39 @@ public class JSONArrayTest {
      * it doesn't check inputs in its constructor.
      */
     @Test
-    public void testCreateWithUnsupportedNumbers() throws JSONException {
+    public void testCreateWithUnsupportedNumbers() {
         JSONArray array = new JSONArray(Arrays.asList(5.5, Double.NaN));
         assertEquals(2, array.length());
         assertEquals(5.5, array.getDouble(0), 0);
         assertEquals(Double.NaN, array.getDouble(1), 0);
     }
     @Test
-    public void testToStringWithUnsupportedNumbers() throws JSONException {
+    public void testToStringWithUnsupportedNumbers() {
         // when the array contains an unsupported number, toString returns null!
         JSONArray array = new JSONArray(Arrays.asList(5.5, Double.NaN));
         assertNull(array.toString());
     }
 
     @Test
-    public void testListConstructorCopiesContents() throws JSONException {
+    public void testListConstructorCopiesContents() {
         List<Object> contents = Arrays.<Object>asList(5);
         JSONArray array = new JSONArray(contents);
         contents.set(0, 10);
         assertEquals(5, array.get(0));
     }
     @Test
-    public void testTokenerConstructor() throws JSONException {
+    public void testTokenerConstructor() {
         JSONArray object = new JSONArray(new JSONTokener("[false]"));
         assertEquals(1, object.length());
         assertEquals(false, object.get(0));
     }
     @Test
-    public void testTokenerConstructorWrongType() throws JSONException {
+    public void testTokenerConstructorWrongType() {
         assertThrowsJSONExceptionEncapsulating(
                 () -> new JSONArray(new JSONTokener("{\"foo\": false}")));
     }
     @Test
-    public void testTokenerConstructorNull() throws JSONException {
+    public void testTokenerConstructorNull() {
         try {
             new JSONArray((JSONTokener) null);
             fail();
@@ -417,18 +417,18 @@ public class JSONArrayTest {
         }
     }
     @Test
-    public void testStringConstructor() throws JSONException {
+    public void testStringConstructor() {
         JSONArray object = new JSONArray("[false]");
         assertEquals(1, object.length());
         assertEquals(false, object.get(0));
     }
     @Test
-    public void testStringConstructorWrongType() throws JSONException {
+    public void testStringConstructorWrongType() {
         assertThrowsJSONExceptionEncapsulating(
                 () -> new JSONArray("{\"foo\": false}"));
     }
     @Test
-    public void testStringConstructorNull() throws JSONException {
+    public void testStringConstructorNull() {
         try {
             new JSONArray((String) null);
             fail();
@@ -445,7 +445,7 @@ public class JSONArrayTest {
         }
     }
     @Test
-    public void testCreate() throws JSONException {
+    public void testCreate() {
         JSONArray array = new JSONArray(Arrays.asList(5.5, true));
         assertEquals(2, array.length());
         assertEquals(5.5, array.getDouble(0), 0);
@@ -453,7 +453,7 @@ public class JSONArrayTest {
         assertEquals("[5.5,true]", array.toString());
     }
     @Test
-    public void testAccessOutOfBounds() throws JSONException {
+    public void testAccessOutOfBounds() {
         JSONArray array = new JSONArray();
         array.put("foo");
         assertEquals(null, array.opt(3));
