@@ -109,6 +109,9 @@
     <color name="flag_orange">#FF9800</color>
     <color name="flag_green">#00ff00</color>
     <color name="flag_blue">#0000ff</color>
+    <color name="flag_pink">#ff82ee</color>
+    <color name="flag_turquoise">#00d1b5</color>
+    <color name="flag_purple">#9649dd</color>
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>

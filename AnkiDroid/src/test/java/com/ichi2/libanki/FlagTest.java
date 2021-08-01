@@ -58,5 +58,9 @@ public class FlagTest extends RobolectricTest {
         assertEquals(3, c.userFlag());
         c.setUserFlag(0);
         assertEquals(0, c.userFlag());
+
+        // test new flags
+        col.setUserFlag(7, Collections.singletonList(c.getId()));
+        assertEquals(1, col.findCards("flag:7").size());
     }
 }

@@ -411,6 +411,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else if (itemId == R.id.action_flag_four) {
             Timber.i("Reviewer:: Flag four");
             onFlag(mCurrentCard, FLAG_BLUE);
+        } else if (itemId == R.id.action_flag_five) {
+            Timber.i("Reviewer:: Flag five");
+            onFlag(mCurrentCard, FLAG_PINK);
+        } else if (itemId == R.id.action_flag_six) {
+            Timber.i("Reviewer:: Flag six");
+            onFlag(mCurrentCard, FLAG_TURQUOISE);
+        } else if (itemId == R.id.action_flag_seven) {
+            Timber.i("Reviewer:: Flag seven");
+            onFlag(mCurrentCard, FLAG_PURPLE);
         } else if (itemId == R.id.action_card_info) {
             Timber.i("Card Viewer:: Card Info");
             openCardInfo();
@@ -618,6 +627,15 @@ public class Reviewer extends AbstractFlashcardViewer {
                     case 4:
                         flag_icon.setIcon(R.drawable.ic_flag_blue);
                         break;
+                    case 5:
+                        flag_icon.setIcon(R.drawable.ic_flag_pink);
+                        break;
+                    case 6:
+                        flag_icon.setIcon(R.drawable.ic_flag_turquoise);
+                        break;
+                    case 7:
+                        flag_icon.setIcon(R.drawable.ic_flag_purple);
+                        break;
                     default:
                         flag_icon.setIcon(R.drawable.ic_flag_transparent);
                         break;
@@ -774,7 +792,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private boolean isFlagResource(int itemId) {
-        return itemId == R.id.action_flag_four
+        return itemId == R.id.action_flag_seven
+                || itemId == R.id.action_flag_six
+                || itemId == R.id.action_flag_five
+                || itemId == R.id.action_flag_four
                 || itemId == R.id.action_flag_three
                 || itemId == R.id.action_flag_two
                 || itemId == R.id.action_flag_one;

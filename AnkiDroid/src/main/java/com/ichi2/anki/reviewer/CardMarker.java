@@ -36,9 +36,12 @@ public class CardMarker {
     public static final int FLAG_ORANGE = 2;
     public static final int FLAG_GREEN = 3;
     public static final int FLAG_BLUE = 4;
+    public static final int FLAG_PINK = 5;
+    public static final int FLAG_TURQUOISE = 6;
+    public static final int FLAG_PURPLE = 7;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE})
+    @IntDef({FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE, FLAG_PINK, FLAG_TURQUOISE, FLAG_PURPLE})
     public @interface FlagDef {}
 
     @NonNull
@@ -75,6 +78,15 @@ public class CardMarker {
                 break;
             case FLAG_BLUE:
                 setFlagView(R.drawable.ic_flag_blue);
+                break;
+            case FLAG_PINK:
+                setFlagView(R.drawable.ic_flag_pink);
+                break;
+            case FLAG_TURQUOISE:
+                setFlagView(R.drawable.ic_flag_turquoise);
+                break;
+            case FLAG_PURPLE:
+                setFlagView(R.drawable.ic_flag_purple);
                 break;
             case FLAG_NONE:
             default:
