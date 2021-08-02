@@ -1,6 +1,7 @@
 plugins {
  // Gradle plugin portal 
  id 'com.github.triplet.play' version '3.5.0-agp7.0'
+ id "com.guardsquare.appsweep" version "0.1.2"
 }
 
 apply plugin: 'com.android.application'
