@@ -73,9 +73,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 
-import androidx.core.util.Pair;
 import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
@@ -424,10 +422,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         File internalizedPick = internalizeUri(selectedImage);
         if (internalizedPick == null) {
-            String urlImagePath = getImageInfoFromUri(mActivity, selectedImage).first;
-            mViewModel = new ImageViewModel(urlImagePath, selectedImage);
-            mField.setImagePath(urlImagePath);
-            mField.setHasTemporaryMedia(false);
             Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", selectedImage);
             showSomethingWentWrong();
             return;
@@ -442,15 +436,15 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private @Nullable File internalizeUri(Uri uri) {
         File internalFile;
-        Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
+        String uriFileName = getImageNameFromUri(mActivity, uri);
 
         // Use the display name from the image info to create a new file with correct extension
-        if (uriFileInfo.second == null) {
+        if (uriFileName == null) {
             Timber.w("internalizeUri() unable to get file name");
             showSomethingWentWrong();
             return null;
         }
-        String uriFileExtension = uriFileInfo.second.substring(uriFileInfo.second.lastIndexOf('.') + 1);
+        String uriFileExtension = uriFileName.substring(uriFileName.lastIndexOf('.') + 1);
         try {
             internalFile = createNewCacheImageFile(uriFileExtension);
         } catch (IOException e) {
@@ -707,72 +701,62 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     /**
-     * Get image information based on uri and selection args
+     * Get image name based on uri and selection args
      *
-     * @return Pair<String, String>: first file path (null if does not exist), second display name (null if does not exist)
+     * @return Display name of file identified by uri (null if does not exist)
      */
-    private @NonNull Pair<String, String> getImageInfoFromUri(Context context, Uri uri) {
-        Timber.d("getImagePathFromUri() URI: %s", uri);
-        Pair<String, String> imageInfo = new Pair<>(null, null);
+    private String getImageNameFromUri(Context context, Uri uri) {
+        Timber.d("getImageNameFromUri() URI: %s", uri);
+        String imageName = null;
         if (DocumentsContract.isDocumentUri(context, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imageInfo = getImageInfoFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                imageName = getImageNameFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(docId));
-                imageInfo = getImageInfoFromContentResolver(context, contentUri, null);
+                imageName = getImageNameFromContentResolver(context, contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            imageInfo = getImageInfoFromContentResolver(context, uri, null);
+            imageName = getImageNameFromContentResolver(context, uri, null);
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             if (uri.getPath() != null) {
                 String[] pathParts = uri.getPath().split("/");
-                imageInfo = new Pair<>(
-                        uri.getPath(),
-                        pathParts[pathParts.length - 1]
-                );
+                imageName = pathParts[pathParts.length - 1];
             }
         }
-        Timber.d("getImagePathFromUri() returning path/name %s/%s", imageInfo.first, imageInfo.second);
-        return imageInfo;
+        Timber.d("getImageNameFromUri() returning name %s", imageName);
+        return imageName;
     }
 
     /**
-     * Get image information based on uri and selection args
+     * Get image name based on uri and selection args
      *
-     * @return string[] 0: file path (null if does not exist), 1: display name (null if does not exist)
+     * @return Display name of file identified by uri (null if does not exist)
      */
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7014
-    private @NonNull Pair<String, String> getImageInfoFromContentResolver(Context context, Uri uri, String selection) {
-        Timber.d("getImagePathFromContentResolver() %s", uri);
-        String[] filePathColumns = {
-                MediaStore.MediaColumns.DATA,
-                MediaStore.MediaColumns.DISPLAY_NAME
-        };
+    private String getImageNameFromContentResolver(Context context, Uri uri, String selection) {
+        Timber.d("getImageNameFromContentResolver() %s", uri);
+        String[] filePathColumns = { MediaStore.MediaColumns.DISPLAY_NAME };
         Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), uri, filePathColumns, selection, null, null, null);
 
         if (cursor == null) {
-            Timber.w("getImageInfoFromContentResolver() cursor was null");
+            Timber.w("getImageNameFromContentResolver() cursor was null");
             showSomethingWentWrong();
-            return new Pair<>(null, null);
+            return null;
         }
 
         if (!cursor.moveToFirst()) {
             //TODO: #5909, it would be best to instrument this to see if we can fix the failure
-            Timber.w("getImageInfoFromContentResolver() cursor had no data");
+            Timber.w("getImageNameFromContentResolver() cursor had no data");
             showSomethingWentWrong();
-            return new Pair<>(null, null);
+            return null;
         }
 
-        Pair<String, String> imageInfo = new Pair<>(
-                cursor.getString(cursor.getColumnIndex(filePathColumns[0])),
-                cursor.getString(cursor.getColumnIndex(filePathColumns[1]))
-        );
+        String imageName = cursor.getString(cursor.getColumnIndex(filePathColumns[0]));
         cursor.close();
-        Timber.d("getImageInfoFromContentResolver() decoded image info path/name %s/%s", imageInfo.first, imageInfo.second);
-        return imageInfo;
+        Timber.d("getImageNameFromContentResolver() decoded image name %s", imageName);
+        return imageName;
     }
 
 
