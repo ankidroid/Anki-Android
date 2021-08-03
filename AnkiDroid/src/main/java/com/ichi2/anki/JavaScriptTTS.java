@@ -112,6 +112,16 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
         return mTts.setSpeechRate(speechRate);
     }
 
+    /** 
+     * Checks whether the TTS engine is busy speaking. 
+     * Note that a speech item is considered complete once it's audio data has 
+     * been sent to the audio mixer, or written to a file.
+     *  
+     */
+    public boolean isSpeaking() {
+        return mTts.isSpeaking();
+    }
+
     /**
      * Interrupts the current utterance (whether played or rendered to file) and discards other utterances in the queue.
      */

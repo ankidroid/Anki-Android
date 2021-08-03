@@ -4245,12 +4245,17 @@ see card.js for available functions
         public int ankiTtsSetSpeechRate(float speechRate) {
           return mTalker.setSpeechRate(speechRate);
         }        
-        
+
         @JavascriptInterface
         public int ankiTtsSetSpeechRate(double speechRate) {
           return mTalker.setSpeechRate((float)speechRate);
         }
-      
+
+        @JavascriptInterface
+        public boolean ankiTtsIsSpeaking() {
+          return mTalker.isSpeaking();
+        }
+
         @JavascriptInterface
         public void ankiTtsStop() {
           mTalker.stop();
