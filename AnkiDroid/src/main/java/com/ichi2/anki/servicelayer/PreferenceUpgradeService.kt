@@ -73,4 +73,14 @@ object PreferenceUpgradeService {
     }
 
     internal fun needsLegacyPreferenceUpgrade(previous: Long): Boolean = previous < CHECK_PREFERENCES_AT_VERSION
+
+    /**
+     * Specifies that no preference upgrades need to happen.
+     * Typically because the app has been run for the first time, or the preferences
+     * have been deleted
+     */
+    @JvmStatic
+    fun setPreferencesUpToDate(preferences: SharedPreferences) {
+        // intentionally left blank
+    }
 }
