@@ -20,6 +20,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -31,20 +32,18 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.DisplayUtils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -586,35 +585,18 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    @SuppressWarnings( {"deprecation", "RedundantSuppression"}) // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     protected String saveWhiteboard(Time time) throws FileNotFoundException {
-
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-
-        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File ankiDroidFolder = new File(pictures, "AnkiDroid");
-
-        if (!ankiDroidFolder.exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            ankiDroidFolder.mkdirs();
-        }
-
-        String baseFileName = "Whiteboard";
-        String timeStamp = TimeUtils.getTimestamp(time);
-        String finalFileName = baseFileName + timeStamp + ".png";
-
-        File saveWhiteboardImageFile = new File(ankiDroidFolder, finalFileName);
-
         if (mForegroundColor != Color.BLACK) {
             canvas.drawColor(Color.BLACK);
         } else {
             canvas.drawColor(Color.WHITE);
         }
-
         this.draw(canvas);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImageFile));
-        return saveWhiteboardImageFile.getAbsolutePath();
+        String baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time);
+        // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
+        return CompatHelper.getCompat().saveImage(getContext(), bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95);
     }
 
     @VisibleForTesting

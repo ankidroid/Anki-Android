@@ -19,9 +19,11 @@ package com.ichi2.compat;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.ThumbnailUtils;
+import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.widget.TimePicker;
@@ -31,6 +33,7 @@ import com.ichi2.utils.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -224,5 +227,19 @@ public class CompatV21 implements Compat {
     public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
         //noinspection WrongConstant
         return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
+    public String saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
+        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+        if (!ankiDroidFolder.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            ankiDroidFolder.mkdirs();
+        }
+        File imageFile = new File(ankiDroidFolder, baseFileName + "." + extension);
+        bitmap.compress(format, quality, new FileOutputStream(imageFile));
+        return imageFile.getAbsolutePath();
     }
 }
