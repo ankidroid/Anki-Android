@@ -145,6 +145,7 @@ public class InitialActivity {
         }
 
         Timber.i("Fresh install");
+        PreferenceUpgradeService.setPreferencesUpToDate(preferences);
         setUpgradedToLatestVersion(preferences);
 
         return true;
