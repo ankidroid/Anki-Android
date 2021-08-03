@@ -124,11 +124,11 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
 
     /**
      * Interrupts the current utterance (whether played or rendered to file) and discards other utterances in the queue.
+     * @return ERROR(-1) SUCCESS(0)
      */
-    public void stop() {
-        // The following Int values will be returned
-        // ERROR(-1) SUCCESS(0)
-        mTts.stop();
+    @ErrorOrSuccess
+    public int stop() {
+        return mTts.stop();
     }
 
 }

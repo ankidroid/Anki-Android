@@ -4257,8 +4257,8 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public void ankiTtsStop() {
-          mTalker.stop();
+        public int ankiTtsStop() {
+          return mTalker.stop();
         }
 
     }
