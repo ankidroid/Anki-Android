@@ -1166,11 +1166,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.i("No space left");
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if ("".equals(preferences.getString("lastVersion", ""))) {
-            Timber.i("Fresh install");
-            preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+        } else if (InitialActivity.performSetupFromFreshInstallOrClearedPreferences(preferences)) {
             onFinishedStartup();
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
+        } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
             if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
@@ -1289,7 +1287,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 Timber.i("Dev Build - not showing 'new features'");
                 // Don't show new features dialog for development builds
-                preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                InitialActivity.setUpgradedToLatestVersion(preferences);
                 String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
                 UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
                 showStartupScreensAndDialogs(preferences, 2);
