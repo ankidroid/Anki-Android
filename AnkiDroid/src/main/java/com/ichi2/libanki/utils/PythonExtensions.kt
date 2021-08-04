@@ -56,7 +56,11 @@ fun <T> List<T>?.isNotNullOrEmpty(): Boolean {
 
 fun <T> list(vararg elements: T) = mutableListOf(elements)
 
-fun String.join(values: MutableList<String>): String {
+fun <T> list(values: Collection<T>): List<T> = ArrayList(values)
+
+fun <T> set(values: List<T>): HashSet<T> = HashSet(values)
+
+fun String.join(values: Collection<String>): String {
     return TextUtils.join(this, values)
 }
 
