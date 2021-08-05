@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
     <string name="tts_no_tts">No parlis</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
         <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>

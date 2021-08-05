@@ -52,6 +52,7 @@
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
     <string name="initializing_tts">TTS 초기화 중...</string>
     <string name="tts_no_tts">말하지 마십시오</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>안드로이드용 플래시카드 암기 앱</h2>AnkiDroid는 데스크탑 버전<a href=\"%2$s\">Anki</a>과 완벽하게 호환되는 플래시카드 어플리케이션입니다. AnkiDroid와 데스크탑용 Anki 모두에서 카드를 생성, 학습, 다운로드할 수 있으며 쉽게 동기화할 수 있습니다.]]></item>
         <item><![CDATA[AnkiDroid를 향상시키기 위해, 사용 중 발생한 문제점을 <a href=\"%1$s\">이슈 트래커</a>로 알려주세요. 새로운 기능이나 아이디어도 환영합니다. <a href=\"%2$s\">위키</a>에서 해답을 찾거나 <a href=\"%3$s\">포럼</a>에서 의견을 나눠보세요.]]></item>

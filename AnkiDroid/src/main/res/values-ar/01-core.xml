@@ -134,6 +134,9 @@
     <string name="menu_flag_card_two">مؤشر برتقالي</string>
     <string name="menu_flag_card_three">مؤشر أخضر</string>
     <string name="menu_flag_card_four">مؤشر أزرق</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_select">تحديد النص</string>

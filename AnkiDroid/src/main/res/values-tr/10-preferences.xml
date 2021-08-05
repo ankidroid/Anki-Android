@@ -145,7 +145,7 @@
     <string name="notification_pref_title" maxLength="41">Şu durumda bildir:</string>
     <string name="never_notify">Hiç bildirme</string>
     <string name="notify_when_pending">Bekleyen mesajlar olduğunda</string>
-    <string name="notification_minimum_cards_due">Çalışılacak en az %d kart olduğunda</string>
+    <string name="notification_minimum_cards_due">En az %d kartın sırası geldiğinde</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
     <string name="timeout_answer_text" maxLength="41">Cevabı otomatik göster</string>

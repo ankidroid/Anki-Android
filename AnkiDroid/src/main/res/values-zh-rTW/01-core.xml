@@ -110,6 +110,9 @@
     <string name="menu_flag_card_two">橙色標記</string>
     <string name="menu_flag_card_three">綠色標記</string>
     <string name="menu_flag_card_four">藍色標記</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_select">選取文字</string>

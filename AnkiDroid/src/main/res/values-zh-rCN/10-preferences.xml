@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">显示大的回答按钮</string>
     <string name="show_large_answer_buttons_summ">以两行显示回答按钮</string>
     <string name="show_top_bar" maxLength="41">显示顶部栏</string>
-    <string name="show_top_bar_summ">在顶部栏中显示卡牌计数、标志和标记</string>
+    <string name="show_top_bar_summ">在顶部栏中显示卡片数量、旗标和标记</string>
     <string name="show_progress" maxLength="41">显示剩余数量</string>
     <string name="show_progress_summ">显示剩余卡片数量</string>
     <string name="show_eta" maxLength="41">显示预计完成时间</string>
@@ -241,7 +241,7 @@
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
     <string name="deck_conf_general" maxLength="41">常规</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
-    <string name="deck_conf_steps" maxLength="41">间隔的步伐(以分钟计)</string>
+    <string name="deck_conf_steps" maxLength="41">学习间隔(以分钟计)</string>
     <string name="deck_conf_order" maxLength="41">顺序</string>
     <string name="deck_conf_new_cards_day" maxLength="41">新卡片/天</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">毕业时间间隔</string>
@@ -249,10 +249,10 @@
     <string name="deck_conf_easy_ivl" maxLength="41">简单按钮对应的时间间隔</string>
     <string name="deck_conf_start_ease" maxLength="41">初始简易度</string>
     <string name="deck_conf_max_rev" maxLength="41">最大复习数量/天</string>
-    <string name="deck_conf_new_bury" maxLength="41">隐藏相关新卡片</string>
-    <string name="deck_conf_new_bury_summ">相关新卡片隐藏至第二天显示</string>
+    <string name="deck_conf_new_bury" maxLength="41">搁置相关新卡片</string>
+    <string name="deck_conf_new_bury_summ">相关新卡片搁置到第二天显示</string>
     <string name="deck_conf_rev_bury" maxLength="41">隐藏相关复习</string>
-    <string name="deck_conf_rev_bury_summ">相关复习隐藏至第二天显示</string>
+    <string name="deck_conf_rev_bury_summ">相关复习搁置到第二天显示</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">使用常规设置</string>
     <string name="deck_conf_use_general_timeout_settings_summ">使用一般的 “自动显示答案” 设置，而不是使用此组的设置。</string>
     <string name="deck_conf_easy_bonus" maxLength="41">回答简单的时间间隔增加比例</string>
@@ -292,8 +292,8 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
     <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
-    <string name="deck_conf_cram_steps" maxLength="41">自定义步伐(以分钟计)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">自定义步伐</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自定义学习间隔(以分钟计)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">自定义学习间隔</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">提醒时间</string>
     <!-- analytics options -->

@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
     <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
     <string name="tts_no_tts">Nie mów</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to komórkowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href=\"%2$s\">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
         <item><![CDATA[Aby pomóc nam ulepszać AnkiDroid, prosimy o zgłaszanie błędów do <a href=\"%1$s\">trackera</a>; pomysły na nowe funkcje są mile widziane. Możesz też poszukać odpowiedzi na <a href=\"%2$s\">naszej wiki</a> lub rozpocząć dyskusję na <a href=\"%3$s\">forum</a>.]]></item>

@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
     <string name="gesture_flag_green">Toggle Green Flag</string>
     <string name="gesture_flag_blue">Toggle Blue Flag</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Αφαίρεση σημαίας</string>
     <string name="gesture_page_up">Page Up</string>
     <string name="gesture_page_down">Page Down</string>

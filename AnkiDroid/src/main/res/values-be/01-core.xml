@@ -124,6 +124,9 @@
     <string name="menu_flag_card_two">Аранжавы сцяжок</string>
     <string name="menu_flag_card_three">Зялёны сцяжок</string>
     <string name="menu_flag_card_four">Блакітны сцяжок</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Змяніць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
@@ -152,7 +155,7 @@
     <string name="time_quantity_minutes">%d хв</string>
     <string name="time_quantity_hours_minutes">%1$d гадз %2$d хв</string>
     <string name="time_quantity_hours">%d гадз</string>
-    <string name="time_quantity_days">%d дз/дні</string>
+    <string name="time_quantity_days">%d дз</string>
     <string name="time_quantity_days_hours">%1$d дз %2$d гадз</string>
     <string name="time_quantity_months">%.1f мес</string>
     <string name="time_quantity_years">%.1f г</string>

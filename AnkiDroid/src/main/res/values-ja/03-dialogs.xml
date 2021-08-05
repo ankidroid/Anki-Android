@@ -52,6 +52,7 @@
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="initializing_tts">テキスト読み上げ機能（TTS）を初期化しています...</string>
     <string name="tts_no_tts">音声なし</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア<a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。AnkiDroidとAnkiのどちらでも教材を作成し、ダウンロードし、学習し、無料のオンラインサービスAnkiWebを介して簡単に双方を同期することができます。]]></item>
         <item><![CDATA[AnkiDroidをよりよいものにするため、バグ（不具合）を見つけた場合は<a href=\"%1$s\">こちら</a>へ報告していただければ幸いです。新しい機能のアイデアも大歓迎です。<a href=\"%2$s\">Wiki</a>をご覧になった上で、<a href=\"%3$s\">フォーラム</a>でディスカッションを開始してください。]]></item>

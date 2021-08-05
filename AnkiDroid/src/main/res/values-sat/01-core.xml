@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">ᱥᱟᱱᱛᱨᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_three">ᱥᱟᱹᱵᱡᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_four">ᱞᱤᱞ ᱯᱚᱛᱠᱟ</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_select">ᱚᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>

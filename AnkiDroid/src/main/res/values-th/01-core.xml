@@ -110,6 +110,9 @@
     <string name="menu_flag_card_two">เครื่องหมายสีส้ม</string>
     <string name="menu_flag_card_three">เครื่องหมายสีเขียว</string>
     <string name="menu_flag_card_four">เครื่องหมายสีน้ำเงิน</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">คุณต้องการจะลบโน้ตนี้และการ์ดภายในทั้งหมดหรือไม่?\n%s</string>
     <string name="menu_select">เลือกข้อความ</string>

@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Tarxeta laranxa</string>
     <string name="menu_flag_card_three">Tarxeta verde</string>
     <string name="menu_flag_card_four">tarxeta azul</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Tes a certeza de querer eliminar esta nota e todos os seus cartóns?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>

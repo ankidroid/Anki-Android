@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">Walang available na wika sa teksto-sa-salita</string>
     <string name="initializing_tts">Magpasimula ng TTS&#8230;</string>
     <string name="tts_no_tts">Huwag kang magsalita</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Mga Flashcard para sa Android</h2>Ang AnkiDroid ay isang flashcard na aplikasyon na ganap na katugma sa desktop softweyr<a href=\"%2$s\">Anki</a>. Maaari kang lumikha, mag-download at matuto ng materyal sa parehong AnkiDroid o Anki Desktop, at madaling i-synchronize ang mga ito sa AnkiWeb.]]></item>
         <item><![CDATA[Upang matulungan kaming gawing mahusay ang AnkiDroid, mangyaring mag-ulat ng mga bug sa <a href+\"%1$s\">ang isyu ng tracker</a>; ang mga bagong tampok na ideya ay masyadong tinatanggap nang malugod. Maghanap ng mga sagot sa <a href=\"%2$s\">sa wiki</a> o magsimula ng talakayan sa <a href=\"%3$s\"> ang forum</a>.]]></item>

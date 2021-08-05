@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
     <string name="initializing_tts">Inicializando TTS&#8230;</string>
     <string name="tts_no_tts">No hable</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Tarjetas de aprendizaje para Android</h2>AnkiDroid es una aplicación de tarjetas de aprendizaje completamente compatible con el software de escritorio<a href=\"%2$s\">Anki</a>. Puedes crear, descargar y aprender material tanto en AnkiDroid como en Anki Desktop y sincronizarlos fácilmente con AnkiWeb.]]></item>
         <item><![CDATA[Para ayudarnos a mejorar AnkiDroid, por favor reporta errores en el <a href=\"%1$s\">registro de problemas</a>; nuevas ideas sobre características del programa son también bienvenidas. Encuentra respuestas en <a href=\"%2$s\">la wiki</a> o comienza una discusión en<a href=\"%3$s\">el foro</a>.]]></item>

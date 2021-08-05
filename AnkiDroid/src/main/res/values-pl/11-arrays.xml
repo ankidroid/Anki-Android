@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Włącz/wyłącz pomarańczową flagę</string>
     <string name="gesture_flag_green">Włącz/wyłącz zieloną flagę</string>
     <string name="gesture_flag_blue">Włącz/wyłącz niebieską flagę</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Usuń flagę</string>
     <string name="gesture_page_up">Przewiń w górę</string>
     <string name="gesture_page_down">Przewiń w dół</string>

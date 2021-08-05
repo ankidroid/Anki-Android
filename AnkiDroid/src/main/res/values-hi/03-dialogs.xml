@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>एंड्रॉइड के लिए फ़्लैशकार्ड</h2>AnkiDroid एक फ़्लैशकार्ड अनुप्रयोग है जो डेस्कटॉप सॉफ्टवेयर <a href=\"%2$s\">Anki</a> से पूरी तरह सांगत है। आप Anki डेस्कटॉप और AnkiDroid सामग्री बना, डाउनलोड कर और सीख सकते हैं, और AnkiWeb से साथ आसानी से समकालीन कर सकते हैं।]]></item>
         <item><![CDATA[AnkiDroid को बेहतर बनाने में हमारी सहायता करने के लिए, कृपया <a href=\"%1$s\">समस्या ट्रैकर</a> को दोष सूचित करें; नई सुविधाओं के विचार भी स्वीकारे जाते हैं। <a href=\"%2$s\"> विकि</a> पर उतर खोजें या <a href=\"%3$s\">फोरम</a> पर बातचीत शुरू करें।]]></item>

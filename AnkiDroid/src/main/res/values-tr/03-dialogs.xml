@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
     <string name="tts_no_tts">Konuşma</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid, masaüstü yazılımı <a href=\"%2$s\">Anki</a>\'yle tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstü\'nde materyal oluşturup, indirip ve öğrenip, bunları AnkiWeb\'le kolayca senkronize edebilirsiniz.]]></item>
         <item><![CDATA[AnkiDroid\'i daha iyi hâle getirmemize yardım etmek için, lütfen bugları <a href=\"%1$s\">sorun takipçisi</a>ne bildirin; yeni özellik fikirlerinizi de bekliyoruz. <a href=\"%2$s\">Wiki</a>de sorularınıza cevap arayın veya <a href=\"%3$s\">forum</a>da bir tartışma açın.]]></item>
@@ -76,20 +77,20 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Kartı yeniden planla</item>
-        <item quantity="other">Kartları yeniden planla</item>
+        <item quantity="one">Kartın zamanını değiştir</item>
+        <item quantity="other">Kartın zamanını değiştir</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Şu anki aralık: %d gün</item>
         <item quantity="other">Şu anki aralık: %d gün</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Şu kadar gün sonra çalışmaya zamanla:</string>
+    <string name="reschedule_card_dialog_message">Şu kadar gün sonra çalışmaya zamanla</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d kartın zamanı değiştirildi</item>
         <item quantity="other">%d kartın zamanı değiştirildi</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Yeni bir kartın zamanı değiştiriliyor. Zamanını değiştirmek yeni kartları aynı zamanda çalışılacak kartlara dönüştürür. Yeni sıranın içinde \"yeni kartın yerini değiştir\" opsiyonunu kullanabilirsiniz.</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Zamanını değiştirmek aynı zamanda gelecekte zamanlayıcının karta muamelesini değiştirecek (kolaylık %d%% yapılacak)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Veritabanı hatası</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
@@ -98,7 +99,7 @@
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
     <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
-    <string name="custom_study_rev_total_rev">Destede çalışılacak kart: %d</string>
+    <string name="custom_study_rev_total_rev">Destede çalışma sırası gelmiş kart: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
@@ -155,7 +156,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Tüm kartlar</string>
     <string name="tags_dialog_option_new_cards">Yeni</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Çıkacak</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Sırası gelmiş</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Boş kartlar aranıyor&#8230;</string>
     <string name="confirm_cancel">İptal etmek istiyor musunuz?</string>

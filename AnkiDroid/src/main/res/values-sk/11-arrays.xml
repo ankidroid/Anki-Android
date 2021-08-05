@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Označiť oranžovou vlajkou</string>
     <string name="gesture_flag_green">Označiť zelenou vlajkou</string>
     <string name="gesture_flag_blue">Označiť modrou vlajkou</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Odstrániť vlajku</string>
     <string name="gesture_page_up">Strana nahor</string>
     <string name="gesture_page_down">Strana nadol</string>

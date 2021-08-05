@@ -115,6 +115,9 @@ mga natitirang minuto</item>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
     <string name="menu_select">Pumili ng teksto</string>
