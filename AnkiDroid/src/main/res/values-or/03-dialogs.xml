@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">କୌଣସି ଲେଖା-ରୁ-କଥା ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି...</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>ଆଣ୍ଡ୍ରଏଡ୍ ପାଇଁ ଫ୍ଲାସକାର୍ଡ</h2>AnkiDroid ହେଉଛି ଏକ ଫ୍ଲାସକାର୍ଡ ଆପ୍ଲିକେସନ୍ ଯାହା ଡେସ୍କଟପ୍ ସଫ୍ଟୱେର୍ <a href=\"%2$s\">Anki</a> ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ସୁସଙ୍ଗତ। ଆପଣ ଉଭୟ Ankidroid କିମ୍ବା Anki ଡେସ୍କଟପରେ ସାମଗ୍ରୀ ସୃଷ୍ଟି, ଡାଉନଲୋଡ୍ ଏବଂ ଶିଖିପାରିବେ, ଏବଂ ସେମାନଙ୍କୁ AnkiWeb ସହିତ ସହଜରେ ସିଙ୍କ୍ରୋନାଇଜ୍ କରିପାରିବେ।]]></item>
         <item><![CDATA[ଆମକୁ AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରିବାକୁ, ଦୟାକରି <a href=\"%1$s\">issue tracker</a>କୁ ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ; ନୂତନ ବୈଶିଷ୍ଟ୍ୟ ଚିନ୍ତାଧାରା ମଧ୍ୟ ବହୁତ ସ୍ୱାଗତଯୋଗ୍ୟ। <a href=\"%2$s\">Wiki</a>ରେ ଉତ୍ତର ଖୋଜ କିମ୍ବା <a href=\"%3$s\">Forum</a>ରେ ଏକ ଆଲୋଚନା ଆରମ୍ଭ କର।]]></item>

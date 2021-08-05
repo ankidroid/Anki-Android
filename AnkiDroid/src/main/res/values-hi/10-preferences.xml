@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
     <string name="show_large_answer_buttons_summ">२ पंक्तियों में उत्तर बटन दिखाएं</string>
     <string name="show_top_bar" maxLength="41">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar_summ">शीर्ष बार में कार्ड की संख्या, ध्वज और चिह्न दिखाएं</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>
     <string name="show_eta" maxLength="41">ईटीए दिखाएं</string>
