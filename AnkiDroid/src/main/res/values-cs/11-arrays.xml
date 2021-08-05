@@ -93,10 +93,10 @@
     changes in the array ordering better
      -->
     <string name="gesture_no_action">Žádná akce</string>
-    <string name="gesture_answer_1">Odpovědní tlačítko 1</string>
-    <string name="gesture_answer_2">Odpovědní tlačítko 2</string>
-    <string name="gesture_answer_3">Odpovědní tlačítko 3</string>
-    <string name="gesture_answer_4">Odpovědní tlačítko 4</string>
+    <string name="gesture_answer_1">Tlačítko odpovědi 1</string>
+    <string name="gesture_answer_2">Tlačítko odpovědi 2</string>
+    <string name="gesture_answer_3">Tlačítko odpovědi 3</string>
+    <string name="gesture_answer_4">Tlačítko odpovědi 4</string>
     <string name="gesture_answer_green">Doporučená odpověď (zelená)</string>
     <string name="gesture_answer_better_recommended">Odpovědět lépe, než bylo doporučeno</string>
     <string name="gesture_tag_note">Štítek k poznámce</string>
@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Přepnout oranžový příznak</string>
     <string name="gesture_flag_green">Přepnout zelený příznak</string>
     <string name="gesture_flag_blue">Přepnout modrý příznak</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Odstranit příznak</string>
     <string name="gesture_page_up">Stránka nahoru</string>
     <string name="gesture_page_down">Stránka dolů</string>

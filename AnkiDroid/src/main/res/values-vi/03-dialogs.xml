@@ -52,6 +52,7 @@
     <string name="no_tts_available_message">Không có ngôn ngữ chuyển-văn-bản-thành-lời</string>
     <string name="initializing_tts">Đang khởi chạy TTS&#8230;</string>
     <string name="tts_no_tts">Đừng phát âm</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Thẻ ghi nhớ cho Android</h2>AnkiDroid là ứng dụng thẻ ghi nhớ hoàn toàn tương thích với phần mềm cho máy bàn <a href=\"%2$s\">Anki</a>. Bạn có thể tạo, tải xuống và học các tài liệu trên cả AnkiDroid hoặc Anki cho máy bàn và dễ dàng đồng bộ chúng với AnkiWeb.]]></item>
         <item><![CDATA[Để giúp chúng tôi hoàn thiện AnkiDroid, xin báo cáo lỗi đến <a href=\"%1$s\">trình theo dõi lỗi</a>; các ý tưởng tính năng mới đều được hoan nghênh. Hãy tìm câu trả lời trên <a href=\"%2$s\">wiki</a> hoặc mở đầu cuộc thảo luận trên <a href=\"%3$s\">diễn đàn</a>.]]></item>

@@ -200,11 +200,11 @@
     <string name="custom_study">自定义学习</string>
     <string name="more_options">更多</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
-    <string name="steps_error">步长必须是大于 0 的数字</string>
-    <string name="steps_min_error">至少需要一个步骤</string>
+    <string name="steps_error">间隔必须是大于 0 的数字</string>
+    <string name="steps_min_error">至少需要一个间隔</string>
     <string name="sched_end">(结束)</string>
-    <string name="sched_unbury_action">在菜单中点击“取消隐藏”来查看这些卡片</string>
-    <string name="sched_has_buried">一些相关的或被隐藏的卡片被推迟到明天。</string>
+    <string name="sched_unbury_action">在菜单中点击“取消搁置”来查看这些卡片</string>
+    <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
     <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
     <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
     <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>

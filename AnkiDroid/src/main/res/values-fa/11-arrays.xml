@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">پرچم نارنجی</string>
     <string name="gesture_flag_green">پرچم سبز</string>
     <string name="gesture_flag_blue">پرچم آبی</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">حذف پرچم</string>
     <string name="gesture_page_up">بالا بردن صفحه</string>
     <string name="gesture_page_down">پایین بردن صفحه</string>

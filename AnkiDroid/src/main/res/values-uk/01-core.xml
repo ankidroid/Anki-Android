@@ -124,6 +124,9 @@
     <string name="menu_flag_card_two">Помаранчевий прапорець</string>
     <string name="menu_flag_card_three">Зелений прапорець</string>
     <string name="menu_flag_card_four">Синій прапорець</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>

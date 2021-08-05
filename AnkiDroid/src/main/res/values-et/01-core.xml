@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Oranž lipp</string>
     <string name="menu_flag_card_three">Roheline lipp</string>
     <string name="menu_flag_card_four">Sinine lipp</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Muuda silte</string>
     <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>
     <string name="menu_select">Vali text</string>

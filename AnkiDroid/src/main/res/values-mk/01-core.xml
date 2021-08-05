@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Портокалово знаме</string>
     <string name="menu_flag_card_three">Зелено знаме</string>
     <string name="menu_flag_card_four">Плаво знаме</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Навистина избришете ја оваа белешка и сите нејзини картички?\n%s</string>
     <string name="menu_select">Изберете текст</string>

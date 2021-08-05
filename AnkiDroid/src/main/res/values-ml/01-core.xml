@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">ഓറഞ്ച് ഫ്ലാഗ്</string>
     <string name="menu_flag_card_three">പച്ച ഫ്ലാഗ്</string>
     <string name="menu_flag_card_four">നീല ഫ്ലാഗ്</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ടാഗുകൾ എഡിറ്റുചെയ്യുക</string>
     <string name="delete_note_message">ഈ കുറിപ്പും അതിന്റെ എല്ലാ കാർഡുകളും ശരിക്കും ഇല്ലാതാക്കുക?\n%s</string>
     <string name="menu_select">വാചകം തിരഞ്ഞെടുക്കുക</string>

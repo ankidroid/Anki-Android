@@ -46,7 +46,7 @@
     <string name="card_browser_delete_card">删除卡牌记录</string>
     <string name="card_browser_suspend_card">暂停卡片</string>
     <string name="card_browser_change_deck">更换牌组</string>
-    <string name="card_browser_unsuspend_card">取消擱置卡片</string>
+    <string name="card_browser_unsuspend_card">取消暂停卡片</string>
     <string name="card_browser_mark_card">标记笔记</string>
     <string name="card_browser_unmark_card">未标记的笔记</string>
     <string name="delete_card_title">确认删除笔记？</string>
@@ -54,7 +54,7 @@
     <string name="card_browser_show_marked">筛选已标记卡牌</string>
     <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
     <string name="card_browser_search_by_tag">按标签筛选</string>
-    <string name="card_browser_search_by_flag">按标志筛选</string>
+    <string name="card_browser_search_by_flag">按旗标筛选</string>
     <string name="card_browser_list_my_searches">我的搜索</string>
     <string name="card_browser_list_my_searches_save">保存搜索结果</string>
     <string name="card_browser_list_my_searches_title">选择一个已保存的搜索结果</string>

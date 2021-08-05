@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Пераключыць аранжавы сцяжок</string>
     <string name="gesture_flag_green">Пераключыць зялёны сцяжок</string>
     <string name="gesture_flag_blue">Пераключыць блакітны сцяжок</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Прыбраць сцяжок</string>
     <string name="gesture_page_up">Папярэдняя старонка</string>
     <string name="gesture_page_down">Наступная старонка</string>

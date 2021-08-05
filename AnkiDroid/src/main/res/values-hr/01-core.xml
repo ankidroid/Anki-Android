@@ -119,6 +119,9 @@
     <string name="menu_flag_card_two">Narančasta oznaka</string>
     <string name="menu_flag_card_three">Zelena oznaka</string>
     <string name="menu_flag_card_four">Plava oznaka</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
     <string name="menu_select">Odaberi tekst</string>

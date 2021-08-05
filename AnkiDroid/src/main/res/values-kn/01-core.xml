@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">ಕಿತ್ತಳೆ ಧ್ವಜ</string>
     <string name="menu_flag_card_three">ಹಸಿರು ಧ್ವಜ</string>
     <string name="menu_flag_card_four">ನೀಲಿ ಧ್ವಜ</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_select">ಪಠ್ಯ ಆಯ್ದುಕೊಳ್ಳಿ</string>

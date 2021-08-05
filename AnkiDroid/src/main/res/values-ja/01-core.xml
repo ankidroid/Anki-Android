@@ -109,6 +109,9 @@
     <string name="menu_flag_card_two">橙フラグ</string>
     <string name="menu_flag_card_three">緑フラグ</string>
     <string name="menu_flag_card_four">青フラグ</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
     <string name="menu_select">テキストを選択</string>

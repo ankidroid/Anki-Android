@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Teksto perskaityti nurodyta kalba negalime</string>
     <string name="initializing_tts">Pradedamas teksto skaitymas balsu&#8230;</string>
     <string name="tts_no_tts">Nekalbėkite</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Atminties kortelės „Android“ sistemai</h2>AnkiDroid tai mokymosi kortelių programa, kurią galite naudoti ir kompiuteriu <a href=\"%2$s\">„Anki“</a>. Medžiagą galite kurti, parsisiųsti ir mokytis naudodami tiek „AnkiDroid“ mobiliąją, tiek „Anki“ kompiuterinę versiją, kurios tarpusavyje yra susinchronizuojamos prisijungus prie „AnkiWeb“ svetainės.]]></item>
         <item><![CDATA[Norėdami mums padėti tobulinti „AnkiDroid“ programą, prašome pranešti apie pastebėtas klaidas <a href=\"%1$s\">problemų registratoriui</a>. Taip pat laukiame naujų idėjų. Atsakymus į kilusius klausimus rasite <a href=\"%2$s\">wiki</a> svetainėje, o padiskutuoti galite mūsų <a href=\"%3$s\">forume</a>.]]></item>

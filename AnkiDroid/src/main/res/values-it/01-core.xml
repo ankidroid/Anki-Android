@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Contrassegno arancione</string>
     <string name="menu_flag_card_three">Contrassegno verde</string>
     <string name="menu_flag_card_four">Contrassegno blu</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Modifica etichette</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_select">Seleziona testo</string>

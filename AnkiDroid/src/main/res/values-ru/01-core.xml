@@ -124,6 +124,9 @@
     <string name="menu_flag_card_two">Оранжевый флажок</string>
     <string name="menu_flag_card_three">Зелёный флажок</string>
     <string name="menu_flag_card_four">Синий флажок</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_select">Выделить текст</string>

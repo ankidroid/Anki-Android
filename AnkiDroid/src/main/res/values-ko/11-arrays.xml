@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">주황색 플래그 넣기 / 빼기</string>
     <string name="gesture_flag_green">초록색 플래그 넣기 / 빼기</string>
     <string name="gesture_flag_blue">파란색 플래그 넣기 / 빼기</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">플래그 빼기</string>
     <string name="gesture_page_up">페이지 위로</string>
     <string name="gesture_page_down">페이지 아래로</string>

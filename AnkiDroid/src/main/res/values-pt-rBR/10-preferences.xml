@@ -210,8 +210,8 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Colar imagens como PNG</string>
     <string name="paste_as_png_summary">Por padrão, o Anki cola imagens na área de transferência como arquivos JPG para economizar espaço em disco. Você pode usar esta opção para colar como imagens PNG.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Duplo toque em voltar para voltar/sair</string>
+    <string name="exit_via_double_tap_back_summ">Para evitar saídas acidentais do revisor ou do aplicativo</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Habilitar estatísticas avançadas</string>
@@ -293,7 +293,7 @@
     <string name="deck_conf_cram_order" maxLength="41">cards selecionados por</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Remarcar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar cards baseado em minhas respostas no baralho</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passos personalizados (em minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificações de lembretes para os decks neste grupo</string>
@@ -310,15 +310,15 @@
     <string name="type_in_answer_focus_summ">Focar automaticamente no campo \"tipo de resposta\" no revisor</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Abrir Changelog</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Adicionar gesto</string>
+    <string name="binding_add_key">Português</string>
+    <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">Selecionar lado da carta</string>
+    <string name="card_side_question">Pergunta</string>
+    <string name="card_side_answer">Resposta</string>
+    <string name="card_side_both">Perguntas &amp; Respostas</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

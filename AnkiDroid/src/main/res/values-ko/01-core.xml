@@ -109,6 +109,9 @@
     <string name="menu_flag_card_two">주황색 표시</string>
     <string name="menu_flag_card_three">초록색 표시</string>
     <string name="menu_flag_card_four">파란색 표시</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_select">텍스트 선택</string>

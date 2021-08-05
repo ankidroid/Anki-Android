@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
     <string name="initializing_tts">A inicializar TTS&#8230;</string>
     <string name="tts_no_tts">Não falar</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Flashcards para Android</h2>AnkiDroid é uma aplicação de flashcards que é totalmente compatível com o software de PC <a href=\"%2$s\">Anki</a>. Você pode criar, descarregar e aprender conteúdos em ambos, AnkiDroid ou Anki Desktop, e sincronizá-los facilmente com AnkiWeb.]]></item>
         <item><![CDATA[Para nos ajudar a melhorar a AnkiDroid, por favor, comunique os erros para <a href=\"%1$s\">o rastreador de problemas</a>; também são bem-vindas novas ideias de funcionalidades. Encontrar respostas na <a href=\"%2$s\">wiki</a> ou iniciar uma discussão no <a href=\"%3$s\">fórum</a>.]]></item>

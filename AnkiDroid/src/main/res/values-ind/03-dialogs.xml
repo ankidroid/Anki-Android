@@ -52,6 +52,7 @@
     <string name="no_tts_available_message">Tidak ada bahasa teks-ke-ucapan tersedia</string>
     <string name="initializing_tts">Memulai TTS&#8230;</string>
     <string name="tts_no_tts">Jangan bicara</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/> Kartu flash untuk Android </h2> AnkiDroid adalah aplikasi flashcard yang sepenuhnya kompatibel dengan perangkat lunak desktop <a href=\"%2$s\"> Anki </a>. Kamu dapat membuat, mendownload dan mempelajari materi pada Desktop AnkiDroid atau Anki, dan menyinkronkannya dengan mudah dengan AnkiWeb.]]></item>
         <item><![CDATA[Untuk membantu kami membuat AnkiDroid lebih baik, harap laporkan bug ke <a href=\"%1$s\">issue tracker</a>; Ide fitur baru juga diterima. Cari jawaban di <a href=\"%2$s\">wiki</a> atau mulai diskusi di <a href=\"%3$s\">forum</a>.]]></item>
