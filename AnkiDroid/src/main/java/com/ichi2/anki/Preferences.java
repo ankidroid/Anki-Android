@@ -168,10 +168,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
 
-    private static final int RESULT_LOAD_IMG = 111;
-    private android.preference.CheckBoxPreference mBackgroundImage;
-    private static long fileLength;
-
     /** The collection path when Preferences was opened  */
     private String mOldCollectionPath = null;
 
@@ -282,37 +278,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     private void initSubscreen(String action, PreferenceContext listener) {
         android.preference.PreferenceScreen screen;
         switch (action) {
-            case "com.ichi2.anki.prefs.appearance":
-                listener.addPreferencesFromResource(R.xml.preferences_appearance);
-                screen = listener.getPreferenceScreen();
-                mBackgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
-                mBackgroundImage.setOnPreferenceClickListener(preference -> {
-                    if (mBackgroundImage.isChecked()) {
-                        try {
-                            Intent galleryIntent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-                            mBackgroundImage.setChecked(true);
-                        } catch (Exception ex) {
-                            Timber.e("%s",ex.getLocalizedMessage());
-                        }
-                    } else {
-                        mBackgroundImage.setChecked(false);
-                        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext());
-                        File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
-                        if (imgFile.exists()) {
-                            if (imgFile.delete()) {
-                                UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_removed), false);
-                            } else {
-                                UIUtils.showThemedToast(requireContext(), getString(R.string.error_deleting_image), false);
-                            }
-                        } else {
-                            UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_removed), false);
-                        }
-                    }
-                    return true;
-                });
-                AppearanceSettingsFragment.initializeCustomFontsDialog(requireContext(), screen);
-                break;
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
                 screen = listener.getPreferenceScreen();
@@ -534,45 +499,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // Note: The below format strings are generic, not card browser specific despite the name
         cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
         cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // DEFECT #5973: Does not handle Google Drive downloads
-        try {
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.MediaColumns.SIZE };
-                try (Cursor cursor = requireContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null)) {
-                    cursor.moveToFirst();
-                    // file size in MB
-                    long fileLength = cursor.getLong(0) / (1024 * 1024);
-
-                    String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext());
-                    String imageName = "DeckPickerBackground.png";
-                    File destFile = new File(currentAnkiDroidDirectory, imageName);
-                    // Image size less than 10 MB copied to AnkiDroid folder
-                    if (fileLength < 10) {
-                        try (FileChannel sourceChannel = ((FileInputStream) getContentResolver().openInputStream(selectedImage)).getChannel();
-                             FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
-                            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-                            UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_applied), false);
-                        }
-                    } else {
-                        mBackgroundImage.setChecked(false);
-                        UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false);
-                    }
-                }
-            } else {
-                mBackgroundImage.setChecked(false);
-                UIUtils.showThemedToast(requireContext(), getString(R.string.no_image_selected), false);
-            }
-        } catch (OutOfMemoryError | Exception e) {
-            Timber.w(e);
-            UIUtils.showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
-        }
     }
 
     private void addThirdPartyAppsListener(android.preference.PreferenceScreen screen) {
@@ -1226,13 +1152,55 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
     }
 
-    public static abstract class AppearanceSettingsFragment extends SpecificSettingsFragment {
+    public static class AppearanceSettingsFragment extends SpecificSettingsFragment {
+
+        private static final int RESULT_LOAD_IMG = 111;
+        private android.preference.CheckBoxPreference mBackgroundImage;
+
+
         @Override
         public int getPreferenceResource() {
             return R.xml.preferences_appearance;
         }
 
-        /** Initializes the list of custom fonts shown in the preferences. */
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_appearance);
+            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            mBackgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
+            mBackgroundImage.setOnPreferenceClickListener(preference -> {
+                if (mBackgroundImage.isChecked()) {
+                    try {
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                        mBackgroundImage.setChecked(true);
+                    } catch (Exception ex) {
+                        Timber.e("%s", ex.getLocalizedMessage());
+                    }
+                } else {
+                    mBackgroundImage.setChecked(false);
+                    String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext());
+                    File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png");
+                    if (imgFile.exists()) {
+                        if (imgFile.delete()) {
+                            UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_removed), false);
+                        } else {
+                            UIUtils.showThemedToast(requireContext(), getString(R.string.error_deleting_image), false);
+                        }
+                    } else {
+                        UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_removed), false);
+                    }
+                }
+                return true;
+            });
+            AppearanceSettingsFragment.initializeCustomFontsDialog(requireContext(), screen);
+        }
+
+
+        /**
+         * Initializes the list of custom fonts shown in the preferences.
+         */
         public static void initializeCustomFontsDialog(Context context, android.preference.PreferenceScreen screen) {
             android.preference.ListPreference defaultFontPreference = (android.preference.ListPreference) screen.findPreference("defaultFont");
             if (defaultFontPreference != null) {
@@ -1245,7 +1213,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         }
 
 
-        /** Returns a list of the names of the installed custom fonts. */
+        /**
+         * Returns a list of the names of the installed custom fonts.
+         */
         private static String[] getCustomFonts(Context context, String defaultValue) {
             return getCustomFonts(context, defaultValue, false);
         }
@@ -1269,6 +1239,45 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
             }
             return names;
+        }
+
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            // DEFECT #5973: Does not handle Google Drive downloads
+            try {
+                if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = { MediaStore.MediaColumns.SIZE };
+                    try (Cursor cursor = requireContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null)) {
+                        cursor.moveToFirst();
+                        // file size in MB
+                        long fileLength = cursor.getLong(0) / (1024 * 1024);
+
+                        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext());
+                        String imageName = "DeckPickerBackground.png";
+                        File destFile = new File(currentAnkiDroidDirectory, imageName);
+                        // Image size less than 10 MB copied to AnkiDroid folder
+                        if (fileLength < 10) {
+                            try (FileChannel sourceChannel = ((FileInputStream) requireContext().getContentResolver().openInputStream(selectedImage)).getChannel();
+                                 FileChannel destChannel = new FileOutputStream(destFile).getChannel()) {
+                                destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                                UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_applied), false);
+                            }
+                        } else {
+                            mBackgroundImage.setChecked(false);
+                            UIUtils.showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false);
+                        }
+                    }
+                } else {
+                    mBackgroundImage.setChecked(false);
+                    UIUtils.showThemedToast(requireContext(), getString(R.string.no_image_selected), false);
+                }
+            } catch (OutOfMemoryError | Exception e) {
+                Timber.w(e);
+                UIUtils.showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.getLocalizedMessage()), false);
+            }
         }
     }
 
