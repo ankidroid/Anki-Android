@@ -24,7 +24,7 @@ import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-public class ConstantFieldDetectorTest {
+public class JavaConstantFieldDetectorTest {
 
     @Language("JAVA")
     private static final String BADLY_NAMED_VARIABLE = "public class Xx { " +
@@ -43,7 +43,7 @@ public class ConstantFieldDetectorTest {
                 .allowMissingSdk()
                 .allowCompilationErrors()
                 .files(create(BADLY_NAMED_VARIABLE))
-                .issues(ConstantFieldDetector.ISSUE)
+                .issues(ConstantJavaFieldDetector.ISSUE)
                 .run()
                 .expectErrorCount(5)
                 .check(output -> {
