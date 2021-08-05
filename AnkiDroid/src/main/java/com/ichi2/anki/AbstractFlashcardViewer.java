@@ -4222,6 +4222,17 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        public void ankiSearchCard(String query) {
+            Intent intent = new Intent(AbstractFlashcardViewer.this, CardBrowser.class);
+            Long currentCardId = getCurrentCardId();
+            if (currentCardId != null) {
+                intent.putExtra("currentCard", currentCardId);
+            }
+            intent.putExtra("search_query", query);
+            startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
+        }
+
+        @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
             try {
                 ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
