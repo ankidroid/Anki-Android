@@ -52,7 +52,7 @@
     <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
     <string name="initializing_tts">正在初始化TTS引擎...</string>
     <string name="tts_no_tts">不要朗读</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\n未使用的文件：\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Android上的卡片记忆应用</h2>AnkiDroid是一个与<a href=\"%2$s\">Anki桌面客户端</a>完全兼容的卡片记忆应用。你可以在Anki桌面客户端或者AnkiDroid添加和下载学习资料，它们可以很方便的通过AnkiWeb进行同步。]]></item>
         <item><![CDATA[为了帮助改进AnkiDroid，请把Bugs发送到<a href=\"%1$s\">问题跟踪系统</a>；也欢迎提出新功能建议。\n在<a href=\"%2$s\">AnkiDroid的Wiki页面</a>上您可以找到一些问题的答案，也可以加入<a href=\"%3$s\">论坛</a>参与讨论。]]></item>
