@@ -598,6 +598,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         setContentView(R.layout.card_browser);
         initNavigationDrawer(findViewById(android.R.id.content));
         startLoadingCollection();
+
+        // for intent coming from search query js api
+        if (getIntent().getStringExtra("search_query") != null) {
+            mSearchTerms = getIntent().getStringExtra("search_query");
+            searchCards();
+        }
     }
 
 
