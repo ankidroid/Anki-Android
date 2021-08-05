@@ -4197,6 +4197,31 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        public boolean ankiBuryCard() {
+            return buryCard();
+        }
+
+        @JavascriptInterface
+        public boolean ankiBuryNote() {
+            return buryNote();
+        }
+
+        @JavascriptInterface
+        public boolean ankiSuspendCard() {
+            return suspendCard();
+        }
+
+        @JavascriptInterface
+        public boolean ankiSuspendNote() {
+            return suspendNote();
+        }
+
+        @JavascriptInterface
+        public void ankiAddTagToCard() {
+            runOnUiThread(() -> showTagsDialog());
+        }
+
+        @JavascriptInterface
         public boolean ankiIsActiveNetworkMetered() {
             try {
                 ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
