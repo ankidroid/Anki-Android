@@ -158,10 +158,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
      * TODO: convert to png if a image file has transparency, or at least if it supports it.
      */
     private static final String PASTE_PNG = "pastePNG";
-    /**
-     * Represents in Android preferences whether the scheduler should use version 1 or 2.
-     */
-    private static final String SCHED_VER = "schedVer";
 
     /**
      * The number of cards that should be due today in a deck to justify adding a notification.
@@ -169,7 +165,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     public static final String MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification";
     private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, SCHED_VER, NEW_TIMEZONE_HANDLING};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING};
 
     /** The collection path when Preferences was opened  */
     private String mOldCollectionPath = null;
@@ -337,8 +333,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 checkBox.setEnabled(false);
                             }
                             break;
-                        case SCHED_VER:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(col.schedVer() == 2);
                     }
                 } catch (NumberFormatException e) {
                     throw new RuntimeException(e);
@@ -525,53 +519,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             }
                         }
                     }
-                    break;
-                }
-                case SCHED_VER: {
-                    boolean wantNew = ((android.preference.CheckBoxPreference) pref).isChecked();
-                    boolean haveNew = getCol().schedVer() == 2;
-                    // northing to do?
-                    if (haveNew == wantNew) {
-                        break;
-                    }
-                    MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
-                    if (haveNew && !wantNew) {
-                        // Going back to V1
-                        builder.title(R.string.sched_ver_toggle_title);
-                        builder.content(R.string.sched_ver_2to1);
-                        builder.onPositive((dialog, which) -> {
-                            getCol().modSchemaNoCheck();
-                            try {
-                                getCol().changeSchedulerVer(1);
-                                ((android.preference.CheckBoxPreference) pref).setChecked(false);
-                            } catch (ConfirmModSchemaException e2) {
-                                // This should never be reached as we explicitly called modSchemaNoCheck()
-                                throw new RuntimeException(e2);
-                            }
-                        });
-                        builder.onNegative((dialog, which) -> ((android.preference.CheckBoxPreference) pref).setChecked(true));
-                        builder.positiveText(R.string.dialog_ok);
-                        builder.negativeText(R.string.dialog_cancel);
-                        builder.show();
-                        break;
-                    }
-                    // Going to V2
-                    builder.title(R.string.sched_ver_toggle_title);
-                    builder.content(R.string.sched_ver_1to2);
-                    builder.onPositive((dialog, which) -> {
-                        getCol().modSchemaNoCheck();
-                        try {
-                            getCol().changeSchedulerVer(2);
-                            ((android.preference.CheckBoxPreference) pref).setChecked(true);
-                        } catch (ConfirmModSchemaException e2) {
-                            // This should never be reached as we explicitly called modSchemaNoCheck()
-                            throw new RuntimeException(e2);
-                        }
-                    });
-                    builder.onNegative((dialog, which) -> ((android.preference.CheckBoxPreference) pref).setChecked(false));
-                    builder.positiveText(R.string.dialog_ok);
-                    builder.negativeText(R.string.dialog_cancel);
-                    builder.show();
                     break;
                 }
                 case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
@@ -1118,6 +1065,40 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             });
             setupContextMenuPreference(screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
             setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
+
+            if (getCol().schedVer() == 1) {
+                Timber.i("Displaying V1-to-V2 scheduler preference");
+                android.preference.CheckBoxPreference schedVerPreference = new android.preference.CheckBoxPreference(requireContext());
+                schedVerPreference.setTitle(R.string.sched_v2);
+                schedVerPreference.setSummary(R.string.sched_v2_summ);
+                schedVerPreference.setOnPreferenceChangeListener((preference, o) -> {
+
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(requireContext());
+                    // Going to V2
+                    builder.title(R.string.sched_ver_toggle_title);
+                    builder.content(R.string.sched_ver_1to2);
+                    builder.onPositive((dialog, which) -> {
+                        getCol().modSchemaNoCheck();
+                        try {
+                            getCol().changeSchedulerVer(2);
+                            screen.removePreference(schedVerPreference);
+                        } catch (ConfirmModSchemaException e2) {
+                            // This should never be reached as we explicitly called modSchemaNoCheck()
+                            throw new RuntimeException(e2);
+                        }
+                    });
+                    builder.onNegative((dialog, which) -> schedVerPreference.setChecked(false));
+                    builder.positiveText(R.string.dialog_ok);
+                    builder.negativeText(R.string.dialog_cancel);
+                    builder.show();
+                    return false;
+
+                });
+                // meaning of order here is the position of Preference in xml layout.
+                schedVerPreference.setOrder(5);
+                screen.addPreference(schedVerPreference);
+            }
+
 
             // Make it possible to test crash reporting, but only for DEBUG builds
             if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
