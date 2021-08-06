@@ -222,9 +222,9 @@ public class Toolbar extends FrameLayout {
     @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     protected int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager()
-                .getDefaultDisplay()
-                .getMetrics(displayMetrics);
+        ((Activity) getContext()).getContext()
+                .getDisplay()
+                .getWindowManager().getBounds(displayMetrics);
         return displayMetrics.widthPixels;
     }
 

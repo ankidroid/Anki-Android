@@ -80,7 +80,7 @@ public class TestUtils {
     @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     public static boolean isScreenSw600dp() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivityInstance().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        getActivityInstance().getContext().getDisplay().getWindowMetrics().getBounds(displayMetrics);
         float widthDp = displayMetrics.widthPixels / displayMetrics.density;
         float heightDp = displayMetrics.heightPixels / displayMetrics.density;
         float screenSw = Math.min(widthDp, heightDp);

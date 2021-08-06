@@ -322,7 +322,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private DisplayMetrics getDisplayMetrics() {
         if (mMetrics == null) {
             mMetrics = new DisplayMetrics();
-            mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
+            mActivity.getContext().getDisplay().getWindowMetrics().getBounds(mMetrics);
         }
         return mMetrics;
     }
