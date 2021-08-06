@@ -18,17 +18,16 @@
 
 package com.ichi2.libanki.backend
 
-import BackendProto.Backend
 import com.google.protobuf.ByteString
 import com.ichi2.libanki.DeckConfigV16
 import com.ichi2.libanki.DeckV16
-import com.ichi2.utils.JSONObject
+import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
+import com.ichi2.libanki.backend.BackendUtils.toByteString
 import java8.util.Optional
 import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.database.NotImplementedException
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import java.io.UnsupportedEncodingException
 
 private typealias did = Long
 private typealias dcid = Long
@@ -160,23 +159,5 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
 
     private fun DeckConfigV16.to_json_bytes(): ByteString {
         return toByteString(this.config)
-    }
-
-    fun from_json_bytes(json: Backend.Json): JSONObject {
-        val str = jsonToString(json)
-        return JSONObject(str)
-    }
-
-    fun jsonToString(json: Backend.Json): String {
-        return try {
-            json.json.toString("UTF-8")
-        } catch (e: UnsupportedEncodingException) {
-            throw IllegalStateException("Could not deserialize JSON", e)
-        }
-    }
-
-    fun toByteString(conf: JSONObject): ByteString {
-        val asString: String = conf.toString()
-        return ByteString.copyFromUtf8(asString)
     }
 }
