@@ -212,6 +212,7 @@
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid/contribute</string>
+    <string name="link_anki_2_scheduler">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html</string>
     <string name="link_ankiweb_docs_cloze_deletion">https://docs.ankiweb.net/editing.html#cloze-deletion</string>
 
     <string-array name="leech_action_values">
