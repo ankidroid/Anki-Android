@@ -1088,7 +1088,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         }
                     });
                     builder.onNegative((dialog, which) -> schedVerPreference.setChecked(false));
+                    builder.onNeutral((dialog, which) -> {
+                        // call v2 scheduler documentation website
+                        Uri uri = Uri.parse(getString(R.string.link_anki_2_scheduler));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    });
                     builder.positiveText(R.string.dialog_ok);
+                    builder.neutralText(R.string.help);
                     builder.negativeText(R.string.dialog_cancel);
                     builder.show();
                     return false;
