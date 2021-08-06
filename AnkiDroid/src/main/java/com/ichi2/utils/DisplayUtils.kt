@@ -28,8 +28,8 @@ object DisplayUtils {
     fun getDisplayDimensions(wm: WindowManager): Point {
         val display = wm.defaultDisplay
         val point = Point()
-        val pt = getWindowManager().getCurrentWindowMetrics()
-        getWindowMetrics.getBounds(pt)
+        getWindowManager().getCurrentWindowMetrics()
+        .getWindowMetrics.getBounds()
         return point
     }
 
