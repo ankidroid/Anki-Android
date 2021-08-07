@@ -31,6 +31,7 @@
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="semi_transparent_black">#80000000</color>
 
     <color name="answer_buttons_highlight_color">#66FFFFFF</color>
 

@@ -18,8 +18,11 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.view.View
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.OnboardingUtils.Companion.isVisited
+import com.ichi2.anki.OnboardingUtils.Companion.setVisited
 import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 
 /**
@@ -57,6 +60,7 @@ abstract class Onboarding<Feature, ActivityType>(
         const val ABSTRACT_FLASHCARD_VIEWER_ONBOARDING = "AbstractFlashcardViewerOnboarding"
         const val REVIEWER_ONBOARDING = "ReviewerOnboarding"
         const val NOTE_EDITOR_ONBOARDING = "NoteEditorOnboarding"
+        const val CARD_BROWSER_ONBOARDING = "CardBrowserOnboarding"
     }
 
     /**
@@ -264,6 +268,49 @@ abstract class Onboarding<Feature, ActivityType>(
 
             override fun getFeatureConstant(): String {
                 return NOTE_EDITOR_ONBOARDING
+            }
+        }
+    }
+
+    class CardBrowser(private val mActivityContext: com.ichi2.anki.CardBrowser) :
+        Onboarding<CardBrowser.CardBrowserOnboardingEnum, com.ichi2.anki.CardBrowser>(mActivityContext, mutableListOf()) {
+
+        init {
+            mTutorials.add(TutorialArguments(CardBrowserOnboardingEnum.DECK_CHANGER, this::showTutorialForDeckChangerIfNew))
+            mTutorials.add(TutorialArguments(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, this::showTutorialForCardClickIfNew))
+        }
+
+        private fun showTutorialForDeckChangerIfNew() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, CardBrowserOnboardingEnum.DECK_CHANGER)
+                .createRectangleWithDimmedBackground()
+                .setFocalColourResource(R.color.material_blue_500)
+                .setDismissedListener { onCreate() }
+                .setTarget(R.id.toolbar_spinner)
+                .setPrimaryText(R.string.deck_changer_card_browser)
+                .setSecondaryText(R.string.deck_changer_card_browser_desc)
+                .show()
+        }
+
+        private fun showTutorialForCardClickIfNew() {
+            val cardBrowserTutorial: FrameLayout = mActivityContext.findViewById(R.id.card_browser_tutorial)
+            cardBrowserTutorial.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    visibility = View.GONE
+                }
+            }
+            setVisited(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, mActivityContext)
+        }
+
+        enum class CardBrowserOnboardingEnum(var mValue: Int) : OnboardingFlag {
+            DECK_CHANGER(0), CARD_PRESS_AND_HOLD(1);
+
+            override fun getOnboardingEnumValue(): Int {
+                return mValue
+            }
+
+            override fun getFeatureConstant(): String {
+                return CARD_BROWSER_ONBOARDING
             }
         }
     }
