@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.OnboardingUtils.Companion.isVisited
 
 /**
@@ -48,6 +49,11 @@ abstract class Onboarding<Feature, ActivityType>(
     private val mContext: ActivityType,
     val mTutorials: MutableList<TutorialArguments<Feature, ActivityType>>
 ) where Feature : Enum<Feature>, Feature : OnboardingFlag, ActivityType : Activity {
+
+    companion object {
+        // Constants being used for onboarding preferences should not be modified.
+        const val DECK_PICKER_ONBOARDING = "DeckPickerOnboarding"
+    }
 
     /**
      * Contains the logic for iterating through various tutorials of a screen and displaying the first one
@@ -86,4 +92,58 @@ abstract class Onboarding<Feature, ActivityType>(
         val mOnboardingCondition: (() -> Boolean)? = null
     )
             where Feature : Enum<Feature>, Feature : OnboardingFlag, ActivityType : Activity
+
+    class DeckPicker(
+        private val mActivityContext: com.ichi2.anki.DeckPicker,
+        private val mRecyclerViewLayoutManager: LinearLayoutManager
+    ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum, com.ichi2.anki.DeckPicker>(mActivityContext, mutableListOf()) {
+
+        init {
+            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
+            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew, mActivityContext::hasAtLeastOneDeckBeingDisplayed))
+            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew, mActivityContext::hasAtLeastOneDeckBeingDisplayed))
+        }
+
+        private fun showTutorialForFABIfNew() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.FAB)
+                .createCircleWithDimmedBackground()
+                .setFocalColourResource(R.color.material_blue_500)
+                .setDismissedListener { onCreate() }
+                .setTarget(R.id.fab_main)
+                .setPrimaryText(R.string.fab_tutorial_title)
+                .setSecondaryText(R.string.fab_tutorial_desc)
+                .show()
+        }
+
+        private fun showTutorialForDeckIfNew() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.DECK_NAME)
+                .createRectangleWithDimmedBackground()
+                .setDismissedListener { showTutorialForCountsLayoutIfNew() }
+                .setTarget(mRecyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.deck_name_linear_layout))
+                .setPrimaryText(R.string.start_studying)
+                .setSecondaryText(R.string.start_studying_desc)
+                .show()
+        }
+
+        private fun showTutorialForCountsLayoutIfNew() {
+            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.COUNTS_LAYOUT)
+                .createRectangleWithDimmedBackground()
+                .setTarget(mRecyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.counts_layout))
+                .setPrimaryText(R.string.menu__study_options)
+                .setSecondaryText(R.string.study_options_desc)
+                .show()
+        }
+
+        enum class DeckPickerOnboardingEnum(var mValue: Int) : OnboardingFlag {
+            FAB(0), DECK_NAME(1), COUNTS_LAYOUT(2);
+
+            override fun getOnboardingEnumValue(): Int {
+                return mValue
+            }
+
+            override fun getFeatureConstant(): String {
+                return DECK_PICKER_ONBOARDING
+            }
+        }
+    }
 }

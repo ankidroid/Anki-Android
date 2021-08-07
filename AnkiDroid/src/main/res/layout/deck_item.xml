@@ -34,6 +34,7 @@
         android:layout_alignParentStart="true"
         android:background="@android:color/transparent" />
     <LinearLayout
+        android:id="@+id/deck_name_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/deckpicker_indent"

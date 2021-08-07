@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
 
@@ -437,6 +438,24 @@ public class DeckPickerTest extends RobolectricTest {
 
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
         assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
+    }
+    
+    @Test
+    public void checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
+        addDeck("Hello World");
+        // Reason for using 2 as the number of decks -> This deck + Default deck
+        assertThat("Deck added", getCol().getDecks().count(), is(2));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("Deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(true));
+    }
+
+    @Test
+    public void checkIfReturnsFalseWhenNoDeckIsDisplayed() {
+        // Only default deck would be there in the count, hence using the value as 1.
+        // Default deck does not get displayed in the DeckPicker if the default deck is empty.
+        assertThat("Contains only default deck", getCol().getDecks().count(), is(1));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("No deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(false));
     }
 
 
