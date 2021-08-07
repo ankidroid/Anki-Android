@@ -42,15 +42,6 @@ import java8.util.Optional
 import java.util.*
 import BackendProto.Backend as pb
 
-private typealias Dict<K, V> = HashMap<K, V>
-private typealias ImmutableList<T> = kotlin.collections.List<T>
-private typealias List<T> = MutableList<T>
-private typealias str = String
-private typealias did = Long
-private typealias dcid = Long // Python3 has no 'long'
-private typealias bool = Boolean
-private typealias Tuple<T1, T2> = Pair<T1, T2>
-
 // legacy code may pass this in as the type argument to .id()
 const val defaultDeck = 0
 const val defaultDynamicDeck = 1
@@ -255,7 +246,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     }
 
     @Deprecated("decks.allIds() is deprecated, use .all_names_and_ids()")
-    fun allIds(): List<str> {
+    fun allIds(): MutableList<str> {
         return this.all_names_and_ids().map {
             x ->
             x.id.toString()
@@ -263,7 +254,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     }
 
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
-    fun allNames(dyn: bool = true, force_default: bool = true): List<str> {
+    fun allNames(dyn: bool = true, force_default: bool = true): MutableList<str> {
         return this.all_names_and_ids(
             skip_empty_default = !force_default, include_filtered = dyn
         ).map {
@@ -441,7 +432,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         this.save(grp)
     }
 
-    fun didsForConf(conf: DeckConfigV16): List<did> {
+    fun didsForConf(conf: DeckConfigV16): MutableList<did> {
         val dids = mutableListOf<did>()
         for (deck in this.all()) {
             if (deck.hasKey("conf") && deck.conf == conf.id) {
@@ -499,7 +490,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         )
     }
 
-    fun cids(did: did, children: bool = false): List<Long> {
+    fun cids(did: did, children: bool = false): MutableList<Long> {
         if (!children) {
             return this.col.db.queryLongList("select id from cards where did=?", did)
         }
@@ -517,7 +508,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     /* Deck selection */
 
     /** The currently active dids. */
-    fun active(): List<did> {
+    fun active(): MutableList<did> {
         // TODO: Copied from the java, should use get_config
         val activeDecks: JSONArray = col.conf.getJSONArray("activeDecks")
         val result = LinkedList<Long>()
@@ -586,7 +577,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         fun _basename(str: str) = basename(str)
 
         @JvmStatic
-        fun immediate_parent_path(name: str): List<str> {
+        fun immediate_parent_path(name: str): MutableList<str> {
             return _path(name).dropLast(1).toMutableList()
         }
 
@@ -606,7 +597,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     }
 
     /** All children of did, as (name, id). */
-    fun children(did: did): List<Tuple<str, did>> {
+    fun children(did: did): MutableList<Tuple<str, did>> {
         val name: str = this.get(did).name
         val actv = mutableListOf<Tuple<str, did>>()
         for (g in this.all_names_and_ids()) {
@@ -628,21 +619,21 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         }.toMutableList()
     }
 
-    fun deck_and_child_ids(deck_id: did): List<did> {
+    fun deck_and_child_ids(deck_id: did): MutableList<did> {
         val parent_name = this.get_legacy(deck_id).name
         val out = mutableListOf(deck_id)
         out.extend(this.child_ids(parent_name))
         return out
     }
 
-    fun childDids(did: did, childMap: childMapNode): List<did> {
-        fun gather(node: childMapNode, arr: List<did>) {
+    fun childDids(did: did, childMap: childMapNode): MutableList<did> {
+        fun gather(node: childMapNode, arr: MutableList<did>) {
             for ((did, child) in node.items()) {
                 arr.append(did)
                 gather(child as childMapNode, arr)
             }
         }
-        val arr: List<did> = mutableListOf()
+        val arr = mutableListOf<did>()
         gather(childMap[did] as childMapNode, arr)
         return arr
     }
@@ -704,13 +695,13 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     }
 
     /** All existing parents of name */
-    fun parentsByName(name: str): List<DeckV16> {
+    fun parentsByName(name: str): MutableList<DeckV16> {
         if (!name.contains("::")) {
             return mutableListOf()
         }
-        val names: List<str> = immediate_parent_path(name)
-        val head: List<str> = mutableListOf()
-        val parents: List<DeckV16> = mutableListOf()
+        val names: MutableList<str> = immediate_parent_path(name)
+        val head: MutableList<str> = mutableListOf()
+        val parents: MutableList<DeckV16> = mutableListOf()
 
         while (names.isNotNullOrEmpty()) {
             head.append(names.pop(0))
