@@ -18,6 +18,7 @@ package com.ichi2.libanki.utils
 
 import android.text.TextUtils
 import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONObject
 import java.util.*
 
 fun <T> MutableList<T>.append(value: T) {
@@ -34,6 +35,10 @@ fun <T> len(l: Sequence<T>): Long {
 
 fun <T> len(l: List<T>): Long {
     return l.size.toLong()
+}
+
+fun len(l: JSONArray): Long {
+    return l.length().toLong()
 }
 
 fun <E> MutableList<E>.pop(i: Int): E {
@@ -70,4 +75,43 @@ fun <E> MutableList<E>.toJsonArray(): JSONArray {
         array.put(i)
     }
     return array
+}
+
+fun <K, V> Map<K, V>.getOptional(k: K): Optional<V> {
+    if (!this.containsKey(k)) {
+        return Optional.empty()
+    }
+    return Optional.of(this[k]!!)
+}
+
+fun JSONArray.remove(jsonObject: JSONObject) {
+    val index = this.index(jsonObject)
+    if (!index.isPresent) {
+        throw IllegalArgumentException("Could not find $jsonObject")
+    }
+    this.remove(index.get())
+}
+
+fun JSONArray.index(jsonObject: JSONObject): Optional<Int> {
+    this.jsonObjectIterable().forEachIndexed {
+        i, value ->
+        run {
+            if (jsonObject == value) {
+                return Optional.of(i)
+            }
+        }
+    }
+    return Optional.empty()
+}
+
+operator fun JSONObject.set(s: String, value: String) {
+    this.put(s, value)
+}
+
+fun JSONArray.append(jsonObject: JSONObject) {
+    this.append(jsonObject)
+}
+
+fun JSONArray.insert(idx: Int, jsonObject: JSONObject) {
+    this.put(idx, jsonObject)
 }

@@ -41,4 +41,6 @@ object BackendUtils {
         val asString: String = conf.toString()
         return ByteString.copyFromUtf8(asString)
     }
+
+    fun to_json_bytes(json: JSONObject): ByteString = toByteString(json)
 }
