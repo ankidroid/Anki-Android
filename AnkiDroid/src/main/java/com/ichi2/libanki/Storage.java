@@ -75,7 +75,7 @@ public class Storage {
         return Collection(context, path, server, log, new SystemTime());
     }
     public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
-        assert path.endsWith(".anki2");
+        assert (path.endsWith(".anki2") || path.endsWith(".anki21"));
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         DroidBackend backend = DroidBackendFactory.getInstance(useBackend());
