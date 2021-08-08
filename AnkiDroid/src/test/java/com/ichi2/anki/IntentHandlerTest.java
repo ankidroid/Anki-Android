@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,15 +26,22 @@ import com.ichi2.anki.services.ReminderService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
+import org.robolectric.shadows.ShadowActivity;
+
+import java.util.Objects;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-public class IntentHandlerTest {
+public class IntentHandlerTest extends RobolectricTest {
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies
 
@@ -82,5 +90,26 @@ public class IntentHandlerTest {
         LaunchType expected = IntentHandler.getLaunchType(intent);
 
         assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
+    }
+    
+    @Test
+    public void mainIntentOpensIntroductionForNewUser() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        LaunchType expected = IntentHandler.getLaunchType(intent);
+        assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
+        ActivityController<IntentHandler> intentHandlerActivityController = Robolectric.buildActivity(IntentHandler.class, intent).create().start().resume().visible();
+        advanceRobolectricLooperWithSleep();
+        IntentHandler intentHandler = intentHandlerActivityController.get();
+        saveControllerForCleanup(intentHandlerActivityController);
+
+        ShadowActivity shadowActivity = shadowOf(intentHandler);
+        Intent outputIntent = shadowActivity.getNextStartedActivity();
+        ComponentName component = outputIntent.getComponent();
+
+        assertThat(component, notNullValue());
+        ComponentName componentName = Objects.requireNonNull(component);
+
+        assertThat("IntroductionActivity should be started", componentName.getClassName(), is("com.ichi2.anki.IntroductionActivity"));
+        assertThat("IntentHandler Activity should be finishing", intentHandler.isFinishing());
     }
 }

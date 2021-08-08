@@ -311,6 +311,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.0'
+    implementation 'com.github.AppIntro:AppIntro:6.1.0'
+    implementation 'org.apache.commons:commons-text:1.9'
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.7.2'
