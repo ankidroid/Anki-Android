@@ -1120,8 +1120,20 @@ public class Decks {
         return actv;
     }
 
+
+    /**
+     * Each node is implicitly associated with a deck D. Each entry in the map is a child C of D; the key is
+     * C's id and the value is the node associated with C.
+     */
     public static class Node extends HashMap<Long, Node> {}
 
+
+    /**
+     * Add to arr the list of ids all descendants of node.
+     */
+    /* The list here is an accumulator for a recursive function.
+    * While it may be more beautiful to return a list of descendants, it would require to do a lot of list union
+    * in the recursion step, which is inefficient.*/
     private void gather(Node node, List<Long> arr) {
         for (Map.Entry<Long, Node> entry : node.entrySet()) {
             Node child = entry.getValue();
@@ -1130,6 +1142,10 @@ public class Decks {
         }
     }
 
+    /**
+     * @param did      the deck whose descendants we want
+     * @param childMap A map from any deck id to its Node
+     * @return the list of all descendants of the deck with id did (did not included) */
     public List<Long> childDids(long did, Map<Long, Node> childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
@@ -1137,6 +1153,10 @@ public class Decks {
     }
 
 
+    /**
+     * Allow to check the deck tree, starting from any deck.
+     * @return A map associating to each deck of the collection its Node.
+     */
     public Map<Long, Node> childMap() {
         Map<Long, Node> id_to_node = new HashMap<>();
 
@@ -1146,18 +1166,20 @@ public class Decks {
         Collections.sort(decks, DeckComparator.INSTANCE);
 
         for (Deck deck : decks) {
-            Node node = new Node();
-            childMap.put(deck.getLong("id"), node);
+            Node deck_node = new Node();
+            id_to_node.put(deck.getLong("id"), deck_node);
 
             List<String> parts = Arrays.asList(path(deck.getString("name")));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-                long pid = byName(immediateParent).getLong("id");
-                childMap.get(pid).put(deck.getLong("id"), node);
+                long parent_id = byName(immediateParent).getLong("id");
+                // Parent_node exists because the iteration is done in alphabetical order
+                Node parent_node = id_to_node.get(parent_id);
+                parent_node.put(deck.getLong("id"), deck_node);
             }
         }
 
-        return childMap;
+        return id_to_node;
     }
 
     /**
