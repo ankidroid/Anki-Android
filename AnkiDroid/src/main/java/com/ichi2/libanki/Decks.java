@@ -1130,16 +1130,15 @@ public class Decks {
         }
     }
 
-    public List<Long> childDids(long did, Node childMap) {
+    public List<Long> childDids(long did, Map<Long, Node> childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
         return arr;
     }
 
 
-    public Node childMap() {
-
-        Node childMap = new Node();
+    public Map<Long, Node> childMap() {
+        Map<Long, Node> id_to_node = new HashMap<>();
 
         // Go through all decks, sorted by name
         List<Deck> decks = all();

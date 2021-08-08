@@ -64,6 +64,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
@@ -529,7 +530,7 @@ public class SchedV2 extends AbstractSched {
         List<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
-        Decks.Node childMap = mCol.getDecks().childMap();
+        Map<Long, Decks.Node> childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
             if (isCancelled(collectionTask)) {
                 return null;
@@ -1552,7 +1553,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _revForDeck(long did, int lim, @NonNull Decks.Node childMap) {
+    protected int _revForDeck(long did, int lim, @NonNull Map<Long, Decks.Node> childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
