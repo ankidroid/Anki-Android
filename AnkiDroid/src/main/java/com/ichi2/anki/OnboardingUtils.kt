@@ -18,7 +18,9 @@
 package com.ichi2.anki
 
 import android.content.Context
-import java.util.BitSet
+import timber.log.Timber
+import java.util.*
+import kotlin.collections.HashSet
 
 class OnboardingUtils {
 
@@ -28,6 +30,19 @@ class OnboardingUtils {
          * Preference can be toggled by visiting 'Advanced' settings in the app.
          */
         const val SHOW_ONBOARDING = "showOnboarding"
+        private val featureConstants: MutableSet<String> = HashSet()
+
+        /** Register this feature category as an onboarding feature.
+         * It ensures it gets reset if asked. */
+        fun addFeature(featureCategory: String) {
+            featureConstants.add(featureCategory)
+        }
+
+        /** Register all feature categories as onboarding features.
+         * They all get reset when reset is pressed. */
+        fun addFeatures(featureCategory: Vector<String>) {
+            featureCategory.forEach(::addFeature)
+        }
 
         /**
          * Check if the tutorial for a feature should be displayed or not.
@@ -63,6 +78,17 @@ class OnboardingUtils {
         private fun getAllVisited(context: Context, featureConstant: String): BitSet {
             val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureConstant, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
+        }
+
+        fun reset(context: Context) {
+            Timber.i("Resetting all onboarding")
+            reset(context, featureConstants)
+        }
+
+        private fun reset(context: Context, featureConstants: Collection<String>) {
+            var editor = AnkiDroidApp.getSharedPrefs(context).edit()
+            featureConstants.forEach { editor.putLong(it, 0) }
+            editor.apply()
         }
     }
 }

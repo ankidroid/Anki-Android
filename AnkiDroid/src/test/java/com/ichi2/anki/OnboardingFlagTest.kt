@@ -79,6 +79,16 @@ class OnboardingFlagTest : RobolectricTest() {
         assertFalse(isVisited(SecondEnum.LAST))
     }
 
+    @Test
+    fun verifyReset() {
+        OnboardingUtils.addFeature(FIRST_ENUM)
+        setVisited(FirstEnum.FIRST)
+        setVisited(SecondEnum.LAST)
+        OnboardingUtils.reset(targetContext)
+        assertFalse(isVisited(FirstEnum.FIRST))
+        assertTrue(isVisited(SecondEnum.LAST))
+    }
+
     private enum class FirstEnum(var mValue: Int) : OnboardingFlag {
         FIRST(0),
         MIDDLE(1);
