@@ -20,6 +20,7 @@ package com.ichi2.anki
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import com.ichi2.anki.IntentHandler.INTRODUCTION_SLIDES_SHOWN
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashSet
@@ -93,6 +94,9 @@ class OnboardingUtils {
                 featureConstants.forEach {
                     this@edit.putLong(it, 0)
                 }
+                // Reset introduction slides preference
+                putBoolean(INTRODUCTION_SLIDES_SHOWN, false)
+                apply()
             }
         }
     }

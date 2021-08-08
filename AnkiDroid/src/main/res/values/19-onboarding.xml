@@ -18,4 +18,20 @@
     <string name="deck_changer_card_browser">Select a deck from here</string>
     <string name="deck_changer_card_browser_desc">Cards from the selected deck will be displayed. Choose \'All Decks\' to view all cards.</string>
     <string name="card_click">Select a card to edit it\nLong press to select multiple cards</string>
+    <string name="introduction_desc">AnkiDroid is a spaced repetition flashcard app. Memorize anything with AnkiDroid!</string>
+    <string name="decks_intro">Create powerful decks with customised cards</string>
+    <string name="decks_intro_desc">Choose from multiple card types</string>
+    <string name="create_cards_intro">Create cards which support multiple content formats</string>
+    <string name="create_cards_intro_desc">Text - Images - Sounds - MathJax - LaTeX</string>
+    <string name="study_time">Study time</string>
+    <string name="study_desc">Review cards and select their difficulty according to which the time interval for their next appearance will be decided</string>
+    <string name="card_browser_desc">Explore the list of your cards</string>
+    <string name="due_time">150 cards due (10 min)</string>
+    <string name="deck_example_name_1">German Learning Deck</string>
+    <string name="deck_example_name_2">Psychology Deck</string>
+    <string name="deck_picker_footer_text">Studied 0 cards in 0 min today</string>
+    <string name="english_deck">English Deck</string>
+    <string name="two_minutes_left_text">2 minutes left</string>
+    <string name="commute">Meaning of Commute</string>
+    <string name="commute_desc">To commute is to travel a long distance to get to work.</string>
 </resources>

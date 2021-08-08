@@ -45,6 +45,9 @@ import timber.log.Timber;
  */
 
 public class IntentHandler extends Activity {
+
+    public static final String INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
@@ -54,7 +57,13 @@ public class IntentHandler extends Activity {
         setContentView(R.layout.progress_bar);
         Intent intent = getIntent();
         Timber.v(intent.toString());
-        Intent reloadIntent = new Intent(this, DeckPicker.class);
+        Intent reloadIntent;
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean(INTRODUCTION_SLIDES_SHOWN, false)) {
+            // If introduction has been shown earlier
+            reloadIntent = new Intent(this, DeckPicker.class);
+        } else {
+            reloadIntent = new Intent(this, IntroductionActivity.class);
+        }
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
@@ -73,11 +82,20 @@ public class IntentHandler extends Activity {
                 break;
             case DEFAULT_START_APP_IF_NEW:
                 Timber.d("onCreate() performing default action");
-                launchDeckPickerIfNoOtherTasks(reloadIntent);
+                launchInitialActivityIfNoOtherTasks(reloadIntent);
                 break;
             default:
                 Timber.w("Unknown launch type: %s. Performing default action", launchType);
-                launchDeckPickerIfNoOtherTasks(reloadIntent);
+                launchInitialActivityIfNoOtherTasks(reloadIntent);
+        }
+    }
+
+    private void launchInitialActivityIfNoOtherTasks(Intent reloadIntent) {
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean(INTRODUCTION_SLIDES_SHOWN, false)) {
+            // If introduction has been shown earlier
+            launchDeckPickerIfNoOtherTasks(reloadIntent);
+        } else {
+            launchIntroductionActivityIfNoOtherTasks(reloadIntent);
         }
     }
 
@@ -167,11 +185,24 @@ public class IntentHandler extends Activity {
         // Launcher intents should start DeckPicker if no other task exists,
         // otherwise go to previous task
         Timber.i("Launching DeckPicker");
+        setUpReloadIntentAndFinish(reloadIntent);
+        startActivityIfNeeded(reloadIntent, 0);
+        finish();
+    }
+
+    private void launchIntroductionActivityIfNoOtherTasks(Intent reloadIntent) {
+        // Launcher intents should start IntroductionActivity if no other task exists,
+        // otherwise go to previous task
+        Timber.i("Launching IntroductionActivity");
+        setUpReloadIntentAndFinish(reloadIntent);
+        startActivity(reloadIntent);
+        finish();
+    }
+    
+    private void setUpReloadIntentAndFinish(Intent reloadIntent) {
         reloadIntent.setAction(Intent.ACTION_MAIN);
         reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivityIfNeeded(reloadIntent, 0);
-        finish();
     }
 
 

@@ -337,6 +337,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
+    implementation 'com.github.AppIntro:AppIntro:6.1.0'
+    implementation 'org.apache.commons:commons-text:1.9'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
