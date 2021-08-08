@@ -1170,6 +1170,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 onboardingPreference.setSummary(R.string.show_onboarding_desc);
                 screen.addPreference(onboardingPreference);
             }
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, option for resetting onboarding walkthrough");
+                android.preference.Preference onboardingPreference = new android.preference.Preference(requireContext());
+                onboardingPreference.setKey("resetOnboarding");
+                onboardingPreference.setTitle(R.string.reset_onboarding);
+                onboardingPreference.setSummary(R.string.reset_onboarding_desc);
+                onboardingPreference.setOnPreferenceClickListener(preference -> {
+                    OnboardingUtils.Companion.reset(requireContext());
+                    return true;
+                });
+                screen.addPreference(onboardingPreference);
+            }
             // Adding change logs in both debug and release builds
             Timber.i("Adding open changelog");
             android.preference.Preference changelogPreference = new android.preference.Preference(requireContext());

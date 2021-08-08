@@ -284,6 +284,8 @@
     </string-array>
 
     <!-- Onboarding -->
+    <string name="reset_onboarding" maxLength="41">Reset onboarding walkthrough</string>
     <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
+    <string name="reset_onboarding_desc">Show all tutorials again</string>
 </resources>
