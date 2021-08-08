@@ -105,11 +105,11 @@ class OnboardingFlagTest : RobolectricTest() {
         }
     }
 
-    private fun <T> isVisited(featureIdentifier: T): Boolean where T : Enum<T>, T : OnboardingFlag {
+    private fun isVisited(featureIdentifier: OnboardingFlag): Boolean {
         return OnboardingUtils.isVisited(featureIdentifier, targetContext)
     }
 
-    private fun <T> setVisited(featureIdentifier: T) where T : Enum<T>, T : OnboardingFlag {
+    private fun setVisited(featureIdentifier: OnboardingFlag) {
         OnboardingUtils.setVisited(featureIdentifier, targetContext)
     }
 }
