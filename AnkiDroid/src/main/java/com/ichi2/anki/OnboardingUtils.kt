@@ -32,7 +32,7 @@ class OnboardingUtils {
         /**
          * Check if the tutorial for a feature should be displayed or not.
          */
-        fun <T> isVisited(featureIdentifier: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
+        fun isVisited(featureIdentifier: OnboardingFlag, context: Context): Boolean {
             // Return if onboarding is not enabled.
             if (!AnkiDroidApp.getSharedPrefs(context).getBoolean(SHOW_ONBOARDING, false)) {
                 return true
@@ -48,7 +48,7 @@ class OnboardingUtils {
         /**
          * Set the tutorial for a feature as visited.
          */
-        fun <T> setVisited(featureIdentifier: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
+        fun setVisited(featureIdentifier: OnboardingFlag, context: Context) {
             val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
 
             // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
