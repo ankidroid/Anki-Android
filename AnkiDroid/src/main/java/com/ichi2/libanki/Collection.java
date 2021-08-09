@@ -105,7 +105,7 @@ public class Collection implements CollectionGetter {
     private boolean mServer;
     //private double mLastSave;
     private final Media mMedia;
-    private final Decks mDecks;
+    private final DeckManager mDecks;
     private ModelManager mModels;
     private final TagManager mTags;
 
@@ -2019,7 +2019,7 @@ public class Collection implements CollectionGetter {
     }
 
 
-    public Decks getDecks() {
+    public DeckManager getDecks() {
         return mDecks;
     }
 

@@ -13,7 +13,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
@@ -236,7 +236,7 @@ public class ReviewerTest extends RobolectricTest {
         Collection col = getCol();
         ModelManager models = col.getModels();
 
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
@@ -252,7 +252,7 @@ public class ReviewerTest extends RobolectricTest {
     public void jsAnkiGetDeckName() {
         Collection col = getCol();
         ModelManager models = col.getModels();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
 
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));

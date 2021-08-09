@@ -24,7 +24,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
@@ -211,7 +211,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
     private class IncreaseToday {
         private final long aId, bId, cId, dId;
-        private final Decks decks;
+        private final DeckManager decks;
         private final AbstractSched sched;
 
         public IncreaseToday() {
@@ -386,7 +386,7 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     private void addDeckWithExactName(String name) {
-        Decks decks = getCol().getDecks();
+        DeckManager decks = getCol().getDecks();
 
         long did = addDeck(name);
         Deck d = decks.get(did);

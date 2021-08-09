@@ -25,7 +25,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
@@ -1731,7 +1731,7 @@ public class SchedV2Test extends RobolectricTest {
     public void regression_test_preview() throws Exception {
         //"https://github.com/ankidroid/Anki-Android/issues/7285"
         Collection col = getColV2();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         AbstractSched sched = col.getSched();
         addNoteUsingBasicModel("foo", "bar");
         long did = addDynamicDeck("test");

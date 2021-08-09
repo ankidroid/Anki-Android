@@ -42,6 +42,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -750,7 +751,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testQueryAllDecks() {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
 
         Cursor decksCursor = getContentResolver()
                 .query(FlashCardsContract.Deck.CONTENT_ALL_URI, FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
