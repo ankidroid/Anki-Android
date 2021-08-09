@@ -37,6 +37,7 @@ import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.utils.DeckNameComparator;
@@ -214,13 +215,13 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
     @NonNull
-    protected Decks getDecks() {
+    protected DeckManager getDecks() {
         return requireCollectionGetter().getCol().getDecks();
     }
 
     private void selectDeckWithDeckName(@NonNull String deckName) {
         try {
-            Long id = getDecks().id(deckName);
+            long id = getDecks().id(deckName);
             SelectableDeck dec = new SelectableDeck(id, deckName);
             selectDeckAndClose(dec);
         } catch (FilteredAncestor filteredAncestor) {
