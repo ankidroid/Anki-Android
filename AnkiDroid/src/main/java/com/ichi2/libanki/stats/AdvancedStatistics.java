@@ -28,7 +28,7 @@ import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
 
@@ -487,7 +487,7 @@ public class AdvancedStatistics {
 
     private class DeckFactory {
 
-        public Deck createDeck(long did, Decks decks) {
+        public Deck createDeck(long did, DeckManager decks) {
 
             Timber.d("Trying to get deck settings for deck with id=" + did);
 
@@ -904,7 +904,7 @@ public class AdvancedStatistics {
             this.mTMax = this.mNTimeBins * this.mTimeBinLength;
         }
 
-        public SimulationResult simNreviews(int today, Decks decks, String didsStr, TodayStats todayStats) {
+        public SimulationResult simNreviews(int today, DeckManager decks, String didsStr, TodayStats todayStats) {
 
             SimulationResult simulationResultAggregated = new SimulationResult(mNTimeBins, mTimeBinLength, SimulationResult.DOUBLE_TO_INT_MODE_ROUND);
 
