@@ -97,7 +97,7 @@ class NoteType(internal val mNoteType: JSONObject) {
         }
 }
 
-class ModelManager(private val col: Collection) {
+class ModelsV16(private val col: Collection) {
     /*
     # Saving/loading registry
     #############################################################
