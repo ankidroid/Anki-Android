@@ -60,7 +60,7 @@ fun <T> list(values: Collection<T>): List<T> = ArrayList(values)
 
 fun <T> set(values: List<T>): HashSet<T> = HashSet(values)
 
-fun String.join(values: Collection<String>): String {
+fun String.join(values: Iterable<String>): String {
     return TextUtils.join(this, values)
 }
 
