@@ -144,9 +144,6 @@ public class Tags extends TagManager {
         return mTags.entrySet();
     }
 
-    public boolean minusOneValue() {
-        return mTags.containsValue(-1);
-    }
 
 
     public void save() {
@@ -355,5 +352,11 @@ public class Tags extends TagManager {
     /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
     public void add(@NonNull String key, @Nullable Integer value) {
         mTags.put(key, value);
+    }
+
+    /** Whether any tags have a usn of -1 */
+    @Override
+    public boolean minusOneValue() {
+        return mTags.containsValue(-1);
     }
 }
