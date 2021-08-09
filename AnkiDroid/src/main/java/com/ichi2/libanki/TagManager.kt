@@ -97,7 +97,7 @@ abstract class TagManager {
      */
 
     /** Parse a string and return a list of tags. */
-    abstract fun split(tags: String): ArrayList<String>
+    abstract fun split(tags: String): MutableList<String>
     /** Join tags into a single string, with leading and trailing spaces. */
     abstract fun join(tags: kotlin.collections.Collection<String>): String
 
