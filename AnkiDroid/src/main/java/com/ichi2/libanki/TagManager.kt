@@ -18,7 +18,6 @@ package com.ichi2.libanki
 
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import net.ankiweb.rsdroid.RustCleanup
-import java.util.*
 
 /**
  * Manages the tag cache and tags for notes.
@@ -32,7 +31,9 @@ abstract class TagManager {
      * Registry save/load
      * ***********************************************************
      */
+    @RustCleanup("Tags.java only")
     abstract fun load(json: String)
+    @RustCleanup("Tags.java only")
     abstract fun flush()
 
     /*
@@ -58,6 +59,7 @@ abstract class TagManager {
     abstract fun registerNotes(nids: kotlin.collections.Collection<Long>? = null)
 
     abstract fun allItems(): Iterable<TagUsnTuple>
+    @RustCleanup("Tags.java only")
     abstract fun save()
     /**
      * byDeck returns the tags of the cards in the deck
@@ -65,7 +67,7 @@ abstract class TagManager {
      * @param children whether to include the deck's children
      * @return a list of the tags
      */
-    abstract fun byDeck(did: Long, children: Boolean): ArrayList<String>
+    abstract fun byDeck(did: Long, children: Boolean = false): List<String>
 
     /*
     * Bulk addition/removal from notes
@@ -110,7 +112,8 @@ abstract class TagManager {
      */
 
     /** Strip duplicates, adjust case to match existing tags, and sort. */
-    abstract fun canonify(tagList: List<String>): TreeSet<String>
+    @RustCleanup("List, not Collection")
+    abstract fun canonify(tagList: List<String>): java.util.AbstractSet<String>
     /** @return True if TAG is in TAGS. Ignore case. */
     abstract fun inList(tag: String, tags: Iterable<String>): Boolean
 
@@ -119,6 +122,7 @@ abstract class TagManager {
      * ***********************************************************
      */
 
+    @RustCleanup("Tags.java only")
     abstract fun beforeUpload()
 
     /*
