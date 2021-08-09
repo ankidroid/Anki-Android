@@ -43,7 +43,11 @@ abstract class TagManager {
     /** Given a list of tags, add any missing ones to tag registry. */
     fun register(tags: Iterable<String>) = register(tags, null)
     /** Given a list of tags, add any missing ones to tag registry. */
-    abstract fun register(tags: Iterable<String>, usn: Int? = null)
+    fun register(tags: Iterable<String>, usn: Int? = null) = register(tags, usn, false)
+    /** Given a list of tags, add any missing ones to tag registry.
+     * @param clear_first Whether to clear the tags in the database before registering the provided tags
+     * */
+    abstract fun register(tags: Iterable<String>, usn: Int? = null, clear_first: Boolean = false)
     abstract fun all(): List<String>
     /** Add any missing tags from notes to the tags list. The old list is cleared first */
     fun registerNotes() = registerNotes(null)

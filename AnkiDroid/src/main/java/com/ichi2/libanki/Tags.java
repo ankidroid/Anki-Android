@@ -100,7 +100,8 @@ public class Tags extends TagManager {
      * ***********************************************************
      */
 
-    public void register(@NonNull Iterable<String> tags, @Nullable Integer usn) {
+    /** {@inheritDoc} */
+    public void register(@NonNull Iterable<String> tags, @Nullable Integer usn, boolean clear_first) {
         //boolean found = false;
         for (String t : tags) {
             if (!mTags.containsKey(t)) {
