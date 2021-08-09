@@ -177,7 +177,7 @@ public class CreateDeckDialog {
         } else if (!newName.equals(mPreviousDeckName)) {
             try {
                 Collection col = CollectionHelper.getInstance().getCol(mContext);
-                Long deckId = col.getDecks().id(mPreviousDeckName);
+                long deckId = col.getDecks().id(mPreviousDeckName);
                 col.getDecks().rename(col.getDecks().get(deckId), newName);
                 mOnNewDeckCreated.accept(deckId);
             } catch (DeckRenameException e) {

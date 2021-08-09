@@ -289,7 +289,7 @@ public class DecksTest extends RobolectricTest {
         long filtered_id = decks.newDyn("filtered");
         assertThrows(FilteredAncestor.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
 
-        Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
+        long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
         Deck subdeck = decks.get(subdeck_id);
         assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
     }

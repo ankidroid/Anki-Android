@@ -1573,11 +1573,6 @@ public class Collection implements CollectionGetter {
         //we use a ! prefix to keep it at the top of the deck list
         String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
         Long nextDeckId = getDecks().id_safe(recoveredDeckName);
-        // Still a risk of failure if recoveredDeckName is the name of a filtered deck
-
-        if (nextDeckId == null) {
-            throw new IllegalStateException("Unable to create deck");
-        }
 
         getDecks().flush();
 

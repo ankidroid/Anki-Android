@@ -317,6 +317,7 @@ public class Decks {
      * ***********************************************************
      */
 
+    @Nullable
     public Long id_for_name(String name) {
         name = usable_name(name);
         Deck deck = byName(name);
@@ -326,11 +327,11 @@ public class Decks {
         return null;
     }
 
-    public Long id(String name) throws FilteredAncestor {
+    public long id(String name) throws FilteredAncestor {
         return id(name, DEFAULT_DECK);
     }
 
-    public Long id_safe(String name) {
+    public long id_safe(String name) {
         return id_safe(name, DEFAULT_DECK);
     }
 
@@ -344,7 +345,7 @@ public class Decks {
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
-    public Long id(String name, String type) throws FilteredAncestor {
+    public long id(String name, String type) throws FilteredAncestor {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
@@ -363,8 +364,8 @@ public class Decks {
      * @param type The json encoding of the deck, except for name and id
      * @return the deck's id
      */
-    private Long id_create_name_valid(String name, String type) {
-        Long id;
+    private long id_create_name_valid(String name, String type) {
+        long id;
         Deck g = new Deck(type);
         g.put("name", name);
         do {
@@ -383,7 +384,7 @@ public class Decks {
     /**
      * Same as id, but rename ancestors if filtered to avoid failure
      */
-    public Long id_safe(String name, String type)  {
+    public long id_safe(String name, String type)  {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
