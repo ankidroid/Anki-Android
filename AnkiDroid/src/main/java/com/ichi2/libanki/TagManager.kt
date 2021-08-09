@@ -125,5 +125,7 @@ abstract class TagManager {
     /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
     abstract fun add(tag: String, usn: Int?)
 
-    abstract fun minusOneValue(): Boolean
+    /** Whether any tags have a usn of -1 */
+    @RustCleanup("not optimised")
+    open fun minusOneValue(): Boolean = allItems().any { (_, value) -> value == -1 }
 }
