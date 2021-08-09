@@ -160,7 +160,7 @@ private typealias childMapNode = Dict<did, Any>
  * Afterwards, we can finish up the implementations, run our tests, and use this with a V16
  * collection, using decks as a separate table
  */
-class DeckManager(private val col: Collection, private val decksBackend: DecksBackend) {
+class DecksV16(private val col: Collection, private val decksBackend: DecksBackend) {
 
     /* Registry save/load */
 
