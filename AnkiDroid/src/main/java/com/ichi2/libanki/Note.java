@@ -26,7 +26,6 @@ import com.ichi2.utils.JSONObject;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -91,7 +90,7 @@ public class Note implements Cloneable {
             mMid = cursor.getLong(1);
             mMod = cursor.getLong(2);
             mUsn = cursor.getInt(3);
-            mTags = mCol.getTags().split(cursor.getString(4));
+            mTags = new ArrayList<>(mCol.getTags().split(cursor.getString(4)));
             mFields = Utils.splitFields(cursor.getString(5));
             mFlags = cursor.getInt(6);
             mData = cursor.getString(7);
@@ -243,7 +242,7 @@ public class Note implements Cloneable {
 
 
     public void setTagsFromStr(String str) {
-        mTags = mCol.getTags().split(str);
+        mTags = new ArrayList<>(mCol.getTags().split(str));
     }
 
 
