@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.libanki.backend.model.TagUsnTuple;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -140,8 +142,11 @@ public class Tags extends TagManager {
 
 
     @NonNull
-    public Set<Map.Entry<String, Integer>> allItems() {
-        return mTags.entrySet();
+    public Set<TagUsnTuple> allItems() {
+        return mTags.entrySet()
+                .stream()
+                .map(entry -> new TagUsnTuple(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
     }
 
 
