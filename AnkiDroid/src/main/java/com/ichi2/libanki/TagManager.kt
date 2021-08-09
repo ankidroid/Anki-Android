@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.libanki.backend.model.TagUsnTuple
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 
@@ -52,7 +53,7 @@ abstract class TagManager {
      */
     abstract fun registerNotes(nids: kotlin.collections.Collection<Long>? = null)
 
-    abstract fun allItems(): MutableIterable<MutableMap.MutableEntry<String, Int>>
+    abstract fun allItems(): Iterable<TagUsnTuple>
     abstract fun save()
     /**
      * byDeck returns the tags of the cards in the deck
@@ -127,5 +128,5 @@ abstract class TagManager {
 
     /** Whether any tags have a usn of -1 */
     @RustCleanup("not optimised")
-    open fun minusOneValue(): Boolean = allItems().any { (_, value) -> value == -1 }
+    open fun minusOneValue(): Boolean = allItems().any { it.usn == -1 }
 }
