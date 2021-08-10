@@ -447,6 +447,9 @@ public class ModelBrowser extends AnkiActivity {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
+
+        initializeNoteTypeList();
+
         mModelNameInput = new FixedEditText(this);
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
@@ -460,6 +463,11 @@ public class ModelBrowser extends AnkiActivity {
                                     String deckName = mModelNameInput.getText().toString()
                                             // Anki desktop doesn't allow double quote characters in deck names
                                             .replaceAll("[\"\\n\\r]", "");
+
+                                    if (mExistingModelNames.contains(deckName)) {
+                                        deckName = randomizeName(deckName);
+                                    }
+
                                     if (deckName.length() > 0) {
                                         model.put("name", deckName);
                                         mCol.getModels().update(model);
