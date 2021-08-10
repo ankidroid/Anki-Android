@@ -123,6 +123,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -1212,7 +1213,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates");
                 try {
-                    Models models = getCol().getModels();
+                    ModelManager models = getCol().getModels();
                     for (Model m : models.all()) {
                         String css = m.getString("css");
                         if (css.contains("font-familiy")) {

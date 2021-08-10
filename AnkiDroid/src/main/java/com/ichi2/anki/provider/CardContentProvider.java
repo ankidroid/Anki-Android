@@ -50,6 +50,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
@@ -282,7 +283,7 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case MODELS: {
-                Models models = col.getModels();
+                ModelManager models = col.getModels();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 for (Long modelId : models.getModels().keySet()) {
@@ -299,7 +300,7 @@ public class CardContentProvider extends ContentProvider {
             }
             case MODELS_ID_TEMPLATES: {
                 /* Direct access model templates */
-                Models models = col.getModels();
+                ModelManager models = col.getModels();
                 Model currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
@@ -316,7 +317,7 @@ public class CardContentProvider extends ContentProvider {
             }
             case MODELS_ID_TEMPLATES_ID: {
                 /* Direct access model template with specific ID */
-                Models models = col.getModels();
+                ModelManager models = col.getModels();
                 int ord = Integer.parseInt(uri.getLastPathSegment());
                 Model currentModel = models.get(getModelIdFromUri(uri, col));
                 String[] columns = ((projection != null) ? projection : CardTemplate.DEFAULT_PROJECTION);
@@ -917,7 +918,7 @@ public class CardContentProvider extends ContentProvider {
                     throw new IllegalArgumentException("Cannot set a filtered deck as default deck for a model");
                 }
                 // Create a new model
-                Models mm = col.getModels();
+                ModelManager mm = col.getModels();
                 Model newModel = mm.newModel(modelName);
                 try {
                     // Add the fields
@@ -971,7 +972,7 @@ public class CardContentProvider extends ContentProvider {
                 // Model ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert model with specific ID");
             case MODELS_ID_TEMPLATES: {
-                Models models = col.getModels();
+                ModelManager models = col.getModels();
                 Long mid = getModelIdFromUri(uri, col);
                 Model existingModel = models.get(mid);
                 if (existingModel == null) {
@@ -1001,7 +1002,7 @@ public class CardContentProvider extends ContentProvider {
             case MODELS_ID_TEMPLATES_ID:
                 throw new IllegalArgumentException("Not possible to insert template with specific ORD");
             case MODELS_ID_FIELDS: {
-                Models models = col.getModels();
+                ModelManager models = col.getModels();
                 long mid = getModelIdFromUri(uri, col);
                 Model existingModel = models.get(mid);
                 if (existingModel == null) {
@@ -1149,7 +1150,7 @@ public class CardContentProvider extends ContentProvider {
         return -1;
     }
 
-    private void addModelToCursor(Long modelId, Models models, MatrixCursor rv, String[] columns) {
+    private void addModelToCursor(Long modelId, ModelManager models, MatrixCursor rv, String[] columns) {
         Model jsonObject = models.get(modelId);
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
@@ -1316,7 +1317,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addTemplateToCursor(JSONObject tmpl, Model model, int id, Models models, MatrixCursor rv, String[] columns) {
+    private void addTemplateToCursor(JSONObject tmpl, Model model, int id, ModelManager models, MatrixCursor rv, String[] columns) {
         try {
             MatrixCursor.RowBuilder rb = rv.newRow();
             for (String column : columns) {

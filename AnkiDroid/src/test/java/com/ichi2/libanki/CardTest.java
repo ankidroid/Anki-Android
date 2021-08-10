@@ -74,7 +74,7 @@ public class CardTest extends RobolectricTest {
         col.addNote(note);
         assertEquals(1, note.numberOfCards());
         Model m = col.getModels().current();
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         // adding a new template should automatically create cards
         JSONObject t = Models.newTemplate("rev");
         t.put("qfmt", "{{Front}}");
@@ -132,7 +132,7 @@ public class CardTest extends RobolectricTest {
     @Test
     public void test_gen_or() throws ConfirmModSchemaException {
         Collection col = getCol();
-        Models models = col.getModels();
+        ModelManager models = col.getModels();
         Model model = models.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
         models.renameField(model, flds.getJSONObject(0), "A");
@@ -189,7 +189,7 @@ public class CardTest extends RobolectricTest {
     @Test
     public void test_gen_not() throws ConfirmModSchemaException {
         Collection col = getCol();
-        Models models = col.getModels();
+        ModelManager models = col.getModels();
         Model model = models.byName("Basic");
         JSONArray flds = model.getJSONArray("flds");
         JSONArray tmpls = model.getJSONArray("tmpls");

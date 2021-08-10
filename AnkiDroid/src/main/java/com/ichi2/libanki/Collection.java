@@ -104,7 +104,7 @@ public class Collection implements CollectionGetter {
     //private double mLastSave;
     private final Media mMedia;
     private final Decks mDecks;
-    private Models mModels;
+    private ModelManager mModels;
     private final TagManager mTags;
 
     private AbstractSched mSched;
@@ -2047,7 +2047,7 @@ public class Collection implements CollectionGetter {
      *
      * @return The model manager
      */
-    public synchronized Models getModels() {
+    public synchronized ModelManager getModels() {
         if (mModels == null) {
             mModels = new Models(this);
             mModels.load(loadColumn("models"));
