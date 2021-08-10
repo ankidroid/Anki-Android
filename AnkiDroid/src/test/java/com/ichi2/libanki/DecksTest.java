@@ -13,6 +13,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -23,8 +24,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.isNotNull;
-import static org.mockito.ArgumentMatchers.isNull;
 
 @RunWith(AndroidJUnit4.class)
 public class DecksTest extends RobolectricTest {
@@ -241,7 +240,7 @@ public class DecksTest extends RobolectricTest {
         Decks decks = col.getDecks();
         long id = addDeck("test");
         decks.select(id);
-        assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
+        assertDoesNotThrow("curDeck should be saved as a long. A deck id.", () -> col.get_config_long("curDeck"));
     }
 
 
