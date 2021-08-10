@@ -2242,7 +2242,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public boolean _new_timezone_enabled() {
-        return getCol().has_config("creationOffset") && !getCol().getConf().isNull("creationOffset");
+        return getCol().has_config_not_null("creationOffset");
     }
 
     @Nullable

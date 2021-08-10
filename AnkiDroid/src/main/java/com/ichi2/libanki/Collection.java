@@ -2094,6 +2094,11 @@ public class Collection implements CollectionGetter {
         return mConf.has(key);
     }
 
+    public boolean has_config_not_null(String key) {
+        // not in libAnki
+        return has_config(key) && !mConf.isNull(key);
+    }
+
     /** @throws JSONException object does not exist or can't be cast */
     public boolean get_config_boolean(@NonNull String key) {
         return mConf.getBoolean(key);
