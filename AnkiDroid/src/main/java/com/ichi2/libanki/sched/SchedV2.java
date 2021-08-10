@@ -899,7 +899,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _updateNewCardRatio() {
-        if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
+        if (mCol.get_config_int("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
             if (mNewCount != 0) {
                 mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
                 // if there are cards to review, ensure modulo >= 2
@@ -920,7 +920,7 @@ public class SchedV2 extends AbstractSched {
         if (mHaveCounts && mNewCount == 0) {
             return false;
         }
-        @Consts.NEW_CARD_ORDER int spread = mCol.getConf().getInt("newSpread");
+        @Consts.NEW_CARD_ORDER int spread = mCol.get_config_int("newSpread");
         if (spread == Consts.NEW_CARDS_LAST) {
             return false;
         } else if (spread == Consts.NEW_CARDS_FIRST) {
@@ -1015,7 +1015,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     private boolean _updateLrnCutoff(boolean force) {
-        long nextCutoff = getTime().intTime() + mCol.getConf().getInt("collapseTime");
+        long nextCutoff = getTime().intTime() + mCol.get_config_int("collapseTime");
         if (nextCutoff - mLrnCutoff > 60 || force) {
             mLrnCutoff = nextCutoff;
             return true;
@@ -1076,7 +1076,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
+        long cutoff = getTime().intTime() + mCol.get_config_long("collapseTime");
         mLrnQueue.clear();
         /* Difference with upstream: Current card can't come in the queue.
              *
@@ -1107,7 +1107,7 @@ public class SchedV2 extends AbstractSched {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
@@ -1123,7 +1123,7 @@ public class SchedV2 extends AbstractSched {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             // mLrnCount -= 1; see decrementCounts()
             return mLrnQueue.getFirstDue() < cutoff;
@@ -1275,7 +1275,7 @@ public class SchedV2 extends AbstractSched {
             int fuzz = new Random().nextInt(Math.max(maxExtra, 1));
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(Consts.QUEUE_TYPE_LRN);
-            if (card.getDue() < (getTime().intTime() + mCol.getConf().getInt("collapseTime"))) {
+            if (card.getDue() < (getTime().intTime() + mCol.get_config_int("collapseTime"))) {
                 mLrnCount += 1;
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -1476,7 +1476,7 @@ public class SchedV2 extends AbstractSched {
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.get_config_int("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -2431,7 +2431,7 @@ public class SchedV2 extends AbstractSched {
             return context.getString(R.string.sched_end);
         }
         String s = Utils.timeQuantityNextIvl(context, ivl);
-        if (ivl < mCol.getConf().getInt("collapseTime")) {
+        if (ivl < mCol.get_config_int("collapseTime")) {
             s = context.getString(R.string.less_than_time, s);
         }
         return s;

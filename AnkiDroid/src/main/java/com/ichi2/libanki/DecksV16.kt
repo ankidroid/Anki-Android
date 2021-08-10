@@ -518,7 +518,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
 
     /** The currently selected did. */
     fun selected(): did {
-        return this.col.conf.getLong("curDeck")
+        return this.col.get_config_long("curDeck")
     }
 
     fun current(): DeckV16 {

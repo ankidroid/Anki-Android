@@ -1071,7 +1071,7 @@ public class Decks {
      * The currently selected did.
      */
     public long selected() {
-        return mCol.getConf().getLong("curDeck");
+        return mCol.get_config_long("curDeck");
     }
 
 

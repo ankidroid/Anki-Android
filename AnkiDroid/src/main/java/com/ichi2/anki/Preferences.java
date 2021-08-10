@@ -299,25 +299,24 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             Collection col = getCol();
             if (col != null) {
                 try {
-                    JSONObject conf = col.getConf();
                     switch (pref.getKey()) {
                         case SHOW_ESTIMATE:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("estTimes"));
+                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config_boolean("estTimes"));
                             break;
                         case SHOW_PROGRESS:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.getBoolean("dueCounts"));
+                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config_boolean("dueCounts"));
                             break;
                         case LEARN_CUTOFF:
-                            ((NumberRangePreference)pref).setValue(conf.getInt("collapseTime") / 60);
+                            ((NumberRangePreference)pref).setValue(col.get_config_int("collapseTime") / 60);
                             break;
                         case TIME_LIMIT:
-                            ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
+                            ((NumberRangePreference)pref).setValue(col.get_config_int("timeLim") / 60);
                             break;
                         case USE_CURRENT:
                             ((android.preference.ListPreference)pref).setValueIndex(col.get_config("addToCur", true) ? 0 : 1);
                             break;
                         case NEW_SPREAD:
-                            ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
+                            ((android.preference.ListPreference)pref).setValueIndex(col.get_config_int("newSpread"));
                             break;
                         case DAY_OFFSET:
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));

@@ -387,7 +387,7 @@ public class Sched extends SchedV2 {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
@@ -592,7 +592,7 @@ public class Sched extends SchedV2 {
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.get_config_int("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"

@@ -1801,10 +1801,9 @@ public class NoteEditor extends AnkiActivity implements
             return;
         }
         if (note == null || mAddNote || mCurrentEditedCard == null) {
-            JSONObject conf = getCol().getConf();
             JSONObject model = getCol().getModels().current();
             if (getCol().get_config("addToCur", true)) {
-                mCurrentDid = conf.getLong("curDeck");
+                mCurrentDid = getCol().get_config_long("curDeck");
                 if (getCol().getDecks().isDyn(mCurrentDid)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
