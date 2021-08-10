@@ -115,7 +115,7 @@ public class SchedV2Test extends RobolectricTest {
         Collection col = getCol();
         col.setCrt(1587852900L);
         //30 minutes learn ahead. required as we have 20m delay
-        col.getConf().put("collapseTime", 1800);
+        col.set_config("collapseTime", 1800);
 
         long homeDeckId = addDeck("Poorretention");
 

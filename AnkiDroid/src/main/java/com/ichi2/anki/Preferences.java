@@ -375,7 +375,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 getCol().setMod();
                 break;
             case 2:
-                getCol().getConf().put("rollover", hours);
+                getCol().set_config("rollover", hours);
                 getCol().flush();
                 break;
         }
@@ -424,36 +424,29 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     closePreferences();
                     break;
                 case SHOW_PROGRESS:
-                    getCol().getConf().put("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    getCol().setMod();
+                    getCol().getCol().set_config("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
                     break;
                 case SHOW_ESTIMATE:
-                    getCol().getConf().put("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    getCol().setMod();
+                    getCol().getCol().set_config("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
                     break;
                 case NEW_SPREAD:
-                    getCol().getConf().put("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
-                    getCol().setMod();
+                    getCol().getCol().set_config("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
                     break;
                 case TIME_LIMIT:
-                    getCol().getConf().put("timeLim", ((NumberRangePreference) pref).getValue() * 60);
-                    getCol().setMod();
+                    getCol().getCol().set_config("timeLim", ((NumberRangePreference) pref).getValue() * 60);
                     break;
                 case LEARN_CUTOFF:
-                    getCol().getConf().put("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
-                    getCol().setMod();
+                    getCol().getCol().set_config("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
                     break;
                 case USE_CURRENT:
-                    getCol().getConf().put("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
-                    getCol().setMod();
+                    getCol().getCol().set_config("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
                     break;
                 case DAY_OFFSET: {
                     setDayOffset(((SeekBarPreference) pref).getValue());
                     break;
                 }
                 case PASTE_PNG:
-                    getCol().getConf().put("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    getCol().setMod();
+                    getCol().set_config("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
                     break;
                 case MINIMUM_CARDS_DUE_FOR_NOTIFICATION: {
                     android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);

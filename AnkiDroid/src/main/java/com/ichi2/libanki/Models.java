@@ -253,8 +253,7 @@ public class Models extends ModelManager {
 
     @Override
     public void setCurrent(Model m) {
-        mCol.getConf().put("curModel", m.getLong("id"));
-        mCol.setMod();
+        mCol.set_config("curModel", m.getLong("id"));
     }
 
     /** {@inheritDoc} */

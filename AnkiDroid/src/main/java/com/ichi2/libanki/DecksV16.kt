@@ -532,8 +532,8 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         val current = this.selected()
         val active = this.deck_and_child_ids(did)
         if (current != did || active != this.active()) {
-            this.col.conf.put("curDeck", did)
-            this.col.conf.put("activeDecks", active.toJsonArray())
+            this.col.set_config("curDeck", did)
+            this.col.set_config("activeDecks", active.toJsonArray())
         }
     }
 

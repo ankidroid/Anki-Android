@@ -183,8 +183,7 @@ public class Collection implements CollectionGetter {
         mStartTime = 0;
         _loadScheduler();
         if (!mConf.optBoolean("newBury", false)) {
-            mConf.put("newBury", true);
-            setMod();
+            set_config("newBury", true);
         }
     }
 
@@ -219,7 +218,7 @@ public class Collection implements CollectionGetter {
             mSched = new SchedV2(this);
             if (!getServer() && isUsingRustBackend()) {
                 try {
-                    getConf().put("localOffset", getSched()._current_timezone_offset());
+                    set_config("localOffset", getSched()._current_timezone_offset());
                 } catch (BackendNotSupportedException e) {
                     throw e.alreadyUsingRustBackend();
                 }
@@ -243,8 +242,7 @@ public class Collection implements CollectionGetter {
         } else {
             v2Sched.moveToV2();
         }
-        mConf.put("schedVer", ver);
-        setMod();
+        set_config("schedVer", ver);
         _loadScheduler();
     }
 
@@ -331,6 +329,7 @@ public class Collection implements CollectionGetter {
      * Mark DB modified. DB operations and the deck/tag/model managers do this automatically, so this is only necessary
      * if you modify properties of this object or the conf dict.
      */
+    @RustCleanup("no longer required in v16 - all update immediately")
     public void setMod() {
         mDb.setMod(true);
     }
@@ -533,7 +532,7 @@ public class Collection implements CollectionGetter {
             Timber.w(e);
             id = 1;
         }
-        mConf.put(type, id + 1);
+        set_config(type, id + 1);
         return id;
     }
 
@@ -1254,7 +1253,7 @@ public class Collection implements CollectionGetter {
      */
 
     public void setTimeLimit(long seconds) {
-        mConf.put("timeLim", seconds);
+        set_config("timeLim", seconds);
     }
 
 
@@ -1336,8 +1335,7 @@ public class Collection implements CollectionGetter {
 
     public void onCreate() {
         mDroidBackend.useNewTimezoneCode(this);
-        getConf().put("schedVer", 2);
-        setMod();
+        set_config("schedVer", 2);
         // we need to reload the scheduler: this was previously loaded as V1
         _loadScheduler();
     }
@@ -1670,7 +1668,7 @@ public class Collection implements CollectionGetter {
         Timber.d("resetNewCardInsertionPosition");
         notifyProgress.run();
         // new card position
-        mConf.put("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW));
+        set_config("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW));
         return Collections.emptyList();
     }
 
@@ -2079,6 +2077,45 @@ public class Collection implements CollectionGetter {
         mConf = conf;
     }
 
+    public void set_config(@NonNull String key, boolean value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, long value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, int value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, double value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, String value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, JSONArray value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void set_config(@NonNull String key, JSONObject value) {
+        setMod();
+        mConf.put(key, value);
+    }
+
+    public void remove_config(@NonNull String key) {
+        setMod();
+        mConf.remove(key);
+    }
 
     public long getScm() {
         return mScm;
