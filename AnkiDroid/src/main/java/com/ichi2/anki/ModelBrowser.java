@@ -74,6 +74,8 @@ public class ModelBrowser extends AnkiActivity {
     private ArrayList<Integer> mCardCounts;
     private ArrayList<Long> mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
+    private ArrayList<String> mNewModelLabels;
+    private ArrayList<String> mExistingModelNames;
 
     private Collection mCol;
     private ActionBar mActionBar;
@@ -303,36 +305,10 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void addNewNoteTypeDialog() {
 
-        String add = getResources().getString(R.string.model_browser_add_add);
-        String clone = getResources().getString(R.string.model_browser_add_clone);
-
-        //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
-        int existingModelSize = (mModels == null) ? 0 : mModels.size();
-        int stdModelSize = StdModels.STD_MODELS.length;
-        ArrayList<String> newModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
-        ArrayList<String> existingModelsNames = new ArrayList<>(existingModelSize);
-
-        //Used to fetch model names
-        mNewModelNames = new ArrayList<>(stdModelSize);
-        for (StdModels StdModels: StdModels.STD_MODELS) {
-            String defaultName = StdModels.getDefaultName();
-            newModelLabels.add(String.format(add, defaultName));
-            mNewModelNames.add(defaultName);
-        }
-
-        final int numStdModels = newModelLabels.size();
-
-        if (mModels != null) {
-            for (Model model : mModels) {
-                String name = model.getString("name");
-                newModelLabels.add(String.format(clone, name));
-                mNewModelNames.add(name);
-                existingModelsNames.add(name);
-            }
-        }
+        initializeNoteTypeList();
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
+        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, mNewModelLabels);
 
         addSelectionSpinner.setAdapter(mNewModelAdapter);
 
@@ -343,14 +319,14 @@ public class ModelBrowser extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                         mModelNameInput = new FixedEditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
-                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < mNewModelLabels.size();
                         // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
                         String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
                         if (!isStdModel) {
                             suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
                         }
 
-                        if (existingModelsNames.contains(suggestedName)) {
+                        if (mExistingModelNames.contains(suggestedName)) {
                             suggestedName = randomizeName(suggestedName);
                         }
                         mModelNameInput.setText(suggestedName);
@@ -397,6 +373,37 @@ public class ModelBrowser extends AnkiActivity {
             fullRefresh();
         } else {
             showToast(getResources().getString(R.string.toast_empty_name));
+        }
+    }
+
+
+    /*
+     * retrieve list of note type in variable, which will going to be in use for adding/cloning note type
+     */
+    private void initializeNoteTypeList() {
+
+        String add = getResources().getString(R.string.model_browser_add_add);
+        String clone = getResources().getString(R.string.model_browser_add_clone);
+
+        // Populates array adapters listing the mModels (includes prefixes/suffixes)
+        int existingModelSize = mModels.size();
+        int stdModelSize = StdModels.STD_MODELS.length;
+        mNewModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
+        mExistingModelNames = new ArrayList<>(existingModelSize);
+
+        // Used to fetch model names
+        mNewModelNames = new ArrayList<>(stdModelSize);
+        for (StdModels StdModels: StdModels.STD_MODELS) {
+            String defaultName = StdModels.getDefaultName();
+            mNewModelLabels.add(String.format(add, defaultName));
+            mNewModelNames.add(defaultName);
+        }
+
+        for (Model model : mModels) {
+            String name = model.getString("name");
+            mNewModelLabels.add(String.format(clone, name));
+            mNewModelNames.add(name);
+            mExistingModelNames.add(name);
         }
     }
 
