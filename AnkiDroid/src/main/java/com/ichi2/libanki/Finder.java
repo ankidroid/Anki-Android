@@ -415,7 +415,7 @@ public class Finder {
             return new Pair<>("", false);
         }
         // use deck default
-        String type = mCol.getConf().getString("sortType");
+        String type = mCol.get_config_string("sortType");
         String sort = null;
         if (type.startsWith("note")) {
             if (type.startsWith("noteCrt")) {
@@ -444,7 +444,7 @@ public class Finder {
             // deck has invalid sort order; revert to noteCrt
             sort = "n.id, c.ord";
         }
-        boolean sortBackwards = mCol.getConf().getBoolean("sortBackwards");
+        boolean sortBackwards = mCol.get_config_boolean("sortBackwards");
         return new Pair<>(" ORDER BY " + sort, sortBackwards);
     }
 

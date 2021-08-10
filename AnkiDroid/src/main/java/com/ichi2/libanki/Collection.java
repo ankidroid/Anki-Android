@@ -529,7 +529,7 @@ public class Collection implements CollectionGetter {
         type = "next" + Character.toUpperCase(type.charAt(0)) + type.substring(1);
         int id;
         try {
-            id = mConf.getInt(type);
+            id = get_config_int(type);
         } catch (JSONException e) {
             Timber.w(e);
             id = 1;
@@ -1260,7 +1260,7 @@ public class Collection implements CollectionGetter {
 
 
     public long getTimeLimit() {
-        return mConf.getLong("timeLim");
+        return get_config_long("timeLim");
     }
 
 
@@ -1272,13 +1272,13 @@ public class Collection implements CollectionGetter {
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
     public Pair<Integer, Integer> timeboxReached() {
-        if (mConf.getLong("timeLim") == 0) {
+        if (get_config_long("timeLim") == 0) {
             // timeboxing disabled
             return null;
         }
         long elapsed = getTime().intTime() - mStartTime;
-        if (elapsed > mConf.getLong("timeLim")) {
-            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
+        if (elapsed > get_config_long("timeLim")) {
+            return new Pair<>(get_config_int("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
@@ -2075,7 +2075,7 @@ public class Collection implements CollectionGetter {
         // bug #5523. This bug should occur only for people using anki
         // prior to version 2.16 and has been corrected with
         // dae/anki#347
-        Upgrade.upgradeJSONIfNecessary(this, conf, "sortBackwards", false);
+        Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false);
         mConf = conf;
     }
 
@@ -2087,6 +2087,35 @@ public class Collection implements CollectionGetter {
 
     // methods with a default can be named `get_config` as the `defaultValue` argument defines the return type
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
+
+    /** @throws JSONException object does not exist or can't be cast */
+    public boolean get_config_boolean(@NonNull String key) {
+        return mConf.getBoolean(key);
+    }
+
+    /** @throws JSONException object does not exist or can't be cast */
+    public long get_config_long(@NonNull String key) {
+        return mConf.getLong(key);
+    }
+
+    /** @throws JSONException object does not exist or can't be cast */
+    public int get_config_int(@NonNull String key) {
+        return mConf.getInt(key);
+    }
+
+    /** @throws JSONException object does not exist or can't be cast */
+    public double get_config_double(@NonNull String key) {
+        return mConf.getDouble(key);
+    }
+
+    /**
+     * If the value is null in the JSON, a string of "null" will be returned
+     * @throws JSONException object does not exist, or can't be cast
+     */
+    @NonNull
+    public String get_config_string(@NonNull String key) {
+        return mConf.getString(key);
+    }
 
     @Nullable
     @Contract("_, !null -> !null")

@@ -1108,7 +1108,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     protected void restoreCollectionPreferences() {
         super.restoreCollectionPreferences();
-        mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
+        mShowRemainingCardCount = getCol().get_config_boolean("dueCounts");
     }
 
     @Override

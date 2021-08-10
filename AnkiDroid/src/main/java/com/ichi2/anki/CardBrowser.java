@@ -620,7 +620,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle = findViewById(R.id.toolbar_title);
 
         mOrder = CARD_ORDER_NONE;
-        String colOrder = getCol().getConf().getString("sortType");
+        String colOrder = getCol().get_config_string("sortType");
         for (int c = 0; c < fSortTypes.length; ++c) {
             if (fSortTypes[c].equals(colOrder)) {
                 mOrder = c;
@@ -634,7 +634,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //setConf. However older version of AnkiDroid didn't call
         //upgradeJSONIfNecessary during setConf, which means the
         //conf saved may still have this bug.
-        mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
+        mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), "sortBackwards", false);
 
         mCards.reset();
         mCardsListView = findViewById(R.id.card_browser_list);
