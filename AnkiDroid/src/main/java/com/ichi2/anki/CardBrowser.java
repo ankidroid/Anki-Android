@@ -433,7 +433,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onSelection(String searchName) {
             Timber.d("OnSelection using search named: %s", searchName);
             JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
-            Timber.d("SavedFilters are %s", savedFiltersObj.toString());
+            Timber.d("SavedFilters are %s", savedFiltersObj == null ? null : savedFiltersObj.toString());
             if (savedFiltersObj != null) {
                 mSearchTerms = savedFiltersObj.optString(searchName);
                 Timber.d("OnSelection using search terms: %s", mSearchTerms);
