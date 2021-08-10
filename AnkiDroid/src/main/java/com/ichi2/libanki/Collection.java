@@ -2088,6 +2088,12 @@ public class Collection implements CollectionGetter {
     // methods with a default can be named `get_config` as the `defaultValue` argument defines the return type
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
 
+
+    public boolean has_config(@NonNull String key) {
+        // not in libAnki
+        return mConf.has(key);
+    }
+
     /** @throws JSONException object does not exist or can't be cast */
     public boolean get_config_boolean(@NonNull String key) {
         return mConf.getBoolean(key);
