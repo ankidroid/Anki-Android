@@ -161,7 +161,7 @@ public class BootService extends BroadcastReceiver {
                     SharedPreferences sp = AnkiDroidApp.getSharedPrefs(context);
                     return sp.getInt("dayOffset", defValue);
                 case 2:
-                    return col.getConf().optInt("rollover", defValue);
+                    return col.get_config("rollover", defValue);
             }
         } catch (Exception e) {
             Timber.w(e);

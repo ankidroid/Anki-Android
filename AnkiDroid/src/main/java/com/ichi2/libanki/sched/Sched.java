@@ -1109,7 +1109,7 @@ public class Sched extends SchedV2 {
             update(deck);
         }
         // unbury if the day has rolled over
-        int unburied = mCol.getConf().optInt("lastUnburied", 0);
+        int unburied = mCol.get_config("lastUnburied", 0);
         if (unburied < mToday) {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
         }

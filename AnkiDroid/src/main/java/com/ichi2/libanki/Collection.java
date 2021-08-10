@@ -56,6 +56,8 @@ import com.ichi2.utils.JSONObject;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -182,7 +184,7 @@ public class Collection implements CollectionGetter {
         mStartReps = 0;
         mStartTime = 0;
         _loadScheduler();
-        if (!mConf.optBoolean("newBury", false)) {
+        if (!get_config("newBury", false)) {
             set_config("newBury", true);
         }
     }
@@ -201,7 +203,7 @@ public class Collection implements CollectionGetter {
 
 
     public int schedVer() {
-        int ver = mConf.optInt("schedVer", fDefaultSchedulerVersion);
+        int ver = get_config("schedVer", fDefaultSchedulerVersion);
         if (fSupportedSchedulerVersions.contains(ver)) {
             return ver;
         } else {
@@ -2077,6 +2079,59 @@ public class Collection implements CollectionGetter {
         mConf = conf;
     }
 
+    // region JSON-Related Config
+
+    // Anki Desktop has a get_config and set_config method handling an "Any"
+    // We're not dynamically typed, so add additional methods for each JSON type that
+    // we can handle
+
+    // methods with a default can be named `get_config` as the `defaultValue` argument defines the return type
+    // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
+
+    @Nullable
+    @Contract("_, !null -> !null")
+    public Boolean get_config(@NonNull String key, @Nullable Boolean defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue;
+        }
+        return mConf.getBoolean(key);
+    }
+
+    @Nullable
+    @Contract("_, !null -> !null")
+    public Long get_config(@NonNull String key, @Nullable Long defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue;
+        }
+        return mConf.getLong(key);
+    }
+
+    @Nullable
+    @Contract("_, !null -> !null")
+    public Integer get_config(@NonNull String key, @Nullable Integer defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue;
+        }
+        return mConf.getInt(key);
+    }
+
+    @Contract("_, !null -> !null")
+    public Double get_config(@NonNull String key, @Nullable Double defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue;
+        }
+        return mConf.getDouble(key);
+    }
+
+    @Nullable
+    @Contract("_, !null -> !null")
+    public String get_config(@NonNull String key, @Nullable String defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue;
+        }
+        return mConf.getString(key);
+    }
+
     public void set_config(@NonNull String key, boolean value) {
         setMod();
         mConf.put(key, value);
@@ -2116,6 +2171,8 @@ public class Collection implements CollectionGetter {
         setMod();
         mConf.remove(key);
     }
+
+    //endregion
 
     public long getScm() {
         return mScm;

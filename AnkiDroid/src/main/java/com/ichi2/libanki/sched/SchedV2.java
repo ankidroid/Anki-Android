@@ -687,7 +687,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        boolean dayLearnFirst = mCol.get_config("dayLearnFirst", false);
         if (dayLearnFirst) {
             c = _getLrnDayCard();
             if (c != null) {
@@ -730,7 +730,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        boolean dayLearnFirst = mCol.get_config("dayLearnFirst", false);
         if (dayLearnFirst) {
             if (_fillLrnDay()) {
                 return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
@@ -2196,7 +2196,7 @@ public class SchedV2 extends AbstractSched {
             update(deck);
         }
         // unbury if the day has rolled over
-        int unburied = mCol.getConf().optInt("lastUnburied", 0);
+        int unburied = mCol.get_config("lastUnburied", 0);
         if (unburied < mToday) {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
             mCol.set_config("lastUnburied", mToday);
@@ -2205,7 +2205,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private long _dayCutoff() {
-        int rolloverTime = mCol.getConf().optInt("rollover", 4);
+        int rolloverTime = mCol.get_config("rollover", 4);
         if (rolloverTime < 0) {
             rolloverTime = 24 + rolloverTime;
         }
@@ -2234,7 +2234,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     private int _rolloverHour() {
-        return getCol().getConf().optInt("rollover", 4);
+        return getCol().get_config("rollover", 4);
     }
 
     // New timezone handling
@@ -2264,14 +2264,14 @@ public class SchedV2 extends AbstractSched {
     @Override
     public int _current_timezone_offset() throws BackendNotSupportedException {
         if (getCol().getServer()) {
-            return getCol().getConf().optInt("localOffset", 0);
+            return getCol().get_config("localOffset", 0);
         } else {
             return getCol().getBackend().local_minutes_west(getTime().intTime());
         }
     }
 
     private int _creation_timezone_offset() {
-        return getCol().getConf().optInt("creationOffset", 0);
+        return getCol().get_config("creationOffset", 0);
     }
 
     @Override

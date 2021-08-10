@@ -181,7 +181,7 @@ class ModelManager(private val col: Collection) {
     fun current(forDeck: bool = true): NoteType {
         var m = get(col.decks.current().getLong("mid"))
         if (!forDeck || !m.isPresent) {
-            m = get(col.conf.optLong("curModel", -1L))
+            m = get(col.get_config("curModel", -1L)!!)
         }
         if (m.isPresent) {
             return m.get()

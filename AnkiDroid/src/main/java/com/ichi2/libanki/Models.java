@@ -270,7 +270,7 @@ public class Models {
             m = get(mCol.getDecks().current().optLong("mid", -1));
         }
         if (m == null) {
-            m = get(mCol.getConf().optLong("curModel", -1));
+            m = get(mCol.get_config("curModel", -1L));
         }
         if (m == null) {
             if (!mModels.isEmpty()) {
