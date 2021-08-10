@@ -18,6 +18,15 @@ import static org.junit.Assert.fail;
 public class AnkiAssert {
 
     /** Helper to sort out "JUnit tests should include assert() or fail()" quality check */
+    public static void assertDoesNotThrow(String message, @NonNull Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Exception e) {
+            throw new AssertionError(message + "\nmethod should not throw", e);
+        }
+    }
+
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check */
     public static void assertDoesNotThrow(@NonNull Runnable runnable) {
         try {
             runnable.run();
