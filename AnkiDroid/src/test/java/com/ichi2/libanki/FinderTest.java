@@ -137,7 +137,7 @@ public class FinderTest extends RobolectricTest {
         Card catCard = note.cards().get(0);
         Model m = col.getModels().current();
         m = col.getModels().copy(m);
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");

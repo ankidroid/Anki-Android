@@ -5,7 +5,7 @@ import android.os.Build;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.ModelManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class ModelTest extends InstrumentedTest {
     @Test
     public void bigQuery() {
         assumeTrue("This test is flaky on API29, ignoring", Build.VERSION.SDK_INT != Build.VERSION_CODES.Q);
-        Models models = testCol.getModels();
+        ModelManager models = testCol.getModels();
         Model model = models.all().get(0);
         final String testString = "test";
         final int size = testString.length() * 1024 * 1024;
