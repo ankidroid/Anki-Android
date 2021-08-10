@@ -2242,8 +2242,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public boolean _new_timezone_enabled() {
-        JSONObject conf = getCol().getConf();
-        return conf.has("creationOffset") && !conf.isNull("creationOffset");
+        return getCol().has_config("creationOffset") && !getCol().getConf().isNull("creationOffset");
     }
 
     @Nullable

@@ -281,7 +281,7 @@ public class SchedV2Test extends RobolectricTest {
         // #5805
         assertThat("Sync ver should be updated if we have a valid Rust collection", Consts.SYNC_VER, is(10));
 
-        assertThat("localOffset should be set if using V2 Scheduler", getCol().getConf().has("localOffset"), is(true));
+        assertThat("localOffset should be set if using V2 Scheduler", getCol().has_config("localOffset"), is(true));
 
         SchedV2 sched = (SchedV2) getCol().getSched();
 

@@ -54,7 +54,7 @@ public class UndoTest extends RobolectricTest {
         // undoing should restore the old value
         col.undo();
         assertNull(col.undoType());
-        assertFalse(col.getConf().has("abc"));
+        assertFalse(col.has_config("abc"));
         // an (auto)save will clear the undo
         col.save("foo");
         assertEquals("foo", col.undoName(getTargetContext().getResources()));
