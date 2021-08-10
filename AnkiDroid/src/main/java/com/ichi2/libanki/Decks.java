@@ -1060,7 +1060,7 @@ public class Decks {
      * The currently active dids. Make sure to copy before modifying.
      */
     public LinkedList<Long> active() {
-        JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
+        JSONArray activeDecks = mCol.get_config_array("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
         addAll(result, activeDecks.longIterable());
         return result;

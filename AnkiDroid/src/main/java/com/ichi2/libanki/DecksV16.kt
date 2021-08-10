@@ -510,7 +510,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     /** The currently active dids. */
     fun active(): MutableList<did> {
         // TODO: Copied from the java, should use get_config
-        val activeDecks: JSONArray = col.conf.getJSONArray("activeDecks")
+        val activeDecks: JSONArray = col.get_config_array("activeDecks")
         val result = LinkedList<Long>()
         CollectionUtils.addAll(result, activeDecks.longIterable())
         return result
