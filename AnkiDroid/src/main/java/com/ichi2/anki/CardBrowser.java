@@ -322,22 +322,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mOrderAsc = false;
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                getCol().getConf().put("sortType", fSortTypes[1]);
+                getCol().set_config("sortType", fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
                         .apply();
             } else {
-                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                getCol().set_config("sortType", fSortTypes[mOrder]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", false)
                         .apply();
             }
-            getCol().getConf().put("sortBackwards", mOrderAsc);
+            getCol().set_config("sortBackwards", mOrderAsc);
             searchCards();
         } else if (which != CARD_ORDER_NONE) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc;
-            getCol().getConf().put("sortBackwards", mOrderAsc);
+            getCol().set_config("sortBackwards", mOrderAsc);
             mCards.reverse();
             updateList();
         }
@@ -447,7 +447,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
             if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
                 savedFiltersObj.remove(searchName);
-                getCol().getConf().put("savedFilters", savedFiltersObj);
+                getCol().set_config("savedFilters", savedFiltersObj);
                 getCol().flush();
                 if (savedFiltersObj.length() == 0) {
                     mMySearchesItem.setVisible(false);
@@ -477,7 +477,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                         getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
             }
             if (should_save) {
-                getCol().getConf().put("savedFilters", savedFiltersObj);
+                getCol().set_config("savedFilters", savedFiltersObj);
                 getCol().flush();
                 mSearchView.setQuery("", false);
                 mMySearchesItem.setVisible(true);

@@ -816,7 +816,7 @@ public class Anki2Importer extends Importer {
             mCol.getSched().maybeRandomizeDeck(did);
         }
         // make sure new position is correct
-        mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
+        mDst.set_config("nextPos", mDst.getDb().queryLongScalar(
                 "select max(due)+1 from cards where type = " + CARD_TYPE_NEW));
         mDst.save();
     }

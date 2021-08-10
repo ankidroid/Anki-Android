@@ -2199,7 +2199,7 @@ public class SchedV2 extends AbstractSched {
         int unburied = mCol.getConf().optInt("lastUnburied", 0);
         if (unburied < mToday) {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
-            mCol.getConf().put("lastUnburied", mToday);
+            mCol.set_config("lastUnburied", mToday);
         }
     }
 
@@ -2277,16 +2277,12 @@ public class SchedV2 extends AbstractSched {
     @Override
     public void set_creation_offset() throws BackendNotSupportedException {
         int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
-        getCol().getConf().put("creationOffset", mins_west);
-        getCol().setMod();
+        getCol().set_config("creationOffset", mins_west);
     }
 
     @Override
     public void clear_creation_offset() {
-        if (getCol().getConf().has("creationOffset")) {
-            getCol().getConf().remove("creationOffset");
-            getCol().setMod();
-        }
+        getCol().remove_config("creationOffset");
     }
 
     protected void update(@NonNull Deck g) {

@@ -190,8 +190,7 @@ class ModelManager(private val col: Collection) {
     }
 
     fun setCurrent(m: NoteType) {
-        col.conf.put("curModel", m.id)
-        col.setMod()
+        col.set_config("curModel", m.id)
     }
 
     /*
