@@ -2109,6 +2109,14 @@ public class Collection implements CollectionGetter {
     }
 
     /**
+     * Edits to this object are not persisted to preferences.
+     * @throws JSONException object does not exist or can't be cast
+     */
+    public JSONObject get_config_object(@NonNull String key) {
+        return new JSONObject(mConf.getJSONObject(key));
+    }
+
+    /**
      * If the value is null in the JSON, a string of "null" will be returned
      * @throws JSONException object does not exist, or can't be cast
      */
@@ -2159,6 +2167,16 @@ public class Collection implements CollectionGetter {
             return defaultValue;
         }
         return mConf.getString(key);
+    }
+
+    /** Edits to the config are not persisted to the preferences */
+    @Nullable
+    @Contract("_, !null -> !null")
+    public JSONObject get_config(@NonNull String key, @Nullable JSONObject defaultValue) {
+        if (!mConf.has(key)) {
+            return defaultValue == null ? null : new JSONObject(defaultValue);
+        }
+        return new JSONObject(mConf.getJSONObject(key));
     }
 
     public void set_config(@NonNull String key, boolean value) {
