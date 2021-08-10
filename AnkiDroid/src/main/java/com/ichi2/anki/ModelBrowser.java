@@ -55,6 +55,7 @@ import java.util.Random;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.libanki.Utils.checksum;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -519,21 +520,11 @@ public class ModelBrowser extends AnkiActivity {
 
 
     /*
-     * Generates a random alphanumeric sequence of 6 characters
-     * Used to append to the end of new note types to dissuade
+     * Takes current timestamp from col and append to the end of new note types to dissuade
      * User from reusing names (which are technically not unique however
      */
     private String randomizeName(String s) {
-        char[] charSet = "123456789abcdefghijklmnopqrstuvqxwzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-
-        char[] randomString = new char[6];
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            int randomIndex = random.nextInt(charSet.length);
-            randomString[i] = charSet[randomIndex];
-        }
-
-        return s + " " + new String(randomString);
+        return s + "-" + checksum(String.valueOf(getCol().getTime().intTimeMS())).substring(0, 5);
     }
 
 
