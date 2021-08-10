@@ -430,7 +430,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onSelection(String searchName) {
             Timber.d("OnSelection using search named: %s", searchName);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             Timber.d("SavedFilters are %s", savedFiltersObj.toString());
             if (savedFiltersObj != null) {
                 mSearchTerms = savedFiltersObj.optString(searchName);
@@ -444,7 +444,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onRemoveSearch(String searchName) {
             Timber.d("OnRemoveSelection using search named: %s", searchName);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
                 savedFiltersObj.remove(searchName);
                 getCol().set_config("savedFilters", savedFiltersObj);
@@ -463,7 +463,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
                 return;
             }
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             boolean should_save = false;
             if (savedFiltersObj == null) {
                 savedFiltersObj = new JSONObject();
@@ -960,7 +960,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mSaveSearchItem = menu.findItem(R.id.action_save_search);
             mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
             mSearchItem = menu.findItem(R.id.action_search);
             mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
@@ -1153,7 +1153,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
             return true;
         } else if (itemId == R.id.action_list_my_searches) {
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             HashMap<String, String> savedFilters;
             if (savedFiltersObj != null) {
                 savedFilters = new HashMap<>(savedFiltersObj.length());
