@@ -314,7 +314,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((NumberRangePreference)pref).setValue(conf.getInt("timeLim") / 60);
                             break;
                         case USE_CURRENT:
-                            ((android.preference.ListPreference)pref).setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
+                            ((android.preference.ListPreference)pref).setValueIndex(col.get_config("addToCur", true) ? 0 : 1);
                             break;
                         case NEW_SPREAD:
                             ((android.preference.ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
@@ -323,7 +323,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((SeekBarPreference)pref).setValue(getDayOffset(col));
                             break;
                         case PASTE_PNG:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(conf.optBoolean("pastePNG"));
+                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config("pastePNG", false));
                             break;
                         case NEW_TIMEZONE_HANDLING:
                             android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
@@ -359,7 +359,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 Calendar calendar = col.crtGregorianCalendar();
                 return calendar.get(Calendar.HOUR_OF_DAY);
             case 2:
-                return col.getConf().optInt("rollover", 4);
+                return col.get_config("rollover", 4);
         }
     }
 

@@ -1803,7 +1803,7 @@ public class NoteEditor extends AnkiActivity implements
         if (note == null || mAddNote || mCurrentEditedCard == null) {
             JSONObject conf = getCol().getConf();
             JSONObject model = getCol().getModels().current();
-            if (conf.optBoolean("addToCur", true)) {
+            if (getCol().get_config("addToCur", true)) {
                 mCurrentDid = conf.getLong("curDeck");
                 if (getCol().getDecks().isDyn(mCurrentDid)) {
                     /*
@@ -2106,7 +2106,7 @@ public class NoteEditor extends AnkiActivity implements
                 currentDeck.put("mid", newId);
                 getCol().getDecks().save(currentDeck);
                 // Update deck
-                if (!getCol().getConf().optBoolean("addToCur", true)) {
+                if (!getCol().get_config("addToCur", true)) {
                     mCurrentDid = model.getLong("did");
                 }
 
