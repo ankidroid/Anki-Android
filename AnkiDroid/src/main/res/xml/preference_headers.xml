@@ -25,9 +25,6 @@
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/app_name">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.general" />
     </header>
 
     <!-- Reviewing Preferences -->
@@ -35,9 +32,6 @@
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
         android:title="@string/pref_cat_reviewing">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.reviewing" />
     </header>
 
     <!-- Appearance Prefrences  -->
@@ -46,9 +40,6 @@
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.appearance" />
     </header>
 
     <!-- Navigation Prefrences -->
@@ -56,9 +47,6 @@
         android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"
         android:title="@string/pref_cat_gestures">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.gestures" />
     </header>
 
     <!-- Advanced Preferences -->
@@ -67,8 +55,5 @@
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.advanced" />
     </header>
 </preference-headers>
