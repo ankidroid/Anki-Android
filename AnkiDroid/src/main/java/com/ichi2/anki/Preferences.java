@@ -850,13 +850,6 @@ public class Preferences extends AppCompatPreferenceActivity {
                     return false;
                 }
             });
-            // Custom buttons options
-            android.preference.Preference customButtonsPreference = screen.findPreference("custom_buttons_link");
-            customButtonsPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = CustomButtonsSettingsFragment.getSubscreenIntent(requireContext());
-                startActivity(i);
-                return true;
-            });
         }
     }
 
@@ -1073,20 +1066,6 @@ public class Preferences extends AppCompatPreferenceActivity {
                             .show();
                     return false;
                 }
-            });
-            // Custom sync server option
-            android.preference.Preference customSyncServerPreference = screen.findPreference("custom_sync_server_link");
-            customSyncServerPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = CustomSyncServerSettingsFragment.getSubscreenIntent(requireContext());
-                startActivity(i);
-                return true;
-            });
-            // Advanced statistics option
-            android.preference.Preference advancedStatisticsPreference = screen.findPreference("advanced_statistics_link");
-            advancedStatisticsPreference.setOnPreferenceClickListener(preference -> {
-                Intent i = AdvancedStatisticsSettingsFragment.getSubscreenIntent(requireContext());
-                startActivity(i);
-                return true;
             });
             setupContextMenuPreference(screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
             setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
@@ -1334,12 +1313,6 @@ public class Preferences extends AppCompatPreferenceActivity {
         public int getPreferenceResource() {
             return R.xml.preferences_advanced_statistics;
         }
-
-        @NonNull
-        public static Intent getSubscreenIntent(Context context) {
-            return getSubscreenIntent(context, AdvancedStatisticsSettingsFragment.class.getSimpleName());
-        }
-
 
         @NonNull
         @Override
