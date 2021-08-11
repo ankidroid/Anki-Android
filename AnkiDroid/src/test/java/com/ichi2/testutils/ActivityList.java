@@ -28,6 +28,7 @@ import com.ichi2.anki.CardTemplateEditor;
 import com.ichi2.anki.CardTemplatePreviewer;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.FilteredDeckOptions;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
@@ -81,6 +82,7 @@ public class ActivityList {
                 get(DeckOptions.class),
                 get(CropImageActivity.class),
                 get(FilteredDeckOptions.class),
+                get(DrawingActivity.class),
                 // Info has unhandled intents
                 get(Info.class),
                 // NoteEditor has unhandled intents
