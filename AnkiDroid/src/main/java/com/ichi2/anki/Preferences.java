@@ -57,11 +57,11 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.preferences.NumberRangePreference;
-import com.ichi2.themes.Themes;
-import com.ichi2.ui.AppCompatPreferenceActivity;
-import com.ichi2.ui.ConfirmationPreference;
-import com.ichi2.ui.SeekBarPreference;
+import com.ichi2.preferences.ConfirmationPreferenceCompat;
+import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat;
+import com.ichi2.preferences.NumberRangePreferenceCompat;
+import com.ichi2.preferences.ResetLanguageDialogPreference;
+import com.ichi2.preferences.SeekBarPreferenceCompat;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -74,7 +74,6 @@ import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -88,7 +87,16 @@ import androidx.annotation.VisibleForTesting;
 import androidx.annotation.XmlRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceScreen;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -96,8 +104,7 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 /**
  * Preferences dialog.
  */
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public class Preferences extends AppCompatPreferenceActivity {
+public class Preferences extends AnkiActivity {
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
@@ -164,45 +171,54 @@ public class Preferences extends AppCompatPreferenceActivity {
     /** The collection path when Preferences was opened  */
     private String mOldCollectionPath = null;
 
+
+    public static final String EXTRA_SHOW_FRAGMENT = ":android:show_fragment";
+
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Themes.setThemeLegacy(this);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.preferences);
+
+        enableToolbar();
 
         // Add a home button to the actionbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getResources().getText(R.string.preferences_title));
 
+        Fragment fragment = getInitialFragment(getIntent());
+
         // onRestoreInstanceState takes priority, this is only set on init.
         mOldCollectionPath = CollectionHelper.getCollectionPath(this);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings_container, fragment)
+                .commit();
+
     }
 
-    private Collection getCol() {
-        return CollectionHelper.getInstance().getCol(this);
-    }
 
-
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-        Iterator<Header> iterator = target.iterator();
-        while (iterator.hasNext()) {
-            Header header = iterator.next();
-            if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.isRestrictedLearningDevice()){
-                iterator.remove();
-            }
+    @NonNull
+    private Fragment getInitialFragment(Intent intent) {
+        if (intent == null) {
+            return new HeaderFragment();
         }
-    }
 
+        String fragmentClass = intent.getStringExtra(EXTRA_SHOW_FRAGMENT);
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        // Fragments are valid if they are inner classes of Preferences.java
-        return fragmentName.startsWith("com.ichi2.anki.Preferences$");
+        if (fragmentClass == null) {
+            return new HeaderFragment();
+        }
+
+        try {
+            return (Fragment) Class.forName(fragmentClass).newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load " + fragmentClass, e);
+        }
     }
 
 
@@ -226,7 +242,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         }
     }
 
-
+    @SuppressWarnings("deprecation") // startActivity
     protected void restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
         CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed");
@@ -257,15 +273,15 @@ public class Preferences extends AppCompatPreferenceActivity {
     /**
      * Loop over every preference in the list and set the summary text
      */
-    private void initAllPreferences(android.preference.PreferenceScreen screen) {
+    private void initAllPreferences(PreferenceScreen screen) {
         for (int i = 0; i < screen.getPreferenceCount(); ++i) {
-            android.preference.Preference preference = screen.getPreference(i);
-            if (preference instanceof android.preference.PreferenceGroup) {
-                android.preference.PreferenceGroup preferenceGroup = (android.preference.PreferenceGroup) preference;
+            Preference preference = screen.getPreference(i);
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
                 for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
-                    android.preference.Preference nestedPreference = preferenceGroup.getPreference(j);
-                    if (nestedPreference instanceof android.preference.PreferenceGroup) {
-                        android.preference.PreferenceGroup nestedPreferenceGroup = (android.preference.PreferenceGroup) nestedPreference;
+                    Preference nestedPreference = preferenceGroup.getPreference(j);
+                    if (nestedPreference instanceof PreferenceGroup) {
+                        PreferenceGroup nestedPreferenceGroup = (PreferenceGroup) nestedPreference;
                         for (int k = 0; k < nestedPreferenceGroup.getPreferenceCount(); ++k) {
                             initPreference(nestedPreferenceGroup.getPreference(k));
                         }
@@ -281,7 +297,7 @@ public class Preferences extends AppCompatPreferenceActivity {
 
 
 
-    private void initPreference(android.preference.Preference pref) {
+    private void initPreference(Preference pref) {
         // Load stored values from Preferences which are stored in the Collection
         if (Arrays.asList(sCollectionPreferences).contains(pref.getKey())) {
             Collection col = getCol();
@@ -289,31 +305,31 @@ public class Preferences extends AppCompatPreferenceActivity {
                 try {
                     switch (pref.getKey()) {
                         case SHOW_ESTIMATE:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config_boolean("estTimes"));
+                            ((CheckBoxPreference)pref).setChecked(col.get_config_boolean("estTimes"));
                             break;
                         case SHOW_PROGRESS:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config_boolean("dueCounts"));
+                            ((CheckBoxPreference)pref).setChecked(col.get_config_boolean("dueCounts"));
                             break;
                         case LEARN_CUTOFF:
-                            ((NumberRangePreference)pref).setValue(col.get_config_int("collapseTime") / 60);
+                            ((NumberRangePreferenceCompat)pref).setValue(col.get_config_int("collapseTime") / 60);
                             break;
                         case TIME_LIMIT:
-                            ((NumberRangePreference)pref).setValue(col.get_config_int("timeLim") / 60);
+                            ((NumberRangePreferenceCompat)pref).setValue(col.get_config_int("timeLim") / 60);
                             break;
                         case USE_CURRENT:
-                            ((android.preference.ListPreference)pref).setValueIndex(col.get_config("addToCur", true) ? 0 : 1);
+                            ((ListPreference)pref).setValueIndex(col.get_config("addToCur", true) ? 0 : 1);
                             break;
                         case NEW_SPREAD:
-                            ((android.preference.ListPreference)pref).setValueIndex(col.get_config_int("newSpread"));
+                            ((ListPreference)pref).setValueIndex(col.get_config_int("newSpread"));
                             break;
                         case DAY_OFFSET:
-                            ((SeekBarPreference)pref).setValue(getDayOffset(col));
+                            ((SeekBarPreferenceCompat)pref).setValue(getDayOffset(col));
                             break;
                         case PASTE_PNG:
-                            ((android.preference.CheckBoxPreference)pref).setChecked(col.get_config("pastePNG", false));
+                            ((CheckBoxPreference)pref).setChecked(col.get_config("pastePNG", false));
                             break;
                         case NEW_TIMEZONE_HANDLING:
-                            android.preference.CheckBoxPreference checkBox = (android.preference.CheckBoxPreference) pref;
+                            CheckBoxPreference checkBox = (CheckBoxPreference) pref;
                             checkBox.setChecked(col.getSched()._new_timezone_enabled());
                             if (col.schedVer() <= 1 || !col.isUsingRustBackend()) {
                                 Timber.d("Disabled 'newTimezoneHandling' box");
@@ -329,7 +345,7 @@ public class Preferences extends AppCompatPreferenceActivity {
                 pref.setEnabled(false);
             }
         } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION.equals(pref.getKey())) {
-            updateNotificationPreference((android.preference.ListPreference) pref);
+            updateNotificationPreference((ListPreference) pref);
         }
         // Set the value from the summary cache
         CharSequence s = pref.getSummary();
@@ -379,7 +395,7 @@ public class Preferences extends AppCompatPreferenceActivity {
     }
 
 
-    public void updateNotificationPreference(android.preference.ListPreference listpref) {
+    public void updateNotificationPreference(ListPreference listpref) {
         CharSequence[] entries = listpref.getEntries();
         CharSequence[] values = listpref.getEntryValues();
         for (int i = 0; i < entries.length; i++) {
@@ -392,7 +408,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         listpref.setSummary(listpref.getEntry().toString());
     }
 
-    private void updateSummary(android.preference.Preference pref) {
+    private void updateSummary(Preference pref) {
         if (pref == null || pref.getKey() == null) {
             return;
         }
@@ -420,14 +436,14 @@ public class Preferences extends AppCompatPreferenceActivity {
         // Get value text
         String value;
         try {
-            if (pref instanceof  NumberRangePreference) {
-                value = Integer.toString(((NumberRangePreference) pref).getValue());
-            } else if (pref instanceof SeekBarPreference) {
-                value = Integer.toString(((SeekBarPreference) pref).getValue());
-            } else if (pref instanceof android.preference.ListPreference) {
-                value = ((android.preference.ListPreference) pref).getEntry().toString();
-            } else if (pref instanceof android.preference.EditTextPreference) {
-                value = ((android.preference.EditTextPreference) pref).getText();
+            if (pref instanceof NumberRangePreferenceCompat) {
+                value = Integer.toString(((NumberRangePreferenceCompat) pref).getValue());
+            } else if (pref instanceof SeekBarPreferenceCompat) {
+                value = Integer.toString(((SeekBarPreferenceCompat) pref).getValue());
+            } else if (pref instanceof ListPreference) {
+                value = ((ListPreference) pref).getEntry().toString();
+            } else if (pref instanceof EditTextPreference) {
+                value = ((EditTextPreference) pref).getText();
             } else {
                 return;
             }
@@ -469,7 +485,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         }
     }
 
-
+    @SuppressWarnings("deprecation")
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, FADE);
@@ -501,11 +517,9 @@ public class Preferences extends AppCompatPreferenceActivity {
         }
     }
 
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github
-    public abstract static class SettingsFragment extends android.preference.PreferenceFragment implements OnSharedPreferenceChangeListener {
+    public abstract static class SettingsFragment extends PreferenceFragmentCompat implements OnSharedPreferenceChangeListener {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             String screenName = getAnalyticsScreenNameConstant();
             UsageAnalytics.sendAnalyticsScreenView(screenName);
             initSubscreen();
@@ -515,8 +529,8 @@ public class Preferences extends AppCompatPreferenceActivity {
         /** Obtains a non-null reference to the preference defined by the key, or throws */
         @NonNull
         @SuppressWarnings("unchecked")
-        protected <T extends android.preference.Preference> T requirePreference(String key) {
-            android.preference.Preference preference = findPreference(key);
+        protected <T extends Preference> T requirePreference(String key) {
+            Preference preference = findPreference(key);
             if (preference == null) {
                 throw new IllegalStateException("missing preference: '" + key + "'");
             }
@@ -526,8 +540,8 @@ public class Preferences extends AppCompatPreferenceActivity {
         /** Obtains a non-null reference to the preference defined by the key, or throws */
         @NonNull
         @SuppressWarnings("unchecked")
-        protected static <T extends android.preference.Preference> T requirePreference(android.preference.PreferenceScreen screen, String key) {
-            android.preference.Preference preference = screen.findPreference(key);
+        protected static <T extends Preference> T requirePreference(PreferenceScreen screen, String key) {
+            Preference preference = screen.findPreference(key);
             if (preference == null) {
                 throw new IllegalStateException("missing preference: '" + key + "'");
             }
@@ -568,17 +582,42 @@ public class Preferences extends AppCompatPreferenceActivity {
             updatePreference(((Preferences) getActivity()), sharedPreferences, key);
         }
 
+
+        @Override
+        @SuppressWarnings("deprecation") // setTargetFragment
+        public void onDisplayPreferenceDialog(Preference preference) {
+            DialogFragment dialogFragment = null;
+            if (preference instanceof IncrementerNumberRangePreferenceCompat) {
+                dialogFragment = IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey());
+            } else if (preference instanceof NumberRangePreferenceCompat) {
+                dialogFragment = NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey());
+            } else if (preference instanceof ResetLanguageDialogPreference) {
+                dialogFragment = ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey());
+            } else if (preference instanceof ConfirmationPreferenceCompat) {
+                dialogFragment = ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey());
+            } else if (preference instanceof SeekBarPreferenceCompat) {
+                dialogFragment = SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey());
+            }
+
+            if (dialogFragment != null) {
+                dialogFragment.setTargetFragment(this, 0);
+                dialogFragment.show(getParentFragmentManager(), "androidx.preference.PreferenceFragment.DIALOG");
+            } else {
+                super.onDisplayPreferenceDialog(preference);
+            }
+        }
+
+
         /**
          * Code which is run when a SharedPreference change has been detected
          * @param preferencesActivity A handle to the calling activity
          * @param prefs instance of SharedPreferences
          * @param key key in prefs which is being updated
          */
-        @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
         private void updatePreference(Preferences preferencesActivity, SharedPreferences prefs, String key) {
             try {
-                android.preference.PreferenceScreen screen = getPreferenceScreen();
-                android.preference.Preference pref = screen.findPreference(key);
+                PreferenceScreen screen = getPreferenceScreen();
+                Preference pref = screen.findPreference(key);
                 if (pref == null) {
                     Timber.e("Preferences: no preference found for the key: %s", key);
                     return;
@@ -592,47 +631,47 @@ public class Preferences extends AppCompatPreferenceActivity {
                         CustomSyncServer.handleSyncServerPreferenceChange(preferencesActivity.getBaseContext());
                         break;
                     case "timeoutAnswer": {
-                        android.preference.CheckBoxPreference keepScreenOn = (android.preference.CheckBoxPreference) screen.findPreference("keepScreenOn");
-                        keepScreenOn.setChecked(((android.preference.CheckBoxPreference) pref).isChecked());
+                        CheckBoxPreference keepScreenOn = screen.findPreference("keepScreenOn");
+                        keepScreenOn.setChecked(((CheckBoxPreference) pref).isChecked());
                         break;
                     }
                     case LANGUAGE:
                         preferencesActivity.closePreferences();
                         break;
                     case SHOW_PROGRESS:
-                        preferencesActivity.getCol().set_config("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().set_config("dueCounts", ((CheckBoxPreference) pref).isChecked());
                         preferencesActivity.getCol().setMod();
                         break;
                     case SHOW_ESTIMATE:
-                        preferencesActivity.getCol().set_config("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().set_config("estTimes", ((CheckBoxPreference) pref).isChecked());
                         preferencesActivity.getCol().setMod();
                         break;
                     case NEW_SPREAD:
-                        preferencesActivity.getCol().set_config("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
+                        preferencesActivity.getCol().set_config("newSpread", Integer.parseInt(((ListPreference) pref).getValue()));
                         preferencesActivity.getCol().setMod();
                         break;
                     case TIME_LIMIT:
-                        preferencesActivity.getCol().set_config("timeLim", ((NumberRangePreference) pref).getValue() * 60);
+                        preferencesActivity.getCol().set_config("timeLim", ((NumberRangePreferenceCompat) pref).getValue() * 60);
                         preferencesActivity.getCol().setMod();
                         break;
                     case LEARN_CUTOFF:
-                        preferencesActivity.getCol().set_config("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
+                        preferencesActivity.getCol().set_config("collapseTime", ((NumberRangePreferenceCompat) pref).getValue() * 60);
                         preferencesActivity.getCol().setMod();
                         break;
                     case USE_CURRENT:
-                        preferencesActivity.getCol().set_config("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
+                        preferencesActivity.getCol().set_config("addToCur", "0".equals(((ListPreference) pref).getValue()));
                         preferencesActivity.getCol().setMod();
                         break;
                     case DAY_OFFSET: {
-                        preferencesActivity.setDayOffset(((SeekBarPreference) pref).getValue());
+                        preferencesActivity.setDayOffset(((SeekBarPreferenceCompat) pref).getValue());
                         break;
                     }
                     case PASTE_PNG:
-                        preferencesActivity.getCol().set_config("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().set_config("pastePNG", ((CheckBoxPreference) pref).isChecked());
                         preferencesActivity.getCol().setMod();
                         break;
                     case MINIMUM_CARDS_DUE_FOR_NOTIFICATION: {
-                        android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);
+                        ListPreference listpref = screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);
                         if (listpref != null) {
                             preferencesActivity.updateNotificationPreference(listpref);
                             if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
@@ -654,7 +693,7 @@ public class Preferences extends AppCompatPreferenceActivity {
                     case "syncAccount": {
                         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.getBaseContext());
                         String username = preferences.getString("username", "");
-                        android.preference.Preference syncAccount = screen.findPreference("syncAccount");
+                        Preference syncAccount = screen.findPreference("syncAccount");
                         if (syncAccount != null) {
                             if (TextUtils.isEmpty(username)) {
                                 syncAccount.setSummary(R.string.sync_account_summ_logged_out);
@@ -668,7 +707,7 @@ public class Preferences extends AppCompatPreferenceActivity {
                         ComponentName providerName = new ComponentName(preferencesActivity, "com.ichi2.anki.provider.CardContentProvider");
                         PackageManager pm = preferencesActivity.getPackageManager();
                         int state;
-                        if (((android.preference.CheckBoxPreference) pref).isChecked()) {
+                        if (((CheckBoxPreference) pref).isChecked()) {
                             state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
                             Timber.i("AnkiDroid ContentProvider enabled by user");
                         } else {
@@ -682,7 +721,7 @@ public class Preferences extends AppCompatPreferenceActivity {
                         if (preferencesActivity.getCol().schedVer() != 1 && preferencesActivity.getCol().isUsingRustBackend()) {
                             AbstractSched sched = preferencesActivity.getCol().getSched();
                             boolean was_enabled = sched._new_timezone_enabled();
-                            boolean is_enabled = ((android.preference.CheckBoxPreference) pref).isChecked();
+                            boolean is_enabled = ((CheckBoxPreference) pref).isChecked();
                             if (was_enabled != is_enabled) {
                                 if (is_enabled) {
                                     try {
@@ -741,19 +780,6 @@ public class Preferences extends AppCompatPreferenceActivity {
             initSubscreen();
         }
 
-        /**
-         * Returns a non-null context object
-         * @throws IllegalStateException if the fragment is not attached to an activity
-         */
-        @NonNull
-        protected Context requireContext() {
-            Context context = getActivity();
-            if (context == null) {
-                throw new IllegalStateException("no context was associated with the activity.");
-            }
-            return context;
-        }
-
         @Nullable
         protected Collection getCol() {
             return CollectionHelper.getInstance().getCol(requireContext());
@@ -762,8 +788,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         @NonNull
         protected static Intent getSubscreenIntent(Context context, String className) {
             Intent i = new Intent(context, Preferences.class);
-            i.putExtra(android.preference.PreferenceActivity.EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$" + className);
-            i.putExtra(android.preference.PreferenceActivity.EXTRA_NO_HEADERS, true);
+            i.putExtra(EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$" + className);
             return i;
         }
 
@@ -771,13 +796,10 @@ public class Preferences extends AppCompatPreferenceActivity {
         protected void setTitle(@StringRes int stringRes) {
             Activity activity = getActivity();
 
-            ActionBar supportActionBar = null;
+            ActionBar supportActionBar;
             if (activity instanceof AppCompatActivity) {
                 AppCompatActivity acActivity = (AppCompatActivity) activity;
-                acActivity.getSupportActionBar();
-            } else if (activity instanceof AppCompatPreferenceActivity) {
-                AppCompatPreferenceActivity apActivity = (AppCompatPreferenceActivity) activity;
-                supportActionBar = apActivity.getSupportActionBar();
+                supportActionBar = acActivity.getSupportActionBar();
             } else {
                 Timber.w("Activity was of the wrong type");
                 return;
@@ -815,11 +837,11 @@ public class Preferences extends AppCompatPreferenceActivity {
         @Override
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_general);
-            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            PreferenceScreen screen = getPreferenceScreen();
             if (AdaptionUtil.isRestrictedLearningDevice()) {
-                android.preference.CheckBoxPreference mCheckBoxPref_Vibrate = requirePreference("widgetVibrate");
-                android.preference.CheckBoxPreference mCheckBoxPref_Blink = requirePreference("widgetBlink");
-                android.preference.PreferenceCategory mCategory = requirePreference("category_general_notification_pref");
+                CheckBoxPreference mCheckBoxPref_Vibrate = requirePreference("widgetVibrate");
+                CheckBoxPreference mCheckBoxPref_Blink = requirePreference("widgetBlink");
+                PreferenceCategory mCategory = requirePreference("category_general_notification_pref");
                 mCategory.removePreference(mCheckBoxPref_Vibrate);
                 mCategory.removePreference(mCheckBoxPref_Blink);
             }
@@ -827,8 +849,8 @@ public class Preferences extends AppCompatPreferenceActivity {
             initializeLanguageDialog(screen);
         }
 
-        private void initializeLanguageDialog(android.preference.PreferenceScreen screen) {
-            android.preference.ListPreference languageSelection = (android.preference.ListPreference) screen.findPreference(LANGUAGE);
+        private void initializeLanguageDialog(PreferenceScreen screen) {
+            ListPreference languageSelection = screen.findPreference(LANGUAGE);
             if (languageSelection != null) {
                 Map<String, String> items = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
                 for (String localeCode : LanguageUtil.APP_LANGUAGES) {
@@ -870,7 +892,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing);
             // Show error toast if the user tries to disable answer button without gestures on
-            android.preference.ListPreference fullscreenPreference = requirePreference(FullScreenMode.PREF_KEY);
+            ListPreference fullscreenPreference = requirePreference(FullScreenMode.PREF_KEY);
             fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(requireContext());
                 if (prefs.getBoolean("gestures", false) || !FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue().equals(newValue)) {
@@ -887,7 +909,7 @@ public class Preferences extends AppCompatPreferenceActivity {
     public static class AppearanceSettingsFragment extends SpecificSettingsFragment {
 
         private static final int RESULT_LOAD_IMG = 111;
-        private android.preference.CheckBoxPreference mBackgroundImage;
+        private CheckBoxPreference mBackgroundImage;
 
 
         @Override
@@ -903,6 +925,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         }
 
 
+        @SuppressWarnings("deprecation") // startActivityForResult
         @Override
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance);
@@ -937,10 +960,10 @@ public class Preferences extends AppCompatPreferenceActivity {
 
         /** Initializes the list of custom fonts shown in the preferences. */
         private void initializeCustomFontsDialog() {
-            android.preference.ListPreference defaultFontPreference = requirePreference("defaultFont");
+            ListPreference defaultFontPreference = requirePreference("defaultFont");
             defaultFontPreference.setEntries(getCustomFonts("System default"));
             defaultFontPreference.setEntryValues(getCustomFonts(""));
-            android.preference.ListPreference browserEditorCustomFontsPreference = requirePreference("browserEditorFont");
+            ListPreference browserEditorCustomFontsPreference = requirePreference("browserEditorFont");
             browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
             browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
         }
@@ -971,7 +994,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             return names;
         }
 
-
+        @SuppressWarnings("deprecation")
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -1028,15 +1051,15 @@ public class Preferences extends AppCompatPreferenceActivity {
         @Override
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_gestures);
-            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            PreferenceScreen screen = getPreferenceScreen();
             updateGestureCornerTouch(screen);
         }
 
-        private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
+        private void updateGestureCornerTouch(PreferenceScreen screen) {
             updateGestureCornerTouch(requireContext(), screen);
         }
 
-        public static void updateGestureCornerTouch(Context context, android.preference.PreferenceScreen screen) {
+        public static void updateGestureCornerTouch(Context context, PreferenceScreen screen) {
             boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false);
             if (gestureCornerTouch) {
                 requirePreference(screen, "gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
@@ -1075,9 +1098,9 @@ public class Preferences extends AppCompatPreferenceActivity {
         @Override
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced);
-            android.preference.PreferenceScreen screen = getPreferenceScreen();
+            PreferenceScreen screen = getPreferenceScreen();
             // Check that input is valid before committing change in the collection path
-            android.preference.EditTextPreference collectionPathPreference = requirePreference("deckPath");
+            EditTextPreference collectionPathPreference = requirePreference("deckPath");
             collectionPathPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 final String newPath = (String) newValue;
                 try {
@@ -1100,7 +1123,7 @@ public class Preferences extends AppCompatPreferenceActivity {
 
             if (getCol().schedVer() == 1) {
                 Timber.i("Displaying V1-to-V2 scheduler preference");
-                android.preference.CheckBoxPreference schedVerPreference = new android.preference.CheckBoxPreference(requireContext());
+                CheckBoxPreference schedVerPreference = new CheckBoxPreference(requireContext());
                 schedVerPreference.setTitle(R.string.sched_v2);
                 schedVerPreference.setSummary(R.string.sched_v2_summ);
                 schedVerPreference.setOnPreferenceChangeListener((preference, o) -> {
@@ -1142,7 +1165,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             // Make it possible to test crash reporting, but only for DEBUG builds
             if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
                 Timber.i("Debug mode, allowing for test crashes");
-                android.preference.Preference triggerTestCrashPreference = new android.preference.Preference(requireContext());
+                Preference triggerTestCrashPreference = new Preference(requireContext());
                 triggerTestCrashPreference.setKey("trigger_crash_preference");
                 triggerTestCrashPreference.setTitle("Trigger test crash");
                 triggerTestCrashPreference.setSummary("Touch here for an immediate test crash");
@@ -1155,7 +1178,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             // Make it possible to test analytics, but only for DEBUG builds
             if (BuildConfig.DEBUG) {
                 Timber.i("Debug mode, allowing for dynamic analytics config");
-                android.preference.Preference analyticsDebugMode = new android.preference.Preference(requireContext());
+                Preference analyticsDebugMode = new Preference(requireContext());
                 analyticsDebugMode.setKey("analytics_debug_preference");
                 analyticsDebugMode.setTitle("Switch Analytics to dev mode");
                 analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
@@ -1172,7 +1195,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             }
             if (BuildConfig.DEBUG) {
                 Timber.i("Debug mode, allowing database lock preference");
-                android.preference.Preference lockDbPreference = new android.preference.Preference(requireContext());
+                Preference lockDbPreference = new Preference(requireContext());
                 lockDbPreference.setKey("debug_lock_database");
                 lockDbPreference.setTitle("Lock Database");
                 lockDbPreference.setSummary("Touch here to lock the database (all threads block in-process, exception if using second process)");
@@ -1184,7 +1207,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             }
             if (BuildConfig.DEBUG) {
                 Timber.i("Debug mode, option for showing onboarding walkthrough");
-                android.preference.CheckBoxPreference onboardingPreference = new android.preference.CheckBoxPreference(requireContext());
+                CheckBoxPreference onboardingPreference = new CheckBoxPreference(requireContext());
                 onboardingPreference.setKey("showOnboarding");
                 onboardingPreference.setTitle(R.string.show_onboarding);
                 onboardingPreference.setSummary(R.string.show_onboarding_desc);
@@ -1192,7 +1215,7 @@ public class Preferences extends AppCompatPreferenceActivity {
             }
             if (BuildConfig.DEBUG) {
                 Timber.i("Debug mode, option for resetting onboarding walkthrough");
-                android.preference.Preference onboardingPreference = new android.preference.Preference(requireContext());
+                Preference onboardingPreference = new Preference(requireContext());
                 onboardingPreference.setKey("resetOnboarding");
                 onboardingPreference.setTitle(R.string.reset_onboarding);
                 onboardingPreference.setSummary(R.string.reset_onboarding_desc);
@@ -1204,14 +1227,14 @@ public class Preferences extends AppCompatPreferenceActivity {
             }
             // Adding change logs in both debug and release builds
             Timber.i("Adding open changelog");
-            android.preference.Preference changelogPreference = new android.preference.Preference(requireContext());
+            Preference changelogPreference = new Preference(requireContext());
             changelogPreference.setTitle(R.string.open_changelog);
             Intent infoIntent = new Intent(requireContext(), Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
             changelogPreference.setIntent(infoIntent);
             screen.addPreference(changelogPreference);
             // Force full sync option
-            ConfirmationPreference fullSyncPreference = requirePreference("force_full_sync");
+            ConfirmationPreferenceCompat fullSyncPreference = requirePreference("force_full_sync");
             fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
             fullSyncPreference.setDialogTitle(R.string.force_full_sync_title);
             fullSyncPreference.setOkHandler(() -> {
@@ -1231,7 +1254,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         private void setupContextMenuPreference(String key, @StringRes int contextMenuName) {
             // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
             //  different than the app language
-            android.preference.CheckBoxPreference cardBrowserContextMenuPreference = requirePreference(key);
+            CheckBoxPreference cardBrowserContextMenuPreference = requirePreference(key);
             String menuName = getString(contextMenuName);
             // Note: The below format strings are generic, not card browser specific despite the name
             cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
@@ -1239,17 +1262,17 @@ public class Preferences extends AppCompatPreferenceActivity {
         }
 
         private void removeUnnecessaryAdvancedPrefs() {
-            android.preference.PreferenceCategory plugins = (android.preference.PreferenceCategory) findPreference("category_plugins");
+            PreferenceCategory plugins = findPreference("category_plugins");
             // Disable the emoji/kana buttons to scroll preference if those keys don't exist
             if (!CompatHelper.hasKanaAndEmojiKeys()) {
-                android.preference.CheckBoxPreference emojiScrolling = (android.preference.CheckBoxPreference) findPreference("scrolling_buttons");
+                CheckBoxPreference emojiScrolling = findPreference("scrolling_buttons");
                 if (emojiScrolling != null && plugins != null) {
                     plugins.removePreference(emojiScrolling);
                 }
             }
             // Disable the double scroll preference if no scrolling keys
             if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
-                android.preference.CheckBoxPreference doubleScrolling = (android.preference.CheckBoxPreference) findPreference("double_scrolling");
+                CheckBoxPreference doubleScrolling = findPreference("double_scrolling");
                 if (doubleScrolling != null && plugins != null) {
                     plugins.removePreference(doubleScrolling);
                 }
@@ -1260,7 +1283,7 @@ public class Preferences extends AppCompatPreferenceActivity {
         private void addThirdPartyAppsListener() {
             // #5864 - some people don't have a browser so we can't use <intent>
             // and need to handle the keypress ourself.
-            android.preference.Preference showThirdParty = requirePreference("thirdpartyapps_link");
+            Preference showThirdParty = requirePreference("thirdpartyapps_link");
             final String githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps";
             showThirdParty.setOnPreferenceClickListener((preference) -> {
                 try {
@@ -1302,9 +1325,8 @@ public class Preferences extends AppCompatPreferenceActivity {
         protected void initSubscreen() {
             setTitle(R.string.custom_buttons);
             addPreferencesFromResource(R.xml.preferences_custom_buttons);
-            android.preference.PreferenceScreen screen = getPreferenceScreen();
             // Reset toolbar button customizations
-            android.preference.Preference reset_custom_buttons = requirePreference("reset_custom_buttons");
+            Preference reset_custom_buttons = requirePreference("reset_custom_buttons");
             reset_custom_buttons.setOnPreferenceClickListener(preference -> {
                 SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit();
                 edit.remove("customButtonUndo");
@@ -1380,8 +1402,8 @@ public class Preferences extends AppCompatPreferenceActivity {
         protected void initSubscreen() {
             setTitle(R.string.custom_sync_server_title);
             addPreferencesFromResource(R.xml.preferences_custom_sync_server);
-            android.preference.Preference syncUrlPreference = requirePreference("syncBaseUrl");
-            android.preference.Preference mSyncUrlPreference = requirePreference("syncMediaUrl");
+            Preference syncUrlPreference = requirePreference("syncBaseUrl");
+            Preference mSyncUrlPreference = requirePreference("syncMediaUrl");
             syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 String newUrl = newValue.toString();
                 if (!URLUtil.isValidUrl(newUrl)) {
