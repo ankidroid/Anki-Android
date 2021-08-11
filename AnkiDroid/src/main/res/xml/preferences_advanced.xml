@@ -37,7 +37,8 @@
             android:summary="@string/force_full_sync_summary" />
         <Preference
             android:key="custom_sync_server_link"
-            android:title="@string/custom_sync_server_title"/>
+            android:title="@string/custom_sync_server_title"
+            android:fragment="com.ichi2.anki.Preferences$CustomSyncServerSettingsFragment" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <com.ichi2.preferences.IncrementerNumberRangePreference
                 android:defaultValue="8"
@@ -153,7 +154,8 @@
                 android:title="@string/double_scrolling_gap" />
             <Preference
                 android:key="advanced_statistics_link"
-                android:title="@string/advanced_statistics_title"/>
+                android:title="@string/advanced_statistics_title"
+                android:fragment="com.ichi2.anki.Preferences$AdvancedStatisticsSettingsFragment" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="html_javascript_debugging"

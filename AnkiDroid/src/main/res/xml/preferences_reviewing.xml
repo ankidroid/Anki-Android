@@ -69,7 +69,8 @@
         <Preference
             android:summary="@string/custom_buttons_summary"
             android:title="@string/custom_buttons"
-            android:key="custom_buttons_link"/>
+            android:key="custom_buttons_link"
+            android:fragment="com.ichi2.anki.Preferences$CustomButtonsSettingsFragment" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="keepScreenOn"
