@@ -88,6 +88,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.annotation.XmlRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceFragmentCompat;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -488,6 +489,17 @@ public class Preferences extends AppCompatPreferenceActivity {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
+
+    public static class HeaderFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.preference_headers, rootKey);
+
+            if (AdaptionUtil.isRestrictedLearningDevice()) {
+                this.findPreference("pref_screen_advanced").setVisible(false);
+            }
+        }
+    }
 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     public abstract static class SettingsFragment extends android.preference.PreferenceFragment implements OnSharedPreferenceChangeListener {
