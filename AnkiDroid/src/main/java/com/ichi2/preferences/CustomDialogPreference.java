@@ -26,7 +26,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see implementation at ResetLanguageDialogPreference
 public class CustomDialogPreference extends android.preference.DialogPreference implements DialogInterface.OnClickListener {
     private final Context mContext;
 
