@@ -35,7 +35,9 @@ import android.graphics.Region;
 import android.net.Uri;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
@@ -56,6 +58,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
+
+import static com.ichi2.anki.cardviewer.CardAppearance.isInNightMode;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -132,6 +136,24 @@ public class Whiteboard extends View {
 
     public int getCurrentStrokeWidth() {
         return AnkiDroidApp.getSharedPrefs(mCardViewer.get()).getInt("whiteBoardStrokeWidth", 6);
+    }
+
+
+    public static Whiteboard createInstance(AbstractFlashcardViewer cardViewer) {
+
+        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(cardViewer);
+        Whiteboard whiteboard = new Whiteboard(cardViewer, isInNightMode(sharedPrefs));
+
+        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        whiteboard.setLayoutParams(lp2);
+        FrameLayout fl = cardViewer.findViewById(R.id.whiteboard);
+        fl.addView(whiteboard);
+
+        whiteboard.setEnabled(true);
+
+        return whiteboard;
     }
 
     @Override
