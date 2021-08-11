@@ -22,7 +22,7 @@ import com.ichi2.anki.AnkiDroidApp;
 
 import androidx.annotation.StringRes;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see: SeekBarPreferenceCompat
 public class SeekBarPreference extends android.preference.DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidns = "http://schemas.android.com/apk/res/android";
 
