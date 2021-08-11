@@ -19,7 +19,7 @@ package com.ichi2.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see: ConfirmationPreferenceCompat
 public class ConfirmationPreference extends android.preference.DialogPreference {
 
     private Runnable mCancelHandler = () -> { /* do nothing by default */ };
