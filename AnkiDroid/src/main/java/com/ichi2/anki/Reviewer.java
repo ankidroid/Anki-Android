@@ -1235,7 +1235,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-        mWhiteboard = Whiteboard.createInstance(this);
+        mWhiteboard = Whiteboard.createInstance(this, true, this);
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are

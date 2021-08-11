@@ -171,7 +171,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -2268,10 +2268,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /** Scroll the currently shown flashcard vertically
-     *
-     * @param dy amount to be scrolled
-     */
+    @Override
     public void scrollCurrentCardBy(int dy) {
         processCardAction(cardWebView -> {
             if (dy != 0 && cardWebView.canScrollVertically(dy)) {
@@ -2281,11 +2278,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /** Tap onto the currently shown flashcard at position x and y
-     *
-     * @param x horizontal position of the event
-     * @param y vertical position of the event
-     */
+    @Override
     public void tapOnCurrentCard(int x, int y) {
         // assemble suitable ACTION_DOWN and ACTION_UP events and forward them to the card's handler
         MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
