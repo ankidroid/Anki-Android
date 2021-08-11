@@ -31,7 +31,7 @@
             android:entryValues="@array/new_spread_values"
             android:key="newSpread"
             android:title="@string/new_spread" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:key="dayOffset"
             android:max="23"
             android:summary="@string/day_offset_summ"
@@ -40,13 +40,13 @@
             app:min="0"
             app:xlabel="@string/xlabel_dayoffset_seekbar"
             app:ylabel="@string/ylabel_dayoffset_seekbar" />
-        <com.ichi2.preferences.IncrementerNumberRangePreference
+        <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="learnCutoff"
             android:summary="@string/time_limit_summ"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0" />
-        <com.ichi2.preferences.IncrementerNumberRangePreference
+        <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="timeLimit"
             android:summary="@string/time_limit_summ"
             android:title="@string/time_limit"
@@ -56,7 +56,7 @@
             android:key="newTimezoneHandling"
             android:title="@string/new_timezone"
             android:defaultValue="false" />
-        <com.ichi2.preferences.NumberRangePreference
+        <com.ichi2.preferences.NumberRangePreferenceCompat
             android:defaultValue="200"
             android:key="doubleTapTimeInterval"
             android:summary="@string/pref_double_tap_time_interval_summary"
@@ -91,7 +91,7 @@
             android:key="showEstimates"
             android:summary="@string/show_estimates_summ"
             android:title="@string/show_estimates" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="100"
             android:key="cardZoom"
             android:max="300"
@@ -100,7 +100,7 @@
             android:title="@string/card_zoom"
             app:interval="10"
             app:min="10" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="100"
             android:key="imageZoom"
             android:max="300"
@@ -109,7 +109,7 @@
             android:title="@string/image_zoom"
             app:interval="10"
             app:min="50" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="100"
             android:key="answerButtonSize"
             android:max="200"
@@ -145,7 +145,7 @@
             android:title="@string/show_large_answer_buttons"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="6"
             android:key="whiteBoardStrokeWidth"
             android:max="30"
@@ -160,14 +160,14 @@
             android:key="timeoutAnswer"
             android:summary="@string/timeout_answer_summ"
             android:title="@string/timeout_answer_text" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="20"
             android:dependency="timeoutAnswer"
             android:key="timeoutAnswerSeconds"
             android:max="30"
             android:summary="@string/timeout_answer_seconds_summ"
             android:title="@string/timeout_answer_seconds" />
-        <com.ichi2.ui.SeekBarPreference
+        <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="60"
             android:dependency="timeoutAnswer"
             android:key="timeoutQuestionSeconds"

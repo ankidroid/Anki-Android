@@ -31,7 +31,7 @@
             android:key="deckPath"
             android:summary="@string/preference_summary_literal"
             android:title="@string/col_path" />
-        <com.ichi2.ui.ConfirmationPreference
+        <com.ichi2.preferences.ConfirmationPreferenceCompat
             android:key="force_full_sync"
             android:title="@string/force_full_sync_title"
             android:summary="@string/force_full_sync_summary" />
@@ -40,7 +40,7 @@
             android:title="@string/custom_sync_server_title"
             android:fragment="com.ichi2.anki.Preferences$CustomSyncServerSettingsFragment" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <com.ichi2.preferences.IncrementerNumberRangePreference
+            <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
                 android:defaultValue="8"
                 android:key="backupMax"
                 android:summary="@string/preference_summary_literal"
@@ -127,14 +127,15 @@
                 android:entryValues="@array/dictionary_values"
                 android:key="dictionary"
                 android:title="@string/dictionary" />
-            <com.ichi2.preferences.CustomDialogPreference
+            <com.ichi2.preferences.ResetLanguageDialogPreference
                 android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_ok"
                 android:summary="@string/reset_languages_summ"
-                android:title="@string/reset_languages" />
+                android:title="@string/reset_languages"
+                android:key="resetLanguages" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="convertFenText"

@@ -16,44 +16,41 @@
 -->
 
 
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UnusedAttribute">
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <!--  General Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/app_name">
-    </header>
+    </Preference>
 
     <!-- Reviewing Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
         android:title="@string/pref_cat_reviewing">
-    </header>
+    </Preference>
 
     <!-- Appearance Prefrences  -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance">
-    </header>
+    </Preference>
 
     <!-- Navigation Prefrences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"
         android:title="@string/pref_cat_gestures">
-    </header>
+    </Preference>
 
     <!-- Advanced Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">
-    </header>
-</preference-headers>
+    </Preference>
+</PreferenceScreen>
