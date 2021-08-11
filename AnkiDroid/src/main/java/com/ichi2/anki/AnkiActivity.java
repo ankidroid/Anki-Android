@@ -626,6 +626,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+        } else {
+            // likely missing "<include layout="@layout/toolbar" />"
+            Timber.w("Could not find toolbar");
         }
     }
 
