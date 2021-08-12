@@ -4,11 +4,13 @@ import com.ichi2.libanki.Sound;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.VideoView;
 
+import androidx.annotation.RequiresApi;
 import timber.log.Timber;
 
 
@@ -34,6 +36,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     Sound mSoundPlayer;
 
     /** Called when the activity is first created. */
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         setContentView(R.layout.video_player);
         mPath = getIntent().getStringExtra("path");
         Timber.i("Video Player intent had path: %s", mPath);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);        
+        getWindow().getDecorView().getWindowInsetsController().hide(android.view.WindowInsets.Type.statusBars());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mVideoView = findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);

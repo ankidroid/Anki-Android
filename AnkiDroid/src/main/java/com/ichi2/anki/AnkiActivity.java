@@ -12,11 +12,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
@@ -33,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
@@ -78,6 +81,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         this.mActivityName = getClass().getSimpleName();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +93,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().getDecorView().getWindowInsetsController().hide(android.view.WindowInsets.Type.statusBars());
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
