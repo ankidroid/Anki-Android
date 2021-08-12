@@ -1166,7 +1166,6 @@ public class Reviewer extends AbstractFlashcardViewer {
     @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
-
         a.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
@@ -1176,23 +1175,18 @@ public class Reviewer extends AbstractFlashcardViewer {
                         | View.SYSTEM_UI_FLAG_LOW_PROFILE
                         | View.SYSTEM_UI_FLAG_IMMERSIVE
         );
-
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
         FullScreenMode fullscreenMode = FullScreenMode.fromPreference(prefs);
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
-
         decorView.setOnApplyWindowInsetsListener((v, insets) -> {
-
             final View toolbar = a.findViewById(R.id.toolbar);
             final View answerButtons = a.findViewById(R.id.answer_options_layout);
             final View topbar = a.findViewById(R.id.top_bar);
             if (toolbar == null || topbar == null || answerButtons == null) {
                 return insets;
             }
-
-
             if (insets.isVisible(WindowInsets.Type.systemBars())) {
                 showViewWithAnimation(toolbar);
                 if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
@@ -1206,7 +1200,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                     hideViewWithAnimation(answerButtons);
                 }
             }
-
             return insets;
         });
     }
