@@ -1567,12 +1567,6 @@ public class NoteEditor extends AnkiActivity implements
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
 
-                /* To check whether Camera Permission is asked in AndroidManifest.xml */
-                if (!CheckCameraPermission.manifestContainsPermission(this)) {
-                    MenuItem item = popup.getMenu().findItem(R.id.menu_multimedia_photo);
-                    item.setVisible(false);
-                }
-
                 popup.setOnMenuItemClickListener(item -> {
 
                     int itemId = item.getItemId();

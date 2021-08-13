@@ -180,8 +180,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
-        layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        if (com.ichi2.utils.CheckCameraPermission.manifestContainsPermission(context)) {
+            layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
     }
 
 
