@@ -149,7 +149,7 @@
     <string name="empty_cards">खाली कार्ड</string>
     <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
     <string name="empty_card_warning">यह कार्ड खाली है । डेक सूची स्क्रीन पर मेनू से \"खाली कार्ड\" विकल्प का उपयोग करें ।</string>
-    <string name="unknown_type_field_warning">प्रकार उत्तर: अज्ञात फ़ील्ड %s</string>
+    <string name="unknown_type_field_warning">उत्तर टाइप करें: अज्ञात फ़ील्ड %s</string>
     <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
     <string name="show_hint">%s दिखाएं</string>
     <string name="info_rate">दर AnkiDroid</string>
@@ -350,4 +350,18 @@
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
     <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Оранжев флаг</string>
     <string name="menu_flag_card_three">Зелен флаг</string>
     <string name="menu_flag_card_four">Син флаг</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
     <string name="menu_select">Избор на текст</string>

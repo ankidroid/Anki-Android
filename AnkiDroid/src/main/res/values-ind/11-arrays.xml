@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Setel Panji Jingga</string>
     <string name="gesture_flag_green">Setel Panji Hijau</string>
     <string name="gesture_flag_blue">Setel Panji Biru</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Hapus Panji</string>
     <string name="gesture_page_up">Halaman Atas</string>
     <string name="gesture_page_down">Halaman Bawah</string>

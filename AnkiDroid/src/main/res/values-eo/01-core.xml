@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Oranĝa flago</string>
     <string name="menu_flag_card_three">Verda flago</string>
     <string name="menu_flag_card_four">Blua flago</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_select">Elekti tekston</string>

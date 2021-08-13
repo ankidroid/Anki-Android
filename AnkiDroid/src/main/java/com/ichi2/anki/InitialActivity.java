@@ -17,9 +17,11 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
+import com.ichi2.utils.VersionUtils;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.BackendFactory;
@@ -28,6 +30,7 @@ import net.ankiweb.rsdroid.RustBackendFailedException;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -119,6 +122,50 @@ public class InitialActivity {
     public static boolean upgradePreferences(Context context, long previousVersionCode) {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
     }
+
+    /**
+     *  @return Whether a fresh install occurred and a "fresh install" setup for preferences was performed
+     *  This only refers to a fresh install from the preferences perspective, not from the Anki data perspective.
+     *
+     *  NOTE: A user can wipe app data, which will mean this returns true WITHOUT deleting their collection.
+     *  The above note will need to be reevaluated after scoped storage migration takes place
+     *
+     *
+     *  On the other hand, restoring an app backup can cause this to return true before the Anki collection is created
+     *  in practice, this doesn't occur due to CollectionHelper.getCol creating a new collection, and it's called before
+     *  this in the startup script
+     */
+    @CheckResult
+    public static boolean performSetupFromFreshInstallOrClearedPreferences(@NonNull SharedPreferences preferences) {
+        boolean lastVersionWasSet = !"".equals(preferences.getString("lastVersion", ""));
+
+        if (lastVersionWasSet) {
+            Timber.d("Not a fresh install [preferences]");
+            return false;
+        }
+
+        Timber.i("Fresh install");
+        PreferenceUpgradeService.setPreferencesUpToDate(preferences);
+        setUpgradedToLatestVersion(preferences);
+
+        return true;
+    }
+
+    /** Sets the preference stating that the latest version has been applied */
+    public static void setUpgradedToLatestVersion(@NonNull SharedPreferences preferences) {
+        Timber.i("Marked prefs as upgraded to latest version: %s", VersionUtils.getPkgVersionName());
+        preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+    }
+
+    /** @return false: The app has been upgraded since the last launch OR the app was launched for the first time.
+     * Implementation detail:
+     * This is not called in the case of performSetupFromFreshInstall returning true.
+     * So this should not use the default value
+     */
+    public static boolean isLatestVersion(SharedPreferences preferences) {
+        return preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName());
+    }
+
 
     // I disapprove, but it's best to keep consistency with the rest of the app
     @SuppressWarnings("deprecation") // #7108: AsyncTask

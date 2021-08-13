@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Baskuli oranĝkoloran flagon</string>
     <string name="gesture_flag_green">Baskuli verdan flagon</string>
     <string name="gesture_flag_blue">Baskuli bluan flagon</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Forigi flagon</string>
     <string name="gesture_page_up">Paĝo supren</string>
     <string name="gesture_page_down">Paĝo suben</string>

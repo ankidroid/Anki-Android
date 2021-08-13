@@ -54,6 +54,7 @@
     <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
     <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>
     <string name="tts_no_tts">Не изговарај</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Kартице за учење за Android</h2>AnkiDroid је програм који користи картице за учење и добро ради са десктоп верзијом <a href=\"%2$s\">Anki</a>. Можете да правите, преузимате и проучавате информације и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
         <item><![CDATA[Како би нам помогли да AnkiDroid буде бољи, молимо вас да пријавите грешке на <a href=\"%1$s\"> базу грешака</a>; Идеје за нове функционалности су добродошле. Пронађите одговор на <a href=\"%2$s\"> wiki</a> или започните дискусију на <a href=\"%3$s\">форуму</a>.]]></item>

@@ -56,7 +56,7 @@
     <string name="stats_cumulative">ସମ୍ମିଳିତ</string>
     <string name="stats_cumulative_percentage">ସମ୍ମିଳିତ ଶତକଡା</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">ସମ୍ମିଳିତ ସଠିକ୍ %</string>
-    <string name="stats_answers">ଉତ୍ତରଗୁଡିକ</string>
+    <string name="stats_answers">ଉତ୍ତରଗୁଡ଼ିକ</string>
     <string name="stats_minutes">ମିନିଟ୍</string>
     <string name="stats_hours">ଘଣ୍ଟା</string>
     <string name="stats_percentage">ଶତକଡ଼ା</string>

@@ -105,7 +105,7 @@ public class Collection implements CollectionGetter {
     private final Media mMedia;
     private final Decks mDecks;
     private Models mModels;
-    private final Tags mTags;
+    private final TagManager mTags;
 
     private AbstractSched mSched;
 
@@ -2111,7 +2111,7 @@ public class Collection implements CollectionGetter {
     }
 
 
-    public Tags getTags() {
+    public TagManager getTags() {
         return mTags;
     }
 

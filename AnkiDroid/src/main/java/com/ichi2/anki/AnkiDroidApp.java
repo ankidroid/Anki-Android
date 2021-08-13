@@ -316,6 +316,11 @@ public class AnkiDroidApp extends Application {
             UIUtils.showThemedToast(this.getApplicationContext(), getString(R.string.user_is_a_robot), false);
         }
 
+        // make default HTML / JS debugging true for debug build
+        if (BuildConfig.DEBUG) {
+            preferences.edit().putBoolean("html_javascript_debugging", true).apply();
+        }
+        
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
         AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
         NotificationChannels.setup(getApplicationContext());

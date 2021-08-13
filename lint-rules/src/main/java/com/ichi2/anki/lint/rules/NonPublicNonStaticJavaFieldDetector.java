@@ -23,7 +23,6 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.ichi2.anki.lint.utils.Constants;
 
-import com.android.annotations.NonNull;
 import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UVariable;
 import org.jetbrains.uast.UastVisibility;
@@ -31,9 +30,9 @@ import org.jetbrains.uast.UastVisibility;
 /**
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#non-public-non-static-field-names-should-start-with-m
  */
-public class NonPublicNonStaticFieldDetector extends FieldNamingPatternDetector {
+public class NonPublicNonStaticJavaFieldDetector extends JavaFieldNamingPatternDetector {
 
-    private static final Implementation implementation = new Implementation(NonPublicNonStaticFieldDetector.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(NonPublicNonStaticJavaFieldDetector.class, Scope.JAVA_FILE_SCOPE);
 
     public static Issue ISSUE = Issue.create(
             "NonPublicNonStaticFieldName",

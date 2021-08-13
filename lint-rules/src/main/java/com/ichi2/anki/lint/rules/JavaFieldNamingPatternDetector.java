@@ -29,7 +29,7 @@ import org.jetbrains.uast.UVariable;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class FieldNamingPatternDetector extends Detector implements Detector.UastScanner {
+public abstract class JavaFieldNamingPatternDetector extends Detector implements Detector.UastScanner {
 
     @Nullable
     @Override
@@ -56,6 +56,11 @@ public abstract class FieldNamingPatternDetector extends Detector implements Det
 
         @Override
         public void visitVariable(@NonNull UVariable node) {
+            // Only apply naming patterns to Java
+            if (mContext.file.getAbsolutePath().endsWith(".kt")) {
+                return;
+            }
+
             // HACK: Using visitField didn't return any results
             if (!(node instanceof UField)) {
                 return;

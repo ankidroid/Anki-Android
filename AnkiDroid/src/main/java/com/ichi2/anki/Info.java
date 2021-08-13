@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
@@ -67,8 +68,8 @@ public class Info extends AnkiActivity {
         int mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (mType == TYPE_NEW_VERSION) {
-            AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                    .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this.getBaseContext());
+            InitialActivity.setUpgradedToLatestVersion(prefs);
         }
 
         setContentView(R.layout.info);

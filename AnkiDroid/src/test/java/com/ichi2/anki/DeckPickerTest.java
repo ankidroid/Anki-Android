@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
 
@@ -243,7 +244,7 @@ public class DeckPickerTest extends RobolectricTest {
         AnkiDroidApp.sSentExceptionReportHack = false;
         try {
             BackendEmulatingOpenConflict.enable();
-            InitialActivityTest.setupForDatabaseConflict();
+            InitialActivityWithConflictTest.setupForDatabaseConflict();
 
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
 
@@ -252,7 +253,7 @@ public class DeckPickerTest extends RobolectricTest {
             assertThat("No exception reports should be thrown", AnkiDroidApp.sSentExceptionReportHack, is(false));
         } finally {
             BackendEmulatingOpenConflict.disable();
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
         }
     }
 
@@ -261,20 +262,20 @@ public class DeckPickerTest extends RobolectricTest {
     public void databaseLockedNoPermissionIntegrationTest() {
         // no permissions -> grant permissions -> db locked
         try {
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
             BackendEmulatingOpenConflict.enable();
 
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
 
             // grant permissions
-            InitialActivityTest.setupForDatabaseConflict();
+            InitialActivityWithConflictTest.setupForDatabaseConflict();
 
             d.onStoragePermissionGranted();
 
             assertThat("A specific dialog for a conflict should be shown", d.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_DB_LOCKED));
         } finally {
             BackendEmulatingOpenConflict.disable();
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
         }
     }
 
@@ -282,7 +283,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
         // Refactor: It would be much better to use a spy - see if we can get this into Robolecteic
         try {
-            InitialActivityTest.grantWritePermissions();
+            InitialActivityWithConflictTest.grantWritePermissions();
             BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());
             // We don't show it if the user is new.
             AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putString("lastVersion", "0.1").apply();
@@ -292,7 +293,7 @@ public class DeckPickerTest extends RobolectricTest {
             assertThat("Analytics opt-in should be displayed", d.mDisplayedAnalyticsOptIn, is(true));
 
         } finally {
-            InitialActivityTest.revokeWritePermissions();
+            InitialActivityWithConflictTest.revokeWritePermissions();
             BackupManagerTestUtilities.reset();
         }
     }
@@ -313,11 +314,11 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void showOptionsMenuWhenCollectionAccessible() {
         try {
-            InitialActivityTest.grantWritePermissions();
+            InitialActivityWithConflictTest.grantWritePermissions();
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
             assertThat("Options menu is displayed when collection is accessible", d.mPrepareOptionsMenu, is(true));
         } finally {
-            InitialActivityTest.revokeWritePermissions();
+            InitialActivityWithConflictTest.revokeWritePermissions();
         }
     }
 
@@ -336,11 +337,11 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void showSyncBadgeWhenCollectionAccessible() {
         try {
-            InitialActivityTest.grantWritePermissions();
+            InitialActivityWithConflictTest.grantWritePermissions();
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
             assertThat("Sync badge is displayed when collection is accessible", d.mDisplaySyncBadge, is(true));
         } finally {
-            InitialActivityTest.revokeWritePermissions();
+            InitialActivityWithConflictTest.revokeWritePermissions();
         }
     }
 
@@ -348,7 +349,7 @@ public class DeckPickerTest extends RobolectricTest {
     @RunInBackground
     public void onResumeLoadCollectionFailureWithInaccessibleCollection() {
         try {
-            InitialActivityTest.revokeWritePermissions();
+            InitialActivityWithConflictTest.revokeWritePermissions();
             enableNullCollection();
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
 
@@ -362,12 +363,12 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void onResumeLoadCollectionSuccessWithAccessibleCollection() {
         try {
-            InitialActivityTest.grantWritePermissions();
+            InitialActivityWithConflictTest.grantWritePermissions();
             DeckPickerEx d = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
             assertThat("Collection initialization ensured by CollectionTask.LoadCollectionComplete", d.getCol(), is(notNullValue()));
             assertThat("Collection Models Loaded", d.getCol().getModels(), is(notNullValue()));
         } finally {
-            InitialActivityTest.revokeWritePermissions();
+            InitialActivityWithConflictTest.revokeWritePermissions();
         }
     }
 
@@ -377,7 +378,7 @@ public class DeckPickerTest extends RobolectricTest {
         try {
             setupColV16();
 
-            InitialActivityTest.setupForValid(getTargetContext());
+            InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
             DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
             waitForAsyncTasksToComplete();
@@ -388,7 +389,7 @@ public class DeckPickerTest extends RobolectricTest {
 
             assertThat("Decks should be visible", deckPicker.getDeckCount(), is(1));
         } finally {
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
         }
     }
 
@@ -400,7 +401,7 @@ public class DeckPickerTest extends RobolectricTest {
             // corrupt col
             DbUtils.performQuery(getTargetContext(), "drop table deck_config");
 
-            InitialActivityTest.setupForValid(getTargetContext());
+            InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
             DeckPickerEx deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
             waitForAsyncTasksToComplete();
@@ -408,7 +409,7 @@ public class DeckPickerTest extends RobolectricTest {
             assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
             assertThat("An error dialog should be displayed", deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.DIALOG_LOAD_FAILED));
         } finally {
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
         }
     }
 
@@ -418,7 +419,7 @@ public class DeckPickerTest extends RobolectricTest {
         try {
             setupColV16();
 
-            InitialActivityTest.setupForValid(getTargetContext());
+            InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
             DeckPickerNoSpaceForBackup deckPicker = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
             waitForAsyncTasksToComplete();
@@ -426,7 +427,7 @@ public class DeckPickerTest extends RobolectricTest {
             assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
             assertThat("A downgrade failed dialog should be shown", deckPicker.mDisplayedDowngradeFailed, is(true));
         } finally {
-            InitialActivityTest.setupForDefault();
+            InitialActivityWithConflictTest.setupForDefault();
         }
     }
 
@@ -437,6 +438,24 @@ public class DeckPickerTest extends RobolectricTest {
 
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
         assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
+    }
+    
+    @Test
+    public void checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
+        addDeck("Hello World");
+        // Reason for using 2 as the number of decks -> This deck + Default deck
+        assertThat("Deck added", getCol().getDecks().count(), is(2));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("Deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(true));
+    }
+
+    @Test
+    public void checkIfReturnsFalseWhenNoDeckIsDisplayed() {
+        // Only default deck would be there in the count, hence using the value as 1.
+        // Default deck does not get displayed in the DeckPicker if the default deck is empty.
+        assertThat("Contains only default deck", getCol().getDecks().count(), is(1));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("No deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(false));
     }
 
 

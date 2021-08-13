@@ -537,6 +537,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        new Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate();
     }
 
     /**
@@ -571,7 +573,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 break;
             case DIRECTORY_NOT_ACCESSIBLE:
                 Timber.i("AnkiDroid directory inaccessible");
-                Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
+                Intent i = Preferences.AdvancedSettingsFragment.getSubscreenIntent(this);
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                 UIUtils.showThemedToast(this, R.string.directory_inaccessible, false);
                 break;
@@ -1166,11 +1168,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.i("No space left");
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().remove("noSpaceLeft").apply();
-        } else if ("".equals(preferences.getString("lastVersion", ""))) {
-            Timber.i("Fresh install");
-            preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+        } else if (InitialActivity.performSetupFromFreshInstallOrClearedPreferences(preferences)) {
             onFinishedStartup();
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
+        } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
             if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
@@ -1289,7 +1289,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } else {
                 Timber.i("Dev Build - not showing 'new features'");
                 // Don't show new features dialog for development builds
-                preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+                InitialActivity.setUpgradedToLatestVersion(preferences);
                 String ver = getResources().getString(R.string.updated_version, VersionUtils.getPkgVersionName());
                 UIUtils.showSnackbar(this, ver, true, -1, null, findViewById(R.id.root_layout), null);
                 showStartupScreensAndDialogs(preferences, 2);
@@ -2185,8 +2185,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    public void addSharedDeck() {
-        openUrl(Uri.parse(getResources().getString(R.string.shared_decks_url)));
+    public void openAnkiWebSharedDecks() {
+        Intent intent = new Intent(this, SharedDecksActivity.class);
+        startActivityWithoutAnimation(intent);
     }
 
 
@@ -2924,6 +2925,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onProgressUpdate(String message) {
             mProgressDialog.setContent(message);
         }
+    }
+
+
+    /**
+     * Check if at least one deck is being displayed.
+     */
+    public boolean hasAtLeastOneDeckBeingDisplayed() {
+        return mDeckListAdapter.getItemCount() > 0 && mRecyclerViewLayoutManager.getChildAt(0) != null;
     }
 
     private enum DeckSelectionType {

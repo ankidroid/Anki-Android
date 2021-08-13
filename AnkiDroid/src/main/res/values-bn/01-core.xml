@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">কমলা ফ্ল্যাগ</string>
     <string name="menu_flag_card_three">সবুজ ফ্ল্যাগ</string>
     <string name="menu_flag_card_four">নীল ফ্ল্যাগ</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
     <string name="menu_select">টেক্সট নির্বাচন করুন</string>

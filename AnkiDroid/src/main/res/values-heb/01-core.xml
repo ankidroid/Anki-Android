@@ -125,6 +125,9 @@
     <string name="menu_flag_card_two">דגל כתום</string>
     <string name="menu_flag_card_three">דגל ירוק</string>
     <string name="menu_flag_card_four">דגל כחול</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_select">בחירת טקסט</string>

@@ -31,9 +31,9 @@ import org.jetbrains.uast.UastVisibility;
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#constant-final-variables-names-must-be-all-uppercase-using-underscore-to-separate-words
  * Constant (final variables) names must be all uppercase using underscore to separate words.
  */
-public class ConstantFieldDetector extends FieldNamingPatternDetector {
+public class ConstantJavaFieldDetector extends JavaFieldNamingPatternDetector {
 
-    private static final Implementation implementation = new Implementation(ConstantFieldDetector.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(ConstantJavaFieldDetector.class, Scope.JAVA_FILE_SCOPE);
 
     public static Issue ISSUE = Issue.create(
             "ConstantFieldName",

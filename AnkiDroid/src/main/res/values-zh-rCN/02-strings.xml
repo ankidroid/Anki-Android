@@ -200,11 +200,11 @@
     <string name="custom_study">自定义学习</string>
     <string name="more_options">更多</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
-    <string name="steps_error">步长必须是大于 0 的数字</string>
-    <string name="steps_min_error">至少需要一个步骤</string>
+    <string name="steps_error">间隔必须是大于 0 的数字</string>
+    <string name="steps_min_error">至少需要一个间隔</string>
     <string name="sched_end">(结束)</string>
-    <string name="sched_unbury_action">在菜单中点击“取消隐藏”来查看这些卡片</string>
-    <string name="sched_has_buried">一些相关的或被隐藏的卡片被推迟到明天。</string>
+    <string name="sched_unbury_action">在菜单中点击“取消搁置”来查看这些卡片</string>
+    <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
     <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
     <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
     <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
@@ -337,4 +337,18 @@
     <string name="password_empty">密码是必填项</string>
     <string name="back_pressed_once">再按一次返回键以退出</string>
     <string name="back_pressed_once_reviewer">再按一次返回键以返回</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

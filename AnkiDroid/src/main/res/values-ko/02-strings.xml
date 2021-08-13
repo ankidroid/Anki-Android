@@ -340,4 +340,18 @@ Context | Request Context    </string>
     <string name="password_empty">비밀번호를 입력하십시오</string>
     <string name="back_pressed_once">뒤로 가기 버튼을 한 번 더 눌러 종료합니다</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

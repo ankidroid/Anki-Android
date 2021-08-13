@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>קלפי לימוד ל־Android</h2>AnkiDroid הוא יישום עם קלפי זיכרון עם תאימות לתכנית שולחן העבודה <a href=\"%2$s\">Anki</a>. ניתן ליצור, להוריד וללמוד חומר גם ב־AnkiDroid או ב־Anki Desktop, ולסנכרן ביניהם בקלות עם AnkiWeb.]]></item>
         <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>

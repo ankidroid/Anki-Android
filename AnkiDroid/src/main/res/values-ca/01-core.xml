@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Bandera taronja</string>
     <string name="menu_flag_card_three">Targeta  Verda</string>
     <string name="menu_flag_card_four">Targeta blava</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edita etiquetes</string>
     <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>
     <string name="menu_select">Selecciona text</string>

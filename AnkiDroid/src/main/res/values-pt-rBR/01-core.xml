@@ -114,6 +114,9 @@
     <string name="menu_flag_card_two">Marcação laranja</string>
     <string name="menu_flag_card_three">Marcação verde</string>
     <string name="menu_flag_card_four">Marcação azul</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>

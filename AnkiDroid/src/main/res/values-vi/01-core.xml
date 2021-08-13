@@ -109,6 +109,9 @@
     <string name="menu_flag_card_two">Cờ cam</string>
     <string name="menu_flag_card_three">Cờ xanh lá</string>
     <string name="menu_flag_card_four">Cờ xanh dương</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Sửa đuôi</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>

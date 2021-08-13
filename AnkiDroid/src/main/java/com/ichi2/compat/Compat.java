@@ -19,6 +19,7 @@ package com.ichi2.compat;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.widget.TimePicker;
@@ -26,6 +27,7 @@ import android.widget.TimePicker;
 import com.ichi2.async.ProgressSenderAndCancelListener;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -215,5 +217,22 @@ public interface Compat {
      * supplied.
      */
     PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
+
+    /**
+     * Writes an image represented by bitmap to the Pictures/AnkiDroid folder under the primary
+     * external storage directory. Requires the WRITE_EXTERNAL_STORAGE permission to be obtained on devices running
+     * API <= 28. If this condition isn't satisfied, this method will throw a {@link FileNotFoundException}.
+     *
+     * @param context Used to insert the image into the appropriate MediaStore collection for API >= 29
+     * @param bitmap Bitmap to be saved
+     * @param baseFileName the filename of the image to be saved excluding the file extension
+     * @param extension File extension of the image to be saved
+     * @param format The format bitmap should be compressed to
+     * @param quality Hint to the compressor specifying the quality of the compressed image
+     * @return The path of the saved image
+     * @throws FileNotFoundException if the device's API is <= 28 and has not obtained the
+     * WRITE_EXTERNAL_STORAGE permission
+     */
+    String saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
 }
 

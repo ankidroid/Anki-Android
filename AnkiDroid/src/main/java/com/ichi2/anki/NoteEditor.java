@@ -254,6 +254,8 @@ public class NoteEditor extends AnkiActivity implements
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
 
+    private final Onboarding.NoteEditor mOnboarding = new Onboarding.NoteEditor(this);
+
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
     }
@@ -431,6 +433,8 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         startLoadingCollection();
+
+        mOnboarding.onCreate();
     }
 
     @Override
@@ -1562,12 +1566,6 @@ public class NoteEditor extends AnkiActivity implements
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
-
-                /* To check whether Camera Permission is asked in AndroidManifest.xml */
-                if (!CheckCameraPermission.manifestContainsPermission(this)) {
-                    MenuItem item = popup.getMenu().findItem(R.id.menu_multimedia_photo);
-                    item.setVisible(false);
-                }
 
                 popup.setOnMenuItemClickListener(item -> {
 

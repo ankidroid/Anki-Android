@@ -80,7 +80,7 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
-    <string name="show_answer">जवाब देखें</string>
+    <string name="show_answer">उत्तर देखें</string>
     <string name="hide_answer">उत्तर छिपाएं</string>
     <string name="ease_button_again">फिर से</string>
     <string name="ease_button_hard">कठिन</string>
@@ -107,13 +107,16 @@
     <string name="menu_bury">स्थगित करें</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
-    <string name="menu_flag">झंडा</string>
+    <string name="menu_flag">ध्वज</string>
     <string name="menu_flag_card">कार्ड को ध्वजांकित करें</string>
-    <string name="menu_flag_card_zero">कोई झंडा नहीं</string>
-    <string name="menu_flag_card_one">लाल झंडा</string>
-    <string name="menu_flag_card_two">नारंगी झंडा</string>
-    <string name="menu_flag_card_three">हरा झंडा</string>
-    <string name="menu_flag_card_four">नीला झंडा</string>
+    <string name="menu_flag_card_zero">कोई ध्वज नहीं</string>
+    <string name="menu_flag_card_one">लाल ध्वज</string>
+    <string name="menu_flag_card_two">नारंगी ध्वज</string>
+    <string name="menu_flag_card_three">हरा ध्वज</string>
+    <string name="menu_flag_card_four">नीला ध्वज</string>
+    <string name="menu_flag_card_five">गुलाबी ध्वज</string>
+    <string name="menu_flag_card_six">फ़ीरोज़ा ध्वज</string>
+    <string name="menu_flag_card_seven">बैंगनी ध्वज</string>
     <string name="menu_edit_tags">टैग संपादित करें</string>
     <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
     <string name="menu_select">पाठ का चयन करें</string>

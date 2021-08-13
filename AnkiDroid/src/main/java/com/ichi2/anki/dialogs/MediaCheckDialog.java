@@ -3,12 +3,17 @@ package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 
@@ -73,49 +78,61 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 final ArrayList<String> unused = getArguments().getStringArrayList("unused");
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
                 // Generate report
-                String report = "";
+                final StringBuilder report = new StringBuilder();
                 if (invalid.size() > 0) {
-                    report += String.format(res().getString(R.string.check_media_invalid), invalid.size());
+                    report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size()));
                 }
                 if (unused.size() > 0) {
                     if (report.length() > 0) {
-                        report += "\n";
+                        report.append("\n");
                     }
-                    report += String.format(res().getString(R.string.check_media_unused), unused.size());
+                    report.append(String.format(res().getString(R.string.check_media_unused), unused.size()));
                 }
                 if (nohave.size() > 0) {
                     if (report.length() > 0) {
-                        report += "\n";
+                        report.append("\n");
                     }
-                    report += String.format(res().getString(R.string.check_media_nohave), nohave.size());
+                    report.append(String.format(res().getString(R.string.check_media_nohave), nohave.size()));
                 }
 
                 if (report.length() == 0) {
-                    report = res().getString(R.string.check_media_no_unused_missing);
+                    report.append(res().getString(R.string.check_media_no_unused_missing));
                 }
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
-                report = res().getString(R.string.check_media_db_updated) + "\n\n" + report;
-                builder.content(report)
-                        .cancelable(true);
+                final String reportStr = res().getString(R.string.check_media_db_updated) + "\n\n" + report.toString();
 
-                // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
-                // needs to acknowledge the results, so show only an OK dialog.
-                if (unused.size() > 0) {
-                    builder.positiveText(res().getString(R.string.dialog_ok))
-                            .negativeText(res().getString(R.string.check_media_delete_unused))
-                            .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity())
+                LinearLayout dialogBody = (LinearLayout) getLayoutInflater().inflate(R.layout.media_check_dialog_body, null);
+                TextView reportTextView = dialogBody.findViewById(R.id.reportTextView);
+                TextView fileListTextView = dialogBody.findViewById(R.id.fileListTextView);
+
+                reportTextView.setText(reportStr);
+
+                if (!unused.isEmpty()) {
+                    reportTextView.append(getString(R.string.unused_strings));
+
+                    fileListTextView.append(TextUtils.join("\n", unused));
+
+                    fileListTextView.setScrollbarFadingEnabled(unused.size() <= fileListTextView.getMaxLines());
+                    fileListTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+                    builder.negativeText(res().getString(R.string.dialog_cancel))
+                            .positiveText(res().getString(R.string.check_media_delete_unused))
+                            .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity())
                                     .dismissAllDialogFragments())
-                            .onNegative((dialog, which) -> {
+                            .onPositive((dialog, which) -> {
                                 ((MediaCheckDialogListener) getActivity()).deleteUnused(unused);
                                 dismissAllDialogFragments();
                             });
                 } else {
-                    builder.positiveText(res().getString(R.string.dialog_ok))
-                            .onPositive((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
+                    builder.negativeText(res().getString(R.string.dialog_ok))
+                            .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
                 }
-                return builder.show();
+                return builder
+                        .customView(dialogBody, false)
+                        .cancelable(true)
+                        .show();
             }
             default:
                 return null;
