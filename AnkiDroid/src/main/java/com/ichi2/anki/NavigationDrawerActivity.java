@@ -141,29 +141,22 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
         // Configure night-mode switch
-
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mFollowSystemThemeSwitch = actionLayout.findViewById(R.id.switch_compat);
 
         mFollowSystemThemeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-
             mNavigationView.getMenu().setGroupVisible(R.id.nav_night_mode_choose_group, !isChecked);
-
             getPreferences().edit().putBoolean(FOLLOW_SYSTEM_PREFERENCE, isChecked).apply();
-
             Themes.setTheme(getApplicationContext());
 
             /*
-            *
             * FIXME: Theme not getting updated
-            *
             * Tried restartActivity() and restartActivityInvalidateBackstack() -> creating an infinite loop at start-up
-            *
-            * */
+            */
 
-            if (isChecked)
+            if (isChecked) {
                 closeDrawer();
-
+            }
         });
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -209,7 +202,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
             return;
         }
-
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
         // Review Cards Shortcut
@@ -281,10 +273,12 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
             if (!followSystemTheme) {
 
-                if(isUserNightMode)
+                if(isUserNightMode) {
                     mNavigationView.getMenu().findItem(R.id.nav_night_mode_dark).setChecked(true);
-                else
+                }
+                else {
                     mNavigationView.getMenu().findItem(R.id.nav_night_mode_light).setChecked(true);
+                }
 
             }
 
@@ -437,7 +431,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START);
             } else if (itemId == R.id.nav_night_mode) {
-                mFollowSystemThemeSwitch.toggle(); //TODO: This toggling does not work
+                mFollowSystemThemeSwitch.toggle(); // This toggling does not work
             } else if (itemId == R.id.nav_night_mode_dark) {
                 applyCustomNightMode(true);
             } else if (itemId == R.id.nav_night_mode_light) {
@@ -460,8 +454,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             }
         };
 
-        if (item.getItemId() != R.id.nav_night_mode)
+        if (item.getItemId() != R.id.nav_night_mode) {
             closeDrawer();
+        }
 
         return item.getItemId() != R.id.nav_night_mode;
     }

@@ -228,8 +228,9 @@ public class Themes {
     private static boolean isNightMode(Context context) {
         UiModeManager uiModeManager = ContextCompat.getSystemService(context, UiModeManager.class);
 
-        if (uiModeManager != null)
+        if (uiModeManager != null) {
             return (uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
+        }
 
         Timber.e("Unable to getSystemService() - UIModeManager");
         return false;
