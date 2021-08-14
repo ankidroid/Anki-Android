@@ -32,6 +32,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.net.Uri;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -585,7 +586,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    protected String saveWhiteboard(Time time) throws FileNotFoundException {
+    protected Uri saveWhiteboard(Time time) throws FileNotFoundException {
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         if (mForegroundColor != Color.BLACK) {
