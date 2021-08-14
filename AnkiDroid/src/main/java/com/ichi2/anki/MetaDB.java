@@ -9,6 +9,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Sound;
+import com.ichi2.widget.WidgetCleanup;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -438,12 +439,12 @@ public class MetaDB {
         }
     }
 
-
     /**
      * Return the current status of the widget.
-     * 
-     * @return [due, eta]
-     */
+     * @return [due, eta] <br>
+     * */
+    @Deprecated
+    @WidgetCleanup(reason = "Widget Status table will be removed from database in future.")
     public static int[] getWidgetSmallStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
@@ -463,7 +464,11 @@ public class MetaDB {
         return new int[]{0, 0};
     }
 
-
+    /**
+     * Widget Status table will be removed from database in future.
+     * */
+    @Deprecated
+    @WidgetCleanup(reason = "Widget Status table will be removed from database in future.")
     public static int getNotificationStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
@@ -483,7 +488,11 @@ public class MetaDB {
         return due;
     }
 
-
+    /**
+     * Widget Status table will be removed from database in future.
+     * */
+    @Deprecated
+    @WidgetCleanup(reason = "Widget Status table will be removed from database in future.")
     public static void storeSmallWidgetStatus(Context context, Pair<Integer, Integer> status) {
         openDBIfClosed(context);
         try {

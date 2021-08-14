@@ -62,4 +62,5 @@ public class Deck extends JSONObject {
     public boolean isStd() {
         return getInt("dyn") == Consts.DECK_STD;
     }
+
 }

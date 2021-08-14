@@ -30,7 +30,7 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.widget.WidgetStatus;
+import com.ichi2.anki.DecksMetaData;
 
 import timber.log.Timber;
 
@@ -50,7 +50,7 @@ public class NotificationService extends BroadcastReceiver {
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         int minCardsDue = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
-        int dueCardsCount = WidgetStatus.fetchDue(context);
+        int dueCardsCount = new DecksMetaData(context).getTotalDueCards().first;
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
             String cardsDueText = context.getResources()

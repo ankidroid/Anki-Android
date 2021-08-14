@@ -19,22 +19,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.Counts;
-import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.anki.DecksMetaData;
 
-import java.util.List;
-
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
-
-import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
 /**
  * The status of the widget.
@@ -61,9 +52,8 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        boolean notificationEnabled = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")) < 1000000;
         boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == android.os.AsyncTask.Status.FINISHED));
-        if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
+        if (sSmallWidgetEnabled && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
@@ -73,68 +63,30 @@ public final class WidgetStatus {
     }
 
 
-    /** Returns the status of each of the decks. */
+    /** Returns the card due and eta of all the due decks. */
     public static int[] fetchSmall(Context context) {
-        return MetaDB.getWidgetSmallStatus(context);
+        DecksMetaData metaData = new DecksMetaData(context);
+        Pair<Integer, Integer> pair = metaData.getTotalDueCards();
+        return new int[] {pair.first, pair.second};
     }
-
-
-    public static int fetchDue(Context context) {
-        return MetaDB.getNotificationStatus(context);
-    }
-
 
     private static class UpdateDeckStatusAsyncTask extends BaseAsyncTask<Context, Void, Context> {
-
-        // due, eta
-        private static Pair<Integer, Integer> sSmallWidgetStatus = new Pair<>(0, 0);
 
         @Override
         protected Context doInBackground(Context... params) {
             super.doInBackground(params);
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
             Context context = params[0];
-            if (!AnkiDroidApp.isSdCardMounted()) {
+            if (!AnkiDroidApp.isSdCardMounted() && sSmallWidgetEnabled) {
                 return context;
             }
-            try {
-                updateCounts(context);
-            } catch (Exception e) {
-                Timber.e(e, "Could not update widget");
-            }
-            return context;
-        }
+            new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
 
-
-        @Override
-        protected void onPostExecute(Context context) {
-            super.onPostExecute(context);
-            Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
-            MetaDB.storeSmallWidgetStatus(context, sSmallWidgetStatus);
-            if (sSmallWidgetEnabled) {
-                new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
-            }
+            // Shows the notification when widget is not set on Home Screen
             Intent intent = new Intent(NotificationService.INTENT_ACTION);
             Context appContext = context.getApplicationContext();
             LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
-        }
-
-
-        private void updateCounts(Context context) {
-            Counts total = new Counts();
-            Collection col = CollectionHelper.getInstance().getCol(context);
-            // Ensure queues are reset if we cross over to the next day.
-            col.getSched()._checkDay();
-
-            // Only count the top-level decks in the total
-            List<DeckDueTreeNode> nodes = col.getSched().deckDueTree();
-            for (DeckDueTreeNode node : nodes) {
-                total.addNew(node.getNewCount());
-                total.addLrn(node.getLrnCount());
-                total.addRev(node.getRevCount());
-            }
-            int eta = col.getSched().eta(total, false);
-            sSmallWidgetStatus = new Pair<>(total.count(), eta);
+            return context;
         }
     }
 }
