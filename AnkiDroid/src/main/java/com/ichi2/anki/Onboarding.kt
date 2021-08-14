@@ -21,6 +21,7 @@ import android.content.Context
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ichi2.anki.OnboardingUtils.Companion.addFeatures
 import com.ichi2.anki.OnboardingUtils.Companion.isVisited
 import com.ichi2.anki.OnboardingUtils.Companion.setVisited
 import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
@@ -57,10 +58,20 @@ abstract class Onboarding<Feature>(
     companion object {
         // Constants being used for onboarding preferences should not be modified.
         const val DECK_PICKER_ONBOARDING = "DeckPickerOnboarding"
-        const val ABSTRACT_FLASHCARD_VIEWER_ONBOARDING = "AbstractFlashcardViewerOnboarding"
         const val REVIEWER_ONBOARDING = "ReviewerOnboarding"
         const val NOTE_EDITOR_ONBOARDING = "NoteEditorOnboarding"
         const val CARD_BROWSER_ONBOARDING = "CardBrowserOnboarding"
+
+        init {
+            addFeatures(
+                listOf<String>(
+                    DECK_PICKER_ONBOARDING,
+                    REVIEWER_ONBOARDING,
+                    NOTE_EDITOR_ONBOARDING,
+                    CARD_BROWSER_ONBOARDING,
+                )
+            )
+        }
     }
 
     /**

@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashSet
@@ -30,7 +31,8 @@ class OnboardingUtils {
          * Preference can be toggled by visiting 'Advanced' settings in the app.
          */
         const val SHOW_ONBOARDING = "showOnboarding"
-        private val featureConstants: MutableSet<String> = HashSet()
+        @VisibleForTesting
+        public val featureConstants: MutableSet<String> = HashSet()
 
         /** Register this feature category as an onboarding feature.
          * It ensures it gets reset if asked. */
@@ -40,7 +42,7 @@ class OnboardingUtils {
 
         /** Register all feature categories as onboarding features.
          * They all get reset when reset is pressed. */
-        fun addFeatures(featureCategory: Vector<String>) {
+        fun addFeatures(featureCategory: Iterable<String>) {
             featureCategory.forEach(::addFeature)
         }
 
