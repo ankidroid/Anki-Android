@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 
 import androidx.annotation.IntDef;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -230,7 +231,8 @@ public class Themes {
         if (uiModeManager != null)
             return (uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
 
-        throw new NullPointerException("Unable to getSystemService() - UIModeManager");
+        Timber.e("Unable to getSystemService() - UIModeManager");
+        return false;
     }
 
 }
