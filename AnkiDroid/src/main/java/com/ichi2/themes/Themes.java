@@ -18,6 +18,7 @@
 package com.ichi2.themes;
 
 
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -63,7 +64,32 @@ public class Themes {
 
     public static void setTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
+
+        if (prefs.getBoolean("followSystem", true)) {
+
+            if (isNightMode(context)) {
+                int theme = Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
+                switch (theme) {
+                    case THEME_NIGHT_DARK:
+                        context.setTheme(R.style.Theme_Dark_Compat);
+                        break;
+                    case THEME_NIGHT_BLACK:
+                        context.setTheme(R.style.Theme_Black_Compat);
+                        break;
+                }
+            } else {
+                int theme = Integer.parseInt(prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT)));
+                switch (theme) {
+                    case THEME_DAY_LIGHT:
+                        context.setTheme(R.style.Theme_Light_Compat);
+                        break;
+                    case THEME_DAY_PLAIN:
+                        context.setTheme(R.style.Theme_Plain_Compat);
+                        break;
+                }
+            }
+
+        } else if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -89,7 +115,32 @@ public class Themes {
 
     public static void setThemeLegacy(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
+
+        if (prefs.getBoolean("followSystem", true)) {
+
+            if (isNightMode(context)) {
+                int theme = Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
+                switch (theme) {
+                    case THEME_NIGHT_DARK:
+                        context.setTheme(R.style.LegacyActionBarDark);
+                        break;
+                    case THEME_NIGHT_BLACK:
+                        context.setTheme(R.style.LegacyActionBarBlack);
+                        break;
+                }
+            } else {
+                int theme = Integer.parseInt(prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT)));
+                switch (theme) {
+                    case THEME_DAY_LIGHT:
+                        context.setTheme(R.style.LegacyActionBarLight);
+                        break;
+                    case THEME_DAY_PLAIN:
+                        context.setTheme(R.style.LegacyActionBarPlain);
+                        break;
+                }
+            }
+
+        } else if (prefs.getBoolean("invertedColors", false)) {
             int theme = Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -157,10 +208,29 @@ public class Themes {
      */
     public static int getCurrentTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
-        if (prefs.getBoolean("invertedColors", false)) {
+
+        if (prefs.getBoolean("followSystem", true)) {
+
+            if (isNightMode(context)) {
+                return Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
+            } else {
+                return Integer.parseInt(prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT)));
+            }
+
+        } else if (prefs.getBoolean("invertedColors", false)) {
             return Integer.parseInt(prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK)));
         } else {
             return Integer.parseInt(prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT)));
         }
     }
+
+    private static boolean isNightMode(Context context) {
+        UiModeManager uiModeManager = ContextCompat.getSystemService(context, UiModeManager.class);
+
+        if (uiModeManager != null)
+            return (uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES);
+
+        throw new NullPointerException("Unable to getSystemService() - UIModeManager");
+    }
+
 }

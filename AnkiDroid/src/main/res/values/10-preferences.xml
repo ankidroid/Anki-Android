@@ -121,6 +121,9 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
+    <string name="follow_system" maxLength="41">Follow System Theme</string>
+    <string name="light_theme" maxLength="41">Light Theme</string>
+    <string name="dark_theme" maxLength="41">Dark Theme</string>
     <string name="default_font" maxLength="41">Default font</string>
     <string name="override_font" maxLength="41">Default font applicability</string>
     <string name="language" maxLength="41">Language</string>
