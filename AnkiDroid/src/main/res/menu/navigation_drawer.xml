@@ -18,9 +18,25 @@
     <group  android:id="@+id/group2">
         <item
             android:id="@+id/nav_night_mode"
-            android:icon="@drawable/ic_brightness_3_black"
-            app:actionLayout="@layout/night_mode_switch"
-            android:title="@string/night_mode"/>
+            android:icon="@drawable/ic_brightness_auto"
+            android:title="@string/follow_system"
+            app:actionLayout="@layout/night_mode_switch" />
+    </group>
+
+    <group android:id="@+id/nav_night_mode_choose_group"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/nav_night_mode_light"
+            android:title="@string/light_theme"
+            android:icon="@drawable/ic_brightness_high" />
+        <item
+            android:id="@+id/nav_night_mode_dark"
+            android:title="@string/dark_theme"
+            android:icon="@drawable/ic_brightness_3_black" />
+    </group>
+
+    <group>
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black"
