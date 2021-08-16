@@ -21,14 +21,12 @@ import android.content.Context;
 
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import com.ichi2.testutils.BackupManagerTestUtilities;
-import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Shadows;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowEnvironment;
 
@@ -39,7 +37,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-@Config(application = EmptyApplication.class) // no point in Application init if we don't use it
 public class InitialActivityWithConflictTest extends RobolectricTest {
     @Before
     @Override
