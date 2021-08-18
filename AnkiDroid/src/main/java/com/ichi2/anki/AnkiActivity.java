@@ -463,10 +463,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     public static void showDialogFragment(AnkiActivity activity, DialogFragment newFragment) {
+        showDialogFragment(activity.getSupportFragmentManager(), newFragment);
+    }
+
+    public static void showDialogFragment(FragmentManager manager, DialogFragment newFragment) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
-        FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         Fragment prev = manager.findFragmentByTag("dialog");
         if (prev != null) {
