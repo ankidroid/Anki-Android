@@ -46,14 +46,17 @@ public class DeckSpinnerSelection {
     private ArrayList<Long> mAllDeckIds;
     private final Spinner mSpinner;
     private final AnkiActivity mContext;
+    @NonNull
+    private final Collection mCollection;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
     private boolean mShowAllDecks = false;
     private static final long ALL_DECKS_ID = 0L;
 
 
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull int spinnerId) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, int spinnerId) {
         this.mContext = context;
+        this.mCollection = collection;
         ActionBar actionBar = mContext.getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         mSpinner = mContext.findViewById(spinnerId);
@@ -66,7 +69,7 @@ public class DeckSpinnerSelection {
     public void initializeActionBarDeckSpinner() {
 
         // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = mContext.getCol().getDecks().allSorted();
+        mDropDownDecks = mCollection.getDecks().allSorted();
 
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -83,7 +86,7 @@ public class DeckSpinnerSelection {
     }
 
     public void initializeNoteEditorDeckSpinner(@NonNull Card currentEditedCard, boolean addNote) {
-        Collection col = mContext.getCol();
+        Collection col = mCollection;
         mDropDownDecks = col.getDecks().allSorted();
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
@@ -129,7 +132,7 @@ public class DeckSpinnerSelection {
     public void setSpinnerListener() {
         mSpinner.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                displayDeckOverrideDialog(mContext.getCol());
+                displayDeckOverrideDialog(mCollection);
             }
             return true;
         });
@@ -198,7 +201,7 @@ public class DeckSpinnerSelection {
                 int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
                 selectDropDownItem(position);
                 if (setAsCurrentDeck) {
-                    mContext.getCol().getDecks().select(deckId);
+                    mCollection.getDecks().select(deckId);
                 }
                 return true;
             }
