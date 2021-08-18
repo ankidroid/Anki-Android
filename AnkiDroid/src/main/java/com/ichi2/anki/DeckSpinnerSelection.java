@@ -54,12 +54,12 @@ public class DeckSpinnerSelection {
     private static final long ALL_DECKS_ID = 0L;
 
 
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, int spinnerId) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner) {
         this.mContext = context;
         this.mCollection = collection;
+        this.mSpinner = spinner;
         ActionBar actionBar = mContext.getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        mSpinner = mContext.findViewById(spinnerId);
     }
 
     public void setShowAllDecks(boolean showAllDecks) {
