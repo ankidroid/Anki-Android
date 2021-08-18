@@ -48,6 +48,7 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -61,7 +62,7 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
-public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
+public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
