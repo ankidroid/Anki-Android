@@ -129,7 +129,7 @@ public class Statistics extends NavigationDrawerActivity implements
 //        StatisticFragment.updateAllFragments();
         long deckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner));
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.setShowAllDecks(true);
         mDeckSpinnerSelection.selectDeckById(deckId, false);
         mTaskHandler.setDeckId(deckId);
@@ -233,7 +233,7 @@ public class Statistics extends NavigationDrawerActivity implements
         if (deck == null) {
             return;
         }
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), true);
         mTaskHandler.setDeckId(deck.getDeckId());
         mViewPager.getAdapter().notifyDataSetChanged();

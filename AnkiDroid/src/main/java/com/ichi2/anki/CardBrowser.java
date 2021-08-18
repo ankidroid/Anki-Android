@@ -124,7 +124,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
         long deckId = deck.getDeckId();
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.selectDeckById(deckId, true);
         selectDeckAndSave(deckId);
     }
@@ -762,7 +762,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         long deckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner));
         mDeckSpinnerSelection.setShowAllDecks(true);
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         selectDeckAndSave(deckId);
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
