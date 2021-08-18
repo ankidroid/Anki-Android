@@ -58,15 +58,14 @@ public class DeckSpinnerSelection {
         this.mContext = context;
         this.mCollection = collection;
         this.mSpinner = spinner;
-        ActionBar actionBar = mContext.getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     public void setShowAllDecks(boolean showAllDecks) {
         mShowAllDecks = showAllDecks;
     }
 
-    public void initializeActionBarDeckSpinner() {
+    public void initializeActionBarDeckSpinner(@NonNull ActionBar actionBar) {
+        actionBar.setDisplayShowTitleEnabled(false);
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = mCollection.getDecks().allSorted();
