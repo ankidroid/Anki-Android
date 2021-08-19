@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -52,6 +53,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -228,8 +230,25 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
 
     protected void onDeckSelected(@Nullable SelectableDeck deck) {
-        ((DeckSelectionListener) requireActivity()).onDeckSelected(deck);
+        getDeckSelectionListener().onDeckSelected(deck);
     }
+
+
+    @NonNull
+    private DeckSelectionListener getDeckSelectionListener() {
+        Activity activity = requireActivity();
+        if (activity instanceof DeckSelectionListener) {
+            return (DeckSelectionListener) activity;
+        }
+
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof DeckSelectionListener) {
+            return (DeckSelectionListener) parentFragment;
+        }
+
+        throw new IllegalStateException("Neither activity or parent fragment were a selection listener");
+    }
+
 
     protected void selectDeckAndClose(@NonNull SelectableDeck deck) {
         onDeckSelected(deck);
