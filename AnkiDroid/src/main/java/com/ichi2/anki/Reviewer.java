@@ -273,7 +273,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         return !getFullscreenMode().isFullScreenReview();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
@@ -306,7 +306,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // 100ms was not enough on my device (Honor 9 Lite -  Android Pie)
@@ -435,7 +435,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     @Override
     protected void toggleWhiteboard() {
         mPrefWhiteboard = ! mPrefWhiteboard;
@@ -1117,7 +1117,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     @Override
     protected boolean onSingleTap() {
         if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
@@ -1127,7 +1127,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         return false;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onFling() {
         if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
@@ -1137,7 +1136,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected final Handler mFullScreenHandler = new Handler() {
-        @RequiresApi(api = Build.VERSION_CODES.R)
         @Override
         public void handleMessage(Message msg) {
             if (mPrefFullscreenReview) {
@@ -1154,7 +1152,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     private void setWhiteboardEnabledState(boolean state) {
         mPrefWhiteboard = state;
         MetaDB.storeWhiteboardState(this, getParentDid(), state);
@@ -1163,43 +1161,85 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         //Hide System Bars
-        getWindow().setDecorFitsSystemWindows(false);
-        WindowInsetsController controller = getWindow().getInsetsController();
-        if (controller != null) {
-            controller.hide(WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-            controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            getWindow().setDecorFitsSystemWindows(false);
+            WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller != null) {
+                controller.hide(WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
+                controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+            }
+        } else {
+            // Set appropriate flags to enable Sticky Immersive mode.
+            a.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE
+            );
         }
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
         FullScreenMode fullscreenMode = FullScreenMode.fromPreference(prefs);
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
-        decorView.setOnApplyWindowInsetsListener((v, insets) -> {
-            final View toolbar = a.findViewById(R.id.toolbar);
-            final View answerButtons = a.findViewById(R.id.answer_options_layout);
-            final View topbar = a.findViewById(R.id.top_bar);
-            if (toolbar == null || topbar == null || answerButtons == null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            decorView.setOnApplyWindowInsetsListener((v, insets) -> {
+                final View toolbar = a.findViewById(R.id.toolbar);
+                final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                final View topbar = a.findViewById(R.id.top_bar);
+                if (toolbar == null || topbar == null || answerButtons == null) {
+                    return insets;
+                }
+                if (insets.isVisible(WindowInsets.Type.systemBars())) {
+                    showViewWithAnimation(toolbar);
+                    if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
+                        showViewWithAnimation(topbar);
+                        showViewWithAnimation(answerButtons);
+                    }
+                } else {
+                    hideViewWithAnimation(toolbar);
+                    if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
+                        hideViewWithAnimation(topbar);
+                        hideViewWithAnimation(answerButtons);
+                    }
+                }
                 return insets;
-            }
-            if (insets.isVisible(WindowInsets.Type.systemBars())) {
-                showViewWithAnimation(toolbar);
-                if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
-                    showViewWithAnimation(topbar);
-                    showViewWithAnimation(answerButtons);
-                }
-            } else {
-                hideViewWithAnimation(toolbar);
-                if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
-                    hideViewWithAnimation(topbar);
-                    hideViewWithAnimation(answerButtons);
-                }
-            }
-            return insets;
-        });
+            });
+        } else {
+            decorView.setOnSystemUiVisibilityChangeListener
+                    (flags -> {
+                        final View toolbar = a.findViewById(R.id.toolbar);
+                        final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                        final View topbar = a.findViewById(R.id.top_bar);
+                        if (toolbar == null || topbar == null || answerButtons == null) {
+                            return;
+                        }
+                        // Note that system bars will only be "visible" if none of the
+                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                        boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                        Timber.d("System UI visibility change. Visible: %b", visible);
+                        if (visible) {
+                            showViewWithAnimation(toolbar);
+                            if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
+                                showViewWithAnimation(topbar);
+                                showViewWithAnimation(answerButtons);
+                            }
+                        } else {
+                            hideViewWithAnimation(toolbar);
+                            if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
+                                hideViewWithAnimation(topbar);
+                                hideViewWithAnimation(answerButtons);
+                            }
+                        }
+                    });
+        }
     }
 
     private static final int ANIMATION_DURATION = 200;
@@ -1225,13 +1265,16 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     // #9332: UI Visibility -> Insets
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
 
-        return (activity.getWindow().getDecorView().getWindowInsetsController().getSystemBarsAppearance()) == 0;
+    private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return (activity.getWindow().getDecorView().getWindowInsetsController().getSystemBarsAppearance()) == 0;
+        } else {
+            return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
+
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
         mWhiteboard = new Whiteboard(this, isInNightMode());
