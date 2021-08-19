@@ -90,6 +90,7 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton;
 import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.anki.ui.NoteTypeSpinnerUtils;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
@@ -575,34 +576,7 @@ public class NoteEditor extends AnkiActivity implements
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner);
-        ArrayList<Model> models = getCol().getModels().all();
-        Collections.sort(models, NamedJSONComparator.INSTANCE);
-        final ArrayList<String> modelNames = new ArrayList<>(models.size());
-        mAllModelIds = new ArrayList<>(models.size());
-        for (JSONObject m : models) {
-            modelNames.add(m.getString("name"));
-            mAllModelIds.add(m.getLong("id"));
-        }
-
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, modelNames) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                // Cast the drop down items (popup items) as text view
-                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
-
-                // If this item is selected
-                if (position == mNoteTypeSpinner.getSelectedItemPosition()) {
-                    tv.setBackgroundColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_background));
-                    tv.setTextColor(ContextCompat.getColor(NoteEditor.this, R.color.note_editor_selected_item_text));
-                }
-
-                // Return the modified view
-                return tv;
-            }
-        };
-        mNoteTypeSpinner.setAdapter(noteTypeAdapter);
-        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        mAllModelIds = NoteTypeSpinnerUtils.setupNoteTypeSpinner(this, mNoteTypeSpinner, col);
 
         // Deck Selector
         TextView deckTextView = findViewById(R.id.CardEditorDeckText);
