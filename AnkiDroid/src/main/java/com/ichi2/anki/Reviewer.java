@@ -273,7 +273,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         return !getFullscreenMode().isFullScreenReview();
     }
 
-
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
@@ -304,7 +303,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         ViewGroupUtils.setRenderWorkaround(this);
     }
-
 
 
     @Override
@@ -433,7 +431,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return true;
     }
-
 
 
     @Override
@@ -1117,7 +1114,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
     }
 
-
     @Override
     protected boolean onSingleTap() {
         if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
@@ -1151,8 +1147,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
     }
 
-
-
     private void setWhiteboardEnabledState(boolean state) {
         mPrefWhiteboard = state;
         MetaDB.storeWhiteboardState(this, getParentDid(), state);
@@ -1161,8 +1155,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-
-    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         //Hide System Bars
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -1264,7 +1256,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                 });
     }
 
-    // #9332: UI Visibility -> Insets
 
     private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -1273,7 +1264,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
         }
     }
-
 
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
