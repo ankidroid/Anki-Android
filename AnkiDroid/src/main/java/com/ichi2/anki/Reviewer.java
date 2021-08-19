@@ -1155,6 +1155,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         //Hide System Bars
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -1256,7 +1257,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 });
     }
 
-
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             return (activity.getWindow().getDecorView().getWindowInsetsController().getSystemBarsAppearance()) == 0;

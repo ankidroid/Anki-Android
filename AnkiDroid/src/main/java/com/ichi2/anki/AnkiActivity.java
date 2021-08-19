@@ -81,6 +81,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         this.mActivityName = getClass().getSimpleName();
     }
 
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.i("AnkiActivity::onCreate - %s", mActivityName);
