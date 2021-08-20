@@ -164,12 +164,11 @@ public class TextImporter extends NoteImporter {
                 String join = getLinesFromFile(10);
                 mDialect = sniffer.sniff(join, mPatterns.toCharArray());
             } catch (Exception e) {
-                Timber.w(e);
+                // expected: do not log the exception
                 try {
                     mDialect = sniffer.sniff(getFirstFileLine().orElse(""), mPatterns.toCharArray());
                 } catch (Exception ex) {
-                    Timber.w(ex);
-                    // pass
+                    // expected and ignored: do not log the exception
                 }
             }
         }
@@ -181,7 +180,7 @@ public class TextImporter extends NoteImporter {
             try {
                 reader = CsvReader.fromDialect(data, mDialect);
             } catch (Exception e) {
-                Timber.w(e);
+                // expected and ignored: do not log the exception
                 err();
             }
         } else {
