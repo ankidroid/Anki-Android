@@ -841,7 +841,7 @@ public class Collection implements CollectionGetter {
                         // check deck is not a cram deck
                         long ndid;
                         try {
-                            ndid = t.getLong("did");
+                            ndid = t.optLong("did", 0);
                             if (ndid != 0) {
                                 did = ndid;
                             }
