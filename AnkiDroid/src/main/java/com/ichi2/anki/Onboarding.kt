@@ -17,7 +17,7 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,10 +49,10 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
  */
 
 // Contains classes for various screens. Each sub-class has methods to show onboarding tutorials.
-abstract class Onboarding<Feature, ActivityType>(
-    private val mContext: ActivityType,
-    val mTutorials: MutableList<TutorialArguments<Feature, ActivityType>>
-) where Feature : Enum<Feature>, Feature : OnboardingFlag, ActivityType : Activity {
+abstract class Onboarding<Feature>(
+    private val mContext: Context,
+    val mTutorials: MutableList<TutorialArguments<Feature>>
+) where Feature : Enum<Feature>, Feature : OnboardingFlag {
 
     companion object {
         // Constants being used for onboarding preferences should not be modified.
@@ -94,17 +94,17 @@ abstract class Onboarding<Feature, ActivityType>(
      * be displayed only if mOnboardingCondition is not null and returns true. Default value is null
      * which indicates that no condition is required.
      */
-    data class TutorialArguments<Feature, ActivityType>(
+    data class TutorialArguments<Feature>(
         val mFeatureIdentifier: Feature,
         val mOnboardingFunction: () -> Unit,
         val mOnboardingCondition: (() -> Boolean)? = null
     )
-            where Feature : Enum<Feature>, Feature : OnboardingFlag, ActivityType : Activity
+            where Feature : Enum<Feature>, Feature : OnboardingFlag
 
     class DeckPicker(
         private val mActivityContext: com.ichi2.anki.DeckPicker,
         private val mRecyclerViewLayoutManager: LinearLayoutManager
-    ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum, com.ichi2.anki.DeckPicker>(mActivityContext, mutableListOf()) {
+    ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(mActivityContext, mutableListOf()) {
 
         init {
             mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
@@ -156,7 +156,7 @@ abstract class Onboarding<Feature, ActivityType>(
     }
 
     class Reviewer(private val mActivityContext: com.ichi2.anki.Reviewer) :
-        Onboarding<Reviewer.ReviewerOnboardingEnum, com.ichi2.anki.Reviewer>(mActivityContext, mutableListOf()) {
+        Onboarding<Reviewer.ReviewerOnboardingEnum>(mActivityContext, mutableListOf()) {
 
         init {
             mTutorials.add(TutorialArguments(ReviewerOnboardingEnum.SHOW_ANSWER, this::onQuestionShown))
@@ -233,7 +233,7 @@ abstract class Onboarding<Feature, ActivityType>(
     }
 
     class NoteEditor(private val mActivityContext: com.ichi2.anki.NoteEditor) :
-        Onboarding<NoteEditor.NoteEditorOnboardingEnum, com.ichi2.anki.NoteEditor>(mActivityContext, mutableListOf()) {
+        Onboarding<NoteEditor.NoteEditorOnboardingEnum>(mActivityContext, mutableListOf()) {
 
         init {
             mTutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
@@ -273,7 +273,7 @@ abstract class Onboarding<Feature, ActivityType>(
     }
 
     class CardBrowser(private val mActivityContext: com.ichi2.anki.CardBrowser) :
-        Onboarding<CardBrowser.CardBrowserOnboardingEnum, com.ichi2.anki.CardBrowser>(mActivityContext, mutableListOf()) {
+        Onboarding<CardBrowser.CardBrowserOnboardingEnum>(mActivityContext, mutableListOf()) {
 
         init {
             mTutorials.add(TutorialArguments(CardBrowserOnboardingEnum.DECK_CHANGER, this::showTutorialForDeckChangerIfNew))
