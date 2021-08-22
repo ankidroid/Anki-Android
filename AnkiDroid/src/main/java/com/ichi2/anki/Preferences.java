@@ -67,8 +67,6 @@ import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.VersionUtils;
 
-import com.ichi2.utils.JSONObject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -94,16 +92,11 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-interface PreferenceContext {
-    android.preference.PreferenceScreen getPreferenceScreen();
-}
-
 /**
  * Preferences dialog.
  */
 @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public class Preferences extends AppCompatPreferenceActivity implements PreferenceContext, OnSharedPreferenceChangeListener {
+public class Preferences extends AppCompatPreferenceActivity {
 
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
@@ -255,12 +248,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        updatePreference(sharedPreferences, key, this);
-    }
-
-
     // ----------------------------------------------------------------------------
     // Class methods
     // ----------------------------------------------------------------------------
@@ -391,148 +378,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     }
 
 
-    /**
-     * Code which is run when a SharedPreference change has been detected
-     * @param prefs instance of SharedPreferences
-     * @param key key in prefs which is being updated
-     * @param listener PreferenceActivity of PreferenceFragment which is hosting the preference
-     */
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
-    private void updatePreference(SharedPreferences prefs, String key, PreferenceContext listener) {
-        try {
-            android.preference.PreferenceScreen screen = listener.getPreferenceScreen();
-            android.preference.Preference pref = screen.findPreference(key);
-            if (pref == null) {
-                Timber.e("Preferences: no preference found for the key: %s", key);
-                return;
-            }
-            // Handle special cases
-            switch (key) {
-                case CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL:
-                case CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE:
-                case CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER:
-                    //This may be a tad hasty - performed before "back" is pressed.
-                    CustomSyncServer.handleSyncServerPreferenceChange(getBaseContext());
-                    break;
-                case "timeoutAnswer": {
-                    android.preference.CheckBoxPreference keepScreenOn = (android.preference.CheckBoxPreference) screen.findPreference("keepScreenOn");
-                    keepScreenOn.setChecked(((android.preference.CheckBoxPreference) pref).isChecked());
-                    break;
-                }
-                case LANGUAGE:
-                    closePreferences();
-                    break;
-                case SHOW_PROGRESS:
-                    getCol().getCol().set_config("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    break;
-                case SHOW_ESTIMATE:
-                    getCol().getCol().set_config("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    break;
-                case NEW_SPREAD:
-                    getCol().getCol().set_config("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
-                    break;
-                case TIME_LIMIT:
-                    getCol().getCol().set_config("timeLim", ((NumberRangePreference) pref).getValue() * 60);
-                    break;
-                case LEARN_CUTOFF:
-                    getCol().getCol().set_config("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
-                    break;
-                case USE_CURRENT:
-                    getCol().getCol().set_config("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
-                    break;
-                case DAY_OFFSET: {
-                    setDayOffset(((SeekBarPreference) pref).getValue());
-                    break;
-                }
-                case PASTE_PNG:
-                    getCol().set_config("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
-                    break;
-                case MINIMUM_CARDS_DUE_FOR_NOTIFICATION: {
-                    android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);
-                    if (listpref != null) {
-                        updateNotificationPreference(listpref);
-                        if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
-                            BootService.scheduleNotification(getCol().getTime(), this);
-                        } else {
-                            PendingIntent intent = CompatHelper.getCompat().getImmutableBroadcastIntent(this, 0,
-                                    new Intent(this, NotificationService.class), 0);
-                            final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                            alarmManager.cancel(intent);
-                        }
-                    }
-                    break;
-                }
-                case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
-                    String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
-                    Acra.onPreferenceChanged(this, value);
-                    break;
-                }
-                case "syncAccount": {
-                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                    String username = preferences.getString("username", "");
-                    android.preference.Preference syncAccount = screen.findPreference("syncAccount");
-                    if (syncAccount != null) {
-                        if (TextUtils.isEmpty(username)) {
-                            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
-                        } else {
-                            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
-                        }
-                    }
-                    break;
-                }
-                case "providerEnabled": {
-                    ComponentName providerName = new ComponentName(this, "com.ichi2.anki.provider.CardContentProvider");
-                    PackageManager pm = getPackageManager();
-                    int state;
-                    if (((android.preference.CheckBoxPreference) pref).isChecked()) {
-                         state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-                        Timber.i("AnkiDroid ContentProvider enabled by user");
-                    } else {
-                        state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-                        Timber.i("AnkiDroid ContentProvider disabled by user");
-                    }
-                    pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
-                    break;
-                }
-                case NEW_TIMEZONE_HANDLING : {
-                    if (getCol().schedVer() != 1 && getCol().isUsingRustBackend()) {
-                        AbstractSched sched = getCol().getSched();
-                        boolean was_enabled = sched._new_timezone_enabled();
-                        boolean is_enabled = ((android.preference.CheckBoxPreference) pref).isChecked();
-                        if (was_enabled != is_enabled) {
-                            if (is_enabled) {
-                                try {
-                                    sched.set_creation_offset();
-                                } catch (BackendNotSupportedException e) {
-                                    throw e.alreadyUsingRustBackend();
-                                }
-                            } else {
-                                sched.clear_creation_offset();
-                            }
-                        }
-                    }
-                    break;
-                }
-                case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
-                    CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
-                    break;
-                case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
-                    AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
-                    break;
-                case "gestureCornerTouch": {
-                    GesturesSettingsFragment.updateGestureCornerTouch(this, screen);
-                }
-            }
-            // Update the summary text to reflect new value
-            updateSummary(pref);
-        } catch (BadTokenException e) {
-            Timber.e(e, "Preferences: BadTokenException on showDialog");
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     public void updateNotificationPreference(android.preference.ListPreference listpref) {
         CharSequence[] entries = listpref.getEntries();
         CharSequence[] values = listpref.getEntryValues();
@@ -645,7 +490,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     // ----------------------------------------------------------------------------
 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
-    public abstract static class SettingsFragment extends android.preference.PreferenceFragment implements PreferenceContext, OnSharedPreferenceChangeListener {
+    public abstract static class SettingsFragment extends android.preference.PreferenceFragment implements OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -669,9 +514,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             prefs.registerOnSharedPreferenceChangeListener(this);
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
-            ((Preferences) getActivity()).updatePreference(prefs, "syncAccount", this);
-            ((Preferences) getActivity()).updatePreference(prefs, "custom_sync_server_link", this);
-            ((Preferences) getActivity()).updatePreference(prefs, "advanced_statistics_link", this);
+            updatePreference(((Preferences) getActivity()), prefs, "syncAccount");
+            updatePreference(((Preferences) getActivity()), prefs, "custom_sync_server_link");
+            updatePreference(((Preferences) getActivity()), prefs, "advanced_statistics_link");
         }
 
         @Override
@@ -682,7 +527,155 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            ((Preferences) getActivity()).updatePreference(sharedPreferences, key, this);
+            updatePreference(((Preferences) getActivity()), sharedPreferences, key);
+        }
+
+        /**
+         * Code which is run when a SharedPreference change has been detected
+         * @param preferencesActivity A handle to the calling activity
+         * @param prefs instance of SharedPreferences
+         * @param key key in prefs which is being updated
+         */
+        @SuppressWarnings("deprecation") // Tracked as #5019 on github - convert to fragments
+        private void updatePreference(Preferences preferencesActivity, SharedPreferences prefs, String key) {
+            try {
+                android.preference.PreferenceScreen screen = getPreferenceScreen();
+                android.preference.Preference pref = screen.findPreference(key);
+                if (pref == null) {
+                    Timber.e("Preferences: no preference found for the key: %s", key);
+                    return;
+                }
+                // Handle special cases
+                switch (key) {
+                    case CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL:
+                    case CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE:
+                    case CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER:
+                        //This may be a tad hasty - performed before "back" is pressed.
+                        CustomSyncServer.handleSyncServerPreferenceChange(preferencesActivity.getBaseContext());
+                        break;
+                    case "timeoutAnswer": {
+                        android.preference.CheckBoxPreference keepScreenOn = (android.preference.CheckBoxPreference) screen.findPreference("keepScreenOn");
+                        keepScreenOn.setChecked(((android.preference.CheckBoxPreference) pref).isChecked());
+                        break;
+                    }
+                    case LANGUAGE:
+                        preferencesActivity.closePreferences();
+                        break;
+                    case SHOW_PROGRESS:
+                        preferencesActivity.getCol().set_config("dueCounts", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case SHOW_ESTIMATE:
+                        preferencesActivity.getCol().set_config("estTimes", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case NEW_SPREAD:
+                        preferencesActivity.getCol().set_config("newSpread", Integer.parseInt(((android.preference.ListPreference) pref).getValue()));
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case TIME_LIMIT:
+                        preferencesActivity.getCol().set_config("timeLim", ((NumberRangePreference) pref).getValue() * 60);
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case LEARN_CUTOFF:
+                        preferencesActivity.getCol().set_config("collapseTime", ((NumberRangePreference) pref).getValue() * 60);
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case USE_CURRENT:
+                        preferencesActivity.getCol().set_config("addToCur", "0".equals(((android.preference.ListPreference) pref).getValue()));
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case DAY_OFFSET: {
+                        preferencesActivity.setDayOffset(((SeekBarPreference) pref).getValue());
+                        break;
+                    }
+                    case PASTE_PNG:
+                        preferencesActivity.getCol().set_config("pastePNG", ((android.preference.CheckBoxPreference) pref).isChecked());
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case MINIMUM_CARDS_DUE_FOR_NOTIFICATION: {
+                        android.preference.ListPreference listpref = (android.preference.ListPreference) screen.findPreference(MINIMUM_CARDS_DUE_FOR_NOTIFICATION);
+                        if (listpref != null) {
+                            preferencesActivity.updateNotificationPreference(listpref);
+                            if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
+                                BootService.scheduleNotification(preferencesActivity.getCol().getTime(), preferencesActivity);
+                            } else {
+                                PendingIntent intent = CompatHelper.getCompat().getImmutableBroadcastIntent(preferencesActivity, 0,
+                                        new Intent(preferencesActivity, NotificationService.class), 0);
+                                final AlarmManager alarmManager = (AlarmManager) preferencesActivity.getSystemService(ALARM_SERVICE);
+                                alarmManager.cancel(intent);
+                            }
+                        }
+                        break;
+                    }
+                    case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
+                        String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
+                        Acra.onPreferenceChanged(preferencesActivity, value);
+                        break;
+                    }
+                    case "syncAccount": {
+                        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.getBaseContext());
+                        String username = preferences.getString("username", "");
+                        android.preference.Preference syncAccount = screen.findPreference("syncAccount");
+                        if (syncAccount != null) {
+                            if (TextUtils.isEmpty(username)) {
+                                syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+                            } else {
+                                syncAccount.setSummary(preferencesActivity.getString(R.string.sync_account_summ_logged_in, username));
+                            }
+                        }
+                        break;
+                    }
+                    case "providerEnabled": {
+                        ComponentName providerName = new ComponentName(preferencesActivity, "com.ichi2.anki.provider.CardContentProvider");
+                        PackageManager pm = preferencesActivity.getPackageManager();
+                        int state;
+                        if (((android.preference.CheckBoxPreference) pref).isChecked()) {
+                            state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+                            Timber.i("AnkiDroid ContentProvider enabled by user");
+                        } else {
+                            state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+                            Timber.i("AnkiDroid ContentProvider disabled by user");
+                        }
+                        pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP);
+                        break;
+                    }
+                    case NEW_TIMEZONE_HANDLING : {
+                        if (preferencesActivity.getCol().schedVer() != 1 && preferencesActivity.getCol().isUsingRustBackend()) {
+                            AbstractSched sched = preferencesActivity.getCol().getSched();
+                            boolean was_enabled = sched._new_timezone_enabled();
+                            boolean is_enabled = ((android.preference.CheckBoxPreference) pref).isChecked();
+                            if (was_enabled != is_enabled) {
+                                if (is_enabled) {
+                                    try {
+                                        sched.set_creation_offset();
+                                    } catch (BackendNotSupportedException e) {
+                                        throw e.alreadyUsingRustBackend();
+                                    }
+                                } else {
+                                    sched.clear_creation_offset();
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
+                        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity);
+                        break;
+                    case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
+                        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity);
+                        break;
+                    case "gestureCornerTouch": {
+                        GesturesSettingsFragment.updateGestureCornerTouch(preferencesActivity, screen);
+                    }
+                }
+                // Update the summary text to reflect new value
+                preferencesActivity.updateSummary(pref);
+            } catch (BadTokenException e) {
+                Timber.e(e, "Preferences: BadTokenException on showDialog");
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
