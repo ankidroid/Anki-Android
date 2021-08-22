@@ -29,6 +29,7 @@ import com.ichi2.anki.CardTemplatePreviewer;
 import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.FilteredDeckOptions;
+import com.ichi2.anki.TextImporter;
 import com.ichi2.anki.Info;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.ModelBrowser;
@@ -94,7 +95,8 @@ public class ActivityList {
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
-                get(SharedDecksActivity.class)
+                get(SharedDecksActivity.class),
+                get(TextImporter.class)
         );
     }
 

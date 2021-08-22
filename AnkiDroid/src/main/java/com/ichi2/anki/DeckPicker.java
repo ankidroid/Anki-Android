@@ -658,6 +658,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_import_text).setVisible(CompatHelper.getSdkVersion() >= Build.VERSION_CODES.O);
 
         MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
         mToolbarSearchView = (SearchView) toolbarSearchItem.getActionView();
@@ -757,6 +758,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (itemId == R.id.action_import) {
             Timber.i("DeckPicker:: Import button pressed");
             showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
+            return true;
+        } else if (itemId == R.id.action_import_text) {
+            Timber.i("DeckPicker:: Import text button pressed");
+            openImportText();
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
             CreateDeckDialog createFilteredDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null);
@@ -2028,6 +2033,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    protected void openImportText() {
+        Intent intent = new Intent(this, TextImporter.class);
+        startActivityWithoutAnimation(intent);
+    }
 
     public void openAnkiWebSharedDecks() {
         Intent intent = new Intent(this, SharedDecksActivity.class);

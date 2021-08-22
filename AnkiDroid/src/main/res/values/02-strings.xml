@@ -395,9 +395,6 @@
     <string name="home">Home</string>
 
     <!-- Importing -->
-    <string name="importer_activity_name">Text file import</string>
-
-
     <string name="import_error_delimiter">Error reading delimiter</string>
     <string name="import_error_not_utf8">File was not a text file</string>
 

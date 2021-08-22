@@ -207,6 +207,12 @@
                 />
         </activity>
         <activity
+            android:name=".TextImporter"
+            android:label="@string/import_text_file"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            />
+        <activity
             android:name=".ModelBrowser"
             android:label="@string/model_browser_label"
             android:exported="false"
