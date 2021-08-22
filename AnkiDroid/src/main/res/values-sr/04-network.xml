@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Слање података...</string>
     <string name="sync_downloading_message">Преузимање у току...</string>
     <string name="sync_title">Синхронизација</string>
-    <string name="sync_downloading_media">Преузимање медија датотека %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Потпуно синхронизовано са локалним подацима</string>
     <string name="sync_log_clocks_unsynchronized">Сат на вашем уређају је нетачан за %1$d секунди%2$s; За синхронизацију је неопходно да сат и временска зона буду приказани коректно. Поставите коректан датум, временску зону вашег телефона и покрените синхронизацију поново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, постављена временска зона уређаја је вероватно погрешна</string>

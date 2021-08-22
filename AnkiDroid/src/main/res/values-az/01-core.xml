@@ -95,6 +95,7 @@
     <string name="unbury">Görünən et</string>
     <string name="rename_deck">Dəstəni yenidən adlandır</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Əlavə et</string>
     <string name="menu_add_note">Qeyd əlavə et</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı sinxron et</string>
@@ -113,6 +114,9 @@
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
     <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Bu qeyd və bütün kartlar həqiqətən də silinsin?\n%s</string>
     <string name="menu_select">Mətni seç</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Ən az bir kart növü lazımdır.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” kart növü və %1$d kartı silinsin?</item>
         <item quantity="other">“%2$s” kart növü və %1$d kartı silinsin?</item>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

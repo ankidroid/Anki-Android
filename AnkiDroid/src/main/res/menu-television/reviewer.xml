@@ -62,6 +62,18 @@
         android:title="@string/menu_flag_card_four"
         android:icon="@drawable/ic_flag_blue"/>
     <item
+        android:id="@+id/action_flag_five"
+        android:title="@string/menu_flag_card_five"
+        android:icon="@drawable/ic_flag_pink"/>
+    <item
+        android:id="@+id/action_flag_six"
+        android:title="@string/menu_flag_card_six"
+        android:icon="@drawable/ic_flag_turquoise"/>
+    <item
+        android:id="@+id/action_flag_seven"
+        android:title="@string/menu_flag_card_seven"
+        android:icon="@drawable/ic_flag_purple"/>
+    <item
         android:id="@+id/action_save_whiteboard"
         android:title="@string/save_whiteboard"
         android:visible="false"

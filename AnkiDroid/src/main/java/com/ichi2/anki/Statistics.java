@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
@@ -129,10 +128,10 @@ public class Statistics extends NavigationDrawerActivity implements
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
         long deckId = getCol().getDecks().selected();
-        mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner));
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.setShowAllDecks(true);
-        mDeckSpinnerSelection.selectDeckById(deckId);
+        mDeckSpinnerSelection.selectDeckById(deckId, false);
         mTaskHandler.setDeckId(deckId);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
@@ -234,8 +233,8 @@ public class Statistics extends NavigationDrawerActivity implements
         if (deck == null) {
             return;
         }
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
-        mDeckSpinnerSelection.selectDeckById(deck.getDeckId());
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
+        mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), true);
         mTaskHandler.setDeckId(deck.getDeckId());
         mViewPager.getAdapter().notifyDataSetChanged();
     }
@@ -269,8 +268,10 @@ public class Statistics extends NavigationDrawerActivity implements
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected AsyncTask mStatisticsTask;
-        protected AsyncTask mStatisticsOverviewTask;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
+        protected android.os.AsyncTask mStatisticsTask;
+        @SuppressWarnings("deprecation") // #7108: AsyncTask
+        protected android.os.AsyncTask mStatisticsOverviewTask;
         private ViewPager2 mActivityPager;
         private TabLayout mSlidingTabLayout;
         private TabLayoutMediator mTabLayoutMediator;

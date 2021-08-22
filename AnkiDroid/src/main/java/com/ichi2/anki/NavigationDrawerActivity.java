@@ -30,6 +30,7 @@ import android.os.Handler;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -85,11 +86,11 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     private Runnable mPendingRunnable;
 
     @Override
-    public void setContentView(int layoutResID) {
+    public void setContentView(@LayoutRes int layoutResID) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         // Using ClosableDrawerLayout as a parent view.
-        ClosableDrawerLayout closableDrawerLayout = (ClosableDrawerLayout) LayoutInflater.from(this).inflate(R.layout.navigation_drawer_layout, null, false);
+        ClosableDrawerLayout closableDrawerLayout = (ClosableDrawerLayout) LayoutInflater.from(this).inflate(getNavigationDrawerLayout(), null, false);
         // Get CoordinatorLayout using resource ID
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) LayoutInflater.from(this).inflate(layoutResID, closableDrawerLayout, false);
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
@@ -104,6 +105,15 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
 
         setContentView(closableDrawerLayout);
+    }
+
+    private @LayoutRes int getNavigationDrawerLayout() {
+        return fitsSystemWindows() ? R.layout.navigation_drawer_layout : R.layout.navigation_drawer_layout_fullscreen;
+    }
+
+    /** Whether android:fitsSystemWindows="true" should be applied to the navigation drawer */
+    protected boolean fitsSystemWindows() {
+        return true;
     }
 
     // Navigation drawer initialisation
@@ -138,6 +148,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
             @Override
+            @SuppressWarnings("deprecation") //  #7111: new Handler()
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
@@ -377,7 +388,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             if (itemId == R.id.nav_decks) {
                 Timber.i("Navigating to decks");
                 Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                // opening DeckPicker should use the instance on the back stack & clear back history
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityWithAnimation(deckPicker, END);
             } else if (itemId == R.id.nav_browser) {
                 Timber.i("Navigating to card browser");

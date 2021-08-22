@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">درحال بارگذاری...</string>
     <string name="sync_downloading_message">درحال بارگيري...</string>
     <string name="sync_title">همگام سازى</string>
-    <string name="sync_downloading_media">درحال دانلود رسانه %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">همگام سازی کامل از دستگاه</string>
     <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
     <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>

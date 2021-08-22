@@ -17,9 +17,11 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 
 import com.ichi2.anki.exception.OutOfSpaceException;
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService;
+import com.ichi2.utils.VersionUtils;
 
 import net.ankiweb.rsdroid.BackendException;
 import net.ankiweb.rsdroid.BackendFactory;
@@ -29,6 +31,7 @@ import java.lang.ref.WeakReference;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /** Utilities for launching the first activity (currently the DeckPicker) */
@@ -38,9 +41,21 @@ public class InitialActivity {
 
     }
 
-    @NonNull
+    /** Returns null on success */
+    @Nullable
     @CheckResult
     public static StartupFailure getStartupFailureType(Context context) {
+
+        // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
+        if (AnkiDroidApp.webViewFailedToLoad()) {
+            return StartupFailure.WEBVIEW_FAILED;
+        }
+
+        // If we're OK, return null
+        if (CollectionHelper.getInstance().getColSafe(context) != null) {
+            return null;
+        }
+
         if (!AnkiDroidApp.isSdCardMounted()) {
             return StartupFailure.SD_CARD_NOT_MOUNTED;
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
@@ -80,6 +95,7 @@ public class InitialActivity {
     /**
      * Downgrades the database at the currently selected collection path from V16 to V11 in a background task
      */
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void downgradeBackend(DeckPicker deckPicker) {
         // Note: This method does not require a backend pointer or an open collection
         Timber.i("Downgrading backend");
@@ -102,9 +118,58 @@ public class InitialActivity {
         BackendFactory.createInstance().getBackend().downgradeBackend(collectionPath);
     }
 
+    /** @return Whether any preferences were upgraded */
+    public static boolean upgradePreferences(Context context, long previousVersionCode) {
+        return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode);
+    }
+
+    /**
+     *  @return Whether a fresh install occurred and a "fresh install" setup for preferences was performed
+     *  This only refers to a fresh install from the preferences perspective, not from the Anki data perspective.
+     *
+     *  NOTE: A user can wipe app data, which will mean this returns true WITHOUT deleting their collection.
+     *  The above note will need to be reevaluated after scoped storage migration takes place
+     *
+     *
+     *  On the other hand, restoring an app backup can cause this to return true before the Anki collection is created
+     *  in practice, this doesn't occur due to CollectionHelper.getCol creating a new collection, and it's called before
+     *  this in the startup script
+     */
+    @CheckResult
+    public static boolean performSetupFromFreshInstallOrClearedPreferences(@NonNull SharedPreferences preferences) {
+        boolean lastVersionWasSet = !"".equals(preferences.getString("lastVersion", ""));
+
+        if (lastVersionWasSet) {
+            Timber.d("Not a fresh install [preferences]");
+            return false;
+        }
+
+        Timber.i("Fresh install");
+        PreferenceUpgradeService.setPreferencesUpToDate(preferences);
+        setUpgradedToLatestVersion(preferences);
+
+        return true;
+    }
+
+    /** Sets the preference stating that the latest version has been applied */
+    public static void setUpgradedToLatestVersion(@NonNull SharedPreferences preferences) {
+        Timber.i("Marked prefs as upgraded to latest version: %s", VersionUtils.getPkgVersionName());
+        preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+    }
+
+    /** @return false: The app has been upgraded since the last launch OR the app was launched for the first time.
+     * Implementation detail:
+     * This is not called in the case of performSetupFromFreshInstall returning true.
+     * So this should not use the default value
+     */
+    public static boolean isLatestVersion(SharedPreferences preferences) {
+        return preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName());
+    }
+
 
     // I disapprove, but it's best to keep consistency with the rest of the app
-    private static class PerformDowngradeTask extends AsyncTask<Void, Void, Void> {
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
+    private static class PerformDowngradeTask extends android.os.AsyncTask<Void, Void, Void> {
 
         private final WeakReference<DeckPicker> mDeckPicker;
         private Exception mException;
@@ -174,5 +239,7 @@ public class InitialActivity {
         DATABASE_DOWNGRADE_REQUIRED,
         DB_ERROR,
         DATABASE_LOCKED,
+        WEBVIEW_FAILED,
+        ;
     }
 }

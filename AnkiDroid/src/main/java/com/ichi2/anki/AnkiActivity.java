@@ -1,4 +1,4 @@
-
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki;
 
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -42,10 +43,12 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -57,8 +60,9 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
-public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
+public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
@@ -75,6 +79,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         this.mActivityName = getClass().getSimpleName();
     }
 
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.i("AnkiActivity::onCreate - %s", mActivityName);
@@ -140,11 +145,16 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Timber.i("Home button pressed");
-            finishWithoutAnimation();
-            return true;
+            return onActionBarBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected boolean onActionBarBackPressed() {
+        finishWithoutAnimation();
+        return true;
+    }
+
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
@@ -393,7 +403,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    public void openUrl(Uri url) {
+    public void openUrl(@NonNull Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
@@ -401,7 +411,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             return;
         }
 
-        int toolbarColor = Themes.getColorFromAttr(this, R.attr.customTabToolbarColor);
+        int toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary);
         int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
 
         CustomTabColorSchemeParams colorSchemeParams =
@@ -453,10 +463,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     public static void showDialogFragment(AnkiActivity activity, DialogFragment newFragment) {
+        showDialogFragment(activity.getSupportFragmentManager(), newFragment);
+    }
+
+    public static void showDialogFragment(FragmentManager manager, DialogFragment newFragment) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
-        FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         Fragment prev = manager.findFragmentByTag("dialog");
         if (prev != null) {
@@ -542,7 +555,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         // Show a notification unless all notifications have been totally disabled
-        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+        if (Integer.parseInt(prefs.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             String ticker = title;
             if (title.equals(getResources().getString(R.string.app_name))) {
@@ -568,7 +581,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(this, DeckPicker.class);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent resultPendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             // mId allows you to update the notification later on.

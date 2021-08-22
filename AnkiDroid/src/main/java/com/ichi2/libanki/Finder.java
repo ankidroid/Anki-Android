@@ -511,6 +511,15 @@ public class Finder {
         case "4":
             flag = 4;
             break;
+        case "5":
+            flag = 5;
+            break;
+        case "6":
+            flag = 6;
+            break;
+        case "7":
+            flag = 7;
+            break;
         default:
             return null;
         }

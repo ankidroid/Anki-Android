@@ -29,13 +29,14 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -184,11 +185,11 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     private void showSubDeckDialog(String parentDeckPath) {
         try {
             // create subdeck
-            Long parentId = requireAnkiActivity().getCol().getDecks().id(parentDeckPath);
+            Long parentId = getDecks().id(parentDeckPath);
             CreateDeckDialog createDeckDialog = new CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId);
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a sub deck was created
-                selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
+                selectDeckWithDeckName(getDecks().name(id));
             });
             createDeckDialog.showDialog();
         } catch (FilteredAncestor filteredAncestor) {
@@ -200,19 +201,24 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         CreateDeckDialog createDeckDialog =  new CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
         createDeckDialog.setOnNewDeckCreated((id) -> {
             // a deck was created
-            selectDeckWithDeckName(requireAnkiActivity().getCol().getDecks().name(id));
+            selectDeckWithDeckName(getDecks().name(id));
         });
         createDeckDialog.showDialog();
     }
 
     @NonNull
-    protected AnkiActivity requireAnkiActivity() {
-        return (AnkiActivity) requireActivity();
+    protected CollectionGetter requireCollectionGetter() {
+        return (CollectionGetter) requireContext();
+    }
+
+    @NonNull
+    protected Decks getDecks() {
+        return requireCollectionGetter().getCol().getDecks();
     }
 
     private void selectDeckWithDeckName(@NonNull String deckName) {
         try {
-            Long id = requireAnkiActivity().getCol().getDecks().id(deckName);
+            Long id = getDecks().id(deckName);
             SelectableDeck dec = new SelectableDeck(id, deckName);
             selectDeckAndClose(dec);
         } catch (FilteredAncestor filteredAncestor) {

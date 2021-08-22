@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Оранжевый флажок</string>
     <string name="gesture_flag_green">Зелёный флажок</string>
     <string name="gesture_flag_blue">Синий флажок</string>
+    <string name="gesture_flag_pink">Розовый флажок</string>
+    <string name="gesture_flag_turquoise">Бирюзовой флажок</string>
+    <string name="gesture_flag_purple">Фиолетовый флажок</string>
     <string name="gesture_flag_remove">Убрать флажок</string>
     <string name="gesture_page_up">На страницу вверх</string>
     <string name="gesture_page_down">На страницу вниз</string>

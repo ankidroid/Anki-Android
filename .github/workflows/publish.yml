@@ -32,7 +32,7 @@ jobs:
       - name: Install Release Utilities
         run: |
           mkdir ~/bin/
-          curl -L -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2
+          curl -L -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.10.0/linux-amd64-github-release.bz2
           cd ~/bin
           bunzip2 github-release.bz2
           chmod 755 ~/bin/github-release
@@ -48,7 +48,7 @@ jobs:
           git remote set-url origin git@github.com:$GITHUB_REPOSITORY
         shell: bash
 
-      - uses: webfactory/ssh-agent@v0.5.2
+      - uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 

@@ -90,6 +90,7 @@
     <string name="unbury">取消搁置</string>
     <string name="rename_deck">重命名</string>
     <string name="create_shortcut">创建快捷方式</string>
+    <string name="browse_cards">浏览卡片</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">添加</string>
     <string name="menu_add_note">添加笔记</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帐户</string>
@@ -101,13 +102,16 @@
     <string name="menu_bury">搁置</string>
     <string name="menu_suspend">暂停</string>
     <string name="menu_delete_note">删除笔记</string>
-    <string name="menu_flag">标志</string>
-    <string name="menu_flag_card">标志卡</string>
-    <string name="menu_flag_card_zero">无标志</string>
-    <string name="menu_flag_card_one">红色标志</string>
-    <string name="menu_flag_card_two">橙色标志</string>
-    <string name="menu_flag_card_three">绿色标志</string>
-    <string name="menu_flag_card_four">蓝色标志</string>
+    <string name="menu_flag">旗标</string>
+    <string name="menu_flag_card">为卡片设置旗标</string>
+    <string name="menu_flag_card_zero">无旗标</string>
+    <string name="menu_flag_card_one">红色旗标</string>
+    <string name="menu_flag_card_two">橙色旗标</string>
+    <string name="menu_flag_card_three">绿色旗标</string>
+    <string name="menu_flag_card_four">蓝色旗标</string>
+    <string name="menu_flag_card_five">粉色标志</string>
+    <string name="menu_flag_card_six">蓝绿色标志</string>
+    <string name="menu_flag_card_seven">紫色标志</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_select">选择文本</string>
@@ -178,7 +182,12 @@
     <string name="card_template_editor_styling">样式</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
     <string name="card_template_editor_deck_override">牌组覆盖</string>
+    <string name="card_template_editor_insert_field">插入字段</string>
+    <string name="card_template_editor_select_field">选择字段</string>
     <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="other">这将创建 %1$d 张卡片。是否继续？</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
     </plurals>
@@ -213,4 +222,7 @@
     <string name="sync_conflict_local_confirm_new">用来自AnkiDroid的卡片组替换您在AnkiWeb上的卡片组吗？</string>
     <string name="sync_conflict_title_new">选择要保留的卡片组</string>
     <string name="sync_conflict_replace_title">替换卡组集合</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="other">%1$d 张卡片 (0到期)</item>
+    </plurals>
 </resources>

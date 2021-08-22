@@ -53,6 +53,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import kotlin.Suppress;
 import timber.log.Timber;
 
 public class Toolbar extends FrameLayout {
@@ -218,6 +219,7 @@ public class Toolbar extends FrameLayout {
     }
 
 
+    @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     protected int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager()

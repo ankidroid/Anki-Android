@@ -26,21 +26,21 @@ public class PreferenceExtensionsTest {
     private static final String LAMBDA_RETURN = "LAMBDA";
 
     @Mock
-    private SharedPreferences mMockReferences;
+    private SharedPreferences mMockPreferences;
 
     @Mock
     private SharedPreferences.Editor mockEditor;
 
     private String getOrSetString(String key, Supplier<String> supplier) {
-        return PreferenceExtensions.getOrSetString(mMockReferences, key, supplier);
+        return PreferenceExtensions.getOrSetString(mMockPreferences, key, supplier);
     }
 
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        Mockito.when(mMockReferences.contains(VALID_KEY)).thenReturn(true);
-        Mockito.when(mMockReferences.getString(eq(VALID_KEY), anyString())).thenReturn(VALID_RESULT);
-        Mockito.when(mMockReferences.edit()).thenReturn(mockEditor);
+        Mockito.when(mMockPreferences.contains(VALID_KEY)).thenReturn(true);
+        Mockito.when(mMockPreferences.getString(eq(VALID_KEY), anyString())).thenReturn(VALID_RESULT);
+        Mockito.when(mMockPreferences.edit()).thenReturn(mockEditor);
         Mockito.when(mockEditor.putString(anyString(), anyString())).thenReturn(mockEditor);
     }
 

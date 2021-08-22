@@ -75,12 +75,12 @@
     <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">%2$s में %1$d पत्ते का अध्ययन किया</item>
+        <item quantity="one">आज %2$s में %1$d कार्ड का अध्ययन किया</item>
         <item quantity="other">%2$s में %1$d पत्तों का अध्ययन किया</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
-    <string name="show_answer">जवाब देखें</string>
+    <string name="show_answer">उत्तर देखें</string>
     <string name="hide_answer">उत्तर छिपाएं</string>
     <string name="ease_button_again">फिर से</string>
     <string name="ease_button_hard">कठिन</string>
@@ -95,24 +95,28 @@
     <string name="unbury">स्थगित से वापस लाएं</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
+    <string name="browse_cards">कार्ड ढुंढे</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
     <string name="menu_bury_card">पत्ता स्थगित करें</string>
     <string name="menu_bury_note">नोट स्थगित करें</string>
-    <string name="menu_suspend_card">कार्ड को निलंबित</string>
+    <string name="menu_suspend_card">पत्ता निलंबित करें</string>
     <string name="menu_suspend_note">नोट निलंबित करें</string>
     <string name="menu_bury">स्थगित करें</string>
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
-    <string name="menu_flag">झंडा</string>
+    <string name="menu_flag">ध्वज</string>
     <string name="menu_flag_card">कार्ड को ध्वजांकित करें</string>
-    <string name="menu_flag_card_zero">कोई झंडा नहीं</string>
-    <string name="menu_flag_card_one">लाल झंडा</string>
-    <string name="menu_flag_card_two">नारंगी झंडा</string>
-    <string name="menu_flag_card_three">हरा झंडा</string>
-    <string name="menu_flag_card_four">नीला झंडा</string>
+    <string name="menu_flag_card_zero">कोई ध्वज नहीं</string>
+    <string name="menu_flag_card_one">लाल ध्वज</string>
+    <string name="menu_flag_card_two">नारंगी ध्वज</string>
+    <string name="menu_flag_card_three">हरा ध्वज</string>
+    <string name="menu_flag_card_four">नीला ध्वज</string>
+    <string name="menu_flag_card_five">गुलाबी ध्वज</string>
+    <string name="menu_flag_card_six">फ़ीरोज़ा ध्वज</string>
+    <string name="menu_flag_card_seven">बैंगनी ध्वज</string>
     <string name="menu_edit_tags">टैग संपादित करें</string>
     <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
     <string name="menu_select">पाठ का चयन करें</string>
@@ -183,12 +187,18 @@
     <string name="card_template_editor_styling">स्टाइल</string>
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउज़र का दिखाव</string>
     <string name="card_template_editor_deck_override">डेक ओवरराइड</string>
+    <string name="card_template_editor_insert_field">फ़ील्ड डालें</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटाएं?</item>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
-    <string name="invalid_template">कोई कार्ड जनरेट नहीं किया जा सका</string>
+    <string name="invalid_template">एक पत्ता उत्पन्न नहीं किया जा सका</string>
     <string name="card_template_editor_would_delete_note">इस कार्ड के प्रकार को हटाने से एक या अधिक नोट हटा दिए जाएंगे। कृपया पहले एक नया कार्ड बनाएं और सहेजें।</string>
     <string name="card_template_editor_save_error">कार्ड टेम्प्लेट परिवर्तन सहेजने में असमर्थ: %s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">AnkiDroid पर अपने संग्रह को AnkiWeb के अपने संग्रह से बदलें?</string>
     <string name="sync_conflict_title_new">रखने के लिए संग्रह का चयन करें</string>
     <string name="sync_conflict_replace_title">संग्रह बदलें</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

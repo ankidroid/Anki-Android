@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Se încarcă&#8230;</string>
     <string name="sync_downloading_message">Descărcare&#8230;</string>
     <string name="sync_title">Sincronizare</string>
-    <string name="sync_downloading_media">Descărcare media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
     <string name="sync_log_clocks_unsynchronized">Ceasul off de %1$d seconds%2$s. Asiguraţi-vă că data, ora şi fusul orar pe telefon sunt stabilite corect, apoi sincronizați din nou.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, fusul orar este eventual, greşit</string>

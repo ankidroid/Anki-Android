@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">Chuyển đổi cờ màu cam</string>
     <string name="gesture_flag_green">Chuyển đổi cờ xanh</string>
     <string name="gesture_flag_blue">Chuyển đổi cờ xanh dương</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Xoá cờ</string>
     <string name="gesture_page_up">Trang lên</string>
     <string name="gesture_page_down">Trang dưới</string>

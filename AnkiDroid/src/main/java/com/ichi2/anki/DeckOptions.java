@@ -42,6 +42,7 @@ import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
@@ -380,7 +381,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.put("reminder", reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                                final PendingIntent reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
                                         getApplicationContext(),
                                         (int) mOptions.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra
@@ -411,7 +412,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.put("reminder", reminder);
 
                                 final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+                                final PendingIntent reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
                                         getApplicationContext(),
                                         (int) mOptions.getLong("id"),
                                         new Intent(getApplicationContext(), ReminderService.class).putExtra

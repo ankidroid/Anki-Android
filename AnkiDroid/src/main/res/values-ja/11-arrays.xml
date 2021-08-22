@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">橙フラグを付ける/取り外す</string>
     <string name="gesture_flag_green">緑フラグを付ける/取り外す</string>
     <string name="gesture_flag_blue">青フラグを付ける/取り外す</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">フラグを取り外す</string>
     <string name="gesture_page_up">１画面分上へスクロール</string>
     <string name="gesture_page_down">１画面分下へスクロール</string>

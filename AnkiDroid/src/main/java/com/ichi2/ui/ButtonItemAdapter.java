@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 /*
  * The MIT License (MIT)
 

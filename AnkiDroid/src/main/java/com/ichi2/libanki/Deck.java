@@ -21,14 +21,29 @@ import com.ichi2.utils.JSONObject;
 import androidx.annotation.CheckResult;
 
 public class Deck extends JSONObject {
+    /**
+     * Creates a copy from {@link JSONObject} and use it as a string
+     *
+     * This function will perform deepCopy on the passed object
+     *
+     * @see Deck#from(JSONObject) if you want to create a
+     *                            Deck without deepCopy
+     */
     public Deck(JSONObject json) {
         super(json);
     }
 
+    /**
+     * Creates a deck object form a json string
+     */
     public Deck(String json) {
         super(json);
     }
 
+
+    /**
+     * Creates a new empty deck object
+     */
     public Deck() {
         super();
     }

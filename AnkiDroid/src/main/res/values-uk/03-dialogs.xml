@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="initializing_tts">Ініціалізація TTS&#8230;</string>
     <string name="tts_no_tts">Не говорити</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid - додаток для карток, повністю сумісний з комп\'ютерною програмою <a href=\"%2$s\">Anki</a>. Ви можете створювати, завантажувати та вивчати матеріал як на AnkiDroid, так і на Anki Desktop, і з легкістю синхронізувати їх за допомогою AnkiWeb.]]></item>
         <item><![CDATA[Щоб допомогти нам зробити AnkiDroid кращим, будь ласка, повідомте про помилки до <a href=\"%1$s\"> баг трекеру</a>; ідеї нових функцій також дуже вітаються. Знайдіть відповіді на <a href=\"%2$s\"> вікі</a> або почніть обговорення на <a href=\"%3$s\"> форумі</a>.]]></item>
@@ -244,6 +245,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Приватність</string>
+    <string name="help_item_ankidroid_privacy_policy">Політика конфіденційності AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Політика конфіденційності AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Умови використання AnkiWeb</string>
     <string name="help_title_send_exception">Надіслати звіт про несправності</string>
     <string name="help_dialog_exception_report_debounce">Звіт вже надіслано</string>
     <!--Sync-->

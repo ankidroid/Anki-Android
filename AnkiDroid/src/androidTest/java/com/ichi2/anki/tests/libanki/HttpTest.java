@@ -27,6 +27,7 @@ public class HttpTest {
 
 
     @Test
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void testLogin() {
 
         String username = "AnkiDroidInstrumentedTestUser";

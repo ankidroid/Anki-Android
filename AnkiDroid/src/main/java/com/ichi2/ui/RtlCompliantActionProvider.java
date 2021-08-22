@@ -89,6 +89,8 @@ public class RtlCompliantActionProvider extends ActionProvider {
         iconDrawable.setAutoMirrored(true);
         actionView.setImageDrawable(iconDrawable);
 
+        actionView.setId(R.id.action_undo);
+
         // Add top and bottom padding of 16 dp
         actionView.setPadding(0, (int) (UIUtils.convertDpToPixel(16f, mContext)),
                 0, (int) (UIUtils.convertDpToPixel(16f, mContext)));

@@ -81,7 +81,7 @@
     <string name="multimedia_editor_text_field_editing_no_text">Nejprve zadejte nějaký text</string>
     <string name="multimedia_editor_text_field_editing_many_words">Slovník obvykle očekává jedno slovo</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Od</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">Vzít z</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Počkejte</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
+    <string name="multimedia_editor_png_paste_error">Chyba při převodu obrázku ve schránce na png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Připojit multimediální obsah k poli %1$s</string>
     <string name="multimedia_editor_attach_media">Připojit multimédia</string>
     <!-- Audio view -->

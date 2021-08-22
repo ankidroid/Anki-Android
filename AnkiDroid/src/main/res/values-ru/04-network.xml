@@ -62,18 +62,17 @@
     <string name="reset_password">Сбросить пароль</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Настройки</string>
-    <string name="deckpreferences_title">Опции для XXX</string>
+    <string name="deckpreferences_title">Параметры для XXX</string>
     <string name="sync_prepare_syncing">Подготавливается синхронизация&#8230;</string>
     <string name="sync_preparing_full_sync_message">Подготавливается полная синхронизация&#8230;</string>
     <string name="sync_uploading_message">Выгружается&#8230;</string>
     <string name="sync_downloading_message">Загружается&#8230;</string>
     <string name="sync_title">Синхронизация</string>
-    <string name="sync_downloading_media">Загружаются медиафайлы%1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
     <string name="sync_log_clocks_unsynchronized">Часы устройства сбиты на %1$d с %2$s. Проверьте, что дата, время и часовой пояс выставлены правильно и попробуйте снова.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, неверный часовой пояс</string>
     <string name="sync_log_clocks_unsynchronized_date">, неверная дата</string>
-    <string name="sync_no_changes_message">Изменений не найдено</string>
+    <string name="sync_no_changes_message">Изменений нет</string>
     <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
     <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>
     <string name="sync_corrupt_database">База данных повреждена. Попробуйте исправить её и синхронизироваться опять.\n\nОб исправлении см. %s.</string>
@@ -87,7 +86,7 @@
     <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>
     <string name="sync_finish_message">Синхронизация заканчивается&#8230;</string>
     <string name="sync_log_finish_error">Ошибка при отправке на сервер команды завершения</string>
-    <string name="sync_writing_db">Изменения записываются в базу данных&#8230;</string>
+    <string name="sync_writing_db">Изменения записываются&#8230;</string>
     <string name="sync_download_chunk">Изменения загружаются&#8230;</string>
     <string name="sync_upload_chunk">Изменения выгружаются&#8230;</string>
     <string name="sync_up_down_size">Выгружено: %1$d кБ,\nзагружено: %2$d кБ</string>
@@ -95,7 +94,7 @@
     <string name="sync_check_upload_file">Файл проверяется перед выгрузкой&#8230;</string>
     <string name="sync_check_download_file">Проверяется загруженный файл&#8230;</string>
     <string name="sync_media_find">Медиафайлы сравниваются&#8230;</string>
-    <string name="sync_media_no_changes">В медифайлах нет изменений</string>
+    <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
     <string name="sync_media_success">Медиафайлы сихронизированы</string>
     <string name="sync_media_changes_count">Будут выгружены %d изменённых медиафайлов</string>
     <string name="sync_media_downloaded_count">%d медиафайлов загружено</string>
@@ -120,7 +119,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
     <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
-    <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
+    <string name="sync_menu_title_full_sync">Синхро (полностью)</string>
+    <string name="sync_menu_title_no_account">Синхро (войти)</string>
     <string name="sync_error_unknown_host_readable">Не удалось подключиться к AnkiWeb. Ваш интернет работает?\n\n%s</string>
 </resources>

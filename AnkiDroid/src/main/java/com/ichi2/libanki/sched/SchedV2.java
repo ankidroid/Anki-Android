@@ -2047,6 +2047,7 @@ public class SchedV2 extends AbstractSched {
                 card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
         } else {
+            //noinspection WrongConstant
             card.setQueue(card.getType());
         }
     }

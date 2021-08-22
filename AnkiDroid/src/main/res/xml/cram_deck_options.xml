@@ -34,6 +34,22 @@
             android:key="order"
             android:title="@string/deck_conf_cram_order" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/deck_conf_cram_filter" android:key="secondFilter" android:enabled="false">
+        <EditTextPreference
+            android:key="search_2"
+            android:title="@string/deck_conf_cram_search" />
+
+        <com.ichi2.preferences.IncrementerNumberRangePreference
+            android:key="limit_2"
+            android:numeric="integer"
+            android:title="@string/deck_conf_cram_limit"
+            app:max="99999"
+            app:min="1" />
+
+        <ListPreference
+            android:key="order_2"
+            android:title="@string/deck_conf_cram_order" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/study_options" android:key="studyOptions" >
         <CheckBoxPreference
             android:defaultValue="true"
@@ -51,6 +67,10 @@
             android:key="steps"
             android:title="@string/deck_conf_cram_steps"
             app:allowEmpty="false" />
-    </PreferenceCategory>
 
+        <CheckBoxPreference
+            android:key="filterSecond"
+            android:summary="@string/deck_conf_cram_filter_2_check"
+            android:title="@string/deck_conf_cram_filter" />
+    </PreferenceCategory>
 </PreferenceScreen>

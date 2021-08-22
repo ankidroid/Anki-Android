@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Teksto perskaityti nurodyta kalba negalime</string>
     <string name="initializing_tts">Pradedamas teksto skaitymas balsu&#8230;</string>
     <string name="tts_no_tts">Nekalbėkite</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Atminties kortelės „Android“ sistemai</h2>AnkiDroid tai mokymosi kortelių programa, kurią galite naudoti ir kompiuteriu <a href=\"%2$s\">„Anki“</a>. Medžiagą galite kurti, parsisiųsti ir mokytis naudodami tiek „AnkiDroid“ mobiliąją, tiek „Anki“ kompiuterinę versiją, kurios tarpusavyje yra susinchronizuojamos prisijungus prie „AnkiWeb“ svetainės.]]></item>
         <item><![CDATA[Norėdami mums padėti tobulinti „AnkiDroid“ programą, prašome pranešti apie pastebėtas klaidas <a href=\"%1$s\">problemų registratoriui</a>. Taip pat laukiame naujų idėjų. Atsakymus į kilusius klausimus rasite <a href=\"%2$s\">wiki</a> svetainėje, o padiskutuoti galite mūsų <a href=\"%3$s\">forume</a>.]]></item>
@@ -244,6 +245,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->

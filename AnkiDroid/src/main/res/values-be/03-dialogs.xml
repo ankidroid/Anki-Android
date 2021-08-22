@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="initializing_tts">Ініцыялізацыя сінтэзу маўлення...</string>
     <string name="tts_no_tts">Не прамаўляць</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/>Навучальныя карткі для Android</h2>AnkiDroid - гэта праграма навучальных картак, якая цалкам сумяшчальная з версіяй праграмы для настольных камп\'ютараў <a href=\"%2$s\"> Anki</a>. Стварайце, пампуйце і вучыце матэрыял на любой прыладзе, а потым з лёгкасцю сінхранізуйце іх з дапамогай AnkiWeb.]]></item>
         <item><![CDATA[Для таго, каб дапамагчы зрабіць нам праграму яшчэ лепш, калі ласка, адпраўляйце справаздачы пра памылкі <a href=\"%1$s\">ў цэнтр адсочвання праблем</a>; мы таксама вітаем прапановы новых магчымасцяў у праграме. Шукайце адказы ў <a href=\"%2$s\">Wikipedia</a> або пачніце абмеркаванне на <a href=\"%3$s\">форуме</a>.]]></item>
@@ -206,14 +207,14 @@
     <string name="incompatible_database_version_title">Несумяшчальная версія базы даных</string>
     <string name="incompatible_database_version_summary">База даных была створана ў больш новай версіі праграмы і ў дадзены час з ёй немагчыма працаваць. Паспрабуйце абнавіць AnkiDroid або панізіць версію базы даных, каб адкрыць яе\n\nВерсія, якая падтрымліваецца: %1$d\nВерсія базы даных:%2$d\n\nНаступныя  параметры аднаўлення перазапішуць вашу бягучую калекцыю, магчыма з сумяшчальнай версіяй базы даных.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Фонавы відарыс ужыты</string>
-    <string name="background_image_removed">Фонавы відарыс выдалены</string>
+    <string name="background_image_applied">Фонавая выява ўжыта</string>
+    <string name="background_image_removed">Фонавая выява выдалена</string>
     <string name="no_image_selected">Ніводная выява не выбрана</string>
-    <string name="error_selecting_image">Памылка выбару відарыса. Калі ласка, звярніцеся да даведніка. %s</string>
+    <string name="error_selecting_image">Памылка выбару выявы. Калі ласка, звярніцеся да даведніка. %s</string>
     <string name="error_deleting_image">Памылка выдалення выявы</string>
     <string name="failed_to_apply_background_image">Памылка дастасавання фонавай выявы %s</string>
-    <string name="background_image_too_large">Фонавы відарыс надта вялікі</string>
-    <string name="image_max_size_allowed">Максімальны памер відарысу можа складаць %d МБ</string>
+    <string name="background_image_too_large">Фонавая выява надта вялікая</string>
+    <string name="image_max_size_allowed">Максімальны памер выявы можа складаць %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Няма дазволу на доступ да сховішча. Дайце неабходныя дазволы, а потым паўтарыце дзеянне.</string>
@@ -244,6 +245,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Прыватнасць</string>
+    <string name="help_item_ankidroid_privacy_policy">Палітыка прыватнасці AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Палітыка прыватнасці AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Умовы і палажэнні AnkiWeb</string>
     <string name="help_title_send_exception">Адправіць справаздачу пра няспраўнасць</string>
     <string name="help_dialog_exception_report_debounce">Справаздача ўжо адпраўлялася</string>
     <!--Sync-->

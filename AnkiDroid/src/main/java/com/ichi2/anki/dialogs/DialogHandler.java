@@ -77,7 +77,8 @@ public class DialogHandler extends Handler {
 
     final WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
-    
+
+    @SuppressWarnings("deprecation") //  #7111: new Handler() - using default constructor
     public DialogHandler(AnkiActivity activity) {
         // Use weak reference to main activity to prevent leaking the activity when it's closed
         mActivity = new WeakReference<>(activity);

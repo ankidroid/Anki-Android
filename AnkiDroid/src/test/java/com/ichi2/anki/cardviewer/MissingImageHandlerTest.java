@@ -1,5 +1,6 @@
 /*
  *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2021 Kael Madar <itsybitsyspider@madarhome.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -113,11 +116,62 @@ public class MissingImageHandlerTest {
         mSut.processFailure(invalidRequest, consumer);
     }
 
+    private void processMissingSound(File file, @NonNull FunctionalInterfaces.Consumer<String> onFailure) {
+        mSut.processMissingSound(file, onFailure);
+    }
+
+    private void processInefficientImage(Runnable onFailure) {
+        mSut.processInefficientImage(onFailure);
+    }
+
 
     @Test
     public void uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg"), (f) -> { throw new RuntimeException("expected"); });
         assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
+    }
+
+
+    @Test
+    public void testMissingSound_NullFile() {
+        processMissingSound(null, defaultHandler());
+        assertThat(mTimesCalled, is(0));
+    }
+
+    @Test
+    public void testThirdSoundIsIgnored() {
+        //Tests that the third call to processMissingSound is ignored
+        FunctionalInterfaces.Consumer<String> handler = defaultHandler();
+        processMissingSound(new File("example.wav"), handler);
+        mSut.onCardSideChange();
+        processMissingSound(new File("example2.wav"), handler);
+        mSut.onCardSideChange();
+        processMissingSound(new File("example3.wav"), handler);
+
+        assertThat(mTimesCalled, is(2));
+        assertThat(mFileNames, contains("example.wav", "example2.wav"));
+    }
+
+    @Test
+    public void testMissingSound_ExceptionCaught() {
+        assertDoesNotThrow(() -> processMissingSound(new File("example.wav"), (f) -> { throw new RuntimeException("expected");}));
+    }
+
+    @Test
+    public void testInefficientImage() {
+        //Tests that the runnable passed to processInefficientImage only runs once
+        class runTest implements Runnable {
+            private int nTimesRun = 0;
+            @Override
+            public void run() {
+                nTimesRun++;
+            }
+            public int getNTimesRun() { return nTimesRun; }
+        }
+        runTest runnableTest = new runTest();
+        processInefficientImage(runnableTest);
+        processInefficientImage(runnableTest);
+        assertThat(runnableTest.getNTimesRun(), is(1));
     }
 
 

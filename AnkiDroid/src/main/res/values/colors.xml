@@ -31,6 +31,7 @@
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="semi_transparent_black">#80000000</color>
 
     <color name="answer_buttons_highlight_color">#66FFFFFF</color>
 
@@ -109,10 +110,17 @@
     <color name="flag_orange">#FF9800</color>
     <color name="flag_green">#00ff00</color>
     <color name="flag_blue">#0000ff</color>
+    <color name="flag_pink">#ff82ee</color>
+    <color name="flag_turquoise">#00d1b5</color>
+    <color name="flag_purple">#9649dd</color>
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
 
     <color name="fab_background">#777</color>
+
+    <color name="popup_background_theme_dark">#434343</color>
+    <color name="popup_background_theme_black">#252525</color>
+
 </resources>
 

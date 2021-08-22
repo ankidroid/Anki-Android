@@ -429,12 +429,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<List<String>> check() {
+    public @NonNull List<List<String>> check() {
         return check(null);
     }
 
 
-    private List<List<String>> check(File[] local) {
+    private @NonNull List<List<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();

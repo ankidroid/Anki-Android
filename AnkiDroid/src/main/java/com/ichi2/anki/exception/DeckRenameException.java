@@ -1,4 +1,4 @@
-
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.exception;
 
 import android.content.res.Resources;

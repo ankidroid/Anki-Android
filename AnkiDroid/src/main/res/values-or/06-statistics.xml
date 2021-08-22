@@ -56,7 +56,7 @@
     <string name="stats_cumulative">ସମ୍ମିଳିତ</string>
     <string name="stats_cumulative_percentage">ସମ୍ମିଳିତ ଶତକଡା</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">ସମ୍ମିଳିତ ସଠିକ୍ %</string>
-    <string name="stats_answers">ଉତ୍ତରଗୁଡିକ</string>
+    <string name="stats_answers">ଉତ୍ତରଗୁଡ଼ିକ</string>
     <string name="stats_minutes">ମିନିଟ୍</string>
     <string name="stats_hours">ଘଣ୍ଟା</string>
     <string name="stats_percentage">ଶତକଡ଼ା</string>
@@ -80,12 +80,12 @@
     <string name="stats_overview_days_studied">ଅଧ୍ୟୟନ ଦିନସଂଖ୍ୟା: &lt;b&gt;%1$d&lt;/b&gt; (%3$d ରୁ %2$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">ଅଧ୍ୟୟନ କରାଯାଇଥିବା ଦିନଗୁଡ଼ିକ ପାଇଁ ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt;; ସମୀକ୍ଷା/ଦିନ</string>
     <string name="stats_overview_reviews_per_day_all">ଯଦି ଆପଣ ପ୍ରତିଦିନ ଅଧ୍ୟୟନ କରନ୍ତି: &lt;b&gt;%1$.1f&lt;/b&gt; ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="stats_overview_total_time_in_period">ସମୁଦାୟ: &lt;b&gt;%d&lt;/b&gt; ମିନିଟ୍</string>
+    <string name="stats_overview_total_time_in_period">ମୋଟ: &lt;b&gt;%d&lt;/b&gt; ମିନିଟ୍</string>
     <string name="stats_overview_time_per_day_studydays">ଅଧ୍ୟୟନ କରାଯାଇଥିବା ଦିନଗୁଡ଼ିକ ପାଇଁ ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ମିନିଟ୍/ଦିନ</string>
     <string name="stats_overview_time_per_day_all">ଯଦି ଆପଣ ପ୍ରତିଦିନ ଅଧ୍ୟୟନ କରନ୍ତି: &lt;b&gt;%1$.1f&lt;/b&gt;ମିନିଟ୍/ଦିନ</string>
     <string name="stats_overview_average_answer_time">ହାରାହାରି ଉତ୍ତର ସମୟ : &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; ପତ୍ର/ମିନିଟ୍)</string>
     <string name="stats_overview_new_cards_per_day">ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ପତ୍ର/ଦିନ</string>
-    <string name="stats_overview_total_new_cards">ସମୁଦାୟ: &lt;b&gt;%1$d&lt;/b&gt; ଟି ପତ୍ର </string>
+    <string name="stats_overview_total_new_cards">ମୋଟ: &lt;b&gt;%1$d&lt;/b&gt;ଟି ପତ୍ର </string>
     <string name="stats_overview_average_interval">"ହାରାହାରି ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_longest_interval">"ଦୀର୍ଘତମ ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; ବର୍ଷ</string>
@@ -111,8 +111,8 @@
     <string name="stats_forecast">ପୂର୍ବାନୁମାନ</string>
     <string name="stats_review_count">ସମୀକ୍ଷା ଗଣନା</string>
     <string name="stats_review_time">ସମୀକ୍ଷା ସମୟ</string>
-    <string name="stats_added" comment="Label of the number of added card">ଯୋଡ଼ା ଯାଇଛି</string>
-    <string name="stats_review_intervals">ଅନ୍ତରାଳ </string>
+    <string name="stats_added" comment="Label of the number of added card">ଯୋଡ଼ାଯାଇଛି</string>
+    <string name="stats_review_intervals">ଅନ୍ତରାଳ</string>
     <string name="stats_breakdown">ଘଣ୍ଟାକ୍ରମେ ଦେଖିବା</string>
     <string name="stats_weekly_breakdown">ସପ୍ତାହକ୍ରମେ ଦେଖିବା </string>
     <string name="stats_answer_buttons">ଉତ୍ତର ବଟନ୍</string>

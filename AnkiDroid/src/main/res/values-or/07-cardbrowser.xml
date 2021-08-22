@@ -48,8 +48,8 @@
     <string name="card_browser_suspend_card">କାର୍ଡଗୁଡ଼ିଙ୍କୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
     <string name="card_browser_unsuspend_card">କାର୍ଡଗୁଡ଼ିଙ୍କୁ ଅନିଲମ୍ବିତ କରନ୍ତୁ</string>
-    <string name="card_browser_mark_card">ନୋଟଗୁଡ଼ିଙ୍କୁ ଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିଙ୍କୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
+    <string name="card_browser_mark_card">ନୋଟଗୁଡ଼ିକୁ ଚିନ୍ହିତ କରନ୍ତୁ</string>
+    <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିକୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="delete_card_title">ନୋଟ୍ ଅପସାରଣ କରିବେ କି?</string>
     <string name="changed_deck_message">%sକୁ ଘୁଞ୍ଚିଗଲା</string>
     <string name="card_browser_show_marked">ଚିହ୍ନିତ (କାର୍ଡ) ଛାଣନ୍ତୁ</string>

@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.canhub.cropper.CropImageActivity;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardInfo;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
@@ -37,6 +38,7 @@ import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.Previewer;
 import com.ichi2.anki.Reviewer;
+import com.ichi2.anki.SharedDecksActivity;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.VideoPlayer;
@@ -77,6 +79,7 @@ public class ActivityList {
                 get(MyAccount.class),
                 get(Preferences.class),
                 get(DeckOptions.class),
+                get(CropImageActivity.class),
                 get(FilteredDeckOptions.class),
                 // Info has unhandled intents
                 get(Info.class),
@@ -90,7 +93,8 @@ public class ActivityList {
                 get(LoadPronounciationActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
-                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor)
+                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
+                get(SharedDecksActivity.class)
         );
     }
 

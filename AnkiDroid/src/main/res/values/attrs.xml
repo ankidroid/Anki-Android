@@ -97,11 +97,17 @@
     <attr name="flagOrange" format="color"/>
     <attr name="flagGreen" format="color"/>
     <attr name="flagBlue" format="color"/>
+    <attr name="flagPink" format="color"/>
+    <attr name="flagTurquoise" format="color"/>
+    <attr name="flagPurple" format="color"/>
     <!-- Note editor colors -->
     <attr name="duplicateColor" format="color"/>
     <attr name="editTextBackgroundColor" format="color"/>
     <attr name="toolbarBackgroundColor" format="color"/>
     <attr name="toolbarIconColor" format="color"/>
+    <attr name="buttonShadowColor" format="color"/>
+    <attr name="buttonRippleColor" format="color"/>
+    <attr name="buttonForegroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
     <attr name="attachFileImage" format="integer"/>
@@ -115,6 +121,7 @@
     <attr name="fab_labelsTextColor" format="color">#fff</attr>
     <attr name="fab_item_background" format="reference"/>
     <!--Custom Tabs colors-->
-    <attr name="customTabToolbarColor" format="color"/>
     <attr name="customTabNavBarColor" format="color"/>
+    <!-- Popup menus' background color -->
+    <attr name="popupBackgroundColor" format="reference"/>
 </resources>

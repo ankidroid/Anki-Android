@@ -17,6 +17,7 @@
 package com.ichi2.async;
 
 import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.RunInBackground;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,7 @@ public class CollectionTaskSearchCardsTest extends AbstractCollectionTaskTest {
 
     @SuppressWarnings("unchecked")
     @Test
+    @RunInBackground
     public void searchCardsNumberOfResultCount() {
         addNoteUsingBasicModel("Hello", "World");
         addNoteUsingBasicModel("One", "Two");

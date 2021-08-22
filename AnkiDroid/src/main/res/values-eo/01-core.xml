@@ -80,7 +80,7 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">enigu respondon</string>
-    <string name="show_answer">montri respondon</string>
+    <string name="show_answer">Montri respondon</string>
     <string name="hide_answer">Kaŝi respondon</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
@@ -95,6 +95,7 @@
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
     <string name="create_shortcut">Krei simbolan ligilon</string>
+    <string name="browse_cards">Foliumi kartojn</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
@@ -113,6 +114,9 @@
     <string name="menu_flag_card_two">Oranĝa flago</string>
     <string name="menu_flag_card_three">Verda flago</string>
     <string name="menu_flag_card_four">Blua flago</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_select">Elekti tekston</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">Stilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspekto de kart-foliumilo</string>
     <string name="card_template_editor_deck_override">Superskribi kartaron</string>
+    <string name="card_template_editor_insert_field">Eniga kampo</string>
+    <string name="card_template_editor_select_field">Elekta kampo</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ĉu forigi la tipon de kartoj “%2$s” kaj ĝian %1$d karton?</item>
         <item quantity="other">Ĉu vi volas forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">Ĉu anstataŭigi vian foran kolekton AnkiWeb per via loka kolekto el AnkiDroid?</string>
     <string name="sync_conflict_title_new">Elektu kolekton por konservi</string>
     <string name="sync_conflict_replace_title">Anstataŭigi kolekton</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d karto (0 lernenda)</item>
+        <item quantity="other">%1$d kartoj (0 lernenda)</item>
+    </plurals>
 </resources>

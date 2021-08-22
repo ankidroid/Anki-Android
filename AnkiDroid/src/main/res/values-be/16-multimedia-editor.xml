@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Пачакайце</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Нешта пайшло не так</string>
+    <string name="multimedia_editor_png_paste_error">Памылка канвертацыі выявы ў PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Дадаць змесціва з мультымедыя да поля %1$s</string>
     <string name="multimedia_editor_attach_media">Дадаць Media-файл</string>
     <!-- Audio view -->
@@ -117,9 +118,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">Няма злучэння</string>
     <!-- Crop function-->
-    <string name="crop_image">Хочаце абрэзаць гэты відарыс?</string>
-    <string name="crop_button">Абрэзаць відарыс</string>
-    <string name="save_dialog_content">Памер бягучага відарыса складае %s МБ. Па змаўчанні памер відарыса абмежаваны да 1 МБ. Хочаце абрэзаць гэты відарыс?</string>
-    <string name="select_image_failed">"Не атрымалася выбраць відарыс. Паўтарыце спробу"</string>
+    <string name="crop_image">Хочаце абрэзаць гэту выяву?</string>
+    <string name="crop_button">Абрэзаць выяву</string>
+    <string name="save_dialog_content">Памер бягучай выявы складае %s МБ. Па змаўчанні памер выявы абмежаваны да 1 МБ. Хочаце абрэзаць гэту выяву?</string>
+    <string name="select_image_failed">"Не атрымалася выбраць выяву. Паўтарыце спробу"</string>
     <string name="activity_result_unexpected">Праграма вярнула нечаканае значэнне. Паспрабуйце скарыстацца іншай праграмай</string>
 </resources>

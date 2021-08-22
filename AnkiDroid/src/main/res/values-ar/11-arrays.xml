@@ -59,7 +59,7 @@
         <item>التأخير النسبي</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>استخدام شَدّة أوراق الحالية</item>
+        <item>استخدام الرزمة الحالية</item>
         <item>تقرير حسب نوع الملحوظة</item>
     </string-array>
     <string-array name="new_spread_labels">
@@ -107,6 +107,9 @@
     <string name="gesture_flag_orange">تفعيل المؤشر البرتقالي</string>
     <string name="gesture_flag_green">تفعيل المؤشر الأخضر</string>
     <string name="gesture_flag_blue">تفعيل المؤشر الأزرق</string>
+    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">إزالة المؤشر</string>
     <string name="gesture_page_up">تمرير صفحة إلى الأعلى</string>
     <string name="gesture_page_down">تمرير صفحة إلى الأسفل</string>

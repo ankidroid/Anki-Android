@@ -21,23 +21,21 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
+import com.ichi2.anki.servicelayer.DebugInfoService;
 import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.utils.ViewGroupUtils;
-
-import org.acra.util.Installation;
 
 import timber.log.Timber;
 
@@ -70,8 +68,8 @@ public class Info extends AnkiActivity {
         int mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (mType == TYPE_NEW_VERSION) {
-            AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                    .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this.getBaseContext());
+            InitialActivity.setUpgradedToLatestVersion(prefs);
         }
 
         setContentView(R.layout.info);
@@ -195,31 +193,7 @@ public class Info extends AnkiActivity {
      * @return debugInfo
      */
     public String copyDebugInfo() {
-        String schedName = "Not found";
-        try {
-            schedName = getCol().getSched().getName();
-        } catch (Throwable e) {
-            Timber.e(e, "Sched name not found");
-        }
-
-        Boolean dbV2Enabled = null;
-        try {
-            dbV2Enabled = getCol().isUsingRustBackend();
-        } catch (Throwable e) {
-            Timber.w(e, "Unable to detect Rust Backend");
-        }
-
-        String webviewUserAgent = getWebviewUserAgent();
-        String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
-                "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
-                "Manufacturer = " + Build.MANUFACTURER + "\n\n" +
-                "Model = " + Build.MODEL + "\n\n" +
-                "Hardware = " + Build.HARDWARE + "\n\n" +
-                "Webview User Agent = " + webviewUserAgent + "\n\n" +
-                "ACRA UUID = " + Installation.id(this) + "\n\n" +
-                "Scheduler = " + schedName + "\n\n" +
-                "Crash Reports Enabled = " + isSendingCrashReports() + "\n\n" +
-                "DatabaseV2 Enabled = " + dbV2Enabled + "\n";
+        String debugInfo = DebugInfoService.getDebugInfo(this, this::getCol);
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
@@ -231,18 +205,6 @@ public class Info extends AnkiActivity {
         return debugInfo;
     }
 
-    private String getWebviewUserAgent() {
-        try {
-            return new WebView(this).getSettings().getUserAgentString();
-        } catch (Throwable e) {
-            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent");
-        }
-        return null;
-    }
-
-    private boolean isSendingCrashReports() {
-        return AnkiDroidApp.isAcraEnbled(this, false);
-    }
 
     @Override
     public void onBackPressed() {

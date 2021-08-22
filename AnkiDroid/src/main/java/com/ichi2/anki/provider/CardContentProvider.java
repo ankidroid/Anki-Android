@@ -1108,7 +1108,7 @@ public class CardContentProvider extends ContentProvider {
                 return null;
             }
 
-            FileUtil.internalizeUri(fileUri, null, tempFile, cR);
+            FileUtil.internalizeUri(fileUri, tempFile, cR);
 
             String fname = media.addFile(tempFile);
             Timber.d("insert -> MEDIA: fname = %s", fname);
@@ -1448,7 +1448,7 @@ public class CardContentProvider extends ContentProvider {
 
     private void throwSecurityException(String methodName, Uri uri) {
         String msg = String.format("Permission not granted for: %s", getLogMessage(methodName, uri));
-        Timber.e(msg);
+        Timber.e("%s", msg);
         throw new SecurityException(msg);
     }
 

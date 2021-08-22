@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
-    <string name="note_editor_set_field_language">फ़ील्ड भाषा सेट करें</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोज डिलीट केवल क्लोज नोट टाइप पर काम करेगा</string>
     <string name="saving_facts">नोट सहेजने</string>
@@ -150,7 +149,7 @@
     <string name="empty_cards">खाली कार्ड</string>
     <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
     <string name="empty_card_warning">यह कार्ड खाली है । डेक सूची स्क्रीन पर मेनू से \"खाली कार्ड\" विकल्प का उपयोग करें ।</string>
-    <string name="unknown_type_field_warning">प्रकार उत्तर: अज्ञात फ़ील्ड %s</string>
+    <string name="unknown_type_field_warning">उत्तर टाइप करें: अज्ञात फ़ील्ड %s</string>
     <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
     <string name="show_hint">%s दिखाएं</string>
     <string name="info_rate">दर AnkiDroid</string>
@@ -328,7 +327,7 @@
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">क्षैतिज रेखा डालें</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_heading">शीर्षक डालें</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
@@ -350,4 +349,19 @@
     <string name="email_id_empty">ई-मेल पते की आवश्यकता है</string>
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
     <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

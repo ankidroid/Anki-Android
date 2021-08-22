@@ -104,11 +104,17 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="flagOrange">@color/flag_orange</item>
         <item name="flagGreen">@color/flag_green</item>
         <item name="flagBlue">@color/flag_blue</item>
+        <item name="flagPink">@color/flag_pink</item>
+        <item name="flagTurquoise">@color/flag_turquoise</item>
+        <item name="flagPurple">@color/flag_purple</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <item name="editTextBackgroundColor">#EBCCCCCC</item>
         <item name="toolbarBackgroundColor">#D6D7D7</item>
         <item name="toolbarIconColor">@color/black</item>
+        <item name="buttonShadowColor">#FFAAAAAA</item>
+        <item name="buttonRippleColor">#595959</item>
+        <item name="buttonForegroundColor">#D6D7D7</item>
         <!-- FAB -->
         <item name="fab_normal">@color/material_light_blue_700</item>
         <item name="fab_pressed">@color/material_light_blue_900</item>
@@ -125,8 +131,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_dark_theme">false</item>
         <!--Custom Tabs colors-->
-        <item name="customTabToolbarColor">@color/material_light_blue_700</item>
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
+        <item name="popupBackgroundColor">@android:color/white</item>
     </style>
 
     <!-- Preferences screens -->

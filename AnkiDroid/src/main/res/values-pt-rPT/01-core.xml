@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">sim</string>
     <!-- Navigation drawer items-->
     <string name="decks">Baralhos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de fichas</string>
@@ -53,7 +53,7 @@
     <string name="studyoptions_start">Estudar</string>
     <!-- DeckPicker.java -->
     <string name="expand">Expandir</string>
-    <string name="collapse">Ocultar</string>
+    <string name="collapse">Recolher</string>
     <string name="study_more">Estudar mais</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d ficha pendente (%2$s)</item>
@@ -64,15 +64,15 @@
         <item quantity="other">%d minutos restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d hora restante</item>
+        <item quantity="other">%d horas restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d dia %d restante</item>
+        <item quantity="other">%d dias %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">A coleção está vazia</string>
+    <string name="no_cards_placeholder_description">Comece a adicionar cartas\ncom o ícone +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Estudou hoje %1$d ficha em %2$s</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Escreva a resposta</string>
     <string name="show_answer">Mostrar resposta</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Ocultar resposta</string>
     <string name="ease_button_again">Novamente</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Bom</string>
@@ -90,11 +90,12 @@
     <string name="menu_import">Importar</string>
     <string name="undo">Anular</string>
     <string name="undo_action_review">última revisão</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_change_deck_multi">trocar baralho</string>
+    <string name="move_all_to_deck">Mudar tudo para baralho</string>
     <string name="unbury">Mostrar</string>
     <string name="rename_deck">Renomear baralho</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Criar atalho</string>
+    <string name="browse_cards">Navegar fichas</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Conta de sincronização</string>
@@ -103,24 +104,27 @@
     <string name="menu_bury_note">Ocultar nota</string>
     <string name="menu_suspend_card">Suspender ficha</string>
     <string name="menu_suspend_note">Suspender nota</string>
-    <string name="menu_bury">Ocultar</string>
+    <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">Sinalizar</string>
+    <string name="menu_flag_card">Sinalizar ficha</string>
+    <string name="menu_flag_card_zero">Sem sinal</string>
+    <string name="menu_flag_card_one">Sinal vermelha</string>
+    <string name="menu_flag_card_two">Sinal laranja</string>
+    <string name="menu_flag_card_three">Sinal verde</string>
+    <string name="menu_flag_card_four">Sinal azul</string>
+    <string name="menu_flag_card_five">Sinal rosada</string>
+    <string name="menu_flag_card_six">Sinal turquesa</string>
+    <string name="menu_flag_card_seven">Sinal roxa</string>
+    <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Procurar texto</string>
     <string name="menu_search">Procurar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Verificar a pronúncia</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho filtrado</string>
     <string name="night_mode">Modo noturno</string>
@@ -129,7 +133,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Por favor, concede à AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -146,17 +150,17 @@
     <string name="time_quantity_months">%.1f mês</string>
     <string name="time_quantity_years">%.1f ano</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">A reconstruir o baralho filtrado&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Criar sub-baralho</string>
+    <string name="empty_filtered_deck">A esvaziar baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Renomear primeiro o baralho de estudo personalizado existente</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck">Pesquisar baralhos</string>
+    <string name="empty_deck_add_note">Adicionar ficha</string>
+    <string name="invalid_deck_name">Nome inválido do baralho</string>
     <string name="studyoptions_empty">Este baralho está vazio. Toque no botão \"+\" para adicionar novo conteúdo.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
     <string name="studyoptions_empty_schedule">Sem fichas agendadas para estudar</string>
@@ -164,14 +168,14 @@
     <string name="studyoptions_congrats_more_rev">O limite diário foi atingido, mas ainda existem fichas à espera para serem revistas. Pode aumentar o limite nas opções.</string>
     <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas isto irá aumentar a sua carga de memorização a curto prazo.</string>
     <string name="studyoptions_congrats_custom">Para estudar fora da agendamento normal, toque em \"Estudo personalizado\".</string>
-    <string name="studyoptions_no_cards_due">Nenhuma ficha a fazer por enquanto.</string>
+    <string name="studyoptions_no_cards_due">Não há fichas vencidas ainda</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Editar esta nota e adicionar alguns apagamentos de cloze. (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">Deseja cancelar a sincronização?</string>
     <string name="continue_sync">Continuar sincronização</string>
     <string name="sync_cancelled">Sincronização cancelada</string>
-    <string name="sync_cancel_message">A cancelar&#8230;\nIsto pode levar algum tempo.</string>
+    <string name="sync_cancel_message">A cancelar&#8230;\nPode levar algum tempo.</string>
     <string name="export">Exportar</string>
     <string name="export_collection">Exportar coleção</string>
     <string name="export_deck">Exportar baralho</string>
@@ -181,42 +185,52 @@
     <string name="card_template_editor_front">Modelo da frente</string>
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
-    <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário.</string>
-    <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Remover o tipo de ficha “%2$s” e a sua %1$d ficha?</item>
-        <item quantity="other">Remover o tipo de ficha “%2$s” e as suas %1$d fichas?</item>
+    <string name="card_template_editor_menu_card_browser_appearance">Aparência do navegador de fichas</string>
+    <string name="card_template_editor_deck_override">Substituição do baralho</string>
+    <string name="card_template_editor_insert_field">Inserir campo</string>
+    <string name="card_template_editor_select_field">Selecionar campo</string>
+    <string name="card_template_editor_cant_delete">Pelo menos um tipo de ficha é necessário</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Isto irá criar %1$d ficha. Continuar?</item>
+        <item quantity="other">Isto irá criar %1$d fichas. Continuar?</item>
     </plurals>
-    <string name="invalid_template">Não foi possível gerar uma ficha</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d ficha?</item>
+        <item quantity="other">Eliminar o tipo de ficha \"%2$s\", e a sua %1$d fichas?</item>
+    </plurals>
+    <string name="invalid_template">Uma ficha não pôde ser gerada</string>
+    <string name="card_template_editor_would_delete_note">A eliminação deste tipo de ficha faria com que uma ou mais notas fossem eliminadas. Por favor crie e grave um novo tipo de ficha primeiro.</string>
+    <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
+    <string name="template_for_current_card_deleted">O tipo de ficha para a ficha atual foi eliminado.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informações da ficha</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
-    <string name="read_write_permission_description">aceder às notas, fichas, modelos e baralhos existentes, bem como criar novos</string>
+    <string name="read_write_permission_description">aceder às notas, fichas, tipos de nota e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de fichas</string>
+    <string name="context_menu_anki_card_label">Ficha Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tem um problema:<br/>%2$s</string>
+    <string name="more_information">Mais informações</string>
+    <string name="no_field">Encontrado \'{{{%1$s}}\', mas não existe um campo chamado \'%1$s\'.</string>
+    <string name="closed_tag_not_open">Encontrou \'{{{/%1$s}}\', mas faltando \'{{{#%1$s}}\' ou \'{{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Falta \'}}\' em \'%s\'.</string>
+    <string name="open_tag_not_closed">Falta \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Encontrado \'{{/%1$s}}\', mas esperado \'{{/%2$s}}\'.</string>
+    <string name="filter_error">Erro no filtro %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">As coleções não podem ser combinadas.\nQue coleção quer conservar?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Substituir a sua coleção na AnkiDroid pela sua coleção da AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Substituir a sua coleção na AnkiWeb pela sua coleção da AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Seleccione a coleção a conservar</string>
+    <string name="sync_conflict_replace_title">Substituir coleção</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d ficha (0 ao vencimento)</item>
+        <item quantity="other">%1$d fichas (0 ao vencimento)</item>
+    </plurals>
 </resources>

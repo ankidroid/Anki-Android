@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[&lt;h2&gt;%1$s:&lt;br/&gt;Android ᱞᱟᱹᱜᱤᱫ ᱯᱷᱞᱟᱥᱠᱟᱰ&lt;/h2&gt;AnkiDroid ᱫᱚ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱮᱯᱞᱤᱠᱮᱚᱱ ᱱᱚᱶᱟᱫᱚ ᱰᱮᱥᱠᱴᱟᱹᱯ ᱥᱚᱯᱷᱴᱣᱮᱨ ᱥᱟᱞᱟᱜ ᱛᱮ ᱦᱚᱸ ᱠᱟᱹᱢᱤᱟᱭ&lt;a href=\&quot;%2$s\&quot;&gt;Anki&lt;/a&gt; ᱾ ᱟᱢ Ankidroid ᱟᱨ Anki Desktop ᱨᱮ ᱠᱟᱰ ᱛᱮᱭᱟᱨ, ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ , ᱟᱨᱦᱚᱸ ᱡᱷᱚᱛᱚ Ankiweb ᱨᱮ synchronize ᱫᱟᱲᱮᱭᱟᱜᱟ ᱾]]></item>
         <item><![CDATA[AnkiDroid ᱟᱨᱦᱚᱸ ᱵᱮᱥ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ bugs ᱨᱤᱯᱚᱴ ᱢᱮ&lt;a href=\&quot;%1$s\&quot;&gt;Issue tracker ᱴᱷᱮᱱ&lt;/a&gt;; ᱱᱟᱶᱟ ᱵᱤᱪᱟᱨ ᱠᱚ ᱮᱢᱟᱱ ᱵᱟᱛᱟᱣᱫᱟᱲᱮᱟᱜ ᱯᱮ ᱾ answers ᱯᱟᱱᱛᱮ ᱯᱮ &lt;a href=\&quot;%2$s\&quot;&gt;ᱣᱤᱠᱤ ᱨᱮ&lt;/a&gt;ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ discussion ᱮᱛᱦᱚᱵ ᱯᱮ&lt;a href=\&quot;%3$s\&quot;&gt;ᱯᱷᱚᱨᱩᱢ ᱨᱮ&lt;/a&gt;.]]></item>
@@ -230,6 +231,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->

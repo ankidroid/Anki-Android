@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
-    <string name="note_editor_set_field_language">ᱡᱟᱭᱜᱟ ᱨᱮᱭᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
@@ -346,4 +345,19 @@
     <string name="email_id_empty">Email address is required</string>
     <string name="password_empty">Password is required</string>
     <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

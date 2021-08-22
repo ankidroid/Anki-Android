@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">Nenhum card criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve usar Ocultar em algum termo</string>
-    <string name="note_editor_set_field_language">Definir idioma do campo.</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum card.\nPor favor, escolha outro tipo de nota, ou clique em \'Cards\' e adicione uma substituição de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
     <string name="saving_facts">Salvando nota</string>
@@ -350,4 +349,19 @@
     <string name="email_id_empty">Endereço de e-mail é necessário</string>
     <string name="password_empty">Senha é necessária</string>
     <string name="back_pressed_once">Pressione voltar novamente para sair</string>
+    <string name="back_pressed_once_reviewer">Pressione voltar novamente para sair</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,9 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
+import com.ichi2.utils.FragmentManagerUtilsKt;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.WithFragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,29 +47,35 @@ public class DeckSpinnerSelection {
 
     private long mDeckId;
     private ArrayList<Long> mAllDeckIds;
+    @NonNull
     private final Spinner mSpinner;
-    private final AnkiActivity mContext;
+    @NonNull
+    private final WithFragmentManager mWithFragmentManager;
+    private final Context mContext;
+    @NonNull
+    private final Collection mCollection;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
     private boolean mShowAllDecks = false;
     private static final long ALL_DECKS_ID = 0L;
 
 
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull int spinnerId) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner) {
         this.mContext = context;
-        ActionBar actionBar = mContext.getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        mSpinner = mContext.findViewById(spinnerId);
+        this.mCollection = collection;
+        this.mSpinner = spinner;
+        this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(context);
     }
 
     public void setShowAllDecks(boolean showAllDecks) {
         mShowAllDecks = showAllDecks;
     }
 
-    public void initializeActionBarDeckSpinner() {
+    public void initializeActionBarDeckSpinner(@NonNull ActionBar actionBar) {
+        actionBar.setDisplayShowTitleEnabled(false);
 
         // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = mContext.getCol().getDecks().allSorted();
+        mDropDownDecks = mCollection.getDecks().allSorted();
 
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -83,7 +92,7 @@ public class DeckSpinnerSelection {
     }
 
     public void initializeNoteEditorDeckSpinner(@NonNull Card currentEditedCard, boolean addNote) {
-        Collection col = mContext.getCol();
+        Collection col = mCollection;
         mDropDownDecks = col.getDecks().allSorted();
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
@@ -129,7 +138,7 @@ public class DeckSpinnerSelection {
     public void setSpinnerListener() {
         mSpinner.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                displayDeckOverrideDialog(mContext.getCol());
+                displayDeckOverrideDialog(mCollection);
             }
             return true;
         });
@@ -174,21 +183,32 @@ public class DeckSpinnerSelection {
         return mSpinner;
     }
 
-    // Iterates the drop down decks, and selects the one matching the given id
-    public boolean selectDeckById(long deckId) {
+    /**
+     * Iterates the drop down decks, and selects the one matching the given id.
+     * @param deckId The deck id to be selected.
+     * @param setAsCurrentDeck If true, deckId will be set as the current deck id of Collection
+     * (this means the deck selected here will continue to appear in any future Activity whose
+     * display data is loaded from Collection's current deck). If false, deckId will not be set as
+     * the current deck id of Collection.
+     * @return True if a deck with deckId exists, false otherwise.
+     */
+    public boolean selectDeckById(long deckId, boolean setAsCurrentDeck) {
         if (deckId == ALL_DECKS_ID) {
             selectAllDecks();
             return true;
         }
-        return searchInList(deckId);
+        return searchInList(deckId, setAsCurrentDeck);
     }
 
 
-    private boolean searchInList(long deckId) {
+    private boolean searchInList(long deckId, boolean setAsCurrentDeck) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
                 int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
                 selectDropDownItem(position);
+                if (setAsCurrentDeck) {
+                    mCollection.getDecks().select(deckId);
+                }
                 return true;
             }
         }
@@ -216,6 +236,6 @@ public class DeckSpinnerSelection {
         }
 
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, false, decks);
-        AnkiActivity.showDialogFragment(mContext, dialog);
+        AnkiActivity.showDialogFragment(mWithFragmentManager.getFragmentManager(), dialog);
     }
 }

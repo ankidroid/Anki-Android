@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">कोणतीही कार्ड तयार केली नाही. कृपया अधिक फील्ड भरा</string>
     <string name="note_editor_no_first_field">प्रथम फील्ड रिक्त आहे</string>
     <string name="note_editor_no_cloze_delations">या टीप प्रकारात क्लोझ डिलीटन्स असणे आवश्यक आहे</string>
-    <string name="note_editor_set_field_language">फील्ड भाषा सेट करा</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान नोट प्रकाराने कोणतीही कार्ड तयार केली नाही. आणखी एक \n कृपया दुसरा टीप प्रकार निवडा किंवा ‘कार्ड’ क्लिक करा आणि फील्ड प्रतिस्थापना जोडा</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोझ हटविणे केवळ क्लोज नोट प्रकारावरच कार्य करेल</string>
     <string name="saving_facts">Ṭīpa jatana karīta āhē</string>
@@ -350,4 +349,19 @@
     <string name="email_id_empty">ईमेल पत्ता आवश्यक आहे</string>
     <string name="password_empty">संकेतशब्द आवश्यक आहे</string>
     <string name="back_pressed_once">बाहेर पडण्यासाठी पुन्हा परत दाबा</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

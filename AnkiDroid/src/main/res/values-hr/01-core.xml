@@ -100,6 +100,7 @@
     <string name="unbury">Otkopaj</string>
     <string name="rename_deck">Preimenuj skupinu</string>
     <string name="create_shortcut">Create shortcut</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj bilješku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkroniziraj račun</string>
@@ -118,6 +119,9 @@
     <string name="menu_flag_card_two">Narančasta oznaka</string>
     <string name="menu_flag_card_three">Zelena oznaka</string>
     <string name="menu_flag_card_four">Plava oznaka</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
     <string name="menu_select">Odaberi tekst</string>
@@ -188,7 +192,14 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Izgled preglednika karata</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Potrebna je barem jedna vrsta kartice</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="few">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Izbrisati \"%2$s\" vrstu kartica i njezinu %1$d karticu?</item>
         <item quantity="few">Izbrisati \"%2$s\" vrstu kartica i njezine %1$d kartice?</item>
@@ -225,4 +236,9 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="few">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Fazendo upload&#8230;</string>
     <string name="sync_downloading_message">Baixando&#8230;</string>
     <string name="sync_title">Sincronização</string>
-    <string name="sync_downloading_media">Baixando mídia %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sincronização completa do local</string>
     <string name="sync_log_clocks_unsynchronized">A hora no seu dispositivo está incorreta por %1$d segundos %2$s; A sincronização precisa que o horário e o fuso horário estejam corretos para evitar erros. Por favor, certifique-se que a data, o horário e o fuso horário do seu telefone esteja correto, e depois tente sincronizar novamente.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, a zona de tempo do dispositivo possivelmente está errada</string>

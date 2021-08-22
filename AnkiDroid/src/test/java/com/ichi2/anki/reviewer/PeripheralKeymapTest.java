@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 public class PeripheralKeymapTest {
     @Test
     public void flagAndAnswerDoNotConflict() {
-        List<Integer> processed = new ArrayList<>();
+        List<ViewerCommand> processed = new ArrayList<>();
 
         PeripheralKeymap peripheralKeymap = new PeripheralKeymap(new MockReviewerUi(), processed::add);
         peripheralKeymap.setup();
@@ -42,10 +42,11 @@ public class PeripheralKeymapTest {
         when(event.getUnicodeChar()).thenReturn(0);
         when(event.isCtrlPressed()).thenReturn(true);
         when(event.getUnicodeChar(0)).thenReturn(49);
+        when(event.getKeyCode()).thenReturn(KeyEvent.KEYCODE_1);
 
         assertThat((char) event.getUnicodeChar(), is('\0'));
         assertThat((char) event.getUnicodeChar(0), is('1'));
-        peripheralKeymap.onKeyDown(8, event);
+        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event);
 
         assertThat(processed, hasSize(1));
         assertThat(processed.get(0), is(ViewerCommand.COMMAND_TOGGLE_FLAG_RED));

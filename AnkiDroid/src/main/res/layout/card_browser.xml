@@ -2,14 +2,14 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/root_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <include layout="@layout/toolbar" />
@@ -37,8 +37,8 @@
 
         <ListView
             android:id="@+id/card_browser_list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="?android:attr/colorBackground"
             android:divider="?attr/cardBrowserDivider"
             android:overScrollFooter="@color/transparent"
@@ -48,4 +48,31 @@
 
     </LinearLayout>
     <include layout="@layout/anki_progress"/>
+
+    <FrameLayout
+        android:id="@+id/card_browser_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent_black"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/hand_icon"
+            android:layout_gravity="center" />
+
+        <com.ichi2.ui.FixedTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/card_click"
+            android:textColor="@color/white"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="100dp" />
+
+    </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

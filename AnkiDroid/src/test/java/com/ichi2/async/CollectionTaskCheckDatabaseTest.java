@@ -18,6 +18,7 @@ package com.ichi2.async;
 
 import android.util.Pair;
 
+import com.ichi2.anki.RunInBackground;
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
@@ -29,6 +30,7 @@ import static org.hamcrest.Matchers.is;
 public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest {
 
     @Test
+    @RunInBackground
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 

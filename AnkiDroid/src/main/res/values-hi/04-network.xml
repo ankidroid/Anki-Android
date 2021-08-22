@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">अपलोड हो रहा है...</string>
     <string name="sync_downloading_message">डाउनलोड कर रहा है...</string>
     <string name="sync_title">समकालन</string>
-    <string name="sync_downloading_media">डाउनलोडिंग मीडिया %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">स्थानीय से पूर्ण सिंक्रनाइज़ेशन</string>
     <string name="sync_log_clocks_unsynchronized">अपनी घड़ी %1$d seconds%2$s द्वारा बंद है । सुनिश्चित करें कि आपके फ़ोन पर दिनांक, समय और क्षेत्र सही तरीके से सेट हैं, फिर पुन: सिंक्रनाइज़ करें ।</string>
     <string name="sync_log_clocks_unsynchronized_tz">, समय ज़ोन संभवत: गलत</string>
