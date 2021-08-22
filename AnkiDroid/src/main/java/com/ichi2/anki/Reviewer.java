@@ -996,7 +996,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
         super.updateActionBar();
+        Timber.d("updateScreenCounts");
         ActionBar actionBar = getSupportActionBar();
+        mSched.reset();
         Counts counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
