@@ -42,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 public class DeckSpinnerSelection {
@@ -66,6 +67,13 @@ public class DeckSpinnerSelection {
         this.mCollection = collection;
         this.mSpinner = spinner;
         this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(context);
+    }
+
+    public DeckSpinnerSelection(@NonNull Fragment fragment, @NonNull Collection collection, @NonNull Spinner spinner) {
+        this.mContext = fragment.getContext();
+        this.mCollection = collection;
+        this.mSpinner = spinner;
+        this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(fragment);
     }
 
     public void setShowAllDecks(boolean showAllDecks) {
