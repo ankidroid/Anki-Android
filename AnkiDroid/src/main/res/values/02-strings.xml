@@ -431,4 +431,14 @@
     <string name="importer_delimiter_comma">Comma</string>
     <string name="importer_delimiter_semicolon">Semicolon</string>
     <string name="importer_delimiter_colon">Colon</string>
+
+    <!-- LibAnki import progress -->
+    <string name="import_progress_checking_duplicates">Checking for duplicates</string>
+    <string name="import_progress_adding">Adding %d notes</string>
+    <string name="import_progress_update">Updating %d notes</string>
+    <string name="import_progress_field_cache">Updating note fields</string>
+    <string name="import_progress_card_gen">Generating cards</string>
+    <string name="import_progress_reorder">Reordering cards</string>
+    <string name="import_progress_processed">Processed %d entries</string>
+
 </resources>

@@ -88,6 +88,7 @@ public class NoteImporter extends Importer {
         Assert.that(!mMapping.isEmpty());
         List<ForeignNote> c = foreignNotes();
         importNotes(c);
+        logProgress(mContext.getString(R.string.import_progress_processed, c.size()));
     }
 
 
@@ -175,6 +176,7 @@ public class NoteImporter extends Importer {
         mEmptyNotes = false;
         int dupeCount = 0;
         List<String> dupes = new ArrayList<>(notes.size());
+        logProgress(mContext.getString(R.string.import_progress_checking_duplicates));
         for (ForeignNote n : notes) {
             for (int c = 0; c < n.mFields.size(); c++) {
                 if (!this.mAllowHTML) {
@@ -242,16 +244,21 @@ public class NoteImporter extends Importer {
                 }
             }
         }
+        logProgress(mContext.getString(R.string.import_progress_adding, _new.size()));
         addNew(_new);
+        logProgress(mContext.getString(R.string.import_progress_update, updates.size()));
         addUpdates(updates);
+        logProgress(mContext.getString(R.string.import_progress_field_cache));
         // make sure to update sflds, etc
         mCol.updateFieldCache(mIds);
-        // generate cards
+
+        logProgress(mContext.getString(R.string.import_progress_card_gen));
         if (!mCol.genCards(mIds, mModel).isEmpty()) {
             this.getLog().add(0, getString(R.string.note_importer_empty_cards_found));
         }
 
 
+        logProgress(mContext.getString(R.string.import_progress_reorder));
         // we randomize or order here, to ensure that siblings
         // have the same due#
         long did = mCol.getDecks().selected();
@@ -278,6 +285,14 @@ public class NoteImporter extends Importer {
         }
         mTotal = mIds.size();
     }
+
+
+    private void logProgress(String message) {
+        if (mProgress != null) {
+            mProgress.publishProgress(message);
+        }
+    }
+
 
     @Nullable
     private Object[] newData(ForeignNote n) {
