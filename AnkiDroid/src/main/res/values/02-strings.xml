@@ -410,4 +410,6 @@
 
     <string name="import_delimiter_select_title">Field separator override</string>
     <string name="import_delimiter_select_content">If AnkiDroid incorrectly detects the character between fields, you may enter it here.\n\nUse \'\\t\' to represent tab.</string>
+
+    <string name="import_field_mapping_label">Field %d of file is</string>
 </resources>
