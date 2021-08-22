@@ -21,7 +21,6 @@ import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebView;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.BackupManagerTest.ThrowingAnswer;
 import com.ichi2.libanki.Card;
 
 import org.junit.Test;
@@ -31,6 +30,7 @@ import java.util.concurrent.locks.Lock;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 
+import static com.ichi2.utils.StrictMock.strictMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doNothing;
@@ -158,7 +158,7 @@ public class OnRenderProcessGoneDelegateTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private AbstractFlashcardViewer getViewer(Lifecycle.State state) {
         WebView mockWebView = mock(WebView.class);
-        AbstractFlashcardViewer mock = mock(AbstractFlashcardViewer.class, new ThrowingAnswer());
+        AbstractFlashcardViewer mock = strictMock(AbstractFlashcardViewer.class);
         doReturn(mock(Lock.class)).when(mock).getWriteLock();
         doReturn(mock(Resources.class)).when(mock).getResources();
         doReturn(mockWebView).when(mock).getWebView();
