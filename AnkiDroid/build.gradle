@@ -7,6 +7,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'app.brant.amazonappstorepublisher'
 apply plugin: 'idea'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 
 
 repositories {
