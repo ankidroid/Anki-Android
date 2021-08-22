@@ -46,10 +46,22 @@ public class LayoutValidationTest extends InstrumentedTest {
         nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout.class));
         nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout.class));
 
+        HashSet<String> invalidFieldNames = new HashSet<>();
+        /*
+        We need both a host activity and a fragment factory.
+        We can use TextImporter as a host activity, but it didn't seem worth the performance hit for a screen that we know works
+        android.view.InflateException: Binary XML file line #126 in com.ichi2.anki:layout/import_csv_option_selection: Binary XML file line #126 in com.ichi2.anki:layout/import_csv_option_selection: Error inflating class androidx.fragment.app.FragmentContainerView
+        Caused by: android.view.InflateException: Binary XML file line #126 in com.ichi2.anki:layout/import_csv_option_selection: Error inflating class androidx.fragment.app.FragmentContainerView
+        Caused by: androidx.fragment.app.Fragment$InstantiationException: Unable to instantiate fragment com.ichi2.anki.importer.FieldMappingFragment: could not find Fragment constructor
+         */
+        invalidFieldNames.add("import_csv_option_selection");
 
         List<Object[]> layouts = new ArrayList<>();
         for (Field f : R.layout.class.getFields()) {
             if (nonAnkiFieldNames.contains(f.getName())) {
+                continue;
+            }
+            if (invalidFieldNames.contains(f.getName())) {
                 continue;
             }
             layouts.add(new Object[] {f.getInt(layout), f.getName() });

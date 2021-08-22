@@ -395,6 +395,9 @@
     <string name="home">Home</string>
 
     <!-- Importing -->
+    <string name="importer_activity_name">Text file import</string>
+
+
     <string name="import_error_delimiter">Error reading delimiter</string>
     <string name="import_error_not_utf8">File was not a text file</string>
 
@@ -412,4 +415,20 @@
     <string name="import_delimiter_select_content">If AnkiDroid incorrectly detects the character between fields, you may enter it here.\n\nUse \'\\t\' to represent tab.</string>
 
     <string name="import_field_mapping_label">Field %d of file is</string>
+
+    <!-- Import Options screen -->
+    <string name="import_fields_separated_by">Fields separated by: %s</string>
+    <string name="import_allow_html_in_fields">Allow HTML in Fields</string>
+    <string name="import_tag_modified_notes">Tag modified notes (update mode only)</string>
+    <string name="importing_first_field_must_be_mapped">Field \'%s\' must be mapped as it is the first field</string>
+
+    <string name="import_mode_update">Update if first field matches existing note</string>
+    <string name="import_mode_ignore">Ignore if first field matches existing note</string>
+    <string name="import_mode_add_regardless">Import even if first field matches existing note</string>
+
+    <string name="importer_delimiter_space">Space</string>
+    <string name="importer_delimiter_tab">Tab</string>
+    <string name="importer_delimiter_comma">Comma</string>
+    <string name="importer_delimiter_semicolon">Semicolon</string>
+    <string name="importer_delimiter_colon">Colon</string>
 </resources>

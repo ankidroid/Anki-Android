@@ -55,10 +55,10 @@ public class NoteImporter extends Importer {
     @Nullable
     private List<String> mMapping;
     @Nullable
-    private final String mTagModified ;
+    private String mTagModified ;
 
 
-    private final Model mModel;
+    private Model mModel;
 
     /** _tagsMapped in python */
     private boolean mTagsMapped;
@@ -73,11 +73,9 @@ public class NoteImporter extends Importer {
     private int mUpdateCount;
     private List<ParsedNode> mTemplateParsed;
 
-
     public NoteImporter(Collection col, String file) {
         super(col, file);
-        this.mModel = col.getModels().current();
-        this.mTemplateParsed = mModel.parsedNodes();
+        setModel(super.mCol.getModels().current());
         this.mMapping = null;
         this.mTagModified = null;
         this.mTagsMapped = false;
@@ -117,7 +115,7 @@ public class NoteImporter extends Importer {
     }
 
 
-    boolean mappingOk() {
+    public boolean mappingOk() {
         return mMapping.contains(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
     }
 
@@ -436,6 +434,22 @@ public class NoteImporter extends Importer {
         this.mAllowHTML = allowHtml;
     }
 
+    public void setModel(Model model) {
+        this.mModel = model;
+        this.mTemplateParsed = mModel.parsedNodes();
+    }
+
+    public Long getModelId() {
+        return mModel.getLong("id");
+    }
+
+    public void setTagModified(String toTagModifiedWith) {
+        this.mTagModified = toTagModifiedWith;
+    }
+
+    public void setMapping(@NonNull List<String> mapping) {
+        mMapping = mapping;
+    }
 
     public enum ImportMode {
         /** update if first field matches existing note */

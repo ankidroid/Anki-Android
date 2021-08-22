@@ -173,4 +173,8 @@
         <item name="android:layout_marginEnd">24dp</item>
     </style>
 
+    <!-- would have liked to use maxHeight, but that didn't work -->
+    <style name="accessible_checkbox_height">
+        <item name="android:layout_height">48dp</item>
+    </style>
 </resources>

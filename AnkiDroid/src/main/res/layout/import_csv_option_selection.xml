@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Note type selector -->
+    <LinearLayout
+        android:id="@+id/type_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/CardEditorModelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:clickable="false"
+            android:gravity="start|center_vertical"
+            android:text="@string/CardEditorModel"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/note_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            app:popupTheme="@style/ActionBar.Popup" />
+
+    </LinearLayout>
+
+    <!-- Deck selector -->
+    <LinearLayout
+        android:id="@+id/deck_selector_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/type_selector">
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/deck_selector_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:clickable="false"
+            android:gravity="start|center_vertical"
+            android:text="@string/CardEditorNoteDeck"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/deck_selector"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            app:popupTheme="@style/ActionBar.Popup" />
+
+    </LinearLayout>
+
+    <!-- Select CSV field separator (tab/comma etc...) -->
+    <Button
+        android:id="@+id/btn_csv_field_delimiter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Fields Separated By: Space"
+        app:layout_constraintTop_toBottomOf="@id/deck_selector_container"
+         />
+
+    <!-- Select Import Conflict Mode (add/duplicate/ignore if the first field is duplicated) -->
+    <Spinner
+        android:id="@+id/import_conflict_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_csv_field_delimiter"
+        />
+
+    <!-- If the conflict mode is "Update", a tag can be added to the updated notes -->
+    <com.ichi2.ui.FixedEditText
+        android:id="@+id/text_tag_modified_notes"
+        app:layout_constraintTop_toBottomOf="@id/import_conflict_mode"
+        android:hint="@string/import_tag_modified_notes"
+        android:textColor="@drawable/edit_text_color_enabled_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Whether HTML should be escaped -->
+    <CheckBox
+        android:id="@+id/check_allow_html"
+        android:layout_width="match_parent"
+        style="@style/accessible_checkbox_height"
+        android:text="@string/import_allow_html_in_fields"
+        app:layout_constraintTop_toBottomOf="@+id/text_tag_modified_notes" />
+
+    <!-- Select a mapping from a CSV column to a field in a note type -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadeScrollbars="false"
+        android:paddingTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/check_allow_html"
+        app:layout_constraintBottom_toTopOf="@id/import_csv_button" >
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/csv_to_note_field_mapping"
+        android:name="com.ichi2.anki.importer.FieldMappingFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@android:layout/select_dialog_item" />
+    </ScrollView>
+
+
+    <android.widget.Button
+        android:id="@+id/import_csv_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/import_deck"
+        style="@style/import_deck_button"
+        android:paddingTop="4dp"
+        android:background="@drawable/import_button_toggle_activated"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

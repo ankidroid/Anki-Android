@@ -20,6 +20,8 @@ import android.content.Context
 import android.os.Parcelable
 import com.ichi2.anki.R
 import com.ichi2.anki.importer.CsvFieldMappingBehavior.MapToNothing
+import com.ichi2.libanki.importer.NoteImporter
+import com.ichi2.libanki.importer.TextImporter
 import com.ichi2.utils.SequenceUtil.takeWhileIncludingFirstNonMatch
 import kotlinx.parcelize.Parcelize
 
@@ -171,4 +173,16 @@ internal abstract class CsvFieldMappingBehavior : Parcelable {
         override fun toDisplayString(ctx: Context): String = ctx.getString(R.string.import_mapped_to_nothing)
     }
     abstract fun toDisplayString(ctx: Context): String
+
+    /** maps the behavior to the string constants that LibAnki expects */
+    fun tolibAnkiString(): String? = when (this) {
+        is MapToField -> { field }
+        is MapToTags -> { NoteImporter.TAGS_IDENTIFIER }
+        else -> { null }
+    }
+}
+
+internal fun TextImporter.setMapping(mapping: List<CsvFieldMappingBehavior>) {
+    val mappingToUse = mapping.map(CsvFieldMappingBehavior::tolibAnkiString)
+    this.setMapping(mappingToUse)
 }

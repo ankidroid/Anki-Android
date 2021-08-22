@@ -269,6 +269,27 @@ public class TextImporter extends NoteImporter {
         }
     }
 
+    public void setDelimiter(char c) {
+        this.mDelimiter = c;
+        updateDelimiter();
+    }
+
+
+    public char getDelimiter() {
+        char delimiter = mDelimiter;
+
+        if (delimiter != '\0') {
+            return delimiter;
+        }
+
+        if (mDialect != null) {
+            return mDialect.mDelimiter;
+        }
+
+        // fall back to \0 otherwise
+        return delimiter;
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static class FileObj {
