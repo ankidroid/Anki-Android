@@ -101,7 +101,10 @@ public class TextImporter extends NoteImporter {
         return notes;
     }
 
-    /** Number of fields. */
+    /**
+     * Number of fields.
+     * @throws UnknownDelimiterException Could not determine delimiter (example: empty file)
+     */
     @Override
     public int fields() {
         open();
@@ -147,13 +150,13 @@ public class TextImporter extends NoteImporter {
         }
 
         if (mDialect == null && mDelimiter == '\0') {
-            throw new RuntimeException("unknownFormat");
+            throw new UnknownDelimiterException();
         }
     }
 
     @Contract(" -> fail")
     private void err() {
-        throw new RuntimeException("unknownFormat");
+        throw new UnknownDelimiterException();
     }
 
     private void updateDelimiter() {
@@ -282,6 +285,12 @@ public class TextImporter extends NoteImporter {
         @NonNull
         public Stream<String> readAsUtf8WithoutBOM() throws IOException {
             return Files.lines(Paths.get(mFile.getAbsolutePath()), StandardCharsets.UTF_8);
+        }
+    }
+
+    public static class UnknownDelimiterException extends RuntimeException {
+        public UnknownDelimiterException() {
+            super("unknownFormat");
         }
     }
 }
