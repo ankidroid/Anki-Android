@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -104,6 +105,7 @@ public class TextImporter extends NoteImporter {
     /**
      * Number of fields.
      * @throws UnknownDelimiterException Could not determine delimiter (example: empty file)
+     * @throws EncodingException Non-UTF file (for example: an image)
      */
     @Override
     public int fields() {
@@ -239,7 +241,7 @@ public class TextImporter extends NoteImporter {
         try {
             data = mFileobj.readAsUtf8WithoutBOM();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new EncodingException(e);
         }
 
         Stream<String> withoutComments = data.filter(x -> !"__comment".equals(sub(x))).map(s -> s + "\n");
@@ -251,12 +253,20 @@ public class TextImporter extends NoteImporter {
 
 
     private Optional<String> getFirstFileLine() {
-        return getDataStream().findFirst();
+        try {
+            return getDataStream().findFirst();
+        } catch (UncheckedIOException e) {
+            throw new EncodingException(e);
+        }
     }
 
 
     private String getLinesFromFile(int numberOfLines) {
-        return TextUtils.join("\n", getDataStream().limit(numberOfLines).collect(Collectors.toList()));
+        try {
+            return TextUtils.join("\n", getDataStream().limit(numberOfLines).collect(Collectors.toList()));
+        } catch (UncheckedIOException e) {
+            throw new EncodingException(e);
+        }
     }
 
 
@@ -291,6 +301,13 @@ public class TextImporter extends NoteImporter {
     public static class UnknownDelimiterException extends RuntimeException {
         public UnknownDelimiterException() {
             super("unknownFormat");
+        }
+    }
+
+    /** Non-UTF file was provided (for example: an image) */
+    public static class EncodingException extends RuntimeException {
+        public EncodingException(Exception e) {
+            super(e);
         }
     }
 }
