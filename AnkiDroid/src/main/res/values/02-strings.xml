@@ -408,4 +408,6 @@
     <string name="import_mapped_to_tags">Mapped to Tags</string>
     <string name="import_mapped_to_nothing">Ignored</string>
 
+    <string name="import_delimiter_select_title">Field separator override</string>
+    <string name="import_delimiter_select_content">If AnkiDroid incorrectly detects the character between fields, you may enter it here.\n\nUse \'\\t\' to represent tab.</string>
 </resources>
