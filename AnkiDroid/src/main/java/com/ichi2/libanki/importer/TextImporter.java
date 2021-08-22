@@ -103,7 +103,7 @@ public class TextImporter extends NoteImporter {
 
     /** Number of fields. */
     @Override
-    protected int fields() {
+    public int fields() {
         open();
         return mNumFields;
     }

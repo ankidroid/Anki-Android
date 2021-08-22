@@ -95,7 +95,7 @@ public class NoteImporter extends Importer {
 
 
     /** The number of fields.*/
-    protected int fields() {
+    public int fields() {
         return 0;
     }
 
