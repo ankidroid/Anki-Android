@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -76,6 +77,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public AnkiActivity() {
         super();
+        this.mActivityName = getClass().getSimpleName();
+    }
+
+    public AnkiActivity(@LayoutRes int contentLayoutId) {
+        super(contentLayoutId);
         this.mActivityName = getClass().getSimpleName();
     }
 
@@ -657,6 +663,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.w("Activity started with no application instance");
         UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
 
+        // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+        // on Importer
+        Themes.setTheme(this);
         // Avoids a SuperNotCalledException
         super.onCreate(savedInstanceState);
         finishActivityWithFade(this);
