@@ -44,6 +44,9 @@ import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
 public class NoteImporter extends Importer {
 
+    /** A magic string used in {@link this#mMapping} when a csv field should be mapped to the tags of a note */
+    public static final String TAGS_IDENTIFIER = "_tags";
+
     private boolean mNeedMapper = true;
     private boolean mNeedDelimiter = false;
     private boolean mAllowHTML = false;
@@ -103,7 +106,7 @@ public class NoteImporter extends Importer {
         flds = flds.subList(0, Math.min(flds.size(), fields()));
         // if there's room left, add tags
         if (fields() > flds.size()) {
-            flds.add("_tags");
+            flds.add(TAGS_IDENTIFIER);
         }
         // and if there's still room left, pad
         int iterations = fields() - flds.size();
@@ -142,7 +145,7 @@ public class NoteImporter extends Importer {
         // note whether tags are mapped
         mTagsMapped = false;
         for (String f : mMapping) {
-            if ("_tags".equals(f)) {
+            if (TAGS_IDENTIFIER.equals(f)) {
                 mTagsMapped = true;
                 break;
             }
@@ -372,7 +375,7 @@ public class NoteImporter extends Importer {
                 continue;
             }
             int c = entry.getKey();
-            if (entry.getValue().equals("_tags")) {
+            if (entry.getValue().equals(TAGS_IDENTIFIER)) {
                 note.mTags.addAll(mCol.getTags().split(note.mFields.get(c)));
             } else {
                 Integer sidx = mFMap.get(entry.getValue()).first;
