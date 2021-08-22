@@ -16,6 +16,7 @@
 
 package com.ichi2.utils
 
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.AnkiActivity
 
@@ -23,5 +24,7 @@ import com.ichi2.anki.AnkiActivity
 fun interface WithFragmentManager {
     fun getFragmentManager(): FragmentManager
 }
+
+fun Fragment.toFragmentManager() = WithFragmentManager { this.childFragmentManager }
 
 fun AnkiActivity.toFragmentManager() = WithFragmentManager { this.supportFragmentManager }
