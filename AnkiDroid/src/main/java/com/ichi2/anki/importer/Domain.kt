@@ -1,4 +1,3 @@
-// ktlint-disable filename
 /*
  *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
  *
@@ -19,3 +18,6 @@ package com.ichi2.anki.importer
 
 /** The name of a field of a note type */
 internal typealias FieldName = String
+
+/** A path to a file in the Android cache */
+internal typealias CacheFilePath = String

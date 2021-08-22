@@ -161,4 +161,16 @@
         <item name="layout_constraintHeight_percent">0.125</item>
         <item name="android:background">@drawable/ic_gesture_tap</item>
     </style>
+
+    <style name="import_deck_button">
+        <item name="android:background">@color/material_blue_500</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+    </style>
+
 </resources>

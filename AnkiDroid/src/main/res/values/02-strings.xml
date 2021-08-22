@@ -395,6 +395,15 @@
     <string name="home">Home</string>
 
     <!-- Importing -->
+    <string name="import_error_delimiter">Error reading delimiter</string>
+    <string name="import_error_not_utf8">File was not a text file</string>
+
+    <string name="import_file_selection_summary">AnkiDroid can import notes from UTF-8 plain text files (.txt, .csv etc...)
+        \n\nDocuments (.doc, .rtf etc...) must be converted to text before being imported. To convert, create a spreadsheet and save as CSV
+        \n\nEach row in the file must have the same number of columns
+        \n\nIf the file has many columns, you may wish to create a new note type</string>
+    <string name="import_select_file_button">Select Text File</string>
+
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>
     <string name="import_mapped_to_nothing">Ignored</string>
