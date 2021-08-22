@@ -441,4 +441,9 @@
     <string name="import_progress_reorder">Reordering cards</string>
     <string name="import_progress_processed">Processed %d entries</string>
 
+    <!-- Import progress fragment -->
+    <string name="import_progress_complete_summary">Import Complete</string>
+    <string name="import_progress_failed">Import failed</string>
+    <string name="import_complete_button" comment="Close the screen after a text file has been imported">Done</string>
+
 </resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Text associated with the progress of the task -->
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/import_progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        android:paddingBottom="6dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/import_progress_bar"
+        />
+
+    <!-- Progress bar (to be hidden once import is finished) -->
+    <ProgressBar
+        android:id="@+id/import_progress_bar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/import_progress_text"
+        app:layout_constraintStart_toStartOf="@id/import_progress_text"
+        app:layout_constraintTop_toBottomOf="@id/import_progress_text"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/import_progress_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/import_progress_complete_summary"
+        android:textSize="24sp"
+        android:paddingBottom="6dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Display the log from the import -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/import_log_wrapper"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/import_progress_done"
+        app:layout_constraintBottom_toTopOf="@id/close_csv_import">
+        <TextView
+            android:id="@+id/import_log"
+            android:textIsSelectable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <!-- Done button (appears after task is completed) -->
+    <android.widget.Button
+        android:id="@+id/close_csv_import"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/import_complete_button"
+        style="@style/import_deck_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
