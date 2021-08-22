@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
@@ -91,7 +92,7 @@ public class DeckSpinnerSelection {
 
     }
 
-    public void initializeNoteEditorDeckSpinner(@NonNull Card currentEditedCard, boolean addNote) {
+    public void initializeNoteEditorDeckSpinner(@Nullable Card currentEditedCard, boolean addNote) {
         Collection col = mCollection;
         mDropDownDecks = col.getDecks().allSorted();
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
