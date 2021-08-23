@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 
@@ -55,7 +56,7 @@ public class IntentHandler extends Activity {
         String action = intent.getAction();
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
-        Consumer<Runnable> runIfStoragePermissions = (runnable) -> performActionIfStoragePermission(runnable, reloadIntent, action);
+        Consumer<Runnable> runIfStoragePermissions = (runnable) -> performActionIfStorageAccessible(runnable, reloadIntent, action);
         LaunchType launchType = getLaunchType(intent);
         switch (launchType) {
             case FILE_IMPORT:
@@ -99,13 +100,20 @@ public class IntentHandler extends Activity {
     }
 
 
-    private void performActionIfStoragePermission(Runnable runnable, Intent reloadIntent, String action) {
-        if (Permissions.hasStorageAccessPermission(this)) {
+    /**
+     * Execute the runnable if one of the two following conditions are satisfied:
+     * <ul>
+     *     <li>AnkiDroid is using an app-specific directory to store user data</li>
+     *     <li>AnkiDroid is using a legacy directory to store user data but has access to it since storage permission
+     *     has been granted (as long as AnkiDroid targets API < 30 & requests legacy storage)</li>
+     * </ul>
+     */
+    private void performActionIfStorageAccessible(Runnable runnable, Intent reloadIntent, String action) {
+        if (!CollectionHelper.isLegacyStorage(this) ||
+                (getApplicationInfo().targetSdkVersion < Build.VERSION_CODES.R && Permissions.hasStorageAccessPermission(this))) {
             Timber.i("User has storage permissions. Running intent: %s", action);
             runnable.run();
         } else {
-            //COULD_BE_BETTER: We could handle this failure in each activity individually, allowing us to pick up after
-            //we get permission
             Timber.i("No Storage Permission, cancelling intent '%s'", action);
             UIUtils.showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false);
             launchDeckPickerIfNoOtherTasks(reloadIntent);
