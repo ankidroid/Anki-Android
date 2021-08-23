@@ -120,7 +120,7 @@
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲ୍ ପାଇଁ kanji/katakana, emoji/kao-moji ବଟନ୍ ଗୁଡ଼ିକୁ ମଧ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
-    <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ </string>
+    <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
     <string name="double_scrolling_gap" maxLength="41">ଦୁଇଥର ସ୍କ୍ରୋଲିଂ</string>
     <string name="double_scrolling_gap_summ">eReader ସହିତ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
@@ -145,19 +145,19 @@
     <string name="notification_pref_title" maxLength="41">କେତେବେଳେ ସୂଚିତ କରିବି</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ </string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
-    <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଅଛି</string>
+    <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଥାଏ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="timeout_answer_text" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ | ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ </string>
+    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ। ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ</string>
     <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବାର ସମୟ ଆସିଗଲା</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବାର ସମୟ ଆସିଗଲା </string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ କାର୍ଡ ସମୀକ୍ଷା ଉପଭୋକ୍ତା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ | ଇ-ଇଙ୍କ ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି |</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
@@ -189,21 +189,20 @@
     <string name="sched_v2" maxLength="41">V2 ଅନୁସୂଚକ</string>
     <string name="sched_v2_summ">ନୂତନ ଅନୁସୂଚକ ସକ୍ଷମ କରନ୍ତୁ। ପରବର୍ତ୍ତୀ ସିଙ୍କରେ ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରେ</string>
     <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
-    <string name="sched_ver_2to1">ଏହା ଶିଖିବାରେ ଯେକୌଣସି ପତ୍ରକୁ ପୁନଃସେଟ୍ କରିବ, ଶୋଧିତ ତାସଖଣ୍ଡଙ୍କୁ ସଫା କରିବ ଏବଂ ଅନୁସୂଚକ ସଂସ୍କରଣକୁ ପରିବର୍ତ୍ତନ କରିବ | ଅଗ୍ରସର ହେବେ?</string>
     <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ ଅନୁସୂଚକ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ। ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି। ଅଗ୍ରସର ହେବେ?</string>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରିନ୍ ସଚଳ ରଖନ୍ତୁ</string>
     <string name="pref_keep_screen_on_summ">ଚିତ୍ରପଟ୍ଟକୁ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ </string>
     <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
-    <string name="convert_fen_text_summ">Forsyth - Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର | ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ |</string>
+    <string name="convert_fen_text_summ">Forsyth–Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର। ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ ହେବା ଆବଶ୍ୟକ।</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="enable_api_summary">ଅନ୍ୟ ଆପ୍ସକୁ AnkiDroid ସହିତ ସଂଯୋଗ କରିବାକୁ ଦିଅ ଏବଂ ତୁମର ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅ </string>
+    <string name="enable_api_summary">ଅନ୍ୟ ଆପ୍ସକୁ AnkiDroid ସହିତ ସଂଯୋଗ କରିବାକୁ ଦିଅ ଏବଂ ତୁମର ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅ</string>
     <string name="custom_buttons" maxLength="41">ଆପ୍ ବାର୍ ବଟନ୍</string>
     <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ ଇଚ୍ଛାରୂପଣ କରନ୍ତୁ</string>
     <string name="custom_buttons_setting_always_show">ସର୍ବଦା ଦେଖାନ୍ତୁ</string>
     <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାନ୍ତୁ</string>
     <string name="custom_buttons_setting_menu_only">କେବଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
-    <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ </string>
+    <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନ୍ ଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହାକି AnkiDroid API ଯେପରିକି ଅଭିଧାନ,ଉପଯୋଗିତା ବ୍ୟବହାର କରେ</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
     <string name="html_javascript_debugging_summ">ସୁଦୂର ୱେବଭ୍ୟୁ ସଂଯୋଗଗୁଡ଼ିକୁ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
@@ -228,17 +227,17 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
     <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ | ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ</string>
+    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ। ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
-    <string name="deck_conf_group" maxLength="41">ବିକଳ୍ପ ଗୋଷ୍ଠୀ </string>
+    <string name="deck_conf_group" maxLength="41">ବିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
     <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ |</item>
-        <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି  |</item>
+        <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ</item>
+        <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">ନୂଆ ପତ୍ରଗୁଡ଼ିକ </string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା </string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ତ୍ରୁଟିସଂଖ୍ୟା</string>
     <string name="deck_conf_general" maxLength="41">ସାଧାରଣ </string>
     <string name="deck_conf_reminders" maxLength="41">ସ୍ମାରକପତ୍ର</string>
@@ -248,14 +247,14 @@
     <string name="deck_conf_graduating_ivl" maxLength="41">ସ୍ନାତକୋତ୍ତର ବ୍ୟବଧାନ</string>
     <string name="deck_conf_days">XXX ଦିନ</string>
     <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ବ୍ୟବଧାନ</string>
-    <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା </string>
+    <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା</string>
     <string name="deck_conf_max_rev" maxLength="41">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
     <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିଙ୍କୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିକ ପରବର୍ତ୍ତୀ ଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
     <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ |</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
     <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_ivl_fct" maxLength="41">ବ୍ୟବଧାନ ପରିବର୍ତ୍ତନକାରୀ</string>
@@ -270,7 +269,7 @@
     <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>
     <string name="deck_conf_autoplay" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡ଼ିଓ ଚଲାନ୍ତୁ</string>
     <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
-    <string name="deck_conf_replayq_summ">ଯେତେବେଳେ ଉତ୍ତର ଦେଖାଯାଏ, ଉଭୟ ପ୍ରଶ୍ନର ଏବଂ ଉତ୍ତର ଅଡ଼ିଓର ପୁନରାବୃତ୍ତି କର </string>
+    <string name="deck_conf_replayq_summ">ଉତ୍ତର ଦେଖାଯିବା ବେଳେ, ଉଭୟ ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ଅଡ଼ିଓ ପୁନଃଚାଳନ କରନ୍ତୁ</string>
     <string name="deck_conf_manage" maxLength="41">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
     <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ ଏବଂ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="deck_conf_current_group" maxLength="41">ସାମ୍ପ୍ରତିକ ଗୋଷ୍ଠୀ</string>
@@ -287,13 +286,13 @@
     </plurals>
     <string name="deck_conf_set_subdecks_message">ଏହି ତାସଖଣ୍ଡର ସମସ୍ତ ଉପତାସଖଣ୍ଡ ପାଇଁ ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ସେଟ୍ କରନ୍ତୁ?</string>
     <string name="pref_browser_editor_font" maxLength="41">ବ୍ରାଉଜର୍ ଏବଂ ସମ୍ପାଦକର ଫଣ୍ଟ</string>
-    <string name="deck_conf_cram_filter" maxLength="41">ଶୋଧକ </string>
+    <string name="deck_conf_cram_filter" maxLength="41">ଶୋଧକ</string>
     <string name="deck_conf_cram_search" maxLength="41">ସନ୍ଧାନ</string>
     <string name="deck_conf_cram_limit" maxLength="41">ଏତିକିରେ ସୀମିତ କର</string>
     <string name="deck_conf_cram_order" maxLength="41">ପାତ୍ରଙ୍କୁ ଏହି ଭାବରେ ଚୟନ କରାଯାଏ </string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନର୍ନିର୍ଦ୍ଧାରଣ</string>
     <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନର୍ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
-    <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଫିଲ୍ଟର୍ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାଦ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାଦ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ବିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -305,7 +304,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
     <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, କାର୍ଡ ସମ୍ପାଦନ କରିବା ସମୟରେ &lt;br&gt; କୁ ନୂତନ ଲାଇନରେ ରୂପାନ୍ତର କରନ୍ତୁ।</string>
     <string name="no_code_formatting" maxLength="41">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
-    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
+    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <!-- Open Changelog-->

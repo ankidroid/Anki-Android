@@ -124,9 +124,9 @@
     <string name="menu_flag_card_two">Аранжавы сцяжок</string>
     <string name="menu_flag_card_three">Зялёны сцяжок</string>
     <string name="menu_flag_card_four">Блакітны сцяжок</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Ружовы сцяжок</string>
+    <string name="menu_flag_card_six">Туркусовы сцяжок</string>
+    <string name="menu_flag_card_seven">Фіялетавы сцяжок</string>
     <string name="menu_edit_tags">Змяніць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
@@ -249,4 +249,5 @@
         <item quantity="many">%1$d картак (0 для паўтору)</item>
         <item quantity="other">%1$d карткі (0 для паўтору)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

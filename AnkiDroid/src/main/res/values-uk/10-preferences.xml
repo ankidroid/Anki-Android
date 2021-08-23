@@ -190,7 +190,6 @@
     <string name="sched_v2" maxLength="41">Планувальник V2</string>
     <string name="sched_v2_summ">Увімкнути новий планувальник. Примушує зміни в одному напрямку при наступній синхронізації</string>
     <string name="sched_ver_toggle_title">Підтвердити</string>
-    <string name="sched_ver_2to1">Це призведе до скидання будь-яких карток у процесі навчання, очищення фільтрів та змінення версії планувальника. Продовжити?</string>
     <string name="sched_ver_1to2">Експериментальний планувальник може спричинити неправильне планування. Переконайтеся, що ви сперше прочитали документацію. Продовжити?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>

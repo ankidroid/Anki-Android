@@ -114,8 +114,8 @@
     <string name="menu_flag_card_two">Orange Flagge</string>
     <string name="menu_flag_card_three">Grüne Flagge</string>
     <string name="menu_flag_card_four">Blaue Flagge</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_five">Du</string>
+    <string name="menu_flag_card_six">Ich bin Amelie</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
@@ -233,4 +233,5 @@
         <item quantity="one">%1$d Karte (0 fällig)</item>
         <item quantity="other">%1$d Karten (0 fällig)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

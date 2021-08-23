@@ -114,9 +114,9 @@
     <string name="menu_flag_card_two">Turuncu bayrak</string>
     <string name="menu_flag_card_three">Yeşil bayrak</string>
     <string name="menu_flag_card_four">Mavi bayrak</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Pembe bayrak</string>
+    <string name="menu_flag_card_six">Turkuaz bayrak</string>
+    <string name="menu_flag_card_seven">Mor bayrak</string>
     <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
     <string name="menu_select">Metni seç</string>
@@ -233,4 +233,5 @@
         <item quantity="one">%1$d kart (0 sırası gelmiş)</item>
         <item quantity="other">%1$d kart (0 sırası gelmiş)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

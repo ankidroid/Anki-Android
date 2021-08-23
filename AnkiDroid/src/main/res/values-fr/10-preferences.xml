@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">Planificateur V2</string>
     <string name="sched_v2_summ">Activer le nouveau planificateur. Force les changements dans une direction lors de la prochaine synchronisation</string>
     <string name="sched_ver_toggle_title">Confirmer</string>
-    <string name="sched_ver_2to1">Cela réinitialisera les cartes en apprentissage, effacera les paquets de cartes filtrés et modifiera la version du planificateur. Continuer ?</string>
     <string name="sched_ver_1to2">Le planificateur expérimental pourrait causer une planification incorrecte. Veuillez vous assurer d\'avoir lu la documentation au préalable. Continuer ?</string>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>

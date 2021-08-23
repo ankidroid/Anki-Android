@@ -233,4 +233,5 @@
         <item quantity="one">%1$d kortti (0 kerrattavissa)</item>
         <item quantity="other">%1$d korttia (0 kerrattavissa)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

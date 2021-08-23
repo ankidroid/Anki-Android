@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">Přepnout oranžový příznak</string>
     <string name="gesture_flag_green">Přepnout zelený příznak</string>
     <string name="gesture_flag_blue">Přepnout modrý příznak</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Přepnout růžový příznak</string>
+    <string name="gesture_flag_turquoise">Přepnout tyrkysový příznak</string>
+    <string name="gesture_flag_purple">Přepnout purpurový příznak</string>
     <string name="gesture_flag_remove">Odstranit příznak</string>
     <string name="gesture_page_up">Stránka nahoru</string>
     <string name="gesture_page_down">Stránka dolů</string>

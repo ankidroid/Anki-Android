@@ -114,9 +114,9 @@
     <string name="menu_flag_card_two">Oranĝa flago</string>
     <string name="menu_flag_card_three">Verda flago</string>
     <string name="menu_flag_card_four">Blua flago</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Rozkolora flago</string>
+    <string name="menu_flag_card_six">Turkisa flago</string>
+    <string name="menu_flag_card_seven">Violkolora flago</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_select">Elekti tekston</string>
@@ -191,8 +191,8 @@
     <string name="card_template_editor_select_field">Elekta kampo</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">%1$d karto estos kreita. Ĉu pluigi?</item>
+        <item quantity="other">%1$d kartoj estos kreitaj. Ĉu pluigi?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ĉu forigi la tipon de kartoj “%2$s” kaj ĝian %1$d karton?</item>
@@ -233,4 +233,5 @@
         <item quantity="one">%1$d karto (0 lernenda)</item>
         <item quantity="other">%1$d kartoj (0 lernenda)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -55,7 +55,7 @@
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nNepoužité soubory:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
         <item><![CDATA[Chcete-li nám pomoci vylepšit AnkiDroid prosím ohlaste chyby ve <a href=\"%1$s\">sledovači chyb</a>; nové myšlenky na funkce jsou také velmi vítány. Mnoho odpovědí naleznete ve <a href=\"%2$s\">wiki</a> nebo začněte diskutovat na <a href=\"%3$s\">foru</a>.]]></item>

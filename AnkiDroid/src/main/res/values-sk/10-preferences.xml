@@ -190,7 +190,6 @@
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Potvrdiť</string>
-    <string name="sched_ver_2to1">Nasledovné zresetuje kartičky v procese učenia, zmaže filtrované balíčky a zmení verziu plánovača. Pokračovať?</string>
     <string name="sched_ver_1to2">Experimentálny plánovač by mohol spôsobiť nesprávne plánovanie. Prosím, uistite sa, že ste si prv prečítali dokumentáciu. Pokračovať?</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínať obrazovku</string>
     <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>

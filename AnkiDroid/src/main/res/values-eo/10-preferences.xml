@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">Planilo V2</string>
     <string name="sched_v2_summ">Aktivigi la novan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
     <string name="sched_ver_toggle_title">Konfirmi</string>
-    <string name="sched_ver_2to1">Tiu procezo nuligos ĉiujn kartojn en lernado, forigi filtritajn kartarojn kaj ŝanĝi la planiloversion. Daŭrigi?</string>
     <string name="sched_ver_1to2">La eksperimenta planilo povus kaŭzi malĝustan planadon. Bonvolu nepre legi la dokumentaron unue. Daŭrigi?</string>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
@@ -300,7 +299,7 @@
     <string name="deck_conf_reminders_time" maxLength="41">Rememori je</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
-    <string name="analytics_title" maxLength="41">Kunhavigi uzadon de funkcioj</string>
+    <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
     <string name="note_editor_replace_newlines" maxLength="41">Anstataŭigi novajn liniojn en HTML</string>
     <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
@@ -311,14 +310,14 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
     <string name="binding_add_gesture">Aldoni geston</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_key">Aldoni klavon</string>
+    <string name="key_picker_default_press_key">Premu klavon</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">Elekti kartflankon</string>
+    <string name="card_side_question">Demando</string>
+    <string name="card_side_answer">Respondo</string>
+    <string name="card_side_both">Demando kaj respondo</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">D: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

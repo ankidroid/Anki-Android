@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">V2 plánovač</string>
     <string name="sched_v2_summ">Povolit nový plánovač. To vynutí změny v jednom směru při příští synchronizaci</string>
     <string name="sched_ver_toggle_title">Potvrdit</string>
-    <string name="sched_ver_2to1">To obnoví všechny karty v procesu učení, vyprázdní filtrované balíčky a změní verzi plánovače. Pokračovat?</string>
     <string name="sched_ver_1to2">Experimentální plánovač by mohl způsobit nesprávné plánování. Ujistěte se prosím, že jste si nejdříve přečetli dokumentaci. Pokračovat?</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>

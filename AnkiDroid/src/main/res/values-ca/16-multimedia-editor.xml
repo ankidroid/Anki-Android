@@ -35,11 +35,11 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Afegeix imatge</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Afegeix clip d\'àudio</string>
     <string name="multimedia_editor_popup_audio">Gravar àudio</string>
     <string name="multimedia_editor_popup_text">Editor avançat</string>
     <string name="multimedia_editor_popup_cloze">Blancs per omplir</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Esborrar camp</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Desenvolupat per glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -67,8 +67,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
     <string name="multimedia_editor_field_editing_image">Imatge</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Enregistrament d\'audio</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Clip d\'àudio</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fet</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -89,7 +89,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Càmera</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_image_field_editing_library">Biblioteca</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Descarregant</string>
@@ -104,23 +104,23 @@
     <string name="multimedia_editor_progress_wait_title">Esperi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_png_paste_error">Error en convertir la imatge del porta-retalls a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adjuntar contingut multimèdia al camp %1$s</string>
     <string name="multimedia_editor_attach_media">Adjuntar multimèdia</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">La gravació ha fracassat</string>
     <string name="multimedia_editor_audio_view_playing_failed">La reproducció ha fallat</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">No es pot crear la barra d\'eines de gravació</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Camp d\'edició</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Traducció</string>
     <!-- Network failure -->
     <string name="network_no_connection">Sense connexió.</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Voleu retallar aquesta imatge?</string>
+    <string name="crop_button">Retalla la imatge</string>
+    <string name="save_dialog_content">La mida actual de la imatge és de %s MB. El límit de mida per defecte de la imatge és 1 MB. La voleu retallar?</string>
+    <string name="select_image_failed">"No s\'ha pogut seleccionar la imatge. Torneu-ho a provar si us plau"</string>
+    <string name="activity_result_unexpected">L\'aplicació ha tornat un valor inesperat. Potser heu d\'usar una aplicació diferent.</string>
 </resources>

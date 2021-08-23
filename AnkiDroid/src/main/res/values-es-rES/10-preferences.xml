@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">Planificador V2</string>
     <string name="sched_v2_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
-    <string name="sched_ver_2to1">Esto restablecerá cualquier carta en el aprendizaje, limpiará mazos filtrados y cambiará la versión del programador. ¿Proceder?</string>
     <string name="sched_ver_1to2">El programador experimental podría causar una programación incorrecta. Por favor, asegúrese de haber leído la documentación primero. ¿Proceder?</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>

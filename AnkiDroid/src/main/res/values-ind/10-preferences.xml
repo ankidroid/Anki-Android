@@ -190,7 +190,6 @@
     <string name="sched_v2" maxLength="41">Penjadwal V2</string>
     <string name="sched_v2_summ">Perbolehkan penjadwal baru. Paksakan pengubahan satu arah pada sinkronisasi selanjutnya</string>
     <string name="sched_ver_toggle_title">Konfirmasi</string>
-    <string name="sched_ver_2to1">Ini akan mereset kartu yang dipelajari, dek terfilter, dan mengubah versi penjadwalan. Lanjut?</string>
     <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
