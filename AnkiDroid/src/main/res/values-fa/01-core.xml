@@ -115,8 +115,8 @@
     <string name="menu_flag_card_three">نشان سبز</string>
     <string name="menu_flag_card_four">نشان آبی</string>
     <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_six">پرچم فیروزه‌ای</string>
+    <string name="menu_flag_card_seven">پرچم بنفش</string>
     <string name="menu_edit_tags">ویرایش تگ‌ها</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
     <string name="menu_select">انتخاب متن</string>
@@ -191,7 +191,7 @@
     <string name="card_template_editor_select_field">انتخاب فیلد</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">%1$d کارت ایجاد می‌شود. ادامه می‌دهید؟</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
@@ -230,7 +230,8 @@
     <string name="sync_conflict_title_new">مجموعه‌ای که می‌خواهید نگه دارید را انتخاب کنید</string>
     <string name="sync_conflict_replace_title">جابجا کردن مجموعه</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="one">%1$d کارت (موعد)</item>
         <item quantity="other">%1$d کارت‌ها (0 موعد مرور)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s کپی</string>
 </resources>

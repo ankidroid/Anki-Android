@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">Planista V2</string>
     <string name="sched_v2_summ">Włącz nową wersję planisty. Wymusza synchronizację w jednym kierunku podczas następnej synchronizacji</string>
     <string name="sched_ver_toggle_title">Potwierdź</string>
-    <string name="sched_ver_2to1">To zresetuje wszystkie karty uczone, wyczyści filtrowane talie i zmieni wersję programu planującego. Kontynuować?</string>
     <string name="sched_ver_1to2">Eksperymentalny planista może powodować nieprawidłowe planowanie. Upewnij się, że przeczytałeś wcześniej dokumentację. Kontynuować?</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>

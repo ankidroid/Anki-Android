@@ -64,11 +64,11 @@
         <item quantity="other">%d րոպե է մնացել</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">What your name?</item>
+        <item quantity="other">%d ঘণ্টা %d বাকি  </item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">can we go for dinner?</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
@@ -233,4 +233,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

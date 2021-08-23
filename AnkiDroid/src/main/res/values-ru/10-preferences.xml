@@ -42,7 +42,7 @@
     <string name="disabled">Выключено</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general_summ">Общие настроки</string>
+    <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Обучение</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">Планировщик V2</string>
     <string name="sched_v2_summ">Включает новый планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
     <string name="sched_ver_toggle_title">Подтвердить</string>
-    <string name="sched_ver_2to1">Это сбросит все изучаемые карточки, очистит фильтрованные колоды и поменяет версию планировщика. Продолжить?</string>
     <string name="sched_ver_1to2">Экспериментальный планировщик может ошибаться. Сначала прочтите документацию. Продолжить?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>

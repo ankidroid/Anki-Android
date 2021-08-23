@@ -43,7 +43,7 @@
     <string name="backup_restore">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର</string>
     <string name="backup_new_collection">ନୂତନ ସଂଗ୍ରହ</string>
     <string name="backup_del_collection">ସଂଗ୍ରହ ଅପସାରଣ କରନ୍ତୁ ଏବଂ ନୂତନ ନିର୍ମାଣ କରନ୍ତୁ</string>
-    <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ |</string>
+    <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ।</string>
     <string name="backup_full_sync_from_server">ସର୍ଭରରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb ରୁ ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ କି? ଏହା ତୁମର ଶେଷ ସିଙ୍କ୍ ଠାରୁ ତୁମର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଏବଂ ଯୋଡ଼ାହୋଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
     <string name="error_handling_title">ତ୍ରୁଟି ପରିଚାଳନା</string>

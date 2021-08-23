@@ -189,7 +189,6 @@
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Xác nhận</string>
-    <string name="sched_ver_2to1">Điều này sẽ đặt lại bất kỳ thẻ nào trong học tập, xóa các bộ thẻ được lọc và thay đổi phiên bản của bộ lập lịch. Tiếp tục?</string>
     <string name="sched_ver_1to2">Trình lập lịch thử nghiệm có thể gây ra lập lịch không chính xác. Hãy đảm bảo rằng bạn đã đọc tài liệu trước. Tiếp tục?</string>
     <string name="pref_keep_screen_on" maxLength="41">Luôn bật màn hình</string>
     <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>

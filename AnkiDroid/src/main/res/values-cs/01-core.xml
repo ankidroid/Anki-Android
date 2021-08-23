@@ -124,9 +124,9 @@
     <string name="menu_flag_card_two">Oranžový příznak</string>
     <string name="menu_flag_card_three">Zelený příznak</string>
     <string name="menu_flag_card_four">Modrý příznak</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Růžový příznak</string>
+    <string name="menu_flag_card_six">Tyrkysový příznak</string>
+    <string name="menu_flag_card_seven">Purpurový příznak</string>
     <string name="menu_edit_tags">Upravit štítky</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
     <string name="menu_select">Vybrat text</string>
@@ -249,4 +249,5 @@
         <item quantity="many">%1$d karty (0 ke zkoušení)</item>
         <item quantity="other">%1$d karet (0 ke zkoušení)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

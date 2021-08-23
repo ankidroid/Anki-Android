@@ -114,7 +114,7 @@
     <string name="menu_flag_card_two">Marcação laranja</string>
     <string name="menu_flag_card_three">Marcação verde</string>
     <string name="menu_flag_card_four">Marcação azul</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">Portuguese brazilian</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Editar tags</string>
@@ -233,4 +233,5 @@
         <item quantity="one">%1$d card (0 programado)</item>
         <item quantity="other">%1$d cards (0 programado)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

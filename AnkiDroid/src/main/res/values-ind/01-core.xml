@@ -226,4 +226,5 @@
         <item quantity="other">%1$d kartu (0 jatuh tempo)
 %1$d kartu (0 jatuh tempo)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -90,7 +90,7 @@
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
-    <string name="browse_cards">các thẻ</string>
+    <string name="browse_cards">Xem các thẻ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
@@ -109,10 +109,10 @@
     <string name="menu_flag_card_two">Cờ cam</string>
     <string name="menu_flag_card_three">Cờ xanh lá</string>
     <string name="menu_flag_card_four">Cờ xanh dương</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Sửa đuôi</string>
+    <string name="menu_flag_card_five">Cờ hồng</string>
+    <string name="menu_flag_card_six">Cờ xanh ngọc lam</string>
+    <string name="menu_flag_card_seven">Cờ tím</string>
+    <string name="menu_edit_tags">Sửa tag</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
     <string name="menu_select">Chọn văn bản</string>
     <string name="menu_lookup">Tra cứu văn bản</string>
@@ -128,7 +128,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Vui lòng cấp cho AnkiDroid quyền \"Bộ nhớ\" để tiếp tục</string>
+    <string name="startup_no_storage_permission">Vui lòng cấp cho AnkiDroid quyền truy cập \"bộ nhớ\"</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -225,4 +225,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d (0 thẻ đến hạn)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

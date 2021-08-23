@@ -265,4 +265,5 @@
         <item quantity="many">%1$d بطاقة (ولا واحدة مستحقة)</item>
         <item quantity="other">%1$d بطاقة (ولا واحدة مستحقة)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

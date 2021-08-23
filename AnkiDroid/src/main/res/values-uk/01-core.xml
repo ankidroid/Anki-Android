@@ -249,4 +249,5 @@
         <item quantity="many">%1$d карток (0 для перегляду)</item>
         <item quantity="other">%1$d карток (0 для перегляду)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

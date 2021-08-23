@@ -352,16 +352,16 @@
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
+    <string name="download_deck">डेक डाउनलोड करें</string>
+    <string name="try_again">पुन: प्रयास करें</string>
+    <string name="cancel_download">डाउनलोड रद्द करें</string>
     <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="downloading_file">%s डाउनलोड हो रहा है</string>
+    <string name="import_deck">डेक आयात करें</string>
+    <string name="something_wrong">कुछ गलत हो गया, कृपया फिर से प्रयास करें</string>
+    <string name="download_failed">डाउनलोड विफल हुआ</string>
+    <string name="deck_download_progress_message">डाउनलोड चलने के दौरान आप अन्य ऐप्स का उपयोग कर सकते हैं</string>
+    <string name="check_network">कृपया अपने नेटवर्क कनेक्शन की जांच करें</string>
+    <string name="search_using_deck_name">डेक नाम का उपयोग करके खोजें</string>
+    <string name="home">गृह</string>
 </resources>

@@ -190,7 +190,6 @@
     <string name="sched_v2" maxLength="41">מתזמן. גירסא 2</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">אשר</string>
-    <string name="sched_ver_2to1">זה יאפס את כל הכרטיסים שבלמידה, ינקה חפיסות מסוננות וישנה את גרסת המתזמן. להמשיך?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>

@@ -378,16 +378,16 @@
     <string name="back_pressed_once_reviewer">Націсніце \"Назад\" яшчэ раз, каб вярнуцца</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Спампаваць калоду</string>
+    <string name="try_again">Паспрабуйце яшчэ</string>
+    <string name="cancel_download">Скасаваць спампоўку</string>
+    <string name="cancel_download_question_title">Скасаваць спампоўку?</string>
+    <string name="downloading_file">Спампоўка %s</string>
+    <string name="import_deck">Імпартаваць калоду</string>
+    <string name="something_wrong">Нешта пайшло не так, калі ласка, паспрабуйце яшчэ раз</string>
+    <string name="download_failed">Памылка пры спампоўцы</string>
+    <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўкі</string>
+    <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
+    <string name="search_using_deck_name">Пошук па назве калоды</string>
+    <string name="home">Галоўная</string>
 </resources>
