@@ -1,0 +1,362 @@
+<!--
+  ~
+  ~  Copyright (c) 2021 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+
+<head>
+    <title>Add Note</title>
+    <style>
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .action-bar {
+            background-color: rgb(61, 146, 226);
+            height: 17vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            box-shadow: 0 1vw 2vw rgb(214, 214, 214);
+        }
+
+        #home-button {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 1;
+            flex-grow: 1;
+        }
+
+        .home-line {
+            position: relative;
+            width: 5vw;
+            height: .5vw;
+            margin: .5vw;
+            border-radius: .5vw;
+            background-color: white;
+        }
+
+        .arrow-line {
+            position: relative;
+            width: 3vw;
+            height: .5vw;
+            border-radius: .5vw;
+            background-color: white;
+        }
+
+        #line-down {
+            transform: rotate(45deg);
+        }
+
+        #line-up {
+            transform: rotate(135deg);
+        }
+
+        #overflow-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 6vw 0 0;
+            order: 4;
+            flex-grow: 0;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            border-radius: 0.5vw;
+            margin-top: 1vw;
+            background-color: white;
+        }
+
+        .preview {
+            width: 6vw;
+            height: 6vw;
+            order: 3;
+            margin: 0 5vw 0 0;
+            align-self: center;
+            flex-grow: 0;
+        }
+
+        .save-icon {
+            align-self: center;
+            order: 2;
+            flex-grow: 0;
+            margin: 0 3vw 0 0;
+        }
+
+        #line-a {
+            transform: rotate(135deg);
+        }
+
+        #line-b {
+            transform: rotate(45deg) translate(-1vw, .8vw);
+        }
+
+        .selector {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4vw;
+        }
+
+        .bold {
+            font-size: 3.5vw;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: bold;
+        }
+
+        .regular {
+            font-size: 3.5vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #selector-title {
+            order: 1;
+            margin: 2vw 0 2vw 5vw;
+        }
+
+        #selector-option {
+            order: 2;
+            flex-grow: 1;
+            margin: auto auto auto 5vw;
+        }
+
+        .triangle {
+            width: 0vw;
+            height: 0vw;
+            align-self: center;
+            border-left: 1vw solid transparent;
+            border-right: 1vw solid transparent;
+            border-bottom: 2vw solid black;
+            transform: rotate(180deg);
+            order: 3;
+            margin: 0 5vw 0 0;
+        }
+
+        .edit-text-top {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5vw;
+        }
+
+        .attachment {
+            height: 5vw;
+            width: 5vw;
+            align-self: center;
+            order: 2;
+            flex-grow: 0;
+            margin: auto 2vw auto auto;
+        }
+
+        .hide-edittext {
+            height: 5vw;
+            width: 5vw;
+            align-self: center;
+            order: 3;
+            flex-grow: 0;
+            margin: auto 5vw auto auto;
+        }
+
+        #edit-text-name {
+            order: 1;
+            flex-grow: 1;
+            margin: auto auto auto 5vw;
+        }
+
+        .edit-text-line {
+            height: .5vw;
+            background-color: darkgrey;
+            margin: 7vw 5vw auto 5vw;
+        }
+
+        .dialogue {
+            background: lightgray;
+            margin: 5vw 5vw 0 5vw;
+            border-radius: 1vw;
+        }
+
+        #dialogue-text {
+            padding: 2vw;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            background: lightgray;
+            margin-top: auto;
+        }
+
+        .icon-size {
+            width: 6vw;
+            height: 6vw;
+            padding: 2vw;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- Action bar -->
+
+<div class="action-bar">
+    <div id="home-button">
+        <div class="arrow-line" id="line-up"></div>
+        <div class="home-line"></div>
+        <div class="arrow-line" id="line-down"></div>
+    </div>
+
+    <!-- preview icon -->
+    <div class="preview">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 12 4.5 C 7 4.5 2.73 7.61 1 12 C 2.73 16.39 7 19.5 12 19.5 C 17 19.5 21.27 16.39 23 12 C 21.27 7.61 17 4.5 12 4.5 Z M 12 17 C 9.24 17 7 14.76 7 12 C 7 9.24 9.24 7 12 7 C 14.76 7 17 9.24 17 12 C 17 14.76 14.76 17 12 17 Z M 12 9 C 10.34 9 9 10.34 9 12 C 9 13.66 10.34 15 12 15 C 13.66 15 15 13.66 15 12 C 15 10.34 13.66 9 12 9 Z"
+                  fill="#ffffff"/>
+        </svg>
+    </div>
+
+    <div class="save-icon">
+        <div class="home-line" id="line-a"></div>
+        <div class="arrow-line" id="line-b"></div>
+    </div>
+
+    <div id="overflow-icon">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</div>
+
+<!-- Main Body -->
+
+<div class="body-main">
+    <div class="selector">
+        <p class="bold" id="selector-title-type">Type:</p>
+        <p class="regular" id="selector-option-basic">Basic</p>
+        <div class="triangle"></div>
+    </div>
+    <div class="selector">
+        <p class="bold" id="selector-title-deck">Deck:</p>
+        <p class="regular" id="selector-option-deck-name">German Learning Deck</p>
+        <div class="triangle"></div>
+    </div>
+    <div class="edit-text">
+        <div class="edit-text-top">
+            <p class="regular" id="edit-text-name-front">Front</p>
+            <div class="attachment">
+                <!-- attachment icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+                    <path id="path"
+                          d="M 2 12.5 C 2 9.46 4.46 7 7.5 7 L 18 7 C 20.21 7 22 8.79 22 11 C 22 13.21 20.21 15 18 15 L 9.5 15 C 8.12 15 7 13.88 7 12.5 C 7 11.12 8.12 10 9.5 10 L 17 10 L 17 12 L 9.41 12 C 8.86 12 8.86 13 9.41 13 L 18 13 C 19.1 13 20 12.1 20 11 C 20 9.9 19.1 9 18 9 L 7.5 9 C 5.57 9 4 10.57 4 12.5 C 4 14.43 5.57 16 7.5 16 L 17 16 L 17 18 L 7.5 18 C 4.46 18 2 15.54 2 12.5 Z"
+                          fill="#000000"/>
+                </svg>
+            </div>
+            <div class="hide-edittext">
+                <!-- dropdown icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+                    <path id="path" d="M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 L 12 16 L 18 10 Z"
+                          fill="#000000"/>
+                </svg>
+            </div>
+        </div>
+        <div class="edit-text-line"></div>
+    </div>
+    <div class="edit-text">
+        <div class="edit-text-top">
+            <p class="regular" id="edit-text-name-back">Back</p>
+            <div class="attachment">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+                    <path id="path"
+                          d="M 2 12.5 C 2 9.46 4.46 7 7.5 7 L 18 7 C 20.21 7 22 8.79 22 11 C 22 13.21 20.21 15 18 15 L 9.5 15 C 8.12 15 7 13.88 7 12.5 C 7 11.12 8.12 10 9.5 10 L 17 10 L 17 12 L 9.41 12 C 8.86 12 8.86 13 9.41 13 L 18 13 C 19.1 13 20 12.1 20 11 C 20 9.9 19.1 9 18 9 L 7.5 9 C 5.57 9 4 10.57 4 12.5 C 4 14.43 5.57 16 7.5 16 L 17 16 L 17 18 L 7.5 18 C 4.46 18 2 15.54 2 12.5 Z"
+                          fill="#000000"/>
+                </svg>
+            </div>
+            <div class="hide-edittext">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+                    <path id="path" d="M 16.59 8.59 L 12 13.17 L 7.41 8.59 L 6 10 L 12 16 L 18 10 Z"
+                          fill="#000000"/>
+                </svg>
+            </div>
+        </div>
+        <div class="edit-text-line"></div>
+    </div>
+    <div class="dialogue">
+        <p class="regular" id="dialogue-text-tags">Tags: </p>
+    </div>
+    <div class="dialogue">
+        <p class="regular" id="dialogue-text-cards">Cards: Card 1, Card 2 </p>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 15.6 10.79 C 16.57 10.12 17.25 9.02 17.25 8 C 17.25 5.74 15.5 4 13.25 4 L 7 4 L 7 18 L 14.04 18 C 16.13 18 17.75 16.3 17.75 14.21 C 17.75 12.69 16.89 11.39 15.6 10.79 Z M 10 6.5 L 13 6.5 C 13.83 6.5 14.5 7.17 14.5 8 C 14.5 8.83 13.83 9.5 13 9.5 L 10 9.5 L 10 6.5 Z M 13.5 15.5 L 10 15.5 L 10 12.5 L 13.5 12.5 C 14.33 12.5 15 13.17 15 14 C 15 14.83 14.33 15.5 13.5 15.5 Z"
+                  fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 10 4 L 10 7 L 12.21 7 L 8.79 15 L 6 15 L 6 18 L 14 18 L 14 15 L 11.79 15 L 15.21 7 L 18 7 L 18 4 Z"
+                  fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 12 17 C 15.31 17 18 14.31 18 11 L 18 3 L 15.5 3 L 15.5 11 C 15.5 12.93 13.93 14.5 12 14.5 C 10.07 14.5 8.5 12.93 8.5 11 L 8.5 3 L 6 3 L 6 11 C 6 14.31 8.69 17 12 17 Z M 5 19 L 5 21 L 19 21 L 19 19 L 5 19 Z"
+                  fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path" d="M 19 13 L 2 13 L 2 11 L 22 11 L 22 13 Z" fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path" d="M 5 4 L 5 7 L 10.5 7 L 10.5 19 L 13.5 19 L 13.5 7 L 19 7 L 19 4 Z"
+                  fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 2.5 4 L 2.5 7 L 7.5 7 L 7.5 19 L 10.5 19 L 10.5 7 L 15.5 7 L 15.5 4 L 2.5 4 Z M 21.5 9 L 12.5 9 L 12.5 12 L 15.5 12 L 15.5 19 L 18.5 19 L 18.5 12 L 21.5 12 L 21.5 9 Z"
+                  fill="#000000"/>
+        </svg>
+    </div>
+    <div class="icon-size">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="vector">
+            <path id="path"
+                  d="M 19 3 L 5 3 C 3.89 3 3 3.9 3 5 L 3 19 C 3 20.1 3.89 21 5 21 L 19 21 C 20.1 21 21 20.1 21 19 L 21 5 C 21 3.9 20.1 3 19 3 Z M 17 13 L 13 13 L 13 17 L 11 17 L 11 13 L 7 13 L 7 11 L 11 11 L 11 7 L 13 7 L 13 11 L 17 11 L 17 13 Z"
+                  fill="#000000"/>
+        </svg>
+        >
+    </div>
+</div>
+</body>
+
+</html>

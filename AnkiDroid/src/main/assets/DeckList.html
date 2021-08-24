@@ -1,0 +1,332 @@
+<!--
+  ~
+  ~ Copyright (c) 2021 Prateek Singh <prateeksingh3212@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+
+<head>
+    <title>Deck List</title>
+    <style>
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .action-bar {
+            background-color: rgb(61, 146, 226);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            box-shadow: 0 1vw 2vw rgb(214, 214, 214);
+        }
+
+        #hamburger {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 1;
+            flex: 0 0 auto;
+        }
+
+        .ham-line {
+            position: relative;
+            width: 5vw;
+            height: .5vw;
+            margin: .5vw;
+            border-radius: .5vw;
+            background-color: white;
+        }
+
+        #actionbar-title {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 0 0 5vw;
+            order: 2;
+            flex: 3 0 auto;
+        }
+
+        #app-name {
+            margin-top: 5%;
+            color: white;
+            font-size: 5vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #due-time {
+            margin-top: -8%;
+            margin-bottom: 5%;
+            color: white;
+            font-size: 3vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        #search-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 0 6vw 0 0;
+            order: 3;
+            flex: 0 0 auto;
+        }
+
+        #circle {
+            width: 2.5vw;
+            height: 2.5vw;
+            border-radius: 2.5vw;
+            border: 0.5vw solid white;
+        }
+
+        #search-line {
+            width: 2.5vw;
+            height: .5vw;
+            background-color: white;
+            transform: rotate(45deg) translate(1.5vw, -1.25vw)
+        }
+
+        #overflow-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: 1vw 6vw 0 0;
+            order: 5;
+            flex: 0 0 auto;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            border-radius: 0.5vw;
+            margin-top: 1vw;
+            background-color: white;
+        }
+
+        #sync-icon {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            margin: -1vw 6vw 1vw 1vw;
+            order: 4;
+            flex: 1 0 1;
+        }
+
+        .triangle {
+            width: 0vw;
+            height: 0vw;
+            border-left: 1vw solid transparent;
+            border-right: 1vw solid transparent;
+            border-bottom: 2vw solid white;
+        }
+
+        #triangle-right {
+            transform: rotate(90deg) translate(7vw, -2vw)
+        }
+
+
+        #triangle-left {
+            transform: rotate(270deg) translate(-1.35vw, .75vw)
+        }
+
+        #semi-circle {
+            border: .5vw solid white;
+            display: inline-block;
+            padding: 1.75vw;
+            border-radius: 50%;
+            transform: rotate(45deg);
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+
+        .deck-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .deck-details {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .deck {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .divider {
+            width: 100%;
+            height: .2vw;
+            background-color: lightgray;
+        }
+
+        .deck-name {
+            font-size: 4.5vw;
+            padding: 2vw;
+            align-self: center;
+            margin: 1vw 0 0 1vw;
+            font-weight: bold;
+            font-family: 'Source Sans Pro', sans-serif;
+            order: 1;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            margin-right: 1vw;
+            order: 2;
+        }
+
+        .total-card {
+            margin: 1vw;
+            font-size: 3vw;
+            color: blue;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .incorrect-card {
+            margin: 1vw;
+            font-size: 3vw;
+            color: red;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .correct-card {
+            margin: 1vw;
+            font-size: 3vw;
+            color: green;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+        }
+
+        .fab-circle {
+            display: flex;
+            align-self: flex-end;
+            justify-content: center;
+            align-items: center;
+            width: 15vw;
+            height: 15vw;
+            font-weight: bold;
+            color: white;
+            font-size: 5vw;
+            border-radius: 7.5vw;
+            background-color: rgb(61, 146, 226);
+            margin: 0 5vw 5vw 0;
+            box-shadow: 1vw 1vw 3vw grey;
+        }
+
+        #card-status {
+            margin: 0 0 1vw 0;
+            align-self: center;
+            font-size: 3vw;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Action bar code -->
+
+<div class="action-bar">
+    <div id="hamburger">
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+        <div class="ham-line"></div>
+    </div>
+    <div id="actionbar-title">
+        <p id="app-name">AnkiDroid</p>
+        <p id="due-time">150 cards due (10 min)</p>
+    </div>
+    <div id="search-icon">
+        <div id="circle"></div>
+        <div id="search-line"></div>
+    </div>
+    <div id="sync-icon">
+        <div class="triangle" id="triangle-right"></div>
+        <div class="triangle" id="triangle-left"></div>
+        <div id="semi-circle"></div>
+    </div>
+    <div id="overflow-icon">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+</div>
+
+<!-- Deck List Begins -->
+
+<div class="deck-list">
+
+    <!-- Full Deck Details -->
+    <div class="deck">
+        <div class="deck-details">
+
+            <!-- Deck Name -->
+
+            <div class="deck-name" id="deck-1">German Learning Deck</div>
+
+            <!-- Card Details -->
+            <div class="card-details">
+                <div class="total-card">35</div>
+                <div class="incorrect-card">12</div>
+                <div class="correct-card">43</div>
+            </div>
+        </div>
+
+        <!-- Divider to separate -->
+        <div class="divider"></div>
+    </div>
+
+    <!-- Full Deck Details -->
+    <div class="deck">
+        <div class="deck-details">
+
+            <!-- Deck Name -->
+
+            <div class="deck-name" id="deck-2">Psychology Deck</div>
+
+            <!-- Card Details -->
+            <div class="card-details">
+                <div class="total-card">20</div>
+                <div class="incorrect-card">05</div>
+                <div class="correct-card">02</div>
+            </div>
+        </div>
+
+        <!-- Divider to separate -->
+        <div class="divider"></div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="fab-circle">+</div>
+    <div id="card-status">Studied 0 cards in 0 min today</div>
+</div>
+</body>
+
+</html>

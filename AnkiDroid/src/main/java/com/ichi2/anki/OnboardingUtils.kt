@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import com.ichi2.anki.IntentHandler.INTRODUCTION_SLIDES_SHOWN
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashSet
@@ -88,6 +89,8 @@ class OnboardingUtils {
         private fun reset(context: Context, featureConstants: Collection<String>) {
             var editor = AnkiDroidApp.getSharedPrefs(context).edit()
             featureConstants.forEach { editor.putLong(it, 0) }
+            // Reset introduction slides preference
+            editor.putBoolean(INTRODUCTION_SLIDES_SHOWN, false)
             editor.apply()
         }
     }
