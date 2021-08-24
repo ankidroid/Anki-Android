@@ -46,7 +46,7 @@
     <string name="multimedia_editor_trans_from">ଠାରୁ</string>
     <string name="multimedia_editor_trans_to">କୁ</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">ଅନୁବାଦ କର</string>
+    <string name="multimedia_editor_trans_translate">ଅନୁବାଦ କରନ୍ତୁ</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">ଅନଲାଇନ୍ ଅନୁବାଦ କରୁଅଛି</string>
     <!-- pick the right translation imperative -->

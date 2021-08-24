@@ -363,4 +363,8 @@
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="home">Ana sayfa</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

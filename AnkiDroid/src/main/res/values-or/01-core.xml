@@ -154,7 +154,7 @@
     <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>
     <string name="empty_cram_label">ଖାଲି</string>
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
-    <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି</string>
+    <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ଆଗ ସାମ୍ପ୍ରତିକ ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନାଧିବେଶନକୁ ପୁନଃନାମିତ କରନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
@@ -233,5 +233,5 @@
         <item quantity="one">%1$dଟିଏ ପତ୍ର (0 ବାକି)</item>
         <item quantity="other">%1$dଟି ପତ୍ର (0 ବାକି)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
 </resources>

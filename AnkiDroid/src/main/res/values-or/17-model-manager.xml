@@ -52,7 +52,7 @@
     <string name="model_field_editor_delete">କ୍ଷେତ୍ର ବିଲୋପ କରନ୍ତୁ</string>
     <string name="model_field_editor_rename">କ୍ଷେତ୍ରକୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
     <string name="model_field_editor_language_hint">କିବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
-    <string name="model_field_editor_reposition_menu">ସ୍ଥାନାନ୍ତର କ୍ଷେତ୍ର</string>
+    <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ର ପୁନଃଅବସ୍ଥାନ</string>
     <string name="model_field_editor_reposition">କ୍ଷେତ୍ର ପୁନଃଅବସ୍ଥାନ କରନ୍ତୁ (%1$d–%2$d ମଧ୍ୟରେ ଏକ ମୂଲ୍ୟ ପ୍ରବେଶ କରନ୍ତୁ)</string>
     <string name="model_field_editor_toggle_sticky">ଯୋଡ଼ିବା ସମୟରେ ଶେଷ ଇନପୁଟ୍ ମନେରଖ</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡିକ ଅଦ୍ୟତନ କରୁଛି</string>

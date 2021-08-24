@@ -351,4 +351,8 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="home">主页</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>
