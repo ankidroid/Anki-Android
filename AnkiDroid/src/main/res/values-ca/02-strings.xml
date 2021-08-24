@@ -364,4 +364,8 @@
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="home">Inici</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

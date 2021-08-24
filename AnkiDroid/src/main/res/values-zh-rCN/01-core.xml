@@ -225,5 +225,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d 张卡片 (0到期)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
 </resources>
