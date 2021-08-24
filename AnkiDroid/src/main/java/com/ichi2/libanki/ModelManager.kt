@@ -65,7 +65,7 @@ abstract class ModelManager {
     abstract fun setCurrent(m: Model)
 
     /** get model with ID, or null.  */
-    abstract fun get(id: Long): Model?
+    abstract operator fun get(id: Long): Model?
     /** get all models  */
     abstract fun all(): ArrayList<Model>
 
