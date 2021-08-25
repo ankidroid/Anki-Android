@@ -17,10 +17,15 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
+import com.ichi2.anki.reviewer.MappableBinding
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int
@@ -69,6 +74,7 @@ object PreferenceUpgradeService {
             /** Returns all instances of preference upgrade classes */
             internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
+                yield(UpgradeVolumeButtonsToBindings())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -152,6 +158,52 @@ object PreferenceUpgradeService {
                  * "needsPreferenceUpgrade", and perform the upgrade.
                  */
                 const val CHECK_PREFERENCES_AT_VERSION = 20500225
+            }
+        }
+
+        @VisibleForTesting
+        internal class UpgradeVolumeButtonsToBindings : PreferenceUpgrade(2) {
+            override fun upgrade(preferences: SharedPreferences) {
+                upgradeVolumeGestureToKeyBind(preferences, "gestureVolumeUp", KeyEvent.KEYCODE_VOLUME_UP)
+                upgradeVolumeGestureToKeyBind(preferences, "gestureVolumeDown", KeyEvent.KEYCODE_VOLUME_DOWN)
+            }
+
+            @VisibleForTesting
+            internal fun upgradeVolumeGestureToKeyBind(preferences: SharedPreferences, oldGesturePreferenceKey: String, volumeKeyCode: Int) {
+                Timber.d("Replacing gesture '%s' with binding", oldGesturePreferenceKey)
+
+                // This exists as a user may have mapped "volume down" to "UNDO".
+                // Undo already exists as a key binding, and we don't want to trash this during an upgrade
+                if (!preferences.contains(oldGesturePreferenceKey)) {
+                    Timber.v("No preference to upgrade")
+                    return
+                }
+
+                try {
+                    replaceGestureWithBinding(preferences, oldGesturePreferenceKey, volumeKeyCode)
+                } finally {
+                    Timber.v("removing pref key: '%s'", oldGesturePreferenceKey)
+                    // remove the old key
+                    preferences.edit { remove(oldGesturePreferenceKey) }
+                }
+            }
+
+            private fun replaceGestureWithBinding(preferences: SharedPreferences, oldGesturePreferenceKey: String, volumeKeyCode: Int) {
+                // the preference should be set, but if it's null, then we have nothing to do
+                val gesture = preferences.getString(oldGesturePreferenceKey, "0") ?: return
+                // If the preference doesn't map (for example: it was removed), then nothing to do
+                val asInt = gesture.toIntOrNull() ?: return
+                val command = ViewerCommand.fromInt(asInt) ?: return
+
+                if (command == ViewerCommand.COMMAND_NOTHING) {
+                    return
+                }
+
+                Timber.i("Moving preference from '%s' to '%s'", oldGesturePreferenceKey, command.preferenceKey)
+
+                // add to the binding_COMMANDNAME preference
+                val binding = MappableBinding(keyCode(volumeKeyCode), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+                command.addBindingAtEnd(preferences, binding)
             }
         }
 

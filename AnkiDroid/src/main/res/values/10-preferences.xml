@@ -325,5 +325,4 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.
     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to %s</string>
-    <string name="bindings_no_volume">Volume keys are supported in the Gestures menu</string>
 </resources>

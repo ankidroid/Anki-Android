@@ -55,9 +55,7 @@ enum class Gesture(
     TAP_RIGHT(R.string.gestures_tap_right, "gestureTapRight", ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED),
     TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left, "gestureTapBottomLeft", ViewerCommand.COMMAND_NOTHING),
     TAP_BOTTOM(R.string.gestures_tap_bottom, "gestureTapBottom", ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right, "gestureTapBottomRight", ViewerCommand.COMMAND_NOTHING),
-    VOLUME_UP(R.string.gestures_volume_up, "gestureVolumeUp", ViewerCommand.COMMAND_NOTHING),
-    VOLUME_DOWN(R.string.gestures_volume_down, "gestureVolumeDown", ViewerCommand.COMMAND_NOTHING);
+    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right, "gestureTapBottomRight", ViewerCommand.COMMAND_NOTHING);
 
     fun fromPreference(prefs: SharedPreferences): ViewerCommand {
         val value = prefs.getString(preferenceKey, null) ?: return preferenceDefault

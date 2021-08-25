@@ -115,11 +115,6 @@ class ControlPreference : ListPreference {
                     .onBindingChanged { binding -> checkExistingBinding(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))) }
                     // select a side, then add
                     .onBindingSubmitted { binding ->
-                        // for now, volume buttons are handled by the reviewer
-                        if (isVolumeKey(binding)) {
-                            UIUtils.showThemedToast(context, R.string.bindings_no_volume, true)
-                            return@onBindingSubmitted
-                        }
                         CardSideSelectionDialog.displayInstance(context) { side -> addBinding(MappableBinding(binding, MappableBinding.Screen.Reviewer(side))) }
                     }
                     .disallowModifierKeys()
@@ -143,11 +138,7 @@ class ControlPreference : ListPreference {
     }
 
     /** Displays a warning to the user if the provided binding couldn't be used */
-    fun checkExistingBinding(binding: MappableBinding) {
-        if (isVolumeKey(binding.binding)) {
-            UIUtils.showThemedToast(context, R.string.bindings_no_volume, true)
-            return
-        }
+    private fun checkExistingBinding(binding: MappableBinding) {
         val existingCommands = getExistingCommands(binding).toList()
         if (existingCommands.isEmpty()) return // no conflicts
         val commandNames = existingCommands.map { context.getString(it.resourceId) }

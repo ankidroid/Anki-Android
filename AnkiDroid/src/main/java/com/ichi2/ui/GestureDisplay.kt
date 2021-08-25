@@ -72,7 +72,7 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
 
     /** Lists all selectable gestures from this view (excludes null) */
     fun availableValues(): List<Gesture> = Gesture.values().filter {
-        !VOLUME_GESTURES.contains(it) && (mTapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
+        (mTapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
     }
 
     /** Sets a callback which is called when the gesture is changed, and non-null */
@@ -181,6 +181,5 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
 
     companion object {
         val NINE_POINT_TAP_GESTURES = listOf(TAP_TOP_LEFT, TAP_TOP_RIGHT, TAP_CENTER, TAP_BOTTOM_LEFT, TAP_BOTTOM_RIGHT)
-        val VOLUME_GESTURES = listOf(VOLUME_UP, VOLUME_DOWN)
     }
 }
