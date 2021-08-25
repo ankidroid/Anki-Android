@@ -60,7 +60,7 @@ public class IntentHandler extends Activity {
         LaunchType launchType = getLaunchType(intent);
         switch (launchType) {
             case FILE_IMPORT:
-                handleFileImport(intent, reloadIntent, action);
+                runIfStoragePermissions.consume(() -> handleFileImport(intent, reloadIntent, action));
                 break;
             case SYNC:
                 runIfStoragePermissions.consume(() -> handleSyncIntent(reloadIntent, action));
