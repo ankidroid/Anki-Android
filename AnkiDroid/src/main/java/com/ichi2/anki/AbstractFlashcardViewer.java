@@ -90,7 +90,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
@@ -347,10 +346,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Gesture Allocation
      */
-    @NonNull
-    private ViewerCommand mGestureVolumeUp = COMMAND_NOTHING;
-    @NonNull
-    private ViewerCommand mGestureVolumeDown = COMMAND_NOTHING;
     protected final GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
@@ -1531,33 +1526,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
     }
 
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            // assign correct gesture code
-            ViewerCommand gesture = COMMAND_NOTHING;
-
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_VOLUME_UP:
-                    gesture = mGestureVolumeUp;
-                    break;
-                case KeyEvent.KEYCODE_VOLUME_DOWN:
-                    gesture = mGestureVolumeDown;
-                    break;
-            }
-
-            // Execute gesture's command, but only consume event if action is assigned. We want the volume buttons to work normally otherwise.
-            if (gesture != COMMAND_NOTHING) {
-                executeCommand(gesture);
-                return true;
-            }
-        }
-
-        return super.dispatchKeyEvent(event);
-    }
-
-
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
         FrameLayout cardContainer = findViewById(R.id.flashcard_frame);
@@ -1947,8 +1915,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
-            mGestureVolumeUp = Gesture.VOLUME_UP.fromPreference(preferences);
-            mGestureVolumeDown = Gesture.VOLUME_DOWN.fromPreference(preferences);
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {

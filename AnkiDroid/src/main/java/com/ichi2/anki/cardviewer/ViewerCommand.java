@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.cardviewer;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.R;
@@ -27,6 +28,7 @@ import com.ichi2.anki.reviewer.MappableBinding;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
@@ -110,6 +112,38 @@ public enum ViewerCommand {
         return Arrays.stream(ViewerCommand.values())
                 .flatMap(x -> x.getDefaultValue().stream())
                 .collect(Collectors.toList());
+    }
+
+    public void addBinding(SharedPreferences preferences, MappableBinding binding) {
+        BiFunction<List<MappableBinding>, MappableBinding, Boolean> addAtStart = (collection, element) -> {
+            // reorder the elements, moving the added binding to the first position
+            collection.remove(element);
+            collection.add(0, element);
+            return true;
+        };
+        addBindingInternal(preferences, binding, addAtStart);
+    }
+
+    public void addBindingAtEnd(SharedPreferences preferences, MappableBinding binding) {
+        BiFunction<List<MappableBinding>, MappableBinding, Boolean> addAtEnd = (collection, element) -> {
+            // do not reorder the elements
+            if (collection.contains(element)) {
+                return false;
+            }
+            collection.add(element);
+            return true;
+        };
+        addBindingInternal(preferences, binding, addAtEnd);
+    }
+
+    private void addBindingInternal(SharedPreferences preferences, MappableBinding binding, BiFunction<List<MappableBinding>, MappableBinding, Boolean> performAdd) {
+        if (this == COMMAND_NOTHING) {
+            return;
+        }
+        List<MappableBinding> bindings = MappableBinding.fromPreference(preferences, this);
+        performAdd.apply(bindings, binding);
+        String newValue = MappableBinding.Companion.toPreferenceString(bindings);
+        preferences.edit().putString(this.getPreferenceKey(), newValue).apply();
     }
 
     @NonNull

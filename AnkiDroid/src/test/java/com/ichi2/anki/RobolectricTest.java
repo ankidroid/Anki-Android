@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -269,6 +270,10 @@ public class RobolectricTest implements CollectionGetter {
             throw e;
         }
 
+    }
+
+    protected SharedPreferences getPreferences() {
+        return AnkiDroidApp.getSharedPrefs(getTargetContext());
     }
 
 
