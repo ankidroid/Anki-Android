@@ -16,8 +16,10 @@
 
 package com.ichi2.anki.reviewer;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
 
@@ -40,11 +42,29 @@ public class PeripheralKeymap {
     }
 
     public void setup() {
-        for (PeripheralCommand command : PeripheralCommand.getDefaultCommands()) {
-            mKeyMap.addCommand(command, command.getSide());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        setup(preferences);
+    }
+
+
+    public void setup(SharedPreferences preferences) {
+        for (ViewerCommand command : ViewerCommand.values()) {
+            add(command, preferences);
         }
 
         mHasSetup = true;
+    }
+
+    private void add(ViewerCommand command, SharedPreferences preferences) {
+        List<MappableBinding> bindings = MappableBinding.fromPreference(preferences, command);
+
+        for (MappableBinding b : bindings) {
+            if (!b.isKey()) {
+                continue;
+            }
+            mKeyMap.set(b, command);
+        }
+
     }
 
 
@@ -91,12 +111,6 @@ public class PeripheralKeymap {
             }
 
             return ret;
-        }
-
-
-        public void addCommand(@NonNull PeripheralCommand command, CardSide side) {
-            MappableBinding key = new MappableBinding(command.getBinding(), side);
-            set(key, command.getCommand());
         }
 
 

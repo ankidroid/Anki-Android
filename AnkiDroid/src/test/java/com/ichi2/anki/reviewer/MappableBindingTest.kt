@@ -16,6 +16,7 @@
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
+import com.ichi2.anki.cardviewer.ViewerCommand
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -38,10 +39,7 @@ class MappableBindingTest {
         assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_A))))
     }
 
-    private fun getAllBindings() = PeripheralCommand.getDefaultCommands()
-        .map { x -> x.binding }
-        .map(this::fromBinding)
-        .toList()
+    private fun getAllBindings() = ViewerCommand.getAllDefaultBindings()
 
     @Suppress("SameParameterValue")
     private fun keyCode(code: Int) = fromBinding(BindingTest.keyCode(code))
