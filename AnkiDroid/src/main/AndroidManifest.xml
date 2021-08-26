@@ -408,6 +408,11 @@
                 />
         </receiver>
 
+        <!-- Small Widget Update Alarm-->
+        <receiver android:name="com.ichi2.widget.WidgetAlarm"
+            android:enabled="true"
+            android:exported="true"/>
+
         <!-- "Add Note" widget -->
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"

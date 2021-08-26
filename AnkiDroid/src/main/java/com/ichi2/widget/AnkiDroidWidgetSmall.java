@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -35,8 +36,10 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
@@ -59,6 +62,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
+        new WidgetAlarm().setAlarm(context);
         UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "enabled");
     }
 
@@ -70,6 +74,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
         UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
+        new WidgetAlarm().stopAlarm(context);
     }
 
     @Override
@@ -120,6 +125,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
 
         public void doUpdate(Context context) {
+            Timber.d("Updating widget");
             AppWidgetManager.getInstance(context)
                     .updateAppWidget(new ComponentName(context, AnkiDroidWidgetSmall.class), buildUpdate(context, true));
         }

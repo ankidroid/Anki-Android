@@ -44,9 +44,6 @@ public final class WidgetStatus {
 
     /**
      * Request the widget to update its status.
-     * TODO Mike - we can reduce battery usage by widget users by removing updatePeriodMillis from metadata
-     *             and replacing it with an alarm we set so device doesn't wake to update the widget, see:
-     *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     @SuppressWarnings("deprecation") // #7108: AsyncTask
     public static void update(Context context) {
