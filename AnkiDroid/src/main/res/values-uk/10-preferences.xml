@@ -94,11 +94,14 @@
     <string name="gestures_allow_links_summary">Жести не враховуватимуться, якщо натиснуто на посилання чи підказку.</string>
     <string name="gestures_corner_touch" maxLength="41">9-точковий дотик</string>
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Відкривати панель навігації при проведенні вправо з будь-якого місця на екрані</string>
     <string name="gestures_swipe_up" maxLength="41">Провести пальцем вгору</string>
     <string name="gestures_swipe_down" maxLength="41">Провести пальцем донизу</string>
     <string name="gestures_swipe_left" maxLength="41">Провести пальцем вліво</string>
     <string name="gestures_swipe_right" maxLength="41">Провести пальцем вправо</string>
     <string name="gestures_double_tap" maxLength="41">Подвійний дотик</string>
+    <string name="gestures_long_tap" maxLength="41">Довгий дотик</string>
     <string name="gestures_tap_top" maxLength="41">Дотик зверху</string>
     <string name="gestures_tap_left" maxLength="41">Дотик ліворуч</string>
     <string name="gestures_tap_right" maxLength="41">Дотик праворуч</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Автоматично завантажувати відсутні медіафайли під час синхронізації</string>
     <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
@@ -162,8 +165,12 @@
     <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
     <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
+    <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
+    <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
+    <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
     <string name="show_top_bar" maxLength="41">Показати верхню панель</string>
     <string name="show_top_bar_summ">Показувати кількість карт, прапорець та зірочку на верхній панелі</string>
     <string name="show_progress" maxLength="41">Показати ті, що залишилися</string>
@@ -201,6 +208,11 @@
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
+    <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">«Назад» двіч для повернення/виходу</string>
+    <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу до оглядача чи додатку</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>
@@ -286,6 +298,7 @@
     <string name="deck_conf_cram_order" maxLength="41">картки вибрані за</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі моїх відповідей в цій колоді</string>
+    <string name="deck_conf_cram_filter_2_check">Увімкнути другий фільтр</string>
     <string name="deck_conf_cram_steps" maxLength="41">Власні кроки (в хвилинах)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Увімкнути нагадувальне сповіщення для колод у цій групі</string>
@@ -302,4 +315,15 @@
     <string name="type_in_answer_focus_summ">Автоматично переходити при повторенні до поля «Вводити відповідь»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
+    <string name="binding_add_gesture">Додати жест</string>
+    <string name="binding_add_key">Додати ключ</string>
+    <string name="key_picker_default_press_key">Натисніть клавішу</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Вибрати сторону карти</string>
+    <string name="card_side_question">Питання</string>
+    <string name="card_side_answer">Відповідь</string>
+    <string name="card_side_both">Питання &amp; Відповідь</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">П: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">В: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

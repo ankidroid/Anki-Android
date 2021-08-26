@@ -95,6 +95,7 @@
     <string name="unbury">अनबरी</string>
     <string name="rename_deck">डेक पुनर्नामित करा</string>
     <string name="create_shortcut">डेक पुनर्नामित करा</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोडा</string>
     <string name="menu_add_note">नोंदी जोडा</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाते समक्रमित करा</string>
@@ -113,6 +114,9 @@
     <string name="menu_flag_card_two">केशरी ध्वज</string>
     <string name="menu_flag_card_three">हिरवा झेंडा</string>
     <string name="menu_flag_card_four">निळा ध्वज</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
     <string name="menu_select">मजकूर निवडा</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">स्टाईलिंग</string>
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउझर स्वरूप</string>
     <string name="card_template_editor_deck_override">डेक ओव्हरराइड</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">कमीतकमी एक कार्ड प्रकार आवश्यक आहे</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
         <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
@@ -212,11 +222,15 @@
     <string name="wrong_tag_closed">\'{{/%1$s}}\' सापडला, परंतु अपेक्षित \'{{/%2$s}}\'</string>
     <string name="filter_error">%s फिल्टरमध्ये त्रुटी</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
+    <string name="sync_conflict_message_new">संग्रह एकत्रित करू शकत नाही. कुठला संग्रह तुम्हाला ठेवायला आवडेल ?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">एन्कीड्रॉंड</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">एन्कीवेब</string>
+    <string name="sync_conflict_remote_confirm_new">तुमचा एंकिवेब  वरील संग्रह पुर्नस्तीत करा एंकिड्रॉइड वर.</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_title_new">संग्रहाला  निवडा ठेवण्यासाठी </string>
+    <string name="sync_conflict_replace_title">संग्रह पून्हास्तित करा</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

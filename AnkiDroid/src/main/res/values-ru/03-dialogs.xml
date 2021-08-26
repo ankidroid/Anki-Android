@@ -55,6 +55,7 @@
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="initializing_tts">Запускается синтез речи&#8230;</string>
     <string name="tts_no_tts">Не произносить</string>
+    <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Учебные карточки для Android</h2>AnkiDroid — это приложение для повторения карточек, которое полностью совместимо с версией <a href=\"%2$s\"> Anki</a> для настольных компьютеров. Создавайте, загружайте и учите карточки в AnkiDroid или Anki и синхронизируйте их через AnkiWeb.]]></item>
         <item><![CDATA[Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках <a href=\"%1$s\">в баг-трекере</a>. Новые идеи также приветствуются. Ищите ответы в <a href=\"%2$s\">вики</a> или начните обсуждение на <a href=\"%3$s\">форуме</a>.]]></item>
@@ -244,6 +245,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Конфиденциальность</string>
+    <string name="help_item_ankidroid_privacy_policy">Политика конфиденциальности AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Политика конфиденциальности AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Условия использования AnkiWeb</string>
     <string name="help_title_send_exception">Отправить отчёт о неполадках</string>
     <string name="help_dialog_exception_report_debounce">Отчёт уже отправлен</string>
     <!--Sync-->

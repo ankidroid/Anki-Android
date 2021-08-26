@@ -74,6 +74,7 @@
             android:label="@string/app_name"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -184,7 +185,8 @@
             android:name="com.ichi2.anki.CardBrowserContextMenuAction"
             android:label="@string/card_browser_context_menu"
             android:enabled="false"
-            android:targetActivity="com.ichi2.anki.CardBrowser">
+            android:targetActivity="com.ichi2.anki.CardBrowser"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -279,7 +281,8 @@
             android:name="com.ichi2.anki.AnkiCardContextMenuAction"
             android:label="@string/context_menu_anki_card_label"
             android:enabled="true"
-            android:targetActivity=".NoteEditor">
+            android:targetActivity=".NoteEditor"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -302,6 +305,11 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
@@ -342,11 +350,6 @@
             >
         </activity>
         <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"/>
-        <activity
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
             android:label="@string/title_activity_translation"
             android:exported="false"
@@ -380,6 +383,11 @@
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
+        <activity
+            android:name=".SharedDecksActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:label="@string/download_deck"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
@@ -388,6 +396,7 @@
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
             android:label="@string/widget_small"
+            android:exported="true"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -402,7 +411,8 @@
         <!-- "Add Note" widget -->
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"
-            android:label="@string/menu_add_note">
+            android:label="@string/menu_add_note"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

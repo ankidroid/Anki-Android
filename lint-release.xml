@@ -49,9 +49,19 @@
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
 
+    <!-- Allows Timber issues defined for AnkiDroid without an api dependency on Timber -->
+    <issue id="UnknownIssueId" severity="ignore" />
     <!-- This come from Timber and we need to also ignore them  -->
+    <!-- Ignored due to https://github.com/JakeWharton/timber/issues/408 -->
     <issue id="BinaryOperationInTimber" severity="ignore" />
     <issue id="LogNotTimber" severity="ignore" />
+    <issue id="StringFormatInTimber" severity="ignore" />
+    <issue id="ThrowableNotAtBeginning" severity="ignore" />
+    <issue id="TimberArgCount" severity="ignore" />
+    <issue id="TimberArgTypes" severity="ignore" />
+    <issue id="TimberTagLength" severity="ignore" />
+    <issue id="TimberExceptionLogging" severity="ignore" />
+
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
     <issue id="RedundantNamespace" severity="ignore" />
@@ -350,4 +360,9 @@
     <issue id="SuspiciousImport" severity="ignore" />
     <issue id="WrongFolder" severity="ignore" />
     <issue id="WrongThreadInterprocedural" severity="ignore" />
+
+
+    <issue id="CustomX509TrustManager" severity="ignore" />
+    <!-- PERF: Could improve by not using notifyDataSetChanged() -->
+    <issue id="NotifyDataSetChanged" severity="ignore" />
 </lint>

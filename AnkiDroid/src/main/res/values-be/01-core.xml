@@ -79,7 +79,7 @@
         <item quantity="many">%d дзён %d засталося</item>
         <item quantity="other">%d дзён %d засталося</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Пустая калекцыя</string>
+    <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -105,6 +105,7 @@
     <string name="unbury">Вярнуць</string>
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
+    <string name="browse_cards">Праглядзець карткі</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Дадаць</string>
     <string name="menu_add_note">Дадаць запіс</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
@@ -123,6 +124,9 @@
     <string name="menu_flag_card_two">Аранжавы сцяжок</string>
     <string name="menu_flag_card_three">Зялёны сцяжок</string>
     <string name="menu_flag_card_four">Блакітны сцяжок</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Змяніць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
     <string name="menu_select">Выбраць тэкст</string>
@@ -193,7 +197,15 @@
     <string name="card_template_editor_styling">Знешні выгляд</string>
     <string name="card_template_editor_menu_card_browser_appearance">Выгляд аглядальніка картак</string>
     <string name="card_template_editor_deck_override">Перавызначэнне калоды</string>
+    <string name="card_template_editor_insert_field">Уставіць поле</string>
+    <string name="card_template_editor_select_field">Абраць поле</string>
     <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Будзе створана %1$d картка. Працягнуць?</item>
+        <item quantity="few">Будзе створана %1$d карткі. Працягнуць?</item>
+        <item quantity="many">Будзе створана %1$d картак. Працягнуць?</item>
+        <item quantity="other">Будзе створана %1$d карткі. Працягнуць?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Выдаліць тып карткі \'%2$s\' і %1$d яе картку?</item>
         <item quantity="few">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>
@@ -231,4 +243,10 @@
     <string name="sync_conflict_local_confirm_new">Замяніць вашу калекцыю AnkiWeb калекцыяй з AnkiDroid?</string>
     <string name="sync_conflict_title_new">Выберыце, якую калекцыю вы хочаце пакінуць</string>
     <string name="sync_conflict_replace_title">Замяніць калекцыю</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d картка (0 для паўтору)</item>
+        <item quantity="few">%1$d карткі (0 для паўтору)</item>
+        <item quantity="many">%1$d картак (0 для паўтору)</item>
+        <item quantity="other">%1$d карткі (0 для паўтору)</item>
+    </plurals>
 </resources>

@@ -16,8 +16,6 @@
 
 package com.ichi2.async;
 
-import android.os.AsyncTask;
-
 import com.ichi2.utils.ThreadUtil;
 
 import java.util.ArrayList;
@@ -30,6 +28,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+/**
+ * This class consists essentially in executing each received TaskDelegate in the order in which they are received.
+ * A single instance should exists and be saved in TaskManager.sTaskManager.
+ * TODO: It uses the deprecated AsyncTask and should eventually be replaced by a non deprecated class.
+ * Even better would be to ensure that the TaskDelegate that reads (the majority of them) can be executed in parallels.
+ */
 public class SingleTaskManager extends TaskManager {
 
     /**
@@ -69,7 +73,7 @@ public class SingleTaskManager extends TaskManager {
      * @return the newly created task
      */
     @Override
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground> launchCollectionTaskConcrete(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
         return launchCollectionTask(task, null);
     }
 
@@ -86,11 +90,12 @@ public class SingleTaskManager extends TaskManager {
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ResultBackground>
-    launchCollectionTaskConcrete(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
-                         @Nullable TaskListener<? super ProgressBackground, ? super ResultBackground> listener) {
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
+    public <Progress, Result> Cancellable
+    launchCollectionTaskConcrete(@NonNull TaskDelegate<Progress, Result> task,
+                         @Nullable TaskListener<? super Progress, ? super Result> listener) {
         // Start new task
-        CollectionTask<ProgressBackground, ResultBackground> newTask = new CollectionTask<>(task, listener, mLatestInstance);
+        CollectionTask<Progress, Result> newTask = new CollectionTask<>(task, listener, mLatestInstance);
         addTasks(newTask);
         newTask.execute();
         return newTask;
@@ -110,9 +115,10 @@ public class SingleTaskManager extends TaskManager {
      * @return whether or not the previous task was successful or not
      */
     @Override
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public boolean waitToFinishConcrete(Integer timeoutSeconds) {
         try {
-            if ((mLatestInstance != null) && (mLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((mLatestInstance != null) && (mLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", mLatestInstance.getTask().getClass());
                 if (timeoutSeconds != null) {
                     mLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);

@@ -54,7 +54,7 @@
     <!-- DeckPicker.java -->
     <string name="expand">Développer</string>
     <string name="collapse">Regrouper</string>
-    <string name="study_more">Réviser plus</string>
+    <string name="study_more">Réviser davantage</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d carte due (%2$s)</item>
         <item quantity="other">%1$d cartes dues (%2$s)</item>
@@ -72,19 +72,19 @@
         <item quantity="other">%d jours %d restants</item>
     </plurals>
     <string name="no_cards_placeholder_title">La collection est vide</string>
-    <string name="no_cards_placeholder_description">Commencez à ajouter des cartes\nen utilisant l\'icône +</string>
+    <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Aujourd’hui, %1$d carte a été étudiée en %2$s</item>
         <item quantity="other">Aujourd’hui, %1$d cartes ont été étudiées en %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Taper la réponse</string>
+    <string name="type_answer_hint">Saisissez la réponse</string>
     <string name="show_answer">Afficher la réponse</string>
-    <string name="hide_answer">Cacher la réponse</string>
+    <string name="hide_answer">Masquer la réponse</string>
     <string name="ease_button_again">Encore</string>
     <string name="ease_button_hard">Difficile</string>
-    <string name="ease_button_good">Bon</string>
+    <string name="ease_button_good">Correct</string>
     <string name="ease_button_easy">Facile</string>
     <string name="studyoptions_congrats_undo">Annuler %s</string>
     <string name="menu_import">Importer</string>
@@ -95,6 +95,7 @@
     <string name="unbury">Déterrer</string>
     <string name="rename_deck">Renommer le paquet</string>
     <string name="create_shortcut">Créer un raccourci</string>
+    <string name="browse_cards">Parcourir les cartes</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
@@ -106,13 +107,16 @@
     <string name="menu_bury">Enterrer</string>
     <string name="menu_suspend">Suspendre</string>
     <string name="menu_delete_note">Supprimer la note</string>
-    <string name="menu_flag">Marquer</string>
-    <string name="menu_flag_card">Marquer la carte</string>
-    <string name="menu_flag_card_zero">Aucun marqueur</string>
-    <string name="menu_flag_card_one">Marqueur rouge</string>
-    <string name="menu_flag_card_two">Marqueur orange</string>
-    <string name="menu_flag_card_three">Marqueur vert</string>
-    <string name="menu_flag_card_four">Marqueur bleu</string>
+    <string name="menu_flag">Ajouter un drapeau</string>
+    <string name="menu_flag_card">Ajouter un drapeau</string>
+    <string name="menu_flag_card_zero">Aucun drapeau</string>
+    <string name="menu_flag_card_one">Drapeau rouge</string>
+    <string name="menu_flag_card_two">Drapeau orange</string>
+    <string name="menu_flag_card_three">Drapeau vert</string>
+    <string name="menu_flag_card_four">Drapeau bleu</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Modifier les étiquettes</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
     <string name="menu_select">Sélectionner le texte</string>
@@ -143,7 +147,7 @@
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d j</string>
     <string name="time_quantity_days_hours">%1$d j %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
+    <string name="time_quantity_months">%.1f m</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Reconstruction du paquet filtré&#8230;</string>
@@ -153,25 +157,25 @@
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>
     <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
-    <string name="empty_deck">Le paquet est vide</string>
+    <string name="empty_deck">Ce paquet est vide</string>
     <string name="search_deck">Recherche de paquet</string>
     <string name="empty_deck_add_note">Ajouter une carte</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
-    <string name="studyoptions_empty">Le paquet est vide. touchez le bouton + pour créer du contenu.</string>
-    <string name="studyoptions_limit_reached">Vous avez atteint votre limite aujourd\'hui</string>
+    <string name="studyoptions_empty">Ce paquet est vide. Appuyez sur le bouton + pour ajouter du contenu.</string>
+    <string name="studyoptions_limit_reached">Vous avez révisé toutes vos cartes d\'aujourd\'hui</string>
     <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
     <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd’hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
     <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l’esprit que cela augmentera votre charge de travail à court terme.</string>
     <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
-    <string name="sd_card_not_mounted">Le dispositif de stockage n\'est pas monté</string>
+    <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync">Synchroniser</string>
     <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
     <string name="continue_sync">Continuer la synchronisation</string>
     <string name="sync_cancelled">Synchronisation annulée</string>
-    <string name="sync_cancel_message">Annulation...\nCela peut prendre quelques minutes.</string>
+    <string name="sync_cancel_message">Annulation...\nCeci peut prendre un certain temps.</string>
     <string name="export">Exporter</string>
     <string name="export_collection">Exporter la collection</string>
     <string name="export_deck">Exporter le paquet</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">Style</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apparence du navigateur de cartes</string>
     <string name="card_template_editor_deck_override">Forcer le paquet</string>
+    <string name="card_template_editor_insert_field">Ajouter un champ</string>
+    <string name="card_template_editor_select_field">Sélectionner un champ</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Cela va créer %1$d carte. Continuer ?</item>
+        <item quantity="other">Cela va créer %1$d cartes. Continuer ?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
@@ -204,9 +214,9 @@
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigateur de cartes</string>
     <string name="context_menu_anki_card_label">Carte Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s a un problème :<br/>%2$s</string>
-    <string name="more_information">Plus d\'\'informations</string>
-    <string name="no_field">Trouvé \'{{%1$s}}\', mais il n\'y a pas de champ appelé \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Trouvé \'{{/%1$s}}\', mais il manque \'{{#%1$s}}\' ou \'{{^%1$s}}\'.</string>
+    <string name="more_information">Plus d\'informations</string>
+    <string name="no_field">\'{{%1$s}}\' a été trouvé, mais il n\'y a pas de champ appelé \'%1$s\'.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' a été trouvé, mais il manque \'{{#%1$s}}\' ou \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">« }}» manquant dans «%s».</string>
     <string name="open_tag_not_closed">\'{{%s }}\' manquant.</string>
     <string name="wrong_tag_closed">\'{{/%1$s}}\' trouvé, mais \'{{/%2$s}}\' est attendu</string>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">Remplacer votre collection sur AnkiWeb par votre collection d\'AnkiDroid ?</string>
     <string name="sync_conflict_title_new">Sélectionnez la collection à garder</string>
     <string name="sync_conflict_replace_title">Remplacer la collection</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d carte (0 à faire)</item>
+        <item quantity="other">%1$d cartes (0 à faire)</item>
+    </plurals>
 </resources>

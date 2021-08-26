@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Uploading&#8230;</string>
     <string name="sync_downloading_message">Downloading&#8230;</string>
     <string name="sync_title">Pag-synchronize</string>
-    <string name="sync_downloading_media">Nagda-download ng media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Buong pag-sync mula sa lokal</string>
     <string name="sync_log_clocks_unsynchronized">Ang iyong orasan ay sa may diperensya na %1$d segundo%2$s. Tiyaking tama ang petsa, oras, at timezone sa iyong telepono, pagkatapos ay i-sync muli.</string>
     <string name="sync_log_clocks_unsynchronized_tz">ang time zone ay maaaring mali</string>

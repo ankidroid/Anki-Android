@@ -95,6 +95,7 @@
     <string name="unbury">ಅನ್ಬರಿ</string>
     <string name="rename_deck">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
+    <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ಸೇರಿಸಿ </string>
     <string name="menu_add_note">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
@@ -113,6 +114,9 @@
     <string name="menu_flag_card_two">ಕಿತ್ತಳೆ ಧ್ವಜ</string>
     <string name="menu_flag_card_three">ಹಸಿರು ಧ್ವಜ</string>
     <string name="menu_flag_card_four">ನೀಲಿ ಧ್ವಜ</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_select">ಪಠ್ಯ ಆಯ್ದುಕೊಳ್ಳಿ</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">ವಿನ್ಯಾಸ</string>
     <string name="card_template_editor_menu_card_browser_appearance">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಗೋಚರತೆ</string>
     <string name="card_template_editor_deck_override">ಡೆಕ್ ಅತಿಕ್ರಮಿಸಿ</string>
+    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">ಕನಿಷ್ಠ ಒಂದು ಕಾರ್ಡ್ ಪ್ರಕಾರದ ಅಗತ್ಯವಿದೆ</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="other">This will create %1$d cards. Proceed?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>
         <item quantity="other">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">ಆಂಕಿಡ್ರಾಯ್ಡ್‌ನಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹದೊಂದಿಗೆ ಅಂಕಿವೆಬ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಬೇಕೆ?</string>
     <string name="sync_conflict_title_new">ಇರಿಸಿಕೊಳ್ಳಲು ಸಂಗ್ರಹವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="sync_conflict_replace_title">ಸಂಗ್ರಹಣೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="other">%1$d cards (0 due)</item>
+    </plurals>
 </resources>

@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.libanki.template;
 
 import java.util.regex.Pattern;

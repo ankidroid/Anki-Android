@@ -29,6 +29,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.backend.model.TagUsnTuple;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -817,16 +818,16 @@ public class Syncer {
     private JSONArray getTags() {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
-            for (Map.Entry<String, Integer> t : mCol.getTags().allItems()) {
-                if (t.getValue() >= mMinUsn) {
-                    result.put(t.getKey());
+            for (TagUsnTuple t : mCol.getTags().allItems()) {
+                if (t.getUsn() >= mMinUsn) {
+                    result.put(t.getTag());
                 }
             }
         } else {
-            for (Map.Entry<String, Integer> t : mCol.getTags().allItems()) {
-                if (t.getValue() == -1) {
-                    String tag = t.getKey();
-                    mCol.getTags().add(t.getKey(), mMaxUsn);
+            for (TagUsnTuple t : mCol.getTags().allItems()) {
+                if (t.getUsn() == -1) {
+                    String tag = t.getTag();
+                    mCol.getTags().add(t.getTag(), mMaxUsn);
                     result.put(tag);
                 }
             }

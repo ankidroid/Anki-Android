@@ -29,9 +29,12 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
+
+import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
 public class NotificationService extends BroadcastReceiver {
 
@@ -46,7 +49,7 @@ public class NotificationService extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
+        int minCardsDue = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minCardsDue) {
             // Build basic notification
@@ -73,7 +76,7 @@ public class NotificationService extends BroadcastReceiver {
             // Creates an explicit intent for an Activity in your app
             Intent resultIntent = new Intent(context, DeckPicker.class);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent,
+            PendingIntent resultPendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(resultPendingIntent);
             // mId allows you to update the notification later on.

@@ -41,11 +41,11 @@
 <resources>
     <string name="youre_offline">Kamu sedang offline</string>
     <string name="sync_even_if_offline">Coba saja</string>
-    <string name="sync_error">Galat mensinkronisasi</string>
-    <string name="vague_error">Galat</string>
+    <string name="sync_error">Gagal mensinkronisasi</string>
+    <string name="vague_error">Gagal</string>
     <string name="retry">Coba Lagi</string>
-    <string name="menu_get_shared_decks">Cari dek dibagi bersama</string>
-    <string name="connection_error_message">Telah terjadi galat jaringan.</string>
+    <string name="menu_get_shared_decks">Cari dek yang telah dibagi</string>
+    <string name="connection_error_message">Telah terjadi masalah jaringan</string>
     <string name="not_logged_in_title">Masuk ke AnkiWeb</string>
     <string name="login_create_account_message">Kamu harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Kamu bisa membuatnya di langkah berikutnya.</string>
     <!-- MyAccount.java -->
@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Mengunggah&#8230;</string>
     <string name="sync_downloading_message">Mengunduh&#8230;</string>
     <string name="sync_title">Sinkronisasi</string>
-    <string name="sync_downloading_media">Mengunduh media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
     <string name="sync_log_clocks_unsynchronized">Jam perangkatmu meleset sebesar %1$d detik %2$s. Pastikan tanggal, waktu, dan zona waktu pada teleponmu sudah benar, lalu sinkronkan lagi.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
@@ -82,7 +81,7 @@
     <string name="sync_overwrite_error">Koleksimu saat ini tidak dapat ditimpa oleh berkas yang diunduh</string>
     <string name="sync_connection_error">Koneksi gagal. Antara koneksi internetmu bermasalah, atau kamu memiliki berkas yang sangat besar di folder mediamu.</string>
     <string name="sync_write_access_error">Berkas yang diunduh tidak dapat disimpan ke kartu SD. Mungkin kartu memori terpasang hanya bisa dibaca atau ruang tidak cukup.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Server Sinkronisasi Kostum di Pengaturan Lanjutan tidak valid (%s). Silakan masukkan server yang valid atau matikan pengaturan.</string>
     <string name="sync_deletions_message">Sinkronisasi deletasi kloza(titik-titik)&#8230;</string>
     <string name="sync_small_objects_message">Menyinkronkan objek kecil&#8230;</string>
     <string name="sync_finish_message">Menyelesaikan sinkronisasi&#8230;</string>
@@ -105,7 +104,7 @@
     <string name="sync_media_error">Galat menyinkronkan data media</string>
     <string name="sync_media_error_check">Galat saat menyinkronkan media. Pemeriksaan media disarankan.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Mohon untuk menjalankan \'%s\' sebelum melakukan sinkronisasi</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
     <string name="force_full_sync_title">Paksa sinkronisasi penuh</string>
@@ -122,5 +121,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
     <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">Tidak bisa terhubung ke AnkiWeb. Apakah internet anda berjalan dengan lancar?\n\n%s</string>
 </resources>

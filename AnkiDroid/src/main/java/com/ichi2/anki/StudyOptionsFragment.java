@@ -54,7 +54,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
 
@@ -308,7 +308,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, BooleanGetter> mUndoListener = new TaskListener<Card, BooleanGetter>() {
+    private final TaskListener<Card, Computation<?>> mUndoListener = new TaskListener<Card, Computation<?>>() {
         @Override
         public void onPreExecute() {
 
@@ -316,7 +316,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
         @Override
-        public void onPostExecute(BooleanGetter v) {
+        public void onPostExecute(Computation<?> v) {
             openReviewer();
         }
     };
@@ -386,7 +386,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             mToolbar.setOnMenuItemClickListener(this);
             Menu menu = mToolbar.getMenu();
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
+            if (getCol() != null && getCol().getDecks().isDyn(getCol().getDecks().selected())) {
                 menu.findItem(R.id.action_rebuild).setVisible(true);
                 menu.findItem(R.id.action_empty).setVisible(true);
                 menu.findItem(R.id.action_custom_study).setVisible(false);
@@ -412,9 +412,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 menu.findItem(R.id.action_export).setVisible(false);
             }
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
+            menu.findItem(R.id.action_unbury).setVisible(getCol() != null && getCol().getSched().haveBuried());
             // Switch on or off undo depending on whether undo is available
-            if (!getCol().undoAvailable()) {
+            if (getCol() == null || !getCol().undoAvailable()) {
                 menu.findItem(R.id.action_undo).setVisible(false);
             } else {
                 menu.findItem(R.id.action_undo).setVisible(true);
@@ -740,8 +740,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return HtmlCompat.fromHtml(withFixedNewlines, HtmlCompat.FROM_HTML_MODE_LEGACY);
     }
 
-    private Collection getCol() {
-        return CollectionHelper.getInstance().getCol(getContext());
+    private @Nullable Collection getCol() {
+        try {
+            return CollectionHelper.getInstance().getCol(getContext());
+        } catch (Exception e) {
+            // This may happen if the backend is locked or similar.
+        }
+        return null;
     }
 
 

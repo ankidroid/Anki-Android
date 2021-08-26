@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fab_tutorial_title">Get started</string>
+    <string name="fab_tutorial_desc">Create a deck, download a pre-made deck or add a note</string>
+    <string name="start_studying">Click on a deck to start studying</string>
+    <string name="start_studying_desc">Long press on a deck to get more options related to it</string>
+    <string name="study_options_desc">Open study options to see card review details for a deck</string>
+    <string name="see_answer">See the answer</string>
+    <string name="see_answer_desc">When you are ready to view the answer, click here</string>
+    <string name="flag_card_desc">Select a coloured flag for this card</string>
+    <string name="undo_desc">Undo and go back to the previous card</string>
+    <string name="select_difficulty">Select the difficulty</string>
+    <string name="select_difficulty_desc">This will decide the time when this card will be displayed again</string>
+    <string name="card_contents">Enter card contents here</string>
+    <string name="card_contents_desc">Enter the question in \'Front\' field and the answer in \'Back\' field</string>
+    <string name="format_content">Format content</string>
+    <string name="format_content_desc">Format your card\'s content using various formatting options</string>
+    <string name="deck_changer_card_browser">Select a deck from here</string>
+    <string name="deck_changer_card_browser_desc">Cards from the selected deck will be displayed. Choose \'All Decks\' to view all cards.</string>
+    <string name="card_click">Select a card to edit it\nLong press to select multiple cards</string>
+</resources>

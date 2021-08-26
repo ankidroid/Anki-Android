@@ -27,6 +27,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +54,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         String modelName = "Basic";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
@@ -118,11 +119,11 @@ public class CardTemplateEditorTest extends RobolectricTest {
         shadowTestEditor.receiveResult(startedIntent, Activity.RESULT_OK, new Intent());
 
         // Save the template then fetch it from the collection to see if it was saved correctly
-        JSONObject testEditorModelEdited = testEditor.getTempModel().getModel();
+        Model testEditorModelEdited = testEditor.getTempModel().getModel();
         advanceRobolectricLooperWithSleep();
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
         advanceRobolectricLooperWithSleep();
-        JSONObject collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
         Assert.assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited);
         Assert.assertEquals("model did not save?", testEditorModelEdited.toString().trim(), collectionBasicModelCopyEdited.toString().trim());
         Assert.assertTrue("model does not have our change?", collectionBasicModelCopyEdited.toString().contains(TEST_MODEL_QFMT_EDIT));
@@ -135,7 +136,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         String modelName = "Basic (and reversed card)";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
@@ -163,10 +164,10 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
         
         // Save the change to the database and make sure there's only one template after
-        JSONObject testEditorModelEdited = testEditor.getTempModel().getModel();
+        Model testEditorModelEdited = testEditor.getTempModel().getModel();
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
         advanceRobolectricLooperWithSleep();
-        JSONObject collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
         Assert.assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited);
         Assert.assertEquals("model did not save?", testEditorModelEdited.toString().trim(), collectionBasicModelCopyEdited.toString().trim());
     }
@@ -176,7 +177,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
         // Make sure we test previewing a new card template - not working for real yet
         String modelName = "Basic";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
@@ -186,8 +187,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
 
         // Try to add a template - click add, click confirm for card add, click confirm again for full sync
         ShadowActivity shadowTestEditor = shadowOf(testEditor);
-        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add));
-        advanceRobolectricLooperWithSleep();
+        addCardType(testEditor, shadowTestEditor);
         // if AnkiDroid moves to match AnkiDesktop it will pop a dialog to confirm card create
         //Assert.assertEquals("Wrong dialog shown?", "This will create NN cards. Proceed?", getDialogText());
         //clickDialogButton(DialogAction.POSITIVE);
@@ -208,10 +208,10 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim(), getCurrentDatabaseModelCopy(modelName).toString().trim());
 
         // Save the change to the database and make sure there are two templates after
-        JSONObject testEditorModelEdited = testEditor.getTempModel().getModel();
+        Model testEditorModelEdited = testEditor.getTempModel().getModel();
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_confirm));
         advanceRobolectricLooperWithSleep();
-        JSONObject collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelCopyEdited = getCurrentDatabaseModelCopy(modelName);
         Assert.assertNotEquals("model is unchanged?", collectionBasicModelOriginal, collectionBasicModelCopyEdited);
         Assert.assertEquals("model did not save?", testEditorModelEdited.toString().trim(), collectionBasicModelCopyEdited.toString().trim());
     }
@@ -357,8 +357,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Model should have 2 templates still", 2, testEditor.getTempModel().getTemplateCount());
 
         // Add a template - click add, click confirm for card add, click confirm again for full sync
-        shadowTestEditor.clickMenuItem(R.id.action_add);
-        advanceRobolectricLooperWithSleep();
+        addCardType(testEditor, shadowTestEditor);
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
         Assert.assertEquals("Change added but not adjusted correctly?", 2, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
@@ -383,8 +382,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Model should have 3 templates now", 3, testEditor.getTempModel().getTemplateCount());
 
         // Add another template - but we work in memory for a while before saving
-        shadowTestEditor.clickMenuItem(R.id.action_add);
-        advanceRobolectricLooperWithSleep();
+        addCardType(testEditor, shadowTestEditor);
         Assert.assertEquals("Change added but not adjusted correctly?", 3, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 0));
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
         Assert.assertEquals("Model should have 4 templates now", 4, testEditor.getTempModel().getTemplateCount());
@@ -485,8 +483,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("Model should have 1 template", 1, testEditor.getTempModel().getTemplateCount());
 
         // Add a template - click add, click confirm for card add, click confirm again for full sync
-        shadowTestEditor.clickMenuItem(R.id.action_add);
-        advanceRobolectricLooperWithSleep();
+        addCardType(testEditor, shadowTestEditor);
         Assert.assertTrue("Model should have changed", testEditor.modelHasChanged());
         Assert.assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.getTempModel(), 1));
         Assert.assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), 0));
@@ -541,7 +538,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         String modelName = "Basic";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
@@ -571,7 +568,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
         String modelName = "Basic";
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"));
         ActivityController<CardTemplateEditor> templateEditorController = Robolectric.buildActivity(CardTemplateEditor.class, intent).create().start().resume().visible();
@@ -596,6 +593,22 @@ public class CardTemplateEditorTest extends RobolectricTest {
         // check if current view is changed or not
         assumeThat(templateEditText.getText().toString(), is(tempModel.getCss()));
         assumeThat(cardTemplateFragment.getCurrentEditorViewId(), is(R.id.styling_edit));
+    }
+
+
+    @NotNull
+    private void addCardType(CardTemplateEditor testEditor, ShadowActivity shadowTestEditor) {
+        Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add));
+        advanceRobolectricLooperWithSleep();
+        int ordinal = testEditor.mViewPager.getCurrentItem();
+        int numAffectedCards = 0;
+        if (!TemporaryModel.isOrdinalPendingAdd(testEditor.getTempModel(), ordinal)) {
+            numAffectedCards = getCol().getModels().tmplUseCount(testEditor.getTempModel().getModel(), ordinal);
+        }
+        Assert.assertEquals("Did not show dialog about adding template and it's card?",
+                getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
+                getDialogText(true));
+        clickDialogButton(DialogAction.POSITIVE, true);
     }
 
 

@@ -3,19 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/studyoptions_main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:gravity="center">
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/studyOptionsToolbar"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ActionBarStyle"
@@ -24,25 +23,25 @@
             app:popupTheme="@style/ActionBar.Popup"/>
         <LinearLayout
             android:layout_below="@id/studyOptionsToolbar"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <View
                 android:id="@+id/studyoptions_gradient"
                 android:layout_width="15dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/shadow_left"
                 android:visibility="gone"/>
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/studyoptions_mainframe"
                 android:paddingBottom="32dp">
                 <ScrollView
                     android:id="@+id/studyoptions_scrollview"
                     android:layout_above="@id/bottom_area_layout"
                     android:layout_alignParentTop="true"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/study_options_padding"
                     android:paddingRight="@dimen/study_options_padding"

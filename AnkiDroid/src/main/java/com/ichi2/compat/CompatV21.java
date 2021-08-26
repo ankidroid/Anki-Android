@@ -16,22 +16,43 @@
 
 package com.ichi2.compat;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.widget.TimePicker;
+
+import com.ichi2.async.ProgressSenderAndCancelListener;
+import com.ichi2.utils.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
-/** Baseline implementation of {@link Compat} with implementations for older APIs */
+/** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
 public class CompatV21 implements Compat {
+
+    // Update to PendingIntent.FLAG_MUTABLE once available (API 31)
+    @SuppressWarnings("unused")
+    public static final int FLAG_MUTABLE = 1 << 25;
+    // Update to PendingIntent.FLAG_IMMUTABLE once available (API 23)
+    public static final int FLAG_IMMUTABLE =  1 << 26;
 
     // Until API26, ignore notification channels
     @Override
@@ -107,6 +128,66 @@ public class CompatV21 implements Compat {
         return count;
     }
 
+    // Explores the source directory tree recursively and copies each directory and each file inside each directory
+    @Override
+    public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {
+        // If destDir exists, it must be a directory. If not, create it
+        FileUtil.ensureFileIsDirectory(destDir);
+
+        final File[] srcFiles = FileUtil.listFiles(srcDir);
+
+        // Copy the contents of srcDir to destDir
+        for (final File srcFile : srcFiles) {
+            final File destFile = new File(destDir, srcFile.getName());
+            if (srcFile.isDirectory()) {
+                copyDirectory(srcFile, destFile, ioTask, deleteAfterCopy);
+            } else if (srcFile.length() != destFile.length()) {
+                OutputStream out = new FileOutputStream(destFile, false);
+                ioTask.doProgress((int) copyFile(srcFile.getAbsolutePath(), out) / 1024);
+                out.close();
+            }
+            if (deleteAfterCopy) {
+                srcFile.delete();
+            }
+        }
+
+        if (deleteAfterCopy) {
+            srcDir.delete();
+        }
+    }
+
+    // Attempts to first rename the contents of the directory. This operation is instant, but it fails if the
+    // source and destination paths are not on the same storage partition.
+    // In case rename fails, it explores the directory tree recursively and copies, then deletes every directory & every
+    // file inside each directory.
+    @Override
+    public void moveDirectory(@NonNull final File srcDir, @NonNull final File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask) throws IOException {
+        // If destDir exists, attempt to move the contents of srcDir by renaming
+        // Otherwise, attempt to rename srcDir to destDir
+        boolean renameSuccessful = true;
+        if (destDir.exists()) {
+            final File[] srcFiles = FileUtil.listFiles(srcDir);
+
+            for (final File srcFile : srcFiles) {
+                final File destFile = new File(destDir, srcFile.getName());
+                if (!srcFile.renameTo(destFile)) {
+                    renameSuccessful = false;
+                    break;
+                }
+            }
+            if (renameSuccessful) {
+                srcDir.delete();
+            }
+        } else {
+            renameSuccessful = srcDir.renameTo(destDir);
+        }
+
+        // If srcDir couldn't be moved by renaming, do a copy and delete
+        if (!renameSuccessful) {
+            copyDirectory(srcDir, destDir, ioTask, true);
+        }
+    }
+
     // Until API 23 the methods have "current" in the name
     @Override
     @SuppressWarnings("deprecation")
@@ -116,4 +197,51 @@ public class CompatV21 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasVideoThumbnail(@NonNull String path) {
+        return ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+    }
+    
+    @Override
+    @SuppressWarnings("deprecation")
+    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
+        audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+                                  @Nullable AudioFocusRequest audioFocusRequest) {
+        audioManager.abandonAudioFocus(audioFocusChangeListener);
+    }
+
+    @Override
+    public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {
+        //noinspection WrongConstant
+        return PendingIntent.getActivity(context, requestCode, intent, flags | FLAG_IMMUTABLE);
+    }
+
+    @Override
+    public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
+        //noinspection WrongConstant
+        return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
+    public Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
+        File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File ankiDroidFolder = new File(pictures, "AnkiDroid");
+        if (!ankiDroidFolder.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            ankiDroidFolder.mkdirs();
+        }
+        File imageFile = new File(ankiDroidFolder, baseFileName + "." + extension);
+        bitmap.compress(format, quality, new FileOutputStream(imageFile));
+        return Uri.fromFile(imageFile);
+    }
 }

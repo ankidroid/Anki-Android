@@ -16,14 +16,12 @@
 
 package com.ichi2.async;
 
-import android.os.AsyncTask;
-
 /**
  * Listener for the status and result of a {@link CollectionTask}.
  * <p>
  * Its methods are guaranteed to be invoked on the main thread.
  * <p>
- * Their semantics is equivalent to the methods of {@link AsyncTask}.
+ * Their semantics is equivalent to the methods of {@link android.os.AsyncTask}.
  */
 public abstract class TaskListener<Progress, Result> {
 

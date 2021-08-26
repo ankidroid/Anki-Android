@@ -92,26 +92,29 @@
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>
     <string name="gestures_allow_links" maxLength="41">Abaikan gestur sentuhan di tautan</string>
     <string name="gestures_allow_links_summary">Sentuhan gestur tidak akan diproses jika ada tautan ditekan.</string>
-    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch" maxLength="41">Mode sentuhan 9-poin</string>
+    <string name="gestures_corner_touch_summary">Perbolehkan gestur sentuhan di bagian pojok layar</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigasi laci layar penuh</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Buka laci navigasi ketika menggeser kanan layar dari mana saja</string>
     <string name="gestures_swipe_up" maxLength="41">Usap ke atas</string>
     <string name="gestures_swipe_down" maxLength="41">Usap ke bawah</string>
     <string name="gestures_swipe_left" maxLength="41">Usap ke kiri</string>
     <string name="gestures_swipe_right" maxLength="41">Usap ke kanan</string>
     <string name="gestures_double_tap" maxLength="41">Sentuh ganda</string>
+    <string name="gestures_long_tap" maxLength="41">Tekan beberapa saat</string>
     <string name="gestures_tap_top" maxLength="41">Sentuh atas</string>
     <string name="gestures_tap_left" maxLength="41">Sentuh kiri</string>
     <string name="gestures_tap_right" maxLength="41">Sentuh kanan</string>
     <string name="gestures_tap_bottom" maxLength="41">Sentuh bawah</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Sentuh bagian atas paling kiri</string>
+    <string name="gestures_corner_tap_top_center">Sentuh bagian atas tengah</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Sentuh bagian atas kanan</string>
+    <string name="gestures_corner_tap_middle_left">Sentuh bagian tengah kiri</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh bagian pas di tengah</string>
+    <string name="gestures_corner_tap_middle_right">Sentuh bagian tengah kanan</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bagian bawah kiri</string>
+    <string name="gestures_corner_tap_bottom_center">Sentuh bagian bawah tengah</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bagian bawah kanan</string>
     <string name="gestures_volume_up" maxLength="41">Volume naik</string>
     <string name="gestures_volume_down" maxLength="41">Volume turun</string>
     <string name="more_scrolling_buttons" maxLength="41">Pembaca elektronik</string>
@@ -127,7 +130,7 @@
     <string name="sync_fetch_missing_media_summ">Otomatis ambil media yang kurang ketika sinkronisasi.</string>
     <string name="sync_account" maxLength="41">Akun AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Belum masuk</string>
-    <string name="sync_account_summ_logged_in">%s</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sinkronisasi otomatis</string>
     <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis saat masuk/keluar aplikasi jika sinkronisasi terakhir lebih dari 10
          menit yang lalu.</string>
@@ -152,8 +155,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX dtk</string>
     <string name="timeout_question_seconds" maxLength="41">Waktu menampilkan pertanyaan selanjutnya</string>
     <string name="select_locale_title">Pilih bahasa</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
+    <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian review kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
     <string name="safe_display" maxLength="41">Mode tampilan aman</string>
     <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
     <string name="disable_extended_text_ui" maxLength="41">Nonaktifkan mode edit kolom tunggal</string>
@@ -162,8 +165,12 @@
     <string name="vertical_centering" maxLength="41">Rata tengah</string>
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
     <string name="pref_backup_max" maxLength="41">Jumlah cadangan maksimal</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Interval sentuhan dua kali (milisekon)</string>
+    <string name="pref_double_tap_time_interval_summary">Menyentuh tombol jawaban untuk kedua kalinya akan dihiraukan jika jumlah waktu ini belum terlewati. Hal ini akan mencegah melakukan sentuhan dua kali tanpa sengaja</string>
     <string name="show_estimates" maxLength="41">Tampilkan waktu di tombol</string>
     <string name="show_estimates_summ">Tampilkan waktu ulasan berikutnya di tombol jawab</string>
+    <string name="show_large_answer_buttons" maxLength="41">Tunjukkan tombol jawaban berukuran besar</string>
+    <string name="show_large_answer_buttons_summ">Tunjukkan tombol jawaban dalam 2 baris</string>
     <string name="show_top_bar" maxLength="41">Tampilkan bar atas</string>
     <string name="show_top_bar_summ">Tampilkan jumlah kartu, panji dan tanda di bar atas</string>
     <string name="show_progress" maxLength="41">Tampilkan kartu yang tersisa</string>
@@ -175,13 +182,13 @@
     <string name="learn_cutoff" maxLength="41">Batas belajar duluan</string>
     <string name="time_limit" maxLength="41">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="new_timezone" maxLength="41">Penanganan baru zona waktu</string>
+    <string name="day_offset_with_description" maxLength="41">Dimulainya hari esok</string>
     <string name="day_offset_summ">XXX jam lewat tengah malam</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Tengah malam</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">Jam 11 Malam</string>
+    <string name="sched_v2" maxLength="41">Penjadwal V2</string>
+    <string name="sched_v2_summ">Perbolehkan penjadwal baru. Paksakan pengubahan satu arah pada sinkronisasi selanjutnya</string>
     <string name="sched_ver_toggle_title">Konfirmasi</string>
     <string name="sched_ver_2to1">Ini akan mereset kartu yang dipelajari, dek terfilter, dan mengubah versi penjadwalan. Lanjut?</string>
     <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>
@@ -201,6 +208,11 @@
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
     <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Tempel gambar di papan klip sebagai PNG</string>
+    <string name="paste_as_png_summary">Anki menempel gambar papan klip berbentuk file JPG agar hemat penyimpanan. Gunakan opsi ini untuk menempel gambar sebagai file PNG.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistik lanjutan</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktifkan statistik lanjutan</string>
@@ -245,7 +257,7 @@
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Gunakan pengaturan umum</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Gunakan pengaturan umum \'Tampilkan jawaban otomatis\' daripada menggunakan pengaturan grup ini.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Bonus mudah</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Interval Susah</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Pengubah interval</string>
     <string name="deck_conf_max_ivl" maxLength="41">Interval maksimal</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Interval baru</string>
@@ -260,7 +272,7 @@
     <string name="deck_conf_replayq" maxLength="41">Ulangi pertanyaan</string>
     <string name="deck_conf_replayq_summ">Saat jawaban ditampilkan, ulangi pertanyaan dan audio jawaban</string>
     <string name="deck_conf_manage" maxLength="41">Manajemen grup</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Tambahkan dan ubah opsi grup</string>
     <string name="deck_conf_current_group" maxLength="41">Grup saat ini</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Ubah nama</string>
     <string name="deck_conf_reset" maxLength="41">Kembalikan ke awal</string>
@@ -280,6 +292,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kartu dipilih menurut </string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
+    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Langkah kustom(dalam menit)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tentukan langkah kustom</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Aktifkan notifikasi pengingat untuk dek di grup dek ini</string>
@@ -288,12 +301,23 @@
     <string name="analytics_dialog_title">Bantu AnkiDroid jadi lebih baik!</string>
     <string name="analytics_title" maxLength="41">Bagikan data penggunaan fitur</string>
     <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Ganti newlines dengan HTML</string>
+    <string name="note_editor_replace_newlines_summ">Di Note Editor, konversikan bentuk apapun dari&lt;br&gt; menjadi neelones ketika mengedit sebuah kartu.</string>
+    <string name="no_code_formatting" maxLength="41">Format teks jawaban simpel</string>
+    <string name="no_code_formatting_summ">Membetulkan ‘􏿾’ yang muncul di hasil ketikan jawaban </string>
+    <string name="type_in_answer_focus" maxLength="41">Fokus \'ketik di jawaban\'</string>
+    <string name="type_in_answer_focus_summ">Fokuskan bagian \'ketik di jawaban\' secara otomatis di reviewer</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Buka Changelog</string>
+    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_key">Add key</string>
+    <string name="key_picker_default_press_key">Press a key</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_question">Question</string>
+    <string name="card_side_answer">Answer</string>
+    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
 </resources>

@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
+    <string name="unused_strings">\n\nUnused files:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>Az AnkiDroid egy tanulókártya alkalmazás, amely teljesen kompatibilis a Pc-s asztali kiadással <a href=\"%2$s\">Anki</a>. Létrehozhatsz, letölthetsz és tanulhatsz anyagokat az AnkiDroid és Pc-s verzió segítségével is. Ezeket az AnkiWeb segítségével egyszerűen szinkronizálhatod.]]></item>
         <item><![CDATA[AnkiDroid fejlesztése érdekében, kérjük jelentsd a hibákat <a href=\"%1$s\">the issue tracker</a>; az újabb funkciókkal kapcsolatos ötleteidnek is nagyon örülünk <a href=\"%2$s\">a wiki</a> vagy beszélgess másokkal <a href=\"%3$s\">a fórum</a>.]]></item>
@@ -230,6 +231,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Privacy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
     <!--Sync-->

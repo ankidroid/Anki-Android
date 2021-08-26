@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theme_black_primary">#070707</color>
+    <color name="theme_black_primary">#000000</color>
     <color name="theme_black_primary_dark">#000000</color>
     <color name="theme_black_primary_light">#151515</color>
     <color name="theme_black_accent">#1565C0</color>
@@ -86,12 +86,18 @@
         <item name="flagOrange">@color/flag_orange</item>
         <item name="flagGreen">@color/flag_green</item>
         <item name="flagBlue">@color/flag_blue</item>
+        <item name="flagPink">@color/flag_pink</item>
+        <item name="flagTurquoise">@color/flag_turquoise</item>
+        <item name="flagPurple">@color/flag_purple</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <!-- Note editor colors -->
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
         <item name="toolbarBackgroundColor">#616161</item>
         <item name="toolbarIconColor">@color/white</item>
+        <item name="buttonShadowColor">#bdbdbd</item>
+        <item name="buttonRippleColor">#BABABA</item>
+        <item name="buttonForegroundColor">#757575</item>
         <!-- FAB -->
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
@@ -104,8 +110,8 @@
         <item name="md_dark_theme">true</item>
         <item name="md_background_color">@color/theme_black_primary_light</item>
         <!--Custom Tabs colors-->
-        <item name="customTabToolbarColor">#000000</item>
-        <item name="customTabNavBarColor">#070707</item>
+        <item name="customTabNavBarColor">#000000</item>
+        <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
     </style>
 
     <!-- Preferences screens -->

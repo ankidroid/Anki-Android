@@ -95,6 +95,7 @@
     <string name="unbury">Nicht mehr aufschieben</string>
     <string name="rename_deck">Stapel umbenennen</string>
     <string name="create_shortcut">Verknüpfung erstellen</string>
+    <string name="browse_cards">Hund</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
@@ -113,6 +114,9 @@
     <string name="menu_flag_card_two">Orange Flagge</string>
     <string name="menu_flag_card_three">Grüne Flagge</string>
     <string name="menu_flag_card_four">Blaue Flagge</string>
+    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
@@ -183,7 +187,13 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aussehen der Kartenübersicht</string>
     <string name="card_template_editor_deck_override">Stapel übergehen</string>
+    <string name="card_template_editor_insert_field">Feld einfügen</string>
+    <string name="card_template_editor_select_field">Feld auswählen</string>
     <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt.</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Dies wird %1$d Karte erstellen. Fortfahren?</item>
+        <item quantity="other">Dies wird %1$d Karten erstellen. Fortfahren?</item>
+    </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
@@ -219,4 +229,8 @@
     <string name="sync_conflict_local_confirm_new">Soll Ihre Sammlung auf AnkiWeb durch die Sammlung auf AnkiDroid ersetzt werden?</string>
     <string name="sync_conflict_title_new">Zu behaltende Sammlung auswählen</string>
     <string name="sync_conflict_replace_title">Sammlung ersetzen</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d Karte (0 fällig)</item>
+        <item quantity="other">%1$d Karten (0 fällig)</item>
+    </plurals>
 </resources>

@@ -41,7 +41,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContentResolverCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.text.TextUtils;
@@ -52,17 +51,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.canhub.cropper.CropImage;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -70,14 +68,12 @@ import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import androidx.core.util.Pair;
 import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
@@ -184,8 +180,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
-        layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        if (com.ichi2.utils.CheckCameraPermission.manifestContainsPermission(context)) {
+            layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
     }
 
 
@@ -322,7 +321,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return mActivity.getText(id).toString();
     }
 
-
+    @SuppressWarnings("deprecation") // #9333: getDefaultDisplay & getMetrics
     private DisplayMetrics getDisplayMetrics() {
         if (mMetrics == null) {
             mMetrics = new DisplayMetrics();
@@ -343,7 +342,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             switch (requestCode) {
                 case ACTIVITY_TAKE_PICTURE:
                 case ACTIVITY_CROP_PICTURE:
-                case UCrop.REQUEST_CROP:
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
                         revertToPreviousImage();
                     }
@@ -357,10 +356,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true);
             }
 
-            // uCrop can give us more information. Not sure it is actionable so for now just log it.
-            if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == UCrop.RESULT_ERROR)) {
-                Timber.w(UCrop.getError((data)), "uCrop threw an error");
-                AnkiDroidApp.sendExceptionReport(UCrop.getError(data), "uCrop threw an error");
+            // cropImage can give us more information. Not sure it is actionable so for now just log it.
+            if ((requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) && (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE)) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (result != null) {
+                    String error = String.valueOf(result.getError());
+                    Timber.w(error, "cropImage threw an error");
+                    AnkiDroidApp.sendExceptionReport(error, "cropImage threw an error");;
+                }
             }
             return;
         }
@@ -378,8 +381,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             handleTakePictureResult();
-        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == UCrop.REQUEST_CROP)) {
-            handleCropResult();
+        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (result != null) {
+                handleCropResult(result);
+            }
         } else {
             Timber.w("Unhandled request code: %d", requestCode);
             return;
@@ -419,10 +425,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         File internalizedPick = internalizeUri(selectedImage);
         if (internalizedPick == null) {
-            String urlImagePath = getImageInfoFromUri(mActivity, selectedImage).first;
-            mViewModel = new ImageViewModel(urlImagePath, selectedImage);
-            mField.setImagePath(urlImagePath);
-            mField.setHasTemporaryMedia(false);
             Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", selectedImage);
             showSomethingWentWrong();
             return;
@@ -437,17 +439,15 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private @Nullable File internalizeUri(Uri uri) {
         File internalFile;
-        Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
-        String filePath = uriFileInfo.first;
-        String displayName = uriFileInfo.second;
+        String uriFileName = getImageNameFromUri(mActivity, uri);
 
         // Use the display name from the image info to create a new file with correct extension
-        if (uriFileInfo.second == null) {
+        if (uriFileName == null) {
             Timber.w("internalizeUri() unable to get file name");
             showSomethingWentWrong();
             return null;
         }
-        String uriFileExtension = uriFileInfo.second.substring(uriFileInfo.second.lastIndexOf('.') + 1);
+        String uriFileExtension = uriFileName.substring(uriFileName.lastIndexOf('.') + 1);
         try {
             internalFile = createNewCacheImageFile(uriFileExtension);
         } catch (IOException e) {
@@ -456,7 +456,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             return null;
         }
         try {
-            File returnFile = FileUtil.internalizeUri(uri, filePath, internalFile, mActivity.getContentResolver());
+            File returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.getContentResolver());
             Timber.d("internalizeUri successful. Returning internalFile.");
             return returnFile;
         } catch (Exception e) {
@@ -606,41 +606,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
-        // Crop on Android 11 broke completely. We will transition to uCrop in general for everyone but first
-        // for Android 11 only we try uCrop. Worst case, it was already broken for them
-        if (CompatHelper.getSdkVersion() > Build.VERSION_CODES.Q) { // We don't compile against 30 yet, so R symbol does not exist
-            UCrop.Options options = new UCrop.Options();
-            options.setFreeStyleCropEnabled(true);
-
-
-            // Color palette
-            options.setActiveControlsWidgetColor(ContextCompat.getColor(mActivity, R.color.theme_light_primary));
-            options.setStatusBarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimaryDark));
-            options.setToolbarColor(Themes.getColorFromAttr(mActivity, R.attr.colorPrimary));
-            options.setToolbarWidgetColor(Themes.getColorFromAttr(mActivity, R.attr.actionBarTextColor));
-            UCrop.of(mPreviousImageUri, ret.mImageUri)
-                    .withOptions(options)
-                    .useSourceImageAspectRatio()
-                    //.withMaxResultSize(maxWidth, maxHeight)
-                    .start(mActivity);
-        } else {
-            // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
-            // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            intent.setDataAndType(mPreviousImageUri, "image/*");
-            intent.putExtra("return-data", false);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
-            intent.putExtra("noFaceDetection", true); // no face detection
-            try {
-                mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(intent, null), ACTIVITY_CROP_PICTURE);
-            } catch (Exception e) {
-                Timber.w(e, "requestCrop unable to start cropping activity for Uri %s", mPreviousImageUri);
-                showSomethingWentWrong();
-                onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
-            }
-        }
+        CropImage.activity(viewModel.mImageUri).start(mActivity);
         return ret;
     }
 
@@ -671,8 +637,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void handleCropResult() {
+    private void handleCropResult(CropImage.ActivityResult result) {
         Timber.d("handleCropResult");
+        mViewModel.deleteImagePath();
+        mViewModel = new ImageViewModel(result.getUriFilePath(mActivity, true), result.getUriContent());
         if (!rotateAndCompress()) {
             Timber.i("handleCropResult() appears to have an invalid file, reverting");
             return;
@@ -736,72 +704,62 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     /**
-     * Get image information based on uri and selection args
+     * Get image name based on uri and selection args
      *
-     * @return Pair<String, String>: first file path (null if does not exist), second display name (null if does not exist)
+     * @return Display name of file identified by uri (null if does not exist)
      */
-    private @NonNull Pair<String, String> getImageInfoFromUri(Context context, Uri uri) {
-        Timber.d("getImagePathFromUri() URI: %s", uri);
-        Pair<String, String> imageInfo = new Pair<>(null, null);
+    private String getImageNameFromUri(Context context, Uri uri) {
+        Timber.d("getImageNameFromUri() URI: %s", uri);
+        String imageName = null;
         if (DocumentsContract.isDocumentUri(context, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imageInfo = getImageInfoFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                imageName = getImageNameFromContentResolver(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(docId));
-                imageInfo = getImageInfoFromContentResolver(context, contentUri, null);
+                imageName = getImageNameFromContentResolver(context, contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            imageInfo = getImageInfoFromContentResolver(context, uri, null);
+            imageName = getImageNameFromContentResolver(context, uri, null);
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             if (uri.getPath() != null) {
                 String[] pathParts = uri.getPath().split("/");
-                imageInfo = new Pair<>(
-                        uri.getPath(),
-                        pathParts[pathParts.length - 1]
-                );
+                imageName = pathParts[pathParts.length - 1];
             }
         }
-        Timber.d("getImagePathFromUri() returning path/name %s/%s", imageInfo.first, imageInfo.second);
-        return imageInfo;
+        Timber.d("getImageNameFromUri() returning name %s", imageName);
+        return imageName;
     }
 
     /**
-     * Get image information based on uri and selection args
+     * Get image name based on uri and selection args
      *
-     * @return string[] 0: file path (null if does not exist), 1: display name (null if does not exist)
+     * @return Display name of file identified by uri (null if does not exist)
      */
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7014
-    private @NonNull Pair<String, String> getImageInfoFromContentResolver(Context context, Uri uri, String selection) {
-        Timber.d("getImagePathFromContentResolver() %s", uri);
-        String[] filePathColumns = {
-                MediaStore.MediaColumns.DATA,
-                MediaStore.MediaColumns.DISPLAY_NAME
-        };
+    private String getImageNameFromContentResolver(Context context, Uri uri, String selection) {
+        Timber.d("getImageNameFromContentResolver() %s", uri);
+        String[] filePathColumns = { MediaStore.MediaColumns.DISPLAY_NAME };
         Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), uri, filePathColumns, selection, null, null, null);
 
         if (cursor == null) {
-            Timber.w("getImageInfoFromContentResolver() cursor was null");
+            Timber.w("getImageNameFromContentResolver() cursor was null");
             showSomethingWentWrong();
-            return new Pair<>(null, null);
+            return null;
         }
 
         if (!cursor.moveToFirst()) {
             //TODO: #5909, it would be best to instrument this to see if we can fix the failure
-            Timber.w("getImageInfoFromContentResolver() cursor had no data");
+            Timber.w("getImageNameFromContentResolver() cursor had no data");
             showSomethingWentWrong();
-            return new Pair<>(null, null);
+            return null;
         }
 
-        Pair<String, String> imageInfo = new Pair<>(
-                cursor.getString(cursor.getColumnIndex(filePathColumns[0])),
-                cursor.getString(cursor.getColumnIndex(filePathColumns[1]))
-        );
+        String imageName = cursor.getString(cursor.getColumnIndex(filePathColumns[0]));
         cursor.close();
-        Timber.d("getImageInfoFromContentResolver() decoded image info path/name %s/%s", imageInfo.first, imageInfo.second);
-        return imageInfo;
+        Timber.d("getImageNameFromContentResolver() decoded image name %s", imageName);
+        return imageName;
     }
 
 

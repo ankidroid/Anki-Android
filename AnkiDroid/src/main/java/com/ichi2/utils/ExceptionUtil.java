@@ -16,6 +16,9 @@
 
 package com.ichi2.utils;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
@@ -36,16 +39,47 @@ public class ExceptionUtil {
     @NonNull
     @CheckResult
     public static String getExceptionMessage(Throwable e) {
+        return getExceptionMessage(e, "\n");
+    }
+
+    @NonNull
+    @CheckResult
+    public static String getExceptionMessage(Throwable e, String separator) {
         StringBuilder ret = new StringBuilder();
         Throwable cause = e;
         while (cause != null) {
-            if (cause != e) {
-                ret.append("\n");
+
+            if (cause.getLocalizedMessage() != null || cause == e) {
+                if (cause != e) {
+                    ret.append(separator);
+                }
+                ret.append(cause.getLocalizedMessage());
             }
-            ret.append(cause.getLocalizedMessage());
             cause = cause.getCause();
         }
 
         return ret.toString();
+    }
+
+    /** Whether the exception is, or contains a cause of a given type */
+    public static <T> boolean containsCause(@NonNull Throwable ex, @NonNull Class<T> clazz) {
+        if (clazz.isInstance(ex)) {
+            return true;
+        }
+
+        Throwable cause = ex.getCause();
+        if (cause == null) {
+            return false;
+        }
+
+        return containsCause(cause, clazz);
+    }
+
+
+    @NonNull
+    public static String getFullStackTrace(@NonNull Throwable ex) {
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
     }
 }

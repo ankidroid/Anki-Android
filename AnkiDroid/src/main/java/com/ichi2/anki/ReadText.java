@@ -128,16 +128,21 @@ public class ReadText {
                     });
         }
         // Show the dialog after short delay so that user gets a chance to preview the card
+        showDialogAfterDelay(builder, 500);
+    }
+
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
+    protected static void showDialogAfterDelay(MaterialDialog.Builder builder, int delayMillis) {
         final Handler handler = new Handler();
-        final int delay = 500;
         handler.postDelayed(() -> {
             try {
                 builder.build().show();
             } catch (WindowManager.BadTokenException e) {
                 Timber.w(e,"Activity invalidated before TTS language dialog could display");
             }
-        }, delay);
+        }, delayMillis);
     }
+
 
     /**
      * Read a card side using a TTS service.

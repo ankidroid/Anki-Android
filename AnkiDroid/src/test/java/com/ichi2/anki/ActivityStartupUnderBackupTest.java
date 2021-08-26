@@ -19,12 +19,15 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.canhub.cropper.CropImageActivity;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
 import com.ichi2.testutils.EmptyApplication;
+import com.ichi2.utils.ExceptionUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,6 +61,7 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
 
     @Before
     public void before() {
+        notYetHandled(CropImageActivity.class.getSimpleName(), "cannot implemented - activity from canhub.cropper");
         notYetHandled(IntentHandler.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(VideoPlayer.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(LoadPronounciationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
@@ -71,12 +75,32 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
     /**
      * Tests that each activity can handle {@link AnkiDroidApp#getInstance()} returning null
      * This happens during a backup, for details, see {@link AnkiActivity#showedActivityFailedScreen(Bundle)}
+     *
+     * Note: If you ran this test and it failed, please check to make sure that any new onCreate methods
+     * have the following code snippet at the start:
+     * <code>
+     * if (showedActivityFailedScreen(savedInstanceState)) {
+     *     return;
+     * }
+     * </code>
      */
     @Test
     public void activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup();
-        ActivityController<? extends Activity> controller = mLauncher.build(getTargetContext()).create();
-
+        ActivityController<? extends Activity> controller;
+        try {
+            controller = mLauncher.build(getTargetContext()).create();
+        } catch (Exception npe) {
+            String stackTrace = ExceptionUtil.getFullStackTrace(npe);
+            Assert.fail("If you ran this test and it failed, please check to make sure that any new onCreate methods\n" +
+                    "have the following code snippet at the start:\n" +
+                    "if (showedActivityFailedScreen(savedInstanceState)) {\n" +
+                    "  return;\n" +
+                    "}\n" + stackTrace);
+            // Throw is useless after failure. However, it is required to compile as the compiler do not get
+            // that controller is not used below.
+            throw npe;
+        }
         shadowOf(getMainLooper()).idle();
 
         // Note: Robolectric differs from actual Android (process is not killed).

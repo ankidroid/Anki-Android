@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">מעלה&#8230;</string>
     <string name="sync_downloading_message">מוריד&#8230;</string>
     <string name="sync_title">סנכרון</string>
-    <string name="sync_downloading_media">מוריד קבצי מדיה: %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">סנכרון מלא מהמקומי</string>
     <string name="sync_log_clocks_unsynchronized">השעון לא מכוון ב־%1$d שניות%2$s. יש לוודא שהתאריך, השעה ואיזור הזמן בטלפון שלך מכוונים כראוי, ואז לבצע סנכרון מחדש.</string>
     <string name="sync_log_clocks_unsynchronized_tz">; יתכן שאיזור הזמן שגוי</string>

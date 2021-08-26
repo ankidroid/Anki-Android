@@ -111,6 +111,9 @@
         <item>@string/gesture_flag_orange</item>
         <item>@string/gesture_flag_green</item>
         <item>@string/gesture_flag_blue</item>
+        <item>@string/gesture_flag_pink</item>
+        <item>@string/gesture_flag_turquoise</item>
+        <item>@string/gesture_flag_purple</item>
         <item>@string/gesture_flag_remove</item>
         <item>@string/gesture_page_up</item>
         <item>@string/gesture_page_down</item>
@@ -146,6 +149,9 @@
         <item>21</item> <!-- Orange Flag -->
         <item>22</item> <!-- Green Flag -->
         <item>23</item> <!-- Blue Flag -->
+        <item>38</item> <!-- Pink Flag -->
+        <item>39</item> <!-- Turquoise Flag -->
+        <item>40</item> <!-- Purple Flag -->
         <item>24</item> <!-- Unset Flag -->
         <item>30</item> <!-- Page Up -->
         <item>31</item> <!-- Page Down -->
@@ -196,13 +202,17 @@
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
+    <string name="link_ankidroid_privacy_policy">https://github.com/ankidroid/Anki-Android/wiki/Privacy-Policy</string>
+    <string name="link_ankiweb_privacy_policy">https://ankiweb.net/account/privacy</string>
+    <string name="link_ankiweb_terms_and_conditions">https://ankiweb.net/account/terms</string>
     <!-- Link is in the name of Glutanimate - server admin -->
     <string name="link_discord">https://discord.gg/qjzcRTx</string>
     <string name="link_facebook">https://www.facebook.com/AnkiDroid/</string>
     <string name="link_twitter">https://twitter.com/ankidroid</string>
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
-    <string name="link_opencollective_donate">https://opencollective.com/ankidroid#section-contribute</string>
+    <string name="link_opencollective_donate">https://opencollective.com/ankidroid/contribute</string>
+    <string name="link_anki_2_scheduler">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html</string>
     <string name="link_ankiweb_docs_cloze_deletion">https://docs.ankiweb.net/editing.html#cloze-deletion</string>
 
     <string-array name="leech_action_values">
@@ -273,4 +283,10 @@
         <item>x-large</item>
         <item>xx-large</item>
     </string-array>
+
+    <!-- Onboarding -->
+    <string name="reset_onboarding" maxLength="41">Reset onboarding walkthrough</string>
+    <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
+    <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
+    <string name="reset_onboarding_desc">Show all tutorials again</string>
 </resources>

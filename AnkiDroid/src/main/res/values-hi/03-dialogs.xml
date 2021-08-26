@@ -53,6 +53,7 @@
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
+    <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>एंड्रॉइड के लिए फ़्लैशकार्ड</h2>AnkiDroid एक फ़्लैशकार्ड अनुप्रयोग है जो डेस्कटॉप सॉफ्टवेयर <a href=\"%2$s\">Anki</a> से पूरी तरह सांगत है। आप Anki डेस्कटॉप और AnkiDroid सामग्री बना, डाउनलोड कर और सीख सकते हैं, और AnkiWeb से साथ आसानी से समकालीन कर सकते हैं।]]></item>
         <item><![CDATA[AnkiDroid को बेहतर बनाने में हमारी सहायता करने के लिए, कृपया <a href=\"%1$s\">समस्या ट्रैकर</a> को दोष सूचित करें; नई सुविधाओं के विचार भी स्वीकारे जाते हैं। <a href=\"%2$s\"> विकि</a> पर उतर खोजें या <a href=\"%3$s\">फोरम</a> पर बातचीत शुरू करें।]]></item>
@@ -230,6 +231,10 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">गोपनीयता</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid गोपनीयता नीति</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb गोपनीयता नीति</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb नियम और शर्तें</string>
     <string name="help_title_send_exception">समस्या निवारण रिपोर्ट भेजें</string>
     <string name="help_dialog_exception_report_debounce">रिपोर्ट पहले ही प्रस्तुत की गई है</string>
     <!--Sync-->

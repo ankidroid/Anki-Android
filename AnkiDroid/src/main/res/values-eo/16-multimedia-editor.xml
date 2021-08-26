@@ -46,7 +46,7 @@
     <string name="multimedia_editor_trans_from">El</string>
     <string name="multimedia_editor_trans_to">En</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">Traduku</string>
+    <string name="multimedia_editor_trans_translate">Traduki</string>
     <!-- waiting message -->
     <string name="multimedia_editor_trans_translating_online">Traduki enrete</string>
     <!-- pick the right translation imperative -->
@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Atendi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Io fiaskis</string>
+    <string name="multimedia_editor_png_paste_error">Eraro dum konverti bildon el tondujo al PNG-formo: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Kunigi plurmedian enhavon al la kampo %1$s</string>
     <string name="multimedia_editor_attach_media">Aldoni aŭdvidaĵon</string>
     <!-- Audio view -->

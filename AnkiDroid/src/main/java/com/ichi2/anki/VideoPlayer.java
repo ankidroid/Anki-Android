@@ -34,6 +34,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     Sound mSoundPlayer;
 
     /** Called when the activity is first created. */
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.i("onCreate");

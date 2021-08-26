@@ -24,6 +24,7 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.compat.CompatHelper;
 
 import timber.log.Timber;
 
@@ -54,7 +55,7 @@ public class AddNoteWidget extends AppWidgetProvider {
 
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
 
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        final PendingIntent pendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, intent, 0);
 
         remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);

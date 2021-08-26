@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Wysyłanie...</string>
     <string name="sync_downloading_message">Pobieranie...</string>
     <string name="sync_title">Synchronizacja</string>
-    <string name="sync_downloading_media">Pobieranie mediów %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
     <string name="sync_log_clocks_unsynchronized">Zegar na Twoim urządzeniu działa nieprawidłowo (o %1$d sekund%2$s); synchronizacja wymaga prawidłowego ustawienia zegara i strefy czasowej aby uniknąć błędów. Upewnij się, że w Twoim telefonie data, czas i Twoja strefa czasowa są ustawione prawidłowo i spróbuj ponownie zsynchronizować.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>

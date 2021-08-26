@@ -18,54 +18,42 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer. */
 public class PeripheralKeymap {
 
-    private final ReviewerUi mReviewerUI;
-    private final KeyMap mAnswerKeyMap;
-    private final KeyMap mQuestionKeyMap;
+    private final KeyMap mKeyMap;
 
     private boolean mHasSetup = false;
 
     public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
-        this.mReviewerUI = reviewerUi;
-        this.mQuestionKeyMap = new KeyMap(commandProcessor);
-        this.mAnswerKeyMap = new KeyMap(commandProcessor);
+        this.mKeyMap = new KeyMap(commandProcessor, reviewerUi);
     }
 
     public void setup() {
-        List<PeripheralCommand> commands = PeripheralCommand.getDefaultCommands();
-
-        for (PeripheralCommand command : commands) {
-            //NOTE: Can be both
-            if (command.isQuestion()) {
-                mQuestionKeyMap.addCommand(command);
-            }
-            if (command.isAnswer()) {
-                mAnswerKeyMap.addCommand(command);
-            }
-         }
+        for (PeripheralCommand command : PeripheralCommand.getDefaultCommands()) {
+            mKeyMap.addCommand(command, command.getSide());
+        }
 
         mHasSetup = true;
     }
 
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (!mHasSetup) {
+        if (!mHasSetup || event.getRepeatCount() > 0) {
             return false;
         }
-        if (mReviewerUI.isDisplayingAnswer()) {
-            return mAnswerKeyMap.onKeyUp(keyCode, event);
-        } else {
-            return mQuestionKeyMap.onKeyUp(keyCode, event);
-        }
+
+        return mKeyMap.onKeyUp(keyCode, event);
     }
 
     @SuppressWarnings( {"unused", "RedundantSuppression"})
@@ -73,70 +61,53 @@ public class PeripheralKeymap {
         return false;
     }
 
-    private static class KeyMap {
-        public final HashMap<Integer, List<PeripheralCommand>> mKeyCodeToCommand = new HashMap<>();
-        public final HashMap<Integer, List<PeripheralCommand>> mUnicodeToCommand = new HashMap<>();
+    public static class KeyMap {
+        public final HashMap<MappableBinding, ViewerCommand> mBindingMap = new HashMap<>();
         private final CommandProcessor mProcessor;
+        private final ReviewerUi mReviewerUI;
 
-        private KeyMap(CommandProcessor commandProcessor) {
+
+        public KeyMap(CommandProcessor commandProcessor, ReviewerUi mReviewerUi) {
             this.mProcessor = commandProcessor;
+            this.mReviewerUI = mReviewerUi;
         }
 
+        @SuppressWarnings( {"unused", "RedundantSuppression"})
         public boolean onKeyUp(int keyCode, KeyEvent event) {
             boolean ret = false;
 
-            {
-                List<PeripheralCommand> a = mKeyCodeToCommand.get(keyCode);
-                if (a != null) {
-                    for (PeripheralCommand command : a) {
-                        if (!command.matchesModifier(event)) {
-                            continue;
-                        }
+            List<Binding> bindings = Binding.key(event);
+            CardSide side = CardSide.fromAnswer(mReviewerUI.isDisplayingAnswer());
 
-                        ret |= mProcessor.executeCommand(command.getCommand());
-                    }
-                }
-            }
-            {
-                // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
-                // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-                int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
-                List<PeripheralCommand> unicodeLookup = mUnicodeToCommand.get(unicodeChar);
-                if (unicodeLookup != null) {
-                    for (PeripheralCommand command : unicodeLookup) {
-                        if (!command.matchesModifier(event)) {
-                            continue;
-                        }
+            for (Binding b: bindings) {
 
-                        ret |= mProcessor.executeCommand(command.getCommand());
-                    }
+                MappableBinding binding = new MappableBinding(b, side);
+                ViewerCommand command = mBindingMap.get(binding);
+                if (command == null) {
+                    continue;
                 }
+
+                ret |= mProcessor.executeCommand(command);
             }
 
             return ret;
         }
 
 
-        public void addCommand(PeripheralCommand command) {
-            //COULD_BE_BETTER: DefaultDict
-            if (command.getUnicodeCharacter() != null) {
-                //NB: Int is correct here, the value from KeyCode is an int.
-                int unicodeChar = command.getUnicodeCharacter();
-                if (!mUnicodeToCommand.containsKey(unicodeChar)) {
-                    mUnicodeToCommand.put(unicodeChar, new ArrayList<>(0));
-                }
-                //noinspection ConstantConditions
-                mUnicodeToCommand.get(unicodeChar).add(command);
-            }
+        public void addCommand(@NonNull PeripheralCommand command, CardSide side) {
+            MappableBinding key = new MappableBinding(command.getBinding(), side);
+            set(key, command.getCommand());
+        }
 
-            if (command.getKeycode() != null) {
-                Integer c = command.getKeycode();
-                if (!mKeyCodeToCommand.containsKey(c)) {
-                    mKeyCodeToCommand.put(c, new ArrayList<>(0));
-                }
-                //noinspection ConstantConditions
-                mKeyCodeToCommand.get(c).add(command);
-            }
+
+        public void set(@NonNull MappableBinding key, @NonNull ViewerCommand value) {
+            mBindingMap.put(key, value);
+        }
+
+
+        @Nullable
+        public ViewerCommand get(MappableBinding key) {
+            return mBindingMap.get(key);
         }
     }
 }

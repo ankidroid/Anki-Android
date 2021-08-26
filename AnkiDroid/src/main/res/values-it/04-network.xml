@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Carico...</string>
     <string name="sync_downloading_message">Scarico...</string>
     <string name="sync_title">Sincronizzazione</string>
-    <string name="sync_downloading_media">Scaricando il media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Sincronizzazione completa da locale</string>
     <string name="sync_log_clocks_unsynchronized">L\'orologio sul tuo dispositivo è errato di %1$d secondi%2$s; La sincronizzazione richiede che il tuo orologio ed il fuso orario siano impostati correttamente per evitare errori. Assicurati che la data, l\'ora e il fuso orario sul tuo telefono cellulare siano impostati correttamente, quindi sincronizza nuovamente.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, il fuso orario del dispositivo è forse sbagliato</string>

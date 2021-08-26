@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Запампаванне&#8230;</string>
     <string name="sync_downloading_message">Спампаванне&#8230;</string>
     <string name="sync_title">Сінхранізацыя</string>
-    <string name="sync_downloading_media">Спампаванне медыяфайлаў %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Цалкам сінхранізавана з прыладай</string>
     <string name="sync_log_clocks_unsynchronized">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунд %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</string>
     <string name="sync_log_clocks_unsynchronized_tz">і магчыма, што часавы пояс прызначаны няправільна</string>

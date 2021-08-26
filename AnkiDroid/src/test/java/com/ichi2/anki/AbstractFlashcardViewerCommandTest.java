@@ -31,6 +31,9 @@ import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_PINK;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_TURQUOISE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_PURPLE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -127,32 +130,50 @@ public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
     }
 
     @Test
-    public void doubleTapRedUnsets() {
+    public void tapPinkFlagSetsPink() {
+        CommandTestCardViewer viewer = getViewer();
+
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK);
+
+        assertThat(viewer.getLastFlag(), is(FLAG_PINK));
+    }
+
+    @Test
+    public void tapTurquoiseFlagSetsTurquoise() {
+        CommandTestCardViewer viewer = getViewer();
+
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE);
+
+        assertThat(viewer.getLastFlag(), is(FLAG_TURQUOISE));
+    }
+
+    @Test
+    public void tapPurpleFlagSetsPurple() {
+        CommandTestCardViewer viewer = getViewer();
+
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE);
+
+        assertThat(viewer.getLastFlag(), is(FLAG_PURPLE));
+    }
+
+    @Test
+    public void doubleTapUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-    }
-
-    @Test
-    public void doubleTapOrangeUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE);
-    }
-
-    @Test
-    public void doubleTapGreenUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN);
-    }
-
-    @Test
-    public void doubleTapBlueUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK);
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE);
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE);
     }
 
-    private void testDoubleTapUnsets(int command) {
+    private void testDoubleTapUnsets(ViewerCommand command) {
         CommandTestCardViewer viewer = getViewer();
 
         viewer.executeCommand(command);
         viewer.executeCommand(command);
 
-        assertThat(viewer.getLastFlag(), is(FLAG_NONE));
+        assertThat(command.toString(), viewer.getLastFlag(), is(FLAG_NONE));
     }
 
 

@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs.tags;
 
 import android.annotation.SuppressLint;
@@ -9,7 +10,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,10 +18,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.utils.DisplayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,7 +117,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        DisplayUtils.resizeWhenSoftInputShown(requireActivity().getWindow());
 
         mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
 
@@ -179,7 +179,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mSelectedOption));
         mDialog = builder.build();
 
-        mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        DisplayUtils.resizeWhenSoftInputShown(mDialog.getWindow());
         return mDialog;
     }
 
@@ -279,12 +279,12 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     mNoTagsTextView.setVisibility(View.GONE);
                 }
                 mTags.add(tag);
-                mTagsArrayAdapter.sortData();
                 feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText);
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
             mTags.check(tag);
+            mTagsArrayAdapter.sortData();
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,

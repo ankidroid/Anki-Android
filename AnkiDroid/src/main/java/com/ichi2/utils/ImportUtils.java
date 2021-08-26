@@ -17,6 +17,7 @@
 package com.ichi2.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -92,6 +93,10 @@ public class ImportUtils {
     public static boolean isInvalidViewIntent(@NonNull Intent intent) {
         return intent.getData() == null && intent.getClipData() == null;
     }
+    
+    public static boolean isFileAValidDeck(String fileName) {
+        return FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg");
+    }
 
 
     @SuppressWarnings("WeakerAccess")
@@ -133,22 +138,12 @@ public class ImportUtils {
                 return handleContentProviderFile(context, intent, clipUri);
             }
 
-            // If the file is being sent from a content provider we need to read the content before we can open the file
-            if ("content".equals(intent.getData().getScheme())) {
+            // If Uri is of scheme which is supported by ContentResolver, read the contents
+            String intentUriScheme = intent.getData().getScheme();
+            if (intentUriScheme.equals(ContentResolver.SCHEME_CONTENT) || intentUriScheme.equals(ContentResolver.SCHEME_FILE)
+                    || intentUriScheme.equals(ContentResolver.SCHEME_ANDROID_RESOURCE)) {
                 Timber.i("Attempting to read content from intent.");
                 return handleContentProviderFile(context, intent, intent.getData());
-            } else if ("file".equals(intent.getData().getScheme())) {
-                Timber.i("Attempting to read file from intent.");
-                // When the VIEW intent is sent as a file, we can open it directly without copying from content provider
-                String filename = intent.getData().getPath();
-                Timber.d("Importing regular file: %s", filename);
-                if (isValidPackageName(filename)) {
-                    // If file has apkg extension then send message to show Import dialog
-                    sendShowImportFileDialogMsg(filename);
-                    return ImportResult.fromSuccess();
-                } else {
-                    return ImportResult.fromErrorString(context.getResources().getString(R.string.import_error_not_apkg_extension, filename));
-                }
             } else {
                 return ImportResult.fromErrorString(context.getResources().getString(R.string.import_error_unhandled_scheme, intent.getData()));
             }

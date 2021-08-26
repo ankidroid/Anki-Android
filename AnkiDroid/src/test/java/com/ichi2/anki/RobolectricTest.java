@@ -25,9 +25,9 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ForegroundTaskManager;
 import com.ichi2.async.SingleTaskManager;
+import com.ichi2.async.TaskDelegate;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -45,7 +45,8 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
-import com.ichi2.utils.BooleanGetter;
+import com.ichi2.testutils.TaskSchedulerRule;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONException;
 
 import net.ankiweb.rsdroid.BackendException;
@@ -57,6 +58,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
@@ -66,7 +68,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
 
@@ -95,8 +96,17 @@ public class RobolectricTest implements CollectionGetter {
         return true;
     }
 
+    @Rule
+    public final TaskSchedulerRule mTaskScheduler = new TaskSchedulerRule();
+
     @Before
     public void setUp() {
+        if (mTaskScheduler.shouldRunInForeground()) {
+            runTasksInForeground();
+        } else {
+            runTasksInBackground();
+        }
+
 
         RustBackendLoader.init();
 
@@ -173,8 +183,6 @@ public class RobolectricTest implements CollectionGetter {
             //called on each AnkiDroidApp.onCreate(), and spams the build
             //there is no onDestroy(), so call it here.
             Timber.uprootAll();
-
-            runTasksInBackground();
         }
     }
 
@@ -415,7 +423,7 @@ public class RobolectricTest implements CollectionGetter {
     }
 
 
-    protected synchronized <Progress, Result extends BooleanGetter> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result extends Computation<?>> void waitFortask(TaskDelegate<Progress, Result> task, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override
@@ -427,7 +435,7 @@ public class RobolectricTest implements CollectionGetter {
             @Override
             public void onPostExecute(Result result) {
 
-                if (result == null || !result.getBoolean()) {
+                if (result == null || !result.succeeded()) {
                     throw new IllegalArgumentException("Task failed");
                 }
                 completed[0] = true;

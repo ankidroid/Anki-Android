@@ -32,6 +32,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.utils.JSONObject;
@@ -54,7 +55,7 @@ public class ReminderService extends BroadcastReceiver {
         }
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+        final PendingIntent reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
             context,
             (int) deckId,
             new Intent(context, ReminderService.class).putExtra(EXTRA_DECK_OPTION_ID, deckId),
@@ -92,7 +93,7 @@ public class ReminderService extends BroadcastReceiver {
         if (col.getDecks().getConf(dConfId) == null) {
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-            final PendingIntent reminderIntent = PendingIntent.getBroadcast(
+            final PendingIntent reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
                     context,
                     (int) dConfId,
                     new Intent(context, ReminderService.class).putExtra(EXTRA_DECK_OPTION_ID, dConfId),
@@ -138,7 +139,7 @@ public class ReminderService extends BroadcastReceiver {
                         ))
                         .setSmallIcon(R.drawable.ic_stat_notify)
                         .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
-                        .setContentIntent(PendingIntent.getActivity(
+                        .setContentIntent(CompatHelper.getCompat().getImmutableActivityIntent(
                                 context,
                                 (int) deckId,
                                 getReviewDeckIntent(context, deckId),

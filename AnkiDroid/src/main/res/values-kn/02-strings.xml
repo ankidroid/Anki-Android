@@ -110,7 +110,6 @@
     <string name="note_editor_no_cards_created">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಹೆಚ್ಚಿನ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</string>
     <string name="note_editor_no_first_field">ಮೊದಲ ಕ್ಷೇತ್ರ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="note_editor_no_cloze_delations">ಈ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಹೊಂದಿರಬೇಕು</string>
-    <string name="note_editor_set_field_language">ಕ್ಷೇತ್ರ ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="note_editor_no_cards_created_all_fields">ಪ್ರಸ್ತುತ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವು ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಉತ್ಪಾದಿಸಲಿಲ್ಲ. ದಯವಿಟ್ಟು \n ದಯವಿಟ್ಟು ಮತ್ತೊಂದು ಟಿಪ್ಪಣಿ ಪ್ರಕಾರವನ್ನು ಆರಿಸಿ, ಅಥವಾ ‘ಕಾರ್ಡ್‌ಗಳು’ ಕ್ಲಿಕ್ ಮಾಡಿ ಮತ್ತು ಕ್ಷೇತ್ರ ಪರ್ಯಾಯವನ್ನು ಸೇರಿಸಿ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳು ಕ್ಲೋಜ್ ಟಿಪ್ಪಣಿ ಪ್ರಕಾರದಲ್ಲಿ ಮಾತ್ರ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ</string>
     <string name="saving_facts">ಟಿಪ್ಪಣಿ ಉಳಿಸಲಾಗುತ್ತಿದೆ</string>
@@ -350,4 +349,19 @@
     <string name="email_id_empty">ಇಮೇಲ್ ವಿಳಾಸದ ಅಗತ್ಯವಿದೆ</string>
     <string name="password_empty">ಗುಪ್ತಪದದ ಅಗತ್ಯವಿದೆ</string>
     <string name="back_pressed_once">ನಿರ್ಗಮಿಸಲು ಮತ್ತೆ ಒತ್ತಿರಿ</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

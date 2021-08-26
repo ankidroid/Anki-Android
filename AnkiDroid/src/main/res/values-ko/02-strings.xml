@@ -44,7 +44,7 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">메뉴 열기</string>
     <string tools:ignore="UnusedResources" name="drawer_close">메뉴 닫기</string>
-    <string name="CardEditorCardDeck">카드 덱:</string>
+    <string name="CardEditorCardDeck">카드 뭉치:</string>
     <string name="CardEditorNoteDeck">덱:</string>
     <string name="CardEditorModel">유형:</string>
     <string name="CardEditorTags">태그: %1$s</string>
@@ -64,8 +64,8 @@
     <string name="hide_whiteboard">화이트 보드 숨기기</string>
     <string name="clear_whiteboard">화이트 보드 지우기</string>
     <string name="replay_audio">오디오 다시 재생</string>
-    <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
-    <string name="leech_notification">거머리로 표시된 카드</string>
+    <string name="leech_suspend_notification">해당 카드에 leech 태그를 붙이고 비활성 시킴</string>
+    <string name="leech_notification">해당 카드에 leech 태그를 붙임</string>
     <string name="corrupt_font">손상된 글꼴 파일 %s</string>
     <string name="webview_crash_unknown">알수없는 오류</string>
     <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
@@ -95,11 +95,11 @@
         <item>예정</item>
         <item>카드 수정일</item>
         <item>작성한 날짜</item>
-        <item>노트編輯日</item>
+        <item>노트 편집일</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">오늘의 新規카드上限을 變更</string>
-    <string name="custom_study_increase_review_limit">오늘의 復習카드上限을 變更</string>
+    <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
+    <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
     <string name="custom_study_review_forgotten">잊어버린 카드 복습하기</string>
     <string name="custom_study_review_ahead">미리 복습하기</string>
     <string name="custom_study_random_selection">무작위 카드 학습하기</string>
@@ -109,13 +109,12 @@
     <string name="cardeditor_title_edit_card">노트 편집하기</string>
     <string name="discard_unsaved_changes">현재 입력된 내용을 버리고 닫을까요?</string>
     <string name="note_editor_no_cards_created">작성된 카드가 없습니다. 먼저 필드를 입력해주십시오.</string>
-    <string name="note_editor_no_first_field">最初필드가 비어있읍니다</string>
-    <string name="note_editor_no_cloze_delations">이 노트타이프는 空欄補充問題의 包含을 要합니다</string>
-    <string name="note_editor_set_field_language">필드言語設定</string>
+    <string name="note_editor_no_first_field">첫번째 필드가 비어있습니다</string>
+    <string name="note_editor_no_cloze_delations">이 노트유형은 빈칸이 있어야 합니다</string>
     <string name="note_editor_no_cards_created_all_fields">현재의 노트 유형으로는 카드를 생성할 수 없습니다.\n먼저 다른 노트 유형을 선택하거나 \'카드\'를 눌러 대체할 필드를 생성해주십시오.</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">空欄補充問題는、空欄補充타이프의 노트에서만 機能합니다。</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">빈칸 뚫기는 오직 빈칸 노트 유형에서만 작동합니다.</string>
     <string name="saving_facts">노트 저장 중</string>
-    <string name="saving_model">노트타이프保存中</string>
+    <string name="saving_model">노트 유형 저장 중</string>
     <string name="save">저장</string>
     <string name="close">닫기</string>
     <string name="select">선택</string>
@@ -132,13 +131,13 @@
         <item quantity="other">%1$d분</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid 카드</string>
-    <string name="note_editor_copy_note">노트複寫</string>
+    <string name="note_editor_copy_note">노트 복사</string>
     <string name="card_editor_reposition_card">위치 변경</string>
     <string name="card_editor_reset_card">학습 진도 재설정</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">일정 변경</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">미리보기</string>
     <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">이름 변경</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">이름 바꾸기</string>
     <string name="default_conf_delete_error">기본 옵션 그룹은 제거할 수 없습니다.</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">%d 카드 추가됨</item>
@@ -157,7 +156,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
-    <string name="import_log_no_apkg">이것은 有效한 Anki파케지 파일이 아닙니다。</string>
+    <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
     <string name="import_log_failed_unzip">apkg 압축 해제 실패: %s</string>
     <string name="import_log_failed_copy_to">%s에서 apkg 복사 실패</string>
     <string name="import_log_failed_validate">apkg 검사 실패</string>
@@ -254,7 +253,7 @@ Context | Request Context    </string>
     <string name="activity_start_failed_load_url">%s을(를) 로드 실패</string>
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
-    <string name="no_browser_notification">브라우저를 찾을 수 없어서 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
+    <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
     <string name="web_page_error">페이지 로드 오류: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">카드의 외부 페이지 링크는 지원되지 않습니다.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
@@ -279,10 +278,10 @@ Context | Request Context    </string>
     <string name="note_importer_error_first_field_matched">첫번째 필드 중복됨: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">첫 필드에 중복 값 추가: %s</string>
     <string name="note_importer_error_appeared_twice">파일에 두개 존재: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_error_empty_notes">생성된 카드가 없어 노트를 가져올 수 없었습니다. 이 문제는 빈 필드가 있거나 텍스트 파일의 내용이 올바른 필드에 매핑되지 않은 경우 발생할 수 있습니다.</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’에 %2$d개의 필드, %3$d가 필요</string>
+    <string name="csv_importer_error_exception">무시 됨: %s</string>
+    <string name="user_is_a_robot">자동 테스트를 감지했습니다. 만약 당신이 로봇이 아니라면 AnkiDroid 지원부에 연락하세요.</string>
     <plurals name="note_importer_notes_added">
         <item quantity="other">노트 %d개 추가됨</item>
     </plurals>
@@ -293,51 +292,66 @@ Context | Request Context    </string>
         <item quantity="other">노트 %d개 변경되지 않음</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">이 카드는 AnkiDroid에서 지원하지 않은 기능을 이용합니다. 개발자에게 문의하거나(%1$s), wiki를 확인해주십시오. %2$s</string>
+    <string name="invalid_json_data">잘못된 카드 데이터입니다. %s</string>
+    <string name="valid_js_api_version">잘못된 AnkiDroid JS API 버전. 개발자에게 문의하거나(%s), wiki를 확인해주십시오.</string>
+    <string name="update_js_api_version">AnkiDroid JS API를 업데이트할 수 있습니다. 개발자에게 문의하거나(%s), wiki를 확인해주십시오.</string>
     <string name="reviewer_invalid_api_version_visit_documentation">보기</string>
     <string name="anki_js_error_code">(오류 코드: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">디버그 정보 복사하기</string>
+    <string name="about_ankidroid_error_copy_debug_info">디버그 정보를 클립보드에 복사하는 도중 오류가 발생했습니다.</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
+    <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
+    <string name="cannot_load_http_resource">http 자료 불러오기는 더 이상 지원되지 않습니다.</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid이 필요한 시스템 WebView를 사용할 수 없습니다. 이 문제는 시스템이 업데이트를 설치하는 경우 발생할 수도 있습니다. 잠시 후 다시 시도하십시오.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">글꼴 크기</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">도구 모음 표시</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="format_insert_bold">굵게</string>
+    <string name="format_insert_italic">기울임꼴</string>
+    <string name="format_insert_underline">밑줄</string>
+    <string name="insert_horizontal_line">밑줄 긋기</string>
+    <string name="insert_heading">제목 삽입</string>
     <string name="format_font_size">글꼴 크기 변경</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="insert_mathjax">MathJax 수식 삽입</string>
+    <string name="insert_cloze">빈칸 삽입</string>
+    <string name="before_text">선택 전 HTML</string>
+    <string name="after_text">선택 후 HTML</string>
     <string name="add_toolbar_item">도구 모음 항목 만들기</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="toolbar_item_explain_remove">선택한 텍스트 앞뒤로 삽입할 HTML을 입력해주십시오.\n\n도구 모음 항목을 길게 눌러 제거합니다.</string>
+    <string name="remove_toolbar_item">도구 모음 항목을 지울까요?</string>
+    <string name="note_editor_paste_too_large">이미지가 너무 커서 붙여넣을 수 없습니다. 수동으로 넣으십시오.</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android 백업이 작동 중입니다. 다시 시도하십시오.</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid 바로가기를 추가하려면 iManager가 필요할 수 있습니다.</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">홈 화면에 AnkiDroid 바로 가기를 추가할 수 없습니다.</string>
+    <string name="create_shortcut_error">바로가기 생성 오류: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">대문자로 시작</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="email_id_empty">이메일은 반드시 입력해야 합니다.</string>
+    <string name="password_empty">비밀번호를 입력하십시오</string>
+    <string name="back_pressed_once">뒤로 가기 버튼을 한 번 더 눌러 종료합니다</string>
+    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
+    <string name="percentage">%s%%</string>
+    <string name="download_deck">Download deck</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="downloading_file">Downloading %s</string>
+    <string name="import_deck">Import Deck</string>
+    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="download_failed">Download failed</string>
+    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="check_network">Please check your network connection</string>
+    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="home">Home</string>
 </resources>

@@ -58,14 +58,17 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anki.cardviewer.CardAppearance;
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
+import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
@@ -81,7 +84,7 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.PairWithBoolean;
+import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -92,7 +95,6 @@ import java.util.Collections;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -129,9 +131,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @VisibleForTesting
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    
+    private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
+    class ScheduleCollectionTaskListener extends NextCardHandler<Computation<Card[]>> {
 
         private final @PluralsRes int mToastResourceId;
 
@@ -142,10 +146,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(PairWithBoolean<Card[]> result) {
+        public void onPostExecute(Computation<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.other.length;
+            int cardCount = result.getValue().length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
         }
@@ -252,15 +256,20 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    protected int getContentViewAttr(int fullscreenMode) {
+    protected int getContentViewAttr(FullScreenMode fullscreenMode) {
         switch (fullscreenMode) {
-            case 1:
+            case BUTTONS_ONLY:
                 return R.layout.reviewer_fullscreen;
-            case 2:
+            case FULLSCREEN_ALL_GONE:
                 return R.layout.reviewer_fullscreen_noanswers;
             default:
                 return R.layout.reviewer;
         }
+    }
+
+    @Override
+    protected boolean fitsSystemWindows() {
+        return !getFullscreenMode().isFullScreenReview();
     }
 
     @Override
@@ -359,7 +368,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.i("Reviewer:: Save whiteboard button pressed");
             if (mWhiteboard != null) {
                 try {
-                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
+                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime()).getPath();
                     UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
                 } catch (Exception e) {
                     Timber.w(e);
@@ -404,6 +413,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else if (itemId == R.id.action_flag_four) {
             Timber.i("Reviewer:: Flag four");
             onFlag(mCurrentCard, FLAG_BLUE);
+        } else if (itemId == R.id.action_flag_five) {
+            Timber.i("Reviewer:: Flag five");
+            onFlag(mCurrentCard, FLAG_PINK);
+        } else if (itemId == R.id.action_flag_six) {
+            Timber.i("Reviewer:: Flag six");
+            onFlag(mCurrentCard, FLAG_TURQUOISE);
+        } else if (itemId == R.id.action_flag_seven) {
+            Timber.i("Reviewer:: Flag seven");
+            onFlag(mCurrentCard, FLAG_PURPLE);
         } else if (itemId == R.id.action_card_info) {
             Timber.i("Card Viewer:: Card Info");
             openCardInfo();
@@ -545,6 +563,36 @@ public class Reviewer extends AbstractFlashcardViewer {
         startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
+    @Override
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        new Handler().post(() -> {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                shouldUseDefaultColor(menuItem);
+            }
+        });
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    /**
+     * This Method changes the color of icon if user taps in overflow button.
+     */
+    private void shouldUseDefaultColor(MenuItem menuItem) {
+        Drawable drawable = menuItem.getIcon();
+
+        if (drawable != null && !menuItem.hasSubMenu() && !isFlagResource(menuItem.getItemId())) {
+            drawable.mutate();
+            drawable.setTint(ResourcesCompat.getColor(getResources(), R.color.material_blue_600, null));
+        }
+    }
+
+
+    @Override
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
+    public void onPanelClosed(int featureId, @NonNull Menu menu) {
+        new Handler().postDelayed(this::refreshActionBar, 100);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -552,6 +600,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
 
         displayIconsOnTv(menu);
+        displayIcons(menu);
 
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
@@ -579,6 +628,15 @@ public class Reviewer extends AbstractFlashcardViewer {
                         break;
                     case 4:
                         flag_icon.setIcon(R.drawable.ic_flag_blue);
+                        break;
+                    case 5:
+                        flag_icon.setIcon(R.drawable.ic_flag_pink);
+                        break;
+                    case 6:
+                        flag_icon.setIcon(R.drawable.ic_flag_turquoise);
+                        break;
+                    case 7:
+                        flag_icon.setIcon(R.drawable.ic_flag_purple);
                         break;
                     default:
                         flag_icon.setIcon(R.drawable.ic_flag_transparent);
@@ -608,6 +666,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         undoIcon.getActionView().setEnabled(undoEnabled);
         if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+        }
+
+        if (undoEnabled) {
+            mOnboarding.onUndoButtonEnabled();
         }
 
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
@@ -687,7 +749,21 @@ public class Reviewer extends AbstractFlashcardViewer {
         suspend_icon.getIcon().mutate().setAlpha(alpha);
 
         setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
+        mOnboarding.onCreate();
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @SuppressLint("RestrictedApi")
+    private void displayIcons(Menu menu) {
+        try {
+            if (menu instanceof MenuBuilder) {
+                MenuBuilder m = (MenuBuilder) menu;
+                m.setOptionalIconsVisible(true);
+            }
+        }catch (Exception | Error e) {
+            Timber.w(e, "Failed to display icons in Over flow menu");
+        }
     }
 
 
@@ -723,7 +799,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private boolean isFlagResource(int itemId) {
-        return itemId == R.id.action_flag_four
+        return itemId == R.id.action_flag_seven
+                || itemId == R.id.action_flag_six
+                || itemId == R.id.action_flag_five
+                || itemId == R.id.action_flag_four
                 || itemId == R.id.action_flag_three
                 || itemId == R.id.action_flag_two
                 || itemId == R.id.action_flag_one;
@@ -811,6 +890,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void displayAnswerBottomBar() {
         super.displayAnswerBottomBar();
+        mOnboarding.onAnswerShown();
         int buttonCount;
         try {
             buttonCount = mSched.answerButtons(mCurrentCard);
@@ -910,7 +990,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefShowETA = preferences.getBoolean("showETA", true);
         this.mProcessor.setup();
-        mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
+        mPrefFullscreenReview = FullScreenMode.isFullScreenReview(preferences);
         mActionButtons.setup(preferences);
         return preferences;
     }
@@ -1055,7 +1135,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-
+    @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -1081,8 +1161,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    private static final int FULLSCREEN_ALL_GONE = 2;
-
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
         a.getWindow().getDecorView().setSystemUiVisibility(
@@ -1096,7 +1175,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         );
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
-        final int fullscreenMode = Integer.parseInt(prefs.getString("fullscreenMode", "0"));
+        FullScreenMode fullscreenMode = FullScreenMode.fromPreference(prefs);
         a.getWindow().setStatusBarColor(Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
@@ -1113,13 +1192,13 @@ public class Reviewer extends AbstractFlashcardViewer {
                     Timber.d("System UI visibility change. Visible: %b", visible);
                     if (visible) {
                         showViewWithAnimation(toolbar);
-                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                        if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
                             showViewWithAnimation(topbar);
                             showViewWithAnimation(answerButtons);
                         }
                     } else {
                         hideViewWithAnimation(toolbar);
-                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                        if (fullscreenMode.equals(FullScreenMode.FULLSCREEN_ALL_GONE)) {
                             hideViewWithAnimation(topbar);
                             hideViewWithAnimation(answerButtons);
                         }
@@ -1149,6 +1228,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 });
     }
 
+    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
@@ -1201,18 +1281,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void disableDrawerSwipeOnConflicts() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
-        if (gesturesEnabled) {
-            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
-            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
-            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
-            if (gestureSwipeUp != COMMAND_NOTHING ||
-                    gestureSwipeDown != COMMAND_NOTHING ||
-                    gestureSwipeRight != COMMAND_NOTHING) {
-                mHasDrawerSwipeConflicts = true;
-                super.disableDrawerSwipe();
-            }
+        if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
+            mHasDrawerSwipeConflicts = true;
+            super.disableDrawerSwipe();
         }
     }
 
@@ -1267,6 +1338,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public AudioView getAudioView() {
         return mMicToolBar;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public boolean hasDrawerSwipeConflicts() {
+        return mHasDrawerSwipeConflicts;
     }
 
     /**

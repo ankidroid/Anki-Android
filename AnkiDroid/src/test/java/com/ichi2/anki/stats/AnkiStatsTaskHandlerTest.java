@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.stats;
 
-import android.os.AsyncTask;
 import android.util.Pair;
 import android.widget.TextView;
 
@@ -52,9 +51,10 @@ public class AnkiStatsTaskHandlerTest extends RobolectricTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void testCreateReviewSummaryStatistics() throws ExecutionException, InterruptedException {
         Mockito.verify(col, atMost(0)).getDb();
-        AsyncTask<Pair<Collection, TextView>, Void, String> result = AnkiStatsTaskHandler
+        android.os.AsyncTask<Pair<Collection, TextView>, Void, String> result = AnkiStatsTaskHandler
                 .createReviewSummaryStatistics(col, view);
 
         result.get();

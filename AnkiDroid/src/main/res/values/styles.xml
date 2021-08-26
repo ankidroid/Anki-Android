@@ -46,7 +46,7 @@
     <style name="FooterButton" parent="FooterButtonBase"/>
 
     <style name="FooterButtonNextTime">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:ellipsize">marquee</item>
@@ -116,6 +116,7 @@
         <item name="android:drawSelectorOnTop">true</item>
         <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
+        <item name="android:colorBackground">?attr/popupBackgroundColor</item>
     </style>
 
     <style name="LargeButtonStyle">
@@ -153,4 +154,11 @@
     </style>
 
 
+    <style name="binding_gesture_tap_button">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="layout_constraintWidth_percent">0.125</item>
+        <item name="layout_constraintHeight_percent">0.125</item>
+        <item name="android:background">@drawable/ic_gesture_tap</item>
+    </style>
 </resources>

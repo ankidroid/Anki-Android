@@ -68,7 +68,6 @@
     <string name="sync_uploading_message">Alŝutado&#8230;</string>
     <string name="sync_downloading_message">Elŝutado&#8230;</string>
     <string name="sync_title">Samtempigo</string>
-    <string name="sync_downloading_media">Elŝutado de aŭdvidaĵo %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
     <string name="sync_log_clocks_unsynchronized">Via horloĝo estas deŝovita je %1$d sekundoj, %2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</string>
     <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>

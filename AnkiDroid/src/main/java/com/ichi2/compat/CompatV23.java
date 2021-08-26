@@ -17,9 +17,14 @@
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.widget.TimePicker;
 
-/** Implementation of {@link Compat} for SDK level 23 */
+import com.ichi2.anki.AnkiActivity;
+
+/** Implementation of {@link Compat} for SDK level 23 and higher. Check  {@link Compat}'s for more detail. */
 @TargetApi(23)
 public class CompatV23 extends CompatV21 implements Compat {
 
@@ -35,4 +40,13 @@ public class CompatV23 extends CompatV21 implements Compat {
     @Override
     public int getMinute(TimePicker picker) { return picker.getMinute(); }
 
+    @Override
+    public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {
+        return PendingIntent.getActivity(context, requestCode, intent, flags | PendingIntent.FLAG_IMMUTABLE);
+    }
+
+    @Override
+    public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
+        return PendingIntent.getBroadcast(context, requestCode, intent, flags | PendingIntent.FLAG_IMMUTABLE);
+    }
 }

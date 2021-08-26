@@ -1,3 +1,4 @@
+//noinspection MissingCopyrightHeader #8659
 /* The following code was written by Matthew Wiggins
  * and is released under the APACHE 2.0 license
  *

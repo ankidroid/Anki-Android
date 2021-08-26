@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs.utils;
 
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.RunInBackground;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.anki.dialogs.RecursivePictureMenu;
 
@@ -34,6 +35,7 @@ import static org.hamcrest.Matchers.is;
 public class HelpDialogTest extends RobolectricTest {
 
     @Test
+    @RunInBackground
     public void testMenuDoesNotCrash() {
         RecursivePictureMenu dialog = (RecursivePictureMenu) HelpDialog.createInstance(getTargetContext());
 
@@ -41,10 +43,11 @@ public class HelpDialogTest extends RobolectricTest {
 
         RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
 
-        assertThat(v.getChildCount(), is(3));
+        assertThat(v.getChildCount(), is(4));
     }
 
     @Test
+    @RunInBackground
     public void testmenuSupportAnkiDroidDoesNotCrash() {
         RecursivePictureMenu dialog = (RecursivePictureMenu) HelpDialog.createInstanceForSupportAnkiDroid(getTargetContext());
 
