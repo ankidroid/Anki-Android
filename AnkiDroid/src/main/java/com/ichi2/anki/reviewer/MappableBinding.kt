@@ -133,8 +133,9 @@ class MappableBinding(private val binding: Binding, private val side: CardSide) 
         }
 
         @CheckResult
+        @JvmStatic
         fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
-            val value = prefs.getString(command.preferenceKey, "") ?: return mutableListOf()
+            val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue
             return fromPreferenceString(value)
         }
     }

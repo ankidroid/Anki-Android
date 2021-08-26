@@ -16,9 +16,18 @@
 
 package com.ichi2.anki.cardviewer;
 
-import com.ichi2.anki.R;
+import android.view.KeyEvent;
 
+import com.ichi2.anki.R;
+import com.ichi2.anki.reviewer.Binding;
+import com.ichi2.anki.reviewer.Binding.ModifierKeys;
+import com.ichi2.anki.reviewer.CardSide;
+import com.ichi2.anki.reviewer.MappableBinding;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,6 +109,98 @@ public enum ViewerCommand {
 
     public String getPreferenceKey() {
         return "binding_" + name().replaceFirst("COMMAND_", "");
+    }
+
+    public static List<MappableBinding> getAllDefaultBindings() {
+        return Arrays.stream(ViewerCommand.values())
+                .flatMap(x -> x.getDefaultValue().stream())
+                .collect(Collectors.toList());
+    }
+
+    @NonNull
+    public List<MappableBinding> getDefaultValue() {
+        // If we use the serialised format, then this adds additional coupling to the properties.
+        switch (this) {
+            case COMMAND_ANSWER_FIRST_BUTTON:
+                return from(keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER));
+            case COMMAND_ANSWER_SECOND_BUTTON:
+                return from(keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER));
+            case COMMAND_ANSWER_THIRD_BUTTON:
+                return from(keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER));
+            case COMMAND_ANSWER_FOURTH_BUTTON:
+                return from(keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER));
+            case COMMAND_FLIP_OR_ANSWER_EASE1:
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH));
+            case COMMAND_FLIP_OR_ANSWER_EASE2:
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH));
+            case COMMAND_FLIP_OR_ANSWER_EASE3:
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH));
+            case COMMAND_FLIP_OR_ANSWER_EASE4:
+                return from(keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH));
+            case COMMAND_ANSWER_RECOMMENDED:
+                return from(keyCode(KeyEvent.KEYCODE_SPACE, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_ENTER, CardSide.BOTH),
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.BOTH));
+
+            case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
+                return from(keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH));
+
+            case COMMAND_EDIT:
+                return from(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH));
+            case COMMAND_MARK:
+                return from(unicode('*', CardSide.BOTH));
+            case COMMAND_BURY_CARD:
+                return from(unicode('-', CardSide.BOTH));
+            case COMMAND_BURY_NOTE:
+                return from(unicode('=', CardSide.BOTH));
+            case COMMAND_SUSPEND_CARD:
+                return from(unicode('@', CardSide.BOTH));
+            case COMMAND_SUSPEND_NOTE:
+                return from(unicode('!', CardSide.BOTH));
+            case COMMAND_PLAY_MEDIA:
+                return from(keyCode(KeyEvent.KEYCODE_R, CardSide.BOTH), keyCode(KeyEvent.KEYCODE_F5, CardSide.BOTH));
+            case COMMAND_REPLAY_VOICE:
+                return from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH));
+            case COMMAND_RECORD_VOICE:
+                return from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, ModifierKeys.shift()));
+            case COMMAND_UNDO:
+                return from(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH));
+            case COMMAND_TOGGLE_FLAG_RED:
+                return from(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_ORANGE:
+                return from(keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_GREEN:
+                return from(keyCode(KeyEvent.KEYCODE_3, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_BLUE:
+                return from(keyCode(KeyEvent.KEYCODE_4, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_PINK:
+                return from(keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_TURQUOISE:
+                return from(keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ModifierKeys.ctrl()));
+            case COMMAND_TOGGLE_FLAG_PURPLE:
+                return from(keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ModifierKeys.ctrl()));
+            default: return new ArrayList<>();
+        }
+    }
+
+
+    private MappableBinding keyCode(int keycode, @SuppressWarnings("SameParameterValue") CardSide side, ModifierKeys keys) {
+        return new MappableBinding(Binding.keyCode(keys, keycode), side);
+    }
+
+
+    private MappableBinding unicode(char c, @SuppressWarnings("SameParameterValue") CardSide side) {
+        return new MappableBinding(Binding.unicode(c), side);
+    }
+
+
+    private List<MappableBinding> from(MappableBinding... bindings) {
+        return new ArrayList<>(Arrays.asList(bindings));
+    }
+
+
+    private MappableBinding keyCode(int keyCode, CardSide side) {
+        return new MappableBinding(Binding.keyCode(keyCode), side);
     }
 
 
