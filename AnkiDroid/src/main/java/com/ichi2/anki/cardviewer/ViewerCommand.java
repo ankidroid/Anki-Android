@@ -52,7 +52,7 @@ public enum ViewerCommand {
     COMMAND_BURY_CARD(R.string.menu_bury, 12),
     COMMAND_SUSPEND_CARD(R.string.menu_suspend_card, 13),
     COMMAND_DELETE(R.string.menu_delete_note, 14),
-    COMMAND_UNUSED_15(R.string.nothing, 15),
+    // 15 is unused.
     COMMAND_PLAY_MEDIA(R.string.gesture_play,16),
     COMMAND_EXIT(R.string.nothing, 17),
     COMMAND_BURY_NOTE(R.string.menu_bury_note, 18),
