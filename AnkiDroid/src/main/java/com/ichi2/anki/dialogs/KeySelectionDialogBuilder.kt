@@ -26,7 +26,7 @@ import com.ichi2.ui.KeyPicker
 typealias KeyCode = Int
 
 class KeySelectionDialogBuilder(context: Context) : MaterialDialog.Builder(context) {
-    private val mKeyPicker: KeyPicker = KeyPicker(context)
+    private val mKeyPicker: KeyPicker = KeyPicker.inflate(context)
 
     /** Supplies a callback which is called each time the user presses a key
      *
@@ -53,7 +53,7 @@ class KeySelectionDialogBuilder(context: Context) : MaterialDialog.Builder(conte
     init {
         positiveText(R.string.dialog_ok)
         title(R.string.binding_add_key)
-        customView(mKeyPicker, false)
+        customView(mKeyPicker.rootLayout, false)
     }
 
     companion object {
