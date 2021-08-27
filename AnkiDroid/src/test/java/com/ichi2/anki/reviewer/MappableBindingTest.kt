@@ -48,6 +48,6 @@ class MappableBindingTest {
     private fun unicodeCharacter(char: Char) = fromBinding(BindingTest.unicodeCharacter(char))
 
     private fun fromBinding(binding: Binding): Any {
-        return MappableBinding(binding, CardSide.BOTH)
+        return MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))
     }
 }
