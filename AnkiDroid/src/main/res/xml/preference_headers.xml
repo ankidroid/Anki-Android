@@ -46,6 +46,13 @@
         android:title="@string/pref_cat_gestures">
     </Preference>
 
+    <!-- Keybinding preferences -->
+    <Preference
+        android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
+        android:summary="@string/pref_cat_controls_summ"
+        android:title="@string/pref_cat_controls">
+    </Preference>
+
     <!-- Advanced Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"

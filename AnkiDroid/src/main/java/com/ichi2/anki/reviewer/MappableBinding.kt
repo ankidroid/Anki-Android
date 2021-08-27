@@ -31,7 +31,7 @@ import kotlin.collections.ArrayList
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(private val binding: Binding, private val screen: Screen) {
+class MappableBinding(val binding: Binding, private val screen: Screen) {
     val isKey: Boolean get() = binding.isKey
     val isKeyCode: Boolean get() = binding.isKeyCode
 
@@ -181,14 +181,18 @@ class MappableBinding(private val binding: Binding, private val screen: Screen) 
         @CheckResult
         fun fromPreferenceString(string: String?): MutableList<MappableBinding> {
             if (TextUtils.isEmpty(string)) return ArrayList()
-
-            val version = string!!.takeWhile { x -> x != '/' }
-            val remainder = string.substring(version.length + 1) // skip the /
-            if (version != "1") {
-                Timber.w("cannot handle version '$version'")
+            try {
+                val version = string!!.takeWhile { x -> x != '/' }
+                val remainder = string.substring(version.length + 1) // skip the /
+                if (version != "1") {
+                    Timber.w("cannot handle version '$version'")
+                    return ArrayList()
+                }
+                return remainder.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to deserialize preference")
                 return ArrayList()
             }
-            return remainder.split(PREF_SEPARATOR).mapNotNull { fromString(it) }.toMutableList()
         }
 
         @CheckResult
@@ -196,6 +200,14 @@ class MappableBinding(private val binding: Binding, private val screen: Screen) 
         fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue
             return fromPreferenceString(value)
+        }
+
+        @CheckResult
+        @JvmStatic
+        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> {
+            return ViewerCommand.values().map {
+                Pair(it, fromPreference(prefs, it))
+            }.toMutableList()
         }
     }
 }
