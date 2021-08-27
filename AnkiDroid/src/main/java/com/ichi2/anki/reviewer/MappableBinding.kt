@@ -41,14 +41,16 @@ class MappableBinding(private val binding: Binding, private val side: CardSide) 
         if (other == null || javaClass != other.javaClass) {
             return false
         }
-        val mappableBinding = other as MappableBinding
-        val binding = mappableBinding.binding
-        return if (side !== CardSide.BOTH && mappableBinding.side !== CardSide.BOTH && side !== mappableBinding.side) {
+        val otherMappableBinding = other as MappableBinding
+        return if (side !== CardSide.BOTH && otherMappableBinding.side !== CardSide.BOTH && side !== otherMappableBinding.side) {
             false
-        } else binding.getKeycode() == binding.getKeycode() &&
-            binding.getUnicodeCharacter() == binding.getUnicodeCharacter() &&
-            binding.getGesture() == binding.getGesture() &&
-            modifierEquals(binding.getModifierKeys())
+        } else {
+            val otherBinding = otherMappableBinding.binding
+            binding.getKeycode() == otherBinding.getKeycode() &&
+                binding.getUnicodeCharacter() == otherBinding.getUnicodeCharacter() &&
+                binding.getGesture() == otherBinding.getGesture() &&
+                modifierEquals(otherBinding.getModifierKeys())
+        }
     }
 
     override fun hashCode(): Int {
