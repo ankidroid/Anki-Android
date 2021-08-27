@@ -171,8 +171,8 @@ class ModelsV16(private val col: Collection) {
         return all_names_and_ids().map { it.name }.toMutableList()
     }
 
-    fun ids(): List<int> {
-        return all_names_and_ids().map { it.id }.toMutableList()
+    fun ids(): Set<int> {
+        return all_names_and_ids().map { it.id }.toSet()
     }
 
     // only used by importing code
