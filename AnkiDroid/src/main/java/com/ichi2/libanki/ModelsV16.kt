@@ -37,6 +37,7 @@ import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import timber.log.Timber
 import java.util.*
 
 private typealias int = Long
@@ -118,6 +119,12 @@ class ModelsV16(private val col: Collection) {
     /** legacy */
     fun flush() {
         // intentionally left blank
+    }
+
+    @RustCleanup("not necessary in V16")
+    fun ensureNotEmpty(): Boolean {
+        Timber.w("ensureNotEmpty is not necessary in V16")
+        return false
     }
 
     /*
