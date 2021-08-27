@@ -116,6 +116,10 @@ class ModelsV16(private val col: Collection) {
         update(m, preserve_usn = false)
     }
 
+    @RustCleanup("not required - java only")
+    fun load(@Suppress("UNUSED_PARAMETER") json: String) {
+    }
+
     /** legacy */
     fun flush() {
         // intentionally left blank
