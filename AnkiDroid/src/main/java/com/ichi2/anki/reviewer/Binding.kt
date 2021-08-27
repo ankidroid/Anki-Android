@@ -75,6 +75,7 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
         return string.toString()
     }
 
+    val isValid: Boolean get() = isKey || gesture != null
     val isKeyCode: Boolean get() = keycode != null
 
     val isKey: Boolean

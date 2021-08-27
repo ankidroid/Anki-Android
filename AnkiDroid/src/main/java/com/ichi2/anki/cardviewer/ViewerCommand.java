@@ -173,12 +173,12 @@ public enum ViewerCommand {
 
 
     private MappableBinding keyCode(int keycode, @SuppressWarnings("SameParameterValue") CardSide side, ModifierKeys keys) {
-        return new MappableBinding(Binding.keyCode(keys, keycode), side);
+        return new MappableBinding(Binding.keyCode(keys, keycode), new MappableBinding.Screen.Reviewer(side));
     }
 
 
     private MappableBinding unicode(char c, @SuppressWarnings("SameParameterValue") CardSide side) {
-        return new MappableBinding(Binding.unicode(c), side);
+        return new MappableBinding(Binding.unicode(c), new MappableBinding.Screen.Reviewer(side));
     }
 
 
@@ -188,7 +188,7 @@ public enum ViewerCommand {
 
 
     private MappableBinding keyCode(int keyCode, CardSide side) {
-        return new MappableBinding(Binding.keyCode(keyCode), side);
+        return new MappableBinding(Binding.keyCode(keyCode), new MappableBinding.Screen.Reviewer(side));
     }
 
 

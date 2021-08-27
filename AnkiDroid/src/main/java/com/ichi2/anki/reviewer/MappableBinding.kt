@@ -30,7 +30,7 @@ import java.util.*
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(private val binding: Binding, private val side: CardSide) {
+class MappableBinding(private val binding: Binding, private val screen: Screen) {
     val isKey: Boolean get() = binding.isKey
     val isKeyCode: Boolean get() = binding.isKeyCode
 
@@ -42,20 +42,23 @@ class MappableBinding(private val binding: Binding, private val side: CardSide) 
             return false
         }
         val otherMappableBinding = other as MappableBinding
-        return if (side !== CardSide.BOTH && otherMappableBinding.side !== CardSide.BOTH && side !== otherMappableBinding.side) {
-            false
-        } else {
-            val otherBinding = otherMappableBinding.binding
-            binding.getKeycode() == otherBinding.getKeycode() &&
-                binding.getUnicodeCharacter() == otherBinding.getUnicodeCharacter() &&
-                binding.getGesture() == otherBinding.getGesture() &&
-                modifierEquals(otherBinding.getModifierKeys())
+
+        val otherBinding = otherMappableBinding.binding
+        val bindingEquals = binding.getKeycode() == otherBinding.getKeycode() &&
+            binding.getUnicodeCharacter() == otherBinding.getUnicodeCharacter() &&
+            binding.getGesture() == otherBinding.getGesture() &&
+            modifierEquals(otherBinding.getModifierKeys())
+
+        if (!bindingEquals) {
+            return false
         }
+
+        return screen.screenEquals(otherMappableBinding.screen)
     }
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        return Objects.hash(binding.getKeycode(), binding.getUnicodeCharacter(), binding.getGesture())
+        return Objects.hash(binding.getKeycode(), binding.getUnicodeCharacter(), binding.getGesture(), screen.prefix)
     }
 
     private fun modifierEquals(keys: Binding.ModifierKeys?): Boolean {
@@ -77,49 +80,97 @@ class MappableBinding(private val binding: Binding, private val side: CardSide) 
     }
 
     fun toDisplayString(context: Context): String {
-        val formatString = when (side) {
-            CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
-            CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-            else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
-        }
-        return String.format(formatString, binding.toDisplayString(context))
+        return screen.toDisplayString(context, binding)
     }
 
     fun toPreferenceString(): String? {
-        val s = StringBuilder()
-        s.append(binding.toString())
-        // don't serialise problematic bindings
-        if (s.isEmpty()) {
-            return null
+        return screen.toPreferenceString(binding)
+    }
+
+    abstract class Screen private constructor(val prefix: Char) {
+        abstract fun toPreferenceString(binding: Binding): String?
+        abstract fun toDisplayString(context: Context, binding: Binding): String
+        abstract fun screenEquals(otherScreen: Screen): Boolean
+
+        class Reviewer(val side: CardSide) : Screen('r') {
+            override fun toPreferenceString(binding: Binding): String? {
+                if (!binding.isValid) {
+                    return null
+                }
+                val s = StringBuilder()
+                s.append(prefix)
+                s.append(binding.toString())
+                // don't serialise problematic bindings
+                if (s.isEmpty()) {
+                    return null
+                }
+                when (side) {
+                    CardSide.QUESTION -> s.append('0')
+                    CardSide.ANSWER -> s.append('1')
+                    CardSide.BOTH -> s.append('2')
+                }
+                return s.toString()
+            }
+
+            override fun toDisplayString(context: Context, binding: Binding): String {
+                val formatString = when (side) {
+                    CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
+                    CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
+                    else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+                }
+                return String.format(formatString, binding.toDisplayString(context))
+            }
+
+            override fun screenEquals(otherScreen: Screen): Boolean {
+                val other: Reviewer = otherScreen as? Reviewer ?: return false
+
+                return side === CardSide.BOTH ||
+                    other.side === CardSide.BOTH ||
+                    side === other.side
+            }
+
+            companion object {
+                @CheckResult
+                fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Reviewer(CardSide.BOTH))
+                fun fromString(s: String): MappableBinding {
+                    val binding = s.substring(0, s.length - 1)
+                    val b = Binding.fromString(binding)
+                    val side = when (s[s.length - 1]) {
+                        '0' -> CardSide.QUESTION
+                        '1' -> CardSide.ANSWER
+                        else -> CardSide.BOTH
+                    }
+                    return MappableBinding(b, Reviewer(side))
+                }
+            }
         }
-        when (side) {
-            CardSide.QUESTION -> s.append('0')
-            CardSide.ANSWER -> s.append('1')
-            CardSide.BOTH -> s.append('2')
-        }
-        return s.toString()
+    }
+
+    /** the serialisation version */
+    enum class Version {
+        ONE
     }
 
     companion object {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, CardSide.BOTH)
+        fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
 
         @CheckResult
         fun fromString(s: String): MappableBinding? {
+            if (s.isEmpty()) {
+                return null
+            }
             return try {
-                val binding = s.substring(0, s.length - 1)
-                val b = Binding.fromString(binding)
-                val side = when (s[s.length - 1]) {
-                    '0' -> CardSide.QUESTION
-                    '1' -> CardSide.ANSWER
-                    else -> CardSide.BOTH
+                // the prefix of the serialized
+                when (s[0]) {
+                    'r' -> Screen.Reviewer.fromString(s.substring(1))
+                    else -> null
                 }
-                MappableBinding(b, side)
             } catch (e: Exception) {
                 Timber.w(e, "failed to deserialize binding")
                 null

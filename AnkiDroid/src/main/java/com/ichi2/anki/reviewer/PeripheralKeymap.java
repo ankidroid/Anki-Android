@@ -102,7 +102,7 @@ public class PeripheralKeymap {
 
             for (Binding b: bindings) {
 
-                MappableBinding binding = new MappableBinding(b, side);
+                MappableBinding binding = new MappableBinding(b, new MappableBinding.Screen.Reviewer(side));
                 ViewerCommand command = mBindingMap.get(binding);
                 if (command == null) {
                     continue;
