@@ -623,4 +623,13 @@ and notes.mid = ? and cards.ord = ?""",
         print("_availClozeOrds() is deprecated; use note.cloze_numbers_in_fields()")
         return modelsBackend.cloze_numbers_in_note(listOf(flds))
     }
+
+    /*
+     * Other stuff NOT IN LIBANKI
+     * ***********************************************************************************************
+     */
+
+    fun count(): Int {
+        return all_names_and_ids().count()
+    }
 }
