@@ -62,6 +62,7 @@ import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat;
 import com.ichi2.preferences.NumberRangePreferenceCompat;
 import com.ichi2.preferences.ResetLanguageDialogPreference;
 import com.ichi2.preferences.SeekBarPreferenceCompat;
+import com.ichi2.preferences.ControlPreference;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -436,6 +437,9 @@ public class Preferences extends AnkiActivity {
         // Get value text
         String value;
         try {
+            if (pref instanceof ControlPreference) {
+                return;
+            }
             if (pref instanceof NumberRangePreferenceCompat) {
                 value = Integer.toString(((NumberRangePreferenceCompat) pref).getValue());
             } else if (pref instanceof SeekBarPreferenceCompat) {
@@ -597,6 +601,8 @@ public class Preferences extends AnkiActivity {
                 dialogFragment = ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey());
             } else if (preference instanceof SeekBarPreferenceCompat) {
                 dialogFragment = SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey());
+            } else if (preference instanceof ControlPreference) {
+                dialogFragment = ControlPreference.View.newInstance(preference.getKey());
             }
 
             if (dialogFragment != null) {
@@ -1430,6 +1436,29 @@ public class Preferences extends AnkiActivity {
 
                 return true;
             });
+        }
+    }
+
+    public static class ControlsSettingsFragment extends SpecificSettingsFragment {
+
+        @Override
+        public int getPreferenceResource() {
+            return R.xml.preferences_controls;
+        }
+
+
+        @NonNull
+        @Override
+        protected String getAnalyticsScreenNameConstant() {
+            return "prefs.controls";
+        }
+
+
+        @Override
+        protected void initSubscreen() {
+            addPreferencesFromResource(R.xml.preferences_controls);
+            PreferenceCategory cat = requirePreference("key_map_category");
+            ControlPreference.setup(cat);
         }
     }
 
