@@ -391,7 +391,7 @@
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="home">Галоўная</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">Супастаўлена з %s</string>
+    <string name="import_mapped_to_tags">Супастаўлена з меткамі</string>
+    <string name="import_mapped_to_nothing">Праігнаравана</string>
 </resources>

@@ -117,8 +117,8 @@
     <string name="save">ସଞ୍ଚୟ</string>
     <string name="close">ବନ୍ଦ</string>
     <string name="select">ବାଛନ୍ତୁ</string>
-    <string name="saving_changes">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଂରକ୍ଷଣ କରୁଛି...</string>
-    <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି </string>
+    <string name="saving_changes">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଂରକ୍ଷଣ କରୁଛି&#8230;</string>
+    <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
@@ -147,10 +147,10 @@
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି ପତ୍ରଗୁଡ଼ିକ</string>
-    <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି...</string>
-    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ଚିଠାରୁ ମେନୁରେ \"ଖାଲି କାର୍ଡଗୁଡ଼ିକ\" ବିକଳ୍ପ ବାଛନ୍ତୁ।</string>
+    <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
+    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ଡେକ୍ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck">ଡେକ୍ ଅପସାରଣ କରୁଅଛି...</string>
+    <string name="delete_deck">ଡେକ୍ ଅପସାରଣ କରୁଅଛି&#8230;</string>
     <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
     <string name="info_rate">AnkiDroid ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
@@ -284,7 +284,7 @@
     <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>
     <string name="note_importer_error_first_field_matched">ପ୍ରଥମ କ୍ଷେତ୍ର ମେଳ ହେଲା : %s</string>
     <string name="note_importer_error_added_duplicate_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ସହିତ ନକଲି ଯୋଡ଼ା ହେଲା : %s</string>
-    <string name="note_importer_error_appeared_twice">%s ଫାଇଲ୍ ରେ ଦୁଇ ଥର ଉପସ୍ଥିତ ଅଛି</string>
+    <string name="note_importer_error_appeared_twice">ଫାଇଲରେ ଦୁଇଥର ଦେଖାଗଲା: %s</string>
     <string name="note_importer_error_empty_notes">ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ଆମଦାନୀ ହୋଇନଥିଲା, କାରଣ ସେମାନେ କୌଣସି ପତ୍ର ସୃଷ୍ଟି କରିନଥିଲେ। ଯେତେବେଳେ ତୁମର ଖାଲି କ୍ଷେତ୍ର ଥାଏ କିମ୍ବା ଯେତେବେଳେ ତୁମେ ଟେକ୍ସଟ୍ ଫାଇଲରେ ଥିବା ବିଷୟବସ୍ତୁକୁ ସଠିକ୍ ଫିଲ୍ଡରେ ମ୍ୟାପ୍ କରିନାହଁ, ଏହା ହୋଇପାରେ</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ରେ %2$d କ୍ଷେତ୍ରସବୁ ଥିଲା, %3$d ଆଶା କରାଯାଉଥିଲା</string>
     <string name="csv_importer_error_exception">ପରିତ୍ୟାଗୀତ: %s</string>
@@ -365,7 +365,7 @@
     <string name="search_using_deck_name">ଡେକ୍ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="home">ଗୃହ</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">%sକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
+    <string name="import_mapped_to_tags">ଟ୍ୟାଗ୍ ଗୁଡ଼ିକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
+    <string name="import_mapped_to_nothing">ଉପେକ୍ଷା କରାଯାଇଛି</string>
 </resources>

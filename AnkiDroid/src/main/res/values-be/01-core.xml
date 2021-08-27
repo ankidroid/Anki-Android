@@ -45,6 +45,7 @@
     <string name="statistics">Статыстыка</string>
     <string name="settings">Налады</string>
     <string name="help">Даведка</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Адправіць водгук</string>
     <string name="studyoptions_due_today">За сёння:</string>
     <string name="studyoptions_new_total">Усяго новых картак:</string>
@@ -249,5 +250,5 @@
         <item quantity="many">%1$d картак (0 для паўтору)</item>
         <item quantity="other">%1$d карткі (0 для паўтору)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s копія</string>
 </resources>
