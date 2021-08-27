@@ -55,8 +55,8 @@ public class JavaScriptTTS implements TextToSpeech.OnInitListener {
     private static final Bundle mTtsParams = new Bundle();
 
     JavaScriptTTS() {
-        Context mContext = AnkiDroidApp.getInstance().getApplicationContext();
-        mTts = new TextToSpeech(mContext, this);
+        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        mTts = new TextToSpeech(context, this);
     }
 
     /** OnInitListener method to receive the TTS engine status */
