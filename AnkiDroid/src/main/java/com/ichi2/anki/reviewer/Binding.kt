@@ -26,15 +26,28 @@ import timber.log.Timber
 import java.util.*
 
 class Binding private constructor(private val modifierKeys: ModifierKeys?, private val keycode: Int?, private val unicodeCharacter: Char?, private val gesture: Gesture?) {
+
+    private fun getKeyCodePrefix(): String {
+        if (keycode == null) {
+            return KEY_PREFIX.toString()
+        }
+
+        if (KeyEvent.isGamepadButton(keycode)) {
+            return GAMEPAD_PREFIX
+        }
+
+        return KEY_PREFIX.toString()
+    }
     fun toDisplayString(context: Context?): String {
         val string = StringBuilder()
         when {
             keycode != null -> {
-                string.append(KEY_PREFIX)
+                string.append(getKeyCodePrefix())
                 string.append(' ')
                 string.append(Objects.requireNonNull(modifierKeys).toString())
                 val keyCodeString = KeyEvent.keyCodeToString(keycode)
-                string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace('_', ' ')))
+                // replace "Button" as we use the gamepad icon
+                string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace("BUTTON_", "").replace('_', ' ')))
             }
             unicodeCharacter != null -> {
                 string.append(KEY_PREFIX)
@@ -184,6 +197,8 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
          * Only used for serialisation. [.KEY_PREFIX] is used for display.
          */
         const val UNICODE_PREFIX = '\u2705'
+
+        const val GAMEPAD_PREFIX = "🎮"
 
         /** This returns multiple bindings due to the "default" implementation not knowing what the keycode for a button is  */
         @JvmStatic
