@@ -295,11 +295,11 @@ public class Collection implements CollectionGetter {
         // This is valid for the framework sqlite as far back as Android 5 / SDK21
         // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
         final int WINDOW_SIZE_KB = 2048;
-        int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
+        int cursorWindowSize = WINDOW_SIZE_KB * 1024;
 
         // reduce the actual size a little bit.
         // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
-        sChunk = (int) (sCursorWindowSize * 15. / 16.);
+        sChunk = (int) (cursorWindowSize * 15. / 16.);
         return sChunk;
     }
 

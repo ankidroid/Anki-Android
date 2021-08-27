@@ -227,12 +227,12 @@ public class MediaSyncer {
             }
 
             int lcnt = mCol.getMedia().mediacount();
-            String sRet = mServer.mediaSanity(lcnt);
-            if ("OK".equals(sRet)) {
+            String sanityRet = mServer.mediaSanity(lcnt);
+            if ("OK".equals(sanityRet)) {
                 return new Pair<>(OK, null);
             } else {
                 mCol.getMedia().forceResync();
-                return new Pair<>(ARBITRARY_STRING, sRet);
+                return new Pair<>(ARBITRARY_STRING, sanityRet);
         }
     }
 

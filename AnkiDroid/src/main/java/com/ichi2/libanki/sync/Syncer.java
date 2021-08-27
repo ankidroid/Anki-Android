@@ -126,8 +126,8 @@ public class Syncer {
         private final String mMessage;
 
 
-        ConnectionResultType(String mMessage) {
-            this.mMessage = mMessage;
+        ConnectionResultType(String message) {
+            this.mMessage = message;
         }
 
 

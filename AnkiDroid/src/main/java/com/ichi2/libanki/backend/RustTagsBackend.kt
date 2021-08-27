@@ -19,22 +19,22 @@ package com.ichi2.libanki.backend
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import net.ankiweb.rsdroid.BackendV1
 
-class RustTagsBackend(val mBackend: BackendV1) : TagsBackend {
+class RustTagsBackend(val backend: BackendV1) : TagsBackend {
     override fun all_tags(): List<TagUsnTuple> {
-        return mBackend.allTags().tagsList.map {
+        return backend.allTags().tagsList.map {
             TagUsnTuple(it.tag, it.usn)
         }
     }
 
     override fun register_tags(tags: String, preserve_usn: Boolean, usn: Int, clear_first: Boolean) {
-        mBackend.registerTags(tags, preserve_usn, usn, clear_first)
+        backend.registerTags(tags, preserve_usn, usn, clear_first)
     }
 
     override fun update_note_tags(nids: List<Long>, tags: String, replacement: String, regex: Boolean): Int {
-        return mBackend.updateNoteTags(nids, tags, replacement, regex).`val`
+        return backend.updateNoteTags(nids, tags, replacement, regex).`val`
     }
 
     override fun add_note_tags(nids: List<Long>, tags: String): Int {
-        return mBackend.addNoteTags(nids, tags).`val`
+        return backend.addNoteTags(nids, tags).`val`
     }
 }

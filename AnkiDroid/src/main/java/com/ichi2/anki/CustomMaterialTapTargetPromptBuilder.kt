@@ -27,7 +27,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectangleProm
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.CirclePromptFocal
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
-class CustomMaterialTapTargetPromptBuilder<T>(val mActivity: Activity, val mFeatureIdentifier: T) : MaterialTapTargetPrompt.Builder(mActivity) where T : Enum<T>, T : OnboardingFlag {
+class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(activity) where T : Enum<T>, T : OnboardingFlag {
 
     companion object {
         private const val NIGHT_MODE_PREFERENCE = "invertedColors"
@@ -54,7 +54,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val mActivity: Activity, val mFeat
     }
 
     fun setFocalColourResource(focalColourRes: Int): CustomMaterialTapTargetPromptBuilder<T> {
-        focalColour = ContextCompat.getColor(mActivity, focalColourRes)
+        focalColour = ContextCompat.getColor(activity, focalColourRes)
         return this
     }
 
@@ -80,7 +80,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val mActivity: Activity, val mFeat
     override fun show(): MaterialTapTargetPrompt? {
         /* Keep the focal colour as transparent for night mode
            so that the contents being highlighted are visible properly */
-        if (AnkiDroidApp.getSharedPrefs(mActivity).getBoolean(NIGHT_MODE_PREFERENCE, false)) {
+        if (AnkiDroidApp.getSharedPrefs(activity).getBoolean(NIGHT_MODE_PREFERENCE, false)) {
             setFocalColourResource(R.color.transparent)
         }
 
@@ -88,7 +88,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val mActivity: Activity, val mFeat
         // This will prevent click on any outside view when user tries to dismiss the feature prompt
         captureTouchEventOutsidePrompt = true
 
-        OnboardingUtils.setVisited(mFeatureIdentifier, mActivity)
+        OnboardingUtils.setVisited(featureIdentifier, activity)
         return super.show()
     }
 }

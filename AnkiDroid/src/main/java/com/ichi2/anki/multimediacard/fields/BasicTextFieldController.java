@@ -82,9 +82,9 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
         // search label
-        TextView mSearchLabel = new FixedTextView(mActivity);
-        mSearchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
-        layout.addView(mSearchLabel);
+        TextView searchLabel = new FixedTextView(mActivity);
+        searchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
+        layout.addView(searchLabel);
         // search buttons
         LinearLayout layoutTools2 = new LinearLayout(mActivity);
         layoutTools2.setOrientation(LinearLayout.HORIZONTAL);

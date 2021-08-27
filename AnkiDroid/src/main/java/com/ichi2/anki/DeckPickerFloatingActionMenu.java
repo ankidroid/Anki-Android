@@ -104,8 +104,8 @@ public class DeckPickerFloatingActionMenu {
     }
 
 
-    public void setIsFABOpen(boolean mIsFABOpen) {
-        this.mIsFABOpen = mIsFABOpen;
+    public void setIsFABOpen(boolean isFABOpen) {
+        this.mIsFABOpen = isFABOpen;
     }
 
 

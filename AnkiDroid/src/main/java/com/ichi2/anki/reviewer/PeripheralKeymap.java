@@ -67,9 +67,9 @@ public class PeripheralKeymap {
         private final ReviewerUi mReviewerUI;
 
 
-        public KeyMap(CommandProcessor commandProcessor, ReviewerUi mReviewerUi) {
+        public KeyMap(CommandProcessor commandProcessor, ReviewerUi reviewerUi) {
             this.mProcessor = commandProcessor;
-            this.mReviewerUI = mReviewerUi;
+            this.mReviewerUI = reviewerUi;
         }
 
         @SuppressWarnings( {"unused", "RedundantSuppression"})

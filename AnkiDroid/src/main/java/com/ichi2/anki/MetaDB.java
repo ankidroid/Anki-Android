@@ -72,65 +72,65 @@ public class MetaDB {
 
 
     /** Creating any table that missing and upgrading necessary tables. */
-    private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
+    private static SQLiteDatabase upgradeDB(SQLiteDatabase metaDb, int databaseVersion) {
         Timber.i("MetaDB:: Upgrading Internal Database..");
         // if (mMetaDb.getVersion() == 0) {
         Timber.i("MetaDB:: Applying changes for version: 0");
 
-        if (mMetaDb.getVersion() < 4) {
-            mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
+        if (metaDb.getVersion() < 4) {
+            metaDb.execSQL("DROP TABLE IF EXISTS languages;");
+            metaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
+            metaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
         }
 
         // Create tables if not exist
-        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        metaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, ord INTEGER, " + "qa INTEGER, " + "language TEXT)");
-        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        metaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
-        mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        metaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
-        updateWidgetStatus(mMetaDb);
-        updateWhiteboardState(mMetaDb);
-        mMetaDb.setVersion(databaseVersion);
+        updateWidgetStatus(metaDb);
+        updateWhiteboardState(metaDb);
+        metaDb.setVersion(databaseVersion);
         Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
-        return mMetaDb;
+        return metaDb;
     }
 
 
-    private static void updateWhiteboardState(SQLiteDatabase mMetaDb) {
-        int columnCount  = DatabaseUtil.getTableColumnCount(mMetaDb, "whiteboardState");
+    private static void updateWhiteboardState(SQLiteDatabase metaDb) {
+        int columnCount  = DatabaseUtil.getTableColumnCount(metaDb, "whiteboardState");
 
         if (columnCount <= 0) {
-            mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            metaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER)");
             return;
         }
 
         if (columnCount < 4) {
             //Default to 1
-            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'");
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'");
             Timber.i("Added 'visible' column to whiteboardState");
         }
 
         if (columnCount < 5) {
-            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN lightpencolor INTEGER DEFAULT NULL");
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN lightpencolor INTEGER DEFAULT NULL");
             Timber.i("Added 'lightpencolor' column to whiteboardState");
-            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN darkpencolor INTEGER DEFAULT NULL");
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN darkpencolor INTEGER DEFAULT NULL");
             Timber.i("Added 'darkpencolor' column to whiteboardState");
         }
     }
 
 
-    private static void updateWidgetStatus(SQLiteDatabase mMetaDb) {
-        int columnCount = DatabaseUtil.getTableColumnCount(mMetaDb, "widgetStatus");
+    private static void updateWidgetStatus(SQLiteDatabase metaDb) {
+        int columnCount = DatabaseUtil.getTableColumnCount(metaDb, "widgetStatus");
         if (columnCount > 0) {
             if (columnCount < 7) {
-                mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
-                mMetaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
+                metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'");
+                metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'");
             }
         } else {
-            mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, "
+            metaDb.execSQL("CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, "
                     + "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, "
                     + "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)");
         }
@@ -527,10 +527,10 @@ public class MetaDB {
         }
 
         @SuppressWarnings("TryFinallyCanBeTryWithResources") //API LEVEL
-        private static int getTableColumnCount(SQLiteDatabase mMetaDb, String tableName) {
+        private static int getTableColumnCount(SQLiteDatabase metaDb, String tableName) {
             Cursor c = null;
             try {
-                c = mMetaDb.rawQuery("PRAGMA table_info(" + tableName + ")", null);
+                c = metaDb.rawQuery("PRAGMA table_info(" + tableName + ")", null);
                 return c.getCount();
             } finally {
                 if (c != null) {

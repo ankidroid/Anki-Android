@@ -53,7 +53,7 @@ object PreferenceUpgradeService {
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
     }
 
-    abstract class PreferenceUpgrade private constructor(val mVersionIdentifier: VersionIdentifier) {
+    abstract class PreferenceUpgrade private constructor(val versionIdentifier: VersionIdentifier) {
         /*
         To add a new preference upgrade:
           * yield a new class from getAllInstances (do not use `legacyPreviousVersionCode` in the constructor)
@@ -76,7 +76,7 @@ object PreferenceUpgradeService {
                 val currentPrefVersion: VersionIdentifier = getPreferenceVersion(preferences)
 
                 return getAllInstances(legacyPreviousVersionCode).filter {
-                    it.mVersionIdentifier > currentPrefVersion
+                    it.versionIdentifier > currentPrefVersion
                 }.toList()
             }
 
@@ -97,7 +97,7 @@ object PreferenceUpgradeService {
             /** Returns the collection of all preference version numbers */
             @VisibleForTesting
             fun getAllVersionIdentifiers(): Sequence<VersionIdentifier> =
-                getAllInstances(IGNORED_LEGACY_VERSION_CODE).map { it.mVersionIdentifier }
+                getAllInstances(IGNORED_LEGACY_VERSION_CODE).map { it.versionIdentifier }
 
             /**
              * @return the latest "version" of the preferences
@@ -110,20 +110,20 @@ object PreferenceUpgradeService {
          * upgrades were detected via a version code comparison
          * rather than comparing a preference value
          */
-        private class LegacyPreferenceUpgrade(val mPreviousVersionCode: LegacyVersionIdentifier) : PreferenceUpgrade(1) {
+        private class LegacyPreferenceUpgrade(val previousVersionCode: LegacyVersionIdentifier) : PreferenceUpgrade(1) {
             override fun upgrade(preferences: SharedPreferences) {
-                if (!needsLegacyPreferenceUpgrade(mPreviousVersionCode)) {
+                if (!needsLegacyPreferenceUpgrade(previousVersionCode)) {
                     return
                 }
 
                 Timber.i("running upgradePreferences()")
                 // clear all prefs if super old version to prevent any errors
-                if (mPreviousVersionCode < 20300130) {
+                if (previousVersionCode < 20300130) {
                     Timber.i("Old version of Anki - Clearing preferences")
                     preferences.edit().clear().apply()
                 }
                 // when upgrading from before 2.5alpha35
-                if (mPreviousVersionCode < 20500135) {
+                if (previousVersionCode < 20500135) {
                     Timber.i("Old version of Anki - Fixing Zoom")
                     // Card zooming behaviour was changed the preferences renamed
                     val oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100)
@@ -159,7 +159,7 @@ object PreferenceUpgradeService {
             Timber.i("Running preference upgrade: ${this.javaClass.simpleName}")
             upgrade(preferences)
 
-            setPreferenceVersion(preferences, this.mVersionIdentifier)
+            setPreferenceVersion(preferences, this.versionIdentifier)
         }
 
         protected abstract fun upgrade(preferences: SharedPreferences)

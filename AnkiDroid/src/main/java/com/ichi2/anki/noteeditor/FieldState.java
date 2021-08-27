@@ -140,7 +140,7 @@ public class FieldState {
     }
 
 
-    private static String[][] fromFieldMap(Context context, String[][] oldFields, Map<String, Pair<Integer, JSONObject>> fMapNew, Map<Integer, Integer> mModelChangeFieldMap) {
+    private static String[][] fromFieldMap(Context context, String[][] oldFields, Map<String, Pair<Integer, JSONObject>> fMapNew, Map<Integer, Integer> modelChangeFieldMap) {
         // Build array of label/values to provide to field EditText views
         String[][] fields = new String[fMapNew.size()][2];
         for (String fname : fMapNew.keySet()) {
@@ -151,9 +151,9 @@ public class FieldState {
             // Field index of new note type
             Integer i = fieldPair.first;
             // Add values from old note type if they exist in map, otherwise make the new field empty
-            if (mModelChangeFieldMap.containsValue(i)) {
+            if (modelChangeFieldMap.containsValue(i)) {
                 // Get index of field from old note type given the field index of new note type
-                Integer j = getKeyByValue(mModelChangeFieldMap, i);
+                Integer j = getKeyByValue(modelChangeFieldMap, i);
                 if (j == null) {
                     continue;
                 }

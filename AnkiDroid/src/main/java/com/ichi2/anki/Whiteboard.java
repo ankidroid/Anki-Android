@@ -462,8 +462,8 @@ public class Whiteboard extends View {
     }
 
 
-    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
-        this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
+    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener onPaintColorChangeListener) {
+        this.mOnPaintColorChangeListener = onPaintColorChangeListener;
     }
 
 
@@ -515,14 +515,14 @@ public class Whiteboard extends View {
             for (Iterator<WhiteboardAction> iterator = mList.iterator(); iterator.hasNext(); ) {
                 WhiteboardAction action = iterator.next();
 
-                Path mPath = action.getPath();
-                if (mPath != null) { // → line
-                    boolean lineRegionSuccess = lineRegion.setPath(mPath, clip);
+                Path path = action.getPath();
+                if (path != null) { // → line
+                    boolean lineRegionSuccess = lineRegion.setPath(path, clip);
                     if (!lineRegionSuccess) {
                         // Small lines can be perfectly vertical/horizontal,
                         // thus giving us an empty region, which would make them undeletable.
                         // For this edge case, we create a Region ourselves.
-                        mPath.computeBounds(bounds, true);
+                        path.computeBounds(bounds, true);
                         lineRegion = new Region(new Rect((int) bounds.left, (int) bounds.top, (int) bounds.right + 1, (int) bounds.bottom + 1));
                     }
                 } else { // → point

@@ -516,7 +516,7 @@ public class Anki2Importer extends Importer {
          * Java: guid -> ord -> cid
          */
         int nbCard = mDst.cardCount();
-        Map<String, Map<Integer, Long>> mCards = new HashMap<>(nbCard);
+        Map<String, Map<Integer, Long>> cardsByGuid = new HashMap<>(nbCard);
         Set<Long> existing = new HashSet<>(nbCard);
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
@@ -526,12 +526,12 @@ public class Anki2Importer extends Importer {
                 int ord = cur.getInt(1);
                 long cid = cur.getLong(2);
                 existing.add(cid);
-                if (mCards.containsKey(guid)) {
-                    mCards.get(guid).put(ord, cid);
+                if (cardsByGuid.containsKey(guid)) {
+                    cardsByGuid.get(guid).put(ord, cid);
                 } else {
                     Map<Integer, Long> map = new HashMap<>(); // The size is at most the number of card type in the note type.
                     map.put(ord, cid);
-                    mCards.put(guid, map);
+                    cardsByGuid.put(guid, map);
                 }
             }
         }
@@ -584,7 +584,7 @@ public class Anki2Importer extends Importer {
                 }
                 NoteTriple dnid = mNotes.get(guid);
                 // does the card already exist in the dst col?
-                if (mCards.containsKey(guid) && mCards.get(guid).containsKey(ord)) {
+                if (cardsByGuid.containsKey(guid) && cardsByGuid.get(guid).containsKey(ord)) {
                     // fixme: in future, could update if newer mod time
                     continue;
                 }

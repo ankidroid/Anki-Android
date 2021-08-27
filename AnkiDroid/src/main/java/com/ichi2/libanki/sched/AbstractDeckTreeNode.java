@@ -30,11 +30,11 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     @Nullable
     private List<T> mChildren = null;
 
-    public AbstractDeckTreeNode(Collection col, String mName, long mDid) {
+    public AbstractDeckTreeNode(Collection col, String name, long did) {
         this.mCol = col;
-        this.mName = mName;
-        this.mDid = mDid;
-        this.mNameComponents = Decks.path(mName);
+        this.mName = name;
+        this.mDid = did;
+        this.mNameComponents = Decks.path(name);
     }
 
     /**

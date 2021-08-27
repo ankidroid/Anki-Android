@@ -34,8 +34,8 @@ public class RustDroidBackend implements DroidBackend {
     private final BackendFactory mBackend;
 
 
-    public RustDroidBackend(BackendFactory mBackend) {
-        this.mBackend = mBackend;
+    public RustDroidBackend(BackendFactory backend) {
+        this.mBackend = backend;
     }
 
 

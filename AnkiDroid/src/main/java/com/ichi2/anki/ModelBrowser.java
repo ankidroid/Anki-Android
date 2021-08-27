@@ -331,9 +331,9 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
+        ArrayAdapter<String> newModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
 
-        addSelectionSpinner.setAdapter(mNewModelAdapter);
+        addSelectionSpinner.setAdapter(newModelAdapter);
 
         new MaterialDialog.Builder(this)
                 .title(R.string.model_browser_add)

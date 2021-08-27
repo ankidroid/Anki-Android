@@ -55,8 +55,8 @@ public class StatsMetaInfo {
         return mSeriesList;
     }
 
-    public void setmSeriesList(double[][] mSeriesList) {
-        this.mSeriesList = mSeriesList;
+    public void setmSeriesList(double[][] seriesList) {
+        this.mSeriesList = seriesList;
     }
 
     public boolean isDataAvailable() {
@@ -71,119 +71,119 @@ public class StatsMetaInfo {
         return mDynamicAxis;
     }
 
-    public void setmDynamicAxis(boolean mDynamicAxis) {
-        this.mDynamicAxis = mDynamicAxis;
+    public void setmDynamicAxis(boolean dynamicAxis) {
+        this.mDynamicAxis = dynamicAxis;
     }
 
     public boolean ismHasColoredCumulative() {
         return mHasColoredCumulative;
     }
 
-    public void setmHasColoredCumulative(boolean mHasColoredCumulative) {
-        this.mHasColoredCumulative = mHasColoredCumulative;
+    public void setmHasColoredCumulative(boolean hasColoredCumulative) {
+        this.mHasColoredCumulative = hasColoredCumulative;
     }
 
     public Stats.AxisType getmType() {
         return mType;
     }
 
-    public void setmType(Stats.AxisType mType) {
-        this.mType = mType;
+    public void setmType(Stats.AxisType type) {
+        this.mType = type;
     }
 
     public int getmTitle() {
         return mTitle;
     }
 
-    public void setmTitle(int mTitle) {
-        this.mTitle = mTitle;
+    public void setmTitle(int title) {
+        this.mTitle = title;
     }
 
     public boolean ismBackwards() {
         return mBackwards;
     }
 
-    public void setmBackwards(boolean mBackwards) {
-        this.mBackwards = mBackwards;
+    public void setmBackwards(boolean backwards) {
+        this.mBackwards = backwards;
     }
 
     public int[] getmValueLabels() {
         return mValueLabels;
     }
 
-    public void setmValueLabels(int[] mValueLabels) {
-        this.mValueLabels = mValueLabels;
+    public void setmValueLabels(int[] valueLabels) {
+        this.mValueLabels = valueLabels;
     }
 
     public int[] getmColors() {
         return mColors;
     }
 
-    public void setmColors(int[] mColors) {
-        this.mColors = mColors;
+    public void setmColors(int[] colors) {
+        this.mColors = colors;
     }
 
     public int[] getmAxisTitles() {
         return mAxisTitles;
     }
 
-    public void setmAxisTitles(int[] mAxisTitles) {
-        this.mAxisTitles = mAxisTitles;
+    public void setmAxisTitles(int[] axisTitles) {
+        this.mAxisTitles = axisTitles;
     }
 
     public int getmMaxCards() {
         return mMaxCards;
     }
 
-    public void setmMaxCards(int mMaxCards) {
-        this.mMaxCards = mMaxCards;
+    public void setmMaxCards(int maxCards) {
+        this.mMaxCards = maxCards;
     }
 
     public int getmMaxElements() {
         return mMaxElements;
     }
 
-    public void setmMaxElements(int mMaxElements) {
-        this.mMaxElements = mMaxElements;
+    public void setmMaxElements(int maxElements) {
+        this.mMaxElements = maxElements;
     }
 
     public double getmFirstElement() {
         return mFirstElement;
     }
 
-    public void setmFirstElement(double mFirstElement) {
-        this.mFirstElement = mFirstElement;
+    public void setmFirstElement(double firstElement) {
+        this.mFirstElement = firstElement;
     }
 
     public double getmLastElement() {
         return mLastElement;
     }
 
-    public void setmLastElement(double mLastElement) {
-        this.mLastElement = mLastElement;
+    public void setmLastElement(double lastElement) {
+        this.mLastElement = lastElement;
     }
 
     public int getmZeroIndex() {
         return mZeroIndex;
     }
 
-    public void setmZeroIndex(int mZeroIndex) {
-        this.mZeroIndex = mZeroIndex;
+    public void setmZeroIndex(int zeroIndex) {
+        this.mZeroIndex = zeroIndex;
     }
 
     public double[][] getmCumulative() {
         return mCumulative;
     }
 
-    public void setmCumulative(double[][] mCumulative) {
-        this.mCumulative = mCumulative;
+    public void setmCumulative(double[][] cumulative) {
+        this.mCumulative = cumulative;
     }
 
     public double getmMcount() {
         return mMcount;
     }
 
-    public void setmMcount(double mMcount) {
-        this.mMcount = mMcount;
+    public void setmMcount(double Mcount) {
+        this.mMcount = Mcount;
     }
 }

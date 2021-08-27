@@ -37,9 +37,9 @@ fun interface GestureListener {
 
 // TODO: Code and preference defaults are inconsistent: #8066
 enum class Gesture(
-    @get:JvmName("getResourceId") val mResourceId: Int,
-    private val mPreferenceKey: String,
-    private val mPreferenceDefault: ViewerCommand
+    @get:JvmName("getResourceId") val resourceId: Int,
+    private val preferenceKey: String,
+    private val preferenceDefault: ViewerCommand
 ) {
     SWIPE_UP(R.string.gestures_swipe_up, "gestureSwipeUp", ViewerCommand.COMMAND_EDIT),
     SWIPE_DOWN(R.string.gestures_swipe_down, "gestureSwipeDown", ViewerCommand.COMMAND_NOTHING),
@@ -60,15 +60,15 @@ enum class Gesture(
     VOLUME_DOWN(R.string.gestures_volume_down, "gestureVolumeDown", ViewerCommand.COMMAND_NOTHING);
 
     fun fromPreference(prefs: SharedPreferences): ViewerCommand {
-        val value = prefs.getString(mPreferenceKey, null) ?: return mPreferenceDefault
+        val value = prefs.getString(preferenceKey, null) ?: return preferenceDefault
 
         val valueAsInt = Integer.parseInt(value)
 
-        return ViewerCommand.fromInt(valueAsInt) ?: mPreferenceDefault
+        return ViewerCommand.fromInt(valueAsInt) ?: preferenceDefault
     }
 
     fun toDisplayString(context: Context): String =
-        getDisplayPrefix() + ' ' + context.getString(mResourceId)
+        getDisplayPrefix() + ' ' + context.getString(resourceId)
 
     private fun getDisplayPrefix(): String =
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) LEGACY_GESTURE_PREFIX else GESTURE_PREFIX

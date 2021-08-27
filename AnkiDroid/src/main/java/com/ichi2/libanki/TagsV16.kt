@@ -38,13 +38,13 @@ import java.util.regex.Pattern
  * tracked, so unused tags can only be removed from the list with a DB check.
  * This module manages the tag cache and tags for notes.
  */
-class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagManager() {
+class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManager() {
 
     /** all tags */
-    override fun all(): List<String> = mBackend.all_tags().map { it.tag }
+    override fun all(): List<String> = backend.all_tags().map { it.tag }
 
     /** List of (tag, usn) */
-    override fun allItems(): List<TagUsnTuple> = mBackend.all_tags()
+    override fun allItems(): List<TagUsnTuple> = backend.all_tags()
 
     /*
     # Registering and fetching tags
@@ -67,7 +67,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagMana
             preserve_usn = true
         }
 
-        mBackend.register_tags(
+        backend.register_tags(
             tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear
         )
     }
@@ -88,7 +88,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagMana
         register(
             set(
                 split(
-                    " ".join(mCol.db.queryStringList("select distinct tags from notes" + lim))
+                    " ".join(col.db.queryStringList("select distinct tags from notes" + lim))
                 )
             ),
             clear = clear,
@@ -101,15 +101,15 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagMana
         val res: List<String>
         if (!children) {
             query = basequery + " AND c.did=?"
-            res = mCol.db.queryStringList(query, did)
+            res = col.db.queryStringList(query, did)
             return list(set(split(" ".join(res))))
         }
         val dids = mutableListOf(did)
-        for ((name, id) in mCol.decks.children(did)) {
+        for ((name, id) in col.decks.children(did)) {
             dids.add(id)
         }
         query = basequery + " AND c.did IN " + ids2str(dids)
-        res = mCol.db.queryStringList(query)
+        res = col.db.queryStringList(query)
         return list(set(split(" ".join(res))))
     }
 
@@ -121,7 +121,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagMana
     /** Add space-separate tags to provided notes,
      * @return changed count. */
     fun bulk_add(nids: List<Long>, tags: String): Int {
-        return mBackend.add_note_tags(nids = nids, tags = tags)
+        return backend.add_note_tags(nids = nids, tags = tags)
     }
 
     /** Replace space-separated tags, returning changed count.
@@ -134,7 +134,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) : TagMana
         replacement: String,
         regex: Boolean
     ): Int {
-        return mBackend.update_note_tags(
+        return backend.update_note_tags(
             nids = nids, tags = tags, replacement = replacement, regex = regex
         )
     }

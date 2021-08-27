@@ -51,8 +51,8 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 
 // Contains classes for various screens. Each sub-class has methods to show onboarding tutorials.
 abstract class Onboarding<Feature>(
-    private val mContext: Context,
-    val mTutorials: MutableList<TutorialArguments<Feature>>
+    private val context: Context,
+    val tutorials: MutableList<TutorialArguments<Feature>>
 ) where Feature : Enum<Feature>, Feature : OnboardingFlag {
 
     companion object {
@@ -82,14 +82,14 @@ abstract class Onboarding<Feature>(
      * @param mTutorials List of tutorials for the Activity
      */
     fun onCreate() {
-        mTutorials.forEach {
+        tutorials.forEach {
             // If tutorial is visited or condition is false then return from the loop.
-            if (isVisited(it.mFeatureIdentifier, mContext) || it.mOnboardingCondition?.invoke() == false) {
+            if (isVisited(it.featureIdentifier, context) || it.onboardingCondition?.invoke() == false) {
                 return@forEach
             }
 
             // Invoke the function to display the tutorial.
-            it.mOnboardingFunction.invoke()
+            it.onboardingFunction.invoke()
 
             // Return so that other tutorials are not displayed.
             return
@@ -99,32 +99,32 @@ abstract class Onboarding<Feature>(
     /**
      * Arguments required to handle the tutorial for a screen.
      *
-     * @param mFeatureIdentifier Enum constant for the feature.
-     * @param mOnboardingFunction Function which has to be invoked if the tutorial needs to be displayed.
-     * @param mOnboardingCondition Condition to be checked before displaying the tutorial. Tutorial should
+     * @param featureIdentifier Enum constant for the feature.
+     * @param onboardingFunction Function which has to be invoked if the tutorial needs to be displayed.
+     * @param onboardingCondition Condition to be checked before displaying the tutorial. Tutorial should
      * be displayed only if mOnboardingCondition is not null and returns true. Default value is null
      * which indicates that no condition is required.
      */
     data class TutorialArguments<Feature>(
-        val mFeatureIdentifier: Feature,
-        val mOnboardingFunction: () -> Unit,
-        val mOnboardingCondition: (() -> Boolean)? = null
+        val featureIdentifier: Feature,
+        val onboardingFunction: () -> Unit,
+        val onboardingCondition: (() -> Boolean)? = null
     )
             where Feature : Enum<Feature>, Feature : OnboardingFlag
 
     class DeckPicker(
-        private val mActivityContext: com.ichi2.anki.DeckPicker,
-        private val mRecyclerViewLayoutManager: LinearLayoutManager
-    ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(mActivityContext, mutableListOf()) {
+        private val activityContext: com.ichi2.anki.DeckPicker,
+        private val recyclerViewLayoutManager: LinearLayoutManager
+    ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(activityContext, mutableListOf()) {
 
         init {
-            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
-            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew, mActivityContext::hasAtLeastOneDeckBeingDisplayed))
-            mTutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew, mActivityContext::hasAtLeastOneDeckBeingDisplayed))
+            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
+            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
+            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
         }
 
         private fun showTutorialForFABIfNew() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.FAB)
+            CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.FAB)
                 .createCircleWithDimmedBackground()
                 .setFocalColourResource(R.color.material_blue_500)
                 .setDismissedListener { onCreate() }
@@ -135,29 +135,29 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForDeckIfNew() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.DECK_NAME)
+            CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.DECK_NAME)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { showTutorialForCountsLayoutIfNew() }
-                .setTarget(mRecyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.deck_name_linear_layout))
+                .setTarget(recyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.deck_name_linear_layout))
                 .setPrimaryText(R.string.start_studying)
                 .setSecondaryText(R.string.start_studying_desc)
                 .show()
         }
 
         private fun showTutorialForCountsLayoutIfNew() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, DeckPickerOnboardingEnum.COUNTS_LAYOUT)
+            CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.COUNTS_LAYOUT)
                 .createRectangleWithDimmedBackground()
-                .setTarget(mRecyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.counts_layout))
+                .setTarget(recyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.counts_layout))
                 .setPrimaryText(R.string.menu__study_options)
                 .setSecondaryText(R.string.study_options_desc)
                 .show()
         }
 
-        enum class DeckPickerOnboardingEnum(var mValue: Int) : OnboardingFlag {
+        enum class DeckPickerOnboardingEnum(var value: Int) : OnboardingFlag {
             FAB(0), DECK_NAME(1), COUNTS_LAYOUT(2);
 
             override fun getOnboardingEnumValue(): Int {
-                return mValue
+                return value
             }
 
             override fun getFeatureConstant(): String {
@@ -166,16 +166,16 @@ abstract class Onboarding<Feature>(
         }
     }
 
-    class Reviewer(private val mActivityContext: com.ichi2.anki.Reviewer) :
-        Onboarding<Reviewer.ReviewerOnboardingEnum>(mActivityContext, mutableListOf()) {
+    class Reviewer(private val activityContext: com.ichi2.anki.Reviewer) :
+        Onboarding<Reviewer.ReviewerOnboardingEnum>(activityContext, mutableListOf()) {
 
         init {
-            mTutorials.add(TutorialArguments(ReviewerOnboardingEnum.SHOW_ANSWER, this::onQuestionShown))
-            mTutorials.add(TutorialArguments(ReviewerOnboardingEnum.FLAG, this::showTutorialForFlagIfNew))
+            tutorials.add(TutorialArguments(ReviewerOnboardingEnum.SHOW_ANSWER, this::onQuestionShown))
+            tutorials.add(TutorialArguments(ReviewerOnboardingEnum.FLAG, this::showTutorialForFlagIfNew))
         }
 
         private fun onQuestionShown() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.SHOW_ANSWER)
+            CustomMaterialTapTargetPromptBuilder(activityContext, ReviewerOnboardingEnum.SHOW_ANSWER)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { onCreate() }
                 .setTarget(R.id.flip_card)
@@ -188,11 +188,11 @@ abstract class Onboarding<Feature>(
          * Called when the difficulty buttons are displayed after clicking on 'Show Answer'.
          */
         fun onAnswerShown() {
-            if (isVisited(ReviewerOnboardingEnum.DIFFICULTY_RATING, mActivityContext)) {
+            if (isVisited(ReviewerOnboardingEnum.DIFFICULTY_RATING, activityContext)) {
                 return
             }
 
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.DIFFICULTY_RATING)
+            CustomMaterialTapTargetPromptBuilder(activityContext, ReviewerOnboardingEnum.DIFFICULTY_RATING)
                 .createRectangleWithDimmedBackground()
                 .setTarget(R.id.ease_buttons)
                 .setPrimaryText(R.string.select_difficulty)
@@ -203,7 +203,7 @@ abstract class Onboarding<Feature>(
         private fun showTutorialForFlagIfNew() {
             // Handler is required here to show feature prompt on menu items. Reference: https://github.com/sjwall/MaterialTapTargetPrompt/issues/73#issuecomment-320681655
             executeFunctionUsingHandler {
-                CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.FLAG)
+                CustomMaterialTapTargetPromptBuilder(activityContext, ReviewerOnboardingEnum.FLAG)
                     .createCircle()
                     .setFocalColourResource(R.color.material_blue_500)
                     .setTarget(R.id.action_flag)
@@ -217,11 +217,11 @@ abstract class Onboarding<Feature>(
          * Show after undo button goes into enabled state
          */
         fun onUndoButtonEnabled() {
-            if (isVisited(ReviewerOnboardingEnum.UNDO, mActivityContext)) {
+            if (isVisited(ReviewerOnboardingEnum.UNDO, activityContext)) {
                 return
             }
 
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, ReviewerOnboardingEnum.UNDO)
+            CustomMaterialTapTargetPromptBuilder(activityContext, ReviewerOnboardingEnum.UNDO)
                 .createCircleWithDimmedBackground()
                 .setFocalColourResource(R.color.material_blue_500)
                 .setTarget(R.id.action_undo)
@@ -230,11 +230,11 @@ abstract class Onboarding<Feature>(
                 .show()
         }
 
-        enum class ReviewerOnboardingEnum(var mValue: Int) : OnboardingFlag {
+        enum class ReviewerOnboardingEnum(var value: Int) : OnboardingFlag {
             SHOW_ANSWER(0), DIFFICULTY_RATING(1), FLAG(2), UNDO(3);
 
             override fun getOnboardingEnumValue(): Int {
-                return mValue
+                return value
             }
 
             override fun getFeatureConstant(): String {
@@ -243,16 +243,16 @@ abstract class Onboarding<Feature>(
         }
     }
 
-    class NoteEditor(private val mActivityContext: com.ichi2.anki.NoteEditor) :
-        Onboarding<NoteEditor.NoteEditorOnboardingEnum>(mActivityContext, mutableListOf()) {
+    class NoteEditor(private val activityContext: com.ichi2.anki.NoteEditor) :
+        Onboarding<NoteEditor.NoteEditorOnboardingEnum>(activityContext, mutableListOf()) {
 
         init {
-            mTutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
-            mTutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FORMATTING_TOOLS, this::showTutorialForFormattingTools))
+            tutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
+            tutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FORMATTING_TOOLS, this::showTutorialForFormattingTools))
         }
 
         private fun showTutorialForFrontAndBackIfNew() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, NoteEditorOnboardingEnum.FRONT_BACK)
+            CustomMaterialTapTargetPromptBuilder(activityContext, NoteEditorOnboardingEnum.FRONT_BACK)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { onCreate() }
                 .setTarget(R.id.CardEditorEditFieldsLayout)
@@ -262,7 +262,7 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForFormattingTools() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, NoteEditorOnboardingEnum.FORMATTING_TOOLS)
+            CustomMaterialTapTargetPromptBuilder(activityContext, NoteEditorOnboardingEnum.FORMATTING_TOOLS)
                 .createRectangleWithDimmedBackground()
                 .setTarget(R.id.editor_toolbar)
                 .setPrimaryText(R.string.format_content)
@@ -270,11 +270,11 @@ abstract class Onboarding<Feature>(
                 .show()
         }
 
-        enum class NoteEditorOnboardingEnum(var mValue: Int) : OnboardingFlag {
+        enum class NoteEditorOnboardingEnum(var value: Int) : OnboardingFlag {
             FRONT_BACK(0), FORMATTING_TOOLS(1);
 
             override fun getOnboardingEnumValue(): Int {
-                return mValue
+                return value
             }
 
             override fun getFeatureConstant(): String {
@@ -283,16 +283,16 @@ abstract class Onboarding<Feature>(
         }
     }
 
-    class CardBrowser(private val mActivityContext: com.ichi2.anki.CardBrowser) :
-        Onboarding<CardBrowser.CardBrowserOnboardingEnum>(mActivityContext, mutableListOf()) {
+    class CardBrowser(private val activityContext: com.ichi2.anki.CardBrowser) :
+        Onboarding<CardBrowser.CardBrowserOnboardingEnum>(activityContext, mutableListOf()) {
 
         init {
-            mTutorials.add(TutorialArguments(CardBrowserOnboardingEnum.DECK_CHANGER, this::showTutorialForDeckChangerIfNew))
-            mTutorials.add(TutorialArguments(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, this::showTutorialForCardClickIfNew))
+            tutorials.add(TutorialArguments(CardBrowserOnboardingEnum.DECK_CHANGER, this::showTutorialForDeckChangerIfNew))
+            tutorials.add(TutorialArguments(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, this::showTutorialForCardClickIfNew))
         }
 
         private fun showTutorialForDeckChangerIfNew() {
-            CustomMaterialTapTargetPromptBuilder(mActivityContext, CardBrowserOnboardingEnum.DECK_CHANGER)
+            CustomMaterialTapTargetPromptBuilder(activityContext, CardBrowserOnboardingEnum.DECK_CHANGER)
                 .createRectangleWithDimmedBackground()
                 .setFocalColourResource(R.color.material_blue_500)
                 .setDismissedListener { onCreate() }
@@ -303,21 +303,21 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForCardClickIfNew() {
-            val cardBrowserTutorial: FrameLayout = mActivityContext.findViewById(R.id.card_browser_tutorial)
+            val cardBrowserTutorial: FrameLayout = activityContext.findViewById(R.id.card_browser_tutorial)
             cardBrowserTutorial.apply {
                 visibility = View.VISIBLE
                 setOnClickListener {
                     visibility = View.GONE
                 }
             }
-            setVisited(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, mActivityContext)
+            setVisited(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, activityContext)
         }
 
-        enum class CardBrowserOnboardingEnum(var mValue: Int) : OnboardingFlag {
+        enum class CardBrowserOnboardingEnum(var value: Int) : OnboardingFlag {
             DECK_CHANGER(0), CARD_PRESS_AND_HOLD(1);
 
             override fun getOnboardingEnumValue(): Int {
-                return mValue
+                return value
             }
 
             override fun getFeatureConstant(): String {

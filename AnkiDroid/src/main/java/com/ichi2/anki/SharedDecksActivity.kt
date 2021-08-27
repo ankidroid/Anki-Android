@@ -36,7 +36,7 @@ import java.io.Serializable
 class SharedDecksActivity : AnkiActivity() {
 
     private lateinit var mWebView: WebView
-    lateinit var mDownloadManager: DownloadManager
+    lateinit var downloadManager: DownloadManager
 
     private var mShouldHistoryBeCleared = false
 
@@ -90,7 +90,7 @@ class SharedDecksActivity : AnkiActivity() {
 
         mWebView = findViewById(R.id.web_view)
 
-        mDownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         mWebView.settings.javaScriptEnabled = true
         mWebView.loadUrl(resources.getString(R.string.shared_decks_url))
@@ -118,7 +118,7 @@ class SharedDecksActivity : AnkiActivity() {
         when {
             sharedDecksDownloadFragmentExists() -> {
                 supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
-                    if ((it as SharedDecksDownloadFragment).mIsDownloadInProgress) {
+                    if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
                         Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
                         // Show cancel confirmation dialog if download is in progress
                         it.showCancelConfirmationDialog()
@@ -178,8 +178,8 @@ class SharedDecksActivity : AnkiActivity() {
  * Used for sending URL, user agent, content disposition and mime type to SharedDecksDownloadFragment.
  */
 data class DownloadFile(
-    val mUrl: String,
-    val mUserAgent: String,
-    val mContentDisposition: String,
-    val mMimeType: String,
+    val url: String,
+    val userAgent: String,
+    val contentDisposition: String,
+    val mimeType: String,
 ) : Serializable

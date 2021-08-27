@@ -19,7 +19,7 @@ import android.content.SharedPreferences
 import timber.log.Timber
 
 /** Whether Reviewer content should take the full screen */
-enum class FullScreenMode(private val mPrefValue: String) {
+enum class FullScreenMode(private val prefValue: String) {
 
     /** Display both navigation and buttons (default) */
     BUTTONS_AND_MENU("0"),
@@ -28,7 +28,7 @@ enum class FullScreenMode(private val mPrefValue: String) {
     /** Remove both menu bar and buttons. Can only be set if gesture is on. */
     FULLSCREEN_ALL_GONE("2");
 
-    fun getPreferenceValue() = mPrefValue
+    fun getPreferenceValue() = prefValue
     fun isFullScreenReview() = this != BUTTONS_AND_MENU
 
     companion object {
@@ -38,8 +38,8 @@ enum class FullScreenMode(private val mPrefValue: String) {
 
         @JvmStatic
         fun fromPreference(prefs: SharedPreferences): FullScreenMode {
-            val value = prefs.getString(PREF_KEY, DEFAULT.mPrefValue)
-            return enumValues<FullScreenMode>().firstOrNull { it.mPrefValue == value } ?: DEFAULT
+            val value = prefs.getString(PREF_KEY, DEFAULT.prefValue)
+            return enumValues<FullScreenMode>().firstOrNull { it.prefValue == value } ?: DEFAULT
         }
 
         @JvmStatic

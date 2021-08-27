@@ -87,11 +87,11 @@ public class OverviewStatsBuilder {
         }
     }
 
-    public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
+    public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType statType) {
         mWebView = chartView;
         mCol = collectionData;
         mDeckId = deckId;
-        mType = mStatType;
+        mType = statType;
     }
 
     public String createInfoHtmlString() {

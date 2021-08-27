@@ -55,8 +55,8 @@ public class PickStringDialogFragment extends DialogFragment {
     }
 
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public void setTitle(String title) {
+        this.mTitle = title;
     }
 
 
