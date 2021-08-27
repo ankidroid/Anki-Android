@@ -16,11 +16,13 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
+import android.os.Build
 import android.text.TextUtils
 import android.util.Pair
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.StringUtil
 import timber.log.Timber
 import java.util.*
@@ -28,15 +30,18 @@ import java.util.*
 class Binding private constructor(private val modifierKeys: ModifierKeys?, private val keycode: Int?, private val unicodeCharacter: Char?, private val gesture: Gesture?) {
 
     private fun getKeyCodePrefix(): String {
+        // KEY_PREFIX is not usable before API 23
+        val keyPrefix = if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) KEY_PREFIX.toString() else ""
+
         if (keycode == null) {
-            return KEY_PREFIX.toString()
+            return keyPrefix
         }
 
         if (KeyEvent.isGamepadButton(keycode)) {
             return GAMEPAD_PREFIX
         }
 
-        return KEY_PREFIX.toString()
+        return keyPrefix
     }
     fun toDisplayString(context: Context?): String {
         val string = StringBuilder()
@@ -187,7 +192,10 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
     companion object {
         const val FORBIDDEN_UNICODE_CHAR = MappableBinding.PREF_SEPARATOR
 
-        /** https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard)  */
+        /**
+         * https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard)
+         * This is not usable on API 21 or 22
+         */
         const val KEY_PREFIX = '\u2328'
 
         /** https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)  */
