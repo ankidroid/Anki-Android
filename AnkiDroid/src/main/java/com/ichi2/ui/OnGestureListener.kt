@@ -26,32 +26,32 @@ import java.util.function.Consumer
 /** Simplifies and adapts a [android.view.GestureDetector.SimpleOnGestureListener]
  * to a consumer accepting a [com.ichi2.anki.cardviewer.Gesture]  */
 class OnGestureListener(
-    private val mView: View,
-    private val mGestureMapper: GestureMapper,
-    private val mConsumer: Consumer<Gesture>
+    private val view: View,
+    private val gestureMapper: GestureMapper,
+    private val consumer: Consumer<Gesture>
 ) : GestureDetector.SimpleOnGestureListener() {
 
-    fun getTapGestureMode() = mGestureMapper.tapGestureMode
+    fun getTapGestureMode() = gestureMapper.tapGestureMode
 
     override fun onDown(e: MotionEvent): Boolean {
         return true
     }
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
-        mConsumer.accept(Gesture.DOUBLE_TAP)
+        consumer.accept(Gesture.DOUBLE_TAP)
         return true
     }
 
     override fun onLongPress(e: MotionEvent) {
-        mConsumer.accept(Gesture.LONG_TAP)
+        consumer.accept(Gesture.LONG_TAP)
     }
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         val dx = e2.x - e1.x
         val dy = e2.y - e1.y
-        val gesture = mGestureMapper.gesture(dx, dy, velocityX, velocityY, false, false, false)
+        val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, false, false, false)
         if (gesture != null) {
-            mConsumer.accept(gesture)
+            consumer.accept(gesture)
         }
         return true
     }
@@ -61,11 +61,11 @@ class OnGestureListener(
         // It's better UX if we detect a single tap and it turns into a double tap later
         // But, the order on my Android 11 is: down, double tap, down
         // and the events aren't equal, which makes this difficult.
-        val height = mView.height
-        val width = mView.width
-        val gesture = mGestureMapper.gesture(height, width, e.x, e.y)
+        val height = view.height
+        val width = view.width
+        val gesture = gestureMapper.gesture(height, width, e.x, e.y)
         if (gesture != null) {
-            mConsumer.accept(gesture)
+            consumer.accept(gesture)
         }
         return true
     }

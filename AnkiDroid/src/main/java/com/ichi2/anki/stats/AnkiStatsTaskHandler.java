@@ -297,16 +297,16 @@ public class AnkiStatsTaskHandler {
         return mStandardTextSize;
     }
 
-    public void setmStandardTextSize(float mStandardTextSize) {
-        this.mStandardTextSize = mStandardTextSize;
+    public void setmStandardTextSize(float standardTextSize) {
+        this.mStandardTextSize = standardTextSize;
     }
 
     public Stats.AxisType getStatType() {
         return mStatType;
     }
 
-    public void setStatType(Stats.AxisType mStatType) {
-        this.mStatType = mStatType;
+    public void setStatType(Stats.AxisType statType) {
+        this.mStatType = statType;
     }
 
 }

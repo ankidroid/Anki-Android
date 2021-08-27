@@ -44,56 +44,56 @@ private typealias int = Long
 private typealias Field = JSONObject // Dict<str, Any>
 private typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
-class NoteType(internal val mNoteType: JSONObject) {
+class NoteType(internal val noteType: JSONObject) {
     /** Python method
      * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
      *
      * Update the dictionary with the provided key/value pairs, overwriting existing keys
      */
     fun update(updateFrom: NoteType) {
-        for (k in updateFrom.mNoteType.keys()) {
-            mNoteType.put(k, updateFrom.mNoteType[k])
+        for (k in updateFrom.noteType.keys()) {
+            noteType.put(k, updateFrom.noteType[k])
         }
     }
 
-    fun deepcopy(): NoteType = NoteType(JSONObject(mNoteType))
+    fun deepcopy(): NoteType = NoteType(JSONObject(noteType))
 
     var flds: JSONArray
-        get() = mNoteType.getJSONArray("flds")
+        get() = noteType.getJSONArray("flds")
         set(value) {
-            mNoteType.put("flds", value)
+            noteType.put("flds", value)
         }
 
     var tmpls: JSONArray
-        get() = mNoteType.getJSONArray("tmpls")
+        get() = noteType.getJSONArray("tmpls")
         set(value) {
-            mNoteType.put("tmpls", value)
+            noteType.put("tmpls", value)
         }
 
     var id: int
-        get() = mNoteType.getLong("id")
+        get() = noteType.getLong("id")
         set(value) {
-            mNoteType.put("id", value)
+            noteType.put("id", value)
         }
 
     var name: String
-        get() = mNoteType.getString("name")
+        get() = noteType.getString("name")
         set(value) {
-            mNoteType.put("name", value)
+            noteType.put("name", value)
         }
 
     var sortf: int
-        get() = mNoteType.getLong("sortf")
+        get() = noteType.getLong("sortf")
         set(value) {
-            mNoteType.put("sortf", value)
+            noteType.put("sortf", value)
         }
 
     // TODO: Not constrained
     @Consts.MODEL_TYPE
     var type: Int
-        get() = mNoteType.getInt("type")
+        get() = noteType.getInt("type")
         set(value) {
-            mNoteType.put("typr", value)
+            noteType.put("typr", value)
         }
 }
 

@@ -282,8 +282,8 @@ public class TextImporter extends NoteImporter {
 
 
         @NonNull
-        public static FileObj open(@NonNull String mFile) {
-            return new FileObj(new File(mFile));
+        public static FileObj open(@NonNull String file) {
+            return new FileObj(new File(file));
         }
 
 

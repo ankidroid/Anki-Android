@@ -32,27 +32,28 @@ import timber.log.Timber
 
 open class NumberRangePreferenceCompat : EditTextPreference {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        mMin = getMinFromAttributes(attrs)
-        mMax = getMaxFromAttributes(attrs)
+        min = getMinFromAttributes(attrs)
+        max = getMaxFromAttributes(attrs)
     }
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        mMin = getMinFromAttributes(attrs)
-        mMax = getMaxFromAttributes(attrs)
+        min = getMinFromAttributes(attrs)
+        max = getMaxFromAttributes(attrs)
     }
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        mMin = getMinFromAttributes(attrs)
-        mMax = getMaxFromAttributes(attrs)
+        min = getMinFromAttributes(attrs)
+        max = getMaxFromAttributes(attrs)
     }
     constructor(context: Context?) : super(context)
 
-    protected var mMin = 0
-    private var mMax = 0
-
-    val min get() = mMin
-    val max get() = mMax
+    var min = 0
+        get() = field
+        protected set(value) { field = value }
+    var max = 0
+        get() = field
+        private set(value) { field = value }
 
     /** The maximum available number of digits */
-    val maxDigits: Int get() = mMax.toString().length
+    val maxDigits: Int get() = max.toString().length
 
     /*
      * Since this preference deals with integers only, it makes sense to only store and retrieve integers. However,
@@ -61,7 +62,7 @@ open class NumberRangePreferenceCompat : EditTextPreference {
      * their Integer equivalents.
      */
     override fun getPersistedString(defaultReturnValue: String?): String? {
-        return getPersistedInt(mMin).toString()
+        return getPersistedInt(min).toString()
     }
 
     override fun persistString(value: String): Boolean {
@@ -75,10 +76,10 @@ open class NumberRangePreferenceCompat : EditTextPreference {
      * @return The input value within acceptable range.
      */
     fun getValidatedRangeFromInt(input: Int): Int {
-        if (input < mMin) {
-            return mMin
-        } else if (input > mMax) {
-            return mMax
+        if (input < min) {
+            return min
+        } else if (input > max) {
+            return max
         }
         return input
     }
@@ -92,13 +93,13 @@ open class NumberRangePreferenceCompat : EditTextPreference {
      */
     private fun getValidatedRangeFromString(input: String): Int {
         return if (TextUtils.isEmpty(input)) {
-            mMin
+            min
         } else {
             try {
                 getValidatedRangeFromInt(input.toInt())
             } catch (e: NumberFormatException) {
                 Timber.w(e)
-                mMin
+                min
             }
         }
     }
@@ -130,7 +131,7 @@ open class NumberRangePreferenceCompat : EditTextPreference {
      * @return the persisted value.
      */
     fun getValue(): Int {
-        return getPersistedInt(mMin)
+        return getPersistedInt(min)
     }
 
     /**

@@ -28,11 +28,11 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     private int mLrnCount;
     private int mNewCount;
 
-    public DeckDueTreeNode(Collection col, String mName, long mDid, int mRevCount, int mLrnCount, int mNewCount) {
-        super(col, mName, mDid);
-        this.mRevCount = mRevCount;
-        this.mLrnCount = mLrnCount;
-        this.mNewCount = mNewCount;
+    public DeckDueTreeNode(Collection col, String name, long did, int revCount, int lrnCount, int newCount) {
+        super(col, name, did);
+        this.mRevCount = revCount;
+        this.mLrnCount = lrnCount;
+        this.mNewCount = newCount;
     }
 
     @Override

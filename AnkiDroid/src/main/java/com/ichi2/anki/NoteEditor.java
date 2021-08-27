@@ -588,7 +588,7 @@ public class NoteEditor extends AnkiActivity implements
         mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
-        String mGetTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
+        String getTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW);
         setDid(mEditorNote);
 
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
@@ -644,8 +644,8 @@ public class NoteEditor extends AnkiActivity implements
         //set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
-            if (mGetTextFromSearchView != null && !mGetTextFromSearchView.isEmpty()) {
-                mEditFields.getFirst().setText(mGetTextFromSearchView);
+            if (getTextFromSearchView != null && !getTextFromSearchView.isEmpty()) {
+                mEditFields.getFirst().setText(getTextFromSearchView);
             }
             mEditFields.getFirst().requestFocus();
         }
@@ -1348,8 +1348,8 @@ public class NoteEditor extends AnkiActivity implements
                     if (field == null) {
                         break;
                     }
-                    MultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
-                    mNote.setField(index, field);
+                    MultimediaEditableNote note = getCurrentMultimediaEditableNote(col);
+                    note.setField(index, field);
                     FieldEditText fieldEditText = mEditFields.get(index);
                     // Completely replace text for text fields (because current text was passed in)
                     String formattedValue = field.getFormattedValue();
@@ -1361,7 +1361,7 @@ public class NoteEditor extends AnkiActivity implements
                         insertStringInField(fieldEditText, formattedValue);
                     }
                     //DA - I think we only want to save the field here, not the note.
-                    NoteService.saveMedia(col, mNote);
+                    NoteService.saveMedia(col, note);
                     mChanged = true;
                 }
                 break;
@@ -1412,11 +1412,11 @@ public class NoteEditor extends AnkiActivity implements
 
     /** @param col Readonly variable to get cache dir */
     private MultimediaEditableNote getCurrentMultimediaEditableNote(Collection col) {
-        MultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+        MultimediaEditableNote note = NoteService.createEmptyNote(mEditorNote.model());
 
         String[] fields = getCurrentFieldStrings();
-        NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote.getMid(), mNote);
-        return mNote;
+        NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote.getMid(), note);
+        return note;
     }
 
 
@@ -1444,11 +1444,11 @@ public class NoteEditor extends AnkiActivity implements
         mEditFields = new LinkedList<>();
 
         // Use custom font if selected from preferences
-        Typeface mCustomTypeface = null;
+        Typeface customTypeface = null;
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String customFont = preferences.getString("browserEditorFont", "");
         if (!"".equals(customFont)) {
-            mCustomTypeface = AnkiFont.getTypeface(this, customFont);
+            customTypeface = AnkiFont.getTypeface(this, customFont);
         }
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
@@ -1481,7 +1481,7 @@ public class NoteEditor extends AnkiActivity implements
                 edit_line_view.setActionModeCallbacks(actionModeCallback);
             }
 
-            edit_line_view.setTypeface(mCustomTypeface);
+            edit_line_view.setTypeface(customTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode);
             mEditFields.add(newTextbox);
@@ -1531,8 +1531,8 @@ public class NoteEditor extends AnkiActivity implements
                 final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                IMultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
-                startMultimediaFieldEditor(index, mNote);
+                IMultimediaEditableNote note = getCurrentMultimediaEditableNote(col);
+                startMultimediaFieldEditor(index, note);
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                 // TODO: Update the icons for dark material theme, then can set 3rd argument to true
@@ -1583,9 +1583,9 @@ public class NoteEditor extends AnkiActivity implements
 
     private void startMultimediaFieldEditorForField(int index, IField field) {
         Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
-        IMultimediaEditableNote mNote = getCurrentMultimediaEditableNote(col);
-        mNote.setField(index, field);
-        startMultimediaFieldEditor(index, mNote);
+        IMultimediaEditableNote note = getCurrentMultimediaEditableNote(col);
+        note.setField(index, field);
+        startMultimediaFieldEditor(index, note);
     }
 
 
@@ -1632,12 +1632,12 @@ public class NoteEditor extends AnkiActivity implements
     }
 
 
-    private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote) {
-        IField field = mNote.getField(index);
+    private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote note) {
+        IField field = note.getField(index);
         Intent editCard = new Intent(NoteEditor.this, MultimediaEditFieldActivity.class);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, index);
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
+        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note);
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
     }
 

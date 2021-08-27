@@ -71,12 +71,12 @@ public class ImportDialog extends AsyncDialogFragment {
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int mType = getArguments().getInt("dialogType");
+        int type = getArguments().getInt("dialogType");
         Resources res = getResources();
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.cancelable(true);
 
-        switch (mType) {
+        switch (type) {
             case DIALOG_IMPORT_HINT: {
                 // Instruct the user that they need to put their APKG files into the AnkiDroid directory
                 return builder.title(res.getString(R.string.import_title))

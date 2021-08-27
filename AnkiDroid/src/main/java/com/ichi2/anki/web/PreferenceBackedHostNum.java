@@ -57,9 +57,9 @@ public class PreferenceBackedHostNum extends HostNum {
         super.setHostNum(newHostNum);
     }
 
-    private static Integer getHostNum(SharedPreferences mPreferences) {
+    private static Integer getHostNum(SharedPreferences preferences) {
         try {
-            String hostNum = mPreferences.getString("hostNum", null);
+            String hostNum = preferences.getString("hostNum", null);
             Timber.v("Obtained hostNum: %s", hostNum);
             return convertFromPreferenceValue(hostNum);
         } catch (Exception e) {

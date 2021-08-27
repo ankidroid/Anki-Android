@@ -30,9 +30,9 @@ import java.util.*
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(private val mBinding: Binding, private val mSide: CardSide) {
-    val isKey: Boolean get() = mBinding.isKey
-    val isKeyCode: Boolean get() = mBinding.isKeyCode
+class MappableBinding(private val binding: Binding, private val side: CardSide) {
+    val isKey: Boolean get() = binding.isKey
+    val isKeyCode: Boolean get() = binding.isKeyCode
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -42,8 +42,8 @@ class MappableBinding(private val mBinding: Binding, private val mSide: CardSide
             return false
         }
         val mappableBinding = other as MappableBinding
-        val binding = mappableBinding.mBinding
-        return if (mSide !== CardSide.BOTH && mappableBinding.mSide !== CardSide.BOTH && mSide !== mappableBinding.mSide) {
+        val binding = mappableBinding.binding
+        return if (side !== CardSide.BOTH && mappableBinding.side !== CardSide.BOTH && side !== mappableBinding.side) {
             false
         } else binding.getKeycode() == binding.getKeycode() &&
             binding.getUnicodeCharacter() == binding.getUnicodeCharacter() &&
@@ -53,12 +53,12 @@ class MappableBinding(private val mBinding: Binding, private val mSide: CardSide
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        return Objects.hash(mBinding.getKeycode(), mBinding.getUnicodeCharacter(), mBinding.getGesture())
+        return Objects.hash(binding.getKeycode(), binding.getUnicodeCharacter(), binding.getGesture())
     }
 
     private fun modifierEquals(keys: Binding.ModifierKeys?): Boolean {
         // equals allowing subclasses
-        val thisKeys = mBinding.getModifierKeys()
+        val thisKeys = binding.getModifierKeys()
         if (thisKeys === keys) {
             return true
         }
@@ -75,22 +75,22 @@ class MappableBinding(private val mBinding: Binding, private val mSide: CardSide
     }
 
     fun toDisplayString(context: Context): String {
-        val formatString = when (mSide) {
+        val formatString = when (side) {
             CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
             CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
             else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
         }
-        return String.format(formatString, mBinding.toDisplayString(context))
+        return String.format(formatString, binding.toDisplayString(context))
     }
 
     fun toPreferenceString(): String? {
         val s = StringBuilder()
-        s.append(mBinding.toString())
+        s.append(binding.toString())
         // don't serialise problematic bindings
         if (s.isEmpty()) {
             return null
         }
-        when (mSide) {
+        when (side) {
             CardSide.QUESTION -> s.append('0')
             CardSide.ANSWER -> s.append('1')
             CardSide.BOTH -> s.append('2')

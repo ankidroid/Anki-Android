@@ -25,110 +25,110 @@ import com.ichi2.utils.StringUtil
 import timber.log.Timber
 import java.util.*
 
-class Binding private constructor(private val mModifierKeys: ModifierKeys?, private val mKeycode: Int?, private val mUnicodeCharacter: Char?, private val mGesture: Gesture?) {
+class Binding private constructor(private val modifierKeys: ModifierKeys?, private val keycode: Int?, private val unicodeCharacter: Char?, private val gesture: Gesture?) {
     fun toDisplayString(context: Context?): String {
         val string = StringBuilder()
         when {
-            mKeycode != null -> {
+            keycode != null -> {
                 string.append(KEY_PREFIX)
                 string.append(' ')
-                string.append(Objects.requireNonNull(mModifierKeys).toString())
-                val keyCodeString = KeyEvent.keyCodeToString(mKeycode)
+                string.append(Objects.requireNonNull(modifierKeys).toString())
+                val keyCodeString = KeyEvent.keyCodeToString(keycode)
                 string.append(StringUtil.toTitleCase(keyCodeString.replace("KEYCODE_", "").replace('_', ' ')))
             }
-            mUnicodeCharacter != null -> {
+            unicodeCharacter != null -> {
                 string.append(KEY_PREFIX)
                 string.append(' ')
-                string.append(Objects.requireNonNull(mModifierKeys).toString())
-                string.append(mUnicodeCharacter)
+                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(unicodeCharacter)
             }
-            mGesture != null -> {
-                string.append(mGesture.toDisplayString(context!!))
+            gesture != null -> {
+                string.append(gesture.toDisplayString(context!!))
             }
         }
         return string.toString()
     }
 
-    fun getKeycode() = mKeycode
-    fun getModifierKeys() = mModifierKeys
-    fun getUnicodeCharacter() = mUnicodeCharacter
-    fun getGesture() = mGesture
+    fun getKeycode() = keycode
+    fun getModifierKeys() = modifierKeys
+    fun getUnicodeCharacter() = unicodeCharacter
+    fun getGesture() = gesture
 
     override fun toString(): String {
         val string = StringBuilder()
         when {
-            mKeycode != null -> {
+            keycode != null -> {
                 string.append(KEY_PREFIX)
-                string.append(Objects.requireNonNull(mModifierKeys).toString())
-                string.append(mKeycode)
+                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(keycode)
             }
-            mUnicodeCharacter != null -> {
+            unicodeCharacter != null -> {
                 string.append(UNICODE_PREFIX)
-                string.append(Objects.requireNonNull(mModifierKeys).toString())
-                string.append(mUnicodeCharacter)
+                string.append(Objects.requireNonNull(modifierKeys).toString())
+                string.append(unicodeCharacter)
             }
-            mGesture != null -> {
+            gesture != null -> {
                 string.append(GESTURE_PREFIX)
-                string.append(mGesture)
+                string.append(gesture)
             }
         }
         return string.toString()
     }
 
-    val isKeyCode: Boolean get() = mKeycode != null
+    val isKeyCode: Boolean get() = keycode != null
 
     val isKey: Boolean
-        get() = isKeyCode || mUnicodeCharacter != null
+        get() = isKeyCode || unicodeCharacter != null
 
-    fun isGesture(): Boolean = mGesture != null
+    fun isGesture(): Boolean = gesture != null
 
     fun matchesModifier(event: KeyEvent): Boolean {
-        return mModifierKeys == null || mModifierKeys.matches(event)
+        return modifierKeys == null || modifierKeys.matches(event)
     }
 
-    open class ModifierKeys internal constructor(private val mShift: Boolean, private val mCtrl: Boolean, private val mAlt: Boolean) {
+    open class ModifierKeys internal constructor(private val shift: Boolean, private val ctrl: Boolean, private val alt: Boolean) {
         fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected
             return shiftMatches(event) && ctrlMatches(event) && altMatches(event)
         }
 
-        private fun shiftMatches(event: KeyEvent): Boolean = mShift == event.isShiftPressed
+        private fun shiftMatches(event: KeyEvent): Boolean = shift == event.isShiftPressed
 
-        private fun ctrlMatches(event: KeyEvent): Boolean = mCtrl == event.isCtrlPressed
+        private fun ctrlMatches(event: KeyEvent): Boolean = ctrl == event.isCtrlPressed
 
         private fun altMatches(event: KeyEvent): Boolean = altMatches(event.isAltPressed)
 
-        open fun shiftMatches(shiftPressed: Boolean): Boolean = mShift == shiftPressed
+        open fun shiftMatches(shiftPressed: Boolean): Boolean = shift == shiftPressed
 
-        fun ctrlMatches(ctrlPressed: Boolean): Boolean = mCtrl == ctrlPressed
+        fun ctrlMatches(ctrlPressed: Boolean): Boolean = ctrl == ctrlPressed
 
-        fun altMatches(altPressed: Boolean): Boolean = mAlt == altPressed
+        fun altMatches(altPressed: Boolean): Boolean = alt == altPressed
 
         override fun toString(): String {
             val string = StringBuilder()
-            if (mCtrl) {
+            if (ctrl) {
                 string.append("Ctrl+")
             }
-            if (mAlt) {
+            if (alt) {
                 string.append("Alt+")
             }
-            if (mShift) {
+            if (shift) {
                 string.append("Shift+")
             }
             return string.toString()
         }
 
         companion object {
-            fun none(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = false, mAlt = false)
+            fun none(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = false)
 
             @JvmStatic
-            fun ctrl(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = true, mAlt = false)
+            fun ctrl(): ModifierKeys = ModifierKeys(shift = false, ctrl = true, alt = false)
 
             @JvmStatic
-            fun shift(): ModifierKeys = ModifierKeys(mShift = true, mCtrl = false, mAlt = false)
+            fun shift(): ModifierKeys = ModifierKeys(shift = true, ctrl = false, alt = false)
 
             @JvmStatic
-            fun alt(): ModifierKeys = ModifierKeys(mShift = false, mCtrl = false, mAlt = true)
+            fun alt(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = true)
 
             /**
              * Parses a [ModifierKeys] from a string.

@@ -92,9 +92,9 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         }
         MaterialDialog dialog = builder.build();
         if (dialog.getRecyclerView() != null) {
-            LinearLayoutManager mLayoutManager = (LinearLayoutManager)dialog.getRecyclerView().getLayoutManager();
+            LinearLayoutManager layoutManager = (LinearLayoutManager)dialog.getRecyclerView().getLayoutManager();
             DividerItemDecoration dividerItemDecoration =
-                    new DividerItemDecoration(dialog.getRecyclerView().getContext(), mLayoutManager.getOrientation());
+                    new DividerItemDecoration(dialog.getRecyclerView().getContext(), layoutManager.getOrientation());
             float scale = res.getDisplayMetrics().density;
             int dpAsPixels = (int) (5*scale + 0.5f);
             dialog.getView().setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels);

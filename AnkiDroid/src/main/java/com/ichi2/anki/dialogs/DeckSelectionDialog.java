@@ -152,13 +152,13 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
 
     private void adjustToolbar(View dialogView, DecksArrayAdapter adapter) {
-        Toolbar mToolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar);
+        Toolbar toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar);
 
-        mToolbar.setTitle(getTitle());
+        toolbar.setTitle(getTitle());
 
-        mToolbar.inflateMenu(R.menu.deck_picker_dialog_menu);
+        toolbar.inflateMenu(R.menu.deck_picker_dialog_menu);
 
-        MenuItem searchItem = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_filter);
+        MenuItem searchItem = toolbar.getMenu().findItem(R.id.deck_picker_dialog_action_filter);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setQueryHint(getString(R.string.deck_picker_dialog_filter_decks));
@@ -176,7 +176,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             }
         });
 
-        MenuItem addDecks = mToolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
+        MenuItem addDecks = toolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
         addDecks.setOnMenuItemClickListener(menuItem -> {
             // creating new deck without any parent deck
             showDeckDialog();

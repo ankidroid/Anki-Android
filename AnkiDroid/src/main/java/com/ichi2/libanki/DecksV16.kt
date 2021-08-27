@@ -108,12 +108,12 @@ var Optional<DeckV16>.name: str
 
 /** Configuration of some deck, filtered deck for filtered deck, config for standard deck */
 abstract class DeckConfigV16 private constructor(val config: JSONObject) {
-    class Config(val mConfigData: JSONObject) : DeckConfigV16(mConfigData) {
-        override fun deepClone(): DeckConfigV16 = Config(mConfigData.deepClone())
+    class Config(val configData: JSONObject) : DeckConfigV16(configData) {
+        override fun deepClone(): DeckConfigV16 = Config(configData.deepClone())
     }
 
-    class FilteredDeck(val mDeckData: JSONObject) : DeckConfigV16(mDeckData) {
-        override fun deepClone(): DeckConfigV16 = FilteredDeck(mDeckData.deepClone())
+    class FilteredDeck(val deckData: JSONObject) : DeckConfigV16(deckData) {
+        override fun deepClone(): DeckConfigV16 = FilteredDeck(deckData.deepClone())
     }
 
     var conf: Long
@@ -160,14 +160,14 @@ private typealias childMapNode = Dict<did, Any>
  * Afterwards, we can finish up the implementations, run our tests, and use this with a V16
  * collection, using decks as a separate table
  */
-class DeckManager(private val col: Collection, private val mDecksBackend: DecksBackend) {
+class DeckManager(private val col: Collection, private val decksBackend: DecksBackend) {
 
     /* Registry save/load */
 
     private fun save(grp: DeckConfigV16) {
         when (grp) {
             is DeckConfigV16.Config -> save(grp)
-            is DeckConfigV16.FilteredDeck -> save(DeckV16.FilteredDeck(grp.mDeckData))
+            is DeckConfigV16.FilteredDeck -> save(DeckV16.FilteredDeck(grp.deckData))
         }
     }
 
@@ -206,7 +206,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     /** Remove the deck. If cardsToo, delete any cards inside. */
     fun rem(did: did, cardsToo: bool = true, childrenToo: bool = true) {
         assert(cardsToo && childrenToo)
-        mDecksBackend.remove_deck(did)
+        decksBackend.remove_deck(did)
     }
 
     /** A sorted sequence of deck names and IDs. */
@@ -215,29 +215,29 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
         include_filtered: bool = true
     ): ImmutableList<DeckNameId> {
 
-        return mDecksBackend.all_names_and_ids(
+        return decksBackend.all_names_and_ids(
             skip_empty_default = skip_empty_default,
             include_filtered = include_filtered
         )
     }
 
     fun id_for_name(name: str): Optional<did> {
-        return mDecksBackend.id_for_name(name)
+        return decksBackend.id_for_name(name)
     }
 
     fun get_legacy(did: did): Optional<DeckV16> {
-        return mDecksBackend.get_deck_legacy(did)
+        return decksBackend.get_deck_legacy(did)
     }
 
     fun get_all_legacy(): ImmutableList<DeckV16> {
-        return mDecksBackend.all_decks_legacy()
+        return decksBackend.all_decks_legacy()
     }
     fun new_deck_legacy(filtered: bool): DeckV16 {
-        return mDecksBackend.new_deck_legacy(filtered)
+        return decksBackend.new_deck_legacy(filtered)
     }
 
     fun deck_tree(): DeckTreeNode {
-        return mDecksBackend.deck_tree(now = 0L, top_deck_id = 0L)
+        return decksBackend.deck_tree(now = 0L, top_deck_id = 0L)
     }
 
     /** All decks. Expensive; prefer all_names_and_ids() */
@@ -300,7 +300,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
 
     /** Add or update an existing deck. Used for syncing and merging. */
     fun update(g: DeckV16, preserve_usn: bool = true) {
-        g.id = mDecksBackend.add_or_update_deck_legacy(g, preserve_usn)
+        g.id = decksBackend.add_or_update_deck_legacy(g, preserve_usn)
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
@@ -360,7 +360,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
 
     /** A list of all deck config. */
     fun all_config(): ImmutableList<DeckConfigV16.Config> {
-        return mDecksBackend.all_config()
+        return decksBackend.all_config()
     }
 
     fun confForDid(did: did): DeckConfigV16 {
@@ -383,11 +383,11 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
     }
 
     fun get_config(conf_id: dcid): Optional<DeckConfigV16> {
-        return mDecksBackend.get_config(conf_id)
+        return decksBackend.get_config(conf_id)
     }
 
     fun update_config(conf: DeckConfigV16, preserve_usn: bool = false) {
-        conf.id = mDecksBackend.update_config(conf, preserve_usn)
+        conf.id = decksBackend.update_config(conf, preserve_usn)
     }
 
     fun add_config(
@@ -399,7 +399,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
             conf = clone_from.get().deepClone()
             conf.id = 0L
         } else {
-            conf = mDecksBackend.new_deck_config_legacy()
+            conf = decksBackend.new_deck_config_legacy()
         }
         conf.name = name
         this.update_config(conf)
@@ -424,7 +424,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
                 this.save(g)
             }
         }
-        mDecksBackend.remove_deck_config(id)
+        decksBackend.remove_deck_config(id)
     }
 
     fun setConf(grp: DeckConfigV16, id: dcid) {
@@ -444,7 +444,7 @@ class DeckManager(private val col: Collection, private val mDecksBackend: DecksB
 
     fun restoreToDefault(conf: DeckConfigV16) {
         val oldOrder = conf.getJSONObject("new").getInt("order")
-        val new = mDecksBackend.new_deck_config_legacy()
+        val new = decksBackend.new_deck_config_legacy()
         new.id = conf.id
         new.name = conf.name
         this.update_config(new)

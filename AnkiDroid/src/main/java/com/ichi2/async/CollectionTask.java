@@ -1174,9 +1174,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         private final int mColumn2Index;
 
 
-        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer mStartPos, Integer n, int column1Index, int column2Index) {
+        public RenderBrowserQA(CardBrowser.CardCollection<CardBrowser.CardCache> cards, Integer startPos, Integer n, int column1Index, int column2Index) {
             this.mCards = cards;
-            this.mStartPos = mStartPos;
+            this.mStartPos = startPos;
             this.mN = n;
             this.mColumn1Index = column1Index;
             this.mColumn2Index = column2Index;

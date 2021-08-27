@@ -26,7 +26,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.PromptOptions
 /**
  * Used for changing PromptBackgroundInterface to PromptBackground.
  */
-class PromptBackgroundAdapter(private val mPromptBackgroundInterface: PromptBackgroundInterface) : PromptBackground() {
+class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackgroundInterface) : PromptBackground() {
     companion object {
         fun PromptBackgroundInterface.toPromptBackground(): PromptBackground {
             return PromptBackgroundAdapter(this)
@@ -34,22 +34,22 @@ class PromptBackgroundAdapter(private val mPromptBackgroundInterface: PromptBack
     }
 
     override fun update(options: PromptOptions<out PromptOptions<*>>, revealModifier: Float, alphaModifier: Float) {
-        mPromptBackgroundInterface.update(options, revealModifier, alphaModifier)
+        promptBackgroundInterface.update(options, revealModifier, alphaModifier)
     }
 
     override fun draw(canvas: Canvas) {
-        mPromptBackgroundInterface.draw(canvas)
+        promptBackgroundInterface.draw(canvas)
     }
 
     override fun contains(x: Float, y: Float): Boolean {
-        return mPromptBackgroundInterface.contains(x, y)
+        return promptBackgroundInterface.contains(x, y)
     }
 
     override fun setColour(colour: Int) {
-        mPromptBackgroundInterface.setColour(colour)
+        promptBackgroundInterface.setColour(colour)
     }
 
     override fun prepare(options: PromptOptions<out PromptOptions<*>>, clipToBounds: Boolean, clipBounds: Rect) {
-        mPromptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
+        promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
     }
 }

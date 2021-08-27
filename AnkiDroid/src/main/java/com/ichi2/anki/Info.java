@@ -65,9 +65,9 @@ public class Info extends AnkiActivity {
 
         Resources res = getResources();
 
-        int mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        int type = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
         // If the page crashes, we do not want to display it again (#7135 maybe)
-        if (mType == TYPE_NEW_VERSION) {
+        if (type == TYPE_NEW_VERSION) {
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this.getBaseContext());
             InitialActivity.setUpgradedToLatestVersion(prefs);
         }
@@ -106,7 +106,7 @@ public class Info extends AnkiActivity {
 
         ViewGroupUtils.setRenderWorkaround(this);
 
-        switch (mType) {
+        switch (type) {
             case TYPE_ABOUT: {
                 String[] content = res.getStringArray(R.array.about_content);
                 sb.append("<html><style>body {color:").append(textColor).append(";}</style>");

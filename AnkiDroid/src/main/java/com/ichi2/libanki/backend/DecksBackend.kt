@@ -67,11 +67,11 @@ interface DecksBackend {
 class DeckRenameError(message: String) : Exception(message)
 
 /** WIP: Backend implementation for usage in Decks.kt */
-class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
+class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
 
     override fun get_config(conf_id: dcid): Optional<DeckConfigV16> {
         return try {
-            val jsonObject = from_json_bytes(mBackend.getDeckConfigLegacy(conf_id))
+            val jsonObject = from_json_bytes(backend.getDeckConfigLegacy(conf_id))
             val config = DeckConfigV16.Config(jsonObject)
             Optional.of(config)
         } catch (ex: BackendNotFoundException) {
@@ -80,22 +80,22 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
     }
 
     override fun update_config(conf: DeckConfigV16, preserve_usn: Boolean): dcid {
-        return mBackend.addOrUpdateDeckConfigLegacy(conf.to_json_bytes(), preserve_usn).dcid
+        return backend.addOrUpdateDeckConfigLegacy(conf.to_json_bytes(), preserve_usn).dcid
     }
 
     override fun new_deck_config_legacy(): DeckConfigV16 {
-        val jsonObject = from_json_bytes(mBackend.newDeckConfigLegacy())
+        val jsonObject = from_json_bytes(backend.newDeckConfigLegacy())
         return DeckConfigV16.Config(jsonObject)
     }
 
     override fun all_config(): MutableList<DeckConfigV16.Config> {
-        val jsonObject = from_json_bytes(mBackend.allDeckConfigLegacy())
+        val jsonObject = from_json_bytes(backend.allDeckConfigLegacy())
         throw NotImplementedException()
     }
 
     override fun add_or_update_deck_legacy(deck: DeckV16, preserve_usn: Boolean): did {
         try {
-            val addOrUpdateResult = mBackend.addOrUpdateDeckLegacy(deck.to_json_bytes(), preserve_usn)
+            val addOrUpdateResult = backend.addOrUpdateDeckLegacy(deck.to_json_bytes(), preserve_usn)
             return addOrUpdateResult.did
         } catch (ex: BackendDeckIsFilteredException) {
             throw DeckRenameError("deck was filtered")
@@ -104,7 +104,7 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
 
     override fun id_for_name(name: String): Optional<did> {
         try {
-            return Optional.of(mBackend.getDeckIDByName(name).did)
+            return Optional.of(backend.getDeckIDByName(name).did)
         } catch (ex: BackendNotFoundException) {
             return Optional.empty()
         }
@@ -112,7 +112,7 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
 
     override fun get_deck_legacy(did: did): Optional<DeckV16> {
         try {
-            val ret = from_json_bytes(mBackend.getDeckLegacy(did))
+            val ret = from_json_bytes(backend.getDeckLegacy(did))
             throw NotImplementedException("convert to either filtered or not filtered")
         } catch (ex: BackendNotFoundException) {
             return Optional.empty()
@@ -120,7 +120,7 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
     }
 
     override fun new_deck_legacy(filtered: Boolean): DeckV16 {
-        val deck = from_json_bytes(mBackend.newDeckLegacy(filtered))
+        val deck = from_json_bytes(backend.newDeckLegacy(filtered))
         return if (filtered) {
             DeckV16.FilteredDeck(deck)
         } else {
@@ -134,23 +134,23 @@ class RustDroidDeckBackend(private val mBackend: BackendV1) : DecksBackend {
     }
 
     override fun all_names_and_ids(skip_empty_default: Boolean, include_filtered: Boolean): List<DeckNameId> {
-        return mBackend.getDeckNames(skip_empty_default, include_filtered).entriesList.map {
+        return backend.getDeckNames(skip_empty_default, include_filtered).entriesList.map {
             entry ->
             DeckNameId(entry.name, entry.id)
         }
     }
 
     override fun deck_tree(now: Long, top_deck_id: Long): DeckTreeNode {
-        val tree = mBackend.deckTree(now, top_deck_id)
+        val tree = backend.deckTree(now, top_deck_id)
         throw NotImplementedException()
     }
 
     override fun remove_deck_config(id: dcid) {
-        mBackend.removeDeckConfig(id)
+        backend.removeDeckConfig(id)
     }
 
     override fun remove_deck(did: did) {
-        mBackend.removeDeck(did)
+        backend.removeDeck(did)
     }
 
     private fun DeckV16.to_json_bytes(): ByteString {

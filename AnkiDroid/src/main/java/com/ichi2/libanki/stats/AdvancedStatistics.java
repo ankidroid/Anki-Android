@@ -170,28 +170,28 @@ public class AdvancedStatistics {
         mSettings = new Settings(context);
         metaInfo.setStatsCalculated(true);
 
-        Collection mCol = CollectionHelper.getInstance().getCol(context);
+        Collection col = CollectionHelper.getInstance().getCol(context);
 
-        int mMaxCards = 0;
-        double mLastElement = 0;
-        int mZeroIndex = 0;
+        int maxCards = 0;
+        double lastElement = 0;
+        int zeroIndex = 0;
 
-        int[] mValueLabels = {     R.string.statistics_relearn,
+        int[] valueLabels = {     R.string.statistics_relearn,
                                    R.string.statistics_mature,
                                    R.string.statistics_young,
                                    R.string.statistics_learn};
-        int[] mColors = {          R.attr.stats_relearn,
+        int[] colors = {          R.attr.stats_relearn,
                                    R.attr.stats_mature,
                                    R.attr.stats_young,
                                    R.attr.stats_learn};
 
-        int[] mAxisTitles = { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
+        int[] axisTitles = { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
 
-        PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, mCol, dids);
+        PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, col, dids);
 
         ArrayList<int[]> dues = simuationResult.getNReviews();
 
-        double[][] mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
+        double[][] seriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
 
         for (int t = 0;t < dues.size(); t++) {
             int[] data = dues.get(t);
@@ -200,79 +200,79 @@ public class AdvancedStatistics {
                            data[REVIEW_TYPE_MATURE_PLUS_1] +
                            data[REVIEW_TYPE_RELEARN_PLUS_1];
 
-            if(nReviews > mMaxCards)
-                mMaxCards = nReviews;                                                                     //Y-Axis: Max. value
+            if(nReviews > maxCards)
+                maxCards = nReviews;                                                                     //Y-Axis: Max. value
 
             //In the bar-chart, the bars will be stacked on top of each other.
             //For the i^{th} bar counting from the bottom we therefore have to
             //provide the sum of the heights of the i^{th} bar and all bars below it.
-            mSeriesList[TIME][t]                        = data[TIME];                                     //X-Axis: Day / Week / Month
-            mSeriesList[REVIEW_TYPE_LEARN_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
+            seriesList[TIME][t]                        = data[TIME];                                     //X-Axis: Day / Week / Month
+            seriesList[REVIEW_TYPE_LEARN_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
                                                           data[REVIEW_TYPE_YOUNG_PLUS_1] +
                                                           data[REVIEW_TYPE_MATURE_PLUS_1] +
                                                           data[REVIEW_TYPE_RELEARN_PLUS_1];               //Y-Axis: # Cards
-            mSeriesList[REVIEW_TYPE_YOUNG_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
+            seriesList[REVIEW_TYPE_YOUNG_PLUS_1][t]    = data[REVIEW_TYPE_LEARN_PLUS_1] +
                                                           data[REVIEW_TYPE_YOUNG_PLUS_1] +
                                                           data[REVIEW_TYPE_MATURE_PLUS_1];                //Y-Axis: # Mature cards
-            mSeriesList[REVIEW_TYPE_MATURE_PLUS_1][t]   = data[REVIEW_TYPE_LEARN_PLUS_1] +
+            seriesList[REVIEW_TYPE_MATURE_PLUS_1][t]   = data[REVIEW_TYPE_LEARN_PLUS_1] +
                                                           data[REVIEW_TYPE_YOUNG_PLUS_1];                 //Y-Axis: # Young
-            mSeriesList[REVIEW_TYPE_RELEARN_PLUS_1][t]  = data[REVIEW_TYPE_LEARN_PLUS_1];                 //Y-Axis: # Learn
+            seriesList[REVIEW_TYPE_RELEARN_PLUS_1][t]  = data[REVIEW_TYPE_LEARN_PLUS_1];                 //Y-Axis: # Learn
 
-            if(data[TIME] > mLastElement)
-                mLastElement = data[TIME];          //X-Axis: Max. value (only for TYPE_LIFE)
+            if(data[TIME] > lastElement)
+                lastElement = data[TIME];          //X-Axis: Max. value (only for TYPE_LIFE)
             if(data[TIME] == 0){
-                mZeroIndex = t;                     //Because we retrieve dues in the past and we should not cumulate them
+                zeroIndex = t;                     //Because we retrieve dues in the past and we should not cumulate them
             }
         }
-        int mMaxElements = dues.size()-1;           //# X values
+        int maxElements = dues.size()-1;           //# X values
         switch (type) {
             case TYPE_MONTH:
-                mLastElement = 31;              //X-Axis: Max. value
+                lastElement = 31;              //X-Axis: Max. value
                 break;
             case TYPE_YEAR:
-                mLastElement = 52;              //X-Axis: Max. value
+                lastElement = 52;              //X-Axis: Max. value
                 break;
             default:
         }
-        double mFirstElement = 0;                      //X-Axis: Min. value
+        double firstElement = 0;                      //X-Axis: Min. value
 
-        double[][] mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
+        double[][] cumulative = simuationResult.getNInState();                                                          //Day starting at zeroIndex, Cumulative # cards
 
-        double mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
-                  mCumulative[CARD_TYPE_YOUNG_PLUS_1][mCumulative[CARD_TYPE_YOUNG_PLUS_1].length-1] +
-                  mCumulative[CARD_TYPE_MATURE_PLUS_1][mCumulative[CARD_TYPE_MATURE_PLUS_1].length-1];
+        double count = cumulative[CARD_TYPE_NEW_PLUS_1][cumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
+                  cumulative[CARD_TYPE_YOUNG_PLUS_1][cumulative[CARD_TYPE_YOUNG_PLUS_1].length-1] +
+                  cumulative[CARD_TYPE_MATURE_PLUS_1][cumulative[CARD_TYPE_MATURE_PLUS_1].length-1];
 
         //some adjustments to not crash the chartbuilding with empty data
-        if(mMaxElements == 0){
-            mMaxElements = 10;
+        if(maxElements == 0){
+            maxElements = 10;
         }
-        if(mMcount == 0){
-            mMcount = 10;
+        if(count == 0){
+            count = 10;
         }
-        if(mFirstElement == mLastElement){
-            mFirstElement = 0;
-            mLastElement = 6;
+        if(firstElement == lastElement){
+            firstElement = 0;
+            lastElement = 6;
         }
-        if(mMaxCards == 0)
-            mMaxCards = 10;
+        if(maxCards == 0)
+            maxCards = 10;
 
         metaInfo.setmDynamicAxis(true);
         metaInfo.setmHasColoredCumulative(true);
         metaInfo.setmType(type);
         metaInfo.setmTitle(R.string.stats_forecast);
         metaInfo.setmBackwards(true);
-        metaInfo.setmValueLabels(mValueLabels);
-        metaInfo.setmColors(mColors);
-        metaInfo.setmAxisTitles(mAxisTitles);
-        metaInfo.setmMaxCards(mMaxCards);
-        metaInfo.setmMaxElements(mMaxElements);
-        metaInfo.setmFirstElement(mFirstElement);
-        metaInfo.setmLastElement(mLastElement);
-        metaInfo.setmZeroIndex(mZeroIndex);
-        metaInfo.setmCumulative(mCumulative);
-        metaInfo.setmMcount(mMcount);
+        metaInfo.setmValueLabels(valueLabels);
+        metaInfo.setmColors(colors);
+        metaInfo.setmAxisTitles(axisTitles);
+        metaInfo.setmMaxCards(maxCards);
+        metaInfo.setmMaxElements(maxElements);
+        metaInfo.setmFirstElement(firstElement);
+        metaInfo.setmLastElement(lastElement);
+        metaInfo.setmZeroIndex(zeroIndex);
+        metaInfo.setmCumulative(cumulative);
+        metaInfo.setmMcount(count);
 
-        metaInfo.setmSeriesList(mSeriesList);
+        metaInfo.setmSeriesList(seriesList);
 
         metaInfo.setDataAvailable(dues.size() > 0);
 
@@ -282,13 +282,13 @@ public class AdvancedStatistics {
     /**
      * Determine forecast statistics based on a computation or simulation of future reviews and returns the results of the simulation.
      * @param type @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
-     * @param mCol @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
+     * @param col @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
      * @param dids @see #calculateDueOriginal(StatsMetaInfo, int, Context, String)
      * @return An object containing the results of the simulation:
      *        - The forecasted number of reviews per review type (relearn, mature, young, learn)
      *        - The forecasted number of cards in each state (new, young, mature)
      */
-    private PlottableSimulationResult calculateDueAsPlottableSimulationResult(Stats.AxisType type, Collection mCol, String dids) {
+    private PlottableSimulationResult calculateDueAsPlottableSimulationResult(Stats.AxisType type, Collection col, String dids) {
         int end = 0;
         int chunk = 0;
         switch (type) {
@@ -307,13 +307,13 @@ public class AdvancedStatistics {
         }
 
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol, mSettings.getDayStartCutoff(mCol.getCrt()));
+        EaseClassifier classifier = new EaseClassifier(col.getTime(), col.getDb());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(col.getDb(), classifier, end, chunk);
+        TodayStats todayStats = new TodayStats(col, mSettings.getDayStartCutoff(col.getCrt()));
 
-        long t0 = mCol.getTime().intTimeMS();
-        SimulationResult simulationResult = reviewSimulator.simNreviews(mSettings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
-        long t1 = mCol.getTime().intTimeMS();
+        long t0 = col.getTime().intTimeMS();
+        SimulationResult simulationResult = reviewSimulator.simNreviews(mSettings.getToday((int)col.getCrt()), col.getDecks(), dids, todayStats);
+        long t1 = col.getTime().intTimeMS();
 
         Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 

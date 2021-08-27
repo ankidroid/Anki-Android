@@ -839,11 +839,11 @@ public class Preferences extends AnkiActivity {
             addPreferencesFromResource(R.xml.preferences_general);
             PreferenceScreen screen = getPreferenceScreen();
             if (AdaptionUtil.isRestrictedLearningDevice()) {
-                CheckBoxPreference mCheckBoxPref_Vibrate = requirePreference("widgetVibrate");
-                CheckBoxPreference mCheckBoxPref_Blink = requirePreference("widgetBlink");
-                PreferenceCategory mCategory = requirePreference("category_general_notification_pref");
-                mCategory.removePreference(mCheckBoxPref_Vibrate);
-                mCategory.removePreference(mCheckBoxPref_Blink);
+                CheckBoxPreference checkBoxPref_Vibrate = requirePreference("widgetVibrate");
+                CheckBoxPreference checkBoxPref_Blink = requirePreference("widgetBlink");
+                PreferenceCategory category = requirePreference("category_general_notification_pref");
+                category.removePreference(checkBoxPref_Vibrate);
+                category.removePreference(checkBoxPref_Blink);
             }
             // Build languages
             initializeLanguageDialog(screen);
@@ -975,19 +975,19 @@ public class Preferences extends AnkiActivity {
 
 
         private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
-            List<AnkiFont> mFonts = Utils.getCustomFonts(requireContext());
-            int count = mFonts.size();
+            List<AnkiFont> fonts = Utils.getCustomFonts(requireContext());
+            int count = fonts.size();
             Timber.d("There are %d custom fonts", count);
             String[] names = new String[count + 1];
             names[0] = defaultValue;
             if (useFullPath) {
                 for (int index = 1; index < count + 1; ++index) {
-                    names[index] = mFonts.get(index - 1).getPath();
+                    names[index] = fonts.get(index - 1).getPath();
                     Timber.d("Adding custom font: %s", names[index]);
                 }
             } else {
                 for (int index = 1; index < count + 1; ++index) {
-                    names[index] = mFonts.get(index - 1).getName();
+                    names[index] = fonts.get(index - 1).getName();
                     Timber.d("Adding custom font: %s", names[index]);
                 }
             }
@@ -1403,7 +1403,7 @@ public class Preferences extends AnkiActivity {
             setTitle(R.string.custom_sync_server_title);
             addPreferencesFromResource(R.xml.preferences_custom_sync_server);
             Preference syncUrlPreference = requirePreference("syncBaseUrl");
-            Preference mSyncUrlPreference = requirePreference("syncMediaUrl");
+            Preference syncMediaUrlPreference = requirePreference("syncMediaUrl");
             syncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 String newUrl = newValue.toString();
                 if (!URLUtil.isValidUrl(newUrl)) {
@@ -1417,7 +1417,7 @@ public class Preferences extends AnkiActivity {
 
                 return true;
             });
-            mSyncUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            syncMediaUrlPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 String newUrl = newValue.toString();
                 if (!URLUtil.isValidUrl(newUrl)) {
                     new AlertDialog.Builder(requireContext())

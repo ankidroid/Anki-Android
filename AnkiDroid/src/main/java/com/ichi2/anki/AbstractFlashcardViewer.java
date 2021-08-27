@@ -1560,7 +1560,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
-        FrameLayout mCardContainer = findViewById(R.id.flashcard_frame);
+        FrameLayout cardContainer = findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = findViewById(R.id.top_bar);
 
@@ -1615,12 +1615,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mNext4.setVisibility(View.GONE);
         }
 
-        Button mFlipCard = findViewById(R.id.flip_card);
+        Button flipCard = findViewById(R.id.flip_card);
         mFlipCardLayout = findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
         if (animationEnabled()) {
-            mFlipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
+            flipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
         }
 
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
@@ -1671,7 +1671,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         );
         LinearLayout answerArea = findViewById(R.id.bottom_area_layout);
         RelativeLayout.LayoutParams answerAreaParams = (RelativeLayout.LayoutParams) answerArea.getLayoutParams();
-        RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) mCardContainer.getLayoutParams();
+        RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) cardContainer.getLayoutParams();
 
         switch (answerButtonsPosition) {
             case "top":
@@ -1690,7 +1690,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 break;
         }
         answerArea.setLayoutParams(answerAreaParams);
-        mCardContainer.setLayoutParams(cardContainerParams);
+        cardContainer.setLayoutParams(cardContainerParams);
     }
 
 
@@ -3659,8 +3659,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     return true;
                 }
 
-                String mFlag = url.replaceFirst("signal:flag_","");
-                switch (mFlag) {
+                String flag = url.replaceFirst("signal:flag_","");
+                switch (flag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
                         return true;
                     case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
@@ -3908,20 +3908,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return false;
             }
 
-            Version mVersionCurrent = Version.valueOf(sCurrentJsApiVersion);
-            Version mVersionSupplied = Version.valueOf(apiVer);
+            Version versionCurrent = Version.valueOf(sCurrentJsApiVersion);
+            Version versionSupplied = Version.valueOf(apiVer);
 
             /*
             * if api major version equals to supplied major version then return true and also check for minor version and patch version
             * show toast for update and contact developer if need updates
             * otherwise return false
             */
-            if (mVersionSupplied.equals(mVersionCurrent)) {
+            if (versionSupplied.equals(versionCurrent)) {
                 return true;
-            } else if (mVersionSupplied.lessThan(mVersionCurrent)) {
+            } else if (versionSupplied.lessThan(versionCurrent)) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
 
-                return mVersionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
+                return versionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
             } else {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
                 return false;

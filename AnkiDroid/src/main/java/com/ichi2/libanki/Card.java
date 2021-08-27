@@ -674,11 +674,11 @@ public class Card implements Cloneable {
         return Card.intToFlag(mFlags);
     }
 
-    public static int setFlagInInt(int mFlags, int flag) {
+    public static int setFlagInInt(int flags, int flag) {
         Assert.that(0 <= flag, "flag to set is negative");
         Assert.that(flag <= 7, "flag to set is greater than 7.");
         // Setting the 3 firsts bits to 0, keeping the remaining.
-        int extraData = (mFlags & ~0b111);
+        int extraData = (flags & ~0b111);
         // flag in 3 fist bits, same data as in mFlags everywhere else
         return extraData | flag;
     }
