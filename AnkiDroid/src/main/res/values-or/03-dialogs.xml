@@ -51,7 +51,7 @@
     </plurals>
     <string name="delete_cram_deck_message">%sର ସମସ୍ତ କାର୍ଡକୁ ସେମାନଙ୍କର ମୂଳ ଡେକ୍କୁ ପଠାଇବେ କି?</string>
     <string name="no_tts_available_message">କୌଣସି ଲେଖା-ରୁ-କଥା ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
-    <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି...</string>
+    <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
     <string-array name="about_content">
@@ -158,7 +158,7 @@
     <string name="tags_dialog_option_new_cards">ନୂଆ</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ବାକି</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହଉଛି</string>
+    <string name="emtpy_cards_finding">ଖାଲି ପତ୍ର ଖୋଜାହଉଛି&#8230;</string>
     <string name="confirm_cancel">ଆପଣ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="empty_cards_none">କୌଣସି ଖାଲି ପତ୍ର ନାହିଁ</string>
     <string name="empty_cards_count">ବିଲୋପ କରିବାକୁ ପତ୍ର : %d</string>

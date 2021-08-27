@@ -45,6 +45,7 @@
     <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
     <string name="settings">ସେଟିଂସମୂହ</string>
     <string name="help">ସହାୟତା</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
     <string name="studyoptions_due_today">ଆଜି ବାକି:</string>
     <string name="studyoptions_new_total">ମୋଟ ନୂତନ କାର୍ଡ:</string>
@@ -175,7 +176,7 @@
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled">ସିଙ୍କ୍ ବାତିଲ ହୋଇଛି</string>
-    <string name="sync_cancel_message">ବାତିଲ ହେଉଛି...\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
+    <string name="sync_cancel_message">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
     <string name="export">ରପ୍ତାନି</string>
     <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="export_deck">ଡେକ୍ ରପ୍ତାନି କରନ୍ତୁ</string>
@@ -185,7 +186,7 @@
     <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_styling">ଶୈଳିକରଣ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ଦୃଶ୍ୟ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ରୂପ</string>
     <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
     <string name="card_template_editor_insert_field">କ୍ଷେତ୍ର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="card_template_editor_select_field">କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>

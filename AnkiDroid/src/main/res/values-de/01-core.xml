@@ -45,6 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Einstellungen</string>
     <string name="help">Hilfe</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Rückmeldung senden</string>
     <string name="studyoptions_due_today">Heute fällig:</string>
     <string name="studyoptions_new_total">Neue Karten gesamt:</string>

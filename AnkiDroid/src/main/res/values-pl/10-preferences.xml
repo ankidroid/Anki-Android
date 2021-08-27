@@ -296,7 +296,7 @@
     <string name="deck_conf_cram_order" maxLength="41">karty zaznaczone przez</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Kolejkuj ponownie</string>
     <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Włącz drugi filtr</string>
     <string name="deck_conf_cram_steps" maxLength="41">Własne kroki (w minutach)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Zdefiniuj własne kroki</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Włącz powiadomienia dla talii w tej grupie talii</string>
@@ -317,9 +317,9 @@
     <string name="binding_add_key">Add key</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
+    <string name="card_side_selection_title">Wybierz stronę karty</string>
+    <string name="card_side_question">Pytanie</string>
+    <string name="card_side_answer">Odpowiedź</string>
     <string name="card_side_both">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
