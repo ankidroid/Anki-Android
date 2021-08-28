@@ -409,6 +409,11 @@ class ModelsV16(private val col: Collection) {
 
     fun newField(name: str) = new_field(name)
 
+    @RustCleanup("remove")
+    fun beforeUpload() {
+        // intentionally blank - not needed
+    }
+
     fun addField(m: NoteType, field: Field) {
         add_field(m, field)
         if (m.id != 0L) {
