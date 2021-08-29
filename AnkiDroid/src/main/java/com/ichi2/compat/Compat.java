@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.view.Window;
 import android.widget.TimePicker;
 
 import com.ichi2.async.ProgressSenderAndCancelListener;
@@ -142,6 +143,8 @@ public interface Compat {
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
+    void setFullscreen(Window window);
 
     @IntDef(flag = true,
             value = {

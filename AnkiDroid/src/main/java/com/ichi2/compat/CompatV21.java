@@ -26,6 +26,8 @@ import android.media.ThumbnailUtils;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TimePicker;
 
 import com.ichi2.async.ProgressSenderAndCancelListener;
@@ -216,6 +218,13 @@ public class CompatV21 implements Compat {
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
+
+
+    @Override
+    public void setFullscreen(Window window) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
 
     @Override
     public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {

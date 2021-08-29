@@ -46,6 +46,7 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
+import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
@@ -91,14 +92,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Themes.setTheme(this);
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {        if (AdaptionUtil.isUserATestClient()) {
-            getWindow().getDecorView().getWindowInsetsController().hide(android.view.WindowInsets.Type.statusBars());
-        }
-        else {
-            if (AdaptionUtil.isUserATestClient()) {
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            }
-        }
+
+        if (AdaptionUtil.isUserATestClient()) {
+            Compat compat = CompatHelper.getCompat();
+            compat.setFullscreen(getWindow());
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
