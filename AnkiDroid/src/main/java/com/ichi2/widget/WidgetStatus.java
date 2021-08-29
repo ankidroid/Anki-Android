@@ -78,11 +78,6 @@ public final class WidgetStatus {
                 return context;
             }
             new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
-
-            // Shows the notification when widget is not set on Home Screen
-            Intent intent = new Intent(NotificationService.INTENT_ACTION);
-            Context appContext = context.getApplicationContext();
-            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
             return context;
         }
     }

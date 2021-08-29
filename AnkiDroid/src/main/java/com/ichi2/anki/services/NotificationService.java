@@ -51,7 +51,21 @@ public class NotificationService extends BroadcastReceiver {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         int minCardsDue = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
         int dueCardsCount = new DecksMetaData(context).getTotalDueCards().first;
+
+        // Gets the number of last due cards when user received notification.
+        int lastDueCards = preferences.getInt("dueCards", 0);
+
         if (dueCardsCount >= minCardsDue) {
+
+            // Used to avoid unnecessary notification which is having same due cards number as shown in previous notification.
+            if (lastDueCards == dueCardsCount) {
+                Timber.d("Not Delivering Notification - No new changes found from last notification");
+                return;
+            }
+
+            // Updating last due cards.
+            preferences.edit().putInt("dueCards", dueCardsCount).apply();
+
             // Build basic notification
             String cardsDueText = context.getResources()
                     .getQuantityString(R.plurals.widget_minimum_cards_due_notification_ticker_text, dueCardsCount, dueCardsCount);

@@ -142,7 +142,7 @@ public class BootService extends BroadcastReceiver {
         alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY,
+                AlarmManager.INTERVAL_HALF_HOUR,
                 notificationIntent
         );
     }
