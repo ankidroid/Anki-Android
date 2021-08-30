@@ -88,6 +88,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.CreateDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceToDowngradeDialog.FileSizeFormatter;
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog;
@@ -174,7 +175,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int SHOW_INFO_NEW_VERSION = 9;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
-    private static final int PICK_APKG_FILE = 13;
+    public static final int PICK_APKG_FILE = 13;
     private static final int PICK_EXPORT_FILE = 14;
 
     // For automatic syncing
@@ -753,7 +754,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_import) {
             Timber.i("DeckPicker:: Import button pressed");
-            openImportFilePicker();
+            showDialogFragment(ImportFileSelectionFragment.createInstance(this));
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
             CreateDeckDialog createFilteredDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null);
@@ -1389,18 +1390,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("showImportDialog() delegating to ImportDialog");
         AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
         showAsyncDialogFragment(newFragment);
-    }
-
-
-    private void openImportFilePicker() {
-        Timber.d("openImportFilePicker() delegating to file picker intent");
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-        intent.putExtra("android.content.extra.FANCY", true);
-        intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-        startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
     }
 
 

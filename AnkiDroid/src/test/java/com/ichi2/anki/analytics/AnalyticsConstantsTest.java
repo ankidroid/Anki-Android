@@ -71,6 +71,8 @@ public class AnalyticsConstantsTest {
         listOfConstantFields.add("fora");
         listOfConstantFields.add("nciku");
         listOfConstantFields.add("eijiro");
+        listOfConstantFields.add("Import APKG");
+        listOfConstantFields.add("Import COLPKG");
     }
 
     @NonNull
