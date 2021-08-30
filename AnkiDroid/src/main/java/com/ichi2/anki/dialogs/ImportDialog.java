@@ -16,34 +16,23 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.ImportUtils;
 
-import java.io.File;
 import java.net.URLDecoder;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class ImportDialog extends AsyncDialogFragment {
 
-    public static final int DIALOG_IMPORT_HINT = 0;
-    public static final int DIALOG_IMPORT_SELECT = 1;
     public static final int DIALOG_IMPORT_ADD_CONFIRM = 2;
     public static final int DIALOG_IMPORT_REPLACE_CONFIRM = 3;
 
     public interface ImportDialogListener {
-        void showImportDialog(int id, String message);
-        void showImportDialog(int id);
         void importAdd(String importPath);
         void importReplace(String importPath);
         void dismissAllDialogFragments();
@@ -77,45 +66,6 @@ public class ImportDialog extends AsyncDialogFragment {
         builder.cancelable(true);
 
         switch (type) {
-            case DIALOG_IMPORT_HINT: {
-                // Instruct the user that they need to put their APKG files into the AnkiDroid directory
-                return builder.title(res.getString(R.string.import_title))
-                        .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiDroidDirectory(getActivity())))
-                        .positiveText(R.string.dialog_ok)
-                        .negativeText(R.string.dialog_cancel)
-                        .onPositive((dialog, which) -> ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_SELECT))
-                        .onNegative((dialog, which) -> dismissAllDialogFragments())
-                        .show();
-            }
-            case DIALOG_IMPORT_SELECT: {
-                // Allow user to choose from the list of available APKG files
-                List<File> fileList = Utils.getImportableDecks(getActivity());
-                if (fileList.isEmpty()) {
-                    UIUtils.showThemedToast(getActivity(),
-                            getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
-                    return builder.showListener(DialogInterface::cancel).show();
-                } else {
-                    String[] tts = new String[fileList.size()];
-                    final String[] importValues = new String[fileList.size()];
-                    for (int i = 0; i < tts.length; i++) {
-                        tts[i] = fileList.get(i).getName();
-                        importValues[i] = fileList.get(i).getAbsolutePath();
-                    }
-                    return builder.title(res.getString(R.string.import_select_title))
-                            .items(tts)
-                            .itemsCallback((materialDialog, view, i, charSequence) -> {
-                                String importPath = importValues[i];
-                                // If collection package, we assume the collection will be replaced
-                                if (ImportUtils.isCollectionPackage(filenameFromPath(importPath))) {
-                                    ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_REPLACE_CONFIRM, importPath);
-                                    // Otherwise we add the file since exported decks / shared decks can't be imported via replace anyway
-                                } else {
-                                    ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_ADD_CONFIRM, importPath);
-                                }
-                            })
-                            .show();
-                }
-            }
             case DIALOG_IMPORT_ADD_CONFIRM: {
                 String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))

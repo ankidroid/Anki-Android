@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -38,7 +37,7 @@ public class DeckPickerImportTest extends RobolectricTest {
     public void importAddShowsImportDialog() {
         DeckPickerImport deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport.class, new Intent());
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM);
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, "");
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog.class));
     }
@@ -47,18 +46,9 @@ public class DeckPickerImportTest extends RobolectricTest {
     public void replaceShowsImportDialog() {
         DeckPickerImport deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport.class, new Intent());
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM);
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, "");
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog.class));
-    }
-
-    @Test
-    public void hintDoesNotShowDialog() {
-        DeckPickerImport deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport.class, new Intent());
-
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
-
-        assertThat(deckPicker.dialogFragment, nullValue());
     }
 
     private static class DeckPickerImport extends DeckPicker {

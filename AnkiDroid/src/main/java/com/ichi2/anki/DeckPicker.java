@@ -120,7 +120,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
@@ -140,8 +139,6 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -756,7 +753,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_import) {
             Timber.i("DeckPicker:: Import button pressed");
-            showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
+            openImportFilePicker();
             return true;
         } else if (itemId == R.id.action_new_filtered_deck) {
             CreateDeckDialog createFilteredDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null);
@@ -1388,30 +1385,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    @Override
-    public void showImportDialog(int id) {
-        showImportDialog(id, "");
-    }
-
-
-    @Override
     public void showImportDialog(int id, String message) {
-        // On API19+ we only use import dialog to confirm, otherwise we use it the whole time
-        if ((id == ImportDialog.DIALOG_IMPORT_ADD_CONFIRM) || (id == ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM)) {
-            Timber.d("showImportDialog() delegating to ImportDialog");
-            AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
-            showAsyncDialogFragment(newFragment);
-        } else {
-            Timber.d("showImportDialog() delegating to file picker intent");
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("*/*");
-            intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
-            intent.putExtra("android.content.extra.FANCY", true);
-            intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
-            startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
-        }
+        Timber.d("showImportDialog() delegating to ImportDialog");
+        AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
+        showAsyncDialogFragment(newFragment);
     }
+
+
+    private void openImportFilePicker() {
+        Timber.d("openImportFilePicker() delegating to file picker intent");
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
+        intent.putExtra("android.content.extra.FANCY", true);
+        intent.putExtra("android.content.extra.SHOW_FILESIZE", true);
+        startActivityForResultWithoutAnimation(intent, PICK_APKG_FILE);
+    }
+
 
     public void onSdCardNotMounted() {
         UIUtils.showThemedToast(this, getResources().getString(R.string.sd_card_not_mounted), false);
