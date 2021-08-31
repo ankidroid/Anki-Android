@@ -61,7 +61,7 @@ abstract class ModelManager {
      * found, it uses the configuration`s field curModel.
      * @return The model, or null if not found in the deck and in the configuration.
      */
-    abstract fun current(forDeck: Boolean): Model?
+    abstract fun current(forDeck: Boolean = true): Model?
     abstract fun setCurrent(m: Model)
 
     /** get model with ID, or null.  */
