@@ -162,7 +162,7 @@ public class Storage {
             if (ver < 4) {
                 col.modSchemaNoCheck();
                 List<Model> models = col.getModels().all();
-                ArrayList<Model> clozes = new ArrayList<>(models);
+                ArrayList<Model> clozes = new ArrayList<>(models.size());
                 for (Model m : models) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);
