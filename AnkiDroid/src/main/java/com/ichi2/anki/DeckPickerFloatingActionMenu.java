@@ -131,6 +131,12 @@ public class DeckPickerFloatingActionMenu {
             mAddSharedLayout.setVisibility(View.VISIBLE);
             mAddDeckLayout.setVisibility(View.VISIBLE);
             mFabBGLayout.setVisibility(View.VISIBLE);
+            mAddNoteLayout.setAlpha(1f);
+            mAddSharedLayout.setAlpha(1f);
+            mAddDeckLayout.setAlpha(1f);
+            mAddNoteLayout.setTranslationY(0);
+            mAddSharedLayout.setTranslationY(0);
+            mAddDeckLayout.setTranslationY(0);
         }
     }
 
