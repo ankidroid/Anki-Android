@@ -111,8 +111,17 @@ class ModelsV16(private val col: Collection) {
         _cache = Dict()
     }
 
+    fun save(m: NoteType? = null) {
+        save(m, templates = false)
+    }
+
     /** Save changes made to provided note type. */
-    fun save(m: NoteType) {
+    @RustCleanup("templates is not needed, m should be non-null")
+    fun save(m: NoteType?, @Suppress("UNUSED_PARAMETER") templates: Boolean) {
+        if (m == null) {
+            Timber.w("a null model is no longer supported - data is automatically flushed")
+            return
+        }
         update(m, preserve_usn = false)
     }
 
