@@ -209,5 +209,42 @@ abstract class ModelManager {
     abstract fun count(): Int
 
     /** Validate model entries.  */
-    abstract fun validateModel(): Boolean
+    @RustCleanup("remove from Java and replace with unit test")
+    fun validateModel(): Boolean {
+        for (model in all()) {
+            if (!validateBrackets(model)) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /** Check if there is a right bracket for every left bracket.  */
+    private fun validateBrackets(value: JSONObject): Boolean {
+        val s = value.toString()
+        var count = 0
+        var inQuotes = false
+        val ar = s.toCharArray()
+        for (i in ar.indices) {
+            val c = ar[i]
+            // if in quotes, do not count
+            if (c == '"' && (i == 0 || ar[i - 1] != '\\')) {
+                inQuotes = !inQuotes
+                continue
+            }
+            if (inQuotes) {
+                continue
+            }
+            when (c) {
+                '{' -> count++
+                '}' -> {
+                    count--
+                    if (count < 0) {
+                        return false
+                    }
+                }
+            }
+        }
+        return count == 0
+    }
 }
