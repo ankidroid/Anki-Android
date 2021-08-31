@@ -158,6 +158,7 @@ public class Models extends ModelManager {
      */
 
     public Models(Collection col) {
+        super(col);
         mCol = col;
     }
 
@@ -746,32 +747,6 @@ public class Models extends ModelManager {
         save(m);
         Timber.d("remTemplate done working");
         return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public @Nullable List<Long> getCardIdsForModel(long modelId, @NonNull int[] ords) {
-        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
-        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
-        //Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
-
-        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
-        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, modelId);
-        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
-        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
-        String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
-        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
-        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, modelId);
-        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
-
-        if (preDeleteNoteCount != postDeleteNoteCount) {
-            Timber.d("There will be orphan notes if these cards are deleted.");
-            return null;
-        }
-        Timber.d("Deleting these cards will not orphan notes.");
-        return cids;
     }
 
 
