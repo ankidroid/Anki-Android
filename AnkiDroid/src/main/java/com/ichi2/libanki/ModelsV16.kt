@@ -45,58 +45,58 @@ private typealias int = Long
 private typealias Field = JSONObject // Dict<str, Any>
 private typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
-class NoteType(internal val noteType: JSONObject) {
-    /** Python method
-     * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
-     *
-     * Update the dictionary with the provided key/value pairs, overwriting existing keys
-     */
-    fun update(updateFrom: NoteType) {
-        for (k in updateFrom.noteType.keys()) {
-            noteType.put(k, updateFrom.noteType[k])
-        }
+typealias NoteType = Model
+
+/** Python method
+ * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
+ *
+ * Update the dictionary with the provided key/value pairs, overwriting existing keys
+ */
+fun NoteType.update(updateFrom: NoteType) {
+    for (k in updateFrom.keys()) {
+        put(k, updateFrom[k])
+    }
+}
+
+fun NoteType.deepcopy(): NoteType = NoteType(JSONObject(this))
+
+var NoteType.flds: JSONArray
+    get() = getJSONArray("flds")
+    set(value) {
+        put("flds", value)
     }
 
-    fun deepcopy(): NoteType = NoteType(JSONObject(noteType))
+var NoteType.tmpls: JSONArray
+    get() = getJSONArray("tmpls")
+    set(value) {
+        put("tmpls", value)
+    }
 
-    var flds: JSONArray
-        get() = noteType.getJSONArray("flds")
-        set(value) {
-            noteType.put("flds", value)
-        }
+var NoteType.id: int
+    get() = getLong("id")
+    set(value) {
+        put("id", value)
+    }
 
-    var tmpls: JSONArray
-        get() = noteType.getJSONArray("tmpls")
-        set(value) {
-            noteType.put("tmpls", value)
-        }
+var NoteType.name: String
+    get() = getString("name")
+    set(value) {
+        put("name", value)
+    }
 
-    var id: int
-        get() = noteType.getLong("id")
-        set(value) {
-            noteType.put("id", value)
-        }
+var NoteType.sortf: int
+    get() = getLong("sortf")
+    set(value) {
+        put("sortf", value)
+    }
 
-    var name: String
-        get() = noteType.getString("name")
-        set(value) {
-            noteType.put("name", value)
-        }
-
-    var sortf: int
-        get() = noteType.getLong("sortf")
-        set(value) {
-            noteType.put("sortf", value)
-        }
-
-    // TODO: Not constrained
-    @Consts.MODEL_TYPE
-    var type: Int
-        get() = noteType.getInt("type")
-        set(value) {
-            noteType.put("typr", value)
-        }
-}
+// TODO: Not constrained
+@Consts.MODEL_TYPE
+var NoteType.type: Int
+    get() = getInt("type")
+    set(value) {
+        put("typr", value)
+    }
 
 class ModelsV16(private val col: Collection) {
     /*
