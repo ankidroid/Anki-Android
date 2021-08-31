@@ -16,7 +16,9 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.utils.Assert
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -132,7 +134,6 @@ abstract class ModelManager(protected val col: Collection) {
 
     @Throws(ConfirmModSchemaException::class)
     abstract fun addField(m: Model, field: JSONObject)
-    abstract fun addFieldInNewModel(m: Model, field: JSONObject)
     abstract fun addFieldModChanged(m: Model, field: JSONObject)
     @Throws(ConfirmModSchemaException::class)
     abstract fun remField(m: Model, field: JSONObject)
@@ -269,5 +270,22 @@ abstract class ModelManager(protected val col: Collection) {
         }
         Timber.d("Deleting these cards will not orphan notes.")
         return cids
+    }
+
+    /**
+     * similar to Anki's addField; but thanks to assumption that
+     * model is new, it never has to throw
+     * [ConfirmModSchemaException]
+     */
+    @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
+    fun addFieldInNewModel(m: Model, field: JSONObject) {
+        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+        try {
+            addField(m, field)
+        } catch (e: ConfirmModSchemaException) {
+            Timber.w(e, "Unexpected mod schema")
+            AnkiDroidApp.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
+            throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
+        }
     }
 }

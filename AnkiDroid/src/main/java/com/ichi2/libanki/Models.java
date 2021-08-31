@@ -464,15 +464,6 @@ public class Models extends ModelManager {
     }
 
     @Override
-    public void addFieldInNewModel(Model m, JSONObject field) {
-        // similar to Anki's addField; but thanks to assumption that
-        // model is new, it never has to throw
-        // ConfirmModSchemaException.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
-        _addField(m, field);
-    }
-
-    @Override
     public void addFieldModChanged(Model m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
