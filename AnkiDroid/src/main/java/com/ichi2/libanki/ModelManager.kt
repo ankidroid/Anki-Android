@@ -203,7 +203,7 @@ abstract class ModelManager {
 
     abstract fun setChanged()
 
-    abstract fun getModels(): HashMap<Long, Model>
+    abstract fun getModels(): Map<Long, Model>
 
     /** @return Number of models */
     abstract fun count(): Int
