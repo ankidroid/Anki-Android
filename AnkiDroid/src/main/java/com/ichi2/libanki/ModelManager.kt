@@ -95,7 +95,7 @@ abstract class ModelManager {
      */
 
     /** Note ids for M  */
-    abstract fun nids(m: Model): ArrayList<Long>
+    abstract fun nids(m: Model): List<Long>
 
     /**
      * Number of notes using m
