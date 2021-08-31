@@ -177,13 +177,25 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         return CollectionHelper.getInstance().colIsOpen();
     }
 
-
+    /**
+     * Whether animations should not be displayed
+     * This is used to improve the UX for e-ink devices
+     * Can be tested via Settings - Advanced - Safe display mode
+     *
+     * @see #animationEnabled()
+     */
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         return preferences.getBoolean("safeDisplay", false);
     }
 
-
+    /**
+     * Whether animations should be displayed
+     * This is used to improve the UX for e-ink devices
+     * Can be tested via Settings - Advanced - Safe display mode
+     *
+     * @see #animationDisabled()
+     */
     public boolean animationEnabled() {
         return !animationDisabled();
     }
