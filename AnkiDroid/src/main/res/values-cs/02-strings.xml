@@ -160,7 +160,6 @@
     <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
     <string name="import_title">Importuje se</string>
-    <string name="import_select_title">Vyberte soubor k importu</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
     <string name="import_message_add_confirm">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</string>
@@ -200,8 +199,6 @@
         Zkus ho otevřít pomocí jedné z dostupných <a href="http://ankisrs.net/#download">distribucí Anki</a> a užij si jednoduché a účinné učení!
         ]]></string>
     <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
-    <string name="import_hint">Umístěte soubor apkg do adresáře „%s“ a klepněte na „OK“, abyste importovali karty</string>
-    <string name="upgrade_import_no_file_found">Nebyl nalezen žádný importovatelný soubor %1$s</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>

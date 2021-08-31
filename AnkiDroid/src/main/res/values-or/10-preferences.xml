@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ</string>
     <string name="pref_cat_gestures_summ">ବଟନ୍ ବଦଳରେ ଟ୍ୟାପ୍ ଏବଂ ସ୍ୱାଇପ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="pref_cat_actions" maxLength="41">କାର୍ଯ୍ୟକଳାପ</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">ବିକଶିତ</string>
     <string name="pref_cat_advanced_summ">ଅନୁକୂଲନ ଏବଂ ପରୀକ୍ଷାମୂଳକ ବୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ</string>
     <string name="pref_cat_performance" maxLength="41">ସଂଚାଳନକାରିତା</string>
@@ -78,7 +80,7 @@
     <string name="card_browser_hide_media" maxLength="41">କାର୍ଡ ବ୍ରାଉଜରରେ ଫାଇଲ ନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
     <string name="card_browser_hide_media_summary">କାର୍ଡ ବ୍ରାଉଜର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣଚିତ୍ରପଟ୍ଟ ମୋଡ୍</string>
+    <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରିନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
     <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
     <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
@@ -150,9 +152,9 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="timeout_answer_text" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
     <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ। ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ</string>
-    <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବାର ସମୟ ଆସିଗଲା</string>
+    <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
-    <string name="timeout_question_seconds" maxLength="41">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବାର ସମୟ ଆସିଗଲା </string>
+    <string name="timeout_question_seconds" maxLength="41">ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବା ସମୟ</string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
@@ -226,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
     <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ। ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
@@ -320,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ପ୍ର: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ଉ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

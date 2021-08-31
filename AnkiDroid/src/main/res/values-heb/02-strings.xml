@@ -160,7 +160,6 @@
     <string name="show_hint">הצגת %s</string>
     <string name="info_rate">דירוג AnkiDroid</string>
     <string name="import_title">מתבצע ייבוא</string>
-    <string name="import_select_title">נא לבחור קובץ לייבוא</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <string name="import_message_add_confirm">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
@@ -200,8 +199,6 @@
         ניתן לפתוח אותה בעזרת אחת מ<a href="http://ankisrs.net/#download">ההפצות של Anki</a> ולהנות מלימוד קל ויעיל!
         ]]></string>
     <string name="export_unsuccessful">שגיאה בייצוא קובץ apkg</string>
-    <string name="import_hint">מקם את קובץ הapkg בתקייה %s ולחץ על \"אשר\" ליבוא הכרטסיות</string>
-    <string name="upgrade_import_no_file_found">לא נמצא קובץ %1$s הניתן ליבוא</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>

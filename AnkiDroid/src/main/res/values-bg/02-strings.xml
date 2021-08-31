@@ -154,7 +154,6 @@
     <string name="show_hint">Покажи %s</string>
     <string name="info_rate">Оцени AnkiDroid</string>
     <string name="import_title">Внасяне</string>
-    <string name="import_select_title">Изберете файл за импортиране</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добави</string>
     <string name="import_message_replace_confirm">Това ще изтрие вашата съществуваща колекция и ще я замени с данните от файла %s</string>
     <string name="import_message_add_confirm">Добавяне на \"%s\" към колекцията? Това може да отнеме дълго време</string>
@@ -194,8 +193,6 @@
         Опитайте се да го отворите, като използвате един от наличните <a href="http://ankisrs.net/#download">Anki разпределения</a> и се насладете на лесно и ефективно учене!
         ]]></string>
     <string name="export_unsuccessful">Грешка при експортиране на apkg файл</string>
-    <string name="import_hint">Поставете apkg файла в директорията \"%s\" и докоснете \"OK\", за да импортирате карти</string>
-    <string name="upgrade_import_no_file_found">Открит е файл %1$s, който не може да се импортира</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Настройки</string>
     <string name="menu__deck_options">Опции за тестето</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Опции за учене</string>

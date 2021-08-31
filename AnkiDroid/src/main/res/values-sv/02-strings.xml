@@ -154,7 +154,6 @@
     <string name="show_hint">Visa %s</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
     <string name="import_title">Importera</string>
-    <string name="import_select_title">Välj fil att importera</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lägg till</string>
     <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
     <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
@@ -194,8 +193,6 @@
         Testa att öppna den med någon av de tillgängliga <a href="http://ankisrs.net/#download"> Anki-distributionerna</a> och njut av ett enkelt och effektivt lärande!
         ]]></string>
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
-    <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
-    <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
     <string name="menu__deck_options">Kortleksalternativ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>

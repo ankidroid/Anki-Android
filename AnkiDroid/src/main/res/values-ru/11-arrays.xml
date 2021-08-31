@@ -60,7 +60,7 @@
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Использовать текущую колоду</item>
-        <item>Решать по типу записи</item>
+        <item>Выбрать по типу записи</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Перемешивать новые и повторяемые</item>

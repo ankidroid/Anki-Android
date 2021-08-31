@@ -154,7 +154,6 @@
     <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
     <string name="info_rate">AnkiDroid ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
-    <string name="import_select_title">ଆମଦାନୀ କରିବା ପାଇଁ ଫାଇଲ୍ ବାଛନ୍ତୁ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
     <string name="import_message_add_confirm">%s କୁ ସଂଗ୍ରହରେ ଯୋଡ଼ନ୍ତୁ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
@@ -194,8 +193,6 @@
         ଉପଲବ୍ଧ <a href="http://ankisrs.net/#download">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଏବଂ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
         ]]></string>
     <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
-    <string name="import_hint">apkg ଫାଇଲ୍ କୁ “%s” directory ରେ ରଖନ୍ତୁ ଏବଂ ପତ୍ର ଆମଦାନୀ କରିବାକୁ “ଠିକ ଅଛି” କୁ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
-    <string name="upgrade_import_no_file_found">କୌଣସି ଆମଦାନୀଯୋଗ୍ୟ %1$s ଫାଇଲ ମିଳିଲା ନାହିଁ </string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__deck_options">ଡେକ୍ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ବିକଳ୍ପଗୁଡ଼ିକ</string>

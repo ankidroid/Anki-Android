@@ -154,7 +154,6 @@
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
-    <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
     <string name="import_message_add_confirm">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ? ᱱᱚᱶᱟ ᱡᱟᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱰᱮᱟᱜᱼᱟᱭ</string>
@@ -190,8 +189,6 @@
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[ Hi! <br/><br/> ᱱᱟᱶᱟ ᱫᱚ Anki flashcards ᱰᱮᱠ ᱠᱟᱱᱟ ᱱᱚᱶᱟ ᱫᱚ ᱵᱷᱮᱡᱟᱜ ᱠᱟᱱᱟ<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>ᱱᱚᱶᱟ ᱠᱚ ᱢᱮᱱᱟᱜ ᱠᱷᱚᱱ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ<a href="http://ankisrs.net/#download">Anki distributions</a> ᱟᱨ ᱵᱮᱥ ᱛᱮ ᱪᱮᱫᱚᱜ ᱢᱮ !]]></string>
     <string name="export_unsuccessful">apkg ᱨᱮᱫ ᱵᱷᱮᱡ ᱵᱷᱩᱞ</string>
-    <string name="import_hint">apkg ᱨᱮᱫ ᱫᱚ “%s” ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱫᱚᱦᱚᱭ ᱢᱮ ᱟᱨ “OK” ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ ᱠᱟᱰ ᱵᱷᱮᱡᱟᱭ ᱞᱟᱹᱜᱤᱫ</string>
-    <string name="upgrade_import_no_file_found">ᱪᱮᱫ ᱦᱚ ᱵᱷᱮᱡᱟ ᱞᱟᱭᱚᱠ %1$s ᱨᱮᱫ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>

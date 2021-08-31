@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gesti</string>
     <string name="pref_cat_gestures_summ">Usa tocchi e scorrimento al posto dei pulsanti</string>
     <string name="pref_cat_actions" maxLength="41">Azioni</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Avanzate</string>
     <string name="pref_cat_advanced_summ">Ottimizzazione e funzionalità sperimentali</string>
     <string name="pref_cat_performance" maxLength="41">Prestazioni</string>
@@ -226,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">URL di sincronizzazione non valido</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Url di sincronizzazione del contenuto multimediale</string>
     <string name="custom_sync_server_media_url_invalid">URL sincronizzazione media non valido</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Le modifiche alle opzioni del gruppo di mazzi influenzeranno più mazzi. Se desideri cambiare solo il mazzo corrente, aggiungi prima un nuovo gruppo di opzioni</string>
     <string name="studyoptions_limit_select_tags">Seleziona etichette</string>
@@ -320,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

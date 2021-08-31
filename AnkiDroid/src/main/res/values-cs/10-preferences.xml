@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gesta</string>
     <string name="pref_cat_gestures_summ">Použití poklepání a gest místo tlačítek</string>
     <string name="pref_cat_actions" maxLength="41">Akce</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Pokročilé</string>
     <string name="pref_cat_advanced_summ">Optimalizace a experimentální funkce</string>
     <string name="pref_cat_performance" maxLength="41">Výkon</string>
@@ -226,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Neplatná URL synchronizace</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
     <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Změny možností skupiny balíčků ovlivní více balíčků. Pokud si přejete změnit pouze aktuální balíček, nejdříve prosím přidejte novou skupinu možností</string>
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>
@@ -324,4 +328,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

@@ -151,7 +151,6 @@
     <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
     <string name="import_title">Mengimpor</string>
-    <string name="import_select_title">Pilih berkas untuk diimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
     <string name="import_message_add_confirm">Tambah \"%s\" ke dalam koleksi? Ini dapat memakan waktu lama</string>
@@ -191,8 +190,6 @@
         Coba buka menggunakan salah satu <a href="http://ankisrs.net/#download">Distribusi Anki</a> yang ada dan selamat belajar mudah dan efisien!
         ]]></string>
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
-    <string name="import_hint">Untuk mengimpor kartu, taruh berkas apkg ke dalam direktori “%s” dan tekan “OK”</string>
-    <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>

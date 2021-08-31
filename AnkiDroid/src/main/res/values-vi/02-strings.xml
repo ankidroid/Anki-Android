@@ -151,7 +151,6 @@
     <string name="show_hint">Hiện %s</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>
     <string name="import_title">Đang nhập</string>
-    <string name="import_select_title">Chọn một tệp để nhập</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
@@ -191,8 +190,6 @@
         Hãy thử mở nó bằng một trong những <a href="http://ankisrs.net/#download"> bản phát hành Anki</a> và tận hưởng việc học dễ dàng và hiệu quả!
         ]]></string>
     <string name="export_unsuccessful">Lỗi kết xuất tệp tin apkg</string>
-    <string name="import_hint">Đưa tệp apkg vào thư mục \"%s\" và bấm \"OK\" để nhập thẻ</string>
-    <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tệp có thể nhập</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
     <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
