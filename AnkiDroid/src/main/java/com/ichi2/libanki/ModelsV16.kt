@@ -408,11 +408,15 @@ class ModelsV16(private val col: Collection) {
         field["name"] = new_name
     }
 
+    /** name exists for compat with java */
+    @RustCleanup("remove - use set_sort_index")
+    fun setSortIdx(m: NoteType, idx: Int) = set_sort_index(m, idx)
+
     /** Modifies schema. */
-    fun set_sort_index(nt: NoteType, idx: int) {
+    fun set_sort_index(nt: NoteType, idx: Int) {
 
         assert(0 <= idx && idx < len(nt.flds))
-        nt.sortf = idx
+        nt.sortf = idx.toLong()
     }
 
     /*
