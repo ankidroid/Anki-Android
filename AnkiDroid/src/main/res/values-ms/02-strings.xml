@@ -151,7 +151,6 @@
     <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
-    <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">Ini akan memadam ada koleksi dan menggantikannya dengan data file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
@@ -191,8 +190,6 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Error exporting apkg file</string>
-    <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
-    <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

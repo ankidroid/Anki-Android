@@ -160,7 +160,6 @@
     <string name="show_hint">Pokaż %s</string>
     <string name="info_rate">Oceń AnkiDroid</string>
     <string name="import_title">Importowanie</string>
-    <string name="import_select_title">Wybierz plik do importu</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
@@ -200,8 +199,6 @@
         Spróbuj ją otworzyć używając jednej z dostępnych <a href="http://ankisrs.net/#download">wersji Anki</a> i ciesz się łatwą i efektywną nauką!
         ]]></string>
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
-    <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
-    <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
     <string name="menu__deck_options">Opcje talii</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcje nauki</string>

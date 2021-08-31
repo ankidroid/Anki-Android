@@ -154,7 +154,6 @@
     <string name="show_hint">%s दिखाएं</string>
     <string name="info_rate">दर AnkiDroid</string>
     <string name="import_title">आयात</string>
-    <string name="import_select_title">आयात करने के लिए कोई फ़ाइल चुनें</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
     <string name="import_message_add_confirm">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</string>
@@ -194,8 +193,6 @@
         उपलब्ध में से एक का उपयोग करके उसे खोलने का प्रयास करें <a href="http://ankisrs.net/#download">अंकी वितरण</a> और आसान और कुशल सीखने का आनंद लें!
         ]]>;    </string>
     <string name="export_unsuccessful">Apkg फ़ाइल निर्यात करने में त्रुटि</string>
-    <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
-    <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">विकल्प</string>
     <string name="menu__deck_options">डेक विकल्प</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अध्ययन के विकल्प</string>

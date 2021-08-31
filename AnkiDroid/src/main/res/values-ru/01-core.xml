@@ -45,7 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Рисование</string>
     <string name="send_feedback">Отправить отзыв</string>
     <string name="studyoptions_due_today">На сегодня:</string>
     <string name="studyoptions_new_total">Всего новых карточек:</string>
@@ -250,5 +250,5 @@
         <item quantity="many">%1$d карточек (0 к просмотру)</item>
         <item quantity="other">%1$d карточек (0 к просмотру)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
 </resources>

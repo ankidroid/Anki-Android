@@ -151,7 +151,6 @@
     <string name="show_hint">%s күрсәтү</string>
     <string name="info_rate">AnkiDroidны бәяләгез</string>
     <string name="import_title">Импортлау</string>
-    <string name="import_select_title">Импорт өчен файл сайлагыз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
     <string name="import_message_replace_confirm">Бу сезнең хәзерге коллекцияне бетерер hәм аны %s файлы белән алыштырыр</string>
     <string name="import_message_add_confirm">\"%s\" коллекциягә кушыргамы? Бу күп вакыт алырга мөмкин</string>
@@ -191,8 +190,6 @@
         Аны ачыр өчен,  <a href="http://ankisrs.net/#download">Anki кушымтасын</a> көйләгез һәм җиңел һәм уңышлы итеп өйрәнегез!
         ]]></string>
     <string name="export_unsuccessful">apkg файлын экспортлаганда хата</string>
-    <string name="import_hint">Импортлау өчен apkg файлын \"%s\" папкасына урнаштырып, ОК төймәсенә басыгыз</string>
-    <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

@@ -166,7 +166,6 @@
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
-    <string name="import_select_title">اختر ملفًا لاستيراده</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <string name="import_message_add_confirm">هل تريد إضافة “%s” إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
@@ -206,8 +205,6 @@
         جرّب فتحها باستخدام توزيعة من <a href="http://ankisrs.net/#download">توزيعات أنكي</a> المتوفرة واستمتع بتعلم سهل وفعّال!
         ]]></string>
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
-    <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
-    <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>

@@ -154,7 +154,6 @@
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
     <string name="import_title">Enporti</string>
-    <string name="import_select_title">Elektu dosieron por enporti</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
@@ -194,8 +193,6 @@
         Malfermu ĝin per unu el disponeblaj <a href="http://ankisrs.net/#download">Anki-programoj</a> kaj ĝuu facilan kaj efikan lernadon!
         ]]></string>
     <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
-    <string name="import_hint">Enmetu apkg-dosieron en la dosierujo “%s” kaj frapetu “bone” por enporti kartojn</string>
-    <string name="upgrade_import_no_file_found">Ne trovis iujn ajn dosierojn por enporti (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
     <string name="menu__deck_options">Agordoj pri kartaro</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>

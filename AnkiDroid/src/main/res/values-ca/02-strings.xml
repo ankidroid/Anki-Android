@@ -154,7 +154,6 @@
     <string name="show_hint">Mostra %s</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
-    <string name="import_select_title">Escolliu el fitxer per importar</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
     <string name="import_message_add_confirm">Afegeix \"%s\" a la col·lecció? Això pot trigar molt de temps</string>
@@ -194,8 +193,6 @@
         Intenta obrir-lo utilitzant una de les <a href="http://ankisrs.net/#download">distribucions d\'Anki</a> disponibles i gaudeix d\'un aprenentatge fàcil i eficient!
         </string>
     <string name="export_unsuccessful">Error en exportar l\'arxiu apkg</string>
-    <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
-    <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>

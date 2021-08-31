@@ -154,7 +154,6 @@
     <string name="show_hint">Amosar %s</string>
     <string name="info_rate">Valora AnkiDroid</string>
     <string name="import_title">Importando</string>
-    <string name="import_select_title">Selecciona un ficheiro para importar</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Engadir</string>
     <string name="import_message_replace_confirm">Isto eliminará a túa colección actual e a substituirá cos datos do ficheiro %s</string>
     <string name="import_message_add_confirm">Engadir \"%s\" á colección? Isto pode levar moito tempo</string>
@@ -194,8 +193,6 @@
         Tenta abrila cunha das <a href="http://ankisrs.net/#download">distribucións do Anki</a> dispoñíbeis e goza dun aprendizaxe doado e eficiente!
         ]]></string>
     <string name="export_unsuccessful">Produciuse un erro enviando o ficheiro apkg</string>
-    <string name="import_hint">Coloca o ficheiro apkg no cartafol \"%s\" e preme \"Aceptar\" para importa cartóns</string>
-    <string name="upgrade_import_no_file_found">Non se atopou ningún ficheiro %1$s para importar</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

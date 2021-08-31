@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">Orange Flagge umschalten</string>
     <string name="gesture_flag_green">Grüne Flagge umschalten</string>
     <string name="gesture_flag_blue">Blaue Flagge umschalten</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Rosa Flagge umschalten</string>
+    <string name="gesture_flag_turquoise">Türkise Flagge umschalten</string>
+    <string name="gesture_flag_purple">Violette Flagge umschalten</string>
     <string name="gesture_flag_remove">Flagge entfernen</string>
     <string name="gesture_page_up">Seite hoch</string>
     <string name="gesture_page_down">Seite runter</string>

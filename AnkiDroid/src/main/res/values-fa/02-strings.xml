@@ -154,7 +154,6 @@
     <string name="show_hint">%s را نمایش بده</string>
     <string name="info_rate">امتیازدهی به آنکی دروید</string>
     <string name="import_title">درحال وارد کردن</string>
-    <string name="import_select_title">فایلی را برای وارد کردن انتخاب کنید</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
     <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
@@ -194,8 +193,6 @@
         برای استفاده از آن یکی از عامل های در دسترس <a href="http://ankisrs.net/#download">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
-    <string name="import_hint">برای وارد کردن کارتها, فایل apkg را در مسیر \"%s\" قرار داده و دکمه تایید را فشار دهید</string>
-    <string name="upgrade_import_no_file_found">فایل %1$s قابل وارد کردن یافت نشد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">تنظیمات مطالعه</string>

@@ -160,7 +160,6 @@
     <string name="show_hint">Паказаць %s</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
     <string name="import_title">Імпартаванне</string>
-    <string name="import_select_title">Выберыце файл для імпарту</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Дадаць</string>
     <string name="import_message_replace_confirm">Ваша бягучая калекцыя будзе выдаленая і яе заменяць даныя з файла %s</string>
     <string name="import_message_add_confirm">Дадаць \"%s\" у калекцыю? Гэта можа заняць шмат часу</string>
@@ -200,8 +199,6 @@
         Вы можаце адкрыць яе з дапамогай праграмы <a href="http://ankisrs.net/#download">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
         ]]></string>
     <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
-    <string name="import_hint">Змясціце файл apkg у каталог \"%s\" і націсніце \"Добра\" для імпарту картак</string>
-    <string name="upgrade_import_no_file_found">Знойдзены не імпартаваны файл %1$s</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры калоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>

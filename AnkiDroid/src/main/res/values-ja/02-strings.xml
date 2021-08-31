@@ -151,7 +151,6 @@
     <string name="show_hint">%s を表示</string>
     <string name="info_rate">このアプリを評価</string>
     <string name="import_title">インポート</string>
-    <string name="import_select_title">インポートするファイルを選択</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
@@ -190,8 +189,6 @@
 このメールには、<a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> から送信された、Anki用フラッシュカードデッキのファイルが添付されています。
 あなたがお使いの端末に対応したAnki用ソフトを<a href="http://ankisrs.net/#download">Anki公式ページ</a>でインストールしてこのデッキを開き、簡単で効率的な学習をお楽しみください！]]></string>
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
-    <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
-    <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
