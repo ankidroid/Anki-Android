@@ -336,6 +336,11 @@ class ModelsV16(private val col: Collection) {
         return col.db.queryLongScalar("select count() from notes where mid = ?", m.id).toInt()
     }
 
+    @RustCleanup("not in libAnki any more - may not be needed")
+    fun tmplUseCount(m: NoteType, ord: Int): Int {
+        return col.db.queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.id, ord)
+    }
+
     /*
     # Copying
     ##################################################
