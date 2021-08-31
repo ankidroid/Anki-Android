@@ -1209,47 +1209,4 @@ public class Models extends ModelManager {
     public int count() {
         return mModels.size();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean validateModel() {
-        for (Model model : mModels.values()) {
-            if (!validateBrackets(model)) {
-                return false;
-            }
-        }
-		return true;
-	}
-
-	/** Check if there is a right bracket for every left bracket. */
-	private boolean validateBrackets(JSONObject value) {
-		String s = value.toString();
-		int count = 0;
-		boolean inQuotes = false;
-		char[] ar = s.toCharArray();
-		for (int i = 0; i < ar.length; i++) {
-			char c = ar[i];
-			// if in quotes, do not count
-			if (c == '"' && (i == 0 || (ar[i-1] != '\\'))) {
-				inQuotes = !inQuotes;
-				continue;
-			}
-			if (inQuotes) {
-				continue;
-			}
-			switch(c) {
-			case '{':
-				count++;
-				break;
-			case '}':
-				count--;
-				if (count < 0) {
-					return false;
-				}
-				break;
-			}
-		}
-		return (count == 0);
-	}
-
 }
