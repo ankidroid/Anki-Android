@@ -32,7 +32,7 @@ import java.util.*
 object NoteTypeSpinnerUtils {
     @JvmStatic
     fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: com.ichi2.libanki.Collection): ArrayList<Long> {
-        val models: ArrayList<Model> = col.models.all()
+        val models: List<Model> = col.models.all()
         Collections.sort(models, NamedJSONComparator.INSTANCE)
         val modelNames: MutableList<String> = ArrayList<String>(models.size)
         val allModelIds = ArrayList<Long>(models.size)

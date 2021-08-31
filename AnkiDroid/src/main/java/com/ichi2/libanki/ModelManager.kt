@@ -67,7 +67,7 @@ abstract class ModelManager {
     /** get model with ID, or null.  */
     abstract fun get(id: Long): Model?
     /** get all models  */
-    abstract fun all(): ArrayList<Model>
+    abstract fun all(): List<Model>
 
     /** get model with NAME.  */
     abstract fun byName(name: String): Model?
