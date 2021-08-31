@@ -255,6 +255,9 @@ class ModelsV16(private val col: Collection) {
         }
     }
 
+    @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
+    fun newModel(name: str): NoteType = new(name)
+
     /** Create a new model, and return it. */
     fun new(name: str): NoteType {
         // caller should call save() after modifying
