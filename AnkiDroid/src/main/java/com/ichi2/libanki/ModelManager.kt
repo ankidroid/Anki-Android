@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.RustCleanup
 
 abstract class ModelManager {
 
@@ -101,6 +102,7 @@ abstract class ModelManager {
      * @param m The model to the count the notes of.
      * @return The number of notes with that model.
      */
+    @RustCleanup("use all_use_counts()")
     abstract fun useCount(m: Model): Int
     /**
      * Number of notes using m

@@ -329,8 +329,8 @@ class ModelsV16(private val col: Collection) {
     }
 
     /** Number of note using M. */
-    fun useCount(m: NoteType): int {
-        return col.db.queryLongScalar("select count() from notes where mid = ?", m.id)
+    fun useCount(m: NoteType): Int {
+        return col.db.queryLongScalar("select count() from notes where mid = ?", m.id).toInt()
     }
 
     /*
