@@ -438,6 +438,11 @@ class ModelsV16(private val col: Collection) {
         // intentionally blank - not needed
     }
 
+    @RustCleanup("Unused ")
+    fun setChanged() {
+        // intentionally blank - not needed
+    }
+
     @RustCleanup("Only exists for interface compatibility")
     fun getModels(): Map<Long, NoteType> = all().map { Pair(it.id, it) }.toMap()
 
