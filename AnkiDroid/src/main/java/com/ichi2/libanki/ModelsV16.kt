@@ -433,6 +433,9 @@ class ModelsV16(private val col: Collection) {
         // intentionally blank - not needed
     }
 
+    @RustCleanup("Only exists for interface compatibility")
+    fun getModels(): Map<Long, NoteType> = all().map { Pair(it.id, it) }.toMap()
+
     fun addField(m: NoteType, field: Field) {
         add_field(m, field)
         if (m.id != 0L) {
