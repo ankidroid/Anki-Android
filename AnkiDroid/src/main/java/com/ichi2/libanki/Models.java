@@ -370,7 +370,7 @@ public class Models extends ModelManager {
     /** {@inheritDoc} */
     @NonNull
     @Override
-    public ArrayList<Long> nids(Model m) {
+    public List<Long> nids(Model m) {
         return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 

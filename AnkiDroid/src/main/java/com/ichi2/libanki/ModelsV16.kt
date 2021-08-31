@@ -323,6 +323,9 @@ class ModelsV16(private val col: Collection) {
     ##################################################
      */
 
+    @RustCleanup("use nids(int)")
+    fun nids(m: Model): List<int> = nids(m.getLong("id"))
+
     /** Note ids for M. */
     fun nids(ntid: int): List<int> {
         return col.db.queryLongList("select id from notes where mid = ?", ntid)
