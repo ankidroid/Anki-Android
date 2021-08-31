@@ -9,13 +9,11 @@
         android:summary="@string/custom_sync_server_enable_summary"
         android:defaultValue="false"/>
     <EditTextPreference
+        android:dependency="useCustomSyncServer"
         android:key="syncBaseUrl"
-        android:dependency="useCustomSyncServer"
-        android:title="@string/custom_sync_server_base_url_title"
-        android:defaultValue="https://ankiweb.net/"/>
+        android:title="@string/custom_sync_server_base_url_title" />
     <EditTextPreference
-        android:key="syncMediaUrl"
         android:dependency="useCustomSyncServer"
-        android:title="@string/custom_sync_server_media_url_title"
-        android:defaultValue="https://msync.ankiweb.net/"/>
+        android:key="syncMediaUrl"
+        android:title="@string/custom_sync_server_media_url_title" />
 </PreferenceScreen>
