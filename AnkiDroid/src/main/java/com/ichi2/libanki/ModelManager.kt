@@ -19,8 +19,9 @@ package com.ichi2.libanki
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
+import timber.log.Timber
 
-abstract class ModelManager {
+abstract class ModelManager(protected val col: Collection) {
 
     /*
      * Saving/loading registry
@@ -156,16 +157,6 @@ abstract class ModelManager {
      */
     @Throws(ConfirmModSchemaException::class)
     abstract fun remTemplate(m: Model, template: JSONObject): Boolean
-    /**
-     * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
-     * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
-     * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
-     *
-     * @param modelId long id of the JSON model
-     * @param ords array of ints, each one is the ordinal a the card template in the given model
-     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
-     */
-    abstract fun getCardIdsForModel(modelId: Long, ords: IntArray): List<Long>?
 
     abstract fun moveTemplate(m: Model, template: JSONObject, idx: Int)
     /*
@@ -246,5 +237,37 @@ abstract class ModelManager {
             }
         }
         return count == 0
+    }
+
+    /**
+     * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
+     * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
+     * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
+     *
+     * @param modelId long id of the JSON model
+     * @param ords array of ints, each one is the ordinal a the card template in the given model
+     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
+     */
+    open fun getCardIdsForModel(modelId: Long, ords: IntArray): List<Long?>? {
+        val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
+        val cids: List<Long?> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
+        // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
+
+        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
+        val noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)"
+        val preDeleteNoteCount: Int = col.db.queryScalar(noteCountPreDeleteSql, modelId)
+        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql)
+        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount)
+        val noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords)
+        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql)
+        val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, modelId)
+        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount)
+        if (preDeleteNoteCount != postDeleteNoteCount) {
+            Timber.d("There will be orphan notes if these cards are deleted.")
+            return null
+        }
+        Timber.d("Deleting these cards will not orphan notes.")
+        return cids
     }
 }
