@@ -95,7 +95,7 @@ var NoteType.sortf: int
 var NoteType.type: Int
     get() = getInt("type")
     set(value) {
-        put("typr", value)
+        put("type", value)
     }
 
 class ModelsV16(private val col: Collection) {
