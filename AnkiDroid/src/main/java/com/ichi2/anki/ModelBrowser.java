@@ -50,6 +50,7 @@ import com.ichi2.ui.FixedEditText;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -97,7 +98,7 @@ public class ModelBrowser extends AnkiActivity {
     private LoadingModelsHandler loadingModelsHandler() {
         return new LoadingModelsHandler(this);
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
+    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<List<Model>, ArrayList<Integer>>> {
         public LoadingModelsHandler(ModelBrowser browser) {
             super(browser);
         }
@@ -113,12 +114,12 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<ArrayList<Model>, ArrayList<Integer>> result) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<List<Model>, ArrayList<Integer>> result) {
             if (result == null) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
-            browser.mModels = result.first;
+            browser.mModels = new ArrayList<>(result.first);
             browser.mCardCounts = result.second;
 
             browser.fillModelList();

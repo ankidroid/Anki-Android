@@ -1808,11 +1808,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
-    public static class CountModels extends TaskDelegate<Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
-        protected Pair<ArrayList<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class CountModels extends TaskDelegate<Void, Pair<List<Model>, ArrayList<Integer>>> {
+        protected Pair<List<Model>, ArrayList<Integer>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadModels");
 
-            ArrayList<Model> models = col.getModels().all();
+            List<Model> models = col.getModels().all();
             ArrayList<Integer> cardCount = new ArrayList<>();
             Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
 
