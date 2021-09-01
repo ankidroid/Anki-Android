@@ -673,4 +673,12 @@ and notes.mid = ? and cards.ord = ?""",
     fun count(): Int {
         return all_names_and_ids().count()
     }
+
+    fun _addTemplate(m: Model, template: JSONObject) {
+        addTemplate(m, template)
+    }
+
+    fun _addField(m: Model, field: JSONObject) {
+        addField(m, field)
+    }
 }

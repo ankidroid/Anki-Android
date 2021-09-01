@@ -158,7 +158,6 @@ abstract class ModelManager(protected val col: Collection) {
 
     @Throws(ConfirmModSchemaException::class)
     abstract fun addTemplate(m: Model, template: JSONObject)
-    abstract fun addTemplateInNewModel(m: Model, template: JSONObject)
     abstract fun addTemplateModChanged(m: Model, template: JSONObject)
     /**
      * Removing a template
@@ -291,11 +290,30 @@ abstract class ModelManager(protected val col: Collection) {
     fun addFieldInNewModel(m: Model, field: JSONObject) {
         Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
         try {
-            addField(m, field)
+            _addField(m, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             AnkiDroidApp.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
             throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
         }
     }
+
+    fun addTemplateInNewModel(m: Model, template: JSONObject) {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+
+        try {
+            _addTemplate(m, template)
+        } catch (e: ConfirmModSchemaException) {
+            Timber.w(e, "Unexpected mod schema")
+            AnkiDroidApp.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
+            throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
+        }
+    }
+
+    /** Add template without schema mod */
+    protected abstract fun _addTemplate(m: Model, template: JSONObject)
+    /** Add field without schema mod */
+    protected abstract fun _addField(m: Model, field: JSONObject)
 }
