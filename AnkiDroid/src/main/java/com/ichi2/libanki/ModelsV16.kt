@@ -122,7 +122,7 @@ class ModelsV16(private val col: Collection) {
             Timber.w("a null model is no longer supported - data is automatically flushed")
             return
         }
-        update(m, preserve_usn = false)
+        update(m, preserve_usn_and_mtime = false)
     }
 
     @RustCleanup("not required - java only")
@@ -303,10 +303,10 @@ class ModelsV16(private val col: Collection) {
     }
 
     /** Add or update an existing model. Use .save() instead. */
-    fun update(m: NoteType, preserve_usn: Boolean = true) {
+    fun update(m: NoteType, preserve_usn_and_mtime: Boolean = true) {
         _remove_from_cache(m.id)
         ensureNameUnique(m)
-        m.id = modelsBackend.add_or_update_notetype(model = m, preserve_usn_and_mtime = preserve_usn)
+        m.id = modelsBackend.add_or_update_notetype(model = m, preserve_usn_and_mtime = preserve_usn_and_mtime)
         setCurrent(m)
         _mutate_after_write(m)
     }
