@@ -89,7 +89,17 @@ abstract class ModelManager(protected val col: Collection) {
 
     abstract fun add(m: Model)
     /** Add or update an existing model. Used for syncing and merging.  */
-    abstract fun update(m: Model)
+    open fun update(m: Model) = update(m, true)
+
+    /**
+     * Add or update an existing model. Used for syncing and merging.
+     *
+     * preserve_usn_and_mtime=True should only be required in two cases:
+     * syncing (which is now handled on the Rust end)
+     * importing apkg files (which will be handled by Rust in the future)
+     */
+    abstract fun update(m: Model, preserve_usn_and_mtime: Boolean = true)
+
     abstract fun have(id: Long): Boolean
     abstract fun ids(): Set<Long>
 

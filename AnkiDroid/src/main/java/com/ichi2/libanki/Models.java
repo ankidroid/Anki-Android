@@ -335,7 +335,12 @@ public class Models extends ModelManager {
 
 
     @Override
-    public void update(Model m) {
+    public void update(Model m, @SuppressWarnings("unused") boolean preserve_usn_and_mtime) {
+        if (!preserve_usn_and_mtime) {
+            Timber.w("preserve_usn_and_mtime is not supported in legacy java class");
+        }
+
+
         mModels.put(m.getLong("id"), m);
         // mark registry changed, but don't bump mod time
         save();
