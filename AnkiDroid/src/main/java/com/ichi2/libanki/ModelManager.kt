@@ -144,7 +144,6 @@ abstract class ModelManager(protected val col: Collection) {
 
     @Throws(ConfirmModSchemaException::class)
     abstract fun addField(m: Model, field: JSONObject)
-    abstract fun addFieldModChanged(m: Model, field: JSONObject)
     @Throws(ConfirmModSchemaException::class)
     abstract fun remField(m: Model, field: JSONObject)
     @Throws(ConfirmModSchemaException::class)
@@ -158,7 +157,6 @@ abstract class ModelManager(protected val col: Collection) {
 
     @Throws(ConfirmModSchemaException::class)
     abstract fun addTemplate(m: Model, template: JSONObject)
-    abstract fun addTemplateModChanged(m: Model, template: JSONObject)
     /**
      * Removing a template
      *
@@ -316,4 +314,19 @@ abstract class ModelManager(protected val col: Collection) {
     protected abstract fun _addTemplate(m: Model, template: JSONObject)
     /** Add field without schema mod */
     protected abstract fun _addField(m: Model, field: JSONObject)
+
+    fun addFieldModChanged(m: Model, field: JSONObject) {
+        // similar to Anki's addField; but thanks to assumption that
+        // mod is already changed, it never has to throw
+        // ConfirmModSchemaException.
+        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        _addField(m, field)
+    }
+
+    fun addTemplateModChanged(m: Model, template: JSONObject) {
+        // similar to addTemplate, but doesn't throw exception;
+        // asserting the model is new.
+        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        _addTemplate(m, template)
+    }
 }

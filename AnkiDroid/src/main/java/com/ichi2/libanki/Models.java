@@ -29,7 +29,6 @@ import timber.log.Timber;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
-import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -468,15 +467,6 @@ public class Models extends ModelManager {
         _addField(m, field);
     }
 
-    @Override
-    public void addFieldModChanged(Model m, JSONObject field) {
-        // similar to Anki's addField; but thanks to assumption that
-        // mod is already changed, it never has to throw
-        // ConfirmModSchemaException.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
-        _addField(m, field);
-    }
-
     static class TransformFieldAdd implements TransformFieldVisitor {
         @Override
         public String[] transform(String[] fields) {
@@ -676,14 +666,6 @@ public class Models extends ModelManager {
         if (!isModelNew(m)) {
             mCol.modSchema();
         }
-        _addTemplate(m, template);
-    }
-
-    @Override
-    public void addTemplateModChanged(Model m, JSONObject template)  {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
         _addTemplate(m, template);
     }
 
