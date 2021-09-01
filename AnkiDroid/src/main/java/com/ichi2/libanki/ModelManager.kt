@@ -160,11 +160,10 @@ abstract class ModelManager(protected val col: Collection) {
     /**
      * Removing a template
      *
-     * @return False if removing template would leave orphan notes.
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun remTemplate(m: Model, template: JSONObject): Boolean
+    abstract fun remTemplate(m: Model, template: JSONObject)
 
     abstract fun moveTemplate(m: Model, template: JSONObject, idx: Int)
     /*
