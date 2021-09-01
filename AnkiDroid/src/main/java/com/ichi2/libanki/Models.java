@@ -671,9 +671,9 @@ public class Models extends ModelManager {
 
     /** {@inheritDoc} */
     @Override
-    public boolean remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
+    public void remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         if (m.getJSONArray("tmpls").length() <= 1) {
-            return false;
+            return;
         }
         // find cards using this template
         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -692,7 +692,7 @@ public class Models extends ModelManager {
         List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
-            return false;
+            return;
         }
 
         // ok to proceed; remove cards
@@ -716,7 +716,6 @@ public class Models extends ModelManager {
         _updateTemplOrds(m);
         save(m);
         Timber.d("remTemplate done working");
-        return true;
     }
 
 
