@@ -246,12 +246,12 @@ class ModelsV16(private val col: Collection) {
     }
 
     /** Get model with NAME. */
-    fun byName(name: str): Optional<NoteType> {
+    fun byName(name: str): NoteType? {
         val id = id_for_name(name)
         if (id.isPresent) {
-            return get(id.get())
+            return get(id.get()).orElse(null)
         } else {
-            return Optional.empty()
+            return null
         }
     }
 
