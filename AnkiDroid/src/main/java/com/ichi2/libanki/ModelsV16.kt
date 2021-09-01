@@ -200,13 +200,13 @@ class ModelsV16(private val col: Collection) {
     @RustCleanup("Check the -1 fallback - copied from the Java")
     fun current(forDeck: bool = true): NoteType {
         var m = get(col.decks.current().getLong("mid"))
-        if (!forDeck || !m.isPresent) {
+        if (!forDeck || m != null) {
             m = get(col.get_config("curModel", -1L)!!)
         }
-        if (m.isPresent) {
-            return m.get()
+        if (m != null) {
+            return m
         }
-        return get(all_names_and_ids().first().id).get()
+        return get(all_names_and_ids().first().id)!!
     }
 
     fun setCurrent(m: NoteType) {
@@ -227,29 +227,29 @@ class ModelsV16(private val col: Collection) {
     }
 
     /** "Get model with ID, or None." */
-    fun get(id: int): Optional<NoteType> {
+    fun get(id: int): NoteType? {
         var nt = _get_cached(id)
         if (!nt.isPresent) {
             try {
                 nt = Optional.of(modelsBackend.get_notetype_legacy(id))
                 _update_cache(nt.get())
             } catch (e: BackendNotFoundException) {
-                return Optional.empty()
+                return null
             }
         }
-        return nt
+        return nt.orElse(null)
     }
 
     /** Get all models */
     fun all(): List<NoteType> {
-        return all_names_and_ids().map { get(it.id).get() }.toMutableList()
+        return all_names_and_ids().map { get(it.id)!! }.toMutableList()
     }
 
     /** Get model with NAME. */
     fun byName(name: str): NoteType? {
         val id = id_for_name(name)
         if (id.isPresent) {
-            return get(id.get()).orElse(null)
+            return get(id.get())
         } else {
             return null
         }
@@ -314,8 +314,8 @@ class ModelsV16(private val col: Collection) {
     private fun _mutate_after_write(nt: NoteType) {
         // existing code expects the note type to be mutated to reflect
         // the changes made when adding, such as ordinal assignment :-(
-        val updated = get(nt.id)
-        nt.update(updated.get())
+        val updated = get(nt.id)!!
+        nt.update(updated)
     }
 
     /*
