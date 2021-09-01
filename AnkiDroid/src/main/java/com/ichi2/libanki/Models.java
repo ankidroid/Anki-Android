@@ -447,7 +447,7 @@ public class Models extends ModelManager {
     }
 
 
-    private void _addField(Model m, JSONObject field) {
+    protected void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
 		JSONArray flds = m.getJSONArray("flds");
@@ -660,7 +660,7 @@ public class Models extends ModelManager {
 
 
     /** Note: should col.genCards() afterwards. */
-    private void _addTemplate(Model m, JSONObject template) {
+    protected void _addTemplate(Model m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -676,14 +676,6 @@ public class Models extends ModelManager {
         if (!isModelNew(m)) {
             mCol.modSchema();
         }
-        _addTemplate(m, template);
-    }
-
-    @Override
-    public void addTemplateInNewModel(Model m, JSONObject template)  {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
         _addTemplate(m, template);
     }
 
