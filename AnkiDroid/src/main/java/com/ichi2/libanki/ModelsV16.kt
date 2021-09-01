@@ -526,6 +526,10 @@ class ModelsV16(private val col: Collection) {
         save(m)
     }
 
+    fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int>, cmap: Map<Int, Int>) {
+        change(m, listOf(nid), newModel, Optional.of(fmap), Optional.of(cmap))
+    }
+
     fun template_use_count(ntid: int, ord: int): int {
         return col.db.queryLongScalar(
             """
@@ -548,8 +552,8 @@ and notes.mid = ? and cards.ord = ?""",
         m: NoteType,
         nids: List<int>,
         newModel: NoteType,
-        fmap: Optional<Dict<Int, Int?>>,
-        cmap: Optional<Dict<Int, Int?>>,
+        fmap: Optional<Map<Int, Int?>>,
+        cmap: Optional<Map<Int, Int?>>,
     ) {
         col.modSchema()
         assert(newModel.id == m.id || (fmap.isPresent && cmap.isPresent))
@@ -562,7 +566,7 @@ and notes.mid = ? and cards.ord = ?""",
         modelsBackend.after_note_updates(nids, mark_modified = true)
     }
 
-    private fun _changeNotes(nids: List<int>, newModel: NoteType, map: Dict<Int, Int?>) {
+    private fun _changeNotes(nids: List<int>, newModel: NoteType, map: Map<Int, Int?>) {
         val d = mutableListOf<Array<Any>>()
 
         val cursor = col.db.query("select id, flds from notes where id in " + ids2str(nids))
@@ -595,7 +599,7 @@ and notes.mid = ? and cards.ord = ?""",
         nids: List<int>,
         oldModel: NoteType,
         newModel: NoteType,
-        map: Dict<Int, Int?>,
+        map: Map<Int, Int?>,
     ) {
         val d = mutableListOf<Array<Any>>()
         val deleted = mutableListOf<Long>()
