@@ -84,8 +84,9 @@ var NoteType.name: String
         put("name", value)
     }
 
-var NoteType.sortf: int
-    get() = getLong("sortf")
+/** Integer specifying which field is used for sorting in the browser */
+var NoteType.sortf: Int
+    get() = getInt("sortf")
     set(value) {
         put("sortf", value)
     }
@@ -372,7 +373,7 @@ class ModelsV16(private val col: Collection) {
         return m.flds.jsonObjectIterable().map { it.getString("name") }.toMutableList()
     }
 
-    fun sortIdx(m: NoteType): int {
+    fun sortIdx(m: NoteType): Int {
         return m.sortf
     }
 
@@ -424,7 +425,7 @@ class ModelsV16(private val col: Collection) {
     fun set_sort_index(nt: NoteType, idx: Int) {
 
         assert(0 <= idx && idx < len(nt.flds))
-        nt.sortf = idx.toLong()
+        nt.sortf = idx
     }
 
     /*
