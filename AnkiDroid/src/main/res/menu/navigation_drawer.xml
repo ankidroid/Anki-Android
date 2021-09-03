@@ -8,7 +8,7 @@
             android:title="@string/decks" />
         <item
             android:id="@+id/nav_browser"
-            android:icon="@drawable/ic_search_black"
+            android:icon="@drawable/ic_flashcard_black"
             android:title="@string/card_browser"/>
         <item
             android:id="@+id/nav_stats"
