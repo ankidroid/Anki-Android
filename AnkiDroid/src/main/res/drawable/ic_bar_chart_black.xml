@@ -13,9 +13,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~
-  ~ Modifications:
+  ~ Modifications (David Allison, 2021):
   ~  fill color set to black
   ~  tint removed
+  ~  flip left/right to better match the equalizer icon we previously used
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,5 +26,5 @@
     android:viewportHeight="24">
   <path
       android:fillColor="#FF000000"
-      android:pathData="M5,9.2h3L8,19L5,19zM10.6,5h2.8v14h-2.8zM16.2,13L19,13v6h-2.8z"/>
+      android:pathData="M5,13.2h3L8,19L5,19zM10.6,5h2.8v14h-2.8zM16.2,9L19,9v10h-2.8z"/>
 </vector>
