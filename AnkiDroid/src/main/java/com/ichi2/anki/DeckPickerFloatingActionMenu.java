@@ -118,7 +118,7 @@ public class DeckPickerFloatingActionMenu {
             mAddSharedLayout.setVisibility(View.VISIBLE);
             mAddDeckLayout.setVisibility(View.VISIBLE);
             mFabBGLayout.setVisibility(View.VISIBLE);
-            mFabMain.animate().rotationBy(140);
+            mFabMain.animate().rotationBy(135); // 135 = 90 + 45
             mAddNoteLayout.animate().translationY(0).setDuration(30);
             mAddSharedLayout.animate().translationY(0).setDuration(50);
             mAddDeckLayout.animate().translationY(0).setDuration(100);
