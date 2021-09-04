@@ -120,7 +120,7 @@
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
     <string name="dialog_cancel">ବାତିଲ</string>
-    <string name="dialog_ok">ଠିକ ଅଛି </string>
+    <string name="dialog_ok">ଠିକ୍‌ ଅଛି</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତ</string>
@@ -249,6 +249,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">ଆଜି ଦେଖିବାକୁ ଥିବା କାର୍ଡର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା ଡେକ୍ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">ଡେକ୍ ପ୍ୟାକେଜ୍ (.apkg)</string>
+    <string name="import_collection_package">ସଂଗ୍ରହ ପ୍ୟାକେଜ୍ (.colpkg)</string>
 </resources>

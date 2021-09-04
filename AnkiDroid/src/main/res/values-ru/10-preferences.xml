@@ -43,7 +43,7 @@
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Общие настройки</string>
-    <string name="pref_cat_reviewing" maxLength="41">Обучение</string>
+    <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
     <string name="pref_cat_flashcard" maxLength="41">Экран</string>
@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Жесты</string>
     <string name="pref_cat_gestures_summ">Использовать касания и смахивание вместо кнопок</string>
     <string name="pref_cat_actions" maxLength="41">Действия</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Управление</string>
+    <string name="pref_cat_controls_summ">Настроить устройства ввода</string>
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
     <string name="pref_cat_performance" maxLength="41">Производительность</string>
@@ -70,7 +70,7 @@
     <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
     <string name="dictionary" maxLength="41">Посмотреть в словаре</string>
     <string name="reset_languages" maxLength="41">Сбросить языки</string>
-    <string name="reset_languages_summ">Сбрасывает сопоставленные всем колодам языки</string>
+    <string name="reset_languages_summ">Сбросит сопоставленные всем колодам языки</string>
     <string name="reset_languages_question">Сбросить все языковые соответствия?</string>
     <string name="reset_confirmation">Все сопоставления сброшены</string>
     <string name="card_zoom" maxLength="41">Масштаб карточек</string>
@@ -136,7 +136,7 @@
     <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
-    <string name="sync_status_badge_summ">Добавлять точку на значок синхронизации, когда можно выгрузить изменения</string>
+    <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
     <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
@@ -229,7 +229,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">Сопоставление команд</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Изменения набора параметров затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новый набор</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
@@ -310,7 +310,7 @@
     <string name="analytics_title" maxLength="41">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
     <string name="note_editor_replace_newlines" maxLength="41">Заменять перенос строк на HTML</string>
-    <string name="note_editor_replace_newlines_summ">Заменять &lt;br&gt; в редакторе записей на перенос строки</string>
+    <string name="note_editor_replace_newlines_summ">Заменяет &lt;br&gt; в редакторе записей на перенос строки</string>
     <string name="no_code_formatting" maxLength="41">Простое форматирование ответа</string>
     <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
     <string name="type_in_answer_focus" maxLength="41">Переключать на «Ввести ответ»</string>
@@ -329,6 +329,6 @@
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">О: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Удалить «%s»</string>
+    <string name="bindings_already_bound">Уже назначено на «%s»</string>
 </resources>

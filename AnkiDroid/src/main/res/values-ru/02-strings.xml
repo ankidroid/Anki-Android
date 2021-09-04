@@ -97,8 +97,8 @@
         <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Изменить лимит новых на сегодня</string>
-    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых на сегодня</string>
+    <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
+    <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
     <string name="custom_study_review_forgotten">Повторить забытые</string>
     <string name="custom_study_review_ahead">Повторить с опережением</string>
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
