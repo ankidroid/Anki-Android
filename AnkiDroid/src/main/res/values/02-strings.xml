@@ -408,4 +408,10 @@
     <string name="failed">Failed</string>
     <string name="success">Success</string>
     <string name="addon_install_complete">%s addon installation complete</string>
+    <string name="ankidroid_js_addon_npm_search_url">https://www.npmjs.com/search?q=keywords:ankidroid-js-addon</string>
+    <string name="ankidroid_js_addon_npm_search_query_url">https://www.npmjs.com/search?q=</string>
+    <string name="search_using_addon_name">Search using addon name</string>
+    <string name="install_js_addon">Install Addon</string>
+    <string name="get_addons">Get Addons</string>
+    <string name="download_addons">Download Addons</string>
 </resources>
