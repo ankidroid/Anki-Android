@@ -38,7 +38,7 @@ permission notice:
     DEALINGS IN THE SOFTWARE.
 */
 
-def className = "/com/ichi2/anki/AnkiFont.kt"
+def className = ""
 
 static def isKotlinCompile(Object t) {
     def clazz = t.class
