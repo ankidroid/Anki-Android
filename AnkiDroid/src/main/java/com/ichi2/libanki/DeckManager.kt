@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki
 
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -180,11 +179,11 @@ abstract class DeckManager {
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
     fun getSubdeckName(did: Long, subdeckName: String?): String? {
-        if (TextUtils.isEmpty(subdeckName)) {
+        if (subdeckName.isNullOrEmpty()) {
             return null
         }
-        val newName = subdeckName!!.replace("\"".toRegex(), "")
-        if (TextUtils.isEmpty(newName)) {
+        val newName = subdeckName.replace("\"".toRegex(), "")
+        if (newName.isEmpty()) {
             return null
         }
         val deck = get(did, false) ?: return null
