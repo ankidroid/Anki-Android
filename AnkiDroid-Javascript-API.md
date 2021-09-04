@@ -140,6 +140,87 @@ For flagging <b>green</b> in current card
 <button onclick="ankiToggleFlag(3);">Green Flag</button>
 ```
 
+
+## Bury Cards
+* #### Name
+```js
+AnkiDroidJS.ankiBuryCard();
+```
+* ### Return
+`boolean`
+
+* #### Info
+Bury current Cards showing in reviewer UI
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiBuryCard();">Bury Card</button>
+```
+
+## Bury Notes
+* #### Name
+```js
+AnkiDroidJS.ankiBuryNote();
+```
+* #### Info
+Bury current Notes showing in reviewer UI
+
+* ### Return
+`boolean`
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiBuryNote();">Bury Note</button>
+```
+
+## Suspend Cards
+* #### Name
+```js
+AnkiDroidJS.ankiSuspendCard();
+```
+* ### Return
+`boolean`
+
+* #### Info
+Suspend current Cards showing in reviewer UI
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiSuspendCard();">Suspend Card</button>
+```
+
+## Suspend Notes
+* #### Name
+```js
+AnkiDroidJS.ankiSuspendNote();
+```
+
+* ### Return
+`boolean`
+
+* #### Info
+Suspend current Notes showing in reviewer UI
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiSuspendNote();">Suspend Note</button>
+```
+
+## Tag Cards
+* #### Name
+```js
+AnkiDroidJS.ankiAddTagToCard();
+```
+
+* #### Info
+Open tags dialog to add tags to current Notes
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiAddTagToCard();">Show Tag Dialog to add tag</button>
+```
+
+
 ## Show options menu using JavaScript
 * #### Name
 ```ankiShowOptionsMenu()```
@@ -530,7 +611,7 @@ console.log(AnkiDroidJS.ankiGetCardODid());
 ## Get next time for review in WebView
 
 * #### Name 
-```
+```js
 AnkiDroidJS.ankiGetNextTime1()
 AnkiDroidJS.ankiGetNextTime2()
 AnkiDroidJS.ankiGetNextTime3()
@@ -547,7 +628,6 @@ console.log(AnkiDroidJS.ankiGetNextTime2());
 console.log(AnkiDroidJS.ankiGetNextTime3());
 console.log(AnkiDroidJS.ankiGetNextTime4());
 ```
-
 
 ## Open card browser and search with query
 * #### Name
@@ -771,3 +851,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#8199 JS API to know if answer is displaying or question](https://github.com/ankidroid/Anki-Android/pull/8199)
 <br>[#8500 Get deck name using JS API](https://github.com/ankidroid/Anki-Android/pull/8500)
 <br>[#9247 JS API to open card browser and search with query](https://github.com/ankidroid/Anki-Android/pull/9247)
+<br>[#9245 New JS API for bury & suspend card and bury & suspend note and tag card](https://github.com/ankidroid/Anki-Android/pull/9245)
