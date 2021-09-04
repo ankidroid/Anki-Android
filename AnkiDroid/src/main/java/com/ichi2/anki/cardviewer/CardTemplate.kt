@@ -13,46 +13,41 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
+import androidx.annotation.CheckResult
+import java.lang.IllegalStateException
 
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-
-public class CardTemplate {
-    private final String mPreStyle;
-    private final String mPreScript;
-    private final String mPreClass;
-    private final String mPreContent;
-    private final String mPostContent;
-
-    public CardTemplate(@NonNull String template) {
-        // Note: This refactoring means the template must be in the specific order of style, class, content.
-        // Since this is a const loaded from an asset file, I'm fine with this.
-        String classDelim = "::class::";
-        String styleDelim = "::style::";
-        String scriptDelim = "::script::";
-        String contentDelim = "::content::";
-
-        int styleIndex = template.indexOf(styleDelim);
-        int scriptIndex = template.indexOf(scriptDelim);
-        int classIndex = template.indexOf(classDelim);
-        int contentIndex = template.indexOf(contentDelim);
-
-        try {
-            this.mPreStyle = template.substring(0, styleIndex);
-            this.mPreScript = template.substring(styleIndex + styleDelim.length(), scriptIndex);
-            this.mPreClass = template.substring(scriptIndex + scriptDelim.length(), classIndex);
-            this.mPreContent = template.substring(classIndex + classDelim.length(), contentIndex);
-            this.mPostContent = template.substring(contentIndex + contentDelim.length());
-        } catch (StringIndexOutOfBoundsException ex) {
-            throw new IllegalStateException("The card template had replacement string order, or content changed", ex);
-        }
+class CardTemplate(template: String) {
+    private var mPreStyle: String? = null
+    private var mPreScript: String? = null
+    private var mPreClass: String? = null
+    private var mPreContent: String? = null
+    private var mPostContent: String? = null
+    @CheckResult
+    fun render(content: String, style: String, script: String, cardClass: String): String {
+        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent
     }
 
-    @CheckResult
-    @NonNull
-    public String render(String content, String style, String script, String cardClass) {
-        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent;
+    init {
+        // Note: This refactoring means the template must be in the specific order of style, class, content.
+        // Since this is a const loaded from an asset file, I'm fine with this.
+        val classDelim = "::class::"
+        val styleDelim = "::style::"
+        val scriptDelim = "::script::"
+        val contentDelim = "::content::"
+        val styleIndex = template.indexOf(styleDelim)
+        val scriptIndex = template.indexOf(scriptDelim)
+        val classIndex = template.indexOf(classDelim)
+        val contentIndex = template.indexOf(contentDelim)
+        try {
+            mPreStyle = template.substring(0, styleIndex)
+            mPreScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
+            mPreClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
+            mPreContent = template.substring(classIndex + classDelim.length, contentIndex)
+            mPostContent = template.substring(contentIndex + contentDelim.length)
+        } catch (ex: StringIndexOutOfBoundsException) {
+            throw IllegalStateException("The card template had replacement string order, or content changed", ex)
+        }
     }
 }
