@@ -38,6 +38,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.Counts;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -865,7 +866,7 @@ public class Syncer {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
         Pair<String, Object[]> limAndArg = usnLim();
-        Map<Long, Long> lmods = new HashMap<>(mCol
+        Map<Long, Long> lmods = HashUtil.HashMapInit(mCol
                     .getDb()
                     .queryScalar(
                             "SELECT count() FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "

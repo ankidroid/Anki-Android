@@ -48,6 +48,8 @@ import com.ichi2.libanki.template.TemplateError;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.HashUtil;
+import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -761,11 +763,11 @@ public class Collection implements CollectionGetter {
     public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
         int nbCount = noteCount();
         // For each note, indicates ords of cards it contains
-        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>(nbCount);
+        HashMap<Long, HashMap<Integer, Long>> have = HashUtil.HashMapInit(nbCount);
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        HashMap<Long, Long> dids = new HashMap<>(nbCount);
+        HashMap<Long, Long> dids = HashUtil.HashMapInit(nbCount);
         // For each note, an arbitrary due of one of its due card processed, if any exists
-        HashMap<Long, Long> dues = new HashMap<>(nbCount);
+        HashMap<Long, Long> dues = HashUtil.HashMapInit(nbCount);
         List<ParsedNode> nodes = null;
         if (model.getInt("type") != Consts.MODEL_CLOZE) {
             nodes = model.parsedNodes();
@@ -1090,7 +1092,7 @@ public class Collection implements CollectionGetter {
         // unpack fields and create dict
         Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
         Set<Map.Entry<String, Pair<Integer, JSONObject>>> maps = fmap.entrySet();
-        Map<String, String> fields = new HashMap<>(maps.size() + 8);
+        Map<String, String> fields = HashUtil.HashMapInit(maps.size() + 8);
         for (Map.Entry<String, Pair<Integer, JSONObject>> entry : maps) {
             fields.put(entry.getKey(), flist[entry.getValue().first]);
         }
@@ -1110,7 +1112,7 @@ public class Collection implements CollectionGetter {
         fields.put("Card", template.getString("name"));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
-        HashMap<String, String> d = new HashMap<>(2);
+        HashMap<String, String> d = HashUtil.HashMapInit(2);
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
@@ -1506,7 +1508,7 @@ public class Collection implements CollectionGetter {
 
         //obtain a list of all valid dconf IDs
         List<DeckConfig> allConf = getDecks().allConf();
-        HashSet<Long> configIds  = new HashSet<>(allConf.size());
+        HashSet<Long> configIds  = HashUtil.HashSetInit(allConf.size());
 
         for (DeckConfig conf : allConf) {
             configIds.add(conf.getLong("id"));

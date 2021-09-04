@@ -31,6 +31,7 @@ import com.ichi2.anki.exception.FilteredAncestor;
 
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.DeckNameComparator;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
@@ -173,7 +174,7 @@ public class Decks extends DeckManager {
          * @param size The expected number of deck to keep
          */
         private NameMap(int size) {
-            mNameMap = new HashMap<>(size);
+            mNameMap = HashUtil.HashMapInit(size);
         }
 
 
@@ -260,7 +261,7 @@ public class Decks extends DeckManager {
     public void load(@NonNull String decks, @NonNull String dconf) {
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
-        mDecks = new HashMap<>(decksarray.length());
+        mDecks = HashUtil.HashMapInit(decksarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
                 Deck o = new Deck(decksarray.getJSONObject(id));
@@ -271,7 +272,7 @@ public class Decks extends DeckManager {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
-        mDconf = new HashMap<>(confarray.length());
+        mDconf = HashUtil.HashMapInit(confarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
                 mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
@@ -941,7 +942,7 @@ public class Decks extends DeckManager {
 
     private void _checkDeckTree() {
         List<Deck> decks = allSorted();
-        Map<String, Deck> names = new HashMap<>(decks.size());
+        Map<String, Deck> names = HashUtil.HashMapInit(decks.size());
 
         for (Deck deck: decks) {
             String deckName = deck.getString("name");

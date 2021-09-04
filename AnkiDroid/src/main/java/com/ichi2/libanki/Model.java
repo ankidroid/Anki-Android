@@ -21,11 +21,11 @@ import android.text.TextUtils;
 
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -94,7 +94,7 @@ public class Model extends JSONObject {
      */
     public Set<String> nonEmptyFields(String[] sfld) {
         List<String> fieldNames = getFieldsNames();
-        Set<String> nonemptyFields = new HashSet<>(sfld.length);
+        Set<String> nonemptyFields = HashUtil.HashSetInit(sfld.length);
         for (int i = 0; i < sfld.length; i++) {
             if (!TextUtils.isEmpty(sfld[i].trim())) {
                 nonemptyFields.add(fieldNames.get(i));

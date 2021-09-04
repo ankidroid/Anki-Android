@@ -27,6 +27,8 @@ import android.util.Pair;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
+import com.ichi2.libanki.Deck;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -765,7 +767,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>(mCol.getModels().count());
+        Map<Long, Object[]> mods = HashUtil.HashMapInit(mCol.getModels().count());
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
@@ -915,7 +917,7 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>(nids.size());
         String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>(col.getModels().count());
+        Map<Long, java.util.Collection<Long>> midToNid = HashUtil.HashMapInit(col.getModels().count());
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
@@ -1008,7 +1010,7 @@ public class Finder {
         search += "'" + fieldName + ":*'";
         // go through notes
         List<Long> nids = col.findNotes(search);
-        Map<String, List<Long>> vals = new HashMap<>(nids.size());
+        Map<String, List<Long>> vals = HashUtil.HashMapInit(nids.size());
         List<Pair<String, List<Long>>> dupes = new ArrayList<>(nids.size());
         Map<Long, Integer> fields = new HashMap<>();
         try (Cursor cur = col.getDb().query(

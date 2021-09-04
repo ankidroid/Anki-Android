@@ -86,6 +86,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
@@ -1159,12 +1160,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             HashMap<String, String> savedFilters;
             if (savedFiltersObj != null) {
-                savedFilters = new HashMap<>(savedFiltersObj.length());
+                savedFilters = HashUtil.HashMapInit(savedFiltersObj.length());
                 for (String searchName : savedFiltersObj) {
                     savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                 }
             } else {
-                savedFilters = new HashMap<>(0);
+                savedFilters = HashUtil.HashMapInit(0);
             }
             showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
                     "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
@@ -1582,7 +1583,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private static Map<Long, Integer> getPositionMap(CardCollection<CardCache> list) {
-        Map<Long, Integer> positions = new HashMap<>(list.size());
+        Map<Long, Integer> positions = HashUtil.HashMapInit(list.size());
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
         }
