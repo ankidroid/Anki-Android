@@ -414,4 +414,6 @@
     <string name="install_js_addon">Install Addon</string>
     <string name="get_addons">Get Addons</string>
     <string name="download_addons">Download Addons</string>
+    <string name="js_addons">JavaScript Addons</string>
+    <string name="addons">Addons</string>
 </resources>
