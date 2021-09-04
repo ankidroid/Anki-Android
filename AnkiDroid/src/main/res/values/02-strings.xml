@@ -396,4 +396,16 @@
     <string name="import_mapped_to_tags">Mapped to Tags</string>
     <string name="import_mapped_to_nothing">Ignored</string>
 
+    <!-- for js addons, npnjs registry url to download addon package file -->
+    <string name="npmjs_registry" translatable="false">https://registry.npmjs.org/%s/latest</string>
+    <string name="is_not_valid_js_addon">%s is not a valid js addon package for AnkiDroid</string>
+    <string name="error_occur_downloading_addon">Error occur in downloading %s addon. Try again</string>
+    <string name="confirm_install">Confirm install?</string>
+    <string name="confirm_addon_install_message">Are you sure you want to install %s?</string>
+    <string name="downloading_npm_package">Downloading...</string>
+    <string name="extracting_npm_package">Extracting...</string>
+    <string name="failed_to_extract_addon_package">Failed to extract the %s addon package</string>
+    <string name="failed">Failed</string>
+    <string name="success">Success</string>
+    <string name="addon_install_complete">%s addon installation complete</string>
 </resources>
