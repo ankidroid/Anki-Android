@@ -470,6 +470,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     // legacy
     fun allConf() = all_config()
     fun getConf(conf_id: dcid) = get_config(conf_id)
+
+    fun confId(name: String, cloneFrom: String): Long {
+        val config: Optional<DeckConfigV16> = Optional.of(DeckConfigV16.Config(JSONObject(cloneFrom)))
+        return add_config_returning_id(name, config)
+    }
+
     fun updateConf(conf: DeckConfigV16, preserve_usn: bool = false) = update_config(conf, preserve_usn)
     fun remConf(id: dcid) = remove_config(id)
     fun confId(name: str, clone_from: Optional<DeckConfigV16> = Optional.empty()) =
