@@ -24,7 +24,7 @@ import com.ichi2.anki.exception.FilteredAncestor
 import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.JSONObject
-import net.ankiweb.rsdroid.RustCleanup
+import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 abstract class DeckManager {
@@ -220,13 +220,14 @@ abstract class DeckManager {
     }
 
     @VisibleForTesting
+    @KotlinCleanup("potentially an extension function")
     fun allSortedNames(): List<String> {
         val names = allNames()
         Collections.sort(names, DeckNameComparator.INSTANCE)
         return names
     }
 
-    @RustCleanup("potentially an extension function")
+    @KotlinCleanup("potentially an extension function")
     fun allDynamicDeckIds(): Array<Long> {
         val ids = allIds()
         val validValues = ArrayList<Long>(ids.size)
