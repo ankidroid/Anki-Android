@@ -30,7 +30,6 @@ import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 
 import com.ichi2.utils.DeckComparator;
-import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -73,7 +72,7 @@ public class Decks extends DeckManager {
     public static final String CURRENT_DECK = "curDeck";
     /** Configuration saving the set of active decks (i.e. current decks and its descendants) */
     public static final String ACTIVE_DECKS = "activeDecks";
-    
+
 
     //not in libAnki
     @SuppressWarnings("WeakerAccess")
@@ -472,25 +471,6 @@ public class Decks extends DeckManager {
     @Override
     public List<Deck> all() {
         return new ArrayList<>(mDecks.values());
-    }
-
-
-    /** {@inheritDoc} */
-    @NonNull
-    @Override
-    public List<Deck> allSorted() {
-        List<Deck> decks = all();
-        Collections.sort(decks, DeckComparator.INSTANCE);
-        return decks;
-    }
-
-    @NonNull
-    @Override
-    @VisibleForTesting
-    public List<String> allSortedNames() {
-        List<String> names = allNames();
-        Collections.sort(names, DeckNameComparator.INSTANCE);
-        return names;
     }
 
 

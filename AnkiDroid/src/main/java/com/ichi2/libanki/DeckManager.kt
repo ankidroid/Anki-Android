@@ -21,6 +21,8 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.DeckRenameException
 import com.ichi2.anki.exception.FilteredAncestor
+import com.ichi2.utils.DeckComparator
+import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
@@ -180,8 +182,6 @@ abstract class DeckManager {
 
     /* Methods only visible for testing */
 
-    @VisibleForTesting
-    abstract fun allSortedNames(): List<String>
     /**
      *
      * @param name The name whose parents should exists
@@ -212,7 +212,19 @@ abstract class DeckManager {
      * This method does not exist in the original python module but *must* be used for any user
      * interface components that display a deck list to ensure the ordering is consistent.
      */
-    abstract fun allSorted(): List<Deck>
+    /** {@inheritDoc}  */
+    fun allSorted(): List<Deck?> {
+        val decks: List<Deck?> = all()
+        Collections.sort(decks, DeckComparator.INSTANCE)
+        return decks
+    }
+
+    @VisibleForTesting
+    fun allSortedNames(): List<String> {
+        val names = allNames()
+        Collections.sort(names, DeckNameComparator.INSTANCE)
+        return names
+    }
 
     @RustCleanup("potentially an extension function")
     fun allDynamicDeckIds(): Array<Long> {
