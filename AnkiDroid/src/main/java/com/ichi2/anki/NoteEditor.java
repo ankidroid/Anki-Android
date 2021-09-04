@@ -138,6 +138,7 @@ import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Decks.CURRENT_DECK;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
@@ -1777,7 +1778,7 @@ public class NoteEditor extends AnkiActivity implements
         if (note == null || mAddNote || mCurrentEditedCard == null) {
             JSONObject model = getCol().getModels().current();
             if (getCol().get_config("addToCur", true)) {
-                mCurrentDid = getCol().get_config_long("curDeck");
+                mCurrentDid = getCol().get_config_long(CURRENT_DECK);
                 if (getCol().getDecks().isDyn(mCurrentDid)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,

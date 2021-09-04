@@ -66,8 +66,12 @@ import static com.ichi2.utils.CollectionUtils.addAll;
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks extends DeckManager {
 
-    // Invalid id, represents an id on an unfound deck
+    /** Invalid id, represents an id on an unfound deck */
     public static final long NOT_FOUND_DECK_ID = -1L;
+    /** Configuration saving the current deck */
+    public static final String CURRENT_DECK = "curDeck";
+    /** Configuration saving the set of active decks (i.e. current decks and its descendants) */
+    public static final String ACTIVE_DECKS = "activeDecks";
     
 
     //not in libAnki
@@ -1019,7 +1023,7 @@ public class Decks extends DeckManager {
     @NonNull
     @Override
     public LinkedList<Long> active() {
-        JSONArray activeDecks = mCol.get_config_array("activeDecks");
+        JSONArray activeDecks = mCol.get_config_array(ACTIVE_DECKS);
         LinkedList<Long> result = new LinkedList<>();
         addAll(result, activeDecks.longIterable());
         return result;
@@ -1029,7 +1033,7 @@ public class Decks extends DeckManager {
     /** {@inheritDoc} */
     @Override
     public long selected() {
-        return mCol.get_config_long("curDeck");
+        return mCol.get_config_long(CURRENT_DECK);
     }
 
 
@@ -1049,7 +1053,7 @@ public class Decks extends DeckManager {
         String name = mDecks.get(did).getString("name");
 
         // current deck
-        mCol.set_config("curDeck", did);
+        mCol.set_config(CURRENT_DECK, did);
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
@@ -1058,7 +1062,7 @@ public class Decks extends DeckManager {
             activeDecks.put(n);
         }
 
-        mCol.set_config("activeDecks", activeDecks);
+        mCol.set_config(ACTIVE_DECKS, activeDecks);
     }
 
 

@@ -30,6 +30,8 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.libanki.Decks.ACTIVE_DECKS
+import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.DeckNameId
 import com.ichi2.libanki.backend.DeckTreeNode
@@ -510,7 +512,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /** The currently active dids. */
     fun active(): MutableList<did> {
         // TODO: Copied from the java, should use get_config
-        val activeDecks: JSONArray = col.get_config_array("activeDecks")
+        val activeDecks: JSONArray = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
         CollectionUtils.addAll(result, activeDecks.longIterable())
         return result
@@ -518,7 +520,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     /** The currently selected did. */
     fun selected(): did {
-        return this.col.get_config_long("curDeck")
+        return this.col.get_config_long(CURRENT_DECK)
     }
 
     fun current(): DeckV16 {
@@ -532,8 +534,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         val current = this.selected()
         val active = this.deck_and_child_ids(did)
         if (current != did || active != this.active()) {
-            this.col.set_config("curDeck", did)
-            this.col.set_config("activeDecks", active.toJsonArray())
+            this.col.set_config(CURRENT_DECK, did)
+            this.col.set_config(ACTIVE_DECKS, active.toJsonArray())
         }
     }
 
