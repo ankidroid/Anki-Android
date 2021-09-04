@@ -2048,10 +2048,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void handleDeckSelection(long did, DeckSelectionType selectionType) {
-        // Clear the undo history when selecting a new deck
-        if (getCol().getDecks().selected() != did) {
-            getCol().clearUndo();
-        }
         // Select the deck
         getCol().getDecks().select(did);
         // Also forget the last deck used by the Browser

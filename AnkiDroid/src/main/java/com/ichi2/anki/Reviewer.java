@@ -231,10 +231,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         Timber.d("selectDeckFromExtra() with deckId = %d", did);
 
-        // Clear the undo history when selecting a new deck
-        if (getCol().getDecks().selected() != did) {
-            getCol().clearUndo();
-        }
         // Select the deck
         getCol().getDecks().select(did);
         // Reset the schedule so that we get the counts for the currently selected deck

@@ -1084,9 +1084,16 @@ public class Decks {
 
 
     /**
-     * Select a new branch.
+     * do nothing if deck is already selected
+     * reset undo, change curDeck and activeDecks
+     * @param did the deck to select
      */
     public void select(long did) {
+        // Clear the undo history when selecting a new deck
+        if (selected() != did) {
+            mCol.clearUndo();
+        }
+
         String name = mDecks.get(did).getString("name");
 
         // current deck
