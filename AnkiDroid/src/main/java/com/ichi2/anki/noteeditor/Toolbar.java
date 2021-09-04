@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ViewGroupUtils;
@@ -60,7 +61,9 @@ public class Toolbar extends FrameLayout {
 
     private TextFormatListener mFormatCallback;
     private LinearLayout mToolbar;
+    private LinearLayout mToolbarLayout;
     private List<View> mCustomButtons = new ArrayList<>();
+    private List<LinearLayout> mRows = new ArrayList<>();
     private View mClozeIcon;
 
     private Paint mStringPaint;
@@ -92,7 +95,7 @@ public class Toolbar extends FrameLayout {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.note_editor_toolbar, this, true);
 
-        int paintSize = dpToPixels(28);
+        int paintSize = dpToPixels(24);
 
         mStringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStringPaint.setTextSize(paintSize);
@@ -100,6 +103,7 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setTextAlign(Paint.Align.CENTER);
 
         this.mToolbar = findViewById(R.id.editor_toolbar_internal);
+        this.mToolbarLayout = findViewById(R.id.toolbar_layout);
         setClick(R.id.note_editor_toolbar_button_bold, "<b>", "</b>");
         setClick(R.id.note_editor_toolbar_button_italic, "<em>", "</em>");
         setClick(R.id.note_editor_toolbar_button_underline, "<u>", "</u>");
@@ -189,27 +193,31 @@ public class Toolbar extends FrameLayout {
         */
 
         // apply style
-        int marginEnd = (int) Math.ceil(8 / context.getResources().getDisplayMetrics().density);
+        int margin = dpToPixels(8);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
-        params.setMarginEnd(marginEnd);
+        params.setMargins(margin, margin/2, margin, margin/2);
         button.setLayoutParams(params);
 
 
-        int fourDp = (int) Math.ceil(4 / context.getResources().getDisplayMetrics().density);
+        int twoDp = (int) Math.ceil(2 / context.getResources().getDisplayMetrics().density);
 
-        button.setPadding(fourDp, fourDp, fourDp, fourDp);
+        button.setPadding(twoDp, twoDp, twoDp, twoDp);
         // end apply style
 
+        if (shouldScrollToolbar()) {
+            this.mToolbar.addView(button, mToolbar.getChildCount());
+        } else {
+            addViewToToolbar(button);
+        }
 
-        this.mToolbar.addView(button, mToolbar.getChildCount());
         mCustomButtons.add(button);
         button.setOnClickListener(l -> runnable.run());
 
         // Hack - items are truncated from the scrollview
-        View v = findViewById(R.id.editor_toolbar_internal);
+        View v = findViewById(R.id.toolbar_layout);
 
-        int expectedWidth = getVisibleItemCount() * dpToPixels(48 + 2 * 4); //width + 4dp padding on both sides
+        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48);
         int width = getScreenWidth();
         LayoutParams p = new LayoutParams(v.getLayoutParams());
         p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.START : Gravity.CENTER_HORIZONTAL);
@@ -231,7 +239,7 @@ public class Toolbar extends FrameLayout {
 
     public void clearCustomItems() {
         for (View v : mCustomButtons) {
-            mToolbar.removeView(v);
+            ((ViewGroup) v.getParent()).removeView(v);
         }
         mCustomButtons.clear();
     }
@@ -284,14 +292,42 @@ public class Toolbar extends FrameLayout {
     }
 
 
-    private int getVisibleItemCount() {
+    private int getVisibleItemCount(LinearLayout layout) {
         int count = 0;
-        for (int i = 0; i < mToolbar.getChildCount(); i++) {
-            if (mToolbar.getChildAt(i).getVisibility() == View.VISIBLE){
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            if (layout.getChildAt(i).getVisibility() == View.VISIBLE) {
                 count++;
             }
         }
         return count;
+    }
+
+
+    private void addViewToToolbar(AppCompatImageButton button) {
+        int expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48);
+        int width = getScreenWidth();
+        if (expectedWidth <= width) {
+            this.mToolbar.addView(button, mToolbar.getChildCount());
+            return;
+        }
+        boolean spaceLeft = false;
+        if (!mRows.isEmpty()) {
+            LinearLayout row = mRows.get(mRows.size() - 1);
+            int expectedRowWidth = getVisibleItemCount(row) * dpToPixels(48);
+            if (expectedRowWidth <= width) {
+                row.addView(button, row.getChildCount());
+                spaceLeft = true;
+            }
+        }
+        if (!spaceLeft) {
+            LinearLayout row = new LinearLayout(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(params);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.addView(button);
+            mRows.add(row);
+            mToolbarLayout.addView(mRows.get(mRows.size() - 1));
+        }
     }
 
     private void setClick(@IdRes int id, String prefix, String suffix) {
@@ -320,6 +356,9 @@ public class Toolbar extends FrameLayout {
         mStringPaint.setColor(color);
     }
 
+    protected static boolean shouldScrollToolbar() {
+        return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorScrollToolbar", true);
+    }
 
     public interface TextFormatListener {
         void performFormat(TextFormatter formatter);
