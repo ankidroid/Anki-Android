@@ -99,7 +99,8 @@ public class ActivityList {
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
                 get(SharedDecksActivity.class),
-                get(AddonDownloadActivity.class)
+                get(AddonDownloadActivity.class),
+                get(AddonBrowser.class)
         );
     }
 
