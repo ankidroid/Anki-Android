@@ -850,14 +850,7 @@ public class Decks extends DeckManager {
      * ***********************************************************
      */
 
-
     @NonNull
-    @Override
-    public String name(long did) {
-        return name(did, false);
-    }
-
-
     public String name(long did, boolean _default) {
         Deck deck = get(did, _default);
         if (deck != null) {
