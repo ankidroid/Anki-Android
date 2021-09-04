@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.canhub.cropper.CropImageActivity;
+import com.ichi2.anki.AddonBrowser;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardInfo;
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
@@ -43,6 +44,7 @@ import com.ichi2.anki.SharedDecksActivity;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.VideoPlayer;
+import com.ichi2.anki.jsaddons.AddonDownloadActivity;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
@@ -96,7 +98,8 @@ public class ActivityList {
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
-                get(SharedDecksActivity.class)
+                get(SharedDecksActivity.class),
+                get(AddonDownloadActivity.class)
         );
     }
 
