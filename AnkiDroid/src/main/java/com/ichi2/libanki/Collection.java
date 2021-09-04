@@ -107,7 +107,7 @@ public class Collection implements CollectionGetter {
     private boolean mServer;
     //private double mLastSave;
     private final Media mMedia;
-    private final Decks mDecks;
+    private final DeckManager mDecks;
     private ModelManager mModels;
     private final TagManager mTags;
 
@@ -1575,11 +1575,6 @@ public class Collection implements CollectionGetter {
         //we use a ! prefix to keep it at the top of the deck list
         String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
         Long nextDeckId = getDecks().id_safe(recoveredDeckName);
-        // Still a risk of failure if recoveredDeckName is the name of a filtered deck
-
-        if (nextDeckId == null) {
-            throw new IllegalStateException("Unable to create deck");
-        }
 
         getDecks().flush();
 
@@ -2026,7 +2021,7 @@ public class Collection implements CollectionGetter {
     }
 
 
-    public Decks getDecks() {
+    public DeckManager getDecks() {
         return mDecks;
     }
 

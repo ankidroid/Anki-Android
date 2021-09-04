@@ -53,9 +53,8 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -474,7 +473,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
         long did = requireArguments().getLong("did");
-        Decks decks = mCollection.getDecks();
+        DeckManager decks = mCollection.getDecks();
         String deckToStudyName = decks.get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         Deck cur = decks.byName(customStudyDeck);

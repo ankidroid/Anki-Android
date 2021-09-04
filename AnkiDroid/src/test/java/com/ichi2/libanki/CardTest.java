@@ -252,7 +252,7 @@ public class CardTest extends RobolectricTest {
         // Test runs as the 7th of august 2020, 9h00
         Note n = addNoteUsingBasicModel("Front", "Back");
         Card c = n.firstCard();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
 
         Calendar cal = Calendar.getInstance();
         cal.set(2021, 2, 19, 7, 42, 42);
