@@ -217,6 +217,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         decksBackend.remove_deck(did)
     }
 
+    @Suppress("deprecation")
+    fun allNames(dyn: Boolean): List<String> {
+        return allNames(dyn = dyn, force_default = true)
+    }
+
     /** A sorted sequence of deck names and IDs. */
     fun all_names_and_ids(
         skip_empty_default: bool = false,
