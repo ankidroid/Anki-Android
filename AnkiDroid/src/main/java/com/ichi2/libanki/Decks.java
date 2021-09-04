@@ -1222,12 +1222,6 @@ public class Decks extends DeckManager {
         return sParentCache.get(deckName);
     }
 
-    @NonNull
-    @Override
-    public String getActualDescription() {
-        return current().optString("desc","");
-    }
-
     @VisibleForTesting
     @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {

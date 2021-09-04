@@ -174,8 +174,8 @@ abstract class DeckManager {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
-    abstract fun getActualDescription(): String
+    @KotlinCleanup("convert to extension method (possibly in servicelayer)")
+    fun getActualDescription(): String = current().optString("desc", "")
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
     abstract fun getSubdeckName(did: Long, subdeckName: String?): String?
