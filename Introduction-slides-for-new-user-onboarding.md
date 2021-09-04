@@ -1,4 +1,6 @@
-## Library being used: https://github.com/AppIntro/AppIntro
+## Library which is being used
+
+  https://github.com/AppIntro/AppIntro
 
 ## Way to add a new slide
 
