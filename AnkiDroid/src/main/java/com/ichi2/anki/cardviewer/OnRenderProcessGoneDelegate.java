@@ -64,11 +64,11 @@ public class OnRenderProcessGoneDelegate {
     public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
         Timber.i("Obtaining write lock for card");
         Lock writeLock = mTarget.getWriteLock();
-        WebView mCardWebView = mTarget.getWebView();
+        WebView cardWebView = mTarget.getWebView();
         Timber.i("Obtained write lock for card");
         try {
             writeLock.lock();
-            if (mCardWebView == null || !mCardWebView.equals(view)) {
+            if (cardWebView == null || !cardWebView.equals(view)) {
                 //A view crashed that wasn't ours.
                 //We have nothing to handle. Returning false is a desire to crash, so return true.
                 Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());

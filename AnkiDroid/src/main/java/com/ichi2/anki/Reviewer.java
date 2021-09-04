@@ -131,6 +131,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @VisibleForTesting
     protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    
+    private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     class ScheduleCollectionTaskListener extends NextCardHandler<Computation<Card[]>> {
@@ -366,7 +368,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             Timber.i("Reviewer:: Save whiteboard button pressed");
             if (mWhiteboard != null) {
                 try {
-                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
+                    String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime()).getPath();
                     UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
                 } catch (Exception e) {
                     Timber.w(e);
@@ -666,6 +668,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
         }
 
+        if (undoEnabled) {
+            mOnboarding.onUndoButtonEnabled();
+        }
+
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
         MenuItem hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard);
         MenuItem change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color);
@@ -743,6 +749,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         suspend_icon.getIcon().mutate().setAlpha(alpha);
 
         setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
+        mOnboarding.onCreate();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -802,6 +809,10 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (answerFieldIsFocused()) {
+            return super.onKeyDown(keyCode, event);
+        }
+
         if (mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
             return true;
         }
@@ -834,9 +845,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (answerFieldIsFocused()) {
-            return super.onKeyUp(keyCode, event);
-        }
         if (mProcessor.onKeyUp(keyCode, event)) {
             return true;
         }
@@ -883,6 +891,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void displayAnswerBottomBar() {
         super.displayAnswerBottomBar();
+        mOnboarding.onAnswerShown();
         int buttonCount;
         try {
             buttonCount = mSched.answerButtons(mCurrentCard);
@@ -1108,7 +1117,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     protected void restoreCollectionPreferences() {
         super.restoreCollectionPreferences();
-        mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
+        mShowRemainingCardCount = getCol().get_config_boolean("dueCounts");
     }
 
     @Override
@@ -1227,12 +1236,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void createWhiteboard() {
         SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
-        mWhiteboard = new Whiteboard(this, isInNightMode());
-        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mWhiteboard.setLayoutParams(lp2);
-        FrameLayout fl = findViewById(R.id.whiteboard);
-        fl.addView(mWhiteboard);
+        mWhiteboard = Whiteboard.createInstance(this, true, this);
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
@@ -1253,7 +1257,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
             return mWhiteboard.handleTouchEvent(event);
         });
-        mWhiteboard.setEnabled(true);
     }
 
     // Show or hide the whiteboard

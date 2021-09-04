@@ -160,7 +160,6 @@
     <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
     <string name="import_title">Importuje se</string>
-    <string name="import_select_title">Vyberte soubor k importu</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
     <string name="import_message_add_confirm">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</string>
@@ -200,8 +199,6 @@
         Zkus ho otevřít pomocí jedné z dostupných <a href="http://ankisrs.net/#download">distribucí Anki</a> a užij si jednoduché a účinné učení!
         ]]></string>
     <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
-    <string name="import_hint">Umístěte soubor apkg do adresáře „%s“ a klepněte na „OK“, abyste importovali karty</string>
-    <string name="upgrade_import_no_file_found">Nebyl nalezen žádný importovatelný soubor %1$s</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
@@ -378,16 +375,20 @@
     <string name="back_pressed_once_reviewer">Pro návrat stiskněte znovu tlačítko zpět</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="download_deck">Stáhnout balíček</string>
+    <string name="try_again">Zkusit znovu</string>
+    <string name="cancel_download">Zrušit stahování</string>
+    <string name="cancel_download_question_title">Zrušit stahování?</string>
+    <string name="downloading_file">Stahuje se %s</string>
+    <string name="import_deck">Importovat balíček</string>
+    <string name="something_wrong">Něco se pokazilo, zkuste to prosím znovu</string>
+    <string name="download_failed">Stahování se nezdařilo</string>
+    <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
+    <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

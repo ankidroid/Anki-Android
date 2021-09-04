@@ -47,8 +47,7 @@ public class SchedUpgradeTest extends RobolectricTest {
     @Test
     public void schedulerForV1CollectionIsV1() {
         // A V1 collection does not have the schedVer variable. This is not the same as a downgrade.
-        getCol().getConf().remove("schedVer");
-        getCol().setMod();
+        getCol().remove_config("schedVer");
         getCol().close();
 
 

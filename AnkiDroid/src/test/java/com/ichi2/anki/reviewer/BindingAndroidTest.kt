@@ -23,6 +23,7 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.alt
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
+import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -71,8 +72,8 @@ class BindingAndroidTest : RobolectricTest() {
     }
 
     private fun assertBindingEquals(fst: Binding, snd: Binding) {
-        val first = MappableBinding(fst, CardSide.BOTH)
-        val second = MappableBinding(snd, CardSide.BOTH)
+        val first = MappableBinding(fst, Reviewer(CardSide.BOTH))
+        val second = MappableBinding(snd, Reviewer(CardSide.BOTH))
         assertEquals(first, second)
     }
 }

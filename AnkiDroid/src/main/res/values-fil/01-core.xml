@@ -38,13 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">oo</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kard browser</string>
     <string name="statistics">Istatistika</string>
     <string name="settings">Ang mga setting</string>
     <string name="help">Tulong</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Magpadala ng tugun</string>
     <string name="studyoptions_due_today">Nakatakda ngayon:</string>
     <string name="studyoptions_new_total">Bilang ng mga bagong Kard:</string>
@@ -72,8 +73,8 @@ mga natitirang minuto</item>
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Walang laman ang tipon</string>
+    <string name="no_cards_placeholder_description">Magsimula idadag ang mga cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Nag-aral ng %1$d kard sa %2$s ngayon</item>
@@ -82,7 +83,7 @@ mga natitirang minuto</item>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">I-type ang sagot</string>
     <string name="show_answer">Ipakita ang sagot</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Itago ang sagot</string>
     <string name="ease_button_again">Muli</string>
     <string name="ease_button_hard">Mahirap</string>
     <string name="ease_button_good">Mabuti</string>
@@ -91,12 +92,12 @@ mga natitirang minuto</item>
     <string name="menu_import">I - import</string>
     <string name="undo">Bumalik sa dati</string>
     <string name="undo_action_review">huling pagsusuri</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_change_deck_multi">Baguhin ang mga decks</string>
+    <string name="move_all_to_deck">Iusong lahat sa deck</string>
     <string name="unbury">Hukayin muli</string>
     <string name="rename_deck">Palitan ang pangalan ng deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">Gumawa ng daang tuwiran</string>
+    <string name="browse_cards">Supling ang mga cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Idagdag</string>
     <string name="menu_add_note">Magdagdag ng tala</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">I-sync ang account</string>
@@ -108,9 +109,9 @@ mga natitirang minuto</item>
     <string name="menu_bury">Ilibing</string>
     <string name="menu_suspend">Suspindihin</string>
     <string name="menu_delete_note">Burahin ang tala</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag">Watawat</string>
+    <string name="menu_flag_card">Card ng isang watawat</string>
+    <string name="menu_flag_card_zero">Walang watawat</string>
     <string name="menu_flag_card_one">Red flag</string>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
@@ -234,4 +235,5 @@ mga natitirang minuto</item>
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

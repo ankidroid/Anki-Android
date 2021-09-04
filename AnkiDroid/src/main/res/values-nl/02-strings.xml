@@ -154,7 +154,6 @@
     <string name="show_hint">Toon %s</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
-    <string name="import_select_title">Kies een bestand om te importeren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_message_add_confirm">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
@@ -195,8 +194,6 @@
         ]]>;
     </string>
     <string name="export_unsuccessful">Er is een fout opgetreden met het exporteren van de apkg file.</string>
-    <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
-    <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>
@@ -365,4 +362,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

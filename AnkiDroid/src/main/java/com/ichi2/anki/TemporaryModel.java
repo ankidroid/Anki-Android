@@ -61,17 +61,17 @@ public class TemporaryModel {
      * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
      */
     public static @Nullable TemporaryModel fromBundle(Bundle bundle) {
-        String mEditedModelFileName = bundle.getString(INTENT_MODEL_FILENAME);
+        String editedModelFileName = bundle.getString(INTENT_MODEL_FILENAME);
         // Bundle.getString is @Nullable, so we have to check.
-        if (mEditedModelFileName == null) {
+        if (editedModelFileName == null) {
             Timber.d("fromBundle() - model file name under key %s", INTENT_MODEL_FILENAME);
             return null;
         }
 
-        Timber.d("onCreate() loading saved model file %s", mEditedModelFileName);
+        Timber.d("onCreate() loading saved model file %s", editedModelFileName);
         Model tempModelJSON;
         try {
-            tempModelJSON = getTempModel((mEditedModelFileName));
+            tempModelJSON = getTempModel((editedModelFileName));
         } catch (IOException e) {
             Timber.w(e, "Unable to load saved model file");
             return null;

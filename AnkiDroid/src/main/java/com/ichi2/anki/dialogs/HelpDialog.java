@@ -46,6 +46,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -247,7 +248,7 @@ public class HelpDialog {
 
         @FunctionalInterface
         public interface ActivityConsumer extends Serializable {
-            void consume(AnkiActivity activity);
+            void consume(@NonNull AnkiActivity activity);
         }
     }
 

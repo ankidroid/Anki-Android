@@ -29,7 +29,6 @@ import timber.log.Timber;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.template.TemplateError;
-import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -55,7 +54,7 @@ import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
-public class Models {
+public class Models extends ModelManager {
     public static final long NOT_FOUND_NOTE_TYPE = -1L;
 
     @VisibleForTesting
@@ -158,14 +157,13 @@ public class Models {
      */
 
     public Models(Collection col) {
+        super(col);
         mCol = col;
     }
 
-
-    /**
-     * Load registry from JSON.
-     */
-    public void load(String json) {
+    /** {@inheritDoc} */
+    @Override
+    public void load(@NonNull String json) {
         mChanged = false;
         mModels = new HashMap<>();
         JSONObject modelarray = new JSONObject(json);
@@ -178,25 +176,9 @@ public class Models {
         }
     }
 
-
-    /**
-     * Mark M modified if provided, and schedule registry flush.
-     */
-    public void save() {
-        save(null, false);
-    }
-
-
-    public void save(Model m) {
-        save(m, false);
-    }
-
-    /**
-     * Save a model
-     * @param m model to save
-     * @param templates flag which (when true) re-generates the cards for each note which uses the model
-     */
-    public void save(Model m, boolean templates) {
+    /** {@inheritDoc} */
+    @Override
+    public void save(@Nullable Model m, boolean templates) {
         if (m != null && m.has("id")) {
             m.put("mod", mCol.getTime().intTime());
             m.put("usn", mCol.usn());
@@ -217,10 +199,8 @@ public class Models {
         // runHook("newModel")
     }
 
-
-    /**
-     * Flush the registry if any models were changed.
-     */
+    /** {@inheritDoc} */
+    @Override
     public void flush() {
         if (mChanged) {
             ensureNotEmpty();
@@ -235,6 +215,8 @@ public class Models {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
@@ -250,27 +232,15 @@ public class Models {
       ***********************************************************************************************
      */
 
-    /**
-     * Get current model.
-     * @return The model, or null if not found in the deck and in the configuration.
-     */
-    public Model current() {
-        return current(true);
-    }
-
-    /**
-     * Get current model.
-     * @param forDeck If true, it tries to get the deck specified in deck by mid, otherwise or if the former is not
-     *                found, it uses the configuration`s field curModel.
-     * @return The model, or null if not found in the deck and in the configuration.
-     */
+    /** {@inheritDoc} */
+    @Override
     public Model current(boolean forDeck) {
         Model m = null;
         if (forDeck) {
             m = get(mCol.getDecks().current().optLong("mid", -1));
         }
         if (m == null) {
-            m = get(mCol.getConf().optLong("curModel", -1));
+            m = get(mCol.get_config("curModel", -1L));
         }
         if (m == null) {
             if (!mModels.isEmpty()) {
@@ -281,14 +251,14 @@ public class Models {
     }
 
 
+    @Override
     public void setCurrent(Model m) {
-        mCol.getConf().put("curModel", m.getLong("id"));
-        mCol.setMod();
+        mCol.set_config("curModel", m.getLong("id"));
     }
 
-
-    /** get model with ID, or null. */
-    public @Nullable Model get(@NonNull Long id) {
+    /** {@inheritDoc} */
+    @Override
+    public @Nullable Model get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -296,15 +266,17 @@ public class Models {
         }
     }
 
-
-    /** get all models */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public ArrayList<Model> all() {
         return new ArrayList<>(mModels.values());
     }
 
-
-    /** get model with NAME. */
-    public Model byName(String name) {
+    /** {@inheritDoc} */
+    @Nullable
+    @Override
+    public Model byName(@NonNull String name) {
         for (Model m : mModels.values()) {
             if (m.getString("name").equals(name)) {
                 return m;
@@ -314,10 +286,10 @@ public class Models {
     }
 
 
-    /** Create a new model, save it in the registry, and return it. */
-	// Called `new` in Anki's code. New is a reserved word in java,
-	// not in python. Thus the method has to be renamed.
-    public Model newModel(String name) {
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
+    public Model newModel(@NonNull String name) {
         // caller should call save() after modifying
         Model m = new Model(DEFAULT_MODEL);
         m.put("name", name);
@@ -330,12 +302,12 @@ public class Models {
     }
 
     // not in anki
-    public static boolean isModelNew(Model m) {
+    public static boolean isModelNew(@NonNull Model m) {
         return m.getLong("id") == 0;
     }
 
-    /** Delete model, and all its cards/notes. 
-     * @throws ConfirmModSchemaException */
+    /** {@inheritDoc} */
+    @Override
     public void rem(Model m) throws ConfirmModSchemaException {
         mCol.modSchema();
         long id = m.getLong("id");
@@ -352,6 +324,7 @@ public class Models {
     }
 
 
+    @Override
     public void add(Model m) {
         _setID(m);
         update(m);
@@ -360,8 +333,13 @@ public class Models {
     }
 
 
-    /** Add or update an existing model. Used for syncing and merging. */
-    public void update(Model m) {
+    @Override
+    public void update(Model m, @SuppressWarnings("unused") boolean preserve_usn_and_mtime) {
+        if (!preserve_usn_and_mtime) {
+            Timber.w("preserve_usn_and_mtime is not supported in legacy java class");
+        }
+
+
         mModels.put(m.getLong("id"), m);
         // mark registry changed, but don't bump mod time
         save();
@@ -377,11 +355,14 @@ public class Models {
     }
 
 
-    public boolean have(@NonNull Long id) {
+    @Override
+    public boolean have(long id) {
         return mModels.containsKey(id);
     }
 
 
+    @NonNull
+    @Override
     public Set<Long> ids() {
         return mModels.keySet();
     }
@@ -391,26 +372,21 @@ public class Models {
       Tools ***********************************************************************************************
      */
 
-    /** Note ids for M */
-    public ArrayList<Long> nids(Model m) {
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
+    public List<Long> nids(Model m) {
         return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 
-    /**
-     * Number of notes using m
-     * @param m The model to the count the notes of.
-     * @return The number of notes with that model.
-     */
+    /** {@inheritDoc} */
+    @Override
     public int useCount(Model m) {
         return mCol.getDb().queryScalar("select count() from notes where mid = ?", m.getLong("id"));
     }
 
-    /**
-     * Number of notes using m
-     * @param m The model to the count the notes of.
-     * @param ord The index of the card template
-     * @return The number of notes with that model.
-     */
+    /** {@inheritDoc} */
+    @Override
     public int tmplUseCount(Model m, int ord) {
         return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
@@ -419,7 +395,9 @@ public class Models {
       Copying ***********************************************************************************************
      */
 
-    /** Copy, save and return. */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public Model copy(Model m) {
         Model m2 = m.deepClone();        
         m2.put("name", m2.getString("name") + " copy");
@@ -428,11 +406,12 @@ public class Models {
     }
 
 
-    /**
+    /*
      * Fields ***********************************************************************************************
      */
-
-    public JSONObject newField(String name) {
+    @NonNull
+    @Override
+    public JSONObject newField(@NonNull String name) {
         JSONObject f = new JSONObject(defaultField);
         f.put("name", name);
         return f;
@@ -452,11 +431,13 @@ public class Models {
     }
 
 
+    @Override
     public int sortIdx(Model m) {
         return m.getInt("sortf");
     }
 
 
+    @Override
     public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException{
         mCol.modSchema();
         m.put("sortf", idx);
@@ -465,7 +446,7 @@ public class Models {
     }
 
 
-    private void _addField(Model m, JSONObject field) {
+    protected void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
 		JSONArray flds = m.getJSONArray("flds");
@@ -476,28 +457,13 @@ public class Models {
 		_transformFields(m, new TransformFieldAdd());
     }
 
-    public void addField(Model m, JSONObject field) throws ConfirmModSchemaException {
+    @Override
+    public void addField(@NonNull Model m, @NonNull JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
         // this is Anki's addField.
         if (!isModelNew(m)) {
             mCol.modSchema();
         }
-        _addField(m, field);
-    }
-
-    public void addFieldInNewModel(Model m, JSONObject field) {
-        // similar to Anki's addField; but thanks to assumption that
-        // model is new, it never has to throw
-        // ConfirmModSchemaException.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
-        _addField(m, field);
-    }
-
-    public void addFieldModChanged(Model m, JSONObject field) {
-        // similar to Anki's addField; but thanks to assumption that
-        // mod is already changed, it never has to throw
-        // ConfirmModSchemaException.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
         _addField(m, field);
     }
 
@@ -512,6 +478,7 @@ public class Models {
     }
 
 
+    @Override
     public void remField(Model m, JSONObject field) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray flds = m.getJSONArray("flds");
@@ -557,6 +524,7 @@ public class Models {
     }
 
 
+    @Override
     public void moveField(Model m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray flds = m.getJSONArray("flds");
@@ -613,6 +581,7 @@ public class Models {
     }
 
 
+    @Override
     public void renameField(Model m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
@@ -669,7 +638,7 @@ public class Models {
     }
 
 
-    /**
+    /*
      * Templates ***********************************************************************************************
      */
 
@@ -681,7 +650,7 @@ public class Models {
 
 
     /** Note: should col.genCards() afterwards. */
-    private void _addTemplate(Model m, JSONObject template) {
+    protected void _addTemplate(Model m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -691,7 +660,7 @@ public class Models {
         save(m);
     }
 
-    /** @throws ConfirmModSchemaException */
+    @Override
     public void addTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         //That is Anki's addTemplate method
         if (!isModelNew(m)) {
@@ -700,29 +669,11 @@ public class Models {
         _addTemplate(m, template);
     }
 
-    public void addTemplateInNewModel(Model m, JSONObject template)  {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
-        _addTemplate(m, template);
-    }
-
-    public void addTemplateModChanged(Model m, JSONObject template)  {
-        // similar to addTemplate, but doesn't throw exception;
-        // asserting the model is new.
-        Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
-        _addTemplate(m, template);
-    }
-
-    /**
-     * Removing a template
-     *
-     * @return False if removing template would leave orphan notes.
-     * @throws ConfirmModSchemaException 
-     */
-    public boolean remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
+    /** {@inheritDoc} */
+    @Override
+    public void remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         if (m.getJSONArray("tmpls").length() <= 1) {
-            return false;
+            return;
         }
         // find cards using this template
         JSONArray tmpls = m.getJSONArray("tmpls");
@@ -741,7 +692,7 @@ public class Models {
         List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
-            return false;
+            return;
         }
 
         // ok to proceed; remove cards
@@ -765,41 +716,6 @@ public class Models {
         _updateTemplOrds(m);
         save(m);
         Timber.d("remTemplate done working");
-        return true;
-    }
-
-
-    /**
-     * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
-     * This method will either give you all the card ids for the ordinals sent in related to the model sent in *or*
-     * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
-     *
-     * @param modelId long id of the JSON model
-     * @param ords array of ints, each one is the ordinal a the card template in the given model
-     * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
-     */
-    public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
-        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
-        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
-        //Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
-
-        // all notes with this template must have at least two cards, or we could end up creating orphaned notes
-        String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
-        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, modelId);
-        Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
-        Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
-        String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
-        Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
-        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, modelId);
-        Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
-
-        if (preDeleteNoteCount != postDeleteNoteCount) {
-            Timber.d("There will be orphan notes if these cards are deleted.");
-            return null;
-        }
-        Timber.d("Deleting these cards will not orphan notes.");
-        return cids;
     }
 
 
@@ -812,6 +728,7 @@ public class Models {
     }
 
 
+    @Override
     public void moveTemplate(Model m, JSONObject template, int idx) {
         JSONArray tmpls = m.getJSONArray("tmpls");
         int oldidx = -1;
@@ -859,15 +776,8 @@ public class Models {
       Model changing ***********************************************************************************************
      */
 
-    /**
-     * Change a model
-     * @param m The model to change.
-     * @param nid The notes that the change applies to.
-     * @param newModel For replacing the old model with another one. Should be self if the model is not changing
-     * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
-     * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
-     * @throws ConfirmModSchemaException 
-     */
+    /** {@inheritDoc} */
+    @Override
     public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
@@ -945,7 +855,8 @@ public class Models {
       Schema hash ***********************************************************************************************
      */
 
-    /** Return a hash of the schema, to see if models are compatible. */
+    @NonNull
+    @Override
     public String scmhash(Model m) {
         StringBuilder s = new StringBuilder();
         JSONArray flds = m.getJSONArray("flds");
@@ -1187,23 +1098,24 @@ public class Models {
     }
 
 
-    /**
+    /*
      * Sync handling ***********************************************************************************************
      */
 
+    @Override
     public void beforeUpload() {
         boolean changed = Utils.markAsUploaded(all());
         if (changed) {
             save();
         }
     }
-
-
-    /**
+    /*
      * Other stuff NOT IN LIBANKI
      * ***********************************************************************************************
      */
 
+
+    @Override
     public void setChanged() {
         mChanged = true;
     }
@@ -1231,57 +1143,14 @@ public class Models {
     }
 
 
+    @Override
     public HashMap<Long, Model> getModels() {
         return mModels;
     }
 
-
-    /**
-     * @return Number of models
-     */
+    /** {@inheritDoc} */
+    @Override
     public int count() {
         return mModels.size();
     }
-
-    /** Validate model entries. */
-	public boolean validateModel() {
-        for (Model model : mModels.values()) {
-            if (!validateBrackets(model)) {
-                return false;
-            }
-        }
-		return true;
-	}
-
-	/** Check if there is a right bracket for every left bracket. */
-	private boolean validateBrackets(JSONObject value) {
-		String s = value.toString();
-		int count = 0;
-		boolean inQuotes = false;
-		char[] ar = s.toCharArray();
-		for (int i = 0; i < ar.length; i++) {
-			char c = ar[i];
-			// if in quotes, do not count
-			if (c == '"' && (i == 0 || (ar[i-1] != '\\'))) {
-				inQuotes = !inQuotes;
-				continue;
-			}
-			if (inQuotes) {
-				continue;
-			}
-			switch(c) {
-			case '{':
-				count++;
-				break;
-			case '}':
-				count--;
-				if (count < 0) {
-					return false;
-				}
-				break;
-			}
-		}
-		return (count == 0);
-	}
-
 }

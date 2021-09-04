@@ -81,7 +81,7 @@ interface PromptBackgroundInterface {
  * Converts from abstract [PromptBackground] to [PromptBackgroundInterface] to allow extensions of a
  * [PromptBackground] without the requirement to inherit from an empty abstract class.
  */
-class PromptBackgroundInterfaceAdapter(private val mPromptBackground: PromptBackground) : PromptBackgroundInterface {
+class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackground) : PromptBackgroundInterface {
     companion object {
         /**
          * Takes PromptBackground and returns PromptBackgroundInterfaceAdapter which
@@ -93,22 +93,22 @@ class PromptBackgroundInterfaceAdapter(private val mPromptBackground: PromptBack
     }
 
     override fun update(options: PromptOptions<out PromptOptions<*>>, revealModifier: Float, alphaModifier: Float) {
-        mPromptBackground.update(options, revealModifier, alphaModifier)
+        promptBackground.update(options, revealModifier, alphaModifier)
     }
 
     override fun draw(canvas: Canvas) {
-        mPromptBackground.draw(canvas)
+        promptBackground.draw(canvas)
     }
 
     override fun contains(x: Float, y: Float): Boolean {
-        return mPromptBackground.contains(x, y)
+        return promptBackground.contains(x, y)
     }
 
     override fun setColour(colour: Int) {
-        mPromptBackground.setColour(colour)
+        promptBackground.setColour(colour)
     }
 
     override fun prepare(options: PromptOptions<out PromptOptions<*>>, clipToBounds: Boolean, clipBounds: Rect) {
-        mPromptBackground.prepare(options, clipToBounds, clipBounds)
+        promptBackground.prepare(options, clipToBounds, clipBounds)
     }
 }

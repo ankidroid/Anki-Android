@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -160,8 +161,8 @@ public class Storage {
             }
             if (ver < 4) {
                 col.modSchemaNoCheck();
-                ArrayList<Model> models = col.getModels().all();
-                ArrayList<Model> clozes = new ArrayList<>(models);
+                List<Model> models = col.getModels().all();
+                ArrayList<Model> clozes = new ArrayList<>(models.size());
                 for (Model m : models) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);

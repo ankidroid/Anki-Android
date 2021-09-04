@@ -44,7 +44,7 @@ public class UndoTest extends RobolectricTest {
         assertNull(col.undoType());
         // let's adjust a study option
         col.save("studyopts");
-        col.getConf().put("abc", 5);
+        col.set_config("abc", 5);
         // it should be listed as undoable
         assertEquals("studyopts", col.undoName(getTargetContext().getResources()));
         // with about 5 minutes until it's clobbered
@@ -54,7 +54,7 @@ public class UndoTest extends RobolectricTest {
         // undoing should restore the old value
         col.undo();
         assertNull(col.undoType());
-        assertFalse(col.getConf().has("abc"));
+        assertFalse(col.has_config("abc"));
         // an (auto)save will clear the undo
         col.save("foo");
         assertEquals("foo", col.undoName(getTargetContext().getResources()));
@@ -76,7 +76,7 @@ public class UndoTest extends RobolectricTest {
     @Test
     public void test_review() throws Exception {
         Collection col = getColV2();
-        col.getConf().put("counts", COUNT_REMAINING);
+        col.set_config("counts", COUNT_REMAINING);
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);

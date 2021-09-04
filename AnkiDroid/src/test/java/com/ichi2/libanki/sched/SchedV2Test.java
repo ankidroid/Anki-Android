@@ -25,8 +25,9 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
@@ -114,7 +115,7 @@ public class SchedV2Test extends RobolectricTest {
         Collection col = getCol();
         col.setCrt(1587852900L);
         //30 minutes learn ahead. required as we have 20m delay
-        col.getConf().put("collapseTime", 1800);
+        col.set_config("collapseTime", 1800);
 
         long homeDeckId = addDeck("Poorretention");
 
@@ -280,7 +281,7 @@ public class SchedV2Test extends RobolectricTest {
         // #5805
         assertThat("Sync ver should be updated if we have a valid Rust collection", Consts.SYNC_VER, is(10));
 
-        assertThat("localOffset should be set if using V2 Scheduler", getCol().getConf().has("localOffset"), is(true));
+        assertThat("localOffset should be set if using V2 Scheduler", getCol().has_config("localOffset"), is(true));
 
         SchedV2 sched = (SchedV2) getCol().getSched();
 
@@ -1212,7 +1213,7 @@ public class SchedV2Test extends RobolectricTest {
         Collection col = getColV2();
         // add two more templates and set second active
         Model m = col.getModels().current();
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
@@ -1730,7 +1731,7 @@ public class SchedV2Test extends RobolectricTest {
     public void regression_test_preview() throws Exception {
         //"https://github.com/ankidroid/Anki-Android/issues/7285"
         Collection col = getColV2();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         AbstractSched sched = col.getSched();
         addNoteUsingBasicModel("foo", "bar");
         long did = addDynamicDeck("test");

@@ -29,6 +29,10 @@
     <issue id="UnusedResources" severity="fatal">
         <!-- Ignore as they'll be used for #7526 -->
         <ignore regexp="content_picture\.png|device_access_mic\.png" />
+        <!-- Remove once #6772 is complete -->
+        <ignore regexp="edit_text_color_enabled_selector\.xml" />
+        <ignore regexp="multiline_spinner_item\.xml" />
+        <!-- end: Remove once #6772 is complete -->
         <ignore path="res/values/12-dont-translate.xml" />
         <!-- Ignore all translations except values - CrowdIn will handle deletions -->
         <!-- We only need to handle -af and all others are implicitly ignored -->

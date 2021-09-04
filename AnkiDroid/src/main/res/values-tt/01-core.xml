@@ -45,6 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Көйләүләр</string>
     <string name="help">Ярдәм</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Бәяләмә җибәрү</string>
     <string name="studyoptions_due_today">Бүгенгә:</string>
     <string name="studyoptions_new_total">Барлыгы яңа кәртләр:</string>
@@ -225,4 +226,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

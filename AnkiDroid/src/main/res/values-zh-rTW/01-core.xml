@@ -45,6 +45,7 @@
     <string name="statistics">統計資料</string>
     <string name="settings">設定</string>
     <string name="help">幫助</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">傳送問題回報</string>
     <string name="studyoptions_due_today">今天到期:</string>
     <string name="studyoptions_new_total">新卡片數量:</string>
@@ -226,4 +227,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

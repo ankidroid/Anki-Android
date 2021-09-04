@@ -13,9 +13,9 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.PreferenceUtils;
@@ -234,9 +234,9 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public void baseDeckName() {
         Collection col = getCol();
-        Models models = col.getModels();
+        ModelManager models = col.getModels();
 
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
         basic.put("did", didAb);
@@ -251,8 +251,8 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public void jsAnkiGetDeckName() {
         Collection col = getCol();
-        Models models = col.getModels();
-        Decks decks = col.getDecks();
+        ModelManager models = col.getModels();
+        DeckManager decks = col.getDecks();
 
         Long didAb = addDeck("A::B");
         Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
@@ -339,7 +339,7 @@ public class ReviewerTest extends RobolectricTest {
 
 
     private void addNoteWithThreeCards() throws ConfirmModSchemaException {
-        Models models = getCol().getModels();
+        ModelManager models = getCol().getModels();
         Model m = models.copy(models.current());
         m.put("name", "Three");
         models.add(m);
@@ -356,7 +356,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
 
-    private void cloneTemplate(Models models, Model m) throws ConfirmModSchemaException {
+    private void cloneTemplate(ModelManager models, Model m) throws ConfirmModSchemaException {
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONObject defaultTemplate = tmpls.getJSONObject(0);
 

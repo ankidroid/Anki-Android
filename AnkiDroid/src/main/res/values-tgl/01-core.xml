@@ -45,6 +45,7 @@
     <string name="statistics">Estadistika</string>
     <string name="settings">Mga setting</string>
     <string name="help">Tulong</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Magpadala ng puna</string>
     <string name="studyoptions_due_today">Kailangan na ngayong araw:</string>
     <string name="studyoptions_new_total">Bilang ng mga bagong baraha:</string>
@@ -247,4 +248,5 @@ Burahin ang “%2$s” uri ng baraha, at ang %1$d mga baraha?</item>
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

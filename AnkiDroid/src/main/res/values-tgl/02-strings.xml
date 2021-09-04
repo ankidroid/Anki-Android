@@ -154,7 +154,6 @@
     <string name="show_hint">Ipakita %s</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>
     <string name="import_title">Ini-Import</string>
-    <string name="import_select_title">Pumili ng isang file na i-iimport</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Magdagdag</string>
     <string name="import_message_replace_confirm">Tatanggalin nito ang iyong koleksyon at palitan ito ng datos ng file %s</string>
     <string name="import_message_add_confirm">Magdagdag \"%s\" sa koleksyon? Maaaring itong matagalan</string>
@@ -194,8 +193,6 @@
         Subukang buksan ito gamit ang isa sa mga <a href="http://ankisrs.net/#download">Anki distributions</a> at magalak madali at mahusay na pag-aaral!
         ]]></string>
     <string name="export_unsuccessful">May mali sa pag-export ng apkg file</string>
-    <string name="import_hint">Ilagay ang apkg file sa directory \"%s\" at pindutin ang \"OK\" upang mag-import ng mga baraha</string>
-    <string name="upgrade_import_no_file_found">Walang maaaring i-import na %1$s file ang natukoy</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

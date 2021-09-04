@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gestes</string>
     <string name="pref_cat_gestures_summ">Utiliser les gestes et mouvements au lieu des boutons</string>
     <string name="pref_cat_actions" maxLength="41">Actions</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Avancé</string>
     <string name="pref_cat_advanced_summ">Optimisation et fonctionnalités expérimentales</string>
     <string name="pref_cat_performance" maxLength="41">Performance</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">Planificateur V2</string>
     <string name="sched_v2_summ">Activer le nouveau planificateur. Force les changements dans une direction lors de la prochaine synchronisation</string>
     <string name="sched_ver_toggle_title">Confirmer</string>
-    <string name="sched_ver_2to1">Cela réinitialisera les cartes en apprentissage, effacera les paquets de cartes filtrés et modifiera la version du planificateur. Continuer ?</string>
     <string name="sched_ver_1to2">Le planificateur expérimental pourrait causer une planification incorrecte. Veuillez vous assurer d\'avoir lu la documentation au préalable. Continuer ?</string>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">URL de synchronisation invalide</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Synchroniser l’URL pour les médias</string>
     <string name="custom_sync_server_media_url_invalid">URL de synchronisation des médias invalide</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Les modifications apportées aux options du groupe de paquets affecteront plusieurs paquets de cartes. Si vous souhaitez modifier uniquement le paquet actuel, veuillez d\'abord ajouter un nouveau groupe d\'options</string>
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
@@ -321,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q : %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R : %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

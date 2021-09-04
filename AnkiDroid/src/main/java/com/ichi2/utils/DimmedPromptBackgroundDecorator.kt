@@ -48,8 +48,8 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.PromptOptions
  * Decorator for [DimmedPromptBackgroundInterface]: Dims the background of the screen so that the
  * highlighted view remains in focus.
  */
-class DimmedPromptBackgroundDecorator(val mPromptBackgroundInterface: PromptBackgroundInterface) : PromptBackgroundInterface {
-    constructor(mPromptBackground: PromptBackground) : this(mPromptBackground.toInterface())
+class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackgroundInterface) : PromptBackgroundInterface {
+    constructor(promptBackground: PromptBackground) : this(promptBackground.toInterface())
 
     private val mDimBounds = RectF()
     private val mDimPaint: Paint = Paint()
@@ -59,7 +59,7 @@ class DimmedPromptBackgroundDecorator(val mPromptBackgroundInterface: PromptBack
     }
 
     override fun prepare(options: PromptOptions<*>, clipToBounds: Boolean, clipBounds: Rect) {
-        mPromptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
+        promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
         val metrics = Resources.getSystem().displayMetrics
         // Set the bounds to display as dimmed to the screen bounds.
         mDimBounds.set(0f, 0f, metrics.widthPixels.toFloat(), (metrics.heightPixels * 2).toFloat())
@@ -67,7 +67,7 @@ class DimmedPromptBackgroundDecorator(val mPromptBackgroundInterface: PromptBack
     }
 
     override fun update(options: PromptOptions<*>, revealModifier: Float, alphaModifier: Float) {
-        mPromptBackgroundInterface.update(options, revealModifier, alphaModifier)
+        promptBackgroundInterface.update(options, revealModifier, alphaModifier)
         // Allow for the dimmed background to fade in and out.
         mDimPaint.alpha = (150 * alphaModifier).toInt()
     }
@@ -76,14 +76,14 @@ class DimmedPromptBackgroundDecorator(val mPromptBackgroundInterface: PromptBack
         // Draw the dimmed background.
         canvas.drawRect(mDimBounds, mDimPaint)
         // Draw the background.
-        mPromptBackgroundInterface.draw(canvas)
+        promptBackgroundInterface.draw(canvas)
     }
 
     override fun contains(x: Float, y: Float): Boolean {
-        return mPromptBackgroundInterface.contains(x, y)
+        return promptBackgroundInterface.contains(x, y)
     }
 
     override fun setColour(colour: Int) {
-        mPromptBackgroundInterface.setColour(colour)
+        promptBackgroundInterface.setColour(colour)
     }
 }

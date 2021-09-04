@@ -45,6 +45,7 @@
     <string name="statistics">Statistika</string>
     <string name="settings">Nustatymai</string>
     <string name="help">Pagalba</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Siųsti atsiliepimą</string>
     <string name="studyoptions_due_today">Šiandien numatyta:</string>
     <string name="studyoptions_new_total">Iš viso naujų kortelių:</string>
@@ -249,4 +250,5 @@
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

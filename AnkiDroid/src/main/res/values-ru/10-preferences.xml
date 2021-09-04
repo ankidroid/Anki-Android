@@ -42,7 +42,7 @@
     <string name="disabled">Выключено</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general_summ">Общие настроки</string>
+    <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Обучение</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Жесты</string>
     <string name="pref_cat_gestures_summ">Использовать касания и смахивание вместо кнопок</string>
     <string name="pref_cat_actions" maxLength="41">Действия</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
     <string name="pref_cat_performance" maxLength="41">Производительность</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">Планировщик V2</string>
     <string name="sched_v2_summ">Включает новый планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
     <string name="sched_ver_toggle_title">Подтвердить</string>
-    <string name="sched_ver_2to1">Это сбросит все изучаемые карточки, очистит фильтрованные колоды и поменяет версию планировщика. Продолжить?</string>
     <string name="sched_ver_1to2">Экспериментальный планировщик может ошибаться. Сначала прочтите документацию. Продолжить?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Недопустимый адрес синхронизации</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Изменения набора параметров затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новый набор</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
@@ -325,4 +328,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">В: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">О: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

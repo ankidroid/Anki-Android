@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -79,7 +80,7 @@ public class TextImporter extends NoteImporter {
                 }
                 List<String> rowAsString = new ArrayList<>(row);
                 if (rowAsString.size() != mNumFields) {
-                    if (rowAsString.size() > 0) {
+                    if (!rowAsString.isEmpty()) {
                         String formatted = getString(R.string.csv_importer_error_invalid_field_count,
                                 TextUtils.join(" ", rowAsString),
                                 rowAsString.size(),
@@ -101,9 +102,13 @@ public class TextImporter extends NoteImporter {
         return notes;
     }
 
-    /** Number of fields. */
+    /**
+     * Number of fields.
+     * @throws UnknownDelimiterException Could not determine delimiter (example: empty file)
+     * @throws EncodingException Non-UTF file (for example: an image)
+     */
     @Override
-    protected int fields() {
+    public int fields() {
         open();
         return mNumFields;
     }
@@ -147,13 +152,13 @@ public class TextImporter extends NoteImporter {
         }
 
         if (mDialect == null && mDelimiter == '\0') {
-            throw new RuntimeException("unknownFormat");
+            throw new UnknownDelimiterException();
         }
     }
 
     @Contract(" -> fail")
     private void err() {
-        throw new RuntimeException("unknownFormat");
+        throw new UnknownDelimiterException();
     }
 
     private void updateDelimiter() {
@@ -164,12 +169,11 @@ public class TextImporter extends NoteImporter {
                 String join = getLinesFromFile(10);
                 mDialect = sniffer.sniff(join, mPatterns.toCharArray());
             } catch (Exception e) {
-                Timber.w(e);
+                // expected: do not log the exception
                 try {
                     mDialect = sniffer.sniff(getFirstFileLine().orElse(""), mPatterns.toCharArray());
                 } catch (Exception ex) {
-                    Timber.w(ex);
-                    // pass
+                    // expected and ignored: do not log the exception
                 }
             }
         }
@@ -181,7 +185,7 @@ public class TextImporter extends NoteImporter {
             try {
                 reader = CsvReader.fromDialect(data, mDialect);
             } catch (Exception e) {
-                Timber.w(e);
+                // expected and ignored: do not log the exception
                 err();
             }
         } else {
@@ -204,7 +208,7 @@ public class TextImporter extends NoteImporter {
         try {
             while (true) {
                 List<String> row = reader.next();
-                if (row.size() > 0) {
+                if (!row.isEmpty()) {
                     mNumFields = row.size();
                     break;
                 }
@@ -237,7 +241,7 @@ public class TextImporter extends NoteImporter {
         try {
             data = mFileobj.readAsUtf8WithoutBOM();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new EncodingException(e);
         }
 
         Stream<String> withoutComments = data.filter(x -> !"__comment".equals(sub(x))).map(s -> s + "\n");
@@ -249,12 +253,20 @@ public class TextImporter extends NoteImporter {
 
 
     private Optional<String> getFirstFileLine() {
-        return getDataStream().findFirst();
+        try {
+            return getDataStream().findFirst();
+        } catch (UncheckedIOException e) {
+            throw new EncodingException(e);
+        }
     }
 
 
     private String getLinesFromFile(int numberOfLines) {
-        return TextUtils.join("\n", getDataStream().limit(numberOfLines).collect(Collectors.toList()));
+        try {
+            return TextUtils.join("\n", getDataStream().limit(numberOfLines).collect(Collectors.toList()));
+        } catch (UncheckedIOException e) {
+            throw new EncodingException(e);
+        }
     }
 
 
@@ -270,8 +282,8 @@ public class TextImporter extends NoteImporter {
 
 
         @NonNull
-        public static FileObj open(@NonNull String mFile) {
-            return new FileObj(new File(mFile));
+        public static FileObj open(@NonNull String file) {
+            return new FileObj(new File(file));
         }
 
 
@@ -283,6 +295,19 @@ public class TextImporter extends NoteImporter {
         @NonNull
         public Stream<String> readAsUtf8WithoutBOM() throws IOException {
             return Files.lines(Paths.get(mFile.getAbsolutePath()), StandardCharsets.UTF_8);
+        }
+    }
+
+    public static class UnknownDelimiterException extends RuntimeException {
+        public UnknownDelimiterException() {
+            super("unknownFormat");
+        }
+    }
+
+    /** Non-UTF file was provided (for example: an image) */
+    public static class EncodingException extends RuntimeException {
+        public EncodingException(Exception e) {
+            super(e);
         }
     }
 }

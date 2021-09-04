@@ -154,7 +154,6 @@
     <string name="show_hint">Erakutsi %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Inportatzea</string>
-    <string name="import_select_title">Aukeratu inportatu beharreko fitxategia</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Gehitu</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
@@ -194,8 +193,6 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Errorea apkg fitxategia esportatzean</string>
-    <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
-    <string name="upgrade_import_no_file_found">Ez da topatu inporta daitekeen %1$s fitxategia</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Aukerak</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

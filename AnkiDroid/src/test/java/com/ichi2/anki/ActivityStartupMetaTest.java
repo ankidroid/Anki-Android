@@ -40,6 +40,8 @@ public class ActivityStartupMetaTest extends RobolectricTest {
 
     @Test
     public void ensureAllActivitiesAreTested() throws PackageManager.NameNotFoundException {
+        // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
+
         // we can't access this in a static context
         PackageManager pm = getTargetContext().getPackageManager();
 

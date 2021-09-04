@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gesztusok</string>
     <string name="pref_cat_gestures_summ">A gombok helyett érintsd meg, és csúsztasd ujjad</string>
     <string name="pref_cat_actions" maxLength="41">Műveletek</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Haladó</string>
     <string name="pref_cat_advanced_summ">Optimalizálás és kísérleti funkciók</string>
     <string name="pref_cat_performance" maxLength="41">Teljesítmény</string>
@@ -190,7 +192,6 @@
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Megerősítés</string>
-    <string name="sched_ver_2to1">Ez visszaállít minden tanult kártyát, kiüríti a szúrt paklikat és megváltoztatja az ütemező verzióját. Folytatja?</string>
     <string name="sched_ver_1to2">A kísérleti ütemező helytelenül ütemezhet. Kérjük olvassa el a dokumentációt először. Folytatja?</string>
     <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>
@@ -228,6 +229,8 @@
     <string name="custom_sync_server_base_url_invalid">url szinkronizálás érvénytelen</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Média szinkronizáló url</string>
     <string name="custom_sync_server_media_url_invalid">Média url szinkronizálás érvénytelen</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
@@ -322,4 +325,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

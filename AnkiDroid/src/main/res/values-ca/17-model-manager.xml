@@ -23,7 +23,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Administreu els tipus de notes</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administreu els camps</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">No podeu suprimir l\'últim tipus de nota</string>
     <string name="toast_last_field">Els tipus de notes han de tenir almenys un camp</string>
     <string name="toast_empty_name">Heu d\'introduir un nom</string>
     <string name="toast_duplicate_field">El nom del camp ja existeix</string>
@@ -43,39 +43,39 @@
     <string name="model_browser_template">Edita les targetes</string>
     <string name="model_browser_add">Afegeix el tipus de nota</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Canvieu el nom del tipus de nota</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Estableix consell d\'idioma a %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edita els camps</string>
     <string name="model_field_editor_add">Afegeix el camp</string>
     <string name="model_field_editor_delete">Suprimeix el camp</string>
     <string name="model_field_editor_rename">Canviar el nom del camp</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">Estableix consell d\'idioma del teclat</string>
     <string name="model_field_editor_reposition_menu">Camp de repós</string>
     <string name="model_field_editor_reposition">Camp de repós (entri un valor %1$d-%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">Recordeu la darrera entrada al afegir</string>
     <string name="model_field_editor_changing">Actualitzant els camps</string>
     <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
     <string name="model_clone_suffix">còpia</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Esteu segur de que voleu suprimir aquest tipus de nota?</string>
     <string name="field_delete_warning">Esteu segur que voleu suprimir aquest camp?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Afegeix: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clona: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_summary">Introduïu la plantilla que utilitzarà el navegador de cartes per mostrar les vostres cartes. Utilitzeu aquesta opció per mostrar una resposta més concisa.\n\nUna plantilla frontal de\n “La capital de {{Country}} és:”\nes pot comprimir al navegador de targetes com\n “Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_question_format">Format de la pregunta</string>
+    <string name="card_template_browser_appearance_answer_format">Format de la resposta</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Recupero els valors per defecte?</string>
+    <string name="card_template_browser_appearance_saving_note">Aquests canvis s\'apliquen quan es desa la plantilla de la carta</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">Substitució de paquet (sí)</string>
+    <string name="card_template_editor_deck_override_off">Substitució de paquet (no)</string>
+    <string name="model_manager_deck_override_added_message">Fixar paquet per defecte de \'%1$s\' a \'%2$s\'</string>
+    <string name="model_manager_deck_override_removed_message">S\'ha eliminat el paquet de defecte de \'%s\'</string>
+    <string name="deck_override_explanation">Selecciona paquet per posar a dins les noves cartes \'%s\'</string>
+    <string name="deck_picker_dialog_filter_decks">Filtre de paquets</string>
 </resources>

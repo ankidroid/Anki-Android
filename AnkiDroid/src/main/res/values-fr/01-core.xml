@@ -45,6 +45,7 @@
     <string name="statistics">Statistiques</string>
     <string name="settings">Paramètres</string>
     <string name="help">Aide</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Envoyer un commentaire</string>
     <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
     <string name="studyoptions_new_total">Cartes inédites :</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d carte (0 à faire)</item>
         <item quantity="other">%1$d cartes (0 à faire)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

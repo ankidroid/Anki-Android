@@ -151,7 +151,6 @@
     <string name="show_hint">显示%s</string>
     <string name="info_rate">给AnkiDroid评分</string>
     <string name="import_title">正在导入……</string>
-    <string name="import_select_title">选择要导入的文件</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <string name="import_message_add_confirm">要添加 \"%s\" 到记忆库吗？</string>
@@ -191,8 +190,6 @@
         使用任一 <a href="http://ankisrs.net/#download">Anki 客户端</a>打开它，享受轻松高效的学习吧！
         ]]></string>
     <string name="export_unsuccessful">导出apkg文件时出错</string>
-    <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
-    <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
@@ -339,16 +336,20 @@
     <string name="back_pressed_once_reviewer">再按一次返回键以返回</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">下载牌组</string>
+    <string name="try_again">再试一次</string>
+    <string name="cancel_download">取消下载</string>
+    <string name="cancel_download_question_title">取消下载吗？</string>
+    <string name="downloading_file">正在下载 %s</string>
+    <string name="import_deck">导入牌组</string>
+    <string name="something_wrong">出错了，请重试</string>
+    <string name="download_failed">下载失败</string>
+    <string name="deck_download_progress_message">您可以在下载过程中使用其他应用</string>
+    <string name="check_network">请检查您的网络连接。</string>
+    <string name="search_using_deck_name">使用牌组名称搜索</string>
+    <string name="home">主页</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">已映射到 %s</string>
+    <string name="import_mapped_to_tags">映射到标签</string>
+    <string name="import_mapped_to_nothing">已忽略</string>
 </resources>

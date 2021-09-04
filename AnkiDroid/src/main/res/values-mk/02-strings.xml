@@ -155,7 +155,6 @@
     <string name="show_hint">Покажи %s</string>
     <string name="info_rate">Гласај AnkiDroid</string>
     <string name="import_title">Увоз</string>
-    <string name="import_select_title">Изберете датотека за увоз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додај</string>
     <string name="import_message_replace_confirm">Ова ќе избрише вашата постоечка колекција и ќе ја замени со податоците од датотеката %s</string>
     <string name="import_message_add_confirm">Додај “%s“ на колекцијата? Ова може да трае долго</string>
@@ -195,8 +194,6 @@
         Обидете се да го отворите користејќи еден од достапните<a href="http://ankisrs.net/#download">Anki дистрибуција</a>и уживајте во лесно и ефикасно учење!
         ]]></string>
     <string name="export_unsuccessful">Грешка при извоз на apkg датотека</string>
-    <string name="import_hint">Ставете ја apkg датотеката во директоријата \"%s\" и допрете \"OK\" за да увезете картички</string>
-    <string name="upgrade_import_no_file_found">%1$s Не е пронајден датотек што може да се увезува</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -365,4 +362,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

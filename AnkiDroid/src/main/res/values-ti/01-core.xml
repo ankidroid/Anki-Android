@@ -45,6 +45,7 @@
     <string name="statistics">ምእካብን ምትትንታንን ጭብጥታት</string>
     <string name="settings">ምምዕርራይ</string>
     <string name="help">ሓገዝ</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">ርእይቶ ስደድ</string>
     <string name="studyoptions_due_today">ናይ ሎሚ ዕማም</string>
     <string name="studyoptions_new_total">ጠቅላላ ሓደስቲ ካርድታት:</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

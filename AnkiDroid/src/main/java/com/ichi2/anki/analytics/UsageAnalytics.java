@@ -442,6 +442,11 @@ public class UsageAnalytics {
         public static final String NCIKU = "nciku";
         @AnalyticsConstant
         public static final String EIJIRO = "eijiro";
+
+        @AnalyticsConstant
+        public static final String IMPORT_APKG_FILE = "Import APKG";
+        @AnalyticsConstant
+        public static final String IMPORT_COLPKG_FILE = "Import COLPKG";
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected

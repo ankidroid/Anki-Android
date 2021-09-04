@@ -151,7 +151,6 @@
     <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Tingkat AnkiDroid</string>
     <string name="import_title">Pengimporan</string>
-    <string name="import_select_title">Pilih file yang akan diimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Menambahkan</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksi yang ada dan menggantinya dengan data file %s</string>
     <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
@@ -191,8 +190,6 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Kesalahan mengekspor file apkg</string>
-    <string name="import_hint">Tempatkan file apkg di direktori \"%s\" dan sentuh \"OK\" untuk mengimpor kartu</string>
-    <string name="upgrade_import_no_file_found">Tidak ada file %1$s yang dapat diimpor ditemukan</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -356,4 +353,8 @@ Dek itu sudah ada</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

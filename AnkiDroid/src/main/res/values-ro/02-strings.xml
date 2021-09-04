@@ -157,7 +157,6 @@
     <string name="show_hint">Show %s</string>
     <string name="info_rate">Dati o nota pentru AnkiDroid</string>
     <string name="import_title">Importing</string>
-    <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adauga</string>
     <string name="import_message_replace_confirm">Aceasta va şterge colecţia existenta şi o va înlocui cu datele din fișierul %s. Eşti sigur?</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
@@ -197,8 +196,6 @@
         Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Error exporting apkg file</string>
-    <string name="import_hint">Pentru a importa cărţi, plasaţi fişierul apkg in directorul %s şi apăsaţi ok</string>
-    <string name="upgrade_import_no_file_found">Nici un fișier importabil %1$s gasit</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -377,4 +374,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

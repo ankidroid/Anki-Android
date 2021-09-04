@@ -13,6 +13,8 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Decks.CURRENT_DECK;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -23,8 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.isNotNull;
-import static org.mockito.ArgumentMatchers.isNull;
 
 @RunWith(AndroidJUnit4.class)
 public class DecksTest extends RobolectricTest {
@@ -37,7 +37,7 @@ public class DecksTest extends RobolectricTest {
 
     @Test
     public void duplicateName() {
-        Decks decks = getCol().getDecks();
+        DeckManager decks = getCol().getDecks();
         decks.load("{\"2\": {\"name\": \"A\", \"id\":2}, \"3\": {\"name\": \"A\", \"id\":3}, \"4\": {\"name\": \"A::B\", \"id\":4}}", "{}");
         decks.checkIntegrity();
         JSONObject deckA = decks.byName("A");
@@ -48,7 +48,7 @@ public class DecksTest extends RobolectricTest {
     }
     @Test
     public void ensureDeckList() {
-        Decks decks = getCol().getDecks();
+        DeckManager decks = getCol().getDecks();
         for (String deckName: TEST_DECKS) {
             addDeck(deckName);
         }
@@ -82,7 +82,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void test_basic() throws FilteredAncestor {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         // we start with a standard col
         assertEquals(1, decks.allSortedNames().size());
         // it should have an id of 1
@@ -151,7 +151,7 @@ public class DecksTest extends RobolectricTest {
         long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
         // parents as necessary
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         decks.rename(decks.get(id), "foo::bar");
         List<String> names = decks.allSortedNames();
         assertTrue(names.contains("foo"));
@@ -238,17 +238,17 @@ public class DecksTest extends RobolectricTest {
     public void curDeckIsLong() throws FilteredAncestor {
         // Regression for #8092
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         long id = addDeck("test");
         decks.select(id);
-        assertThat("curDeck should be saved as a long. A deck id.", col.getConf().get("curDeck") instanceof Long);
+        assertDoesNotThrow("curDeck should be saved as a long. A deck id.", () -> col.get_config_long(CURRENT_DECK));
     }
 
 
     @Test
     public void isDynStd() {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         long filteredId = addDynamicDeck("filtered");
         Deck filtered = decks.get(filteredId);
         long deckId = addDeck("deck");
@@ -270,7 +270,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void testEnsureParents() throws FilteredAncestor {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         addDeck("test");
         String subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
@@ -286,11 +286,11 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void descendantOfFiltered() throws FilteredAncestor {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         long filtered_id = decks.newDyn("filtered");
         assertThrows(FilteredAncestor.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
 
-        Long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
+        long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
         Deck subdeck = decks.get(subdeck_id);
         assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"));
     }
@@ -298,7 +298,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void testEnsureParentsNotFiltered() throws FilteredAncestor {
         Collection col = getCol();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
         addDeck("test");
         String subsubdeck_name = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
@@ -319,7 +319,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void confForDidReturnsDefaultIfNotFound() {
         // https://github.com/ankitects/anki/commit/94d369db18c2a6ac3b0614498d8abcc7db538633
-        Decks decks = getCol().getDecks();
+        DeckManager decks = getCol().getDecks();
 
         Deck d = decks.all().get(0);
         d.put("conf", 12L);

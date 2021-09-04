@@ -45,6 +45,7 @@
     <string name="statistics">Štatistiky</string>
     <string name="settings">Nastavenia</string>
     <string name="help">Pomoc</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Poslať spätnú väzbu</string>
     <string name="studyoptions_due_today">Dnes na preskúšanie:</string>
     <string name="studyoptions_new_total">Celkový počet nových kartičiek:</string>
@@ -249,4 +250,5 @@
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

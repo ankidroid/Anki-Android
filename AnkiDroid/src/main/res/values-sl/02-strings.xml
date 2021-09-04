@@ -160,7 +160,6 @@
     <string name="show_hint">Prikaži %s</string>
     <string name="info_rate">Oceni AnkiDroid</string>
     <string name="import_title">Uvažanje</string>
-    <string name="import_select_title">Izberite datoteko za uvoz</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <string name="import_message_add_confirm">Dodaj \"%s\" v zbirko? To lahko traja dolgo časa</string>
@@ -200,8 +199,6 @@
         Poskusite ga odpreti z eno od razpoložljivih <a href="http://ankisrs.net/#download">distribucij Anki</a> in uživajte v enostavnem in učinkovitem učenju!
         ]]></string>
     <string name="export_unsuccessful">Napaka pri izvažanju datoteke apkg</string>
-    <string name="import_hint">Vstavite datoteko apkg v mapo \"%s\" in pritisnite \"V redu\", da uvozite kartice</string>
-    <string name="upgrade_import_no_file_found">Nobene uvozljive datoteke %1$s ni bilo mogoče najti</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -390,4 +387,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

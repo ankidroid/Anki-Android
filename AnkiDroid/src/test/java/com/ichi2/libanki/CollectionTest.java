@@ -97,7 +97,7 @@ public class CollectionTest extends RobolectricTest {
         assertEquals(1, n);
         // test multiple cards - add another template
         Model m = col.getModels().current();
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
@@ -182,7 +182,7 @@ public class CollectionTest extends RobolectricTest {
     @Ignore("Pending port of media search from Rust code")
     public void test_furigana() {
         Collection col = getCol();
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         Model m = mm.current();
         // filter should work
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}");

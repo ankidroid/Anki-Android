@@ -151,7 +151,6 @@
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
-    <string name="import_select_title">選擇欲匯入的檔案</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
     <string name="import_message_add_confirm">新增「%s」到集合嗎？這可能會花上好一段時間</string>
@@ -191,8 +190,6 @@
         使用任一 <a href="http://ankisrs.net/#download">Anki 用戶端</a>打開它，享受輕鬆高效的學習吧！
         ]]></string>
     <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
-    <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
-    <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
@@ -351,4 +348,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

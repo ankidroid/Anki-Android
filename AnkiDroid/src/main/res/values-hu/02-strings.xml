@@ -154,7 +154,6 @@
     <string name="show_hint">Mutass %s</string>
     <string name="info_rate">AnkiDroid értékelése</string>
     <string name="import_title">Importálás</string>
-    <string name="import_select_title">Válassz egy importálandó fájlt</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <string name="import_message_add_confirm">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</string>
@@ -194,8 +193,6 @@
         Próbáld meg megnyitni az  egyiket a rendelkezésre állók közül <a href="http://ankisrs.net/#download">Anki distributions</a> és élvezd az egyszerű és hatékony tanulást!!
         ]]></string>
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
-    <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
-    <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Beállítások</string>
     <string name="menu__deck_options">Pakli beállítások</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tanulási beállítások</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

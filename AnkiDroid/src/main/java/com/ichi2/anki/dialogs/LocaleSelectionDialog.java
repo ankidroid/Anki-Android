@@ -110,23 +110,23 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
                 .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false);
 
 
-        LocaleListAdapter mAdapter = new LocaleListAdapter(Locale.getAvailableLocales());
-        setupRecyclerView(activity, tagsDialogView, mAdapter);
+        LocaleListAdapter adapter = new LocaleListAdapter(Locale.getAvailableLocales());
+        setupRecyclerView(activity, tagsDialogView, adapter);
 
-        inflateMenu(tagsDialogView, mAdapter);
+        inflateMenu(tagsDialogView, adapter);
         //Only show a negative button, use the RecyclerView for positive actions
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                 .negativeText(getString(R.string.dialog_cancel))
                 .customView(tagsDialogView, false)
                 .onNegative((dialog, which) -> mDialogHandler.onLocaleSelectionCancelled());
 
-        Dialog mDialog = builder.build();
+        Dialog dialog = builder.build();
 
-        Window window = mDialog.getWindow();
+        Window window = dialog.getWindow();
         if (window != null) {
             DisplayUtils.resizeWhenSoftInputShown(window);
         }
-        return mDialog;
+        return dialog;
     }
 
 
@@ -146,12 +146,12 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
 
     private void inflateMenu(@NonNull View tagsDialogView, @NonNull final LocaleListAdapter adapter) {
-        Toolbar mToolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar);
-        mToolbar.setTitle(R.string.locale_selection_dialog_title);
+        Toolbar toolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar);
+        toolbar.setTitle(R.string.locale_selection_dialog_title);
 
-        mToolbar.inflateMenu(R.menu.locale_dialog_search_bar);
+        toolbar.inflateMenu(R.menu.locale_dialog_search_bar);
 
-        MenuItem searchItem = mToolbar.getMenu().findItem(R.id.locale_dialog_action_search);
+        MenuItem searchItem = toolbar.getMenu().findItem(R.id.locale_dialog_action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 

@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Lernkartei für Android</h2>AnkiDroid ist eine Lernkartei-Anwendung, die voll kompatibel mit der Desktop-Software <a href=\"%2$s\">Anki</a> ist. Sie können mit AnkiDroid oder Anki Desktop Inhalte erstellen, herunterladen und lernen, und dann ganz einfach mit AnkiWeb synchronisieren.]]></item>
         <item><![CDATA[Um AnkiDroid zu verbessern, melden Sie Bugs bitte in dem <a href=\"%1$s\">Issue-Tracker</a>. Ideen zu neuen Features sind dort auch willkommen. Schauen Sie bei Fragen in das <a href=\"%2$s\">Wiki</a> oder starten Sie eine Diskussion im <a href=\"%3$s\">Forum</a>.]]></item>
@@ -249,4 +249,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Öffnen Sie die Stapelübersichtsseite mit der Anzahl der heute zu sehenden Karten.</string>
+    <string name="import_deck_package">Deck package (.apkg)</string>
+    <string name="import_collection_package">Collection package (.colpkg)</string>
 </resources>

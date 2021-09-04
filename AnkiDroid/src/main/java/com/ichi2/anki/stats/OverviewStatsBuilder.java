@@ -87,11 +87,11 @@ public class OverviewStatsBuilder {
         }
     }
 
-    public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
+    public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType statType) {
         mWebView = chartView;
         mCol = collectionData;
         mDeckId = deckId;
-        mType = mStatType;
+        mType = statType;
     }
 
     public String createInfoHtmlString() {
@@ -280,7 +280,7 @@ public class OverviewStatsBuilder {
 
         // Fill in the overview stats
         oStats.forecastTotalReviews = tot;
-        oStats.forecastAverageReviews = totd.size() == 0 ? 0 : (double) tot / (totd.size() * chunk);
+        oStats.forecastAverageReviews = totd.isEmpty() ? 0 : (double) tot / (totd.size() * chunk);
         oStats.forecastDueTomorrow = mCol.getDb().queryScalar(
                 "select count() from cards where did in " + _limit() + " and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " +
                         "and due = ?", mCol.getSched().getToday() + 1);

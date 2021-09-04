@@ -133,6 +133,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>
+
+        <item name="editTextDisabled">@color/material_grey_500</item>
     </style>
 
     <!-- Preferences screens -->

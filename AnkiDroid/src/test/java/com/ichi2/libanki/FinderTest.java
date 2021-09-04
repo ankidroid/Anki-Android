@@ -137,7 +137,7 @@ public class FinderTest extends RobolectricTest {
         Card catCard = note.cards().get(0);
         Model m = col.getModels().current();
         m = col.getModels().copy(m);
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
@@ -213,20 +213,20 @@ public class FinderTest extends RobolectricTest {
         assertEquals(0, col.findCards("front:do").size());
         assertEquals(5, col.findCards("front:*").size());
         // ordering
-        col.getConf().put("sortType", "noteCrt");
+        col.set_config("sortType", "noteCrt");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true))));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
 
-        col.getConf().put("sortType", "noteFld");
+        col.set_config("sortType", "noteFld");
         col.flush();
         assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        col.getConf().put("sortType", "cardMod");
+        col.set_config("sortType", "cardMod");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
         assertEquals(firstCardId, (long) col.findCards("", true).get(0));
-        col.getConf().put("sortBackwards", true);
+        col.set_config("sortBackwards", true);
         col.flush();
         assertTrue(latestCardIds.contains(col.findCards("", true).get(0)));
         /* TODO: Port BuiltinSortKind

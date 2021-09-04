@@ -43,7 +43,7 @@
     <string name="backup_restore">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର</string>
     <string name="backup_new_collection">ନୂତନ ସଂଗ୍ରହ</string>
     <string name="backup_del_collection">ସଂଗ୍ରହ ଅପସାରଣ କରନ୍ତୁ ଏବଂ ନୂତନ ନିର୍ମାଣ କରନ୍ତୁ</string>
-    <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ |</string>
+    <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ।</string>
     <string name="backup_full_sync_from_server">ସର୍ଭରରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb ରୁ ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ କି? ଏହା ତୁମର ଶେଷ ସିଙ୍କ୍ ଠାରୁ ତୁମର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଏବଂ ଯୋଡ଼ାହୋଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
     <string name="error_handling_title">ତ୍ରୁଟି ପରିଚାଳନା</string>
@@ -51,7 +51,7 @@
     <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="backup_error_menu_repair">ଡାଟାବେସ୍ ମରାମତି କରନ୍ତୁ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">ଡାଟାବେସ୍ ମରାମତି କରୁଅଛି...</string>
+    <string name="backup_repair_deck_progress">ଡାଟାବେସ୍ ମରାମତି କରୁଅଛି&#8230;</string>
     <string name="backup_invalid_file_error">ବଚ୍ଛିତ ବ୍ୟାକଅପ୍ ଫାଇଲଟି ଅବୈଧ ଥିଲା</string>
     <string name="backup_restore_select_title">ପୁନରୁଦ୍ଧାର ପାଇଁ ବ୍ୟାକଅପ୍ ଚୟନ କରନ୍ତୁ</string>
     <string name="backup_restore_no_backups">ଏହି ଡିଭାଇସ୍ ରେ କୌଣସି ବ୍ୟାକ୍ଅପ୍ ଉପଲବ୍ଧ ନାହିଁ। ଯଦି ଆପଣଙ୍କର ଡେସ୍କଟପ୍ କମ୍ପ୍ୟୁଟରରେ ବ୍ୟାକ୍ଅପ୍ ଅଛି, ତେବେ ସେମାନଙ୍କୁ ହସ୍ତକୃତ ଭାବରେ ଆପଣଙ୍କର AnkiDroid ଫୋଲ୍ଡରରେ ନକଲ କରନ୍ତୁ।</string>

@@ -1,5 +1,6 @@
 /****************************************************************************************
- * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>                                   *
+ *                                                                                      *
+ * Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>                           *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -14,38 +15,38 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.ui;
+package com.ichi2.utils
 
-import android.content.Context;
-import android.util.AttributeSet;
+import android.os.Handler
+import android.os.Looper
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public class ConfirmationPreference extends android.preference.DialogPreference {
+object HandlerUtils {
 
-    private Runnable mCancelHandler = () -> { /* do nothing by default */ };
-    private Runnable mOkHandler = () -> { /* do nothing by default */ };
-
-    public ConfirmationPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    public void setCancelHandler(Runnable cancelHandler) {
-        this.mCancelHandler = cancelHandler;
-    }
-
-
-    public void setOkHandler(Runnable okHandler) {
-        this.mOkHandler = okHandler;
-    }
-
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        if (positiveResult) {
-            mOkHandler.run();
-        } else {
-            mCancelHandler.run();
+    /**
+     * Add runnable to message queue and run on the thread to which this handler is attached.
+     * This will run on the main thread if called from the main thread.
+     *
+     * @param function The function which needs to be executed.
+     */
+    fun executeFunctionUsingHandler(function: () -> Unit) {
+        Handler(Looper.getMainLooper()).post {
+            function()
         }
+    }
+
+    /**
+     * Execute a function after a certain delay.
+     * This will run on the main thread if called from the main thread.
+     *
+     * @param function The function which needs to be executed.
+     * @param time The time by which the function execution needs to be delayed.
+     */
+    fun executeFunctionWithDelay(function: () -> Unit, time: Long) {
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                function()
+            },
+            time
+        )
     }
 }

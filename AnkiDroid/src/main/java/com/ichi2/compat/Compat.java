@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.widget.TimePicker;
 
 import com.ichi2.async.ProgressSenderAndCancelListener;
@@ -233,6 +234,6 @@ public interface Compat {
      * @throws FileNotFoundException if the device's API is <= 28 and has not obtained the
      * WRITE_EXTERNAL_STORAGE permission
      */
-    String saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
+    Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
 }
 

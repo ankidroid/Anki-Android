@@ -45,6 +45,7 @@
     <string name="statistics">ᱟᱸᱠᱲᱟ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="help">ᱜᱚᱲᱚ</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
     <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
@@ -114,7 +115,7 @@
     <string name="menu_flag_card_two">ᱥᱟᱱᱛᱨᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_three">ᱥᱟᱹᱵᱡᱟ ᱯᱚᱛᱠᱟ</string>
     <string name="menu_flag_card_four">ᱞᱤᱞ ᱯᱚᱛᱠᱟ</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">ᱯᱚᱛᱠᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

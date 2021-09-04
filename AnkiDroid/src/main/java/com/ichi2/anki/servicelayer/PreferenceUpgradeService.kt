@@ -17,10 +17,15 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
+import com.ichi2.anki.reviewer.MappableBinding
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int
@@ -53,7 +58,7 @@ object PreferenceUpgradeService {
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
     }
 
-    abstract class PreferenceUpgrade private constructor(val mVersionIdentifier: VersionIdentifier) {
+    abstract class PreferenceUpgrade private constructor(val versionIdentifier: VersionIdentifier) {
         /*
         To add a new preference upgrade:
           * yield a new class from getAllInstances (do not use `legacyPreviousVersionCode` in the constructor)
@@ -69,6 +74,7 @@ object PreferenceUpgradeService {
             /** Returns all instances of preference upgrade classes */
             internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
+                yield(UpgradeVolumeButtonsToBindings())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -76,7 +82,7 @@ object PreferenceUpgradeService {
                 val currentPrefVersion: VersionIdentifier = getPreferenceVersion(preferences)
 
                 return getAllInstances(legacyPreviousVersionCode).filter {
-                    it.mVersionIdentifier > currentPrefVersion
+                    it.versionIdentifier > currentPrefVersion
                 }.toList()
             }
 
@@ -97,7 +103,7 @@ object PreferenceUpgradeService {
             /** Returns the collection of all preference version numbers */
             @VisibleForTesting
             fun getAllVersionIdentifiers(): Sequence<VersionIdentifier> =
-                getAllInstances(IGNORED_LEGACY_VERSION_CODE).map { it.mVersionIdentifier }
+                getAllInstances(IGNORED_LEGACY_VERSION_CODE).map { it.versionIdentifier }
 
             /**
              * @return the latest "version" of the preferences
@@ -110,20 +116,20 @@ object PreferenceUpgradeService {
          * upgrades were detected via a version code comparison
          * rather than comparing a preference value
          */
-        private class LegacyPreferenceUpgrade(val mPreviousVersionCode: LegacyVersionIdentifier) : PreferenceUpgrade(1) {
+        private class LegacyPreferenceUpgrade(val previousVersionCode: LegacyVersionIdentifier) : PreferenceUpgrade(1) {
             override fun upgrade(preferences: SharedPreferences) {
-                if (!needsLegacyPreferenceUpgrade(mPreviousVersionCode)) {
+                if (!needsLegacyPreferenceUpgrade(previousVersionCode)) {
                     return
                 }
 
                 Timber.i("running upgradePreferences()")
                 // clear all prefs if super old version to prevent any errors
-                if (mPreviousVersionCode < 20300130) {
+                if (previousVersionCode < 20300130) {
                     Timber.i("Old version of Anki - Clearing preferences")
                     preferences.edit().clear().apply()
                 }
                 // when upgrading from before 2.5alpha35
-                if (mPreviousVersionCode < 20500135) {
+                if (previousVersionCode < 20500135) {
                     Timber.i("Old version of Anki - Fixing Zoom")
                     // Card zooming behaviour was changed the preferences renamed
                     val oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100)
@@ -155,11 +161,57 @@ object PreferenceUpgradeService {
             }
         }
 
+        @VisibleForTesting
+        internal class UpgradeVolumeButtonsToBindings : PreferenceUpgrade(2) {
+            override fun upgrade(preferences: SharedPreferences) {
+                upgradeVolumeGestureToKeyBind(preferences, "gestureVolumeUp", KeyEvent.KEYCODE_VOLUME_UP)
+                upgradeVolumeGestureToKeyBind(preferences, "gestureVolumeDown", KeyEvent.KEYCODE_VOLUME_DOWN)
+            }
+
+            @VisibleForTesting
+            internal fun upgradeVolumeGestureToKeyBind(preferences: SharedPreferences, oldGesturePreferenceKey: String, volumeKeyCode: Int) {
+                Timber.d("Replacing gesture '%s' with binding", oldGesturePreferenceKey)
+
+                // This exists as a user may have mapped "volume down" to "UNDO".
+                // Undo already exists as a key binding, and we don't want to trash this during an upgrade
+                if (!preferences.contains(oldGesturePreferenceKey)) {
+                    Timber.v("No preference to upgrade")
+                    return
+                }
+
+                try {
+                    replaceGestureWithBinding(preferences, oldGesturePreferenceKey, volumeKeyCode)
+                } finally {
+                    Timber.v("removing pref key: '%s'", oldGesturePreferenceKey)
+                    // remove the old key
+                    preferences.edit { remove(oldGesturePreferenceKey) }
+                }
+            }
+
+            private fun replaceGestureWithBinding(preferences: SharedPreferences, oldGesturePreferenceKey: String, volumeKeyCode: Int) {
+                // the preference should be set, but if it's null, then we have nothing to do
+                val gesture = preferences.getString(oldGesturePreferenceKey, "0") ?: return
+                // If the preference doesn't map (for example: it was removed), then nothing to do
+                val asInt = gesture.toIntOrNull() ?: return
+                val command = ViewerCommand.fromInt(asInt) ?: return
+
+                if (command == ViewerCommand.COMMAND_NOTHING) {
+                    return
+                }
+
+                Timber.i("Moving preference from '%s' to '%s'", oldGesturePreferenceKey, command.preferenceKey)
+
+                // add to the binding_COMMANDNAME preference
+                val binding = MappableBinding(keyCode(volumeKeyCode), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+                command.addBindingAtEnd(preferences, binding)
+            }
+        }
+
         fun performUpgrade(preferences: SharedPreferences) {
             Timber.i("Running preference upgrade: ${this.javaClass.simpleName}")
             upgrade(preferences)
 
-            setPreferenceVersion(preferences, this.mVersionIdentifier)
+            setPreferenceVersion(preferences, this.versionIdentifier)
         }
 
         protected abstract fun upgrade(preferences: SharedPreferences)

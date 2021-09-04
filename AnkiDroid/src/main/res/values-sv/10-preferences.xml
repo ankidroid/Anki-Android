@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gester</string>
     <string name="pref_cat_gestures_summ">Använd klickningar och svepningar istället för knappar</string>
     <string name="pref_cat_actions" maxLength="41">Handlingar</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Avancerat</string>
     <string name="pref_cat_advanced_summ">Optimeringar och experimentella funktioner</string>
     <string name="pref_cat_performance" maxLength="41">Prestanda</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">V2 schemaläggare</string>
     <string name="sched_v2_summ">Aktivera den nya schemaläggaren. Vilket tvingar ändringar i en riktning vid nästa synkronisering</string>
     <string name="sched_ver_toggle_title">Bekräfta</string>
-    <string name="sched_ver_2to1">Detta kommer att återställa alla kort i nyinlärda-kön, rensa bort alla filtrerade kortlekar och ändra schemaläggarens version. Vill du fortsätta?</string>
     <string name="sched_ver_1to2">Den experimentella schemaläggaren kan komma att orsaka felakting schemaläggning. Försäkra dig om att du först har läst dokumentationen. Vill du fortsätta?</string>
     <string name="pref_keep_screen_on" maxLength="41">Håll skärm på</string>
     <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Synkroniserings URL är ogiltig</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediasynkroniseringsurl</string>
     <string name="custom_sync_server_media_url_invalid">Media sync URL är ogiltig</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ändringar till kortleksgruppsinställningar kommer att påverka flera kortlekar. Om du bara vill ändra nuvarande kortlek, var då vänlig och lägg först till en ny konfigurationsgrupp</string>
     <string name="studyoptions_limit_select_tags">Välj etiketter</string>
@@ -321,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

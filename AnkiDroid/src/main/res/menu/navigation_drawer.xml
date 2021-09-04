@@ -8,11 +8,11 @@
             android:title="@string/decks" />
         <item
             android:id="@+id/nav_browser"
-            android:icon="@drawable/ic_search_black"
+            android:icon="@drawable/ic_flashcard_black"
             android:title="@string/card_browser"/>
         <item
             android:id="@+id/nav_stats"
-            android:icon="@drawable/ic_equalizer_black"
+            android:icon="@drawable/ic_bar_chart_black"
             android:title="@string/statistics"/>
     </group>
     <group  android:id="@+id/group2">

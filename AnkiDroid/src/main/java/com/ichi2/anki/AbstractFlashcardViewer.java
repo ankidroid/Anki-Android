@@ -90,7 +90,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
-import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
@@ -171,7 +170,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -347,10 +346,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Gesture Allocation
      */
-    @NonNull
-    private ViewerCommand mGestureVolumeUp = COMMAND_NOTHING;
-    @NonNull
-    private ViewerCommand mGestureVolumeDown = COMMAND_NOTHING;
     protected final GestureProcessor mGestureProcessor = new GestureProcessor(this);
 
     private String mCardContent;
@@ -1531,36 +1526,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
     }
 
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            // assign correct gesture code
-            ViewerCommand gesture = COMMAND_NOTHING;
-
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_VOLUME_UP:
-                    gesture = mGestureVolumeUp;
-                    break;
-                case KeyEvent.KEYCODE_VOLUME_DOWN:
-                    gesture = mGestureVolumeDown;
-                    break;
-            }
-
-            // Execute gesture's command, but only consume event if action is assigned. We want the volume buttons to work normally otherwise.
-            if (gesture != COMMAND_NOTHING) {
-                executeCommand(gesture);
-                return true;
-            }
-        }
-
-        return super.dispatchKeyEvent(event);
-    }
-
-
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
-        FrameLayout mCardContainer = findViewById(R.id.flashcard_frame);
+        FrameLayout cardContainer = findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = findViewById(R.id.top_bar);
 
@@ -1615,12 +1583,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mNext4.setVisibility(View.GONE);
         }
 
-        Button mFlipCard = findViewById(R.id.flip_card);
+        Button flipCard = findViewById(R.id.flip_card);
         mFlipCardLayout = findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
         if (animationEnabled()) {
-            mFlipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
+            flipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
         }
 
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
@@ -1671,7 +1639,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         );
         LinearLayout answerArea = findViewById(R.id.bottom_area_layout);
         RelativeLayout.LayoutParams answerAreaParams = (RelativeLayout.LayoutParams) answerArea.getLayoutParams();
-        RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) mCardContainer.getLayoutParams();
+        RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) cardContainer.getLayoutParams();
 
         switch (answerButtonsPosition) {
             case "top":
@@ -1690,7 +1658,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 break;
         }
         answerArea.setLayoutParams(answerAreaParams);
-        mCardContainer.setLayoutParams(cardContainerParams);
+        cardContainer.setLayoutParams(cardContainerParams);
     }
 
 
@@ -1947,8 +1915,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
-            mGestureVolumeUp = Gesture.VOLUME_UP.fromPreference(preferences);
-            mGestureVolumeDown = Gesture.VOLUME_DOWN.fromPreference(preferences);
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
@@ -1963,7 +1929,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
+            mShowNextReviewTime = getCol().get_config_boolean("estTimes");
 
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -2268,10 +2234,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /** Scroll the currently shown flashcard vertically
-     *
-     * @param dy amount to be scrolled
-     */
+    @Override
     public void scrollCurrentCardBy(int dy) {
         processCardAction(cardWebView -> {
             if (dy != 0 && cardWebView.canScrollVertically(dy)) {
@@ -2281,11 +2244,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /** Tap onto the currently shown flashcard at position x and y
-     *
-     * @param x horizontal position of the event
-     * @param y vertical position of the event
-     */
+    @Override
     public void tapOnCurrentCard(int x, int y) {
         // assemble suitable ACTION_DOWN and ACTION_UP events and forward them to the card's handler
         MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
@@ -2820,16 +2779,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_UNSET_FLAG:
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
-            case COMMAND_ANSWER_FIRST_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_ONE);
-            case COMMAND_ANSWER_SECOND_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_TWO);
-            case COMMAND_ANSWER_THIRD_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_THREE);
-            case COMMAND_ANSWER_FOURTH_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_FOUR);
-            case COMMAND_ANSWER_RECOMMENDED:
-                return answerCardIfVisible(getRecommendedEase(false));
             case COMMAND_PAGE_UP:
                 onPageUp();
                 return true;
@@ -2936,14 +2885,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("Toggle flag: Setting flag to %d", flag);
             onFlag(mCurrentCard, flag);
         }
-    }
-
-    private boolean answerCardIfVisible(@Consts.BUTTON_TYPE int ease) {
-        if (!sDisplayAnswer) {
-            return false;
-        }
-        performClickWithVisualFeedback(ease);
-        return true;
     }
 
     protected void performClickWithVisualFeedback(int ease) {
@@ -3666,8 +3607,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     return true;
                 }
 
-                String mFlag = url.replaceFirst("signal:flag_","");
-                switch (mFlag) {
+                String flag = url.replaceFirst("signal:flag_","");
+                switch (flag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
                         return true;
                     case "red": executeCommand(COMMAND_TOGGLE_FLAG_RED);
@@ -3915,20 +3856,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return false;
             }
 
-            Version mVersionCurrent = Version.valueOf(sCurrentJsApiVersion);
-            Version mVersionSupplied = Version.valueOf(apiVer);
+            Version versionCurrent = Version.valueOf(sCurrentJsApiVersion);
+            Version versionSupplied = Version.valueOf(apiVer);
 
             /*
             * if api major version equals to supplied major version then return true and also check for minor version and patch version
             * show toast for update and contact developer if need updates
             * otherwise return false
             */
-            if (mVersionSupplied.equals(mVersionCurrent)) {
+            if (versionSupplied.equals(versionCurrent)) {
                 return true;
-            } else if (mVersionSupplied.lessThan(mVersionCurrent)) {
+            } else if (versionSupplied.lessThan(versionCurrent)) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
 
-                return mVersionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
+                return versionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
             } else {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
                 return false;
@@ -4014,6 +3955,8 @@ see card.js for available functions
     }
 
     public class JavaScriptFunction {
+        // Text to speech
+        private JavaScriptTTS mTalker = new JavaScriptTTS();
 
         // if supplied api version match then enable api
         private void enableJsApi() {
@@ -4247,5 +4190,51 @@ see card.js for available functions
                 return true;
             }
         }
+
+        @JavascriptInterface
+        public int ankiTtsSpeak(String text, int queueMode) {
+          return mTalker.speak(text, queueMode);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSpeak(String text) {
+          return mTalker.speak(text);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetLanguage(String loc) {
+          return mTalker.setLanguage(loc);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetPitch(float pitch) {
+          return mTalker.setPitch(pitch);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetPitch(double pitch) {
+          return mTalker.setPitch((float)pitch);
+        }
+
+        @JavascriptInterface
+        public int ankiTtsSetSpeechRate(float speechRate) {
+          return mTalker.setSpeechRate(speechRate);
+        }        
+
+        @JavascriptInterface
+        public int ankiTtsSetSpeechRate(double speechRate) {
+          return mTalker.setSpeechRate((float)speechRate);
+        }
+
+        @JavascriptInterface
+        public boolean ankiTtsIsSpeaking() {
+          return mTalker.isSpeaking();
+        }
+
+        @JavascriptInterface
+        public int ankiTtsStop() {
+          return mTalker.stop();
+        }
+
     }
 }

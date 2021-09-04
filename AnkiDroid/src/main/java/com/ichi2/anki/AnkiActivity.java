@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -48,6 +49,7 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -61,7 +63,7 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
 
-public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
+public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
@@ -75,6 +77,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public AnkiActivity() {
         super();
+        this.mActivityName = getClass().getSimpleName();
+    }
+
+    public AnkiActivity(@LayoutRes int contentLayoutId) {
+        super(contentLayoutId);
         this.mActivityName = getClass().getSimpleName();
     }
 
@@ -170,13 +177,25 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         return CollectionHelper.getInstance().colIsOpen();
     }
 
-
+    /**
+     * Whether animations should not be displayed
+     * This is used to improve the UX for e-ink devices
+     * Can be tested via Settings - Advanced - Safe display mode
+     *
+     * @see #animationEnabled()
+     */
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
         return preferences.getBoolean("safeDisplay", false);
     }
 
-
+    /**
+     * Whether animations should be displayed
+     * This is used to improve the UX for e-ink devices
+     * Can be tested via Settings - Advanced - Safe display mode
+     *
+     * @see #animationDisabled()
+     */
     public boolean animationEnabled() {
         return !animationDisabled();
     }
@@ -462,10 +481,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     public static void showDialogFragment(AnkiActivity activity, DialogFragment newFragment) {
+        showDialogFragment(activity.getSupportFragmentManager(), newFragment);
+    }
+
+    public static void showDialogFragment(FragmentManager manager, DialogFragment newFragment) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
-        FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         Fragment prev = manager.findFragmentByTag("dialog");
         if (prev != null) {
@@ -519,11 +541,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      *
      * @param message
      */
-    protected void showSimpleMessageDialog(String message) {
+    public void showSimpleMessageDialog(String message) {
         showSimpleMessageDialog(message, false);
     }
 
-    protected void showSimpleMessageDialog(String title, String message){
+    public void showSimpleMessageDialog(String title, String message){
         showSimpleMessageDialog(title, message, false);
     }
 
@@ -537,12 +559,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    protected void showSimpleMessageDialog(String message, boolean reload) {
+    public void showSimpleMessageDialog(String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
         showAsyncDialogFragment(newFragment);
     }
 
-    protected void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
+    public void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
     }
@@ -622,6 +644,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+        } else {
+            // likely missing "<include layout="@layout/toolbar" />"
+            Timber.w("Could not find toolbar");
         }
     }
 
@@ -650,6 +675,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.w("Activity started with no application instance");
         UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
 
+        // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+        // on Importer
+        Themes.setTheme(this);
         // Avoids a SuperNotCalledException
         super.onCreate(savedInstanceState);
         finishActivityWithFade(this);

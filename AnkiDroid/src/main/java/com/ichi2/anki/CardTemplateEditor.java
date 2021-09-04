@@ -95,7 +95,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     protected ViewPager2 mViewPager;
     private TabLayout mSlidingTabLayout;
     private TemporaryModel mTempModel;
-    private InsertFieldDialogFactory mInsertFieldDialogFactory;
 
     @Nullable
     private List<String> mFieldNames;
@@ -139,7 +138,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         // Load the args either from the intent or savedInstanceState bundle
         mEditorPosition = new HashMap<>();
         mEditorViewId = new HashMap<>();
-        mInsertFieldDialogFactory = new InsertFieldDialogFactory(s -> getCurrentFragment().insertField(s)).attachToActivity(this);
 
         if (savedInstanceState == null) {
             // get model id
@@ -544,7 +542,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             if (mTemplateEditor.mFieldNames == null) {
                 return;
             }
-            InsertFieldDialog insertFieldDialog = mTemplateEditor.mInsertFieldDialogFactory
+
+            InsertFieldDialogFactory insertFieldDialogFactory = new InsertFieldDialogFactory(this::insertField).attachToActivity(mTemplateEditor);
+
+            InsertFieldDialog insertFieldDialog = insertFieldDialogFactory
                     .newInsertFieldDialog()
                     .withArguments(mTemplateEditor.mFieldNames);
             mTemplateEditor.showDialogFragment(insertFieldDialog);

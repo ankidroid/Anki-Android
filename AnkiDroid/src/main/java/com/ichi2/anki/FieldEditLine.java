@@ -85,7 +85,7 @@ public class FieldEditLine extends FrameLayout {
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
         this.mMediaButton = findViewById(R.id.id_media_button);
-        ConstraintLayout mConstraintLayout = findViewById(R.id.constraint_layout);
+        ConstraintLayout constraintLayout = findViewById(R.id.constraint_layout);
         this.mExpandButton = findViewById(R.id.id_expand_button);
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -95,9 +95,9 @@ public class FieldEditLine extends FrameLayout {
             mEditText.setNextFocusForwardId(mMediaButton.getId());
             mMediaButton.setNextFocusForwardId(mExpandButton.getId());
             ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(mConstraintLayout);
+            constraintSet.clone(constraintLayout);
             constraintSet.connect(mMediaButton.getId(), ConstraintSet.END, mExpandButton.getId(), ConstraintSet.START);
-            constraintSet.applyTo(mConstraintLayout);
+            constraintSet.applyTo(constraintLayout);
         }
 
         this.mExpansionState = ExpansionState.EXPANDED;

@@ -18,5 +18,15 @@ package com.ichi2.testutils;
 
 import android.app.Application;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 public class EmptyApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // reset the static state of the app
+        AnkiDroidApp.simulateRestoreFromBackup();
+    }
 }

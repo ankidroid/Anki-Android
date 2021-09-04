@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">手势操作</string>
     <string name="pref_cat_gestures_summ">使用点击和滑动代替按钮</string>
     <string name="pref_cat_actions" maxLength="41">动作</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">高级设置</string>
     <string name="pref_cat_advanced_summ">优化和实验性的功能</string>
     <string name="pref_cat_performance" maxLength="41">性能</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">V2 调度器</string>
     <string name="sched_v2_summ">启用新版调度器。在下次同步时强制单向变更</string>
     <string name="sched_ver_toggle_title">确认</string>
-    <string name="sched_ver_2to1">这将重置学习中的任何卡牌，清除已筛选的牌组，并更改调度器版本。继续吗？</string>
     <string name="sched_ver_1to2">实验性调度器可能会产生错误的进度。请确保您首先已阅读文档。继续吗？</string>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">同步地址无效</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">媒体文件同步地址</string>
     <string name="custom_sync_server_media_url_invalid">媒体同步地址无效</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">更改牌组集选项会影响多个牌组。如果您想仅更改当前牌组，请先添加一个新的选项组</string>
     <string name="studyoptions_limit_select_tags">选择标签</string>
@@ -319,4 +322,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">问： %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答： %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

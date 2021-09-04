@@ -33,7 +33,7 @@ public class StdModels {
     private final CreateStdModels mFun;
 
     interface CreateStdModels {
-        Model create(Models mm, String name);
+        Model create(ModelManager mm, String name);
     }
 
     public StdModels(CreateStdModels fun, @StringRes int defaultName) {
@@ -41,24 +41,24 @@ public class StdModels {
         this.mDefaultName = defaultName;
     }
 
-    private Model _new(Models mm) {
+    private Model _new(ModelManager mm) {
         String name = getDefaultName();
         return _new(mm, name);
     }
 
-    private Model _new(Models mm, String name) {
+    private Model _new(ModelManager mm, String name) {
         return mFun.create(mm, name);
     }
 
     public Model add(Collection col, String name) {
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         Model model = _new(mm, name);
         mm.add(model);
         return model;
     }
 
     public Model add(Collection col) {
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         Model model = _new(mm);
         mm.add(model);
         return model;

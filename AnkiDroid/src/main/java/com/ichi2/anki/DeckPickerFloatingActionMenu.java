@@ -104,8 +104,8 @@ public class DeckPickerFloatingActionMenu {
     }
 
 
-    public void setIsFABOpen(boolean mIsFABOpen) {
-        this.mIsFABOpen = mIsFABOpen;
+    public void setIsFABOpen(boolean isFABOpen) {
+        this.mIsFABOpen = isFABOpen;
     }
 
 
@@ -118,7 +118,7 @@ public class DeckPickerFloatingActionMenu {
             mAddSharedLayout.setVisibility(View.VISIBLE);
             mAddDeckLayout.setVisibility(View.VISIBLE);
             mFabBGLayout.setVisibility(View.VISIBLE);
-            mFabMain.animate().rotationBy(140);
+            mFabMain.animate().rotationBy(135); // 135 = 90 + 45
             mAddNoteLayout.animate().translationY(0).setDuration(30);
             mAddSharedLayout.animate().translationY(0).setDuration(50);
             mAddDeckLayout.animate().translationY(0).setDuration(100);
@@ -131,6 +131,12 @@ public class DeckPickerFloatingActionMenu {
             mAddSharedLayout.setVisibility(View.VISIBLE);
             mAddDeckLayout.setVisibility(View.VISIBLE);
             mFabBGLayout.setVisibility(View.VISIBLE);
+            mAddNoteLayout.setAlpha(1f);
+            mAddSharedLayout.setAlpha(1f);
+            mAddDeckLayout.setAlpha(1f);
+            mAddNoteLayout.setTranslationY(0);
+            mAddSharedLayout.setTranslationY(0);
+            mAddDeckLayout.setTranslationY(0);
         }
     }
 

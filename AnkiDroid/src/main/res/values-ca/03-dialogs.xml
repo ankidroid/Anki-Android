@@ -41,7 +41,7 @@
     <string name="check_db_title">Base de dades de verificació</string>
     <string name="check_db_warning">Això pot trigar molt de temps</string>
     <string name="check_db_acknowledge">Base de dades comprovada</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Base de dades comprovada i optimitzada.\nEncongida %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
     <string name="delete_deck_default_deck">No es pot suprimir el paquet per defecte.</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
     <string name="tts_no_tts">No parlis</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\Fitxers no usats:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid és una aplicació de flashcards que és totalment compatible amb el programari d\'escriptori <a href=\"%2$s\"> Anki</a>. Podeu crear, descarregar i aprendre sobre aquest material en tant AnkiDroid o Anki i sincronitzar-los fàcilment amb AnkiWeb.]]></item>
         <item><![CDATA[Per ajudar-nos a fer millor la AnkiDroid, si us plau informeu els errors al <a href=\"%1$s\"> buscador d\'incidències</a>; noves idees són molt benvingudes. Trobeu respostes a la <a href=\"%2$s\"> wiki</a> o comenceu un debat al <a href=\"%3$s\"> fòrum</a>.]]></item>
@@ -62,51 +62,51 @@
         <item><![CDATA[AnkiDroid és alliberat sota la <a href=\"%1$s\"> llicència de GNU-GPL v3</a> i el codi font està disponible <a href=\"%2$s\"> a GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Previsualització</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Recol·locar carta nova</string>
+    <string name="reposition_card_dialog_message">Posició inicial</string>
+    <string name="reposition_card_not_new_error">Solament es poden recol·locar les cartes noves</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d carta recol·locada</item>
+        <item quantity="other">%d cartes recol·locades</item>
     </plurals>
     <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
     <string name="reset_card_dialog_message">Aquesta carta es posarà al final de la cua de les cartes noves.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="one">%d carta reiniciada</item>
+        <item quantity="other">%d cartes reiniciades</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
+        <item quantity="one">Carta reprogramada</item>
+        <item quantity="other">Cartes reprogramades</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Interval actual: %d dia</item>
+        <item quantity="other">Interval actual: %d dies</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Planificar una revisió en x dies:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d carta reprogramada</item>
+        <item quantity="other">%d cartes reprogramades</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="reschedule_card_dialog_new_card_warning">S’està reprogramant una nova targeta. La reprogramació també converteix les cartes noves en cartes de revisió. Utilitzeu l\'opció \"reposiciona la carta\" per canviar la posició d\'una nova carta dins de la nova cua</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">La reprogramació també restableix la forma en què el planificador tracta la targeta en el futur (la dificultat es fixarà a %d%%)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Sel·lecciona el paquet amb el teu gestor d\'arxius o visita la pàgina about:downloads per importar-lo</string>
     <string name="answering_error_title">Error de la base de dades</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">No s\'ha pogut escriure a la col·lecció. La base de dades podria estar malmesa o potser no hi ha prou espai buit al disc. \n\nSi això passa més sovint, proveu de comprovar la base de dades, reparar la col·lecció o restaurar-la des d\'una còpia de seguretat. Toqueu \"opcions\" per fer-ho.\n\nTambé podria ser un error d\'AnkiDroid; Informeu de l’error perquè puguem comprovar-ho.</string>
     <string name="answering_error_report">Informa dels errors</string>
     <string name="repair_deck_dialog">Realment voleu intentar reparar la base de dades? \n\nAbans de començar, es desarà una còpia a la carpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
     <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_new_total_new">Noves cartes al paquet: %d</string>
     <string name="custom_study_rev_total_rev">Revisions vençudes al paquet: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de noves cartes a</string>
+    <string name="custom_study_rev_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de revisions a</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
     <string name="custom_study_ahead">Revisió de x dies endavant:</string>
     <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
     <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
     <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
     <string name="import_progress">• Important notes: %1$d%%\n• important targetes: %2$d%%\n• post-processant: %3$d%%</string>
@@ -115,8 +115,8 @@
     <string name="import_complete_count">Targetes importades: %d</string>
     <string name="sd_card_full_title">Targeta SD plena</string>
     <string name="sd_card_almost_full_title">Targeta SD gairebé plena</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Sense espai</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau </string>
     <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
     <string name="dialog_cancel">Cancel·la</string>
@@ -147,11 +147,11 @@
     <string name="check_media_no_unused_missing">Cap arixu no utilitzat o mancant trobat</string>
     <string name="check_media_db_updated">Base de dades de multimèdia reconstruïda</string>
     <string name="check_media_delete_unused">Suprimir no utilitzats</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Suprimint medis&#8230;</string>
+    <string name="delete_media_result_title">Resultat de la supressió</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d fitxer esborrat</item>
+        <item quantity="other">%d fitxers esborrats</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Totes les cartes</string>
@@ -159,94 +159,96 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Venciment</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Trobar targetes buides&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">Voleu cancel·lar?</string>
     <string name="empty_cards_none">No hi ha targetes buides</string>
     <string name="empty_cards_count">Targetes per eliminar: %d</string>
     <string name="empty_cards_deleted">Targetes eliminades: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">No s\'ha pogut obtenir permís per usar el micròfon.</string>
+    <string name="multimedia_editor_camera_permission_refused">No s\'ha pogut obtenir permís per usar la càmera. S\'ha desactivat la funcionalitat.</string>
+    <string name="multimedia_editor_failed">No s\'ha pogut obrir l\'editor multimèdia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">S\'ha denegat el permís de gravació d\'àudio</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_title">Benvingut a AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requereix permís d\'emmagatzematge. Aquest permís s\'usa exclusivament per emmagatzemar la vostra col·lecció, el multimèdia de les cartes i còpies de seguretat d\'AnkiDroid. El nostre codi és de codi obert, escrit per voluntaris i confien en ell milions de persones.\n\nSi teniu alguna pregunta, accediu al nostre manual integrat a l\'aplicació o visiteu els nostres fòrums d\'assistència.\n\nGràcies per provar AnkiDroid! \n— Equip de desenvolupament d\'AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">S\'ha produït un error desconegut al mostrar l\'editor avançat</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">S\'ha actualitzat l\'Ankidroid</string>
+    <string name="integrity_check_startup_content">AnkiDroid s\'ha actualitzat. Aquesta actualització inclou solucions per a possibles problemes de bases de dades i us recomanem que executeu ara la comprovació de la base de dades.</string>
+    <string name="integrity_check_continue_anyway">Continua igualment</string>
+    <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nActualment teniu %s lliures.</string>
+    <string name="integrity_check_fixed_no_home_deck">S\'han recuperat %d cartes procedents de paquets incorrectes. Consulteu el manual per obtenir més informació si us plau.</string>
+    <string name="video_creation_error">No s\'ha pogut reproduir el vídeo</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">No s\'ha pogut canviar el paquet</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Error al processar les opcions del paquet: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">Base de dades  bloquejada</string>
+    <string name="database_locked_summary">Una altra aplicació fa servir la base de dades AnkiDroid. Tanqueu l’altra aplicació i torneu a obrir AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Versió de base de dades incompatible</string>
+    <string name="incompatible_database_version_summary">La base de dades és una versió més avançada de la que pot funcionar aquesta versió d\'AnkiDroid. Actualitzeu AnkiDroid o feu una versió anterior de la base de dades per obrir-la\n\nVersió compatible: %1$d\nVersió de base de dades: %2$d\n\nLes següents opcions de restauració sobreescriuran la vostra col·lecció actual, possiblement amb una versió de base de dades compatible:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_applied">S\'ha aplicat una imatge de fons</string>
+    <string name="background_image_removed">S\'ha tret la imatge de fons</string>
+    <string name="no_image_selected">No hi ha cap imatge seleccionada</string>
+    <string name="error_selecting_image">Error al seleccionar la imatge. Si us plau veieu el manual. %s</string>
+    <string name="error_deleting_image">Error esborrant imatge</string>
+    <string name="failed_to_apply_background_image">Error al aplicar la imatge de fons %s</string>
+    <string name="background_image_too_large">La imatge de fons del selector de paquets és massa gran</string>
+    <string name="image_max_size_allowed">Mida màxima de la imatge: %d MB </string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Falta el permís d\'emmagatzematge necessari. Si us plau, concediu permís d\'emmagatzematge i torneu a intentar l\'acció.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">No s\'ha pogut carregar l\'aspecte del navegador de cartes</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">No s\'han pogut programar els recordatoris</string>
+    <string name="boot_service_too_many_notifications">Hi ha massa recordatoris programats. Alguns no apareixeran</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Selecció d\'idioma del teclat</string>
+    <string name="locale_selection_dialog_summary">Alguns teclats multilingües, com GBoard, admeten canviar d\'idioma mentre s\'edita text\n\nSol·liciteu al fabricant del teclat la funció \"setImeHintLocales\" si el teclat no canvia d\'idioma.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_using_ankidroid">Com usar AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manual d\'AnkiDroid</string>
+    <string name="help_item_anki_manual">Manual d\'Anki</string>
+    <string name="help_item_ankidroid_faq">FAQs d\'AnkiDroid</string>
+    <string name="help_title_get_help">Obtenir ajuda</string>
+    <string name="help_item_mailing_list">Llista de correu</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">Informa d\'un error</string>
+    <string name="help_title_support_ankidroid">Suporteu AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donar</string>
+    <string name="help_item_support_develop_ankidroid">Desenvolupar</string>
+    <string name="help_item_support_rate_ankidroid">Valorar</string>
+    <string name="help_item_support_other_ankidroid">Altres</string>
+    <string name="help_title_community">Comunitat</string>
+    <string name="help_item_anki_forums">Forums d\'Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_privacy">Privacitat</string>
+    <string name="help_item_ankidroid_privacy_policy">Política de privacitat AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Política de privacitat AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Termes i condicions d\'AnkiWeb</string>
+    <string name="help_title_send_exception">Enviar informe de resolució de problemes</string>
+    <string name="help_dialog_exception_report_debounce">Informe ja enviat</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Es pot activar una sincronització automàtica en %d segon</item>
+        <item quantity="other">Es pot activar una sincronització automàtica en %d segons</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Nombre de cartes noves que es poden veure avui en aquest paquet.</string>
+    <string name="deck_picker_rev">Nombre de cartes pendents per avui en aquest paquet.</string>
+    <string name="deck_picker_lrn">Número de cartes que s\'estan aprenent en aquest paquet.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">Obriu la pàgina de descripció general del paquet que conté el nombre de cartes que podeu veure avui.</string>
+    <string name="import_deck_package">Deck package (.apkg)</string>
+    <string name="import_collection_package">Collection package (.colpkg)</string>
 </resources>

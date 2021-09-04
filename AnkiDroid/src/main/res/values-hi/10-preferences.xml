@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_gestures_summ">स्पर्श और स्वाइप के बजाय बटनों का उपयोग करें</string>
     <string name="pref_cat_actions" maxLength="41">क्रियाएँ</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
     <string name="pref_cat_advanced_summ">अनुकूलन और प्रायोगिक सुविधाएँ</string>
     <string name="pref_cat_performance" maxLength="41">निष्पादन</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">V2 अनुसूचक</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">पुष्टि करें</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">स्क्रीन चालू रखें</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">मीडिया सिंक्रनाइज़ेशन url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">टैग का चयन करें</string>
@@ -321,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">प्र: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">उ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

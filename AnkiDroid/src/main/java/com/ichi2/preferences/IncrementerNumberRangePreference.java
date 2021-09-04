@@ -28,7 +28,7 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.R;
 
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
 public class IncrementerNumberRangePreference extends NumberRangePreference {
 
     private final LinearLayout mLinearLayout = new LinearLayout(getContext());

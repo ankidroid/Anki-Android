@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">الإيماءات</string>
     <string name="pref_cat_gestures_summ">استخدم النقرات والسحب بدلًا من الأزرار</string>
     <string name="pref_cat_actions" maxLength="41">الإجراءات</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">خيارات متقدمة</string>
     <string name="pref_cat_advanced_summ">التحسين والميزات التجريبية</string>
     <string name="pref_cat_performance" maxLength="41">الأداء</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">المجدول الإصدار 2</string>
     <string name="sched_v2_summ">تمكين الجدولة الجديدة. فرض التغيير في اتجاه واحد على المزامنة التالية</string>
     <string name="sched_ver_toggle_title">تأكيد</string>
-    <string name="sched_ver_2to1">سيؤدي هذا إلى إعادة البطاقات في طور التعلم إلى بطاقات جديدة، ومسح الرزم المفلترة، وتغيير إصدار المجدول. هل تريد الاستمرار؟</string>
     <string name="sched_ver_1to2">قد يسبب المجدول التجريبي مزامنة خاطئة. لا تنسَ قراءة الوثائق أولًا. هل تريد الاستمرار؟</string>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">رابط المزامنة غير صالح</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">رابط مزامنة الوسائط</string>
     <string name="custom_sync_server_media_url_invalid">رابط مزامنة الوسائط غير صالح</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة الرزم على عدة رزم. إذا كنت ترغب في تغيير الرزمة الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
@@ -329,4 +332,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">س: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ج: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

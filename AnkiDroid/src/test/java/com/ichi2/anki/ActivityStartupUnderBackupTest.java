@@ -25,7 +25,9 @@ import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
 import com.ichi2.testutils.EmptyApplication;
+import com.ichi2.utils.ExceptionUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,8 +87,20 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
     @Test
     public void activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup();
-        ActivityController<? extends Activity> controller = mLauncher.build(getTargetContext()).create();
-
+        ActivityController<? extends Activity> controller;
+        try {
+            controller = mLauncher.build(getTargetContext()).create();
+        } catch (Exception npe) {
+            String stackTrace = ExceptionUtil.getFullStackTrace(npe);
+            Assert.fail("If you ran this test and it failed, please check to make sure that any new onCreate methods\n" +
+                    "have the following code snippet at the start:\n" +
+                    "if (showedActivityFailedScreen(savedInstanceState)) {\n" +
+                    "  return;\n" +
+                    "}\n" + stackTrace);
+            // Throw is useless after failure. However, it is required to compile as the compiler do not get
+            // that controller is not used below.
+            throw npe;
+        }
         shadowOf(getMainLooper()).idle();
 
         // Note: Robolectric differs from actual Android (process is not killed).

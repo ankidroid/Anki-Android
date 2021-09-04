@@ -59,7 +59,7 @@ public class PreferencesTest extends RobolectricTest {
 
         preferences.setDayOffset(2);
 
-        assertThat("rollover config should be set to new value", getCol().getConf().optInt("rollover", 4), is(2));
+        assertThat("rollover config should be set to new value", getCol().get_config("rollover", 4), is(2));
     }
 
     @NonNull

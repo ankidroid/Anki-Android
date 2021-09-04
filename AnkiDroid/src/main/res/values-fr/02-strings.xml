@@ -154,7 +154,6 @@
     <string name="show_hint">Afficher %s</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
-    <string name="import_select_title">Sélectionner un fichier à importer</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Ceci peut prendre un long moment</string>
@@ -194,8 +193,6 @@
         Essayez de l’ouvrir avec une des <a href="http://ankisrs.net/#download">Distributions Anki</a> disponibles et amusez-vous à apprendre rapidement et efficacement !
         ]]></string>
     <string name="export_unsuccessful">Erreur lors de l\'exportation du fichier apkg</string>
-    <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
-    <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options des paquets</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

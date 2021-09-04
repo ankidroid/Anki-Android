@@ -10,15 +10,15 @@ import timber.log.Timber;
 
 public class Upgrade {
 
-    public static boolean upgradeJSONIfNecessary(Collection col, JSONObject conf, String name, boolean defaultValue) {
+    public static boolean upgradeJSONIfNecessary(Collection col, String name, boolean defaultValue) {
         boolean val = defaultValue;
         try {
-            val = conf.getBoolean(name);
+            val = col.get_config_boolean(name);
         } catch (JSONException e) {
             Timber.w(e);
             // workaround to repair wrong values from older libanki versions
             try {
-                conf.put(name, val);
+                 col.set_config(name, val);
             } catch (JSONException e1) {
                 Timber.w(e1);
                 // do nothing

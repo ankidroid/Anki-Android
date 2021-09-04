@@ -28,7 +28,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class KeyPickerTest : RobolectricTest() {
 
-    private var mKeyPicker: KeyPicker = KeyPicker(targetContext)
+    private var mKeyPicker: KeyPicker = KeyPicker.inflate(targetContext)
 
     @Test
     fun test_normal_binding() {

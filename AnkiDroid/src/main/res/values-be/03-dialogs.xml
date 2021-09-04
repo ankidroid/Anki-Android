@@ -55,7 +55,7 @@
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="initializing_tts">Ініцыялізацыя сінтэзу маўлення...</string>
     <string name="tts_no_tts">Не прамаўляць</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nНявыкарыстаныя файлы:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/>Навучальныя карткі для Android</h2>AnkiDroid - гэта праграма навучальных картак, якая цалкам сумяшчальная з версіяй праграмы для настольных камп\'ютараў <a href=\"%2$s\"> Anki</a>. Стварайце, пампуйце і вучыце матэрыял на любой прыладзе, а потым з лёгкасцю сінхранізуйце іх з дапамогай AnkiWeb.]]></item>
         <item><![CDATA[Для таго, каб дапамагчы зрабіць нам праграму яшчэ лепш, калі ласка, адпраўляйце справаздачы пра памылкі <a href=\"%1$s\">ў цэнтр адсочвання праблем</a>; мы таксама вітаем прапановы новых магчымасцяў у праграме. Шукайце адказы ў <a href=\"%2$s\">Wikipedia</a> або пачніце абмеркаванне на <a href=\"%3$s\">форуме</a>.]]></item>
@@ -265,4 +265,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Адкрыйце старонку папярэдняга прагляду калоды, якая змяшчае колькасць картак для прагляду на сёння.</string>
+    <string name="import_deck_package">Deck package (.apkg)</string>
+    <string name="import_collection_package">Collection package (.colpkg)</string>
 </resources>

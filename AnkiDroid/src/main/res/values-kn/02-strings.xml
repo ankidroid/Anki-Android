@@ -154,7 +154,6 @@
     <string name="show_hint">%s ತೋರಿಸು</string>
     <string name="info_rate">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ</string>
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
-    <string name="import_select_title">ಆಮದು ಮಾಡಲು ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ಸೇರಿಸಿ</string>
     <string name="import_message_replace_confirm">ಇದು ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಂಗ್ರಹವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಅದನ್ನು%s ಫೈಲ್‌ನ ಡೇಟಾದೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ</string>
     <string name="import_message_add_confirm">ಸಂಗ್ರಹಕ್ಕೆ “%s” ಸೇರಿಸುವುದೇ? ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
@@ -194,8 +193,6 @@
         ಲಭ್ಯವಿರುವ ಒಂದನ್ನು ಬಳಸಿ ಅದನ್ನು ತೆರೆಯಲು ಪ್ರಯತ್ನಿಸಿ <a href="http://ankisrs.net/#download">Anki distributions</a> ಮತ್ತು ಸುಲಭ ಮತ್ತು ಪರಿಣಾಮಕಾರಿ ಕಲಿಕೆಯನ್ನು ಆನಂದಿಸಿ!
         ]]></string>
     <string name="export_unsuccessful">ಎಪಿಕೆಜಿ ಫೈಲ್ ರಫ್ತು ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
-    <string name="import_hint">ಎಪಿಕೆಜಿ ಫೈಲ್ ಅನ್ನು “%s” ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಇರಿಸಿ ಮತ್ತು ಕಾರ್ಡ್‌ಗಳನ್ನು ಆಮದು ಮಾಡಲು “ಸರಿ” ಸ್ಪರ್ಶಿಸಿ</string>
-    <string name="upgrade_import_no_file_found">ಆಮದು ಮಾಡಬಹುದಾದ%1$s ಫೈಲ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
     <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

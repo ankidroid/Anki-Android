@@ -26,7 +26,7 @@ import com.ichi2.anki.tests.Shared;
 import com.ichi2.anki.testutil.TestEnvironment;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
@@ -295,7 +295,7 @@ public class ImportTest extends InstrumentedTest {
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsv2() throws  IOException, ConfirmModSchemaException {
-        Models mm = testCol.getModels();
+        ModelManager mm = testCol.getModels();
         Model m = mm.current();
         JSONObject f = mm.newField("Three");
         mm.addField(m, f);
@@ -386,7 +386,7 @@ public class ImportTest extends InstrumentedTest {
 
 
     private void addFieldToCurrentModel(String fieldName) throws ConfirmModSchemaException {
-        Models mm = testCol.getModels();
+        ModelManager mm = testCol.getModels();
         Model m = mm.current();
         JSONObject f = mm.newField(fieldName);
         mm.addField(m, f);

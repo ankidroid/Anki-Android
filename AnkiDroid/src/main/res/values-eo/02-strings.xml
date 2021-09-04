@@ -154,7 +154,6 @@
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
     <string name="import_title">Enporti</string>
-    <string name="import_select_title">Elektu dosieron por enporti</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
@@ -194,8 +193,6 @@
         Malfermu ĝin per unu el disponeblaj <a href="http://ankisrs.net/#download">Anki-programoj</a> kaj ĝuu facilan kaj efikan lernadon!
         ]]></string>
     <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
-    <string name="import_hint">Enmetu apkg-dosieron en la dosierujo “%s” kaj frapetu “bone” por enporti kartojn</string>
-    <string name="upgrade_import_no_file_found">Ne trovis iujn ajn dosierojn por enporti (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
     <string name="menu__deck_options">Agordoj pri kartaro</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
@@ -352,16 +349,20 @@
     <string name="back_pressed_once_reviewer">Frapetu denove por reiri</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Elŝuti kartaron</string>
+    <string name="try_again">Reprovi</string>
+    <string name="cancel_download">Rezigni elŝuton</string>
+    <string name="cancel_download_question_title">Ĉu rezigni elŝuton?</string>
+    <string name="downloading_file">Elŝutado de %s</string>
+    <string name="import_deck">Enporti kartaron</string>
+    <string name="something_wrong">Problemo okazis, reprovu</string>
+    <string name="download_failed">Elŝuto malsukcesis</string>
+    <string name="deck_download_progress_message">Vi povas uzi aliajn aplikaĵojn kiam la dosiero(j) estas elŝutata(j)</string>
+    <string name="check_network">Kontrolu vian retkonekton</string>
+    <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
+    <string name="home">Hejmo</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>
