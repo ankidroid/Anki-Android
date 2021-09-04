@@ -1235,22 +1235,4 @@ public class Decks extends DeckManager {
     public static boolean isDynamic(Deck deck) {
         return deck.isDyn();
     }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nullable
-    public String getSubdeckName(long did, @Nullable String subdeckName) {
-        if (TextUtils.isEmpty(subdeckName)) {
-            return null;
-        }
-        String newName = subdeckName.replaceAll("\"", "");
-        if (TextUtils.isEmpty(newName)) {
-            return null;
-        }
-        Deck deck = get(did, false);
-        if (deck == null) {
-            return null;
-        }
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName;
-    }
 }
