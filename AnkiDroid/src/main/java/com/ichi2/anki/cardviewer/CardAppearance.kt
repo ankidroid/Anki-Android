@@ -13,173 +13,148 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
+import android.content.SharedPreferences
+import androidx.annotation.CheckResult
+import com.ichi2.anki.reviewer.ReviewerCustomFonts
+import com.ichi2.libanki.Card
+import com.ichi2.themes.Themes
+import java.lang.StringBuilder
 
-import android.content.SharedPreferences;
-
-import com.ichi2.anki.reviewer.ReviewerCustomFonts;
-import com.ichi2.libanki.Card;
-import com.ichi2.themes.Themes;
-
-import androidx.annotation.CheckResult;
-
-/** Responsible for calculating CSS and element styles and modifying content on a flashcard */
-public class CardAppearance {
-
-    /** Max size of the font for dynamic calculation of font size */
-    private static final int DYNAMIC_FONT_MAX_SIZE = 14;
-
-    /** Min size of the font for dynamic calculation of font size */
-    private static final int DYNAMIC_FONT_MIN_SIZE = 3;
-    private static final int DYNAMIC_FONT_FACTOR = 5;
-
-    /** Constant for class attribute signaling answer */
-    public static final String ANSWER_CLASS = "\"answer\"";
-
-    /** Constant for class attribute signaling question */
-    public static final String QUESTION_CLASS = "\"question\"";
-
-    private final int mCardZoom;
-    private final int mImageZoom;
-    private final boolean mNightMode;
-    private final boolean mCenterVertically;
-    private final ReviewerCustomFonts mCustomFonts;
-
-    public CardAppearance(ReviewerCustomFonts customFonts, int cardZoom, int imageZoom, boolean nightMode, boolean centerVertically) {
-        this.mCustomFonts = customFonts;
-        this.mCardZoom = cardZoom;
-        this.mImageZoom = imageZoom;
-        this.mNightMode = nightMode;
-        this.mCenterVertically = centerVertically;
-    }
-
-    public boolean isNightMode() {
-        return mNightMode;
-    }
-
-
+/** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
+class CardAppearance(private val customFonts: ReviewerCustomFonts, private val cardZoom: Int, private val imageZoom: Int, val isNightMode: Boolean, private val centerVertically: Boolean) {
     /**
      * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
      */
-    public boolean hasUserDefinedNightMode(Card card) {
+    fun hasUserDefinedNightMode(card: Card): Boolean {
         // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-        return card.css().contains(".night_mode") || card.css().contains(".nightMode");
+        return card.css().contains(".night_mode") || card.css().contains(".nightMode")
     }
 
-    public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
-        int cardZoom = preferences.getInt("cardZoom", 100);
-        int imageZoom = preferences.getInt("imageZoom", 100);
-        boolean nightMode = isInNightMode(preferences);
-        boolean centerVertically = preferences.getBoolean("centerVertically", false);
-        return new CardAppearance(customFonts, cardZoom, imageZoom, nightMode, centerVertically);
-    }
-
-    public static boolean isInNightMode(SharedPreferences sharedPrefs) {
-        return sharedPrefs.getBoolean("invertedColors", false);
-    }
-
-
-    public static String fixBoldStyle(String content) {
-        // In order to display the bold style correctly, we have to change
-        // font-weight to 700
-        return content.replace("font-weight:600;", "font-weight:700;");
-    }
-
-    /** Below could be in a better abstraction. **/
-    public void appendCssStyle(StringBuilder style) {
+    /** Below could be in a better abstraction.  */
+    fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
-        if (mCardZoom != 100) {
-            style.append(String.format("body { zoom: %s }\n", mCardZoom / 100.0));
+        if (cardZoom != 100) {
+            style.append(String.format("body { zoom: %s }\n", cardZoom / 100.0))
         }
 
         // Zoom images
-        if (mImageZoom != 100) {
-            style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
+        if (imageZoom != 100) {
+            style.append(String.format("img { zoom: %s }\n", imageZoom / 100.0))
         }
     }
 
     @CheckResult
-    public String getCssClasses(int currentTheme) {
-        StringBuilder cardClass = new StringBuilder();
-
-        if (mCenterVertically) {
-            cardClass.append(" vertically_centered");
+    fun getCssClasses(currentTheme: Int): String {
+        val cardClass = StringBuilder()
+        if (centerVertically) {
+            cardClass.append(" vertically_centered")
         }
-
-        if (mNightMode) {
+        if (isNightMode) {
             // Enable the night-mode class
-            cardClass.append(" night_mode nightMode");
+            cardClass.append(" night_mode nightMode")
 
             // Emit the dark_mode selector to allow dark theme overrides
             if (currentTheme == Themes.THEME_NIGHT_DARK) {
-                cardClass.append(" ankidroid_dark_mode");
+                cardClass.append(" ankidroid_dark_mode")
             }
         } else {
             // Emit the plain_mode selector to allow plain theme overrides
             if (currentTheme == Themes.THEME_DAY_PLAIN) {
-                cardClass.append(" ankidroid_plain_mode");
+                cardClass.append(" ankidroid_plain_mode")
             }
         }
-        return cardClass.toString();
+        return cardClass.toString()
     }
 
-    /**
-     * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
-     * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     *
-     * @param htmlContent The content to measure font size for
-     * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
-     */
-    public static int calculateDynamicFontSize(String htmlContent) {
-        // NB: Comment seems incorrect
-        // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
-        // remove all html tags and spaces
-        String realContent = htmlContent.replaceAll("<br.*?>", " ");
-        realContent = realContent.replaceAll("<hr.*?>", " ");
-        realContent = realContent.replaceAll("<.*?>", "");
-        realContent = realContent.replaceAll("&nbsp;", " ");
-        return Math.max(DYNAMIC_FONT_MIN_SIZE, DYNAMIC_FONT_MAX_SIZE - realContent.length() / DYNAMIC_FONT_FACTOR);
-    }
-
-
-    public String getStyle() {
-        StringBuilder style = new StringBuilder();
-
-        mCustomFonts.updateCssStyle(style);
-
-        this.appendCssStyle(style);
-
-        return style.toString();
-    }
-
-
-    public String getCardClass(int oneBasedCardOrdinal, int currentTheme) {
-        String cardClass = "card card" + oneBasedCardOrdinal;
-
-        cardClass += getCssClasses(currentTheme);
-
-        return cardClass;
-    }
-
-    /**
-     * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     *
-     * @param content The content to surround with tags.
-     * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
-     * @return The enriched content
-     */
-    public static String enrichWithQADiv(String content, boolean isAnswer) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div class=");
-        if (isAnswer) {
-            sb.append(ANSWER_CLASS);
-        } else {
-            sb.append(QUESTION_CLASS);
+    val style: String
+        get() {
+            val style = StringBuilder()
+            customFonts.updateCssStyle(style)
+            appendCssStyle(style)
+            return style.toString()
         }
-        sb.append(" id=\"qa\">");
-        sb.append(content);
-        sb.append("</div>");
-        return sb.toString();
+
+    fun getCardClass(oneBasedCardOrdinal: Int, currentTheme: Int): String {
+        var cardClass = "card card$oneBasedCardOrdinal"
+        cardClass += getCssClasses(currentTheme)
+        return cardClass
+    }
+
+    companion object {
+        /** Max size of the font for dynamic calculation of font size  */
+        private const val DYNAMIC_FONT_MAX_SIZE = 14
+
+        /** Min size of the font for dynamic calculation of font size  */
+        private const val DYNAMIC_FONT_MIN_SIZE = 3
+        private const val DYNAMIC_FONT_FACTOR = 5
+
+        /** Constant for class attribute signaling answer  */
+        const val ANSWER_CLASS = "\"answer\""
+
+        /** Constant for class attribute signaling question  */
+        const val QUESTION_CLASS = "\"question\""
+        @JvmStatic
+        fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
+            val cardZoom = preferences.getInt("cardZoom", 100)
+            val imageZoom = preferences.getInt("imageZoom", 100)
+            val nightMode = isInNightMode(preferences)
+            val centerVertically = preferences.getBoolean("centerVertically", false)
+            return CardAppearance(customFonts, cardZoom, imageZoom, nightMode, centerVertically)
+        }
+
+        @JvmStatic
+        fun isInNightMode(sharedPrefs: SharedPreferences): Boolean {
+            return sharedPrefs.getBoolean("invertedColors", false)
+        }
+
+        @JvmStatic
+        fun fixBoldStyle(content: String): String {
+            // In order to display the bold style correctly, we have to change
+            // font-weight to 700
+            return content.replace("font-weight:600;", "font-weight:700;")
+        }
+
+        /**
+         * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
+         * contains html-tags, which will not be displayed and therefore should not be taken into account.
+         *
+         * @param htmlContent The content to measure font size for
+         * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
+         */
+        @JvmStatic
+        fun calculateDynamicFontSize(htmlContent: String): Int {
+            // NB: Comment seems incorrect
+            // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
+            // remove all html tags and spaces
+            var realContent = htmlContent.replace("<br.*?>".toRegex(), " ")
+            realContent = realContent.replace("<hr.*?>".toRegex(), " ")
+            realContent = realContent.replace("<.*?>".toRegex(), "")
+            realContent = realContent.replace("&nbsp;".toRegex(), " ")
+            return Math.max(DYNAMIC_FONT_MIN_SIZE, DYNAMIC_FONT_MAX_SIZE - realContent.length / DYNAMIC_FONT_FACTOR)
+        }
+
+        /**
+         * Adds a div html tag around the contents to have an indication, where answer/question is displayed
+         *
+         * @param content The content to surround with tags.
+         * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
+         * @return The enriched content
+         */
+        @JvmStatic
+        fun enrichWithQADiv(content: String?, isAnswer: Boolean): String {
+            val sb = StringBuilder()
+            sb.append("<div class=")
+            if (isAnswer) {
+                sb.append(ANSWER_CLASS)
+            } else {
+                sb.append(QUESTION_CLASS)
+            }
+            sb.append(" id=\"qa\">")
+            sb.append(content)
+            sb.append("</div>")
+            return sb.toString()
+        }
     }
 }
