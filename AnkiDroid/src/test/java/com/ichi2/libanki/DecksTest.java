@@ -13,6 +13,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Decks.CURRENT_DECK;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -240,7 +241,7 @@ public class DecksTest extends RobolectricTest {
         Decks decks = col.getDecks();
         long id = addDeck("test");
         decks.select(id);
-        assertDoesNotThrow("curDeck should be saved as a long. A deck id.", () -> col.get_config_long("curDeck"));
+        assertDoesNotThrow("curDeck should be saved as a long. A deck id.", () -> col.get_config_long(CURRENT_DECK));
     }
 
 

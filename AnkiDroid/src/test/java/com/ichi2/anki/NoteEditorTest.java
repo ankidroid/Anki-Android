@@ -44,6 +44,7 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
+import static com.ichi2.libanki.Decks.CURRENT_DECK;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -218,12 +219,12 @@ public class NoteEditorTest extends RobolectricTest {
         // value returned if deck not found
         final int DECK_ID_NOT_FOUND = -404;
         long currentDid = addDeck("Basic::Test");
-        getCol().set_config("curDeck", currentDid);
+        getCol().set_config(CURRENT_DECK, currentDid);
         Note n = super.addNoteUsingBasicModel("Test", "Note");
         n.model().put("did", currentDid);
         NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
 
-        getCol().set_config("curDeck", Consts.DEFAULT_DECK_ID); // Change DID if going through default path
+        getCol().set_config(CURRENT_DECK, Consts.DEFAULT_DECK_ID); // Change DID if going through default path
         Intent copyNoteIntent = getCopyNoteIntent(editor);
         NoteEditor newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, copyNoteIntent);
 
