@@ -45,7 +45,7 @@
     <string name="statistics">ᱟᱸᱠᱲᱟ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="help">ᱜᱚᱲᱚ</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">ᱛᱮᱭᱟᱨ</string>
     <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
     <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
@@ -231,8 +231,8 @@
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d ᱠᱟᱰ (᱐ ᱰᱭᱩ)</item>
+        <item quantity="other">%1$d ᱠᱟᱰᱥ (᱐ ᱰᱭᱩ)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s ᱱᱚᱠᱚᱞ</string>
 </resources>

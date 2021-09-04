@@ -241,6 +241,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">打开包含今天要查看的卡片数量的牌组概览页。</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">牌组包（.apkg）</string>
+    <string name="import_collection_package">收藏包（.colpkg）</string>
 </resources>
