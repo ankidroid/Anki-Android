@@ -1,6 +1,6 @@
 ## Library being used: https://github.com/AppIntro/AppIntro
 
-## Way to add a new slide:
+## Way to add a new slide
 
    Visit `IntroductionActivity` and create a new object of `IntroductionResources`.
 
