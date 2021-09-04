@@ -548,6 +548,23 @@ console.log(AnkiDroidJS.ankiGetNextTime3());
 console.log(AnkiDroidJS.ankiGetNextTime4());
 ```
 
+
+## Open card browser and search with query
+* #### Name
+```js
+AnkiDroidJS.ankiSearchCard(query)
+```
+* #### Info
+From reviewer UI, open Card browser and search for cards using the query
+
+* #### Usage
+```html
+<button onclick="AnkiDroidJS.ankiSearchCard('deck:\"test\" {{hanzi}}')">Search this in Card browser</button>
+```
+View more examples in the PR [#9247](https://github.com/ankidroid/Anki-Android/pull/9247)
+
+
+
 ## Some tips to improve card / deck development
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
 <br>**Note: Using this may give some problem when using AnkiWeb in Android Chrome, so to make available some functionality only to AnkiDroid app then ```wv``` in ```navigator.userAgent``` can be used.**
@@ -753,3 +770,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#6386 Show Toast using JavaScript function in WebView](https://github.com/ankidroid/Anki-Android/pull/6386)
 <br>[#8199 JS API to know if answer is displaying or question](https://github.com/ankidroid/Anki-Android/pull/8199)
 <br>[#8500 Get deck name using JS API](https://github.com/ankidroid/Anki-Android/pull/8500)
+<br>[#9247 JS API to open card browser and search with query](https://github.com/ankidroid/Anki-Android/pull/9247)
