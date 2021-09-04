@@ -41,6 +41,7 @@ import com.ichi2.utils.CollectionUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import java8.util.Optional
+import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 import BackendProto.Backend as pb
 
@@ -188,6 +189,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /* Deck save/load */
+    @RustCleanup("only for java interface: newDyn was used for filtered decks")
+    fun id(name: str): did {
+        // use newDyn for now
+        return id(name, true, 0).get()
+    }
 
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
     fun id(name: str, create: bool = true, type: Int = 0): Optional<did> {
@@ -689,7 +695,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             if (nameMap.isPresent) {
                 deck = nameMap.get()[parent_name]!!
             } else {
-                deck = this.get(this.id(parent_name).get()).get()!!
+                deck = this.get(this.id(parent_name)).get()!!
             }
             parents.append(deck)
         }
