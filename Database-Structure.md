@@ -32,6 +32,7 @@ More information on what these represent are clearly explained in http://ankisrs
 This document often refers to "epoch seconds/milliseconds". This is the amount of time that has passed since the [Unix Epoch](https://en.wikipedia.org/wiki/Epoch_(computing)) (1 January 1970 00:00:00 UT).
 
 # Database schema
+## Cards
 ```sql
 -- Cards are what you review. 
 -- There can be multiple cards for each note, as determined by the Template.
@@ -91,6 +92,11 @@ CREATE TABLE cards (
     data            text not null
       -- currently unused
 );
+
+```
+
+
+```sql
 
 -- col contains a single row that holds various information about the collection
 CREATE TABLE col (
