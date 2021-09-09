@@ -21,8 +21,8 @@ import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.HandlerUtils
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.closeTo
+import org.hamcrest.Matchers.`is`
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
