@@ -23,11 +23,11 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
-- detailed statistics
-- syncing with AnkiWeb
+- Night mode
+- Whiteboard
+- Progress widget
+- Detailed statistics
+- Syncing with AnkiWeb
 - write answers (optional)
 - text-to-speech integration
 - more than 6000 premade decks
