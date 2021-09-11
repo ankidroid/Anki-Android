@@ -332,3 +332,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 }
+apply from: "./kotlinMigration.gradle"
