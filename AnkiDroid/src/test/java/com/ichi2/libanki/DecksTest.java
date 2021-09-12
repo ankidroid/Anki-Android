@@ -52,7 +52,7 @@ public class DecksTest extends RobolectricTest {
         for (String deckName: TEST_DECKS) {
             addDeck(deckName);
         }
-        JSONObject brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
+        Deck brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS");
         Asserts.notNull(brokenDeck,"We should get deck with given name");
         // Changing the case. That could exists in an old collection or during sync.
         brokenDeck.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS");
