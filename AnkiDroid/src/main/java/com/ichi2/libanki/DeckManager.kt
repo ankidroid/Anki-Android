@@ -23,8 +23,8 @@ import com.ichi2.anki.exception.DeckRenameException
 import com.ichi2.anki.exception.FilteredAncestor
 import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.DeckNameComparator
-import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 
 abstract class DeckManager {
@@ -35,9 +35,11 @@ abstract class DeckManager {
      */
 
     abstract fun load(decks: String, dconf: String)
-    fun save() = save(null)
+    @RustCleanup("Unused in V16")
+    abstract fun save()
     /** Can be called with either a deck or a deck configuration. */
-    abstract fun save(g: JSONObject?)
+    abstract fun save(g: Deck)
+    abstract fun save(g: DeckConfig)
     abstract fun flush()
 
     /*

@@ -280,9 +280,26 @@ public class Decks extends DeckManager {
         mChanged = false;
     }
 
+
     /** {@inheritDoc} */
     @Override
-    public void save(JSONObject g) {
+    public void save() {
+        save((JSONObject) null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void save(@NonNull Deck g) {
+        save((JSONObject) g);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void save(@NonNull DeckConfig g) {
+        save((JSONObject) g);
+    }
+
+    private void save(JSONObject g) {
         if (g != null) {
             g.put("mod", mCol.getTime().intTime());
             g.put("usn", mCol.usn());
