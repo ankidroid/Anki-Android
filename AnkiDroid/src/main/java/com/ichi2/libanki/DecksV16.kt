@@ -42,6 +42,7 @@ import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
+import timber.log.Timber
 import java.util.*
 import BackendProto.Backend as pb
 
@@ -56,6 +57,7 @@ const val defaultDynamicDeck = 1
 open class DeckV16 private constructor(private val deck: JSONObject) {
     class NonFilteredDeck(val deck: JSONObject) : DeckV16(deck)
     class FilteredDeck(val deck: JSONObject) : DeckV16(deck)
+    internal class Generic(val deck: JSONObject) : DeckV16(deck)
 
     // to be usd rarely
     fun getJsonObject(): JSONObject {
@@ -119,6 +121,10 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
         override fun deepClone(): DeckConfigV16 = FilteredDeck(deckData.deepClone())
     }
 
+    class Generic(val deckData: JSONObject) : DeckConfigV16(deckData) {
+        override fun deepClone(): DeckConfigV16 = Generic(deckData.deepClone())
+    }
+
     var conf: Long
         get() = config.getLong("conf")
         set(value) {
@@ -172,6 +178,19 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             is DeckConfigV16.Config -> save(grp)
             is DeckConfigV16.FilteredDeck -> save(DeckV16.FilteredDeck(grp.deckData))
         }
+    }
+
+    @RustCleanup("not in V16")
+    fun save() {
+        Timber.w(Exception("Decks.save() called - probably a bug"))
+    }
+
+    fun save(g: Deck) {
+        save(DeckV16.Generic(g))
+    }
+
+    fun save(g: DeckConfig) {
+        save(DeckConfigV16.Generic(g))
     }
 
     fun save(g: DeckConfigV16.Config) {
