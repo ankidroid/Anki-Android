@@ -339,6 +339,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         update(DeckV16.Generic(g), preserve_usn = true)
     }
 
+    fun rename(g: Deck, newName: String) {
+        rename(DeckV16.Generic(g), newName)
+    }
+
     /** Add or update an existing deck. Used for syncing and merging. */
     fun update(g: DeckV16, preserve_usn: bool = true) {
         g.id = decksBackend.add_or_update_deck_legacy(g, preserve_usn)
