@@ -520,6 +520,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return this.col.db.queryLongList("select id from cards where did in " + ids2str(dids))
     }
 
+    @RustCleanup("needs testing")
+    fun checkIntegrity() {
+        // I believe this is now handled in libAnki
+    }
+
     fun for_card_ids(cids: List<Long>): List<did> {
         return this.col.db.queryLongList("select did from cards where id in ${ids2str(cids)}")
     }
