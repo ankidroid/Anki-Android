@@ -472,7 +472,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         decksBackend.remove_deck_config(id)
     }
 
-    fun setConf(grp: DeckConfigV16, id: dcid) {
+    fun setConf(grp: Deck, id: Long) {
+        setConf(DeckV16.Generic(grp), id)
+    }
+
+    @RustCleanup("maybe an issue here - grp was deckConfig in V16")
+    fun setConf(grp: DeckV16, id: dcid) {
         grp.conf = id
         this.save(grp)
     }
