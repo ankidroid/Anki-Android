@@ -476,6 +476,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         setConf(DeckV16.Generic(grp), id)
     }
 
+    fun restoreToDefault(conf: DeckConfig) {
+        restoreToDefault(DeckConfigV16.Generic(conf))
+    }
+
     @RustCleanup("maybe an issue here - grp was deckConfig in V16")
     fun setConf(grp: DeckV16, id: dcid) {
         grp.conf = id
