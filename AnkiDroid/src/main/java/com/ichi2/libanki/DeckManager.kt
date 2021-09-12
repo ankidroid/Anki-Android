@@ -193,27 +193,6 @@ abstract class DeckManager {
         return deck.getString("name") + Decks.DECK_SEPARATOR + subdeckName
     }
 
-    /* Methods only visible for testing */
-
-    /**
-     *
-     * @param name The name whose parents should exists
-     * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
-     * @throws FilteredAncestor if a parent is filtered
-     */
-    @VisibleForTesting
-    @Throws(FilteredAncestor::class)
-    protected abstract fun _ensureParents(name: String): String
-
-    /**
-     *
-     * Similar as ensure parent, to use when the method can't fail and it's better to allow more change to ancestor's names.
-     * @param name The name whose parents should exists
-     * @return The name similar to input, changed as required, and as little as required, so that no ancestor is filtered and the parent's name is an existing deck.
-     */
-    @VisibleForTesting
-    protected abstract fun _ensureParentsNotFiltered(name: String): String
-
     /*
      * Not in libAnki
      */

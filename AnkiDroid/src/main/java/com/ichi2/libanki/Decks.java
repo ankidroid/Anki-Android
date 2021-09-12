@@ -682,9 +682,13 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param name The name whose parents should exists
+     * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
+     * @throws FilteredAncestor if a parent is filtered
+     */
     @NonNull
-    @Override
     @VisibleForTesting
     protected String _ensureParents(@NonNull String name) throws FilteredAncestor {
         String s = "";
@@ -714,9 +718,9 @@ public class Decks extends DeckManager {
 
 
     /** {@inheritDoc} */
-    @Override
+    @NonNull
     @VisibleForTesting
-    protected  String _ensureParentsNotFiltered(String name) {
+    protected String _ensureParentsNotFiltered(String name) {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
