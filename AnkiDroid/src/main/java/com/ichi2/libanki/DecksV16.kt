@@ -517,6 +517,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return add_config_returning_id(name, config)
     }
 
+    fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.Generic(g), preserve_usn = false)
     fun updateConf(conf: DeckConfigV16, preserve_usn: bool = false) = update_config(conf, preserve_usn)
     fun remConf(id: dcid) = remove_config(id)
     fun confId(name: str, clone_from: Optional<DeckConfigV16> = Optional.empty()) =
