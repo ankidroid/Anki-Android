@@ -476,6 +476,9 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         setConf(DeckV16.Generic(grp), id)
     }
 
+    fun didsForConf(conf: DeckConfig): List<Long> =
+        didsForConf(DeckConfigV16.Generic(conf))
+
     fun restoreToDefault(conf: DeckConfig) {
         restoreToDefault(DeckConfigV16.Generic(conf))
     }
