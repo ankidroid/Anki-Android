@@ -183,6 +183,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         this.update(g, preserve_usn = false)
     }
 
+    @RustCleanup("unused in V16")
+    fun load(@Suppress("UNUSED_PARAMETER") decks: String, @Suppress("UNUSED_PARAMETER") dconf: String) {
+    }
+
     // legacy
     fun flush() {
         // no-op
