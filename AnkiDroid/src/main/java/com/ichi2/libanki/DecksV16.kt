@@ -724,6 +724,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return childMap
     }
 
+    fun parents(did: Long): List<Deck> {
+        val parents = parents(did, Optional.empty())
+        return parents.map { x -> Deck(x.getJsonObject()) }
+    }
+
     @RustCleanup("not needed")
     fun beforeUpload() {
         // intentionally blank
