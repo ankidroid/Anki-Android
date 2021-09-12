@@ -270,7 +270,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void testEnsureParents() throws FilteredAncestor {
         Collection col = getCol();
-        DeckManager decks = col.getDecks();
+        Decks decks = (Decks) col.getDecks();
         addDeck("test");
         String subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
@@ -298,7 +298,7 @@ public class DecksTest extends RobolectricTest {
     @Test
     public void testEnsureParentsNotFiltered() throws FilteredAncestor {
         Collection col = getCol();
-        DeckManager decks = col.getDecks();
+        Decks decks = (Decks) col.getDecks();
         addDeck("test");
         String subsubdeck_name = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck");
         assertEquals("test::sub:: subdeck", subsubdeck_name);// Only parents are renamed, not the last deck.
