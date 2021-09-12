@@ -334,6 +334,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return Optional.empty()
     }
 
+    fun update(g: Deck) {
+        // we preserve USN here as this method is used for syncing and merging
+        update(DeckV16.Generic(g), preserve_usn = true)
+    }
+
     /** Add or update an existing deck. Used for syncing and merging. */
     fun update(g: DeckV16, preserve_usn: bool = true) {
         g.id = decksBackend.add_or_update_deck_legacy(g, preserve_usn)
