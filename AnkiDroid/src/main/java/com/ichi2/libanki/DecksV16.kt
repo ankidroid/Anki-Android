@@ -669,6 +669,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return actv
     }
 
+    fun childDids(did: Long, childMap: Decks.Node): List<Long> {
+        return childDids(did, childMapNode(childMap))
+    }
+
     fun child_ids(parent_name: str): Iterable<did> {
         val prefix = parent_name + "::"
         return all_names_and_ids().filter {
