@@ -720,6 +720,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return childMap
     }
 
+    @RustCleanup("not needed")
+    fun beforeUpload() {
+        // intentionally blank
+    }
+
     private fun sorted(all: ImmutableList<DeckV16>): ImmutableList<DeckV16> {
         return all.sortedBy {
             d ->
