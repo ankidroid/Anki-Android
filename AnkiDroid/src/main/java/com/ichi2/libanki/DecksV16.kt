@@ -227,8 +227,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
     fun id(name: str, create: bool = true, type: Int = 0): Optional<did> {
         val id = this.id_for_name(name)
-        if (id.isPresent) {
-            return id
+        if (id != null) {
+            return Optional.of(id)
         } else if (!create) {
             return Optional.empty()
         }
@@ -263,8 +263,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         )
     }
 
-    fun id_for_name(name: str): Optional<did> {
-        return decksBackend.id_for_name(name)
+    fun id_for_name(name: str): did? {
+        return decksBackend.id_for_name(name).orElse(null)
     }
 
     fun get_legacy(did: did): Optional<DeckV16> {
@@ -334,8 +334,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /** Get deck with NAME, ignoring case. */
     fun byName(name: str): Optional<DeckV16> {
         val id = this.id_for_name(name)
-        if (id.isPresent) {
-            return this.get_legacy(id.get())
+        if (id != null) {
+            return this.get_legacy(id)
         }
         return Optional.empty()
     }
