@@ -129,8 +129,8 @@ abstract class DeckManager {
 
     fun name(did: Long): String = name(did, _default = false)
     abstract fun name(did: Long, _default: Boolean = false): String
-    fun cids(did: Long): Array<Long> = cids(did, false)
-    abstract fun cids(did: Long, children: Boolean): Array<Long>
+    fun cids(did: Long): MutableList<Long> = cids(did, false)
+    abstract fun cids(did: Long, children: Boolean): MutableList<Long>
     abstract fun checkIntegrity()
 
     /*
