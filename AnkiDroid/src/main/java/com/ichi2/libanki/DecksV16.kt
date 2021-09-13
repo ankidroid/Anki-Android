@@ -218,6 +218,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return id(name, true, 0).get()
     }
 
+    @RustCleanup("only for java interface - should be removed")
+    @RustCleanup("This needs major testing - the behavior had changed")
+    fun id_safe(name: String, @Suppress("UNUSED_PARAMETER") type: String): Long {
+        return id(name, create = true, type = 0).get()
+    }
+
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
     fun id(name: str, create: bool = true, type: Int = 0): Optional<did> {
         val id = this.id_for_name(name)
