@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:backgroundTint="?attr/fab_normal"
-                android:src="@drawable/ic_folder_white"
+                android:src="@drawable/ic_add_deck_filled"
                 app:fabSize="mini"
                 />
         </LinearLayout>
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:backgroundTint="?attr/fab_normal"
-                android:src="@drawable/ic_add_white"
+                android:src="@drawable/ic_add_note"
                 app:fabSize="mini"
                 />
         </LinearLayout>
