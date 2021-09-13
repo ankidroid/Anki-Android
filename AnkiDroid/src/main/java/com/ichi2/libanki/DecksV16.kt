@@ -532,8 +532,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     /* Deck utils */
 
-    fun name(did: did, default: bool = false): str {
-        val deck = this.get(did, _default = default).toV16Optional()
+    fun name(did: did, _default: bool = false): str {
+        val deck = this.get(did, _default = _default).toV16Optional()
         if (deck.isPresent) {
             return deck.name
         }
