@@ -411,7 +411,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return decksBackend.all_config()
     }
 
-    fun confForDid(did: did): DeckConfigV16 {
+    @RustCleanup("Return v16 config - we return a typed object here")
+    fun confForDid(did: did): DeckConfig {
         val deck = this.get(did, _default = false).toV16Optional()
         assert(deck.isPresent)
         val deckValue = deck.get()
@@ -424,10 +425,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             }
             val knownConf = conf.get()
             knownConf.dyn = false
-            return knownConf
+            return DeckConfig(knownConf.config)
         }
         // dynamic decks have embedded conf
-        return DeckConfigV16.FilteredDeck(deck.get().getJsonObject())
+        return DeckConfig(DeckConfigV16.FilteredDeck(deck.get().getJsonObject()).config)
     }
 
     fun get_config(conf_id: dcid): Optional<DeckConfigV16> {
