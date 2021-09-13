@@ -283,8 +283,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** All decks. Expensive; prefer all_names_and_ids() */
-    fun all(): ImmutableList<DeckV16> {
-        return this.get_all_legacy()
+    fun all(): ImmutableList<Deck> {
+        return this.get_all_legacy().map { x -> Deck(x.getJsonObject()) }
     }
 
     @Deprecated("decks.allIds() is deprecated, use .all_names_and_ids()")
@@ -464,11 +464,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         this.col.modSchema() // TODO: True was passed in as an arg
         for (g in this.all()) {
             // ignore cram decks
-            if (!g.hasKey("conf")) {
+            if (!g.has("conf")) {
                 continue
             }
             if (g.conf.toString() == id.toString()) {
-                g.conf = 1L
+                g.put("conf", 1L) // we need this as setConf() already is defined
                 this.save(g)
             }
         }
@@ -495,7 +495,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     fun didsForConf(conf: DeckConfigV16): MutableList<did> {
         val dids = mutableListOf<did>()
         for (deck in this.all()) {
-            if (deck.hasKey("conf") && deck.conf == conf.id) {
+            if (deck.has("conf") && deck.conf == conf.id) {
                 dids.append(deck.id)
             }
         }
@@ -744,11 +744,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         // intentionally blank
     }
 
-    private fun sorted(all: ImmutableList<DeckV16>): ImmutableList<DeckV16> {
-        return all.sortedBy {
-            d ->
-            d.name
-        }
+    private fun sorted(all: ImmutableList<Deck>): ImmutableList<Deck> {
+        return all.sortedBy { d -> d.getString("name") }
     }
 
     /** All parents of did. */
@@ -799,7 +796,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return parents
     }
 
-    fun nameMap(): Map<str, DeckV16> {
+    fun nameMap(): Map<str, Deck> {
         return all().map { d -> Pair(d.name, d) }.toMap()
     }
 
@@ -829,4 +826,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     fun Deck.toV16(): DeckV16 {
         return DeckV16.Generic(this)
     }
+
+    val Deck.id: did get() = this.getLong("id")
+    val Deck.name: str get() = this.getString("name")
+    val Deck.conf: Long get() = this.getLong("conf")
 }
