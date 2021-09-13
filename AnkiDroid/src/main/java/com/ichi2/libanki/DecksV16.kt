@@ -318,7 +318,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         this.save(deck)
     }
 
-    fun count(): Long {
+    fun count(): Int {
         return len(this.all_names_and_ids())
     }
 

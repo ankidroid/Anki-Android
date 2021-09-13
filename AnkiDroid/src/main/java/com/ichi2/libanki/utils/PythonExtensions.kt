@@ -33,8 +33,8 @@ fun <T> len(l: Sequence<T>): Long {
     return l.count().toLong()
 }
 
-fun <T> len(l: List<T>): Long {
-    return l.size.toLong()
+fun <T> len(l: List<T>): Int {
+    return l.size
 }
 
 fun len(l: JSONArray): Long {

@@ -73,6 +73,7 @@ abstract class DeckManager {
     abstract fun collapse(did: Long)
 
     /** Return the number of decks. */
+    @RustCleanup("This is a long in V16 - shouldn't make a difference, but needs investigation")
     abstract fun count(): Int
     @CheckResult
     /** Obtains the deck from the DeckID, or default if the deck was not found */
