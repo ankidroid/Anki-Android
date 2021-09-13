@@ -329,12 +329,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** Get deck with NAME, ignoring case. */
-    fun byName(name: str): Optional<DeckV16> {
+    fun byName(name: str): Deck? {
         val id = this.id_for_name(name)
         if (id != null) {
-            return this.get_legacy(id).toV16Optional()
+            return this.get_legacy(id)
         }
-        return Optional.empty()
+        return null
     }
 
     fun update(g: Deck) {
@@ -777,19 +777,19 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** All existing parents of name */
-    fun parentsByName(name: str): MutableList<DeckV16> {
+    fun parentsByName(name: str): MutableList<Deck> {
         if (!name.contains("::")) {
             return mutableListOf()
         }
         val names: MutableList<str> = immediate_parent_path(name)
         val head: MutableList<str> = mutableListOf()
-        val parents: MutableList<DeckV16> = mutableListOf()
+        val parents: MutableList<Deck> = mutableListOf()
 
         while (names.isNotNullOrEmpty()) {
             head.append(names.pop(0))
             val deck = this.byName("::".join(head))
-            if (deck.isPresent) {
-                parents.append(deck.get())
+            if (deck != null) {
+                parents.append(deck)
             }
         }
 
