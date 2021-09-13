@@ -267,8 +267,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return decksBackend.id_for_name(name).orElse(null)
     }
 
-    fun get_legacy(did: did): Optional<DeckV16> {
-        return decksBackend.get_deck_legacy(did)
+    fun get_legacy(did: did): Deck? {
+        return decksBackend.get_deck_legacy(did).map { x -> Deck(x.getJsonObject()) }.orElse(null)
     }
 
     fun get_all_legacy(): ImmutableList<DeckV16> {
@@ -306,13 +306,13 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun collapse(did: did) {
-        val deck = this.get(did).get()
+        val deck = this.get(did)!!.toV16()
         deck.collapsed = !deck.collapsed
         this.save(deck)
     }
 
     fun collapseBrowser(did: did) {
-        val deck = this.get(did).get()
+        val deck = this.get(did)!!.toV16()
         val collapsed = deck.browserCollapsed
         deck.browserCollapsed = !collapsed
         this.save(deck)
@@ -322,12 +322,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return len(this.all_names_and_ids())
     }
 
-    fun get(did: did, default: bool = true): Optional<DeckV16> {
+    fun get(did: did, default: bool = true): Deck? {
         val deck = this.get_legacy(did)
         return when {
-            deck.isPresent -> deck
+            deck != null -> deck
             default -> this.get_legacy(1)
-            else -> Optional.empty()
+            else -> null
         }
     }
 
@@ -335,7 +335,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     fun byName(name: str): Optional<DeckV16> {
         val id = this.id_for_name(name)
         if (id != null) {
-            return this.get_legacy(id)
+            return this.get_legacy(id).toV16Optional()
         }
         return Optional.empty()
     }
@@ -415,7 +415,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun confForDid(did: did): DeckConfigV16 {
-        val deck = this.get(did, default = false)
+        val deck = this.get(did, default = false).toV16Optional()
         assert(deck.isPresent)
         val deckValue = deck.get()
         if (deckValue.hasKey("conf")) {
@@ -535,7 +535,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /* Deck utils */
 
     fun name(did: did, default: bool = false): str {
-        val deck = this.get(did, default = default)
+        val deck = this.get(did, default = default).toV16Optional()
         if (deck.isPresent) {
             return deck.name
         }
@@ -544,7 +544,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun nameOrNone(did: did): Optional<str> {
-        val deck = this.get(did, default = false)
+        val deck = this.get(did, default = false).toV16Optional()
         if (deck.isPresent) {
             return Optional.of(deck.name)
         }
@@ -597,7 +597,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun current(): DeckV16 {
-        return this.get(this.selected()).get()
+        return DeckV16.Generic(this.get(this.selected())!!)
     }
 
     /** Select a new branch. */
@@ -673,7 +673,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     /** All children of did, as (name, id). */
     fun children(did: did): MutableList<Tuple<str, did>> {
-        val name: str = this.get(did).name
+        val name: str = this.get(did)!!.toV16().name
         val actv = mutableListOf<Tuple<str, did>>()
         for (g in this.all_names_and_ids()) {
             if (g.name.startsWith(name + "::")) {
@@ -699,7 +699,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun deck_and_child_ids(deck_id: did): MutableList<did> {
-        val parent_name = this.get_legacy(deck_id).name
+        val parent_name = this.get_legacy(deck_id)!!.toV16().name
         val out = mutableListOf(deck_id)
         out.extend(this.child_ids(parent_name))
         return out
@@ -739,8 +739,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun parents(did: Long): List<Deck> {
-        val parents = parents(did, Optional.empty())
-        return parents.map { x -> Deck(x.getJsonObject()) }
+        return parents(did, Optional.empty())
     }
 
     @RustCleanup("not needed")
@@ -758,25 +757,25 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /** All parents of did. */
     fun parents(
         did: did,
-        nameMap: Optional<Dict<str, DeckV16>> = Optional.empty()
-    ): List<DeckV16> {
+        nameMap: Optional<Dict<str, Deck>> = Optional.empty()
+    ): List<Deck> {
         // get parent and grandparent names
         val parents_names: MutableList<str> = mutableListOf()
-        for (part in immediate_parent_path(this.get(did).name)) {
+        for (part in immediate_parent_path(this.get(did).toV16Optional().name)) {
             if (parents_names.isNullOrEmpty()) {
                 parents_names.append(part)
             } else {
                 parents_names.append(parents_names[-1] + "::" + part)
             }
         }
-        val parents: MutableList<DeckV16> = mutableListOf()
+        val parents: MutableList<Deck> = mutableListOf()
         // convert to objects
         for (parent_name in parents_names) {
-            var deck: DeckV16
+            var deck: Deck
             if (nameMap.isPresent) {
                 deck = nameMap.get()[parent_name]!!
             } else {
-                deck = this.get(this.id(parent_name)).get()!!
+                deck = this.get(this.id(parent_name))!!
             }
             parents.append(deck)
         }
@@ -820,6 +819,17 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     // 1 for dyn, 0 for standard
     fun isDyn(did: did): Boolean {
-        return this.get(did).get().dyn != 0
+        return this.get(did)!!.toV16().dyn != 0
+    }
+
+    fun Deck?.toV16Optional(): Optional<DeckV16> {
+        if (this == null) {
+            return Optional.empty()
+        }
+        return Optional.of(this.toV16())
+    }
+
+    fun Deck.toV16(): DeckV16 {
+        return DeckV16.Generic(this)
     }
 }
