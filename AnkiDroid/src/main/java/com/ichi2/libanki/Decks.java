@@ -905,15 +905,15 @@ public class Decks extends DeckManager {
 
     @NonNull
     @Override
-    public Long[] cids(long did, boolean children) {
+    public List<Long> cids(long did, boolean children) {
         if (!children) {
-            return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
+            return mCol.getDb().queryLongList("select id from cards where did=?", did);
         }
         java.util.Collection<Long> values = children(did).values();
         List<Long> dids = new ArrayList<>(values.size() + 1);
         dids.add(did);
         dids.addAll(values);
-        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
+        return mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids));
     }
 
 

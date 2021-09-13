@@ -94,7 +94,7 @@ class Exporter {
         if (mDid == null) {
             cids = Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards"));
         } else {
-            cids = mCol.getDecks().cids(mDid, true);
+            cids = Utils.list2ObjectArray(mCol.getDecks().cids(mDid, true));
         }
         mCount = cids.length;
         return cids;
