@@ -319,11 +319,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return len(this.all_names_and_ids())
     }
 
-    fun get(did: did, default: bool = true): Deck? {
+    fun get(did: did, _default: bool = true): Deck? {
         val deck = this.get_legacy(did)
         return when {
             deck != null -> deck
-            default -> this.get_legacy(1)
+            _default -> this.get_legacy(1)
             else -> null
         }
     }
@@ -412,7 +412,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun confForDid(did: did): DeckConfigV16 {
-        val deck = this.get(did, default = false).toV16Optional()
+        val deck = this.get(did, _default = false).toV16Optional()
         assert(deck.isPresent)
         val deckValue = deck.get()
         if (deckValue.hasKey("conf")) {
@@ -532,7 +532,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /* Deck utils */
 
     fun name(did: did, default: bool = false): str {
-        val deck = this.get(did, default = default).toV16Optional()
+        val deck = this.get(did, _default = default).toV16Optional()
         if (deck.isPresent) {
             return deck.name
         }
@@ -541,7 +541,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     fun nameOrNone(did: did): Optional<str> {
-        val deck = this.get(did, default = false).toV16Optional()
+        val deck = this.get(did, _default = false).toV16Optional()
         if (deck.isPresent) {
             return Optional.of(deck.name)
         }
