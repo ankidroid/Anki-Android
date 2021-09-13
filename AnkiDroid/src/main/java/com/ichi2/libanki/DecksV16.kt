@@ -288,11 +288,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     @Deprecated("decks.allIds() is deprecated, use .all_names_and_ids()")
-    fun allIds(): MutableList<str> {
-        return this.all_names_and_ids().map {
-            x ->
-            x.id.toString()
-        }.toMutableList()
+    fun allIds(): Set<did> {
+        return this.all_names_and_ids().map { x -> x.id }.toSet()
     }
 
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
