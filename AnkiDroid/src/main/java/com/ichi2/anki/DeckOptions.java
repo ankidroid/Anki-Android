@@ -61,7 +61,6 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.NamedJSONComparator;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -809,7 +808,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void buildLists() {
         android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
-        ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
+        List<DeckConfig> confs = mCol.getDecks().allConf();
         Collections.sort(confs, NamedJSONComparator.INSTANCE);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];

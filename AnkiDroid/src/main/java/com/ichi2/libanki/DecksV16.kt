@@ -516,7 +516,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     // legacy
-    fun allConf() = all_config()
+    fun allConf() = all_config().map { x -> DeckConfig(x.config) }.toMutableList()
     fun getConf(conf_id: dcid) = get_config(conf_id)
 
     fun confId(name: String, cloneFrom: String): Long {
