@@ -670,12 +670,12 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** All children of did, as (name, id). */
-    fun children(did: did): MutableList<Tuple<str, did>> {
+    fun children(did: did): TreeMap<str, did> {
         val name: str = this.get(did)!!.toV16().name
-        val actv = mutableListOf<Tuple<str, did>>()
+        val actv = TreeMap<str, did>()
         for (g in this.all_names_and_ids()) {
             if (g.name.startsWith(name + "::")) {
-                actv.append(Tuple(g.name, g.id))
+                actv.put(g.name, g.id)
             }
         }
         return actv
