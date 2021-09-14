@@ -103,7 +103,7 @@ abstract class DeckManager {
      */
 
     /** * A list of all deck config. */
-    abstract fun allConf(): ArrayList<DeckConfig>
+    abstract fun allConf(): List<DeckConfig>
     abstract fun confForDid(did: Long): DeckConfig
     abstract fun getConf(confId: Long): DeckConfig?
     abstract fun updateConf(g: DeckConfig)

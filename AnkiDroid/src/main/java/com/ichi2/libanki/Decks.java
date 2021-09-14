@@ -760,7 +760,7 @@ public class Decks extends DeckManager {
     /** {@inheritDoc} */
     @NonNull
     @Override
-    public ArrayList<DeckConfig> allConf() {
+    public List<DeckConfig> allConf() {
         return new ArrayList<>(mDconf.values());
     }
 
