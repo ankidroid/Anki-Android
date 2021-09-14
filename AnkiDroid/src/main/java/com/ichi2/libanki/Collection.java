@@ -49,7 +49,6 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -110,6 +109,7 @@ public class Collection implements CollectionGetter {
     private final DeckManager mDecks;
     private ModelManager mModels;
     private final TagManager mTags;
+    private ConfigManager mConf;
 
     private AbstractSched mSched;
 
@@ -123,7 +123,6 @@ public class Collection implements CollectionGetter {
     private boolean mDty;
     private int mUsn;
     private long mLs;
-    private JSONObject mConf;
     // END: SQL table columns
 
     // API 21: Use a ConcurrentLinkedDeque
@@ -272,7 +271,7 @@ public class Collection implements CollectionGetter {
             mDty = cursor.getInt(3) == 1; // No longer used
             mUsn = cursor.getInt(4);
             mLs = cursor.getLong(5);
-            mConf = new JSONObject(cursor.getString(6));
+            mConf = new Config(cursor.getString(6));
             deckConf = cursor.getString(7);
             mTags.load(cursor.getString(8));
         } finally {
@@ -357,7 +356,7 @@ public class Collection implements CollectionGetter {
         values.put("dty", mDty ? 1 : 0);
         values.put("usn", mUsn);
         values.put("ls", mLs);
-        values.put("conf", Utils.jsonToString(mConf));
+        values.put("conf", Utils.jsonToString(getConf()));
         mDb.update("col", values);
     }
 
@@ -2060,7 +2059,7 @@ public class Collection implements CollectionGetter {
     }
 
     public JSONObject getConf() {
-        return mConf;
+        return mConf.getJson();
     }
 
 
@@ -2073,7 +2072,7 @@ public class Collection implements CollectionGetter {
         // prior to version 2.16 and has been corrected with
         // dae/anki#347
         Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false);
-        mConf = conf;
+        mConf.setJson(conf);
     }
 
     // region JSON-Related Config
