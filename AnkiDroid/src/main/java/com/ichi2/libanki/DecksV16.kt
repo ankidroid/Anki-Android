@@ -581,8 +581,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     /* Deck selection */
 
     /** The currently active dids. */
-    fun active(): MutableList<did> {
-        // TODO: Copied from the java, should use get_config
+    @RustCleanup("Probably better as a queue")
+    fun active(): LinkedList<did> {
         val activeDecks: JSONArray = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
         CollectionUtils.addAll(result, activeDecks.longIterable())
