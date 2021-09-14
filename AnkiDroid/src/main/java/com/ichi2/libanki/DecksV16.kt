@@ -715,7 +715,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return arr
     }
 
-    fun childMap(): childMapNode {
+    @RustCleanup("used to return childMapNode")
+    fun childMap(): Decks.Node {
         val nameMap = this.nameMap()
         val childMap = childMapNode()
 
@@ -733,7 +734,16 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             }
         }
 
-        return childMap
+        return childMap.toNode()
+    }
+
+    @RustCleanup("needs testing")
+    fun childMapNode.toNode(): Decks.Node {
+        val ret = Decks.Node()
+        for (x in this) {
+            ret[x.key] = (x.value as childMapNode).toNode()
+        }
+        return ret
     }
 
     fun parents(did: Long): List<Deck> {
