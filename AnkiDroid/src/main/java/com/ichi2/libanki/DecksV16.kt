@@ -517,7 +517,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     // legacy
     fun allConf() = all_config().map { x -> DeckConfig(x.config) }.toMutableList()
-    fun getConf(confId: dcid) = get_config(confId)
+    fun getConf(confId: dcid): DeckConfig? = get_config(confId).map { x -> DeckConfig(x.config) }.orElse(null)
 
     fun confId(name: String, cloneFrom: String): Long {
         val config: Optional<DeckConfigV16> = Optional.of(DeckConfigV16.Config(JSONObject(cloneFrom)))
