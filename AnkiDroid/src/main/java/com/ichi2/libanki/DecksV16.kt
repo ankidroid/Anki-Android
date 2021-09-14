@@ -594,8 +594,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return this.col.get_config_long(CURRENT_DECK)
     }
 
-    fun current(): DeckV16 {
-        return DeckV16.Generic(this.get(this.selected())!!)
+    fun current(): Deck {
+        return this.get(this.selected())!!
     }
 
     /** Select a new branch. */
