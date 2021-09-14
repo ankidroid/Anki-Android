@@ -44,7 +44,7 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string tools:ignore="UnusedResources" name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
-    <string name="CardEditorCardDeck">କାର୍ଡ ଡେକ୍:</string>
+    <string name="CardEditorCardDeck">ପତ୍ର ଡେକ୍:</string>
     <string name="CardEditorNoteDeck">ଡେକ୍:</string>
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>

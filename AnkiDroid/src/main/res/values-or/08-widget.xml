@@ -39,9 +39,9 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">ପତ୍ର ବାକି</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">ᱥᱟᱨᱮᱡᱽᱠᱟᱱ ᱠᱟᱰ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%dଟେ AnkiDroid ପତ୍ର ବାକି ଅଛି</item>
+        <item quantity="one">%d AnkiDroid ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
         <item quantity="other">%dଟି AnkiDroid ପତ୍ର ବାକି ଅଛି</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid ଛୋଟ</string>

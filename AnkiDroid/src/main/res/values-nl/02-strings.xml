@@ -347,10 +347,10 @@
     <string name="email_id_empty">E-mailadres vereist</string>
     <string name="password_empty">Wachtwoord is vereist</string>
     <string name="back_pressed_once">Druk nogmaals op \'terug\' om af te sluiten</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">Druk nogmaals op terug om terug te keren</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
+    <string name="download_deck">Set downloaden</string>
     <string name="try_again">Try Again</string>
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_question_title">Cancel download?</string>
@@ -361,7 +361,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="home">Startpagina</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>

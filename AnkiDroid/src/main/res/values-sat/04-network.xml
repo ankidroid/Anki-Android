@@ -39,7 +39,7 @@
 
 -->
 <resources>
-    <string name="youre_offline">ᱟᱢ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱟᱢ</string>
+    <string name="youre_offline">ᱟᱢ ᱫᱚ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱨᱮ</string>
     <string name="sync_even_if_offline">ᱡᱮᱞᱠᱟᱭ ᱢᱮ</string>
     <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
     <string name="vague_error">ᱵᱷᱩᱞ</string>
