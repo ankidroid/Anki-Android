@@ -96,7 +96,7 @@
     <string name="menu_add_note">添加笔记</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帐户</string>
     <string name="menu_dismiss_note">隐藏/删除</string>
-    <string name="menu_bury_card">隐藏卡片</string>
+    <string name="menu_bury_card">搁置卡片</string>
     <string name="menu_bury_note">搁置笔记</string>
     <string name="menu_suspend_card">暂停卡片</string>
     <string name="menu_suspend_note">暂停笔记</string>

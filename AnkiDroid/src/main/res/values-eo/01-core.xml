@@ -45,7 +45,7 @@
     <string name="statistics">Statistiko</string>
     <string name="settings">Agordoj</string>
     <string name="help">Helpo</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Desegnado</string>
     <string name="send_feedback">Sendi opinion</string>
     <string name="studyoptions_due_today">Lernendaj hodiaŭ:</string>
     <string name="studyoptions_new_total">Novaj kartoj tute:</string>
@@ -234,5 +234,5 @@
         <item quantity="one">%1$d karto (0 lernenda)</item>
         <item quantity="other">%1$d kartoj (0 lernenda)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Kopio de %s</string>
 </resources>

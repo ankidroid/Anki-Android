@@ -187,7 +187,7 @@
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
     <string name="card_template_editor_menu_card_browser_appearance">Visning i kortbläddrare</string>
-    <string name="card_template_editor_deck_override">Kortleksöverskrivning</string>
+    <string name="card_template_editor_deck_override">Åsidosätt kortlek</string>
     <string name="card_template_editor_insert_field">Lägg till fält</string>
     <string name="card_template_editor_select_field">Välj fält</string>
     <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>

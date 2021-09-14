@@ -73,7 +73,7 @@
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
+    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas\nusando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -117,7 +117,7 @@
     <string name="menu_flag_card_four">Marca azul</string>
     <string name="menu_flag_card_five">Uaujskz</string>
     <string name="menu_flag_card_six">I like your home </string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_seven">Bandera violeta</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>

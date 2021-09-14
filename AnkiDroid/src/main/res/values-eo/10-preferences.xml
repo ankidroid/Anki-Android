@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_gestures_summ">Stiri per frapeti kaj ŝovumi anstataŭ per butonoj</string>
     <string name="pref_cat_actions" maxLength="41">Agoj</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
+    <string name="pref_cat_controls_summ">Agordi klavarojn kaj aliajn stirilojn</string>
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
     <string name="pref_cat_advanced_summ">Plejbonigado kaj spertulaj eblaĵoj</string>
     <string name="pref_cat_performance" maxLength="41">Rendimento</string>
@@ -229,7 +229,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Ligilo de aŭdvidaĵa samtempigado</string>
     <string name="custom_sync_server_media_url_invalid">Malĝusta ligilo de samtempigo de aŭdvidaĵoj</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">Asigni al ordonoj</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
@@ -325,6 +325,6 @@
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Forigi: “%s”</string>
+    <string name="bindings_already_bound">Jam asignita al %s</string>
 </resources>

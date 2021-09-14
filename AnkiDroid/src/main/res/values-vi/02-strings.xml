@@ -336,15 +336,15 @@
     <string name="back_pressed_once_reviewer">Nhấn lại lần nữa để quay lại</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
+    <string name="download_deck">Tải bộ thẻ xuống</string>
+    <string name="try_again">Thử lại</string>
+    <string name="cancel_download">Hủy tải xuống</string>
+    <string name="cancel_download_question_title">Hủy tải xuống?</string>
+    <string name="downloading_file">Đang tải xuống %s</string>
+    <string name="import_deck">Nhập bộ thẻ</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
+    <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>

@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">Activer/désactiver la balise orange</string>
     <string name="gesture_flag_green">Activer/désactiver la balise verte</string>
     <string name="gesture_flag_blue">Activer/désactiver la balise bleue</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Activer/désactiver le balise rose</string>
+    <string name="gesture_flag_turquoise">Activer/désactiver la balise turquoise</string>
+    <string name="gesture_flag_purple">Activer/désactiver la balise violette</string>
     <string name="gesture_flag_remove">Retirer la balise</string>
     <string name="gesture_page_up">Remonter</string>
     <string name="gesture_page_down">Descendre</string>

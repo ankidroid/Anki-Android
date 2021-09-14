@@ -107,7 +107,7 @@
     <string name="gesture_flag_orange">Переключити помаранчевий прапорець</string>
     <string name="gesture_flag_green">Переключити зелений прапорець</string>
     <string name="gesture_flag_blue">Переключити синій прапорець</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_pink">Перемкнути рожевий прапор</string>
     <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
     <string name="gesture_flag_purple">Toggle Purple Flag</string>
     <string name="gesture_flag_remove">Прибрати прапорець</string>

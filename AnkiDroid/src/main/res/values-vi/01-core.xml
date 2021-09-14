@@ -45,7 +45,7 @@
     <string name="statistics">Thống kê</string>
     <string name="settings">Cài đặt</string>
     <string name="help">Trợ giúp</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Bản vẽ</string>
     <string name="send_feedback">Gửi phản hồi</string>
     <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
     <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
@@ -226,5 +226,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d (0 thẻ đến hạn)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Bản sao của %s</string>
 </resources>
