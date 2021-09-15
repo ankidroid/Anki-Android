@@ -23,6 +23,7 @@ import com.ichi2.libanki.DeckConfigV16
 import com.ichi2.libanki.DeckV16
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.toByteString
+import com.ichi2.utils.JSONObject
 import java8.util.Optional
 import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.database.NotImplementedException
@@ -89,8 +90,9 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
     }
 
     override fun all_config(): MutableList<DeckConfigV16.Config> {
-        val jsonObject = from_json_bytes(backend.allDeckConfigLegacy())
-        throw NotImplementedException()
+        return from_json_bytes(backend.allDeckConfigLegacy())
+            .objectIterable { obj -> DeckConfigV16.Config(obj) }
+            .toMutableList()
     }
 
     override fun add_or_update_deck_legacy(deck: DeckV16, preserve_usn: Boolean): did {
@@ -129,8 +131,9 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
     }
 
     override fun all_decks_legacy(): MutableList<DeckV16> {
-        throw NotImplementedException()
-        // mutableListOf(from_json_bytes(mBackend.allDecksLegacy).values())
+        return from_json_bytes(backend.allDecksLegacy)
+            .objectIterable { obj -> DeckV16.Generic(obj) }
+            .toMutableList()
     }
 
     override fun all_names_and_ids(skip_empty_default: Boolean, include_filtered: Boolean): List<DeckNameId> {
@@ -159,5 +162,9 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
 
     private fun DeckConfigV16.to_json_bytes(): ByteString {
         return toByteString(this.config)
+    }
+
+    private fun <T> JSONObject.objectIterable(f: (JSONObject) -> T) = sequence {
+        keys().forEach { k -> yield(f(getJSONObject(k))) }
     }
 }
