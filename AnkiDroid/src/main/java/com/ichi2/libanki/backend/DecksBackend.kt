@@ -19,9 +19,12 @@
 package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString
+import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfigV16
 import com.ichi2.libanki.DeckV16
+import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
+import com.ichi2.libanki.backend.BackendUtils.jsonToArray
 import com.ichi2.libanki.backend.BackendUtils.toByteString
 import com.ichi2.utils.JSONObject
 import java8.util.Optional
@@ -90,8 +93,9 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
     }
 
     override fun all_config(): MutableList<DeckConfigV16.Config> {
-        return from_json_bytes(backend.allDeckConfigLegacy())
-            .objectIterable { obj -> DeckConfigV16.Config(obj) }
+        return jsonToArray(backend.allDeckConfigLegacy())
+            .jsonObjectIterable()
+            .map { obj -> DeckConfigV16.Config(obj) }
             .toMutableList()
     }
 
@@ -114,8 +118,13 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
 
     override fun get_deck_legacy(did: did): Optional<DeckV16> {
         try {
-            val ret = from_json_bytes(backend.getDeckLegacy(did))
-            throw NotImplementedException("convert to either filtered or not filtered")
+            val jsonObject = from_json_bytes(backend.getDeckLegacy(did))
+            val ret = if (Decks.isDynamic(Deck(jsonObject))) {
+                DeckV16.FilteredDeck(jsonObject)
+            } else {
+                DeckV16.NonFilteredDeck(jsonObject)
+            }
+            return Optional.of(ret)
         } catch (ex: BackendNotFoundException) {
             return Optional.empty()
         }
