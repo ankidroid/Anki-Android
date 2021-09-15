@@ -67,7 +67,7 @@ public interface DroidBackend {
 
     @RustV1Cleanup("backend.newDeckConfigLegacy")
     default DeckConfig new_deck_config_legacy() {
-        return new DeckConfig(Decks.DEFAULT_CONF);
+        return new DeckConfig(Decks.DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG);
     }
 
     void useNewTimezoneCode(Collection col);

@@ -16,19 +16,22 @@
  */
 package com.ichi2.libanki;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ichi2.utils.JSONObject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-public class DeckConfig extends JSONObject{
+public class DeckConfig extends JSONObject {
+    @NonNull
+    private final Source mSource;
+
     /**
      * Creates a new empty deck config object
      */
-    private DeckConfig() {
+    private DeckConfig(@NonNull Source source) {
         super();
+        this.mSource = source;
     }
 
     /**
@@ -36,18 +39,18 @@ public class DeckConfig extends JSONObject{
      *
      * This function will perform deepCopy on the passed object
      *
-     * @see DeckConfig#from(JSONObject) if you want to create a
-     *                                  DeckConfig without deepCopy
      */
-    public DeckConfig(JSONObject json) {
+    public DeckConfig(JSONObject json, @NonNull Source source) {
         super(json);
+        mSource = source;
     }
 
     /**
      * Creates a deck config object form a json string
      */
-    public DeckConfig(String json) {
+    public DeckConfig(String json, @NonNull Source source) {
         super(json);
+        mSource = source;
     }
 
     public static @Nullable Boolean parseTimer(JSONObject config) {
@@ -85,7 +88,20 @@ public class DeckConfig extends JSONObject{
 
     @Override
     public DeckConfig deepClone() {
-        DeckConfig dc = new DeckConfig();
+        DeckConfig dc = new DeckConfig(this.getSource());
         return deepClonedInto(dc);
+    }
+
+    @NonNull
+    public Source getSource() {
+        return mSource;
+    }
+
+    /** Specifies how to save the config */
+    public enum Source {
+        /** From an entry in dconf */
+        DECK_CONFIG,
+        /** filtered decks have their config embedded in the deck */
+        DECK_EMBEDDED
     }
 }

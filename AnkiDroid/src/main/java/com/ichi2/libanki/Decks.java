@@ -274,7 +274,7 @@ public class Decks extends DeckManager {
         mDconf = HashUtil.HashMapInit(confarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
-                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id), DeckConfig.Source.DECK_CONFIG));
             }
         }
         mChanged = false;
@@ -780,7 +780,7 @@ public class Decks extends DeckManager {
             return conf;
         }
         // dynamic decks have embedded conf
-        return new DeckConfig(deck);
+        return new DeckConfig(deck, DeckConfig.Source.DECK_EMBEDDED);
     }
 
 
@@ -800,7 +800,7 @@ public class Decks extends DeckManager {
     @Override
     public long confId(@NonNull String name, @NonNull String cloneFrom) {
         long id;
-        DeckConfig c = new DeckConfig(cloneFrom);
+        DeckConfig c = new DeckConfig(cloneFrom, DeckConfig.Source.DECK_CONFIG);
         do {
             id = mCol.getTime().intTimeMS();
         } while (mDconf.containsKey(id));

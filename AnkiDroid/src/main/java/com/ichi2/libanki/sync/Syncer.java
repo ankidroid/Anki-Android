@@ -802,7 +802,7 @@ public class Syncer {
         }
         JSONArray confs = rchg.getJSONArray(1);
         for (JSONObject deckConfig: confs.jsonObjectIterable()) {
-            DeckConfig r = new DeckConfig(deckConfig);
+            DeckConfig r = new DeckConfig(deckConfig, DeckConfig.Source.DECK_CONFIG);
             DeckConfig l = mCol.getDecks().getConf(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {

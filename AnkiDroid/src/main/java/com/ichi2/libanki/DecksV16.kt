@@ -115,15 +115,15 @@ var Optional<DeckV16>.name: str
 abstract class DeckConfigV16 private constructor(val config: JSONObject) {
     class Config(val configData: JSONObject) : DeckConfigV16(configData) {
         override fun deepClone(): DeckConfigV16 = Config(configData.deepClone())
+        override val source = DeckConfig.Source.DECK_CONFIG
     }
 
     class FilteredDeck(val deckData: JSONObject) : DeckConfigV16(deckData) {
         override fun deepClone(): DeckConfigV16 = FilteredDeck(deckData.deepClone())
+        override val source = DeckConfig.Source.DECK_EMBEDDED
     }
 
-    class Generic(val deckData: JSONObject) : DeckConfigV16(deckData) {
-        override fun deepClone(): DeckConfigV16 = Generic(deckData.deepClone())
-    }
+    abstract val source: DeckConfig.Source
 
     var conf: Long
         get() = config.getLong("conf")
@@ -151,6 +151,15 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
 
     fun getJSONObject(key: String): JSONObject = config.getJSONObject(key)
     abstract fun deepClone(): DeckConfigV16
+
+    companion object {
+        fun from(g: DeckConfig): DeckConfigV16 {
+            return when (g.source) {
+                DeckConfig.Source.DECK_EMBEDDED -> FilteredDeck(g)
+                DeckConfig.Source.DECK_CONFIG -> Config(g)
+            }
+        }
+    }
 }
 
 /** New/lrn/rev conf, from deck config */
@@ -190,7 +199,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     override fun save(g: DeckConfig) {
-        save(DeckConfigV16.Generic(g))
+        save(DeckConfigV16.from(g))
     }
 
     fun save(g: DeckConfigV16.Config) {
@@ -425,10 +434,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             }
             val knownConf = conf.get()
             knownConf.dyn = false
-            return DeckConfig(knownConf.config)
+            return DeckConfig(knownConf.config, knownConf.source)
         }
         // dynamic decks have embedded conf
-        return DeckConfig(DeckConfigV16.FilteredDeck(deck.get().getJsonObject()).config)
+        return DeckConfig(deck.get().getJsonObject(), DeckConfig.Source.DECK_EMBEDDED)
     }
 
     fun get_config(conf_id: dcid): Optional<DeckConfigV16> {
@@ -481,10 +490,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     override fun didsForConf(conf: DeckConfig): List<Long> =
-        didsForConf(DeckConfigV16.Generic(conf))
+        didsForConf(DeckConfigV16.from(conf))
 
     override fun restoreToDefault(conf: DeckConfig) {
-        restoreToDefault(DeckConfigV16.Generic(conf))
+        restoreToDefault(DeckConfigV16.from(conf))
     }
 
     @RustCleanup("maybe an issue here - grp was deckConfig in V16")
@@ -511,20 +520,20 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         this.update_config(new)
         // if it was previously randomized, re-sort
         if (oldOrder == 0) {
-            this.col.sched.resortConf(DeckConfig(new.config))
+            this.col.sched.resortConf(DeckConfig(new.config, DeckConfig.Source.DECK_CONFIG))
         }
     }
 
     // legacy
-    override fun allConf() = all_config().map { x -> DeckConfig(x.config) }.toMutableList()
-    override fun getConf(confId: dcid): DeckConfig? = get_config(confId).map { x -> DeckConfig(x.config) }.orElse(null)
+    override fun allConf() = all_config().map { x -> DeckConfig(x.config, x.source) }.toMutableList()
+    override fun getConf(confId: dcid): DeckConfig? = get_config(confId).map { x -> DeckConfig(x.config, x.source) }.orElse(null)
 
     override fun confId(name: String, cloneFrom: String): Long {
         val config: Optional<DeckConfigV16> = Optional.of(DeckConfigV16.Config(JSONObject(cloneFrom)))
         return add_config_returning_id(name, config)
     }
 
-    override fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.Generic(g), preserve_usn = false)
+    override fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.from(g), preserve_usn = false)
     fun updateConf(conf: DeckConfigV16, preserve_usn: bool = false) = update_config(conf, preserve_usn)
     override fun remConf(id: dcid) = remove_config(id)
     fun confId(name: str, clone_from: Optional<DeckConfigV16> = Optional.empty()) =
