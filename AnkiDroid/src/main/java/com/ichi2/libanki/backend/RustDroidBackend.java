@@ -56,6 +56,11 @@ public class RustDroidBackend implements DroidBackend {
         return true;
     }
 
+    /** Whether the 'Decks' , 'Deck Config', 'Note Types' etc.. are set by database creation */
+    @Override
+    public boolean databaseCreationInitializesData() {
+        return false; // only true in V16, not V11
+    }
 
     @Override
     public boolean isUsingRustBackend() {
