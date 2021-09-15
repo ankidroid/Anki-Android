@@ -109,7 +109,7 @@ operator fun JSONObject.set(s: String, value: String) {
 }
 
 fun JSONArray.append(jsonObject: JSONObject) {
-    this.append(jsonObject)
+    this.put(jsonObject)
 }
 
 fun JSONArray.insert(idx: Int, jsonObject: JSONObject) {
