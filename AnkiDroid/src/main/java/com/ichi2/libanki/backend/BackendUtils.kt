@@ -20,6 +20,7 @@ package com.ichi2.libanki.backend
 
 import BackendProto.Backend
 import com.google.protobuf.ByteString
+import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import java.io.UnsupportedEncodingException
@@ -28,6 +29,11 @@ object BackendUtils {
     fun from_json_bytes(json: Backend.Json): JSONObject {
         val str = jsonToString(json)
         return JSONObject(str)
+    }
+
+    fun jsonToArray(json: Backend.Json): JSONArray {
+        val str = jsonToString(json)
+        return JSONArray(str)
     }
 
     fun jsonToString(json: Backend.Json): String {

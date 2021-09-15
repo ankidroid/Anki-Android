@@ -22,6 +22,11 @@ import com.ichi2.utils.JSONObject
 
 abstract class ConfigManager {
     @CheckResult abstract fun has(key: String): Boolean
+
+    /**
+     * Returns true if this object has no mapping for [key]or if it has
+     * a mapping whose value is [JSONObject.NULL].
+     */
     @CheckResult abstract fun isNull(key: String): Boolean
     @CheckResult abstract fun getString(key: String): String
     @CheckResult abstract fun getBoolean(key: String): Boolean
