@@ -50,6 +50,12 @@ public class JavaDroidBackend implements DroidBackend {
 
 
     @Override
+    public boolean databaseCreationInitializesData() {
+        return false;
+    }
+
+
+    @Override
     public boolean isUsingRustBackend() {
         return false;
     }
