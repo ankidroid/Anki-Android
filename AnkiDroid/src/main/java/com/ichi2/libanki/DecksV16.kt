@@ -144,9 +144,9 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
         }
 
     var dyn: bool
-        get() = config.getBoolean("dyn")
+        get() = config.getInt("dyn") == Consts.DECK_DYN
         set(value) {
-            config.put("dyn", value)
+            config.put("dyn", if (value) Consts.DECK_DYN else Consts.DECK_STD)
         }
 
     fun getJSONObject(key: String): JSONObject = config.getJSONObject(key)
