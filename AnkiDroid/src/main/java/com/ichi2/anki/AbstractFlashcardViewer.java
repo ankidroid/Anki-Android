@@ -707,21 +707,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected class AnswerCardHandler extends NextCardHandler<Computation<?>> {
-
-        private final boolean mQuick;
-
-
-        protected AnswerCardHandler(boolean quick) {
-            mQuick = quick;
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            super.onPreExecute();
-            blockControls(mQuick);
-        }
+    protected TaskListenerBuilder<Card, Computation<?>> answerCardHandler(boolean quick) {
+        return nextCardHandler()
+                .alsoExecuteBefore(() -> blockControls(quick));
     }
 
 
@@ -1187,7 +1175,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), new AnswerCardHandler(false));
+            answerCardHandler(false).execute(new CollectionTask.Undo());
         }
     }
 
@@ -1338,7 +1326,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), new AnswerCardHandler(true));
+        answerCardHandler(true).execute(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase));
     }
 
     // Set the content view to the one provided and initialize accessors.
@@ -3552,7 +3540,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), new AnswerCardHandler(false));
+        answerCardHandler(false).execute(new CollectionTask.GetCard());
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
