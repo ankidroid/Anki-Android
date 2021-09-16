@@ -21,6 +21,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.UndoAction.UNDO_NAME_ID
 import com.ichi2.libanki.UndoAction.revertCardToProvidedState
 import com.ichi2.utils.Computation
@@ -34,6 +35,35 @@ private typealias RepositionResetResult = Computation<Array<Card>>
 private typealias RepositionOrReset = AnkiTask<Card?, RepositionResetResult>
 
 class SchedulerService {
+
+    class GetCard : ActionAndNextCard() {
+        override fun execute(): ComputeResult {
+            return getCard(this)
+        }
+
+        companion object {
+            fun getCard(getCard: ActionAndNextCard): ComputeResult {
+                val sched = getCard.col.sched
+                Timber.i("Obtaining card")
+                val newCard = sched.card
+                newCard?._getQA(true)
+                getCard.doProgress(newCard)
+                return Computation.OK
+            }
+        }
+    }
+
+    class AnswerAndGetCard(
+        private val oldCard: Card,
+        @BUTTON_TYPE private val ease: Int
+    ) : ActionAndNextCard() {
+        override fun execute(): ComputeResult {
+            Timber.i("Answering card %d", oldCard.id)
+            col.sched.answerCard(oldCard, ease)
+            return GetCard.getCard(this)
+        }
+    }
+
     class BuryCard(val card: Card) : ActionAndNextCard() {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
