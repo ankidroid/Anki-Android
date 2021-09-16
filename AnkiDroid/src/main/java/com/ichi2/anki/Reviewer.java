@@ -77,7 +77,6 @@ import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -282,7 +281,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        answerCardHandler(false).execute(new CollectionTask.GetCard());
+        new SchedulerService.GetCard().runWithHandler(answerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -879,7 +878,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        answerCardHandler(false).execute(new CollectionTask.GetCard());
+        new SchedulerService.GetCard().runWithHandler(answerCardHandler(false));
     }
 
 

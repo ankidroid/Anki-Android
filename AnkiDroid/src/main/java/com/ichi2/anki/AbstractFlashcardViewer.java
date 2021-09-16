@@ -1326,7 +1326,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        answerCardHandler(true).execute(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase));
+        new SchedulerService.AnswerAndGetCard(mCurrentCard, mCurrentEase).runWithHandler(answerCardHandler(true));
     }
 
     // Set the content view to the one provided and initialize accessors.
@@ -3540,7 +3540,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        answerCardHandler(false).execute(new CollectionTask.GetCard());
+        new SchedulerService.GetCard().runWithHandler(answerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
