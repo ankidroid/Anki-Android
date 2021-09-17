@@ -104,6 +104,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.export.ActivityExportingDelegate;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
@@ -1306,7 +1307,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
+        new UndoService.Undo().runWithHandler(undoTaskListener(isReview));
     }
 
 

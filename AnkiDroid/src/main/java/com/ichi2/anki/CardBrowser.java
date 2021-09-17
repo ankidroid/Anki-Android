@@ -71,6 +71,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
@@ -1332,7 +1333,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void onUndo() {
         if (getCol().undoAvailable()) {
-            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mUndoHandler);
+            new UndoService.Undo().runWithHandler(mUndoHandler);
         }
     }
 
@@ -1765,8 +1766,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             // snackbar to offer undo
             String deckName = browser.getCol().getDecks().name(browser.mNewDid);
-            browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION,
-                                                         R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler), browser.mCardsListView, null);
+            browser.mUndoSnackbar = UIUtils.showSnackbar(
+                    browser,
+                    String.format(browser.getString(R.string.changed_deck_message), deckName),
+                    SNACKBAR_DURATION,
+                    R.string.undo,
+                    v -> TaskManager.launchCollectionTask(new UndoService.Undo().toDelegate(), browser.mUndoHandler),
+                    browser.mCardsListView, null);
         }
     }
 
@@ -1926,7 +1932,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             // snackbar to offer undo
             String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION,
-                    R.string.undo, v -> TaskManager.launchCollectionTask(new CollectionTask.Undo(), browser.mUndoHandler),
+                    R.string.undo, v -> new UndoService.Undo().runWithHandler(browser.mUndoHandler),
                     browser.mCardsListView, null);
             browser.searchCards();
         }

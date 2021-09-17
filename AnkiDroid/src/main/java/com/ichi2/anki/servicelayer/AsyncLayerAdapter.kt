@@ -155,12 +155,6 @@ class TaskListenerBuilder<TProgress, TResult> constructor() {
         }
         return this
     }
-
-    /* Below should be extension methods. They exist for a clean Java interface */
-
-    fun execute(task: TaskDelegate<TProgress, TResult>) {
-        TaskManager.launchCollectionTask(task, this.toListener())
-    }
 }
 
 /** Converts an AnkiTask to a TaskDelegate */

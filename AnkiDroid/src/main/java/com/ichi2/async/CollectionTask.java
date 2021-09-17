@@ -746,22 +746,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return card;
     }
 
-    public static class Undo extends TaskDelegate<Card, Computation<?>> {
-        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Card> collectionTask) {
-            try {
-                col.getDb().executeInTransaction(() -> {
-                    Card card = nonTaskUndo(col);
-                    collectionTask.doProgress(card);
-                });
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return ERR;
-            }
-            return OK;
-        }
-    }
-
     /**
      * A class allowing to send partial search result to the browser to display while the search ends
      */
