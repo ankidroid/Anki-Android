@@ -29,8 +29,8 @@ import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
 
-private typealias ActionAndNextCard = AnkiTask<Card?, ComputeResult>
-private typealias ComputeResult = Computation<*>
+internal typealias ActionAndNextCard = AnkiTask<Card?, ComputeResult>
+internal typealias ComputeResult = Computation<*>
 private typealias RepositionResetResult = Computation<Array<Card>>
 private typealias RepositionOrReset = AnkiTask<Card?, RepositionResetResult>
 

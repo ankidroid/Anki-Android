@@ -18,7 +18,7 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -95,7 +95,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitFortask(new CollectionTask.Undo(), 5000);
+        waitFortask(new UndoService.Undo().toDelegate(), 5000);
 
         Counts countsAfterUndo = sched.counts();
 

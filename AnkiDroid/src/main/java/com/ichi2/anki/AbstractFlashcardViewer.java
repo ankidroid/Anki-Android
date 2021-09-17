@@ -113,6 +113,7 @@ import com.ichi2.anki.servicelayer.AnkiTask;
 import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
+import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -1175,7 +1176,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            answerCardHandler(false).execute(new CollectionTask.Undo());
+            new UndoService.Undo().runWithHandler(answerCardHandler(false));
         }
     }
 
