@@ -145,7 +145,7 @@ public class ActivityExportingDelegate implements ExportDialogListener, ExportCo
                 .setType("application/apkg")
                 .setStream(uri)
                 .setSubject(mActivity.getString(R.string.export_email_subject, attachment.getName()))
-                .setHtmlText(mActivity.getString(R.string.export_email_text_new))
+                .setHtmlText(mActivity.getString(R.string.export_email_text_new, mActivity.getString(R.string.link_manual), mActivity.getString(R.string.link_distributions)))
                 .getIntent();
         if (shareIntent.resolveActivity(mActivity.getPackageManager()) != null) {
             mActivity.startActivityWithoutAnimation(shareIntent);
