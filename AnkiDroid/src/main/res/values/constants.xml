@@ -170,7 +170,7 @@
         <item>0</item>
         <item>3</item>
     </string-array>
-    <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_anki">https://ankisrs.net</string>
     <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
@@ -178,7 +178,7 @@
     <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
-    <string name="link_donation">http://ankisrs.net/support</string>
+    <string name="link_donation">https://ankisrs.net/support</string>
     <string name="link_market">market://details?id=com.ichi2.anki</string>
     <string name="link_market_kindle">http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki</string>
     <string name="link_translation">http://crowdin.net/project/ankidroid</string>
@@ -199,7 +199,7 @@
     <string name="link_faq_external_http_content">https://github.com/ankidroid/Anki-Android/wiki/FAQ#external-content</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
-    <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+    <string name="resetpw_url">https://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
     <string name="link_ankidroid_privacy_policy">https://github.com/ankidroid/Anki-Android/wiki/Privacy-Policy</string>
