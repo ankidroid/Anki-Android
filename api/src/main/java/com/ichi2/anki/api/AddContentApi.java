@@ -393,7 +393,7 @@ public final class AddContentApi {
 
     /**
      * Insert a new model into AnkiDroid.
-     * See the <a href="http://ankisrs.net/docs/manual.html#cards-and-templates">Anki Desktop Manual</a> for more help
+     * See the <a href="https://docs.ankiweb.net/templates/intro.html">Anki Desktop Manual</a> for more help
      * @param name name of model
      * @param fields array of field names
      * @param cards array of names for the card templates

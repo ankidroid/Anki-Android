@@ -16,7 +16,7 @@ import android.net.Uri;
  * <p>
  * FlashCardsContract defines the access to flash card related information. Flash cards consist of
  * notes and cards. To find out more about notes and cards, see
- * <a href="http://ankisrs.net/docs/manual.html#the-basics">the basics section in the Anki manual.</a>
+ * <a href="https://docs.ankiweb.net/getting-started.html#key-concepts">the basics section in the Anki manual.</a>
  * </p>
  * <p></p>
  * <p>
@@ -131,7 +131,7 @@ public class FlashCardsContract {
      * For queries, the {@code selectionArgs} parameter can contain an optional selection statement for the notes table
      * in the sql database. E.g. "mid = 12345678" could be used to limit to a particular model ID.
      * The {@code selection} parameter is an optional search string for the Anki browser. The syntax is described
-     * <a href="http://ankisrs.net/docs/manual.html#searching">in the search section of the Anki manual</a>.
+     * <a href="https://docs.ankiweb.net/searching.html">in the search section of the Anki manual</a>.
      * <p>
      * <p>
      * Example for querying notes with a certain tag:
