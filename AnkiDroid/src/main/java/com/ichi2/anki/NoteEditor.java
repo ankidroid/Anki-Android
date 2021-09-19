@@ -146,7 +146,7 @@ import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards
  * which show that note are generated. Some models generate one card, others generate more than one.
  *
- * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
+ * @see <a href="https://docs.ankiweb.net/getting-started.html#cards">the Anki Desktop manual</a>
  */
 public class NoteEditor extends AnkiActivity implements
         DeckSelectionDialog.DeckSelectionListener,
