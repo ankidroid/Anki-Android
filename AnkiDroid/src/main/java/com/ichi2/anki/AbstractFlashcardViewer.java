@@ -669,13 +669,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             NextCard<?> nextCardAndResult = Objects.requireNonNull(result.getValue());
 
-            Card card = nextCardAndResult.getCard();
-            if (card == null) {
+            if (nextCardAndResult.hasNoMoreCards()) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
                 return;
             }
 
-            mCurrentCard = card;
+            mCurrentCard = nextCardAndResult.nextScheduledCard();
 
             // Start reviewing next card
             mTypeAnswer.updateInfo(mCurrentCard, getResources());

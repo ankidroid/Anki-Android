@@ -42,9 +42,12 @@ class SchedulerService {
 
     /**
      * A pair of the next card from the scheduler, and an optional method result
-     * A null card implies that there are no more cards
      */
-    class NextCard<out T>(val card: Card?, val result: T) {
+    class NextCard<out T>(private val card: Card?, val result: T) {
+        fun hasNoMoreCards(): Boolean = card == null
+        /** Returns the next scheduled card
+         * Only call if noMoreCards returns false */
+        fun nextScheduledCard(): Card = card!!
         companion object {
             fun withNoResult(card: Card?): NextCard<Unit> =
                 NextCard(card, Unit)
