@@ -70,6 +70,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
@@ -1353,13 +1354,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void resetProgressNoConfirm(List<Long> cardIds) {
-        TaskManager.launchCollectionTask(new CollectionTask.ResetCards(cardIds), resetProgressCardHandler());
+        TaskManager.launchCollectionTask(new SchedulerService.ResetCards(cardIds).toDelegate(), resetProgressCardHandler());
     }
 
 
     @VisibleForTesting
     void repositionCardsNoValidation(List<Long> cardIds, Integer position) {
-        TaskManager.launchCollectionTask(new CollectionTask.RepositionCards(cardIds, position),
+        TaskManager.launchCollectionTask(new SchedulerService.RepositionCards(cardIds, position).toDelegate(),
                                             repositionCardHandler());
     }
 
@@ -1415,7 +1416,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void rescheduleWithoutValidation(List<Long> selectedCardIds, Integer newDays) {
-        TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(selectedCardIds, newDays),
+        TaskManager.launchCollectionTask(new SchedulerService.RescheduleCards(selectedCardIds, newDays).toDelegate(),
             rescheduleCardHandler());
     }
 

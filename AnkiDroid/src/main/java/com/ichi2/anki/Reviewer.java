@@ -73,6 +73,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
@@ -525,7 +526,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days -> {
             List<Long> cardIds = Collections.singletonList(mCurrentCard.getId());
-            scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge).execute(new CollectionTask.RescheduleCards(cardIds, days));
+            new SchedulerService.RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge));
         };
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
@@ -544,7 +545,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             List<Long> cardIds = Collections.singletonList(mCurrentCard.getId());
-            scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge).execute(new CollectionTask.ResetCards(cardIds));
+            new SchedulerService.ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);

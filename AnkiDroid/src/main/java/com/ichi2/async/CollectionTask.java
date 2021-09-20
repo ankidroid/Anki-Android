@@ -85,13 +85,10 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.async.TaskManager.setLatestInstance;
-import static com.ichi2.libanki.Card.deepCopyCardArray;
-import static com.ichi2.libanki.UndoAction.*;
 import static com.ichi2.utils.Computation.OK;
 import static com.ichi2.utils.Computation.ERR;
 
@@ -528,30 +525,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-
-    private static class UndoRepositionRescheduleResetCards extends UndoAction {
-        private final Card[] mCardsCopied;
-
-
-        public UndoRepositionRescheduleResetCards(@StringRes @UNDO_NAME_ID int undoNameId, Card[] cards_copied) {
-            super(undoNameId);
-            this.mCardsCopied = cards_copied;
-        }
-
-
-        public @Nullable Card undo(@NonNull Collection col) {
-            Timber.i("Undoing action of type %s on %d cards", getClass(), mCardsCopied.length);
-            for (Card card : mCardsCopied) {
-                card.flush(false);
-            }
-            // /* card schedule change undone, reset and get
-            // new card */
-            Timber.d("Single card non-review change undo succeeded");
-            col.reset();
-            return col.getSched().getCard();
-        }
-    }
-
     private static abstract class DismissNotes<Progress> extends TaskDelegate<Progress, Computation<? extends Card[]>> {
         protected final List<Long> mCardIds;
 
@@ -781,71 +754,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             // mark undo for all at once
             col.markUndo(changeDeckMulti);
             return true;
-        }
-    }
-
-    private abstract static class RescheduleRepositionReset extends DismissNotes<Card> {
-        @StringRes @UNDO_NAME_ID private final int mUndoNameId;
-        public RescheduleRepositionReset(List<Long> cardIds, @StringRes @UNDO_NAME_ID int undoNameId) {
-            super(cardIds);
-            mUndoNameId = undoNameId;
-        }
-
-        protected boolean actualTask(Collection col, ProgressSenderAndCancelListener<Card> collectionTask, Card[] cards) {
-            AbstractSched sched = col.getSched();
-            // collect undo information, sensitive to memory pressure, same for all 3 cases
-            try {
-                Timber.d("Saving undo information of type %s on %d cards", getClass(), cards.length);
-                Card[] cards_copied = deepCopyCardArray(cards, collectionTask);
-                UndoAction repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(mUndoNameId, cards_copied);
-                col.markUndo(repositionRescheduleResetCards);
-            } catch (CancellationException ce) {
-                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mUndoNameId);
-            }
-            actualActualTask(sched);
-            // In all cases schedule a new card so Reviewer doesn't sit on the old one
-            col.reset();
-            collectionTask.doProgress(sched.getCard());
-            return true;
-        }
-
-        protected abstract void actualActualTask(AbstractSched sched);
-    }
-
-    public static class RescheduleCards extends RescheduleRepositionReset {
-        private final int mSchedule;
-        public RescheduleCards(List<Long> cardIds, int schedule) {
-            super(cardIds, R.string.card_editor_reschedule_card);
-            this.mSchedule = schedule;
-        }
-
-        @Override
-        protected void actualActualTask(AbstractSched sched) {
-            sched.reschedCards(mCardIds, mSchedule, mSchedule);
-        }
-    }
-
-    public static class RepositionCards extends RescheduleRepositionReset {
-        private final int mPosition;
-        public RepositionCards(List<Long> cardIds, int position) {
-            super(cardIds, R.string.card_editor_reposition_card);
-            this.mPosition = position;
-        }
-
-        @Override
-        protected void actualActualTask(AbstractSched sched) {
-            sched.sortCards(mCardIds, mPosition, 1, false, true);
-        }
-    }
-
-    public static class ResetCards extends RescheduleRepositionReset {
-        public ResetCards(List<Long> cardIds) {
-            super(cardIds, R.string.card_editor_reset_card);
-        }
-
-        @Override
-        protected void actualActualTask(AbstractSched sched) {
-            sched.forgetCards(mCardIds);
         }
     }
 
