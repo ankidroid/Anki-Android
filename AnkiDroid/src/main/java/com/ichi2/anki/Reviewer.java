@@ -73,10 +73,10 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -93,6 +93,7 @@ import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
 import java.util.Collections;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -136,25 +137,14 @@ public class Reviewer extends AbstractFlashcardViewer {
     
     private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
-    /** We need to listen for and handle reschedules / resets very similarly */
-    class ScheduleCollectionTaskListener extends NextCardHandler<Computation<? extends Card[]>> {
-
-        private final @PluralsRes int mToastResourceId;
-
-
-        protected ScheduleCollectionTaskListener(@PluralsRes int toastResourceId) {
-            mToastResourceId = toastResourceId;
-        }
-
-
-        @Override
-        public void onPostExecute(Computation<? extends Card[]> result) {
-            super.onPostExecute(result);
+    protected TaskListenerBuilder<Card, Computation<? extends Card[]>> scheduleCollectionTaskHandler(@PluralsRes int toastResourceId) {
+        return nextCardHandler().alsoExecuteAfter(result -> {
+            // BUG: If the method crashes, this will crash
             invalidateOptionsMenu();
             int cardCount = result.getValue().length;
             UIUtils.showThemedToast(Reviewer.this,
-                    getResources().getQuantityString(mToastResourceId, cardCount, cardCount), true);
-        }
+                    getResources().getQuantityString(toastResourceId, cardCount, cardCount), true);
+        });
     }
 
     @Override
@@ -533,8 +523,10 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     private void showRescheduleCardDialog() {
-        Consumer<Integer> runnable = days ->
-            TaskManager.launchCollectionTask(new CollectionTask.RescheduleCards(Collections.singletonList(mCurrentCard.getId()), days), new ScheduleCollectionTaskListener(R.plurals.reschedule_cards_dialog_acknowledge));
+        Consumer<Integer> runnable = days -> {
+            List<Long> cardIds = Collections.singletonList(mCurrentCard.getId());
+            scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge).execute(new CollectionTask.RescheduleCards(cardIds, days));
+        };
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
@@ -551,8 +543,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            TaskManager.launchCollectionTask(new CollectionTask.ResetCards(Collections.singletonList(mCurrentCard.getId())),
-                    new ScheduleCollectionTaskListener(R.plurals.reset_cards_dialog_acknowledge));
+            List<Long> cardIds = Collections.singletonList(mCurrentCard.getId());
+            scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge).execute(new CollectionTask.ResetCards(cardIds));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);

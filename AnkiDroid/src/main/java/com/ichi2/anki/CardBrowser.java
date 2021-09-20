@@ -1742,14 +1742,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Object, Computation<Card[]>> {
+    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Object, Computation<? extends Card[]>> {
         public ChangeDeckHandler(CardBrowser browser) {
             super("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<? extends Card[]> result) {
             browser.hideProgressBar();
 
             browser.searchCards();
@@ -1853,13 +1853,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new SuspendCardHandler(this);
     }
 
-    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<Card[]>> {
+    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<? extends Card[]>> {
         public SuspendCardHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> cards) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<? extends Card[]> cards) {
             browser.updateCardsInList(Arrays.asList(cards.getValue()));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1880,13 +1880,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
     }
-    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<Card[]>> {
+    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<Void, Computation<? extends Card[]>> {
         public MarkCardHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, Computation<Card[]> cards) {
+        protected void actualOnValidPostExecute(CardBrowser browser, Computation<? extends Card[]> cards) {
             browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards.getValue()))));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
