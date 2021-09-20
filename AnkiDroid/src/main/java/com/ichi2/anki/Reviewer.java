@@ -137,7 +137,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    class ScheduleCollectionTaskListener extends NextCardHandler<Computation<Card[]>> {
+    class ScheduleCollectionTaskListener extends NextCardHandler<Computation<? extends Card[]>> {
 
         private final @PluralsRes int mToastResourceId;
 
@@ -148,7 +148,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(Computation<Card[]> result) {
+        public void onPostExecute(Computation<? extends Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getValue().length;
