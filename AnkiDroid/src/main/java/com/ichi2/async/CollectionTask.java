@@ -751,7 +751,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
-            return new Computation<>(cards);
+            return Computation.ok(cards);
         }
 
         /**
@@ -1708,7 +1708,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
             // Then do the actual check
-            return new Computation<>(col.getMedia().check());
+            return Computation.ok(col.getMedia().check());
         }
     }
 

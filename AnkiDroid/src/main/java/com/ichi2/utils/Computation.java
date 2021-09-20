@@ -20,9 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Represents a computed value or a failure. Similar to c++ absl::StatusOr<U>, Rust Result<U>,
- * and almost similar to Future<U>, except that `get` don't throws.
- * @param <ComputedType> The value of a succesful computation
+ * Represents a computed value or a failure. Similar to c++ absl::StatusOr<U>, Rust Result<U>
+ * @param <ComputedType> The value of a successful computation
  */
 // "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
 // `Result` would not be an acceptable type name.
@@ -31,7 +30,6 @@ public class Computation<ComputedType> {
      * The computed value in case of success. Null in case of failure
      */
     private final @Nullable ComputedType mValue;
-
     public boolean succeeded() {
         return mValue != null;
     }
@@ -39,18 +37,25 @@ public class Computation<ComputedType> {
     public static final Computation OK = new Computation<>(new Object());
 
     public ComputedType getValue() {
+        if (!succeeded()) {
+            throw new IllegalStateException("Computation returned error");
+        }
         return mValue;
     }
 
     private Computation() {
         mValue = null;
     }
-    public Computation(@NonNull ComputedType value) {
+
+    private Computation(@NonNull ComputedType value) {
         mValue = value;
     }
 
     /** A strongly typed error return value */
     public static <ComputedType> Computation<ComputedType> err() {
         return new Computation<>();
+    }
+    public static <ComputedType> Computation<ComputedType> ok(ComputedType value) {
+        return new Computation<>(value);
     }
 }
