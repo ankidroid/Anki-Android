@@ -23,16 +23,6 @@ import org.junit.Test
 
 class ComputationTest {
     @Test
-    fun nullIsFailure() {
-        // This test behavior should change
-        val asNull = Computation.ok<Int?>(null)
-        assertThat(asNull.succeeded(), equalTo(false))
-        assertThrows(IllegalStateException::class.java) {
-            asNull.value
-        }
-    }
-
-    @Test
     fun valueIsSuccess() {
         val asNull = Computation.ok(1)
         assertThat(asNull.succeeded(), equalTo(true))
@@ -41,7 +31,7 @@ class ComputationTest {
 
     @Test
     fun errorIsFailure() {
-        val asNull = Computation.err<Int?>()
+        val asNull = Computation.err<Int>()
         assertThat(asNull.succeeded(), equalTo(false))
         assertThrows(IllegalStateException::class.java) {
             asNull.value
