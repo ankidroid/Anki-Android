@@ -13,49 +13,47 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-
-package com.ichi2.utils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+package com.ichi2.utils
 
 /**
  * Represents a computed value or a failure. Similar to c++ absl::StatusOr<U>, Rust Result<U>
- * @param <ComputedType> The value of a successful computation
+ * @param ComputedType The value of a successful computation
  */
 // "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
 // `Result` would not be an acceptable type name.
-public class Computation<ComputedType> {
+class Computation<ComputedType> {
+
+    private val mValue: ComputedType?
+    fun succeeded(): Boolean = mValue != null
+
     /**
-     * The computed value in case of success. Null in case of failure
+     * The computed value in case of success. [IllegalStateException] in case of failure
      */
-    private final @Nullable ComputedType mValue;
-    public boolean succeeded() {
-        return mValue != null;
-    }
-    public static final Computation ERR = new Computation();
-    public static final Computation OK = new Computation<>(new Object());
-
-    public ComputedType getValue() {
-        if (!succeeded()) {
-            throw new IllegalStateException("Computation returned error");
+    val value: ComputedType?
+        get() {
+            check(succeeded()) { "Computation returned error" }
+            return mValue
         }
-        return mValue;
+
+    private constructor() {
+        mValue = null
     }
 
-    private Computation() {
-        mValue = null;
+    private constructor(value: ComputedType) {
+        mValue = value
     }
 
-    private Computation(@NonNull ComputedType value) {
-        mValue = value;
-    }
+    companion object {
+        @JvmField val ERR: Computation<*> = Computation<Any?>()
+        @JvmField val OK: Computation<*> = Computation(Any())
 
-    /** A strongly typed error return value */
-    public static <ComputedType> Computation<ComputedType> err() {
-        return new Computation<>();
-    }
-    public static <ComputedType> Computation<ComputedType> ok(ComputedType value) {
-        return new Computation<>(value);
+        /** A strongly typed error return value */
+        @JvmStatic fun <ComputedType> err(): Computation<ComputedType> {
+            return Computation()
+        }
+
+        @JvmStatic fun <ComputedType> ok(value: ComputedType): Computation<ComputedType> {
+            return Computation(value)
+        }
     }
 }

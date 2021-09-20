@@ -738,7 +738,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 try {
                     boolean succeeded = actualTask(col, collectionTask, cards);
                     if (!succeeded) {
-                        return ERR;
+                        return Computation.err();
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
@@ -747,7 +747,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return ERR;
+                return Computation.err();
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
