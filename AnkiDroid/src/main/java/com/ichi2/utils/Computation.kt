@@ -21,7 +21,7 @@ package com.ichi2.utils
  */
 // "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
 // `Result` would not be an acceptable type name.
-class Computation<ComputedType> {
+class Computation<out ComputedType> {
 
     private val mValue: ComputedType?
     fun succeeded(): Boolean = mValue != null

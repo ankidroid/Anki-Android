@@ -353,7 +353,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<Card[]>> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<? extends Card[]>> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -365,7 +365,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             browser.mReloadRequired = true;
             int cardCount = cards.getValue().length;
@@ -379,7 +379,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<Card[]>>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<? extends Card[]>>{
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -391,7 +391,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             browser.mReloadRequired = true;
             int cardCount = cards.getValue().length;
@@ -405,7 +405,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, Computation<Card[]>>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, Computation<? extends Card[]>>{
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -417,7 +417,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             browser.mReloadRequired = true;
             int cardCount = cards.getValue().length;
