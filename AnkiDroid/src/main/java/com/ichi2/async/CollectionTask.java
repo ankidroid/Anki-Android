@@ -552,7 +552,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    private static abstract class DismissNotes<Progress> extends TaskDelegate<Progress, Computation<Card[]>> {
+    private static abstract class DismissNotes<Progress> extends TaskDelegate<Progress, Computation<? extends Card[]>> {
         protected final List<Long> mCardIds;
 
         public DismissNotes(List<Long> cardIds) {
