@@ -21,7 +21,8 @@ package com.ichi2.utils
  */
 // "Result" is used as a type parameter in AsyncTask, where this class is used a lot. Hence,
 // `Result` would not be an acceptable type name.
-class Computation<out ComputedType> {
+// We use "Any" to disallow nullable types. Use an [Optional] instead.
+class Computation<out ComputedType : Any> {
 
     private val mValue: ComputedType?
     fun succeeded(): Boolean = mValue != null
@@ -29,10 +30,10 @@ class Computation<out ComputedType> {
     /**
      * The computed value in case of success. [IllegalStateException] in case of failure
      */
-    val value: ComputedType?
+    val value: ComputedType
         get() {
             check(succeeded()) { "Computation returned error" }
-            return mValue
+            return mValue!!
         }
 
     private constructor() {
@@ -44,15 +45,15 @@ class Computation<out ComputedType> {
     }
 
     companion object {
-        @JvmField val ERR: Computation<*> = Computation<Any?>()
+        @JvmField val ERR: Computation<*> = Computation<Any>()
         @JvmField val OK: Computation<*> = Computation(Any())
 
         /** A strongly typed error return value */
-        @JvmStatic fun <ComputedType> err(): Computation<ComputedType> {
+        @JvmStatic fun <ComputedType : Any> err(): Computation<ComputedType> {
             return Computation()
         }
 
-        @JvmStatic fun <ComputedType> ok(value: ComputedType): Computation<ComputedType> {
+        @JvmStatic fun <ComputedType : Any> ok(value: ComputedType): Computation<ComputedType> {
             return Computation(value)
         }
     }
