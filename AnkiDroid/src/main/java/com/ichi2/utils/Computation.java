@@ -48,4 +48,9 @@ public class Computation<ComputedType> {
     public Computation(@NonNull ComputedType value) {
         mValue = value;
     }
+
+    /** A strongly typed error return value */
+    public static <ComputedType> Computation<ComputedType> err() {
+        return new Computation<>();
+    }
 }

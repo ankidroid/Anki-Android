@@ -1703,7 +1703,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 col.getMedia().rebuildIfInvalid();
             } catch (IOException e) {
                 Timber.w(e);
-                return ERR;
+                return Computation.err();
             }
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
