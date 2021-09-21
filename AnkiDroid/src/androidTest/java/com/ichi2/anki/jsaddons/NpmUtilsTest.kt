@@ -1,15 +1,30 @@
 package com.ichi2.anki.jsaddons
 
+import android.Manifest
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import androidx.test.rule.GrantPermissionRule
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.jsaddons.NpmUtils.REVIEWER_ADDON
 import com.ichi2.anki.jsaddons.NpmUtils.getAddonNameFromUrl
+import com.ichi2.anki.jsaddons.NpmUtils.getEnabledAddonsContent
+import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.Shared
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
+import java.nio.file.Files
 
 @RunWith(AndroidJUnit4::class)
-class NpmUtilsTest : RobolectricTest() {
+class NpmUtilsTest : InstrumentedTest() {
+    var NPM_ADDON_TGZ_PACKAGE_NAME = "valid-ankidroid-js-addon-test-1.0.0.tgz"
+
+    @get:Rule
+    var mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     /**
      * URL for openUrl in DownloadAddonBroadcastReceiver
@@ -56,5 +71,32 @@ class NpmUtilsTest : RobolectricTest() {
         // the url does not start with https://www.npmjs.com, then get null
         result = getAddonNameFromUrl(ANKIDROID_DOC_URL)
         assertNull(result)
+    }
+
+    @Test
+    fun getEnabledAddonsContentTest() {
+        // setup
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(testContext)
+        val jsAddonKey: String = REVIEWER_ADDON
+
+        val tempAddonDir = File(Files.createTempDirectory("AnkiDroid-addons").toString())
+        val tgzPath = Shared.getTestFilePath(testContext, NPM_ADDON_TGZ_PACKAGE_NAME)
+
+        // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
+        NpmPackageTgzExtract.extractTarGzipToAddonFolder(File(tgzPath), tempAddonDir)
+        val packagePath = File(tempAddonDir, "package")
+        val packageJsonPath = File(packagePath, "package.json")
+
+        // mapping for json AnkiDroid/addons/ankidroid-js-addons...
+        val mapper = ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        // fetch package.json for the addon and read value to AddonModel
+        val addonModel: AddonModel = mapper.readValue(File(packageJsonPath.toString()), AddonModel::class.java)
+        // enable the addon
+        addonModel.updatePrefs(sharedPrefs, jsAddonKey, false)
+
+        // test
+        val result = "<script src='/storage/emulated/0/AnkiDroid/addons/valid-ankidroid-js-addon-test/package/index.js'></script>\n"
+        assertEquals(result, getEnabledAddonsContent(testContext))
     }
 }
