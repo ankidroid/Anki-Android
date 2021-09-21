@@ -16,8 +16,14 @@
 
 package com.ichi2.anki.cardviewer;
 
+import android.content.Context;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.jsaddons.NpmUtils;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 public class CardTemplate {
     private final String mPreStyle;
@@ -25,8 +31,9 @@ public class CardTemplate {
     private final String mPreClass;
     private final String mPreContent;
     private final String mPostContent;
+    private final Context mContext;
 
-    public CardTemplate(@NonNull String template) {
+    public CardTemplate(@NonNull String template, @NonNull Context context) {
         // Note: This refactoring means the template must be in the specific order of style, class, content.
         // Since this is a const loaded from an asset file, I'm fine with this.
         String classDelim = "::class::";
@@ -40,6 +47,7 @@ public class CardTemplate {
         int contentIndex = template.indexOf(contentDelim);
 
         try {
+            this.mContext = context;
             this.mPreStyle = template.substring(0, styleIndex);
             this.mPreScript = template.substring(styleIndex + styleDelim.length(), scriptIndex);
             this.mPreClass = template.substring(scriptIndex + scriptDelim.length(), classIndex);
@@ -53,6 +61,13 @@ public class CardTemplate {
     @CheckResult
     @NonNull
     public String render(String content, String style, String script, String cardClass) {
-        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent;
+        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent + setAddons(mContext);
+    }
+
+    public String setAddons(Context context) {
+        if (AnkiDroidApp.getSharedPrefs(context).getBoolean("javascript_addons_support_prefs", false)) {
+            return NpmUtils.getEnabledAddonsContent(context);
+        }
+        return "";
     }
 }
