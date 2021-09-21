@@ -30,11 +30,13 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.*
 import com.ichi2.libanki.backend.ModelsBackend
+import com.ichi2.libanki.backend.ModelsBackendImpl
 import com.ichi2.libanki.backend.NoteTypeNameID
 import com.ichi2.libanki.backend.NoteTypeNameIDUseCount
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
@@ -99,14 +101,14 @@ var NoteType.type: Int
         put("type", value)
     }
 
-class ModelsV16(col: Collection) : ModelManager(col) {
+class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     /*
     # Saving/loading registry
     #############################################################
      */
 
     private var _cache: Dict<int, NoteType> = Dict()
-    private val modelsBackend: ModelsBackend = null!!
+    private val modelsBackend: ModelsBackend = ModelsBackendImpl(backend)
 
     init {
         _cache = Dict()
