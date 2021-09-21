@@ -11,6 +11,17 @@
 
         <include layout="@layout/toolbar" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:focusable="true"
+            android:paddingBottom="72dp"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="3dp"/>
 
     </LinearLayout>
     <include layout="@layout/anki_progress"/>

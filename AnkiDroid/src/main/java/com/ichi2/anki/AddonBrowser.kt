@@ -21,10 +21,18 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.ichi2.anki.jsaddons.AddonDownloadActivity
+import com.ichi2.anki.jsaddons.AddonModel
+import com.ichi2.anki.jsaddons.AddonsAdapter
+import com.ichi2.anki.jsaddons.isValidAnkiDroidAddon
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import timber.log.Timber
 import java.io.File
+import java.io.IOException
 
 /**
  * A menu 'Addons' added to side Navigation drawer
@@ -32,6 +40,8 @@ import java.io.File
  * Also 'Get Addons' menu added to option menu of this Activity, view onCreateOptionsMenu below
  */
 class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
+    private lateinit var mAddonsListRecyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -46,6 +56,10 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = getString(R.string.js_addons)
         showBackIcon()
+
+        mAddonsListRecyclerView = findViewById(R.id.addons)
+        mAddonsListRecyclerView.layoutManager = LinearLayoutManager(this)
+
         hideProgressBar()
         listAddonsFromDir()
     }
@@ -74,7 +88,6 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
     }
 
     fun listAddonsFromDir() {
-        // TODO
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
 
         // AnkiDroid/addons/
@@ -83,5 +96,26 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
             addonsDir.mkdirs()
         }
         Timber.d("List addon from directory.")
+
+        val addonsList: MutableList<AddonModel> = ArrayList()
+        try {
+            val files = addonsDir.listFiles()
+            for (file in files!!) {
+                Timber.d("Addons: %s", file.name)
+                val mapper = ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+                val addonModel = mapper.readValue(File(file, "package/package.json"), AddonModel::class.java)
+
+                if (addonModel.isValidAnkiDroidAddon()) {
+                    addonsList.add(addonModel)
+                }
+            }
+
+            mAddonsListRecyclerView.adapter = AddonsAdapter(addonsList)
+        } catch (e: IOException) {
+            Timber.w(e.localizedMessage)
+            UIUtils.showThemedToast(this, getString(R.string.is_not_valid_js_addon), false)
+        }
     }
 }

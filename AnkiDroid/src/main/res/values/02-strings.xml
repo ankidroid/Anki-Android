@@ -417,4 +417,16 @@
     <string name="download_addons">Download Addons</string>
     <string name="js_addons">JavaScript Addons</string>
     <string name="addons">Addons</string>
+    <string name="addon_enabled">%s addon enabled</string>
+    <string name="addon_disabled">%s addon disabled</string>
+    <string name="confirm_remove_addon">Do you want to remove %s ?</string>
+    <string name="updating_addon">Updating %s addon</string>
+    <string name="failed_to_remove_addon">Failed to remove addon. Try again or remove it manually</string>
+    <string name="addon_version">Version</string>
+    <string name="ankidroid_js_api_version">AnkiDroid JS API Version</string>
+    <string name="npm_package_name">NPM Package Name</string>
+    <string name="addon_description">Description</string>
+    <string name="addon_type" comment="Addon type reviewer or note-editor">Type </string>
+    <string name="addon_author">Author</string>
+    <string name="addon_license">License</string>
 </resources>
