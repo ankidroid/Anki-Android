@@ -1,11 +1,8 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -14,10 +11,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,6 +21,7 @@ import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CardTest extends RobolectricTest {
@@ -134,9 +130,9 @@ public class CardTest extends RobolectricTest {
         Collection col = getCol();
         ModelManager models = col.getModels();
         Model model = models.byName("Basic");
-        JSONArray flds = model.getJSONArray("flds");
-        models.renameField(model, flds.getJSONObject(0), "A");
-        models.renameField(model, flds.getJSONObject(1), "B");
+        assertNotNull(model);
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B");
         JSONObject fld2 = models.newField("C");
         fld2.put("ord", NULL);
         models.addField(model, fld2);
@@ -191,11 +187,10 @@ public class CardTest extends RobolectricTest {
         Collection col = getCol();
         ModelManager models = col.getModels();
         Model model = models.byName("Basic");
-        JSONArray flds = model.getJSONArray("flds");
+        assertNotNull(model);
         JSONArray tmpls = model.getJSONArray("tmpls");
-
-        models.renameField(model, flds.getJSONObject(0), "First");
-        models.renameField(model, flds.getJSONObject(1), "Front");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front");
         JSONObject fld2 = models.newField("AddIfEmpty");
         fld2.put("name", "AddIfEmpty");
         models.addField(model, fld2);
