@@ -41,6 +41,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.HashMap
 
 private typealias int = Long
 // # types
@@ -583,7 +584,8 @@ and notes.mid = ? and cards.ord = ?""",
                 val fldsString = cursor.getString(1)
 
                 var flds = splitFields(fldsString)
-                val newflds = mutableListOf<str>()
+                // Kotlin: we can't expand a list via index, so use a HashMap
+                val newflds = HashMap<Int, str>()
                 for ((old, new) in list(map.entries)) {
                     if (new == null) {
                         continue
@@ -591,8 +593,8 @@ and notes.mid = ? and cards.ord = ?""",
                     newflds[new] = flds[old]
                 }
                 flds = Array(flds.size) { "" }
-                newflds.forEachIndexed {
-                    i, fld ->
+                newflds.forEach {
+                    (i, fld) ->
                     flds[i] = fld
                 }
                 val fldsAsString = joinFields(flds)
