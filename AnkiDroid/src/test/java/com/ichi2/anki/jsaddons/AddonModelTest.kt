@@ -4,17 +4,18 @@ import android.os.Looper.getMainLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
+import com.ichi2.anki.jsaddons.NpmUtils.REVIEWER_ADDON
+import junit.framework.TestCase.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import java.io.IOException
 import java.net.URL
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
@@ -93,5 +94,35 @@ class AddonModelTest : RobolectricTest() {
 
         // test, it is not a valid addon for AnkiDroid
         assertFalse(addonModel.isValidAnkiDroidAddon())
+    }
+
+    @Test
+    fun updatePrefsTest() {
+        // Download addon from npmjs.org, enable using updatePrefs
+        shadowOf(getMainLooper()).idle()
+
+        val context = targetContext
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(context)
+        val jsAddonKey: String = REVIEWER_ADDON
+
+        // mapping for json fetched from http://registry.npmjs.org/ankidroid-js-addon-.../latest
+        val mapper = ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+        // fetch package.json for the addon and read value to AddonModel
+        val addonModel: AddonModel = mapper.readValue(URL(context.getString(R.string.npmjs_registry, NPM_PACKAGE_NAME)), AddonModel::class.java)
+
+        // here remove set to false, so prefs updated and this addon have true value. i.e. enabled
+        addonModel.updatePrefs(sharedPrefs, jsAddonKey, false)
+
+        // get all enabled addons
+        var enabledAddonSet = preferences!!.getStringSet(jsAddonKey, HashSet())
+        assertTrue(enabledAddonSet!!.contains(NPM_PACKAGE_NAME))
+
+        // Now remove it from prefs using updatePrefs and test it
+        addonModel.updatePrefs(sharedPrefs, jsAddonKey, true)
+
+        enabledAddonSet = preferences!!.getStringSet(jsAddonKey, HashSet())
+        assertFalse(enabledAddonSet!!.contains(NPM_PACKAGE_NAME))
     }
 }
