@@ -779,7 +779,7 @@ public class Models extends ModelManager {
 
     /** {@inheritDoc} */
     @Override
-    public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+    public void change(Model m, long nid, Model newModel, @Nullable Map<Integer, Integer> fmap, @Nullable Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
