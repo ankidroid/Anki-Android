@@ -17,6 +17,16 @@
 
 package com.ichi2.anki.jsaddons
 
+import android.annotation.SuppressLint
+import android.content.Context
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import timber.log.Timber
+import java.io.File
+import java.lang.StringBuilder
+import java.util.*
+import kotlin.collections.HashSet
+
 object NpmUtils {
     // Update if api get updated
     const val ANKIDROID_JS_API = "0.0.1"
@@ -61,5 +71,49 @@ object NpmUtils {
         }
 
         return addonName
+    }
+
+    @SuppressLint("MutatingSharedPrefs")
+    @JvmStatic
+    fun getEnabledAddonsContent(context: Context): String {
+        val content = StringBuilder()
+
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        val preferences = AnkiDroidApp.getSharedPrefs(context)
+
+        // set of enabled reviewer addons only
+        val reviewerEnabledAddonSet = preferences.getStringSet(REVIEWER_ADDON, HashSet())
+        // make a copy of prefs and modify it (ConcurrentModificationException)
+        val newStrSet: MutableSet<String> = HashSet(reviewerEnabledAddonSet)
+
+        for (enabledAddon in reviewerEnabledAddonSet!!) {
+            try {
+                // AnkiDroid/addons/js-addons/package/index.js
+                // here enabledAddon is id of npm package which may not contain ../ or other bad path
+                val joinedPath: StringJoiner = StringJoiner("/")
+                    .add(currentAnkiDroidDirectory)
+                    .add("addons")
+                    .add(enabledAddon)
+                    .add("package")
+                    .add("index.js")
+
+                val indexJsPath: String = joinedPath.toString()
+
+                // user removed content from folder and prefs not updated then remove it
+                if (!File(indexJsPath).exists()) {
+                    newStrSet.remove(enabledAddon)
+                }
+
+                // <script src="../addons/some-addons/package/index.js"></script>
+                val scriptSrcTag = "<script src='$indexJsPath'></script>\n"
+                content.append(scriptSrcTag)
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                Timber.w(e, "AbstractFlashcardViewer::Exception")
+            }
+        }
+
+        // update prefs for file exits in addons folder
+        preferences.edit().putStringSet(REVIEWER_ADDON, newStrSet).apply()
+        return content.toString()
     }
 }
