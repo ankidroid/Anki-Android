@@ -126,6 +126,7 @@ public class SchedV2Test extends RobolectricTest {
         lapse.put("mult", 0.7d);
         lapse.put("delays", new JSONArray("[20]"));
 
+        col.getDecks().save(homeDeckConf);
         ensureLapseMatchesSppliedAnkiDesktopConfig(lapse);
 
         col.flush();
