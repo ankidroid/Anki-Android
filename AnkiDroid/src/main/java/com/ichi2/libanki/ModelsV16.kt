@@ -198,7 +198,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     /** Get current model.*/
     @RustCleanup("Check the -1 fallback - copied from the Java")
     override fun current(forDeck: bool): NoteType {
-        var m = get(col.decks.current().getLong("mid"))
+        var m = get(col.decks.current().getLongOrNull("mid"))
         if (!forDeck || m == null) {
             m = get(col.get_config("curModel", -1L)!!)
         }
@@ -227,6 +227,14 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     /** "Get model with ID, or None." */
     override fun get(id: int): NoteType? {
+        return get(id as int?)
+    }
+
+    /** Externally, we do not want to pass in a null id */
+    private fun get(id: int?): NoteType? {
+        if (id == null) {
+            return null
+        }
         var nt = _get_cached(id)
         if (!nt.isPresent) {
             try {
@@ -683,5 +691,22 @@ and notes.mid = ? and cards.ord = ?""",
 
     override fun _addField(m: Model, field: JSONObject) {
         addField(m, field)
+    }
+}
+
+/**
+ * @return null if the key doesn't exist, or the value is not a long. The long value of the key
+ * otherwise
+ *
+ * This better approximates `JSON.get` in the Python
+ */
+private fun Deck.getLongOrNull(key: String): int? {
+    if (!has(key)) {
+        return null
+    }
+    try {
+        return getLong(key)
+    } catch (ex: Exception) {
+        return null
     }
 }
