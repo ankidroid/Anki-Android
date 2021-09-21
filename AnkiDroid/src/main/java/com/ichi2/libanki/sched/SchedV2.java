@@ -215,9 +215,11 @@ public class SchedV2 extends AbstractSched {
         mHaveQueues = false;
         mHaveCounts = false;
         discardCurrentCard();
+        mCol.getDecks().update_active();
     }
 
     public void reset() {
+        mCol.getDecks().update_active();
         _updateCutoff();
         resetCounts(false);
         resetQueues(false);

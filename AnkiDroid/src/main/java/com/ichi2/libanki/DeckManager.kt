@@ -194,6 +194,9 @@ abstract class DeckManager {
         return deck.getString("name") + Decks.DECK_SEPARATOR + subdeckName
     }
 
+    @RustCleanup("to be removed")
+    abstract fun update_active()
+
     /*
      * Not in libAnki
      */

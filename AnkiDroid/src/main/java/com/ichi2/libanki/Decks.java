@@ -1192,6 +1192,12 @@ public class Decks extends DeckManager {
         return get(did).isDyn();
     }
 
+
+    @Override
+    public void update_active() {
+        // intentionally blank
+    }
+
     /*
      * ******************************
      * utils methods
