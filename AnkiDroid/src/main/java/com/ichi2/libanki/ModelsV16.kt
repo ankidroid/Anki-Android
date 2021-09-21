@@ -533,8 +533,8 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
         save(m)
     }
 
-    override fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int>, cmap: Map<Int, Int>) {
-        change(m, listOf(nid), newModel, Optional.of(fmap), Optional.of(cmap))
+    override fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int>?, cmap: Map<Int, Int>?) {
+        change(m, listOf(nid), newModel, Optional.ofNullable(fmap), Optional.ofNullable(cmap))
     }
 
     fun template_use_count(ntid: int, ord: int): int {
