@@ -627,7 +627,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** don't use this, it will likely go away */
-    fun update_active() {
+    override fun update_active() {
         this.select(this.current().id)
     }
 
