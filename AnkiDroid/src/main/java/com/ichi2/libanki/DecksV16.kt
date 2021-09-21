@@ -652,7 +652,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
         @JvmStatic
         fun basename(name: str): str {
-            return path(name)[-1]
+            return path(name).last()
         }
 
         @JvmStatic
@@ -779,7 +779,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             if (parents_names.isNullOrEmpty()) {
                 parents_names.append(part)
             } else {
-                parents_names.append(parents_names[-1] + "::" + part)
+                parents_names.append(parents_names.last() + "::" + part)
             }
         }
         val parents: MutableList<Deck> = mutableListOf()
