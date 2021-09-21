@@ -199,7 +199,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     @RustCleanup("Check the -1 fallback - copied from the Java")
     override fun current(forDeck: bool): NoteType {
         var m = get(col.decks.current().getLong("mid"))
-        if (!forDeck || m != null) {
+        if (!forDeck || m == null) {
             m = get(col.get_config("curModel", -1L)!!)
         }
         if (m != null) {
