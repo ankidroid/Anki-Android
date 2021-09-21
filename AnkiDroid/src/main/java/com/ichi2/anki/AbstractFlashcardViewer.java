@@ -1023,7 +1023,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Load the template for the card
         try {
             String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
-            mCardTemplate = new CardTemplate(data);
+            mCardTemplate = new CardTemplate(data, this);
         } catch (IOException e) {
             Timber.w(e);
         }
