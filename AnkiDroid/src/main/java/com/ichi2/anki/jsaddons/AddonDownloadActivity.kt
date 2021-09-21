@@ -107,7 +107,14 @@ class AddonDownloadActivity : AnkiActivity() {
         mDownloadButton = findViewById(R.id.download_button)
 
         mWebView.settings.javaScriptEnabled = true
-        mWebView.loadUrl(resources.getString(R.string.ankidroid_js_addon_npm_search_url))
+
+        // if it called for updating addon from details dialog
+        val addonName = intent.getStringExtra("addon_name")
+        if (addonName != null) {
+            mWebView.loadUrl(resources.getString(R.string.npmjs_package_url, addonName))
+        } else {
+            mWebView.loadUrl(resources.getString(R.string.ankidroid_js_addon_npm_search_url))
+        }
 
         mWebView.webViewClient = WebViewClient()
         mWebView.webViewClient = mWebViewClient
