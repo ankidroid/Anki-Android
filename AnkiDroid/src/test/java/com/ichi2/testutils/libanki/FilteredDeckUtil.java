@@ -33,7 +33,7 @@ public class FilteredDeckUtil {
 
         conf.getJSONArray("terms").getJSONArray(0).put(0, search);
 
-        col.getDecks().updateConf(conf);
+        col.getDecks().save(conf);
 
         return filteredDid;
     }
