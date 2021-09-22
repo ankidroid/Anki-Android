@@ -75,6 +75,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
@@ -1748,6 +1749,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         protected Pair<Boolean, String> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundSaveModel");
             Model oldModel = col.getModels().get(mModel.getLong("id"));
+            Objects.requireNonNull(oldModel);
 
             // TODO need to save all the cards that will go away, for undo
             //  (do I need to remove them from graves during undo also?)
@@ -1784,6 +1786,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                     }
                 }
 
+                // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
+                // This could be done better
+                mModel.put("mod", oldModel.getLong("mod"));
                 col.getModels().save(mModel, true);
                 col.getModels().update(mModel);
                 col.reset();
