@@ -184,10 +184,10 @@
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
-    <string name="export_email_text"><![CDATA[        嗨！
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        这是从 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 记忆牌组。
-        使用任一 <a href="http://ankisrs.net/#download">Anki 客户端</a>打开它，享受轻松高效的学习吧！
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>

@@ -187,11 +187,11 @@
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
     <string name="export_successful">L\'arxiu \"%s\" ha estat importat. Vols enviar-lo amb una altra applicació?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
-    <string name="export_email_text">        Hola!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-		És un mall d\'Anki enviat des de <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Intenta obrir-lo utilitzant una de les <a href="http://ankisrs.net/#download">distribucions d\'Anki</a> disponibles i gaudeix d\'un aprenentatge fàcil i eficient!
-        </string>
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]></string>
     <string name="export_unsuccessful">Error en exportar l\'arxiu apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>

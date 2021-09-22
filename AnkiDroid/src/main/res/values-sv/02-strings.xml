@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
     <string name="export_successful">Filen ”%s” har exporterats. Vill du skicka den med en annan app?</string>
     <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hej!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Detta är en kortlek med Anki-flashcards som skickats från <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Testa att öppna den med någon av de tillgängliga <a href="http://ankisrs.net/#download"> Anki-distributionerna</a> och njut av ett enkelt och effektivt lärande!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>

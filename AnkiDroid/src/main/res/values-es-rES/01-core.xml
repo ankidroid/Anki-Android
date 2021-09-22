@@ -192,7 +192,7 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">Tu estas</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">

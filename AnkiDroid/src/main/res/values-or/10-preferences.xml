@@ -224,8 +224,8 @@
     <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର</string>
     <string name="custom_sync_server_enable_title" maxLength="41">କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="custom_sync_server_enable_summary">ଯଦି ଆପଣ ମାଲିକାନା AnkiWeb ସେବା ବ୍ୟବହାର କରିବାକୁ ଚାହୁଁନାହାଁନ୍ତି ତେବେ ଆପଣ ଏଠାରେ ଏକ ବିକଳ୍ପ ସର୍ଭର ନିର୍ଦ୍ଦିଷ୍ଟ କରିପାରିବେ</string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">url ସିଙ୍କ୍ କର</string>
-    <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">ସିଙ୍କ୍ url</string>
+    <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
     <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <!-- Key Bindings -->

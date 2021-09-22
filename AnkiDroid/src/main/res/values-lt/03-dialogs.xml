@@ -133,7 +133,7 @@
     <string name="restore_backup">Jūsų rinkinys bus pakeistas senesne kopija. Bus prarasta bet kokia neišsaugota pažanga.</string>
     <string name="dialog_cancel">Atšaukti</string>
     <string name="dialog_ok">Gerai</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Tęsti</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Kurti</string>
     <string name="dialog_positive_delete">Ištrinti</string>

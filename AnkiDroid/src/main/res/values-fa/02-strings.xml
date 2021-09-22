@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
-    <string name="export_email_text"><![CDATA[        سلام!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="https://ankidroid.org/docs/manual.html">ankidroid برای شما ارسال شده است</a>.
-        برای استفاده از آن یکی از عامل های در دسترس <a href="http://ankisrs.net/#download">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>

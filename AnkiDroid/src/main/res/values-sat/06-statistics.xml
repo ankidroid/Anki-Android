@@ -41,9 +41,9 @@
     <string name="statistics_young">ᱡᱚᱣᱟᱱ</string>
     <string name="statistics_mature">ᱫᱝᱜᱩᱟᱹ</string>
     <string name="statistics_young_and_learn">ᱡᱚᱣᱟᱱ+ᱪᱮᱫᱚᱜ</string>
-    <string name="statistics_unlearned">ᱵᱟᱭᱧᱚᱞᱠᱚᱜ</string>
-    <string name="statistics_suspended">ᱵᱚᱫ ᱜᱤᱰᱤ</string>
-    <string name="statistics_buried">ᱛᱚᱯᱟ ᱮᱱᱟ</string>
+    <string name="statistics_unlearned">ᱵᱟᱝᱧᱮᱞᱟᱜ</string>
+    <string name="statistics_suspended">ᱵᱚᱫ ᱜᱤᱰᱤ </string>
+    <string name="statistics_buried">ᱛᱚᱯᱟ ᱮᱱᱟ </string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ᱫᱩᱲᱦᱟᱹ ᱪᱮᱫᱚᱜ</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ᱪᱮᱫᱚᱜ</string>
     <string name="statistics_cram">ᱜᱷᱤᱥᱟᱹᱣ</string>

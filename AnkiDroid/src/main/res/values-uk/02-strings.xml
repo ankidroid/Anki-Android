@@ -193,10 +193,10 @@
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_successful">Файл “%s” було експортовано. Ви хочете відправити його до іншої програми?</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
-    <string name="export_email_text"><![CDATA[        Привіт!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Ці картки Anki надіслані з <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Спробуйте відкрити використовуючи одну з наявних <a href="http://ankisrs.net/#download">Anki дистрибутивів </a> і насолоджуйтесь легким і ефективним навчанням!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>

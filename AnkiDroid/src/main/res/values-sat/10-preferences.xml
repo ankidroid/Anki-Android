@@ -40,23 +40,23 @@
 <resources>
     <!-- generic strings -->
     <string name="disabled">ᱵᱚᱸᱫ</string>
-    <string name="enabled">ᱦᱩᱞ ᱦᱚᱪᱚ</string>
+    <string name="enabled">ᱦᱩᱞ ᱦᱚᱪᱚ </string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general_summ">ᱥᱟᱫᱷᱟᱨᱚᱬ ᱥᱟᱡᱟᱣ</string>
+    <string name="pref_cat_general_summ">ᱥᱟᱫᱷᱟᱨᱚᱬ ᱥᱟᱡᱟᱣ </string>
     <string name="pref_cat_reviewing" maxLength="41">ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
     <string name="pref_cat_reviewing_summ">ᱱᱚᱱ-ᱰᱮᱠ-ᱵᱤᱥᱮᱥ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">ᱵᱮᱵᱷᱟᱨ</string>
-    <string name="pref_cat_flashcard" maxLength="41">ᱩᱫᱩᱜᱽ</string>
-    <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰ ᱥᱤᱞᱚᱴ</string>
-    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
-    <string name="pref_cat_appearance_summ">ᱩᱱᱩᱭᱦᱟᱹᱨ ᱟᱨ ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱵᱚᱫᱚᱞ</string>
-    <string name="pref_cat_themes" maxLength="41">ᱩᱱᱩᱭᱦᱟᱹᱨ</string>
+    <string name="pref_cat_flashcard" maxLength="41">ᱰᱤᱥᱯᱞᱮ</string>
+    <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰᱯᱟᱴᱟ</string>
+    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ </string>
+    <string name="pref_cat_appearance_summ">ᱩᱱᱩᱭᱦᱟᱹᱨ ᱟᱨ ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ ᱵᱚᱫᱚᱞ </string>
+    <string name="pref_cat_themes" maxLength="41">ᱛᱷᱤᱢᱥ</string>
     <string name="pref_cat_fonts" maxLength="41">ᱪᱤᱠᱤ</string>
     <string name="pref_cat_gestures" maxLength="41">ᱪᱤᱱᱦᱟᱹ</string>
     <string name="pref_cat_gestures_summ">ᱵᱚᱴᱚᱱ ᱵᱚᱫᱚᱞ ᱛᱮ ᱴᱤᱰᱟᱹᱜ ᱟᱨ ᱜᱟᱹᱫᱩᱡ ᱢᱮ</string>
     <string name="pref_cat_actions" maxLength="41">ᱠᱟᱹᱢᱤ</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">ᱠᱳᱸᱴᱨᱳᱞ</string>
+    <string name="pref_cat_controls_summ">ᱠᱳᱱᱯᱦᱤᱜᱚᱨ ᱠᱤᱵᱚᱰ ᱠᱚ ᱟᱨ ᱮᱴᱟᱜ ᱰᱤᱵᱷᱟᱤᱥ ᱠᱚ</string>
     <string name="pref_cat_advanced" maxLength="41">ᱞᱟᱦᱟ ᱦᱚᱪᱚ</string>
     <string name="pref_cat_advanced_summ">ᱵᱮᱥ ᱚᱵᱚᱥᱛᱟ ᱟᱨ ᱵᱤᱰᱟᱹᱣ ᱠᱟᱛᱮ ᱵᱟᱰᱜᱚᱜᱽ ᱧᱮᱞ</string>
     <string name="pref_cat_performance" maxLength="41">ᱠᱟᱹᱢᱤ ᱫᱟᱲᱮ</string>
@@ -96,14 +96,14 @@
     <string name="gestures_allow_links_summary">ᱴᱤᱰᱹᱟᱜ ᱪᱤᱱᱦᱟᱹ ᱵᱟᱭ ᱠᱟᱹᱢᱤᱟᱭ ᱡᱚᱫᱤ ᱞᱤᱝᱠ/ᱦᱤᱸᱴ ᱨᱮ ᱚᱛᱟᱭᱟ ᱾</string>
     <string name="gestures_corner_touch" maxLength="41">᱙ᱼᱤᱸᱪ ᱚᱛᱟ</string>
     <string name="gestures_corner_touch_summary">ᱥᱠᱨᱤᱱ ᱠᱩᱱᱟᱹ ᱠᱚᱨᱮ  ᱚᱛᱟ ᱜᱮᱥᱪᱚᱨᱠᱚ ᱮᱢ ᱪᱷᱚ</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">ᱯᱷᱩᱞᱥᱨᱤᱱ ᱱᱮᱵᱷᱤᱜᱮᱥᱚᱱ ᱰᱟᱨᱣᱮᱨ</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ᱥᱠᱨᱤᱱ ᱨᱮᱭᱟᱜ ᱡᱟᱦᱟᱸᱥᱮᱫ ᱠᱷᱚᱱ ᱡᱚᱡᱚᱢ ᱯᱟᱦᱴᱟ ᱥᱣᱟᱭᱤᱯ ᱠᱟᱛᱮ ᱱᱟᱵᱷᱤᱜᱮᱥᱚᱱ ᱰᱨᱚᱣᱮᱨ ᱡᱷᱤᱡᱽ ᱯᱮ</string>
     <string name="gestures_swipe_up" maxLength="41">ᱪᱮᱛᱟᱱ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_down" maxLength="41">ᱞᱟᱛᱟᱨ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_left" maxLength="41">ᱞᱮᱸᱜᱟ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_swipe_right" maxLength="41">ᱡᱚᱡᱚᱢ ᱴᱷᱮᱞᱟᱣ</string>
     <string name="gestures_double_tap" maxLength="41">ᱫᱚᱦᱲᱟ ᱡᱚᱴᱮᱫ</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">ᱞᱚᱝ ᱴᱚᱪ</string>
     <string name="gestures_tap_top" maxLength="41">ᱪᱮᱛᱟᱱ ᱡᱚᱴᱮᱫ</string>
     <string name="gestures_tap_left" maxLength="41">ᱞᱮᱸᱜᱟ ᱡᱚᱴᱮᱫ</string>
     <string name="gestures_tap_right" maxLength="41">ᱡᱚᱡᱚᱢ ᱡᱚᱴᱮᱫ</string>
@@ -156,8 +156,8 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="timeout_question_seconds" maxLength="41">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱯᱚᱨᱥᱚᱱ ᱫᱮᱠᱷᱟᱣᱼᱟ</string>
     <string name="select_locale_title">ᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">ᱠᱟᱰ ᱦᱟᱰᱣᱮᱨ ᱥᱤᱡᱚᱱᱤᱭᱟᱹ ᱴᱷᱟᱠᱮᱫ ᱮᱢᱮ </string>
+    <string name="software_render_summ">ᱦᱟᱰᱣᱮᱨ ᱵᱮᱱᱟᱣ ᱩᱥᱟᱹᱨᱟ ᱜᱮᱭᱟ ᱢᱮᱱᱠᱟᱷᱟᱱ ᱵᱤᱥᱮᱥ ᱞᱮᱠᱟᱛᱮ Android 8/8.1. ᱮᱴᱠᱮᱴᱚᱬᱮ ᱦᱩᱭᱫᱟᱲᱮᱟᱫ-ᱟ।ᱡᱩᱫᱤ ᱟᱢ ᱤᱸᱴᱚᱨᱯᱷᱮᱥ  ᱠᱟᱰ ᱨᱤᱵᱷᱭᱩ ᱟᱜ ᱵᱟᱢ ᱧᱮᱞᱧᱟᱢᱮᱫ-ᱟ, ᱮᱱᱠᱷᱟᱱ ᱥᱮᱴᱤᱝ ᱨᱮ ᱪᱮᱥᱴᱟᱭᱢᱮ</string>
     <string name="safe_display" maxLength="41">ᱡᱟᱹᱯᱛᱤ ᱚᱵᱚᱥᱛᱷᱟ ᱩᱫᱩᱜᱽ ᱢᱚᱰ</string>
     <string name="safe_display_summ">ᱡᱷᱚᱛᱚ ᱮᱱᱤᱢᱮᱥᱚᱱ ᱵᱚᱱᱫᱽ ᱠᱟᱛᱮ ᱟᱨ ᱴᱷᱤᱠ ᱛᱚᱨᱤᱠᱟ ᱛᱮ ᱠᱟᱰ ᱤᱫᱤ ᱢᱮ ᱾ ᱤᱼᱠᱟᱲᱤ ᱰᱤᱵᱷᱟᱤᱥ ᱫᱚᱨᱠᱟᱨ ᱯᱟᱲᱟᱣ ᱜᱮᱭᱟ ᱾ </string>
     <string name="disable_extended_text_ui" maxLength="41">ᱢᱤᱫᱴᱟᱹᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱯᱰᱟᱣ ᱢᱚᱰ ᱵᱸᱫᱚ</string>
@@ -166,12 +166,12 @@
     <string name="vertical_centering" maxLength="41">ᱛᱟᱞᱟ ᱥᱟᱡᱟᱣ</string>
     <string name="vertical_centering_summ">ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚ ᱛᱟᱞᱟ ᱨᱮ ᱥᱤᱫᱷᱟ ᱛᱮ ᱟᱹᱜᱩᱭᱢᱮ</string>
     <string name="pref_backup_max" maxLength="41">ᱵᱮᱠᱟᱹᱯ ᱨᱮᱭᱟᱜ ᱡᱟᱹᱥᱛᱤ ᱮᱞ</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ᱵᱟᱨᱫᱷᱟᱣ ᱞᱭᱟᱯ ᱚᱠᱛᱚ ᱤᱱᱴᱟᱹᱨᱵᱷᱟᱞ (ᱢᱤᱞᱤᱥᱮᱠᱮᱰ)</string>
+    <string name="pref_double_tap_time_interval_summary">ᱡᱩᱫᱤ ᱱᱤᱛᱚᱜ ᱵᱟᱝ ᱦᱩᱭᱟᱹᱠᱟᱱᱟ ᱮᱱᱠᱷᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱨᱮᱭᱟᱜ ᱫᱚᱥᱟᱨ ᱴᱭᱟᱯ ᱵᱟᱝ ᱛᱩᱸᱠᱷᱤᱜ-ᱟ । ᱱᱚᱣᱟ ᱦᱩᱯᱠᱟᱹ ᱰᱚᱵᱚᱞ ᱴᱭᱟᱯ ᱴᱷᱟᱠᱮᱫ ᱚᱪᱚᱭᱟ </string>
     <string name="show_estimates" maxLength="41">ᱵᱟᱹᱴᱟᱹᱱ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣ</string>
     <string name="show_estimates_summ">ᱛᱮᱞᱟ ᱵᱟᱹᱴᱚᱱ ᱨᱮ ᱞᱟᱦᱟ ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱥᱚᱢᱚᱭ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">ᱢᱟᱨᱟᱝ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱧᱮ ᱚᱪᱚᱭ ᱢᱮ</string>
+    <string name="show_large_answer_buttons_summ">᱒ᱰᱷᱟᱰ ᱨᱮ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱳᱱ ᱧᱮᱞ ᱚᱪᱚᱭ ᱢᱮ</string>
     <string name="show_top_bar" maxLength="41">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_top_bar_summ">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱨᱮ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱠᱚ, ᱯᱚᱛᱠᱟ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress" maxLength="41">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
@@ -183,13 +183,13 @@
     <string name="learn_cutoff" maxLength="41">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="time_limit" maxLength="41">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="new_timezone" maxLength="41">ᱱᱟᱣᱟ ᱚᱠᱛᱚ ᱴᱷᱟᱶ ᱪᱟᱹᱞᱩ</string>
+    <string name="day_offset_with_description" maxLength="41">ᱜᱟᱯᱟ ᱫᱤᱱ ᱟᱜ ᱮᱛᱦᱚᱵ </string>
     <string name="day_offset_summ">XXX ᱴᱟᱲᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱵ</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">ᱛᱟᱞᱟ ᱧᱤᱸᱫᱟᱹ</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">11pm</string>
+    <string name="sched_v2" maxLength="41">V2 ᱥᱠᱮᱰᱩᱞᱟᱹᱨ</string>
+    <string name="sched_v2_summ">ᱮᱢ-ᱢᱮ ᱱᱟᱣᱟ ᱥᱠᱮᱰᱩᱞᱟᱹᱨ । ᱫᱚᱥᱟᱨ ᱥᱤᱝᱠ ᱨᱮ ᱢᱤᱫᱴᱤᱡ ᱫᱤᱥᱟᱹᱨᱮ ᱯᱩᱨᱤᱵᱚᱨᱛᱚᱱ ᱦᱚᱪᱚ ᱢᱮᱭᱟ </string>
     <string name="sched_ver_toggle_title">ᱴᱷᱤᱠ</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
@@ -209,10 +209,10 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">ᱠᱞᱤᱯᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱫᱚ PNG</string>
+    <string name="paste_as_png_summary">ᱰᱤᱯᱷᱚᱞᱴ ᱞᱮᱠᱟᱛᱮ Anki ᱥᱯᱮᱥ ᱟᱨᱡᱟᱣ JPG ᱯᱷᱟᱹᱤᱞ ᱞᱮᱠᱟ ᱠᱞᱤᱯᱵᱚᱰ ᱨᱮ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱭ ᱯᱮᱥᱴᱟᱭ । ᱟᱢ ᱱᱚᱣᱟ ᱚᱯᱥᱚᱱ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ PNG ᱪᱤᱛᱟᱹᱨ ᱯᱮᱥᱴ ᱞᱟᱹᱜᱤᱫ ।</string>
+    <string name="exit_via_double_tap_back" maxLength="41">ᱨᱩᱣᱟᱹᱲ/ᱩᱴᱷᱟᱹᱣᱜ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱫᱷᱟᱣ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="exit_via_double_tap_back_summ">ᱦᱩᱯᱠᱟᱹ  ᱧᱮᱧᱮᱞᱤᱭᱟᱹ ᱟᱨ ᱟᱯᱞᱤᱠᱮᱥᱚᱱ ᱥᱟᱦᱟ ᱞᱟᱹᱜᱤᱫ</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
@@ -229,7 +229,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ url ᱵᱷᱩᱞ</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">ᱠᱳᱢᱟᱸᱰ ᱢᱟᱯᱤᱝ</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Select tags</string>
@@ -275,7 +275,7 @@
     <string name="deck_conf_replayq" maxLength="41">Replay question</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
     <string name="deck_conf_manage" maxLength="41">Group management</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">ᱮᱰ ᱮᱸᱰ ᱪᱮᱧ ᱳᱯᱥᱚᱱ ᱜᱨᱩᱯ</string>
     <string name="deck_conf_current_group" maxLength="41">Current group</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="deck_conf_reset" maxLength="41">Restore defaults</string>
@@ -296,7 +296,7 @@
     <string name="deck_conf_cram_order" maxLength="41">ᱠᱟᱰᱥ ᱪᱚᱭᱚᱱ ᱯᱨᱚᱠᱟᱨ ᱠᱚ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">ᱫᱚᱥᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱜᱚᱱᱚᱪᱚ</string>
     <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable reminder notifications for decks in this deck group</string>
@@ -305,26 +305,26 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="note_editor_replace_newlines" maxLength="41">HTML ᱥᱟᱞᱟᱜ ᱱᱟᱣᱟᱞᱟᱹᱭᱤᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="note_editor_replace_newlines_summ">ᱱᱳᱴ ᱮᱰᱤᱴᱚᱨ ᱨᱮ, ᱠᱟᱰ ᱮᱰᱤᱴ ᱡᱷᱚᱜ &lt;br&gt; ᱱᱟᱣᱟ ᱰᱟᱦᱟᱨ ᱛᱮ ᱤᱫᱤ ᱮᱢᱮ ।</string>
+    <string name="no_code_formatting" maxLength="41">ᱥᱚᱦᱚᱡᱽ ᱴᱟᱤᱯ ᱦᱩᱭᱟ ᱠᱟᱱ ᱞᱟᱹᱱᱟᱹᱭ ᱯᱷᱚᱨᱢᱟᱴᱤᱝ</string>
+    <string name="no_code_formatting_summ">ᱴᱟᱤᱯ ᱠᱟᱱ ᱞᱟᱹᱭ ᱨᱮᱡᱚᱞᱴᱨᱮ ᱧᱮᱞᱚᱜ ᱠᱟᱱ ‘􏿾’ ᱴᱷᱤᱠᱟᱭ</string>
+    <string name="type_in_answer_focus" maxLength="41">ᱫᱷᱮᱭᱟᱱ ᱮᱢ ᱢᱮ \'ᱞᱟᱹᱱᱟᱹᱭ ᱴᱟᱤᱯ ᱨᱮ\'</string>
+    <string name="type_in_answer_focus_summ">ᱧᱮᱧᱮᱞᱤᱭᱟᱹ ᱴᱷᱮᱱ \'ᱞᱟᱹᱱᱟᱹᱭ ᱴᱟᱤᱯ ᱢᱮ\' ᱴᱷᱟᱶ ᱨᱮ ᱟᱡᱟᱡ ᱛᱮ ᱫᱷᱮᱭᱟᱱ ᱮᱢ ᱢᱮ</string>
     <!-- Open Changelog-->
-    <string name="open_changelog">Open Changelog</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="open_changelog">ᱯᱩᱨᱤᱵᱚᱨᱛᱚᱱ ᱞᱳᱜᱽ ᱡᱷᱤᱡᱽ ᱢᱮ</string>
+    <string name="binding_add_gesture">ᱤᱥᱟᱨᱟ ᱡᱚᱲᱟᱣ</string>
+    <string name="binding_add_key">Key ᱡᱚᱲᱟᱣ</string>
+    <string name="key_picker_default_press_key">ᱢᱤᱫ key ᱚᱛᱟᱭ ᱢᱮ</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">ᱠᱟᱰ ᱯᱟᱥᱴᱟ ᱪᱚᱪᱷᱟᱣ ᱢᱮ</string>
+    <string name="card_side_question">ᱠᱩᱠᱞᱤ</string>
+    <string name="card_side_answer">ᱞᱟᱹᱱᱟᱹᱭ</string>
+    <string name="card_side_both">ᱠᱩᱠᱞᱤ &amp; ᱞᱟᱹᱱᱟᱹᱭ</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ᱯ: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ᱩ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ ᱚᱪᱚᱜᱢᱮ</string>
+    <string name="bindings_already_bound">ᱢᱟᱬᱟᱝ ᱠᱷᱚᱱ ᱛᱚᱞ %s</string>
 </resources>

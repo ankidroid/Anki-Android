@@ -187,11 +187,11 @@
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
     <string name="export_successful">Arquivo \"%s\" foi exportado. Deseja enviá-lo com um outro app?</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
-    <string name="export_email_text"><![CDATA[         Olá!
-         <br/><br/>
-         Este é um baralho de cards Anki enviado por <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-         Tente abri-lo usando uma das <a href="http://ankisrs.net/#download"> distribuições Anki</a> disponíveis e desfrute de um aprendizado fácil e eficiente!
-         ]]></string>
+    <string name="export_email_text_new"><![CDATA[        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]></string>
     <string name="export_unsuccessful">Erro ao exportar arquivo apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
@@ -349,20 +349,20 @@
     <string name="back_pressed_once_reviewer">Pressione voltar novamente para sair</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Baixar baralho</string>
+    <string name="try_again">Tentar Novamente</string>
+    <string name="cancel_download">Cancelar download</string>
+    <string name="cancel_download_question_title">Cancelar download?</string>
+    <string name="downloading_file">Baixando %s</string>
+    <string name="import_deck">Importar Baralho</string>
+    <string name="something_wrong">Algo deu errado. Por favor, tente novamente</string>
+    <string name="download_failed">Download falhou</string>
+    <string name="deck_download_progress_message">Você pode usar outros apps enquanto o download está rodando</string>
+    <string name="check_network">Por favor verifique sua conexão de rede</string>
+    <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
+    <string name="home">Início</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">Movido para %s</string>
+    <string name="import_mapped_to_tags">Movido para Tags</string>
+    <string name="import_mapped_to_nothing">Ignorado</string>
 </resources>

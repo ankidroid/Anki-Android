@@ -37,90 +37,90 @@
     <string name="multimedia_editor_popup_image">ᱪᱤᱛᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="multimedia_editor_popup_audio_clip">ᱥᱟᱰᱮ ᱠᱞᱤᱯ ᱫᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="multimedia_editor_popup_audio">ᱥᱟᱰᱮ ᱨᱮᱠᱚᱰ  ᱢᱮ</string>
-    <string name="multimedia_editor_popup_text">ᱮᱰᱵᱷᱟᱱᱥ ᱥᱟᱯᱰᱟᱣᱼᱟᱜ</string>
-    <string name="multimedia_editor_popup_cloze">ᱠᱞᱚᱡ ᱜᱮᱫ ᱜᱤᱰᱤᱫ</string>
+    <string name="multimedia_editor_popup_text">ᱮᱰᱵᱷᱟᱱᱥ  ᱥᱟᱯᱰᱟᱣᱼᱟᱜ</string>
+    <string name="multimedia_editor_popup_cloze">ᱠᱞᱚᱡ ᱜᱮᱫ  ᱜᱤᱰᱤᱫ</string>
     <string name="multimedia_editor_popup_clear_field">ᱴᱷᱟᱶ ᱯᱷᱟᱨᱪᱟᱭ ᱢᱮ</string>
     <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">ᱥᱚᱧᱪᱟᱞᱚᱱᱤᱭᱟ glosbe.com</string>
+    <string name="multimedia_editor_trans_poweredglosbe">ᱥᱚᱧᱪᱟᱞᱚᱱᱤᱭᱟᱹ glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">ᱠᱷᱚᱱ</string>
-    <string name="multimedia_editor_trans_to">ᱛᱮ</string>
+    <string name="multimedia_editor_trans_from"> ᱠᱷᱚᱱ</string>
+    <string name="multimedia_editor_trans_to"> ᱛᱮ</string>
     <!-- imperative for the button title -->
-    <string name="multimedia_editor_trans_translate">ᱛᱚᱨᱡᱚᱢᱟ</string>
+    <string name="multimedia_editor_trans_translate"> ᱛᱚᱨᱡᱚᱢᱟ</string>
     <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">ᱚᱱᱞᱟᱭᱤᱱ ᱛᱚᱨᱡᱚᱢᱟ</string>
+    <string name="multimedia_editor_trans_translating_online">ᱚᱱᱞᱟᱭᱤᱱ  ᱛᱚᱨᱡᱚᱢᱟ</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">ᱛᱚᱨᱡᱚᱢᱟ ᱪᱚᱭᱚᱱ</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
+    <string name="multimedia_editor_trans_pick_translation_source">ᱟᱹᱲᱟᱹᱵᱟᱜᱟᱱ ᱪᱚᱭᱚᱱ ᱢᱮ</string>
     <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">ᱯᱨᱩᱛᱷᱩᱢ ColorDict ᱜᱟᱺᱣᱛᱟᱦᱟᱭ ᱢᱮ</string>
+    <string name="multimedia_editor_trans_install_color_dict">ᱯᱩᱭᱞᱩ ColorDict ᱜᱟᱺᱣᱛᱟᱦᱟᱭ ᱢᱮ</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">ᱞᱟᱫᱮ</string>
-    <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱞ-ᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_pron_load">ᱞᱳᱰ</string>
+    <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">ᱩᱪᱨᱚᱬ ᱰᱮᱜᱟᱹᱣ</string>
-    <string name="multimedia_editor_word_search_try_lower_case">ᱠᱟᱛᱤᱡ ᱚᱠᱭᱚᱨ ᱛᱮ ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
+    <string name="multimedia_editor_pron_pronunciation_failed">ᱩᱪᱨᱚᱬ ᱵᱟᱝᱜᱟᱱ ᱞᱮᱱᱟ</string>
+    <string name="multimedia_editor_word_search_try_lower_case">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱹᱴᱤᱡ ᱟᱠᱷᱚᱨ ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ᱚᱱᱚᱞ</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text."> ᱚᱱᱚᱞ</string>
     <string name="multimedia_editor_field_editing_image">ᱪᱤᱛᱟᱹᱨ</string>
-    <string name="multimedia_editor_field_editing_audio">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ᱥᱟᱲᱮ ᱠᱞᱤᱯ</string>
+    <string name="multimedia_editor_field_editing_audio">ᱚᱰᱤᱳ ᱨᱮᱠᱚᱰᱤᱝ</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ᱚᱰᱤᱳ ᱠᱞᱤᱯ</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ᱦᱩᱭᱮᱱᱟ</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">ᱯᱟᱱᱛᱮ ᱞᱟᱹᱜᱤᱫᱺ</string>
-    <string name="multimedia_editor_text_field_editing_say">ᱩᱪᱨᱚᱬ</string>
-    <string name="multimedia_editor_text_field_editing_clear">ᱥᱟᱯᱷᱟ</string>
-    <string name="multimedia_editor_text_field_editing_clone">ᱱᱚᱠᱟᱞ ᱠᱷᱚᱱ</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">ᱛᱚᱨᱡᱚᱢᱟ</string>
+    <string name="multimedia_editor_text_field_editing_search_label">ᱥᱮᱸᱫᱽᱨᱟ ᱞᱟᱹᱜᱤᱫᱺ</string>
+    <string name="multimedia_editor_text_field_editing_say">ᱩᱪᱟᱹᱨᱚᱬ</string>
+    <string name="multimedia_editor_text_field_editing_clear">ᱯᱷᱟᱨᱪᱟ</string>
+    <string name="multimedia_editor_text_field_editing_clone">ᱠᱞᱳᱱ ᱠᱷᱚᱱ</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">ᱛᱚᱨᱡᱚᱢᱟ </string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">ᱠᱤᱪᱷᱤ ᱚᱱᱚᱞ ᱠᱚ ᱚᱞ ᱢᱮ ᱯᱨᱩᱛᱷᱩᱢ</string>
-    <string name="multimedia_editor_text_field_editing_many_words">ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱢᱤᱫᱴᱟ ᱟᱲᱟ ᱜᱮ ᱟᱥᱟ ᱟᱭ</string>
+    <string name="multimedia_editor_text_field_editing_no_text">ᱯᱩᱭᱞᱩ ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱚᱱᱚᱞ ᱚᱞ ᱢᱮ</string>
+    <string name="multimedia_editor_text_field_editing_many_words">ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱢᱤᱫᱴᱟ ᱟᱲᱟ ᱜᱮ ᱟᱥᱟᱭᱟ</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">ᱠᱷᱚᱱ ᱤᱫᱤ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">ᱠᱷᱚᱱ ᱤᱫᱤᱭ ᱢᱮ</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">ᱜᱮᱞᱨᱭ</string>
-    <string name="multimedia_editor_image_field_editing_photo">ᱠᱮᱢᱨᱟ</string>
-    <string name="multimedia_editor_image_field_editing_library">ᱯᱩᱛᱷᱤ ᱚᱲᱟᱜ</string>
+    <string name="multimedia_editor_image_field_editing_galery">ᱜᱮᱞᱮᱨᱤ</string>
+    <string name="multimedia_editor_image_field_editing_photo">ᱠᱭᱟᱢᱮᱨᱟ</string>
+    <string name="multimedia_editor_image_field_editing_library">ᱯᱩᱛᱷᱤ  ᱚᱲᱟᱜ</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_general_downloading">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">ᱦᱩᱭᱮᱱᱟ</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">ᱦᱩᱭᱟᱹᱱᱟ</string>
     <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">ᱟᱲᱟ ᱫᱚ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
+    <string name="multimedia_editor_error_word_not_found">ᱟᱹᱲᱟᱹ ᱫᱚ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">ᱛᱚᱨᱡᱚᱢᱟ ᱧᱟᱢ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="multimedia_editor_searching_word">ᱚᱱᱚᱞ ᱥᱮᱸᱫᱽᱨᱼᱜ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_trans_getting_failure">ᱛᱚᱨᱡᱚᱢᱟ ᱧᱟᱢ ᱰᱤᱜᱟᱹᱣ </string>
+    <string name="multimedia_editor_searching_word">ᱚᱱᱚᱞ ᱥᱮᱸᱫᱽᱨᱼᱜ ᱠᱟᱱᱟ </string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">ᱛᱟᱹᱝᱜᱤ</string>
+    <string name="multimedia_editor_progress_wait_title">ᱛᱟᱹᱝᱜᱤ </string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">ᱡᱟᱦᱟᱱᱟᱜ ᱠᱚ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
+    <string name="multimedia_editor_something_wrong">ᱡᱟᱦᱟᱱᱟᱜ ᱠᱚ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ </string>
     <string name="multimedia_editor_png_paste_error">ᱠᱞᱤᱯᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ png ᱨᱮ ᱵᱚᱫᱚᱞ ᱨᱮ ᱦᱤᱲᱤᱡ : %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s ᱡᱟᱭᱜᱟ ᱨᱮ ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱡᱤᱱᱤᱥ ᱞᱟᱴᱷᱟᱭ ᱢᱮ</string>
     <string name="multimedia_editor_attach_media">ᱢᱮᱰᱤᱭᱟ ᱞᱟᱴᱷᱟᱭ ᱢᱮ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">ᱨᱮᱠᱚᱰ ᱠᱚ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
-    <string name="multimedia_editor_audio_view_playing_failed">ᱮᱛᱦᱚᱵ ᱠᱚ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_audio_view_recording_failed">ᱨᱮᱠᱚᱰ ᱠᱚ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ </string>
+    <string name="multimedia_editor_audio_view_playing_failed">ᱮᱛᱦᱚᱵ ᱠᱚ ᱰᱤᱜᱟᱹᱣ </string>
+    <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ </string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ᱥᱟᱯᱲᱟᱣ ᱡᱟᱭᱜᱟ</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">ᱛᱚᱨᱡᱚᱢᱟ</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ᱮᱰᱤᱴᱤᱝ ᱡᱟᱭᱜᱟ</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">ᱛᱚᱨᱡᱚᱢᱟ </string>
     <!-- Network failure -->
-    <string name="network_no_connection">ᱵᱟᱝ ᱡᱩᱰᱟᱹᱣ</string>
+    <string name="network_no_connection">ᱵᱟᱝ ᱡᱚᱲᱟᱹᱣ</string>
     <!-- Crop function-->
-    <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
-    <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ</string>
-    <string name="save_dialog_content">ᱱᱤᱛᱚᱜ ᱪᱤᱛᱟᱹᱨ ᱨᱮᱭᱟᱜ ᱢᱟᱯ %sMB ᱾ ᱦᱩᱰᱟᱹᱜ ᱪᱤᱛᱹᱨ ᱢᱟᱯ ᱑MB ᱾ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟ ᱠᱟᱱᱟ ᱥᱮ?</string>
+    <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
+    <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ </string>
+    <string name="save_dialog_content">ᱱᱤᱛᱚᱜ ᱪᱤᱛᱟᱹᱨ ᱨᱮᱭᱟᱜ ᱢᱟᱯ %sMB ᱾ ᱦᱩᱰᱟᱹᱜ ᱪᱤᱛᱹᱨ ᱢᱟᱯ ᱑MB ᱾ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟ ᱠᱟᱱᱟ ᱥᱮ?  </string>
     <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱪᱚᱭᱚᱱ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
     <string name="activity_result_unexpected">ᱮᱯᱯ ᱵᱟᱝ ᱵᱟᱰᱟᱭ ᱠᱟᱱ ᱜᱚᱱᱚᱝ ᱨᱩᱟᱹᱰ ᱮᱢᱚᱜ ᱠᱟᱱᱟᱭ ᱾ ᱟᱢ ᱚᱞᱜᱟ ᱮᱯᱯ ᱵᱮᱵᱷᱨᱟ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
 </resources>

@@ -184,10 +184,10 @@
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_successful">Tệp tin \"%s\" đã được kết xuất. Bạn có muốn gửi nó đi với ứng dụng khác?</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
-    <string name="export_email_text"><![CDATA[        Xin chào!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Đây là bộ thẻ flashcards Anki được gửi từ <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Hãy thử mở nó bằng một trong những <a href="http://ankisrs.net/#download"> bản phát hành Anki</a> và tận hưởng việc học dễ dàng và hiệu quả!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Lỗi kết xuất tệp tin apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
