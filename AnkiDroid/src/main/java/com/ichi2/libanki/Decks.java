@@ -109,7 +109,8 @@ public class Decks extends DeckManager {
                 // list of (search, limit, order); we only use first element for now
                 + "\"terms\": [[\"\", 100, 0]],"
                 + "\"resched\": true,"
-                + "\"previewDelay\": 10"
+                + "\"previewDelay\": 10,"
+                + "\"browserCollapsed\": false"
             + "}";
 
     public static final String DEFAULT_CONF = ""
