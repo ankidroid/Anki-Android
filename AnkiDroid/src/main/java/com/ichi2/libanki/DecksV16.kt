@@ -738,8 +738,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             val immediateParent = immediate_parent(deck.name)
             if (immediateParent.isPresent) {
                 val pid = nameMap[immediateParent.get()]?.id
-                val value = childMap[pid] as childMapNode
-                value[deck.id] = node
+                val value = childMap[pid] as childMapNode?
+                if (value != null) {
+                    value[deck.id] = node
+                }
             }
         }
 
