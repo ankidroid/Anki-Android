@@ -19,6 +19,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashSet
@@ -32,7 +33,7 @@ class OnboardingUtils {
          */
         const val SHOW_ONBOARDING = "showOnboarding"
         @VisibleForTesting
-        public val featureConstants: MutableSet<String> = HashSet()
+        val featureConstants: MutableSet<String> = HashSet()
 
         /** Register this feature category as an onboarding feature.
          * It ensures it gets reset if asked. */
@@ -88,9 +89,11 @@ class OnboardingUtils {
         }
 
         private fun reset(context: Context, featureConstants: Collection<String>) {
-            var editor = AnkiDroidApp.getSharedPrefs(context).edit()
-            featureConstants.forEach { editor.putLong(it, 0) }
-            editor.apply()
+            AnkiDroidApp.getSharedPrefs(context).edit {
+                featureConstants.forEach {
+                    this@edit.putLong(it, 0)
+                }
+            }
         }
     }
 }
