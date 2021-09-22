@@ -81,19 +81,19 @@ public class AudioRecorderTest extends RobolectricTest {
     public void testRecordingLowSampling() throws IOException {
 
         class initHandlerWithError implements Runnable {
-            private int timesRun = 0;
-            private boolean hasThrown = false;
+            private int mTimesRun = 0;
+            private boolean mHasThrown = false;
             @Override
             public void run() {
-                timesRun++;
-                if(!hasThrown) {
-                    hasThrown = true;
+                mTimesRun++;
+                if(!mHasThrown) {
+                    mHasThrown = true;
                     //the try-catch in AudioRecorder should catch this exception and move to low-sampling mode
                     throw new RuntimeException();
                 }
             }
             public int getTimesRun() {
-                return timesRun;
+                return mTimesRun;
             }
         }
         initHandlerWithError recordingHandler = new initHandlerWithError();

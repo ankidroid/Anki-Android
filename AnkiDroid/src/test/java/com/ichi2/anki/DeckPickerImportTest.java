@@ -53,18 +53,18 @@ public class DeckPickerImportTest extends RobolectricTest {
 
     private static class DeckPickerImport extends DeckPicker {
 
-        private AsyncDialogFragment dialogFragment;
+        private AsyncDialogFragment mDialogFragment;
 
         private Class<?> getAsyncDialogFragmentClass() {
-            if (dialogFragment == null) {
+            if (mDialogFragment == null) {
                 fail("No async fragment shown");
             }
-            return dialogFragment.getClass();
+            return mDialogFragment.getClass();
         }
 
         @Override
         public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
-            this.dialogFragment = newFragment;
+            this.mDialogFragment = newFragment;
             super.showAsyncDialogFragment(newFragment);
         }
     }

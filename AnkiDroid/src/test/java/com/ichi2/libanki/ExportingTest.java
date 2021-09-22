@@ -9,24 +9,24 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
 public class ExportingTest extends RobolectricTest {
-    private Collection col;
+    private Collection mCol;
 
     /*****************
      ** Exporting    *
      *****************/
     private void setup() {
-        col = getCol();
-        Note note = col.newNote();
+        mCol = getCol();
+        Note note = mCol.newNote();
         note.setItem("Front", "foo");
         note.setItem("Back", "bar<br>");
         note.setTagsFromStr("tag, tag2");
-        col.addNote(note);
+        mCol.addNote(note);
         // with a different col
-        note = col.newNote();
+        note = mCol.newNote();
         note.setItem("Front", "baz");
         note.setItem("Back", "qux");
         note.model().put("did", addDeck("new col"));
-        col.addNote(note);
+        mCol.addNote(note);
     }
 
 

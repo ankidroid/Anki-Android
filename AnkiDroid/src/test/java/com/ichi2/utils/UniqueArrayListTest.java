@@ -41,7 +41,7 @@ import static org.mockito.Mockito.never;
 public class UniqueArrayListTest {
 
 
-    private List<String> dupData = Arrays.asList(
+    private List<String> mDupData = Arrays.asList(
             "55",
             "TEst",
             "TEst",
@@ -58,7 +58,7 @@ public class UniqueArrayListTest {
             "55"
     );
 
-    private List<String> noDupData = Arrays.asList(
+    private List<String> mNoDupData = Arrays.asList(
             "55",
             "TEst",
             "12",
@@ -156,8 +156,8 @@ public class UniqueArrayListTest {
 
     @Test
     public void testFromCollection() {
-        UniqueArrayList<String> uniqueArrayList = UniqueArrayList.from(dupData);
-        assertEquals(noDupData, uniqueArrayList);
+        UniqueArrayList<String> uniqueArrayList = UniqueArrayList.from(mDupData);
+        assertEquals(mNoDupData, uniqueArrayList);
 
         uniqueArrayList = new UniqueArrayList<>();
         assertTrue(uniqueArrayList.isEmpty());

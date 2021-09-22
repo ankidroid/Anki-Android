@@ -44,7 +44,7 @@ public class FileUtilTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
-    long testFolderSize;
+    long mTestFolderSize;
 
     private static class DummyListener implements ProgressSenderAndCancelListener<Integer> {
         @Override
@@ -95,7 +95,7 @@ public class FileUtilTest {
         for (int i = 0; i < files.size(); ++i) {
             final File file = files.get(i);
             writeStringToFile(file, "File " + (i + 1) + " called " + file.getName());
-            testFolderSize += file.length();
+            mTestFolderSize += file.length();
         }
 
         return grandParentDir;
@@ -182,7 +182,7 @@ public class FileUtilTest {
 
         // Test for success scenario
         File dir = createSrcFilesForTest(temporaryRootDir, "dir");
-        assertEquals(FileUtil.getDirectorySize(dir), testFolderSize);
+        assertEquals(FileUtil.getDirectorySize(dir), mTestFolderSize);
 
         // Test for failure scenario by passing a file as an argument instead of a directory
         assertThrows(IOException.class, () -> FileUtil.getDirectorySize(new File(dir, "file1.txt")));

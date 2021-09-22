@@ -29,40 +29,40 @@ import static org.mockito.Mockito.*;
 @RunWith(AndroidJUnit4.class)
 public class MaxExecFunctionTest extends TestCase {
 
-    private Runnable function;
+    private Runnable mFunction;
 
     @Before
     public void before(){
-        function = mock(Runnable.class);
+        mFunction = mock(Runnable.class);
     }
 
     @Test
     public void doNotExceedMaxExecs(){
-        final MaxExecFunction m = new MaxExecFunction(3,function);
+        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
 
         for (int i = 0; i < 50; i++) {
             m.exec();
         }
 
-        verify(function,times(3)).run();
+        verify(mFunction,times(3)).run();
     }
 
     @Test
     public void onlyOnceForAReference(){
         final Object ref = new Object();
-        final MaxExecFunction m = new MaxExecFunction(3,function);
+        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
 
         for (int i = 0; i < 50; i++) {
             m.execOnceForReference(ref);
         }
 
-        verify(function,times(1)).run();
+        verify(mFunction,times(1)).run();
     }
 
 
     @Test
     public void doNotExceedMaxExecsWithMultipleReferences(){
-        final MaxExecFunction m = new MaxExecFunction(3,function);
+        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
 
         for (int i = 0; i < 10; i++) {
             final Object ref = new Object();
@@ -71,7 +71,7 @@ public class MaxExecFunctionTest extends TestCase {
             }
         }
 
-        verify(function,times(3)).run();
+        verify(mFunction,times(3)).run();
     }
 
 }

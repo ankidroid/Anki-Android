@@ -36,7 +36,7 @@ import static org.mockito.Mockito.never;
 public class TagsListTest {
 
 
-    final List<String> SORTED_TAGS = Arrays.asList(
+    static final List<String> SORTED_TAGS = Arrays.asList(
             "colors",
             "faces",
             "programming",
@@ -46,7 +46,7 @@ public class TagsListTest {
             "names"
     );
 
-    final List<String> TAGS = Arrays.asList(
+    static final List<String> TAGS = Arrays.asList(
             "programming",
             "learn",
             "names",
@@ -57,14 +57,14 @@ public class TagsListTest {
     );
 
 
-    final List<String> CHECKED_TAGS = Arrays.asList(
+    static final List<String> CHECKED_TAGS = Arrays.asList(
             "programming",
             "faces",
             "colors"
     );
 
 
-    TagsList TAGS_LIST;
+    TagsList mTagsList;
 
 
     private static <E> List<E> join(List<E> l1, List<E> l2) {
@@ -102,7 +102,7 @@ public class TagsListTest {
 
     @Before
     public void setUp() throws Exception {
-        TAGS_LIST = new TagsList(TAGS, CHECKED_TAGS);
+        mTagsList = new TagsList(TAGS, CHECKED_TAGS);
     }
 
 
@@ -149,105 +149,105 @@ public class TagsListTest {
 
     @Test
     public void test_isChecked_index() {
-        assertTrue("Tag at index 0 should be checked", TAGS_LIST.isChecked(0));
-        assertTrue("Tag at index 3 should be checked", TAGS_LIST.isChecked(3));
-        assertFalse("Tag at index 1 should be unchecked", TAGS_LIST.isChecked(1));
-        assertFalse("Tag at index 6 should be unchecked", TAGS_LIST.isChecked(6));
+        assertTrue("Tag at index 0 should be checked", mTagsList.isChecked(0));
+        assertTrue("Tag at index 3 should be checked", mTagsList.isChecked(3));
+        assertFalse("Tag at index 1 should be unchecked", mTagsList.isChecked(1));
+        assertFalse("Tag at index 6 should be unchecked", mTagsList.isChecked(6));
     }
 
 
     @Test
     public void test_isChecked_object() {
-        assertTrue("'programming' tag should be checked", TAGS_LIST.isChecked("programming"));
-        assertTrue("'faces' tag should be checked", TAGS_LIST.isChecked("faces"));
-        assertFalse("'cars' tag should be unchecked", TAGS_LIST.isChecked("cars"));
-        assertFalse("'flags' tag should be unchecked", TAGS_LIST.isChecked("flags"));
+        assertTrue("'programming' tag should be checked", mTagsList.isChecked("programming"));
+        assertTrue("'faces' tag should be checked", mTagsList.isChecked("faces"));
+        assertFalse("'cars' tag should be unchecked", mTagsList.isChecked("cars"));
+        assertFalse("'flags' tag should be unchecked", mTagsList.isChecked("flags"));
     }
 
 
     @Test
     public void test_add() {
         assertTrue("Adding 'anki' tag should return true, as the 'anki' is a new tag",
-                TAGS_LIST.add("anki"));
+                mTagsList.add("anki"));
         assertFalse("Adding 'colors' tag should return false, as the 'colors' is a already existing tag",
-                TAGS_LIST.add("colors"));
+                mTagsList.add("colors"));
 
         assertEquals("The newly added 'anki' tag should be found when retrieving all tags list",
-                join(TAGS, "anki"), TAGS_LIST.copyOfAllTagList());
+                join(TAGS, "anki"), mTagsList.copyOfAllTagList());
         assertSameElementsIgnoreOrder("Adding operations should have nothing to do with the checked status of tags",
-                CHECKED_TAGS, TAGS_LIST.copyOfCheckedTagList());
+                CHECKED_TAGS, mTagsList.copyOfCheckedTagList());
     }
 
 
     @Test
     public void test_check() {
         assertFalse("Attempting to check tag 'anki' should return false, as 'anki' is not found in all tags list",
-                TAGS_LIST.check("anki")); //not in the list
+                mTagsList.check("anki")); //not in the list
         assertFalse("Attempting to check tag 'colors' should return false, as 'colors' is already checked",
-                TAGS_LIST.check("colors")); // already checked
+                mTagsList.check("colors")); // already checked
         assertTrue("Attempting to check tag 'flags' should return true, as 'flags' is found in all tags and is not already checked",
-                TAGS_LIST.check("flags"));
+                mTagsList.check("flags"));
 
 
         assertEquals("Changing the status of tags to be checked should have noting to do with all tag list",
-                TAGS, TAGS_LIST.copyOfAllTagList());//no change
+                TAGS, mTagsList.copyOfAllTagList());//no change
         assertSameElementsIgnoreOrder("The checked 'flags' tag should be found when retrieving list of checked tag",
-                join(CHECKED_TAGS, "flags"), TAGS_LIST.copyOfCheckedTagList());
+                join(CHECKED_TAGS, "flags"), mTagsList.copyOfCheckedTagList());
     }
 
 
     @Test
     public void test_uncheck() {
         assertFalse("Attempting to uncheck tag 'anki' should return false, as 'anki' is not found in all tags list",
-                TAGS_LIST.uncheck("anki")); //not in the list
+                mTagsList.uncheck("anki")); //not in the list
         assertFalse("Attempting to uncheck tag 'flags' should return false, as 'flags' is already unchecked",
-                TAGS_LIST.uncheck("flags")); // already unchecked
+                mTagsList.uncheck("flags")); // already unchecked
         assertTrue("Attempting to uncheck tag 'colors' should return true, as 'colors' is found in all tags and is checked",
-                TAGS_LIST.uncheck("colors"));
+                mTagsList.uncheck("colors"));
 
 
         assertEquals("Changing the status of tags to be unchecked should have noting to do with all tag list",
-                TAGS, TAGS_LIST.copyOfAllTagList());//no change
+                TAGS, mTagsList.copyOfAllTagList());//no change
         assertSameElementsIgnoreOrder("The unchecked 'colors' tag should be not be found when retrieving list of checked tag",
-                minus(CHECKED_TAGS, "colors"), TAGS_LIST.copyOfCheckedTagList());
+                minus(CHECKED_TAGS, "colors"), mTagsList.copyOfCheckedTagList());
     }
 
 
     @Test
     public void test_toggleAllCheckedStatuses() {
-        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
-        assertSameElementsIgnoreOrder(CHECKED_TAGS, TAGS_LIST.copyOfCheckedTagList());
+        assertEquals(TAGS, mTagsList.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(CHECKED_TAGS, mTagsList.copyOfCheckedTagList());
 
-        assertTrue(TAGS_LIST.toggleAllCheckedStatuses());
+        assertTrue(mTagsList.toggleAllCheckedStatuses());
 
-        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
-        assertSameElementsIgnoreOrder(TAGS, TAGS_LIST.copyOfCheckedTagList());
+        assertEquals(TAGS, mTagsList.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(TAGS, mTagsList.copyOfCheckedTagList());
 
-        assertTrue(TAGS_LIST.toggleAllCheckedStatuses());
+        assertTrue(mTagsList.toggleAllCheckedStatuses());
 
-        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
-        assertSameElementsIgnoreOrder(new ArrayList<>(), TAGS_LIST.copyOfCheckedTagList());
+        assertEquals(TAGS, mTagsList.copyOfAllTagList());
+        assertSameElementsIgnoreOrder(new ArrayList<>(), mTagsList.copyOfCheckedTagList());
     }
 
 
     @Test
     public void test_size_if_checked_have_no_extra_items_not_found_in_allTags() {
-        assertEquals(TAGS.size(), TAGS_LIST.size());
+        assertEquals(TAGS.size(), mTagsList.size());
     }
 
     @Test
     public void test_size_if_checked_have_extra_items_not_found_in_allTags() {
-        TAGS_LIST = new TagsList(TAGS, join(CHECKED_TAGS, "NEW"));
-        assertEquals(TAGS.size() + 1, TAGS_LIST.size());
+        mTagsList = new TagsList(TAGS, join(CHECKED_TAGS, "NEW"));
+        assertEquals(TAGS.size() + 1, mTagsList.size());
     }
 
 
     @Test
     public void test_sort() {
-        assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
-        TAGS_LIST.sort();
+        assertEquals(TAGS, mTagsList.copyOfAllTagList());
+        mTagsList.sort();
         assertEquals("Calling #sort on TagsList should result on sorting all tags",
-                SORTED_TAGS, TAGS_LIST.copyOfAllTagList());
+                SORTED_TAGS, mTagsList.copyOfAllTagList());
     }
 
 
@@ -255,10 +255,10 @@ public class TagsListTest {
     public void test_sort_will_not_call_collectionsSort() {
         try (MockedStatic<Collections> MockCollection = mockStatic(Collections.class)) {
 
-            assertEquals(TAGS, TAGS_LIST.copyOfAllTagList());
-            TAGS_LIST.sort();
+            assertEquals(TAGS, mTagsList.copyOfAllTagList());
+            mTagsList.sort();
             assertEquals("Calling #sort on TagsList should result on sorting all tags",
-                    SORTED_TAGS, TAGS_LIST.copyOfAllTagList());
+                    SORTED_TAGS, mTagsList.copyOfAllTagList());
 
             MockCollection.verify(() -> Collections.sort(any(), any()), never());
         }

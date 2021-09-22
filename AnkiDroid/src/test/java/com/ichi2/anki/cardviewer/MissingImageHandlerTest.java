@@ -161,12 +161,12 @@ public class MissingImageHandlerTest {
     public void testInefficientImage() {
         //Tests that the runnable passed to processInefficientImage only runs once
         class runTest implements Runnable {
-            private int nTimesRun = 0;
+            private int mNTimesRun = 0;
             @Override
             public void run() {
-                nTimesRun++;
+                mNTimesRun++;
             }
-            public int getNTimesRun() { return nTimesRun; }
+            public int getNTimesRun() { return mNTimesRun; }
         }
         runTest runnableTest = new runTest();
         processInefficientImage(runnableTest);

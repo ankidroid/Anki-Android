@@ -48,46 +48,46 @@ public class PieChartParameterizedTest {
     public ColorWrap[] colors;
 
     @Mock
-    GraphicsWrap graphics;
+    GraphicsWrap mGraphics;
 
     @Mock
-    PlotSheet plot;
+    PlotSheet mPlot;
 
-    PieChart pieChart;
+    PieChart mPieChart;
 
-    private MockedStatic<Color> colorMockedStatic;
+    private MockedStatic<Color> mColorMockedStatic;
 
     @Before
     public void setUp() {
-        colorMockedStatic = Mockito.mockStatic(Color.class);
+        mColorMockedStatic = Mockito.mockStatic(Color.class);
         MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
-        when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
+        when(mPlot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
         FontMetricsWrap fm = mock(FontMetricsWrap.class);
         when(fm.getHeight()).thenReturn(10f);
         when(fm.stringWidth(any(String.class))).thenReturn(30f);
-        when(graphics.getFontMetrics()).thenReturn(fm);
+        when(mGraphics.getFontMetrics()).thenReturn(fm);
 
         RectangleWrap r = createRectangleMock(100, 100);
-        when(graphics.getClipBounds()).thenReturn(r);
-        pieChart = new PieChart(plot, values, colors);
+        when(mGraphics.getClipBounds()).thenReturn(r);
+        mPieChart = new PieChart(mPlot, values, colors);
     }
 
     @After
     public void tearDown() {
-        colorMockedStatic.close();
+        mColorMockedStatic.close();
     }
 
     @Test
     public void testPaintDrawsAllArcs() {
-        pieChart.paint(graphics);
+        mPieChart.paint(mGraphics);
         // ordered verification is used to prevent failures when there are tiny adjacent sectors
-        InOrder inOrder = inOrder(graphics);
+        InOrder inOrder = inOrder(mGraphics);
         for (int i = 0; i < values.length; i++) {
             if (arcLengths[i] == 0) continue;
-            inOrder.verify(graphics).setColor(colors[i]);
-            inOrder.verify(graphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            inOrder.verify(mGraphics).setColor(colors[i]);
+            inOrder.verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                     floatThat(closeTo(startAngles[i])),
                     floatThat(closeTo(arcLengths[i])));
         }

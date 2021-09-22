@@ -50,13 +50,13 @@ import static org.mockito.Mockito.*;
 @RunWith(AndroidJUnit4.class)
 public class CustomStudyDialogTest extends RobolectricTest {
 
-    CustomStudyListener mockListener;
+    CustomStudyListener mMockListener;
 
 
     @Override
     public void setUp() {
         super.setUp();
-        mockListener = mock(CustomStudyListener.class);
+        mMockListener = mock(CustomStudyListener.class);
     }
 
 
@@ -64,7 +64,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
     @After
     public void tearDown() {
         super.tearDown();
-        reset(mockListener);
+        reset(mMockListener);
     }
 
 
@@ -76,7 +76,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
                 .getArguments();
 
 
-        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(this::getCol, mockListener);
+        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(this::getCol, mMockListener);
         FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, factory);
 
         scenario.moveToState(Lifecycle.State.STARTED);
@@ -134,7 +134,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         when(mockSched.newCount()).thenReturn(0);
 
 
-        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(() -> mockCollection, mockListener);
+        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(() -> mockCollection, mMockListener);
         FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, R.style.Theme_AppCompat, factory);
 
         scenario.moveToState(Lifecycle.State.STARTED);

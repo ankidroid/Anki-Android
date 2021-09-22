@@ -28,13 +28,13 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class TimePreferenceTest {
-    private final String parsableHour;
-    private final int expectedHour;
+    private final String mParsableHour;
+    private final int mExpectedHour;
 
 
     public TimePreferenceTest(String parsableHour, int expectedHour) {
-        this.parsableHour = parsableHour;
-        this.expectedHour = expectedHour;
+        this.mParsableHour = parsableHour;
+        this.mExpectedHour = expectedHour;
     }
 
 
@@ -49,8 +49,8 @@ public class TimePreferenceTest {
     
     @Test
     public void shouldParseHours() {
-        int actualHour = TimePreference.parseHours(this.parsableHour);
+        int actualHour = TimePreference.parseHours(this.mParsableHour);
 
-        assertEquals(expectedHour, actualHour);
+        assertEquals(mExpectedHour, actualHour);
     }
 }
