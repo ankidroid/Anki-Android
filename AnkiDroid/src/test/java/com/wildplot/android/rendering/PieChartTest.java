@@ -28,77 +28,77 @@ public class PieChartTest {
     private static final double PRECISION = 1E-3F;
 
     @Mock
-    private GraphicsWrap graphics;
+    private GraphicsWrap mGraphics;
 
     @Mock
-    private PlotSheet plot;
+    private PlotSheet mPlot;
 
-    private PieChart pieChart;
+    private PieChart mPieChart;
 
-    private MockedStatic<Color> colorMockedStatic;
+    private MockedStatic<Color> mColorMockedStatic;
 
 
     @Before
     public void setUp() {
-        colorMockedStatic = mockStatic(Color.class);
+        mColorMockedStatic = mockStatic(Color.class);
         MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
-        when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
+        when(mPlot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
         FontMetricsWrap fm = mock(FontMetricsWrap.class);
         when(fm.getHeight()).thenReturn(10f);
         when(fm.stringWidth(anyString())).thenReturn(30f);
-        when(graphics.getFontMetrics()).thenReturn(fm);
+        when(mGraphics.getFontMetrics()).thenReturn(fm);
     }
 
     @After
     public void tearDown() {
-        colorMockedStatic.close();
+        mColorMockedStatic.close();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void constructorShouldThrowIfSizesMismatch() {
-        new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
+        new PieChart(mPlot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
     }
 
     @Test
     public void paintShouldNotDrawAnythingIfValuesAreZero() {
-        pieChart = new PieChart(plot, new double[]{0, 0}, new ColorWrap[]{
+        mPieChart = new PieChart(mPlot, new double[]{0, 0}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
-        pieChart.paint(graphics);
-        verify(graphics, never()).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+        mPieChart.paint(mGraphics);
+        verify(mGraphics, never()).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                 anyFloat(), anyFloat());
     }
 
     @Test
     public void paintShouldDrawFullRedCircleIfOneValue() {
-        pieChart = new PieChart(plot, new double[]{1.}, new ColorWrap[]{
+        mPieChart = new PieChart(mPlot, new double[]{1.}, new ColorWrap[]{
                 ColorWrap.RED});
         RectangleWrap r = createRectangleMock(100, 100);
-        when(graphics.getClipBounds()).thenReturn(r);
-        pieChart.paint(graphics);
-        verify(graphics).setColor(ColorWrap.RED);
-        verify(graphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+        when(mGraphics.getClipBounds()).thenReturn(r);
+        mPieChart.paint(mGraphics);
+        verify(mGraphics).setColor(ColorWrap.RED);
+        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                 floatThat(closeTo(-90F)),
                 floatThat(closeTo(360F)));
     }
 
     @Test
     public void paintShouldDrawTwoSectorsWithGivenColors() {
-        pieChart = new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{
+        mPieChart = new PieChart(mPlot, new double[]{1, 1}, new ColorWrap[]{
                 ColorWrap.RED, ColorWrap.GREEN});
         RectangleWrap r = createRectangleMock(100, 100);
-        when(graphics.getClipBounds()).thenReturn(r);
+        when(mGraphics.getClipBounds()).thenReturn(r);
 
-        pieChart.paint(graphics);
+        mPieChart.paint(mGraphics);
 
-        verify(graphics).setColor(ColorWrap.RED);
-        verify(graphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+        verify(mGraphics).setColor(ColorWrap.RED);
+        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                 floatThat(closeTo(-90F)),
                 floatThat(closeTo(180F)));
 
-        verify(graphics).setColor(ColorWrap.GREEN);
-        verify(graphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+        verify(mGraphics).setColor(ColorWrap.GREEN);
+        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                 floatThat(closeTo(90F)),
                 floatThat(closeTo(180F)));
     }

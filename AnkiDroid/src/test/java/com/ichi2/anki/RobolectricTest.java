@@ -87,10 +87,10 @@ public class RobolectricTest implements CollectionGetter {
 
     private static boolean mBackground = true;
 
-    private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
+    private final ArrayList<ActivityController<?>> mControllersForCleanup = new ArrayList<>();
 
     protected void saveControllerForCleanup(ActivityController<?> controller) {
-        controllersForCleanup.add(controller);
+        mControllersForCleanup.add(controller);
     }
 
     protected boolean useInMemoryDatabase() {
@@ -151,7 +151,7 @@ public class RobolectricTest implements CollectionGetter {
     public void tearDown() {
 
         // If you don't clean up your ActivityControllers you will get OOM errors
-        for (ActivityController<?> controller : controllersForCleanup) {
+        for (ActivityController<?> controller : mControllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString());
             try {
                 controller.destroy();
@@ -160,7 +160,7 @@ public class RobolectricTest implements CollectionGetter {
                 // No exception here should halt test execution since tests are over anyway.
             }
         }
-        controllersForCleanup.clear();
+        mControllersForCleanup.clear();
 
         try {
             if (CollectionHelper.getInstance().colIsOpen()) {

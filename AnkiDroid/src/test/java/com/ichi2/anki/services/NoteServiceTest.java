@@ -44,10 +44,10 @@ import static org.junit.Assert.assertThrows;
 @RunWith(AndroidJUnit4.class)
 public class NoteServiceTest extends RobolectricTest {
 
-    Collection testCol;
+    Collection mTestCol;
     @Before
     public void before() {
-        testCol = getCol();
+        mTestCol = getCol();
     }
 
     //temporary folder to test importMediaToDirectory function
@@ -57,12 +57,12 @@ public class NoteServiceTest extends RobolectricTest {
     //tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     public void updateJsonNoteTest() {
-        Model testModel = testCol.getModels().byName("Basic");
+        Model testModel = mTestCol.getModels().byName("Basic");
         IMultimediaEditableNote multiMediaNote = NoteService.createEmptyNote(testModel);
         multiMediaNote.getField(0).setText("foo");
         multiMediaNote.getField(1).setText("bar");
 
-        Note basicNote = new Note(testCol, testModel);
+        Note basicNote = new Note(mTestCol, testModel);
         basicNote.setField(0, "this should be changed to foo");
         basicNote.setField(1, "this should be changed to bar");
 
@@ -82,7 +82,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         //model with ID 45
         testModel = new Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}");
-        Note noteWithID45 = new Note(testCol, testModel);
+        Note noteWithID45 = new Note(mTestCol, testModel);
 
         Throwable expectedException = assertThrows(RuntimeException.class, () -> NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45));
         assertEquals(expectedException.getMessage(), "Source and Destination Note ID do not match.");
@@ -105,9 +105,9 @@ public class NoteServiceTest extends RobolectricTest {
         audioField.setAudioPath(mFile.getAbsolutePath());
         testAudioClip.setField(0, audioField);
 
-        NoteService.saveMedia(testCol, testAudioClip);
+        NoteService.saveMedia(mTestCol, testAudioClip);
 
-        File outFile = new File(testCol.getMedia().dir(), mFile.getName());
+        File outFile = new File(mTestCol.getMedia().dir(), mFile.getName());
 
         assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), audioField.getAudioPath());
 
@@ -131,9 +131,9 @@ public class NoteServiceTest extends RobolectricTest {
         imgField.setImagePath(mFile.getAbsolutePath());
         testImage.setField(0, imgField);
 
-        NoteService.saveMedia(testCol, testImage);
+        NoteService.saveMedia(mTestCol, testImage);
 
-        File outFile = new File(testCol.getMedia().dir(), mFile.getName());
+        File outFile = new File(mTestCol.getMedia().dir(), mFile.getName());
 
         assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), imgField.getImagePath());
     }

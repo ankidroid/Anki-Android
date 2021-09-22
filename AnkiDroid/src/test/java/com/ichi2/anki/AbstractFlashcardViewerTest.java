@@ -36,7 +36,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
         public Integer mAnswered;
-        private int lastTime = 0;
+        private int mLastTime = 0;
 
         @Override
         protected void setTitle() {
@@ -58,8 +58,8 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
         @Override
         protected long getElapsedRealTime() {
-            lastTime += AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
-            return lastTime;
+            mLastTime += AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
+            return mLastTime;
         }
 
 

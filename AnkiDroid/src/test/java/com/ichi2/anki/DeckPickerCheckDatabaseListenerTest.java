@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
-    private DeckPickerTestImpl impl;
+    private DeckPickerTestImpl mImpl;
 
     @Override
     public void setUp() {
@@ -45,8 +45,8 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
                 Robolectric.buildActivity(DeckPickerTestImpl.class, new Intent())
                 .create().start().resume();
         saveControllerForCleanup((controller));
-        impl = controller.get();
-        impl.resetVariables();
+        mImpl = controller.get();
+        mImpl.resetVariables();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         execute(result);
 
-        assertThat("Load Failed dialog should be shown if no data is supplied", impl.didDisplayDialogLoadFailed());
+        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl.didDisplayDialogLoadFailed());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         execute(result);
 
-        assertThat("Load Failed dialog should be shown if empty data is supplied", impl.didDisplayDialogLoadFailed());
+        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl.didDisplayDialogLoadFailed());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         execute(result);
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !impl.didDisplayDialogLoadFailed());
-        assertThat("Dialog should be displayed", impl.didDisplayMessage());
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed());
+        assertThat("Dialog should be displayed", mImpl.didDisplayMessage());
     }
 
     @Test
@@ -86,9 +86,9 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         execute(result);
 
-        assertThat("Load Failed dialog should be shown if failed data is supplied", impl.didDisplayDialogLoadFailed());
-        assertThat("Locked Database dialog should be shown if Db was locked", !impl.didDisplayLockedDialog());
-        assertThat("Dialog should not be displayed", !impl.didDisplayMessage());
+        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl.didDisplayDialogLoadFailed());
+        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl.didDisplayLockedDialog());
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage());
     }
 
     @Test
@@ -98,9 +98,9 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
         execute(result);
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !impl.didDisplayDialogLoadFailed());
-        assertThat("Locked Database dialog should be shown if Db was locked", impl.didDisplayLockedDialog());
-        assertThat("Dialog should not be displayed", !impl.didDisplayMessage());
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed());
+        assertThat("Locked Database dialog should be shown if Db was locked", mImpl.didDisplayLockedDialog());
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage());
     }
 
     @NonNull
@@ -137,7 +137,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
     }
 
     private void execute(Pair<Boolean, CheckDatabaseResult> result) {
-        DeckPicker.CheckDatabaseListener listener = getInstance(impl);
+        DeckPicker.CheckDatabaseListener listener = getInstance(mImpl);
 
         listener.onPostExecute(result);
     }

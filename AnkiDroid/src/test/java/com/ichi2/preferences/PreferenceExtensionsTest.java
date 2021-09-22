@@ -45,7 +45,7 @@ public class PreferenceExtensionsTest {
     private SharedPreferences mMockPreferences;
 
     @Mock
-    private SharedPreferences.Editor mockEditor;
+    private SharedPreferences.Editor mMockEditor;
 
     private String getOrSetString(String key, Supplier<String> supplier) {
         return PreferenceExtensions.getOrSetString(mMockPreferences, key, supplier);
@@ -56,8 +56,8 @@ public class PreferenceExtensionsTest {
         MockitoAnnotations.openMocks(this);
         Mockito.when(mMockPreferences.contains(VALID_KEY)).thenReturn(true);
         Mockito.when(mMockPreferences.getString(eq(VALID_KEY), anyString())).thenReturn(VALID_RESULT);
-        Mockito.when(mMockPreferences.edit()).thenReturn(mockEditor);
-        Mockito.when(mockEditor.putString(anyString(), anyString())).thenReturn(mockEditor);
+        Mockito.when(mMockPreferences.edit()).thenReturn(mMockEditor);
+        Mockito.when(mMockEditor.putString(anyString(), anyString())).thenReturn(mMockEditor);
     }
 
     private String getForMissingKey() {
@@ -80,8 +80,8 @@ public class PreferenceExtensionsTest {
     @Test
     public void missingKeySetsPreference() {
         getForMissingKey();
-        Mockito.verify(mockEditor).putString(MISSING_KEY, LAMBDA_RETURN);
-        Mockito.verify(mockEditor).apply();
+        Mockito.verify(mMockEditor).putString(MISSING_KEY, LAMBDA_RETURN);
+        Mockito.verify(mMockEditor).apply();
     }
 
     @SuppressWarnings("unused")
