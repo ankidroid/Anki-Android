@@ -523,6 +523,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
+        // PERF: Should be in background
+        mCollection.getDecks().save(dyn);
         TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), createCustomStudySessionListener());
 
         // Hide the dialogs
