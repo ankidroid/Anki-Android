@@ -95,7 +95,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         customStudy.remove("mod");
         customStudy.remove("name");
 
-        String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true,\"return\":true}";
+        String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true}";
         assertThat(customStudy.toString(), is(expected));
     }
 

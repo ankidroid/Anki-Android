@@ -108,8 +108,7 @@ public class Decks extends DeckManager {
                 + "\"separate\": true,"
                 // list of (search, limit, order); we only use first element for now
                 + "\"terms\": [[\"\", 100, 0]],"
-                + "\"resched\": true,"
-                + "\"return\": true" // currently unused
+                + "\"resched\": true"
             + "}";
 
     public static final String DEFAULT_CONF = ""
