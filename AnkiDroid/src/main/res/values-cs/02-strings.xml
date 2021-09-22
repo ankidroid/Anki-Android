@@ -193,10 +193,10 @@
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
     <string name="export_successful">Soubor „%s“ byl exportován. Chcete jej poslat pomocí jiné aplikace?</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
-    <string name="export_email_text"><![CDATA[        Ahoj!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Tohle je balíček kartiček Anki poslaný z <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Zkus ho otevřít pomocí jedné z dostupných <a href="http://ankisrs.net/#download">distribucí Anki</a> a užij si jednoduché a účinné učení!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>

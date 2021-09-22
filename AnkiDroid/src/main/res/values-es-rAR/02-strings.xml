@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_successful">El archivo \"%s\" fue exportado. ¿Desea enviarlo con otra aplicación?</string>
     <string name="export_email_subject">Tarjetas exportadas por AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        ¡Hola!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Este es un mazo de tarjetas de estudio de Anki enviado desde <a href="https://ankidroid.org/docs/manual.html">Ankidroid</a>.
-        ¡Intenta abrirlo usando una de las distribuciones disponibles de Anki <a href="http://ankisrs.net/#download"> y disfruta de un sencillo y eficiente aprendizaje!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Error al exportar archivo apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>

@@ -100,7 +100,7 @@
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
-    <string name="custom_study_review_ahead">ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ</string>
+    <string name="custom_study_review_ahead">ଆଗୁଆ ସମୀକ୍ଷା</string>
     <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
     <string name="custom_study_preview_new">ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କର</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
@@ -187,17 +187,17 @@
     <string name="export_save_apkg_unsuccessful">ଆଙ୍କି ପ୍ୟାକେଜ୍ ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
-    <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        ଏହା <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ଡେକ୍।
-        ଉପଲବ୍ଧ <a href="http://ankisrs.net/#download">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଏବଂ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__deck_options">ଡେକ୍ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="select_tts">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
-    <string name="custom_study">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ </string>
+    <string name="custom_study">ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ</string>
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପର୍ଯ୍ୟାୟଟି ୦ ଠାରୁ ଅଧିକ ଗୋଟେ ସଂଖ୍ୟା ହବା ଉଚିତ</string>

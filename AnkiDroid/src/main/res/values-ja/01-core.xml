@@ -45,7 +45,7 @@
     <string name="statistics">統計情報</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">描画</string>
     <string name="send_feedback">フィードバック</string>
     <string name="studyoptions_due_today">今日の課題:</string>
     <string name="studyoptions_new_total">新規カード:</string>
@@ -110,9 +110,9 @@
     <string name="menu_flag_card_two">橙フラグ</string>
     <string name="menu_flag_card_three">緑フラグ</string>
     <string name="menu_flag_card_four">青フラグ</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">ピンクのフラグ</string>
+    <string name="menu_flag_card_six">青緑色のフラグ</string>
+    <string name="menu_flag_card_seven">紫のフラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
     <string name="menu_select">テキストを選択</string>

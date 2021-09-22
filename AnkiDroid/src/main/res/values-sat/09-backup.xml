@@ -40,7 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱵᱟᱝ ᱥᱟᱱᱪᱟᱣ ᱠᱟᱱᱟ ᱾  SD card ᱨᱮ ᱡᱟᱭᱟᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱜᱷᱟᱹᱛᱤᱨ ᱠᱚᱢ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱚᱞᱜᱟ ᱨᱮᱫ ᱠᱚ ᱚᱰᱚᱠ ᱛᱟᱢ ᱾</string>
     <string name="sd_space_warning">%d MB ᱠᱷᱚᱱ ᱠᱚᱢ ᱡᱟᱭᱟᱜ ᱟᱢᱟᱜ SD card ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱾\nᱦᱟᱱᱤ ᱠᱚᱢ ᱞᱟᱹᱛᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱠᱚᱢ ᱢᱮ ᱾</string>
-    <string name="backup_restore">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
+    <string name="backup_restore">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ </string>
     <string name="backup_new_collection">ᱱᱟᱶᱟ ᱴᱩᱢᱟᱹᱞ</string>
     <string name="backup_del_collection">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="backup_del_collection_question">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱞᱨᱟᱣᱟᱭ, ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱢᱮᱴᱟᱣᱼᱜ ᱛᱟᱢᱟ ᱾ ᱾</string>

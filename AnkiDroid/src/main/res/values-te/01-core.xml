@@ -45,7 +45,7 @@
     <string name="statistics">గణాంకాలు</string>
     <string name="settings">సెట్టింగులు</string>
     <string name="help">సహాయం</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">బొమ్మ </string>
     <string name="send_feedback">స్పందన పంపండి</string>
     <string name="studyoptions_due_today">నేడు గడువు:</string>
     <string name="studyoptions_new_total">అన్ని కొత్త కార్డులు:</string>
@@ -65,15 +65,15 @@
         <item quantity="other">%d నిమిషాలు మిగిలి ఉన్నాయి</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d నిమిషం %d మిగిలి ఉంది</item>
+        <item quantity="other">%d నిమిషాలు %d మిగిలి ఉన్నాయి</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d రోజు %d మిగిలి ఉంది </item>
+        <item quantity="other">%d రోజులు %d మిగిలి ఉన్నాయి</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">సముదాయం ఖాళీ గా ఉంది </string>
+    <string name="no_cards_placeholder_description">+ గుర్తు ని నొక్కి చీటీ కూర్చు</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">అధ్యయనం %1$d కార్డు లో %2$s నేడు</item>

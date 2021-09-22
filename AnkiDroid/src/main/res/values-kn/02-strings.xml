@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">ಉಳಿಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ವಿಫಲವಾಗಿದೆ</string>
     <string name="export_successful">“%s” ಫೈಲ್ ಅನ್ನು ರಫ್ತು ಮಾಡಲಾಗಿದೆ. ನೀವು ಅದನ್ನು ಇನ್ನೊಂದು ಅಪ್ಲಿಕೇಶನ್‌ನೊಂದಿಗೆ ಕಳುಹಿಸಲು ಬಯಸುವಿರಾ?</string>
     <string name="export_email_subject">ಆಂಕಿಡ್ರಾಯ್ಡ್ ರಫ್ತು ಮಾಡಿದ ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ಗಳು:%s</string>
-    <string name="export_email_text"><![CDATA[        ನಮಸ್ತೆ!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        ಇದು ಕಳುಹಿಸಿದ ಅಂಕಿ ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್ ಡೆಕ್ ಆಗಿದೆ <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        ಲಭ್ಯವಿರುವ ಒಂದನ್ನು ಬಳಸಿ ಅದನ್ನು ತೆರೆಯಲು ಪ್ರಯತ್ನಿಸಿ <a href="http://ankisrs.net/#download">Anki distributions</a> ಮತ್ತು ಸುಲಭ ಮತ್ತು ಪರಿಣಾಮಕಾರಿ ಕಲಿಕೆಯನ್ನು ಆನಂದಿಸಿ!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">ಎಪಿಕೆಜಿ ಫೈಲ್ ರಫ್ತು ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>

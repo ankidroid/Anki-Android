@@ -193,10 +193,11 @@
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
-    <string name="export_email_text"><![CDATA[Привет!
-<br/><br/>
-Это колода карточек, отправленная из приложения <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-Установите на компьютер приложение <a href="http://ankisrs.net/#download">Anki</a>, чтобы открыть эту колоду и наслаждаться легким и эффективным обучением!]]></string>
+    <string name="export_email_text_new"><![CDATA[        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]></string>
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>

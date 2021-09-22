@@ -77,7 +77,7 @@
     <string name="image_zoom" maxLength="41">छवि ज़ूम</string>
     <string name="button_size" maxLength="41">उत्तर बटन आकार</string>
     <string name="card_browser_font_size" maxLength="41">कार्ड ब्राउज़र फ़ॉन्ट स्केलिंग</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="card_browser_hide_media" maxLength="41">फाइलों के नाम कार्ड ब्राउज़र में दिखाएं</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid निर्देशिका</string>
     <string name="fullscreen_review" maxLength="41">फुल स्क्रीन मोड</string>
@@ -172,7 +172,7 @@
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
     <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
     <string name="show_large_answer_buttons_summ">२ पंक्तियों में उत्तर बटन दिखाएं</string>
-    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">ऊपरी बार दिखाएं</string>
     <string name="show_top_bar_summ">शीर्ष बार में कार्ड की संख्या, ध्वज और चिह्न दिखाएं</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
     <string name="show_progress_summ">शेष कार्ड गणना दिखाएं</string>

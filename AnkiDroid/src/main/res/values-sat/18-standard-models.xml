@@ -20,10 +20,10 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">ᱢᱟᱲᱟᱝ</string>
-    <string name="back_field_name">ᱛᱟᱭᱚᱢ</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ᱚᱞ</string>
-    <string name="extra_field_name">ᱵᱟᱲᱛᱤ</string>
+    <string name="front_field_name">ᱥᱟᱢᱟᱝ</string>
+    <string name="back_field_name">ᱛᱟᱭᱚᱢ </string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ᱚᱱᱚᱞ</string>
+    <string name="extra_field_name">ᱵᱟᱹᱲᱛᱤ</string>
     <string name="field_to_ask_front_name">\'ᱯᱟᱪᱞᱟᱹ\' ᱥᱮᱞᱫ ᱢᱮ</string>
     <!--Card type-->
     <string name="card_n_name">ᱠᱟᱰ%d</string>

@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Датотекот\"%s\" беше извезен. Дали сакате да го испратите со друга апликација?</string>
     <string name="export_email_subject">AnkiDroid извезувани флеширани картички:%s</string>
-    <string name="export_email_text"><![CDATA[        Здраво!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Ова е палубата за испраќање на Anki flashcards <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>
-        Обидете се да го отворите користејќи еден од достапните<a href="http://ankisrs.net/#download">Anki дистрибуција</a>и уживајте во лесно и ефикасно учење!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Грешка при извоз на apkg датотека</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
