@@ -33,7 +33,6 @@ import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
@@ -50,7 +49,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -108,10 +106,10 @@ public class AbstractSchedTest extends RobolectricTest {
     public void ensureUndoCorrectCounts() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Deck deck = col.getDecks().get(1);
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertThat(dconf, notNullValue());
         dconf.getJSONObject("new").put("perDay", 10);
-        JSONArray newCount = deck.getJSONArray("newToday");
+        col.getDecks().save(dconf);
         for (int i = 0; i < 20; i++) {
             Note note = col.newNote();
             note.setField(0, "a");
@@ -164,9 +162,10 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6903
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        ModelManager models = col.getModels();
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertThat(dconf, notNullValue());
         dconf.getJSONObject("new").put("bury", true);
+        getCol().getDecks().save(dconf);
         final int nbNote = 2;
         Note[] notes = new Note[nbNote];
         for (int i = 0; i < nbNote; i++) {
@@ -251,8 +250,9 @@ public class AbstractSchedTest extends RobolectricTest {
             ModelManager models = col.getModels();
 
             DeckConfig dconf = decks.getConf(1);
+            assertThat(dconf, notNullValue());
             dconf.getJSONObject("new").put("perDay", 0);
-
+            decks.save(dconf);
 
             Model model = models.byName("Basic");
             for (long did : new long[]{cId, dId}) {
@@ -313,10 +313,11 @@ mw.col.sched.extendLimits(1, 0)
         Collection col = getCol();
         DeckConfig conf = col.getDecks().confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
+        col.getDecks().save(conf);
         col.set_config("collapseTime", 20 * 60);
         AbstractSched sched = col.getSched();
 
-        Note note = addNoteUsingBasicModel("foo", "bar");
+        addNoteUsingBasicModel("foo", "bar");
 
         col.reset();
         advanceRobolectricLooper();
