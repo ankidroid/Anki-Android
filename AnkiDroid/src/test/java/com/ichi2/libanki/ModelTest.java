@@ -539,8 +539,12 @@ public class ModelTest extends RobolectricTest {
         reqSize(opt);
         r = opt.getJSONArray("req").getJSONArray(0);
         assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
-        assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
+        if (col.getModels() instanceof ModelsV16) {
+            assertEquals(new JSONArray("[0, 1]"), r.getJSONArray(2));
+        } else {
+            // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
+            assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
+        }
     }
 
     @Test
