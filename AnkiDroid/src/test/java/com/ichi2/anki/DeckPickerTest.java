@@ -401,7 +401,7 @@ public class DeckPickerTest extends RobolectricTest {
             setupColV16();
 
             // corrupt col
-            DbUtils.performQuery(getTargetContext(), "drop table deck_config");
+            DbUtils.performQuery(getTargetContext(), "drop table decks");
 
             InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
