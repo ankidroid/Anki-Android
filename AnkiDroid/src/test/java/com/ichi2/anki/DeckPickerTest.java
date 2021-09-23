@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
 
@@ -42,6 +41,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
@@ -201,7 +201,9 @@ public class DeckPickerTest extends RobolectricTest {
         AbstractSched sched = col.getSched();
 
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertNotNull(dconf);
         dconf.getJSONObject("new").put("perDay", 10);
+        col.getDecks().save(dconf);
         for (int i = 0; i < 11; i++) {
             addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
         }
