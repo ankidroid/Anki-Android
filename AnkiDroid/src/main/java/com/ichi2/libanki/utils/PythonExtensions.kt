@@ -112,6 +112,26 @@ fun JSONArray.append(jsonObject: JSONObject) {
     this.put(jsonObject)
 }
 
+/**
+ * Insert an item at a given position. O(n) at the first position
+ *
+ * The first argument is the index of the element before which to insert,
+ * so `a.insert(0, x)` inserts at the front of the list,
+ * and `a.insert(len(a), x)` is equivalent to `a.append(x)`.
+ */
 fun JSONArray.insert(idx: Int, jsonObject: JSONObject) {
+    if (idx >= this.length()) {
+        this.put(jsonObject)
+        return
+    }
+
+    // shuffle the elements up to make room for the next
+    // pointer starts at the last element, and appends, after that, replaces elements
+    var pointerIndex = this.length() - 1
+    while (pointerIndex >= idx) {
+        this.put(pointerIndex + 1, this.getJSONObject(pointerIndex))
+        pointerIndex--
+    }
+
     this.put(idx, jsonObject)
 }
