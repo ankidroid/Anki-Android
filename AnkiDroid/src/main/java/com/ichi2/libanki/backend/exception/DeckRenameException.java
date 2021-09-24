@@ -1,5 +1,5 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.exception;
+package com.ichi2.libanki.backend.exception;
 
 import android.content.res.Resources;
 

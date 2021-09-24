@@ -19,8 +19,8 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.exception.DeckRenameException
 import com.ichi2.anki.exception.FilteredAncestor
+import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup

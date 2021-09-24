@@ -20,12 +20,11 @@ import android.content.Context;
 import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MaterialEditTextDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
