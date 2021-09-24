@@ -102,7 +102,6 @@ import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.anki.export.ActivityExportingDelegate;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -122,6 +121,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
@@ -627,8 +627,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("DeckPicker:: Creating new deck...");
         try {
             getCol().getDecks().id(deckName);
-        } catch (FilteredAncestor filteredAncestor) {
-            UIUtils.showThemedToast(this, getString(R.string.decks_rename_filtered_nosubdecks), false);
+        } catch (DeckRenameException ex) {
+            UIUtils.showThemedToast(this, ex.getLocalizedMessage(getResources()), false);
             return false;
         }
         updateDeckList();

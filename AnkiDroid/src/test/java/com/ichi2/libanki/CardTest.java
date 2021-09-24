@@ -2,7 +2,7 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -242,7 +242,7 @@ public class CardTest extends RobolectricTest {
 
     @Test
     @Config(qualifiers = "en")
-    public void nextDueTest() throws FilteredAncestor {
+    public void nextDueTest() throws DeckRenameException {
         Collection col = getCol();
         // Test runs as the 7th of august 2020, 9h00
         Note n = addNoteUsingBasicModel("Front", "Back");

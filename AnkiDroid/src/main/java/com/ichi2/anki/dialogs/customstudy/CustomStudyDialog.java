@@ -48,13 +48,13 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.dialogs.ContextMenuHelper;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckManager;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -495,8 +495,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck);
             try {
                 dyn = decks.get(decks.newDyn(customStudyDeck));
-            } catch (FilteredAncestor filteredAncestor) {
-                UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), true);
+            } catch (DeckRenameException ex) {
+                UIUtils.showThemedToast(requireActivity(), ex.getLocalizedMessage(this.getResources()), true);
                 return;
             }
         }

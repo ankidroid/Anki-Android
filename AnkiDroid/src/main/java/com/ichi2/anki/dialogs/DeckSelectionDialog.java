@@ -33,12 +33,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckManager;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -195,8 +194,8 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 selectDeckWithDeckName(getDecks().name(id));
             });
             createDeckDialog.showDialog();
-        } catch (FilteredAncestor filteredAncestor) {
-            Timber.w(filteredAncestor);
+        } catch (DeckRenameException ex) {
+            Timber.w(ex);
         }
     }
 
@@ -224,8 +223,8 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             long id = getDecks().id(deckName);
             SelectableDeck dec = new SelectableDeck(id, deckName);
             selectDeckAndClose(dec);
-        } catch (FilteredAncestor filteredAncestor) {
-            UIUtils.showThemedToast(requireActivity(), getString(R.string.decks_rename_filtered_nosubdecks), false);
+        } catch (DeckRenameException ex) {
+            UIUtils.showThemedToast(requireActivity(), ex.getLocalizedMessage(getResources()), false);
         }
     }
 
