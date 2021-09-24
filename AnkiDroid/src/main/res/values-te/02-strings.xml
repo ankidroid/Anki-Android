@@ -154,7 +154,6 @@
     <string name="show_hint">కనిపింపజేయు %s</string>
     <string name="info_rate">రేట్ AnkiDroid</string>
     <string name="import_title">దిగుమతి</string>
-    <string name="import_select_title">దిగుమతి చేయడానికి ఒక ఫైల్ను ఎంచుకోండి</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">చేర్చు</string>
     <string name="import_message_replace_confirm">ఇది మీ ప్రస్తుత సేకరణను తొలగిస్తుంది మరియు ఫైల్ యొక్క డేటాను భర్తీ చేస్తుంది %s</string>
     <string name="import_message_add_confirm">సేకరణకు \"%s\" ని జోడించాలా? ఇది చాలా కాలం పడుతుంది</string>
@@ -188,14 +187,12 @@
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">\"%s\" ఫైల్ ఎగుమతి చేయబడింది. మీరు మరొక అనువర్తనంతో పంపాలనుకుంటున్నారా?</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        ఈ నుండి Anki flashcards డెక్ పంపండి ఉంది <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-      అందుబాటులో ఉన్న వాటిని ఉపయోగించి తెరవడాన్ని ప్రయత్నించండి మరియు సులభమైన మరియు సమర్థవంతమైన అభ్యాసను ఆస్వాదించండి! <a href="http://ankisrs.net/#download">Anki distributions</a> 
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Apkg ఫైల్ను ఎగుమతి చేయడంలో లోపం</string>
-    <string name="import_hint">డైరెక్టరీలో \"%s\" లో apkg ఫైల్ను ఉంచండి మరియు కార్డ్లను దిగుమతి చేయడానికి \"సరే\" ను తాకండి</string>
-    <string name="upgrade_import_no_file_found">దిగుమతి చెయ్యదగిన %1$s ఫైల్ కనుగొనబడలేదు</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

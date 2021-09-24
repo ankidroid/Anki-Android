@@ -17,8 +17,10 @@
 package com.ichi2.ui
 
 import android.content.Context
-import android.view.Gravity
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.Binding
 import timber.log.Timber
@@ -29,18 +31,30 @@ typealias KeyCode = Int
  * Square dialog which allows a user to select a [Binding] for a key press
  * This does not yet support bluetooth headsets.
  */
-class KeyPicker(context: Context) : FixedTextView(context) {
-    private var mBinding: Binding? = null
-    private var mOnBindingChangedListener: ((Binding) -> Unit)? = null
-    private var mIsValidKeyCode: ((KeyCode) -> Boolean)? = null
+class KeyPicker(val rootLayout: View) {
+    private val textView: TextView = rootLayout.findViewById(R.id.key_picker_selected_key)
 
-    fun getBinding(): Binding? = mBinding
+    private val context: Context get() = rootLayout.context
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+    private var text: String
+        set(value) {
+            textView.text = value
+        }
+        get() = textView.text.toString()
+
+    private var onBindingChangedListener: ((Binding) -> Unit)? = null
+    private var isValidKeyCode: ((KeyCode) -> Boolean)? = null
+
+    /** Currently bound key */
+    private var binding: Binding? = null
+
+    fun getBinding(): Binding? = binding
+
+    fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action != KeyEvent.ACTION_DOWN) return true
 
         // When accepting a keypress, we only want to find the keycode, not the unicode character.
-        val isValidKeyCode = mIsValidKeyCode
+        val isValidKeyCode = isValidKeyCode
         val maybeBinding = Binding.key(event).stream().filter { x -> x.isKeyCode && (isValidKeyCode == null || isValidKeyCode(x.getKeycode()!!)) }.findFirst()
         if (!maybeBinding.isPresent) {
             return true
@@ -48,32 +62,29 @@ class KeyPicker(context: Context) : FixedTextView(context) {
 
         val newBinding = maybeBinding.get()
         Timber.d("Changed key to '%s'", newBinding)
-        mBinding = newBinding
+        binding = newBinding
         text = newBinding.toDisplayString(context)
-        mOnBindingChangedListener?.invoke(newBinding)
+        onBindingChangedListener?.invoke(newBinding)
         return true
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // enforce height == width
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
-    }
-
     fun setBindingChangedListener(listener: (Binding) -> Unit) {
-        mOnBindingChangedListener = listener
+        onBindingChangedListener = listener
     }
 
     fun setKeycodeValidation(validation: (KeyCode) -> Boolean) {
-        mIsValidKeyCode = validation
+        isValidKeyCode = validation
     }
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-        text = context.getString(R.string.key_picker_default_press_key)
-        textSize = 24f
-        textAlignment = TEXT_ALIGNMENT_CENTER
-        gravity = Gravity.CENTER
-        requestFocus()
+        textView.requestFocus()
+        textView.setOnKeyListener { _, _, event -> dispatchKeyEvent(event) }
+    }
+
+    companion object {
+        fun inflate(context: Context): KeyPicker {
+            val layout = LayoutInflater.from(context).inflate(R.layout.dialog_key_picker, null)
+            return KeyPicker(layout)
+        }
     }
 }

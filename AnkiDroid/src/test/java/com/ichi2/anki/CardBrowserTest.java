@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.anki;
 
 import android.Manifest;
@@ -598,7 +614,7 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         // Make sure card has default value in sortType field
-        assertThat("Initially Card Browser has order = noteFld", getCol().getConf().get("sortType"), is("noteFld"));
+        assertThat("Initially Card Browser has order = noteFld", getCol().get_config_string("sortType"), is("noteFld"));
 
         // Store the current (before changing the database) Mod Time
         long initialMod = getCol().getMod();
@@ -616,7 +632,7 @@ public class CardBrowserTest extends RobolectricTest {
         // Find the current (after database has been changed) Mod time
         long finalMod = getCol().getMod();
 
-        assertThat("Card Browser has the new sortType field", getCol().getConf().get("sortType"), is("cardEase"));
+        assertThat("Card Browser has the new sortType field", getCol().get_config_string("sortType"), is("cardEase"));
         Assert.assertNotEquals("Modification time must change", initialMod, finalMod);
     }
 

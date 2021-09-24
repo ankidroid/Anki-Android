@@ -35,13 +35,11 @@ class ViewerCommandTest {
                 "binding_FLIP_OR_ANSWER_EASE2, binding_FLIP_OR_ANSWER_EASE3, binding_FLIP_OR_ANSWER_EASE4, " +
                 "binding_FLIP_OR_ANSWER_RECOMMENDED, binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, " +
                 "binding_UNDO, binding_EDIT, binding_MARK, binding_LOOKUP, binding_BURY_CARD, " +
-                "binding_SUSPEND_CARD, binding_DELETE, binding_UNUSED_15, binding_PLAY_MEDIA, " +
+                "binding_SUSPEND_CARD, binding_DELETE, binding_PLAY_MEDIA, " +
                 "binding_EXIT, binding_BURY_NOTE, binding_SUSPEND_NOTE, binding_TOGGLE_FLAG_RED, " +
                 "binding_TOGGLE_FLAG_ORANGE, binding_TOGGLE_FLAG_GREEN, binding_TOGGLE_FLAG_BLUE, " +
                 "binding_TOGGLE_FLAG_PINK, binding_TOGGLE_FLAG_TURQUOISE, binding_TOGGLE_FLAG_PURPLE, " +
-                "binding_UNSET_FLAG, binding_ANSWER_FIRST_BUTTON, binding_ANSWER_SECOND_BUTTON, " +
-                "binding_ANSWER_THIRD_BUTTON, binding_ANSWER_FOURTH_BUTTON, binding_ANSWER_RECOMMENDED, " +
-                "binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
+                "binding_UNSET_FLAG, binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
                 "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD",
             names
         )

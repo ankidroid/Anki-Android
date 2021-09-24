@@ -24,16 +24,15 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
@@ -50,7 +49,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -108,10 +106,10 @@ public class AbstractSchedTest extends RobolectricTest {
     public void ensureUndoCorrectCounts() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Deck deck = col.getDecks().get(1);
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertThat(dconf, notNullValue());
         dconf.getJSONObject("new").put("perDay", 10);
-        JSONArray newCount = deck.getJSONArray("newToday");
+        col.getDecks().save(dconf);
         for (int i = 0; i < 20; i++) {
             Note note = col.newNote();
             note.setField(0, "a");
@@ -164,9 +162,10 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6903
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Models models = col.getModels();
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertThat(dconf, notNullValue());
         dconf.getJSONObject("new").put("bury", true);
+        getCol().getDecks().save(dconf);
         final int nbNote = 2;
         Note[] notes = new Note[nbNote];
         for (int i = 0; i < nbNote; i++) {
@@ -210,23 +209,23 @@ public class AbstractSchedTest extends RobolectricTest {
 
 
     private class IncreaseToday {
-        private final long aId, bId, cId, dId;
-        private final Decks decks;
-        private final AbstractSched sched;
+        private final long mAId, mBId, mCId, mDId;
+        private final DeckManager mDecks;
+        private final AbstractSched mSched;
 
         public IncreaseToday() {
-            decks = getCol().getDecks();
-            sched = getCol().getSched();
-            aId = addDeck("A");
-            bId = addDeck("A::B");
-            cId = addDeck("A::B::C");
-            dId = addDeck("A::B::D");
+            mDecks = getCol().getDecks();
+            mSched = getCol().getSched();
+            mAId = addDeck("A");
+            mBId = addDeck("A::B");
+            mCId = addDeck("A::B::C");
+            mDId = addDeck("A::B::D");
         }
 
         private void assertNewCountIs(String explanation, long did, int expected) {
-            decks.select(did);
-            sched.resetCounts();
-            assertThat(explanation, sched.newCount(), is(expected));
+            mDecks.select(did);
+            mSched.resetCounts();
+            assertThat(explanation, mSched.newCount(), is(expected));
         }
 
         private void increaseAndAssertNewCountsIs(String explanation, long did, int a, int b, int c, int d) {
@@ -235,27 +234,28 @@ public class AbstractSchedTest extends RobolectricTest {
         }
 
         private void assertNewCountsIs(String explanation, int a, int b, int c, int d) {
-            assertNewCountIs(explanation, aId, a);
-            assertNewCountIs(explanation, bId, b);
-            assertNewCountIs(explanation, cId, c);
-            assertNewCountIs(explanation, dId, d);
+            assertNewCountIs(explanation, mAId, a);
+            assertNewCountIs(explanation, mBId, b);
+            assertNewCountIs(explanation, mCId, c);
+            assertNewCountIs(explanation, mDId, d);
         }
 
         private void extendNew(long did) {
-            decks.select(did);
-            sched.extendLimits(1, 0);
+            mDecks.select(did);
+            mSched.extendLimits(1, 0);
         }
 
         public void test() {
             Collection col = getCol();
-            Models models = col.getModels();
+            ModelManager models = col.getModels();
 
-            DeckConfig dconf = decks.getConf(1);
+            DeckConfig dconf = mDecks.getConf(1);
+            assertThat(dconf, notNullValue());
             dconf.getJSONObject("new").put("perDay", 0);
-
+            mDecks.save(dconf);
 
             Model model = models.byName("Basic");
-            for (long did : new long[]{cId, dId}) {
+            for (long did : new long[]{mCId, mDId}) {
                 // The note is added in model's did. So change model's did.
                 model.put("did", did);
                 for (int i = 0; i < 4; i++) {
@@ -264,27 +264,27 @@ public class AbstractSchedTest extends RobolectricTest {
             }
 
             assertNewCountsIs("All daily limits are 0", 0, 0, 0, 0);
-            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too", cId, 1, 1, 1, 0);
-            increaseAndAssertNewCountsIs("Adding a review in A add it in its children too", aId, 2, 2, 2, 1);
-            increaseAndAssertNewCountsIs("Adding a review in B add it in its parents and children too", bId,3, 3, 3, 2);
-            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 4, 4, 3, 3);
-            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 5, 5, 3, 4);
+            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too", mCId, 1, 1, 1, 0);
+            increaseAndAssertNewCountsIs("Adding a review in A add it in its children too", mAId, 2, 2, 2, 1);
+            increaseAndAssertNewCountsIs("Adding a review in B add it in its parents and children too", mBId,3, 3, 3, 2);
+            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", mDId, 4, 4, 3, 3);
+            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", mDId, 5, 5, 3, 4);
 
-            decks.select(cId);
+            mDecks.select(mCId);
             col.reset();
             for (int i = 0; i < 3; i++) {
-                Card card = sched.getCard();
-                sched.answerCard(card, sched.answerButtons(card));
+                Card card = mSched.getCard();
+                mSched.answerCard(card, mSched.answerButtons(card));
             }
             assertNewCountsIs("All cards from C are reviewed. Still 4 cards to review in D, but only two available because of A's limit.", 2, 2, 0, 2);
 
-            increaseAndAssertNewCountsIs("Increasing the number of card in C increase it in its parents too. This allow for more review in any children, and in particular in D.", cId, 3, 3, 1, 3);
+            increaseAndAssertNewCountsIs("Increasing the number of card in C increase it in its parents too. This allow for more review in any children, and in particular in D.", mCId, 3, 3, 1, 3);
             // D increase because A's limit changed.
             // This means that increasing C, which is not related to D, can increase D
             // This follows upstream but is really counter-intuitive.
 
 
-            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too, even if c has no more card. This allow one more card in d.", cId, 4, 4, 1, 4);
+            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too, even if c has no more card. This allow one more card in d.", mCId, 4, 4, 1, 4);
             /* I would have expected :
              increaseAndAssertNewCountsIs("", cId, 3, 3, 1, 3);
              But it seems that applying "increase c", while not actually increasing c (because there are no more new card)
@@ -313,10 +313,11 @@ mw.col.sched.extendLimits(1, 0)
         Collection col = getCol();
         DeckConfig conf = col.getDecks().confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
-        col.getConf().put("collapseTime", 20 * 60);
+        col.getDecks().save(conf);
+        col.set_config("collapseTime", 20 * 60);
         AbstractSched sched = col.getSched();
 
-        Note note = addNoteUsingBasicModel("foo", "bar");
+        addNoteUsingBasicModel("foo", "bar");
 
         col.reset();
         advanceRobolectricLooper();
@@ -386,7 +387,7 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     private void addDeckWithExactName(String name) {
-        Decks decks = getCol().getDecks();
+        DeckManager decks = getCol().getDecks();
 
         long did = addDeck(name);
         Deck d = decks.get(did);

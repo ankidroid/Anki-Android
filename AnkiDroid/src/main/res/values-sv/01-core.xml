@@ -45,6 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Inställningar</string>
     <string name="help">Hjälp</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Skicka feedback</string>
     <string name="studyoptions_due_today">Aktuella idag:</string>
     <string name="studyoptions_new_total">Totalt antal nya kort:</string>
@@ -186,7 +187,7 @@
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
     <string name="card_template_editor_menu_card_browser_appearance">Visning i kortbläddrare</string>
-    <string name="card_template_editor_deck_override">Kortleksöverskrivning</string>
+    <string name="card_template_editor_deck_override">Åsidosätt kortlek</string>
     <string name="card_template_editor_insert_field">Lägg till fält</string>
     <string name="card_template_editor_select_field">Välj fält</string>
     <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d kort (0 förfallet)</item>
         <item quantity="other">%1$d kort (0 förfallet)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

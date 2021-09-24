@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="initializing_tts">Inicializando TTS&#8230;</string>
     <string name="tts_no_tts">Não fale</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nArquivos não utilizados:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Flashcards para Android</h2>AnkiDroid é uma app de cards de estudo totalmente compatível com o software de PC <a href=\"%2$s\">Anki</a>. Você pode criar, baixar e aprender conteúdos em ambos (AnkiDroid ou Anki Desktop) e sincronizá-los facilmente com AnkiWeb.]]></item>
         <item><![CDATA[Para nos ajudar a melhorar a AnkiDroid, favor reportar bugs para <a href=\"%1$s\"> o rastreador de problemas</a>; novas ideias de recurso também são muito bem-vindas. Encontrar respostas na <a href=\"%2$s\"> wiki</a> ou iniciar uma discussão no <a href=\"%3$s\"> fórum</a>.]]></item>
@@ -249,4 +249,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Abra a página de visão geral do deck contendo o número de cartas a serem vistas hoje.</string>
+    <string name="import_deck_package">Baralho (.apkg)</string>
+    <string name="import_collection_package">Coleção (.colpkg)</string>
 </resources>

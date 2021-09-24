@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">套用橙色標記</string>
     <string name="gesture_flag_green">套用綠色標記</string>
     <string name="gesture_flag_blue">套用藍色標記</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">切換粉色標記</string>
+    <string name="gesture_flag_turquoise">切換藍綠色標記</string>
+    <string name="gesture_flag_purple">切換紫色標記</string>
     <string name="gesture_flag_remove">移除標記</string>
     <string name="gesture_page_up">向上翻頁</string>
     <string name="gesture_page_down">向下翻頁</string>

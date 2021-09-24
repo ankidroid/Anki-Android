@@ -28,7 +28,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.testutils.ParametersUtils;
+import com.ichi2.testutils.JsonUtils;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -50,13 +50,13 @@ import static org.mockito.Mockito.*;
 @RunWith(AndroidJUnit4.class)
 public class CustomStudyDialogTest extends RobolectricTest {
 
-    CustomStudyListener mockListener;
+    CustomStudyListener mMockListener;
 
 
     @Override
     public void setUp() {
         super.setUp();
-        mockListener = mock(CustomStudyListener.class);
+        mMockListener = mock(CustomStudyListener.class);
     }
 
 
@@ -64,7 +64,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
     @After
     public void tearDown() {
         super.tearDown();
-        reset(mockListener);
+        reset(mMockListener);
     }
 
 
@@ -76,7 +76,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
                 .getArguments();
 
 
-        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(this::getCol, mockListener);
+        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(this::getCol, mMockListener);
         FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, factory);
 
         scenario.moveToState(Lifecycle.State.STARTED);
@@ -95,8 +95,23 @@ public class CustomStudyDialogTest extends RobolectricTest {
         customStudy.remove("mod");
         customStudy.remove("name");
 
-        String expected = "{\"newToday\":[0,0],\"revToday\":[0,0],\"lrnToday\":[0,0],\"timeToday\":[0,0],\"collapsed\":false,\"dyn\":1,\"desc\":\"\",\"usn\":-1,\"delays\":null,\"separate\":true,\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]],\"resched\":true,\"return\":true}";
-        assertThat(customStudy.toString(), is(expected));
+        String expected = "{" +
+                "\"browserCollapsed\":false," +
+                "\"collapsed\":false," +
+                "\"delays\":null," +
+                "\"desc\":\"\"," +
+                "\"dyn\":1," +
+                "\"lrnToday\":[0,0]," +
+                "\"newToday\":[0,0]," +
+                "\"previewDelay\":10," +
+                "\"resched\":true," +
+                "\"revToday\":[0,0]," +
+                "\"separate\":true," +
+                "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
+                "\"timeToday\":[0,0]," +
+                "\"usn\":-1" +
+                "}";
+        assertThat(JsonUtils.toOrderedString(customStudy), is(expected));
     }
 
 
@@ -119,7 +134,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         when(mockSched.newCount()).thenReturn(0);
 
 
-        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(() -> mockCollection, mockListener);
+        CustomStudyDialogFactory factory = new CustomStudyDialogFactory(() -> mockCollection, mMockListener);
         FragmentScenario<CustomStudyDialog> scenario = FragmentScenario.launch(CustomStudyDialog.class, args, R.style.Theme_AppCompat, factory);
 
         scenario.moveToState(Lifecycle.State.STARTED);

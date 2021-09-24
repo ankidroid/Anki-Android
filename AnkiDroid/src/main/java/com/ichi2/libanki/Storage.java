@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -97,10 +98,7 @@ public class Storage {
             } else if (ver > Consts.SCHEMA_VERSION) {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
-                // add in reverse order so basic is default
-                for (int i = StdModels.STD_MODELS.length-1; i>=0; i--) {
-                    StdModels.STD_MODELS[i].add(col);
-                }
+                addNoteTypes(col, backend);
                 col.onCreate();
                 col.save();
             }
@@ -111,6 +109,19 @@ public class Storage {
             throw e;
         }
     }
+
+    /** Add note types when creating database */
+    private static void addNoteTypes(Collection col, DroidBackend backend) {
+        if (backend.databaseCreationInitializesData()) {
+            Timber.i("skipping adding note types - already exist");
+            return;
+        }
+        // add in reverse order so basic is default
+        for (int i = StdModels.STD_MODELS.length-1; i>=0; i--) {
+            StdModels.STD_MODELS[i].add(col);
+        }
+    }
+
 
     /**
      * Whether the collection should try to be opened with a Rust-based DB Backend
@@ -160,8 +171,8 @@ public class Storage {
             }
             if (ver < 4) {
                 col.modSchemaNoCheck();
-                ArrayList<Model> models = col.getModels().all();
-                ArrayList<Model> clozes = new ArrayList<>(models);
+                List<Model> models = col.getModels().all();
+                ArrayList<Model> clozes = new ArrayList<>(models.size());
                 for (Model m : models) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);
@@ -300,7 +311,9 @@ public class Storage {
 
     private static int _createDB(DB db, @NonNull Time time, DroidBackend backend) {
         if (backend.databaseCreationCreatesSchema()) {
-            _setColVars(db, time);
+            if (!backend.databaseCreationInitializesData()) {
+                _setColVars(db, time);
+            }
             // This line is required for testing - otherwise Rust will override a mocked time.
             db.execute("update col set crt = ?", UIUtils.getDayStart(time) / 1000);
         } else {

@@ -136,7 +136,7 @@
         <item quantity="other">%1$d min.</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">„AnkiDroid“ kortelė</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Kopijuoti pastabas</string>
     <string name="card_editor_reposition_card">Keisti išdėstymą</string>
     <string name="card_editor_reset_card">Atkurti pažangą</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Atidėti</string>
@@ -160,7 +160,6 @@
     <string name="show_hint">Rodyti %s</string>
     <string name="info_rate">Įvertinkite „AnkiDroid“</string>
     <string name="import_title">Importuojama</string>
-    <string name="import_select_title">Pasirinkite įkeliamą failą</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridėti</string>
     <string name="import_message_replace_confirm">Jūsų turima kolekcija bus ištrinta ir pakeista %s failo duomenimis</string>
     <string name="import_message_add_confirm">Ar norite į kolekciją įtraukti „%s“? Tai gali ilgai užtrukti</string>
@@ -194,15 +193,12 @@
     <string name="export_save_apkg_unsuccessful">Išsaugoti „Anki“ paketo nepavyko</string>
     <string name="export_successful">Failas „%s“ buvo eksportuotas. Ar norite jį siųsti kita programa?</string>
     <string name="export_email_subject">Eksportuota „AnkiDroid“ kortelių: %s</string>
-    <string name="export_email_text"><![CDATA[        Sveiki!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Tai yra „Anki“ kortelių rinkinys, gautas iš <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Bandykite jį atidaryti naudodami vieną iš siūlomų <a href="http://ankisrs.net/#download">„Anki“ platinamų programų</a> ir mėgaukitės lengvu ir produktyviu mokymusi!
-        ]]>;
-    </string>
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]></string>
     <string name="export_unsuccessful">Eksportuoti apkg failo nepavyko</string>
-    <string name="import_hint">Norėdami įkelti korteles, į „%s“ katalogą įkelkite apkg failą ir paspauskite „OK“</string>
-    <string name="upgrade_import_no_file_found">Įkėlimui numatytas %1$s failas nerastas</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Parinktys</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -391,4 +387,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

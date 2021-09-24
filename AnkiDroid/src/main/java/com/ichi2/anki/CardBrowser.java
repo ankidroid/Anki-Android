@@ -86,6 +86,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.Permissions;
@@ -124,7 +125,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
         long deckId = deck.getDeckId();
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.selectDeckById(deckId, true);
         selectDeckAndSave(deckId);
     }
@@ -304,6 +305,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private boolean mShouldRestoreScroll = false;
     private boolean mPostAutoScroll = false;
 
+    private final Onboarding.CardBrowser mOnboarding = new Onboarding.CardBrowser(this);
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -322,22 +325,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mOrderAsc = false;
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                getCol().getConf().put("sortType", fSortTypes[1]);
+                getCol().set_config("sortType", fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
                         .apply();
             } else {
-                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                getCol().set_config("sortType", fSortTypes[mOrder]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", false)
                         .apply();
             }
-            getCol().getConf().put("sortBackwards", mOrderAsc);
+            getCol().set_config("sortBackwards", mOrderAsc);
             searchCards();
         } else if (which != CARD_ORDER_NONE) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc;
-            getCol().getConf().put("sortBackwards", mOrderAsc);
+            getCol().set_config("sortBackwards", mOrderAsc);
             mCards.reverse();
             updateList();
         }
@@ -430,8 +433,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onSelection(String searchName) {
             Timber.d("OnSelection using search named: %s", searchName);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-            Timber.d("SavedFilters are %s", savedFiltersObj.toString());
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
+            Timber.d("SavedFilters are %s", savedFiltersObj == null ? null : savedFiltersObj.toString());
             if (savedFiltersObj != null) {
                 mSearchTerms = savedFiltersObj.optString(searchName);
                 Timber.d("OnSelection using search terms: %s", mSearchTerms);
@@ -444,10 +447,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onRemoveSearch(String searchName) {
             Timber.d("OnRemoveSelection using search named: %s", searchName);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
                 savedFiltersObj.remove(searchName);
-                getCol().getConf().put("savedFilters", savedFiltersObj);
+                getCol().set_config("savedFilters", savedFiltersObj);
                 getCol().flush();
                 if (savedFiltersObj.length() == 0) {
                     mMySearchesItem.setVisible(false);
@@ -463,7 +466,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
                 return;
             }
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             boolean should_save = false;
             if (savedFiltersObj == null) {
                 savedFiltersObj = new JSONObject();
@@ -477,7 +480,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                         getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
             }
             if (should_save) {
-                getCol().getConf().put("savedFilters", savedFiltersObj);
+                getCol().set_config("savedFilters", savedFiltersObj);
                 getCol().flush();
                 mSearchView.setQuery("", false);
                 mMySearchesItem.setVisible(true);
@@ -604,8 +607,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mSearchTerms = getIntent().getStringExtra("search_query");
             searchCards();
         }
-    }
 
+        mOnboarding.onCreate();
+    }
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
@@ -620,7 +624,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mActionBarTitle = findViewById(R.id.toolbar_title);
 
         mOrder = CARD_ORDER_NONE;
-        String colOrder = getCol().getConf().getString("sortType");
+        String colOrder = getCol().get_config_string("sortType");
         for (int c = 0; c < fSortTypes.length; ++c) {
             if (fSortTypes[c].equals(colOrder)) {
                 mOrder = c;
@@ -634,7 +638,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //setConf. However older version of AnkiDroid didn't call
         //upgradeJSONIfNecessary during setConf, which means the
         //conf saved may still have this bug.
-        mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
+        mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), "sortBackwards", false);
 
         mCards.reset();
         mCardsListView = findViewById(R.id.card_browser_list);
@@ -757,9 +761,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         long deckId = getCol().getDecks().selected();
-        mDeckSpinnerSelection = new DeckSpinnerSelection(this, R.id.toolbar_spinner);
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner));
         mDeckSpinnerSelection.setShowAllDecks(true);
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner();
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         selectDeckAndSave(deckId);
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
@@ -960,7 +964,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mSaveSearchItem = menu.findItem(R.id.action_save_search);
             mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches);
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
             mSearchItem = menu.findItem(R.id.action_search);
             mSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
@@ -1153,15 +1157,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
             return true;
         } else if (itemId == R.id.action_list_my_searches) {
-            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            JSONObject savedFiltersObj = getCol().get_config("savedFilters", (JSONObject) null);
             HashMap<String, String> savedFilters;
             if (savedFiltersObj != null) {
-                savedFilters = new HashMap<>(savedFiltersObj.length());
+                savedFilters = HashUtil.HashMapInit(savedFiltersObj.length());
                 for (String searchName : savedFiltersObj) {
                     savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                 }
             } else {
-                savedFilters = new HashMap<>(0);
+                savedFilters = HashUtil.HashMapInit(0);
             }
             showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
                     "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
@@ -1300,7 +1304,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.action_view_card_info) {
             List<Long> selectedCardIds = getSelectedCardIds();
-            if (selectedCardIds.size() > 0) {
+            if (!selectedCardIds.isEmpty()) {
                 Intent intent = new Intent(this, CardInfo.class);
                 intent.putExtra("cardId", selectedCardIds.get(0));
                 startActivityWithAnimation(intent, FADE);
@@ -1579,7 +1583,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private static Map<Long, Integer> getPositionMap(CardCollection<CardCache> list) {
-        Map<Long, Integer> positions = new HashMap<>(list.size());
+        Map<Long, Integer> positions = HashUtil.HashMapInit(list.size());
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
         }
@@ -2111,7 +2115,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             List<Long> cardsIdsToHide = value.second;
             if (cardsIdsToHide != null) {
                     try {
-                        if (cardsIdsToHide.size() > 0) {
+                        if (!cardsIdsToHide.isEmpty()) {
                             Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
                             browser.removeNotesView(cardsIdsToHide, true);
                         }

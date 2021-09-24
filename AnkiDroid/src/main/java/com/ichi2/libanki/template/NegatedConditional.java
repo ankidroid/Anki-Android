@@ -29,8 +29,8 @@ public class NegatedConditional extends ParsedNode {
     private final ParsedNode mChild;
 
 
-    public NegatedConditional(String mKey, ParsedNode child) {
-        this.mKey = mKey;
+    public NegatedConditional(String key, ParsedNode child) {
+        this.mKey = key;
         this.mChild = child;
     }
 

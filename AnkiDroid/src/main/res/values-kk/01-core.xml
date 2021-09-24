@@ -38,83 +38,84 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Растау</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="decks">Колодалар</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Карталарым көру</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Параметрлер</string>
+    <string name="help">Көмек</string>
+    <string name="drawing">Сурет</string>
+    <string name="send_feedback">Пікір жіберу</string>
+    <string name="studyoptions_due_today">Бүгінгі:</string>
+    <string name="studyoptions_new_total">Барлық жаңа карталар</string>
+    <string name="studyoptions_total_cards">Барлық карталар</string>
+    <string name="studyoptions_eta">Болжамды уақыт (мин.)</string>
+    <string name="studyoptions_start">Оқу</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Толығырақ</string>
+    <string name="collapse">Жасыру</string>
+    <string name="study_more">Көбірек оқу</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d карта оқу керек (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d минута қалды</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d сағат %d қалды</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d күн %d қалды</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Колода жоқ</string>
+    <string name="no_cards_placeholder_description">Карта қосу үшін\n + басыңызшы</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">Бүгін %2$s ішінде %1$d карта оқыдыңыз</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="type_answer_hint">Жауапты теріңіз</string>
+    <string name="show_answer">Жауапты көрсету</string>
+    <string name="hide_answer">Жауапты жасыру</string>
+    <string name="ease_button_again">Қайта</string>
+    <string name="ease_button_hard">Қиын</string>
+    <string name="ease_button_good">Жақсы</string>
+    <string name="ease_button_easy">Оңай</string>
+    <string name="studyoptions_congrats_undo">%s болдырмау</string>
+    <string name="menu_import">Импорттау</string>
+    <string name="undo">Болдырмау</string>
+    <string name="undo_action_review">соңғы қайталау</string>
+    <string name="undo_action_change_deck_multi">колода өзгерту</string>
+    <string name="move_all_to_deck">Барлық карталарды колодаға жіберу</string>
     <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
+    <string name="rename_deck">Атын өзгерту</string>
+    <string name="create_shortcut">Төте жол жасау</string>
+    <string name="browse_cards">Карталарды көру</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Қосу</string>
+    <string name="menu_add_note">Жазба қосу</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
+    <string name="menu_dismiss_note">Жасыру / жою</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
     <string name="menu_suspend_note">Suspend note</string>
     <string name="menu_bury">Bury</string>
     <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_delete_note">Жазба жою</string>
+    <string name="menu_flag">Бөлектеу</string>
+    <string name="menu_flag_card">Картаны бөлектеу</string>
+    <string name="menu_flag_card_zero">Белгісіз</string>
+    <string name="menu_flag_card_one">Сары белгі</string>
+    <string name="menu_flag_card_two">Сары белгі</string>
+    <string name="menu_flag_card_three">Жасыл белгі</string>
+    <string name="menu_flag_card_four">Көк белгі</string>
+    <string name="menu_flag_card_five">Қызғылт белгі</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

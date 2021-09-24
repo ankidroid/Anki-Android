@@ -39,12 +39,12 @@
 
 -->
 <resources>
-    <string name="youre_offline">ᱟᱢ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱟᱢ</string>
+    <string name="youre_offline">ᱟᱢ ᱫᱚ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱨᱮ</string>
     <string name="sync_even_if_offline">ᱡᱮᱞᱠᱟᱭ ᱢᱮ</string>
-    <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
+    <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ </string>
     <string name="vague_error">ᱵᱷᱩᱞ</string>
-    <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ</string>
-    <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠ ᱠᱚ ᱧᱟᱢ ᱢᱮ</string>
+    <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ </string>
+    <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠ ᱠᱚ ᱧᱟᱢ ᱢᱮ </string>
     <string name="connection_error_message">ᱱᱮᱴᱣᱟᱨᱠ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭ ᱮᱱᱟ</string>
     <string name="not_logged_in_title">AnkiWeb ᱛᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ</string>
     <string name="login_create_account_message">cloud ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱟᱹᱢᱤ ᱨᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ ᱞᱟᱹᱜᱤᱫ third party ᱠᱷᱟᱛᱟ ᱫᱚᱨᱠᱟᱨ ᱾ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱡᱷᱟᱸᱯ ᱠᱚ ᱧᱮᱞ ᱢᱮ ᱾ </string>
@@ -121,5 +121,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">ᱥᱭᱸᱠ (ᱯᱩᱨᱟᱹ)</string>
     <string name="sync_menu_title_no_account">ᱥᱭᱸᱠ (ᱵᱚᱞᱚᱱ ᱢᱮ)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable"> AnkiWeb ᱥᱟᱞᱟᱜ ᱵᱟᱝ ᱡᱚᱲᱟᱣ ᱠᱟᱱᱟ ।. ᱟᱢᱟᱜ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱮ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ ?\n\n%s</string>
 </resources>

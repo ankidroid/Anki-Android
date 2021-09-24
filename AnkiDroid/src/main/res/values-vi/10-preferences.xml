@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Cử Chỉ/ Điều Hướng</string>
     <string name="pref_cat_gestures_summ">Sử dụng taps và swipes thay vì các nút bấm</string>
     <string name="pref_cat_actions" maxLength="41">Tác vụ</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Tuỳ chọn nâng cao</string>
     <string name="pref_cat_advanced_summ">Tối ưu hóa và tính năng thử nghiệm</string>
     <string name="pref_cat_performance" maxLength="41">Hiệu năng</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Xác nhận</string>
-    <string name="sched_ver_2to1">Điều này sẽ đặt lại bất kỳ thẻ nào trong học tập, xóa các bộ thẻ được lọc và thay đổi phiên bản của bộ lập lịch. Tiếp tục?</string>
     <string name="sched_ver_1to2">Trình lập lịch thử nghiệm có thể gây ra lập lịch không chính xác. Hãy đảm bảo rằng bạn đã đọc tài liệu trước. Tiếp tục?</string>
     <string name="pref_keep_screen_on" maxLength="41">Luôn bật màn hình</string>
     <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Đồng bộ hóa url không hợp lệ</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Url đồng bộ hóa phương tiện</string>
     <string name="custom_sync_server_media_url_invalid">Url đồng bộ hóa phương tiện không hợp lệ</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Các thay đổi đối với tùy chọn nhóm bộ thẻ sẽ ảnh hưởng đến nhiều bộ thẻ. Nếu bạn chỉ muốn thay đổi bộ thẻ hiện tại, trước tiên hãy thêm một nhóm tùy chọn mới</string>
     <string name="studyoptions_limit_select_tags">Chọn thẻ</string>
@@ -319,4 +322,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

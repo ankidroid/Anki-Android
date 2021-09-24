@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.libanki.backend.model.TagUsnTuple;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,8 +34,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import okhttp3.internal.Util;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**
@@ -50,7 +52,7 @@ instead of a JSONObject. It is much more convenient to work with a TreeMap in Ja
 may be a performance penalty in doing so (on startup and shutdown).
  */
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
-public class Tags {
+public class Tags extends TagManager {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
 
@@ -69,7 +71,7 @@ public class Tags {
     }
 
 
-    public void load(String json) {
+    public void load(@NonNull String json) {
         JSONObject tags = new JSONObject(json);
         for (String t : tags) {
             mTags.put(t, tags.getInt(t));
@@ -98,13 +100,8 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Given a list of tags, add any missing ones to tag registry. */
-    public void register(Iterable<String> tags) {
-        register(tags, null);
-    }
-
-
-    public void register(Iterable<String> tags, Integer usn) {
+    /** {@inheritDoc} */
+    public void register(@NonNull Iterable<String> tags, @Nullable Integer usn, boolean clear_first) {
         //boolean found = false;
         for (String t : tags) {
             if (!mTags.containsKey(t)) {
@@ -118,18 +115,13 @@ public class Tags {
     }
 
 
+    @NonNull
     public List<String> all() {
         return new ArrayList<>(mTags.keySet());
     }
 
-
-    public void registerNotes() {
-        registerNotes(null);
-    }
-
-
     /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(java.util.Collection<Long> nids) {
+    public void registerNotes(@Nullable java.util.Collection<Long> nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {
@@ -150,13 +142,14 @@ public class Tags {
     }
 
 
-    public Set<Map.Entry<String, Integer>> allItems() {
-        return mTags.entrySet();
+    @NonNull
+    public Set<TagUsnTuple> allItems() {
+        return mTags.entrySet()
+                .stream()
+                .map(entry -> new TagUsnTuple(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
     }
 
-    public boolean minusOneValue() {
-        return mTags.containsValue(-1);
-    }
 
 
     public void save() {
@@ -164,12 +157,8 @@ public class Tags {
     }
 
 
-    /**
-    * byDeck returns the tags of the cards in the deck
-    * @param did the deck id
-    * @param children whether to include the deck's children
-    * @return a list of the tags
-    */
+    /** {@inheritDoc} */
+    @NonNull
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
@@ -192,27 +181,8 @@ public class Tags {
      * ***********************************************************
      */
 
-    /**
-     * FIXME: This method must be fixed before it is used. See note below.
-     * Add/remove tags in bulk. TAGS is space-separated.
-     *
-     * @param ids The cards to tag.
-     * @param tags List of tags to add/remove. They are space-separated.
-     */
-    public void bulkAdd(List<Long> ids, String tags) {
-        bulkAdd(ids, tags, true);
-    }
-
-
-    /**
-     * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
-     * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
-     *
-     * @param ids The cards to tag.
-     * @param tags List of tags to add/remove. They are space-separated.
-     * @param add True/False to add/remove.
-     */
-    public void bulkAdd(List<Long> ids, String tags, boolean add) {
+    /** {@inheritDoc} */
+    public void bulkAdd(@NonNull List<Long> ids, @NonNull String tags, boolean add) {
         List<String> newTags = split(tags);
         if (newTags == null || newTags.isEmpty()) {
             return;
@@ -257,18 +227,14 @@ public class Tags {
     }
 
 
-    public void bulkRem(List<Long> ids, String tags) {
-        bulkAdd(ids, tags, false);
-    }
-
-
     /*
      * String-based utilities
      * ***********************************************************
      */
 
-    /** Parse a string and return a list of tags. */
-    public ArrayList<String> split(String tags) {
+    /** {@inheritDoc} */
+    @NonNull
+    public ArrayList<String> split(@NonNull String tags) {
         ArrayList<String> list = new ArrayList<>(tags.length());
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
@@ -279,9 +245,10 @@ public class Tags {
     }
 
 
-    /** Join tags into a single string, with leading and trailing spaces. */
-    public String join(java.util.Collection<String> tags) {
-        if (tags == null || tags.size() == 0) {
+    /** {@inheritDoc} */
+    @NonNull
+    public String join(@NonNull java.util.Collection<String> tags) {
+        if (tags.isEmpty()) {
             return "";
         } else {
             String joined = TextUtils.join(" ", tags);
@@ -307,8 +274,9 @@ public class Tags {
         return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches();
     }
 
-    /** Delete tags if they exist. */
-    public String remFromStr(String deltags, String tags) {
+    /** {@inheritDoc}  */
+    @NonNull
+    public String remFromStr(@NonNull String deltags, @NonNull String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
             List<String> remove = new ArrayList<>(); // Usually not a lot of tags are removed simultaneously.
@@ -332,7 +300,8 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Strip duplicates, adjust case to match existing tags, and sort. */
+    /** {@inheritDoc} */
+    @NonNull
     public TreeSet<String> canonify(List<String> tagList) {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
@@ -350,8 +319,8 @@ public class Tags {
     }
 
 
-    /** True if TAG is in TAGS. Ignore case. */
-    public boolean inList(String tag, Iterable<String> tags) {
+    /** {@inheritDoc} */
+    public boolean inList(@NonNull String tag, Iterable<String> tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {
                 return true;
@@ -387,7 +356,13 @@ public class Tags {
 
 
     /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
-    public void add(String key, Integer value) {
+    public void add(@NonNull String key, @Nullable Integer value) {
         mTags.put(key, value);
+    }
+
+    /** Whether any tags have a usn of -1 */
+    @Override
+    public boolean minusOneValue() {
+        return mTags.containsValue(-1);
     }
 }

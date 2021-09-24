@@ -15,6 +15,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.template.ParsedNode;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.HtmlUtils;
 import com.ichi2.utils.JSONObject;
 
@@ -43,6 +44,9 @@ import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
 public class NoteImporter extends Importer {
+
+    /** A magic string used in {@link this#mMapping} when a csv field should be mapped to the tags of a note */
+    public static final String TAGS_IDENTIFIER = "_tags";
 
     private boolean mNeedMapper = true;
     private boolean mNeedDelimiter = false;
@@ -92,7 +96,7 @@ public class NoteImporter extends Importer {
 
 
     /** The number of fields.*/
-    protected int fields() {
+    public int fields() {
         return 0;
     }
 
@@ -103,7 +107,7 @@ public class NoteImporter extends Importer {
         flds = flds.subList(0, Math.min(flds.size(), fields()));
         // if there's room left, add tags
         if (fields() > flds.size()) {
-            flds.add("_tags");
+            flds.add(TAGS_IDENTIFIER);
         }
         // and if there's still room left, pad
         int iterations = fields() - flds.size();
@@ -142,7 +146,7 @@ public class NoteImporter extends Importer {
         // note whether tags are mapped
         mTagsMapped = false;
         for (String f : mMapping) {
-            if ("_tags".equals(f)) {
+            if (TAGS_IDENTIFIER.equals(f)) {
                 mTagsMapped = true;
                 break;
             }
@@ -161,7 +165,7 @@ public class NoteImporter extends Importer {
             }
         }
 
-        HashSet<String> firsts = new HashSet<>(notes.size());
+        HashSet<String> firsts = HashUtil.HashSetInit(notes.size());
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
@@ -372,7 +376,7 @@ public class NoteImporter extends Importer {
                 continue;
             }
             int c = entry.getKey();
-            if (entry.getValue().equals("_tags")) {
+            if (entry.getValue().equals(TAGS_IDENTIFIER)) {
                 note.mTags.addAll(mCol.getTags().split(note.mFields.get(c)));
             } else {
                 Integer sidx = mFMap.get(entry.getValue()).first;

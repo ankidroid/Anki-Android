@@ -45,6 +45,7 @@
     <string name="statistics">Статистики</string>
     <string name="settings">Поставки</string>
     <string name="help">Помош</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Прати повратна информација</string>
     <string name="studyoptions_due_today">Поради денес:</string>
     <string name="studyoptions_new_total">Вкупно нови картички:</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -45,6 +45,7 @@
     <string name="statistics">Staitisticí</string>
     <string name="settings">Socruithe</string>
     <string name="help">Cabhair</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Seol aiseolas</string>
     <string name="studyoptions_due_today">Athbhreithnigh inniu:</string>
     <string name="studyoptions_new_total">Cártaí nua iomlán:</string>
@@ -257,4 +258,5 @@
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

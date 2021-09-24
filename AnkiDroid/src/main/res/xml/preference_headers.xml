@@ -16,59 +16,48 @@
 -->
 
 
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UnusedAttribute">
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <!--  General Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/app_name">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.general" />
-    </header>
+    </Preference>
 
     <!-- Reviewing Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
         android:title="@string/pref_cat_reviewing">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.reviewing" />
-    </header>
+    </Preference>
 
     <!-- Appearance Prefrences  -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.appearance" />
-    </header>
+    </Preference>
 
     <!-- Navigation Prefrences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"
         android:title="@string/pref_cat_gestures">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.gestures" />
-    </header>
+    </Preference>
+
+    <!-- Keybinding preferences -->
+    <Preference
+        android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
+        android:summary="@string/pref_cat_controls_summ"
+        android:title="@string/pref_cat_controls">
+    </Preference>
 
     <!-- Advanced Preferences -->
-    <header
+    <Preference
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">
-        <extra
-            android:name="subscreen"
-            android:value="com.ichi2.anki.prefs.advanced" />
-    </header>
-</preference-headers>
+    </Preference>
+</PreferenceScreen>

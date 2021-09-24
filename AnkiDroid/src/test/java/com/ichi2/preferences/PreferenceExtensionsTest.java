@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.ichi2.preferences;
 
 import android.content.SharedPreferences;
@@ -29,7 +45,7 @@ public class PreferenceExtensionsTest {
     private SharedPreferences mMockPreferences;
 
     @Mock
-    private SharedPreferences.Editor mockEditor;
+    private SharedPreferences.Editor mMockEditor;
 
     private String getOrSetString(String key, Supplier<String> supplier) {
         return PreferenceExtensions.getOrSetString(mMockPreferences, key, supplier);
@@ -40,8 +56,8 @@ public class PreferenceExtensionsTest {
         MockitoAnnotations.openMocks(this);
         Mockito.when(mMockPreferences.contains(VALID_KEY)).thenReturn(true);
         Mockito.when(mMockPreferences.getString(eq(VALID_KEY), anyString())).thenReturn(VALID_RESULT);
-        Mockito.when(mMockPreferences.edit()).thenReturn(mockEditor);
-        Mockito.when(mockEditor.putString(anyString(), anyString())).thenReturn(mockEditor);
+        Mockito.when(mMockPreferences.edit()).thenReturn(mMockEditor);
+        Mockito.when(mMockEditor.putString(anyString(), anyString())).thenReturn(mMockEditor);
     }
 
     private String getForMissingKey() {
@@ -64,8 +80,8 @@ public class PreferenceExtensionsTest {
     @Test
     public void missingKeySetsPreference() {
         getForMissingKey();
-        Mockito.verify(mockEditor).putString(MISSING_KEY, LAMBDA_RETURN);
-        Mockito.verify(mockEditor).apply();
+        Mockito.verify(mMockEditor).putString(MISSING_KEY, LAMBDA_RETURN);
+        Mockito.verify(mMockEditor).apply();
     }
 
     @SuppressWarnings("unused")

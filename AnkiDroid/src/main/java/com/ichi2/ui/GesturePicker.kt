@@ -38,8 +38,8 @@ import timber.log.Timber
  */
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
 class GesturePicker @JvmOverloads
-constructor(mCtx: Context, mAttributeSet: AttributeSet? = null, mDefStyleAttr: Int = 0) :
-    ConstraintLayout(mCtx, mAttributeSet, mDefStyleAttr) {
+constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
+    ConstraintLayout(ctx, attributeSet, defStyleAttr) {
 
     private val mGestureSpinner: Spinner
     private val mGestureDisplay: GestureDisplay
@@ -47,7 +47,7 @@ constructor(mCtx: Context, mAttributeSet: AttributeSet? = null, mDefStyleAttr: I
     private var mOnGestureListener: GestureListener? = null
 
     init {
-        val inflater = mCtx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.gesture_picker, this)
         mGestureDisplay = findViewById(R.id.gestureDisplay)
         mGestureSpinner = findViewById(R.id.spinner_gesture)
@@ -86,9 +86,9 @@ constructor(mCtx: Context, mAttributeSet: AttributeSet? = null, mDefStyleAttr: I
 
     private fun availableGestures() = mGestureDisplay.availableValues()
 
-    inner class GestureWrapper(val mGesture: Gesture?) {
+    inner class GestureWrapper(val gesture: Gesture?) {
         override fun toString(): String {
-            return mGesture?.toDisplayString(context) ?: "None"
+            return gesture?.toDisplayString(context) ?: "None"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -97,18 +97,18 @@ constructor(mCtx: Context, mAttributeSet: AttributeSet? = null, mDefStyleAttr: I
 
             other as GestureWrapper
 
-            if (mGesture != other.mGesture) return false
+            if (gesture != other.gesture) return false
 
             return true
         }
 
-        override fun hashCode() = mGesture?.hashCode() ?: 0
+        override fun hashCode() = gesture?.hashCode() ?: 0
     }
 
     private inner class InnerSpinner : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
-            onGesture(wrapper?.mGesture)
+            onGesture(wrapper?.gesture)
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {

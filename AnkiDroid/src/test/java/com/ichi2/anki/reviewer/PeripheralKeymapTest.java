@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.reviewer;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
@@ -37,7 +38,7 @@ public class PeripheralKeymapTest {
         List<ViewerCommand> processed = new ArrayList<>();
 
         PeripheralKeymap peripheralKeymap = new PeripheralKeymap(new MockReviewerUi(), processed::add);
-        peripheralKeymap.setup();
+        peripheralKeymap.setup(mock(SharedPreferences.class));
         KeyEvent event = mock(KeyEvent.class);
         when(event.getUnicodeChar()).thenReturn(0);
         when(event.isCtrlPressed()).thenReturn(true);

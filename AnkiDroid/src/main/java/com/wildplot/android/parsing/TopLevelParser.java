@@ -17,6 +17,7 @@ package com.wildplot.android.parsing;
 
 import android.annotation.SuppressLint;
 
+import com.ichi2.utils.HashUtil;
 import com.wildplot.android.rendering.interfaces.Function2D;
 import com.wildplot.android.rendering.interfaces.Function3D;
 
@@ -26,7 +27,7 @@ import java.util.regex.Pattern;
 @SuppressLint("NonPublicNonStaticFieldName")
 public class TopLevelParser implements Function2D, Function3D, Cloneable {
     private final HashMap<String, TopLevelParser> parserRegister;
-    private final HashMap<String, Double> varMap = new HashMap<>(2); // Number form initVarMap
+    private final HashMap<String, Double> varMap = HashUtil.HashMapInit(2); // Number form initVarMap
     private double x = 0.0, y = 0.0;
     private final Expression expression;
     private final boolean isValid;

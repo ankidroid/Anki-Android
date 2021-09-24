@@ -30,7 +30,6 @@ import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.join
 import com.ichi2.libanki.utils.list
 import com.ichi2.libanki.utils.set
-import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -39,48 +38,48 @@ import java.util.regex.Pattern
  * tracked, so unused tags can only be removed from the list with a DB check.
  * This module manages the tag cache and tags for notes.
  */
-class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
+class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManager() {
 
     /** all tags */
-    fun all(): List<String> = mBackend.all_tags().map { it.tag }
+    override fun all(): List<String> = backend.all_tags().map { it.tag }
 
     /** List of (tag, usn) */
-    fun allItems(): List<TagUsnTuple> = mBackend.all_tags()
+    override fun allItems(): List<TagUsnTuple> = backend.all_tags()
 
     /*
     # Registering and fetching tags
     #############################################################
     */
 
-    fun register(
-        tags: kotlin.collections.Collection<String>,
-        usn: Optional<Int> = Optional.empty(),
-        clear: Boolean = false
+    override fun register(
+        tags: Iterable<String>,
+        usn: Int?,
+        clear: Boolean
     ) {
 
         val preserve_usn: Boolean
         val usn_: Int
-        if (!usn.isPresent) {
+        if (usn == null) {
             preserve_usn = false
             usn_ = 0
         } else {
-            usn_ = usn.get()
+            usn_ = usn
             preserve_usn = true
         }
 
-        mBackend.register_tags(
+        backend.register_tags(
             tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear
         )
     }
 
     /** Add any missing tags from notes to the tags list. */
-    fun registerNotes(nids: Optional<List<Long>> = Optional.empty()) {
+    override fun registerNotes(nids: kotlin.collections.Collection<Long>?) {
 
         // when called without an argument, the old list is cleared first.
         val clear: Boolean
         val lim: String
-        if (nids.isPresent) {
-            lim = " where id in " + ids2str(nids.get())
+        if (nids != null) {
+            lim = " where id in " + ids2str(nids)
             clear = false
         } else {
             lim = ""
@@ -89,28 +88,28 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
         register(
             set(
                 split(
-                    " ".join(mCol.db.queryStringList("select distinct tags from notes" + lim))
+                    " ".join(col.db.queryStringList("select distinct tags from notes" + lim))
                 )
             ),
             clear = clear,
         )
     }
 
-    fun byDeck(did: Long, children: Boolean = false): List<String> {
+    override fun byDeck(did: Long, children: Boolean): List<String> {
         val basequery = "select n.tags from cards c, notes n WHERE c.nid = n.id"
         val query: String
         val res: List<String>
         if (!children) {
             query = basequery + " AND c.did=?"
-            res = mCol.db.queryStringList(query, did)
+            res = col.db.queryStringList(query, did)
             return list(set(split(" ".join(res))))
         }
         val dids = mutableListOf(did)
-        for ((name, id) in mCol.decks.children(did)) {
+        for ((name, id) in col.decks.children(did)) {
             dids.add(id)
         }
         query = basequery + " AND c.did IN " + ids2str(dids)
-        res = mCol.db.queryStringList(query)
+        res = col.db.queryStringList(query)
         return list(set(split(" ".join(res))))
     }
 
@@ -122,7 +121,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
     /** Add space-separate tags to provided notes,
      * @return changed count. */
     fun bulk_add(nids: List<Long>, tags: String): Int {
-        return mBackend.add_note_tags(nids = nids, tags = tags)
+        return backend.add_note_tags(nids = nids, tags = tags)
     }
 
     /** Replace space-separated tags, returning changed count.
@@ -135,7 +134,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
         replacement: String,
         regex: Boolean
     ): Int {
-        return mBackend.update_note_tags(
+        return backend.update_note_tags(
             nids = nids, tags = tags, replacement = replacement, regex = regex
         )
     }
@@ -143,17 +142,12 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
     // legacy routines
 
     /**  Add tags in bulk. TAGS is space-separated. */
-    fun bulkAdd(ids: List<Long>, tags: String, add: Boolean = true) {
-
+    override fun bulkAdd(ids: List<Long>, tags: String, add: Boolean) {
         if (add) {
             bulk_add(ids, tags)
         } else {
             bulk_update(ids, tags, "", false)
         }
-    }
-
-    fun bulkRem(ids: List<Long>, tags: String) {
-        bulkAdd(ids, tags, false)
     }
 
     /*
@@ -162,7 +156,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
      */
 
     /** Parse a string and return a list of tags. */
-    fun split(tags: String): MutableList<String> {
+    override fun split(tags: String): MutableList<String> {
         return tags.replace('\u3000', ' ')
             .split("\\s".toRegex())
             .filter { it.isNotEmpty() }
@@ -170,7 +164,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
     }
 
     /** Join tags into a single string, with leading and trailing spaces. */
-    fun join(tags: List<String>): String {
+    override fun join(tags: kotlin.collections.Collection<String>): String {
         if (tags.isEmpty()) {
             return ""
         }
@@ -190,7 +184,7 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
     }
 
     /** Delete tags if they exist. */
-    fun remFromStr(deltags: String, tags: String): String {
+    override fun remFromStr(deltags: String, tags: String): String {
         fun wildcard(search: String, str: String): Boolean {
             // TODO: needs testing
             val escaped = Pattern.quote(search).replace("\\*", ".*")
@@ -221,12 +215,41 @@ class TagsV16(val mCol: Collection, private val mBackend: TagsBackend) {
      */
 
     // this is now a no-op - the tags are canonified when the note is saved
-    fun canonify(tagList: List<String>): List<String> {
-        return tagList
+    override fun canonify(tagList: List<String>): java.util.AbstractSet<String> {
+        // libAnki difference: tagList was returned directly
+        return HashSet(tagList)
     }
 
     /** True if TAG is in TAGS. Ignore case.*/
-    fun inList(tag: String, tags: List<String>): Boolean {
+    override fun inList(tag: String, tags: Iterable<String>): Boolean {
         return tags.map { it.lowercase() }.contains(tag.lowercase())
+    }
+
+    /*
+     * Not in libAnki
+     */
+
+    override fun add(tag: String, usn: Int?) {
+        register(listOf(tag), usn)
+    }
+
+    /*
+     * Interface compatibility - to be removed
+     */
+
+    override fun load(json: String) {
+        // intentionally left blank
+    }
+
+    override fun flush() {
+        // intentionally left blank
+    }
+
+    override fun save() {
+        // intentionally left blank//
+    }
+
+    override fun beforeUpload() {
+        // intentionally left blank//
     }
 }

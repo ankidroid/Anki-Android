@@ -45,6 +45,7 @@
     <string name="statistics">Estadísticas</string>
     <string name="settings">Configuración</string>
     <string name="help">Ayuda</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Enviar comentarios</string>
     <string name="studyoptions_due_today">Programadas para hoy:</string>
     <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
@@ -72,7 +73,7 @@
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
+    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas\nusando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -116,7 +117,7 @@
     <string name="menu_flag_card_four">Marca azul</string>
     <string name="menu_flag_card_five">Uaujskz</string>
     <string name="menu_flag_card_six">I like your home </string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_seven">Bandera violeta</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>
@@ -191,7 +192,7 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">Tu estas</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -52,7 +52,7 @@
         android:key="gestureFullScreenNavigationDrawer"
         android:summary="@string/gestures_fullscreen_nav_drawer_summary"
         android:title="@string/gestures_full_screen_nav_drawer" />
-    <com.ichi2.ui.SeekBarPreference
+    <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:dependency="gestures"
         android:dialogMessage="@string/preference_summary_literal"

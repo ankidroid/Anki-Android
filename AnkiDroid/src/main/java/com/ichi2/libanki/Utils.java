@@ -38,6 +38,7 @@ import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.ImportUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -61,7 +62,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -554,6 +554,7 @@ public class Utils {
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
     @SuppressWarnings("CharsetObjectCanBeUsed")
+    @NonNull
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
@@ -710,7 +711,7 @@ public class Utils {
             throw new IOException("Failed to create target directory: " + targetDirectory);
         }
         if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = new HashMap<>(0);
+            zipEntryToFilenameMap = HashUtil.HashMapInit(0);
         }
         for (String requestedEntry : zipEntries) {
             ZipArchiveEntry ze = zipFile.getEntry(requestedEntry);
@@ -856,7 +857,7 @@ public class Utils {
         final Intent intent = new Intent(action);
         intent.setComponent(componentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**
@@ -1111,7 +1112,7 @@ public class Utils {
      * @return The set of non empty field values.
      */
     public static Set<String> nonEmptyFields(Map<String, String> fields) {
-        Set<String> nonempty_fields = new HashSet<>(fields.size());
+        Set<String> nonempty_fields = HashUtil.HashSetInit(fields.size());
         for (Map.Entry<String, String> kv: fields.entrySet()) {
             String value = kv.getValue();
             value = Utils.stripHTMLMedia(value).trim();

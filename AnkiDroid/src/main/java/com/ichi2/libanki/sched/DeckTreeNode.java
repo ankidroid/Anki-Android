@@ -21,8 +21,8 @@ import com.ichi2.libanki.Collection;
 import java.util.List;
 
 public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
-    public DeckTreeNode(Collection col, String mName, long mDid) {
-        super(col, mName, mDid);
+    public DeckTreeNode(Collection col, String name, long did) {
+        super(col, name, did);
     }
 
 

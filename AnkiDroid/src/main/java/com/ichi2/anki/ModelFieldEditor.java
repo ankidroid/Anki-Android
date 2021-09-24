@@ -143,8 +143,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      * Containing clickable labels for the fields
      */
     private void createfieldLabels() {
-        ArrayAdapter<String> mFieldLabelAdapter = new ArrayAdapter<>(this, R.layout.model_field_editor_list_item, mFieldLabels);
-        mFieldLabelView.setAdapter(mFieldLabelAdapter);
+        ArrayAdapter<String> fieldLabelAdapter = new ArrayAdapter<>(this, R.layout.model_field_editor_list_item, mFieldLabels);
+        mFieldLabelView.setAdapter(fieldLabelAdapter);
         mFieldLabelView.setOnItemClickListener((parent, view, position, id) -> {
             mContextMenu = ModelEditorContextMenu.newInstance(mFieldLabels.get(position), mContextMenuListener);
             showDialogFragment(mContextMenu);
@@ -172,11 +172,11 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
     /**
      * Clean the input field or explain why it's rejected
-     * @param mFieldNameInput Editor to get the input
+     * @param fieldNameInput Editor to get the input
      * @return The value to use, or null in case of failure
      */
-    private @Nullable String _uniqueName(@NonNull EditText mFieldNameInput) {
-        String input = mFieldNameInput.getText().toString()
+    private @Nullable String _uniqueName(@NonNull EditText fieldNameInput) {
+        String input = fieldNameInput.getText().toString()
                 .replaceAll("[\\n\\r{}:\"]", "");
         // The number of #, ^, /, space, tab, starting the input
         int offset;

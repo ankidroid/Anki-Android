@@ -50,11 +50,13 @@ import com.ichi2.ui.FixedEditText;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
+import static com.ichi2.libanki.Utils.checksum;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -73,6 +75,8 @@ public class ModelBrowser extends AnkiActivity {
     private ArrayList<Integer> mCardCounts;
     private ArrayList<Long> mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
+    private ArrayList<String> mNewModelLabels;
+    private ArrayList<String> mExistingModelNames;
 
     private Collection mCol;
     private ActionBar mActionBar;
@@ -97,7 +101,7 @@ public class ModelBrowser extends AnkiActivity {
     private LoadingModelsHandler loadingModelsHandler() {
         return new LoadingModelsHandler(this);
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<ArrayList<Model>, ArrayList<Integer>>> {
+    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<List<Model>, ArrayList<Integer>>> {
         public LoadingModelsHandler(ModelBrowser browser) {
             super(browser);
         }
@@ -113,12 +117,12 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<ArrayList<Model>, ArrayList<Integer>> result) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<List<Model>, ArrayList<Integer>> result) {
             if (result == null) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
-            browser.mModels = result.first;
+            browser.mModels = new ArrayList<>(result.first);
             browser.mCardCounts = result.second;
 
             browser.fillModelList();
@@ -302,38 +306,12 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void addNewNoteTypeDialog() {
 
-        String add = getResources().getString(R.string.model_browser_add_add);
-        String clone = getResources().getString(R.string.model_browser_add_clone);
-
-        //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
-        int existingModelSize = (mModels == null) ? 0 : mModels.size();
-        int stdModelSize = StdModels.STD_MODELS.length;
-        ArrayList<String> newModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
-        ArrayList<String> existingModelsNames = new ArrayList<>(existingModelSize);
-
-        //Used to fetch model names
-        mNewModelNames = new ArrayList<>(stdModelSize);
-        for (StdModels StdModels: StdModels.STD_MODELS) {
-            String defaultName = StdModels.getDefaultName();
-            newModelLabels.add(String.format(add, defaultName));
-            mNewModelNames.add(defaultName);
-        }
-
-        final int numStdModels = newModelLabels.size();
-
-        if (mModels != null) {
-            for (Model model : mModels) {
-                String name = model.getString("name");
-                newModelLabels.add(String.format(clone, name));
-                mNewModelNames.add(name);
-                existingModelsNames.add(name);
-            }
-        }
+        initializeNoteTypeList();
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
+        ArrayAdapter<String> newModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, mNewModelLabels);
 
-        addSelectionSpinner.setAdapter(mNewModelAdapter);
+        addSelectionSpinner.setAdapter(newModelAdapter);
 
         new MaterialDialog.Builder(this)
                 .title(R.string.model_browser_add)
@@ -342,14 +320,14 @@ public class ModelBrowser extends AnkiActivity {
                 .onPositive((dialog, which) -> {
                         mModelNameInput = new FixedEditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
-                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < mNewModelLabels.size();
                         // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
                         String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
                         if (!isStdModel) {
                             suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
                         }
 
-                        if (existingModelsNames.contains(suggestedName)) {
+                        if (mExistingModelNames.contains(suggestedName)) {
                             suggestedName = randomizeName(suggestedName);
                         }
                         mModelNameInput.setText(suggestedName);
@@ -401,6 +379,37 @@ public class ModelBrowser extends AnkiActivity {
 
 
     /*
+     * retrieve list of note type in variable, which will going to be in use for adding/cloning note type
+     */
+    private void initializeNoteTypeList() {
+
+        String add = getResources().getString(R.string.model_browser_add_add);
+        String clone = getResources().getString(R.string.model_browser_add_clone);
+
+        // Populates array adapters listing the mModels (includes prefixes/suffixes)
+        int existingModelSize = mModels.size();
+        int stdModelSize = StdModels.STD_MODELS.length;
+        mNewModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
+        mExistingModelNames = new ArrayList<>(existingModelSize);
+
+        // Used to fetch model names
+        mNewModelNames = new ArrayList<>(stdModelSize);
+        for (StdModels StdModels: StdModels.STD_MODELS) {
+            String defaultName = StdModels.getDefaultName();
+            mNewModelLabels.add(String.format(add, defaultName));
+            mNewModelNames.add(defaultName);
+        }
+
+        for (Model model : mModels) {
+            String name = model.getString("name");
+            mNewModelLabels.add(String.format(clone, name));
+            mNewModelNames.add(name);
+            mExistingModelNames.add(name);
+        }
+    }
+
+
+    /*
      * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
      */
     private void deleteModelDialog() {
@@ -439,6 +448,9 @@ public class ModelBrowser extends AnkiActivity {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
+
+        initializeNoteTypeList();
+
         mModelNameInput = new FixedEditText(this);
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
@@ -452,6 +464,11 @@ public class ModelBrowser extends AnkiActivity {
                                     String deckName = mModelNameInput.getText().toString()
                                             // Anki desktop doesn't allow double quote characters in deck names
                                             .replaceAll("[\"\\n\\r]", "");
+
+                                    if (mExistingModelNames.contains(deckName)) {
+                                        deckName = randomizeName(deckName);
+                                    }
+
                                     if (deckName.length() > 0) {
                                         model.put("name", deckName);
                                         mCol.getModels().update(model);
@@ -519,21 +536,11 @@ public class ModelBrowser extends AnkiActivity {
 
 
     /*
-     * Generates a random alphanumeric sequence of 6 characters
-     * Used to append to the end of new note types to dissuade
+     * Takes current timestamp from col and append to the end of new note types to dissuade
      * User from reusing names (which are technically not unique however
      */
     private String randomizeName(String s) {
-        char[] charSet = "123456789abcdefghijklmnopqrstuvqxwzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-
-        char[] randomString = new char[6];
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            int randomIndex = random.nextInt(charSet.length);
-            randomString[i] = charSet[randomIndex];
-        }
-
-        return s + " " + new String(randomString);
+        return s + "-" + checksum(String.valueOf(getCol().getTime().intTimeMS())).substring(0, 5);
     }
 
 

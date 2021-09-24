@@ -28,9 +28,9 @@ public class CustomStudyDialogFactory extends ExtendedFragmentFactory {
     final Supplier<Collection> mCollectionSupplier;
     final CustomStudyListener mCustomStudyListener;
 
-    public CustomStudyDialogFactory(Supplier<Collection> mCollectionSupplier, CustomStudyListener mCustomStudyListener) {
-        this.mCollectionSupplier = mCollectionSupplier;
-        this.mCustomStudyListener = mCustomStudyListener;
+    public CustomStudyDialogFactory(Supplier<Collection> collectionSupplier, CustomStudyListener customStudyListener) {
+        this.mCollectionSupplier = collectionSupplier;
+        this.mCustomStudyListener = customStudyListener;
     }
 
     @NonNull

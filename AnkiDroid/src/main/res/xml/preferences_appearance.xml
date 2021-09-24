@@ -64,7 +64,7 @@
                 android:defaultValue="@string/empty_string"
                 android:key="browserEditorFont"
                 android:title="@string/pref_browser_editor_font" />
-            <com.ichi2.ui.SeekBarPreference
+            <com.ichi2.preferences.SeekBarPreferenceCompat
                 android:defaultValue="100"
                 android:key="relativeCardBrowserFontSize"
                 android:max="200"

@@ -90,7 +90,7 @@ class ModelsBackendImpl(private val backend: BackendV1) : ModelsBackend {
     }
 
     override fun add_or_update_notetype(model: NoteType, preserve_usn_and_mtime: Boolean): ntid {
-        val toJsonBytes = to_json_bytes(model.mNoteType)
+        val toJsonBytes = to_json_bytes(model)
         return backend.addOrUpdateNotetype(toJsonBytes, preserve_usn_and_mtime).ntid
     }
 

@@ -45,15 +45,15 @@
     <!--Rename-->
     <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">ସୂଚକ ଭାଷା ଭାବରେ %s ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">ଭାଷା ସୂଚକ କୁ %s ସେଟ୍ କରନ୍ତୁ</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">କ୍ଷେତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="model_field_editor_add">କ୍ଷେତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="model_field_editor_delete">କ୍ଷେତ୍ର ବିଲୋପ କରନ୍ତୁ</string>
     <string name="model_field_editor_rename">କ୍ଷେତ୍ରକୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
-    <string name="model_field_editor_language_hint">କିବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
-    <string name="model_field_editor_reposition_menu">ସ୍ଥାନାନ୍ତର କ୍ଷେତ୍ର</string>
-    <string name="model_field_editor_reposition">ରିପୋଜିସନ୍ ଫିଲ୍ଡ (ଏକ ମୂଲ୍ୟ %1$d-%2$d ପ୍ରବେଶ କରନ୍ତୁ)</string>
+    <string name="model_field_editor_language_hint">କୀବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ର ପୁନଃଅବସ୍ଥାନ</string>
+    <string name="model_field_editor_reposition">କ୍ଷେତ୍ର ପୁନଃଅବସ୍ଥାନ କରନ୍ତୁ (%1$d–%2$d ମଧ୍ୟରେ ଏକ ମୂଲ୍ୟ ପ୍ରବେଶ କରନ୍ତୁ)</string>
     <string name="model_field_editor_toggle_sticky">ଯୋଡ଼ିବା ସମୟରେ ଶେଷ ଇନପୁଟ୍ ମନେରଖ</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡିକ ଅଦ୍ୟତନ କରୁଛି</string>
     <string name="model_field_editor_sort_field">ଏହି କ୍ଷେତ୍ର ଦ୍ୱାରା ସଜାନ୍ତୁ</string>
@@ -76,6 +76,6 @@
     <string name="card_template_editor_deck_override_off">ତାସଖଣ୍ଡ ନବଳେଖନ (ବନ୍ଦ)</string>
     <string name="model_manager_deck_override_added_message">‘%1$s’ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ‘%2$s’ ରେ ସେଟ୍ କରନ୍ତୁ</string>
     <string name="model_manager_deck_override_removed_message">‘%s’ ପାଇଁ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ ଅପସାରଣ କରାଯାଇଛି</string>
-    <string name="deck_override_explanation">ନୂତନ ‘%s’ କାର୍ଡଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ ଡେକ୍ ଚୟନ କରନ୍ତୁ</string>
-    <string name="deck_picker_dialog_filter_decks">ତାସଖଣ୍ଡଙ୍କୁ ଶୋଧିତ କର</string>
+    <string name="deck_override_explanation">ନୂତନ ‘%s’ ପତ୍ରଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ ଡେକ୍ ଚୟନ କରନ୍ତୁ</string>
+    <string name="deck_picker_dialog_filter_decks">ତାସଖଣ୍ଡ ଶୋଧନ</string>
 </resources>

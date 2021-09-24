@@ -25,27 +25,27 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MapUtilTest {
-    private Map<Integer, String> map;
+    private Map<Integer, String> mMap;
 
 
     @Before
     public void initializeMap() {
-        map = new HashMap<>();
-        map.put(12, "Anki");
-        map.put(5, "AnkiMobile");
-        map.put(20, "AnkiDroid");
-        map.put(30, "AnkiDesktop");
+        mMap = new HashMap<>();
+        mMap.put(12, "Anki");
+        mMap.put(5, "AnkiMobile");
+        mMap.put(20, "AnkiDroid");
+        mMap.put(30, "AnkiDesktop");
     }
 
 
     @Test
     public void getKeyByValueIsEqualTest() {
-        assertThat(getKeyByValue(map, "AnkiDroid"), is(20));
+        assertThat(getKeyByValue(mMap, "AnkiDroid"), is(20));
     }
 
 
     @Test
     public void getKeyByValueIsNotEqualTest() {
-        assertThat(getKeyByValue(map, "AnkiDesktop"), not(5));
+        assertThat(getKeyByValue(mMap, "AnkiDesktop"), not(5));
     }
 }

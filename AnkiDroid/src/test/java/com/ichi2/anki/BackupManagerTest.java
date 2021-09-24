@@ -21,13 +21,12 @@ import com.ichi2.testutils.MockTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.io.File;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.StrictMock.strictMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +35,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -117,7 +115,7 @@ public class BackupManagerTest {
 
     @Test
     public void noBackupPerformedIfBackupAlreadyExists() {
-        File file = mock(File.class, new ThrowingAnswer());
+        File file = strictMock(File.class);
         doReturn(true).when(file).exists();
 
         BackupManager bm = getPassingBackupManagerSpy(file);
@@ -176,16 +174,8 @@ public class BackupManagerTest {
 
     // strict mock
     private File getBackupFileMock() {
-        File f = mock(File.class, new ThrowingAnswer());
+        File f = strictMock(File.class);
         doReturn(false).when(f).exists();
         return f;
-    }
-
-
-    // Likely a better way. Using: https://stackoverflow.com/a/36206766
-    public static class ThrowingAnswer implements Answer<Object> {
-        @Override public Object answer(InvocationOnMock invocation) {
-            throw new AssertionError("Unexpected invocation: " + invocation);
-        }
     }
 }

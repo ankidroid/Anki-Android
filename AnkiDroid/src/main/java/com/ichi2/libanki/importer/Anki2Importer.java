@@ -30,17 +30,16 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.utils.HashUtil;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,7 +139,7 @@ public class Anki2Importer extends Importer {
 
 
     private void _import() {
-        mDecks = new HashMap<>(mSrc.getDecks().count());
+        mDecks = HashUtil.HashMapInit(mSrc.getDecks().count());
         try {
             // Use transactions for performance and rollbacks in case of error
             mDst.getDb().getDatabase().beginTransaction();
@@ -203,8 +202,8 @@ public class Anki2Importer extends Importer {
     private void _importNotes() {
         int noteCount = mDst.noteCount();
         // build guid -> (id,mod,mid) hash & map of existing note ids
-        mNotes = new HashMap<>(noteCount);
-        Set<Long> existing = new HashSet<>(noteCount);
+        mNotes = HashUtil.HashMapInit(noteCount);
+        Set<Long> existing = HashUtil.HashSetInit(noteCount);
         try (Cursor cur = mDst.getDb().query("select id, guid, mod, mid from notes")) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
@@ -334,7 +333,7 @@ public class Anki2Importer extends Importer {
 
             if (dupes > 0) {
                 mLog.add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
-                if (dupesIgnored.size() > 0) {
+                if (!dupesIgnored.isEmpty()) {
                     mLog.add(getRes().getString(R.string.import_update_ignored));
                 }
             }
@@ -396,7 +395,7 @@ public class Anki2Importer extends Importer {
 
     /** Prepare index of schema hashes. */
     private void _prepareModels() {
-        mModelMap = new HashMap<>(mSrc.getModels().count());
+        mModelMap = HashUtil.HashMapInit(mSrc.getModels().count());
     }
 
 
@@ -516,8 +515,8 @@ public class Anki2Importer extends Importer {
          * Java: guid -> ord -> cid
          */
         int nbCard = mDst.cardCount();
-        Map<String, Map<Integer, Long>> mCards = new HashMap<>(nbCard);
-        Set<Long> existing = new HashSet<>(nbCard);
+        Map<String, Map<Integer, Long>> cardsByGuid = HashUtil.HashMapInit(nbCard);
+        Set<Long> existing = HashUtil.HashSetInit(nbCard);
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id")) {
@@ -526,12 +525,12 @@ public class Anki2Importer extends Importer {
                 int ord = cur.getInt(1);
                 long cid = cur.getLong(2);
                 existing.add(cid);
-                if (mCards.containsKey(guid)) {
-                    mCards.get(guid).put(ord, cid);
+                if (cardsByGuid.containsKey(guid)) {
+                    cardsByGuid.get(guid).put(ord, cid);
                 } else {
                     Map<Integer, Long> map = new HashMap<>(); // The size is at most the number of card type in the note type.
                     map.put(ord, cid);
-                    mCards.put(guid, map);
+                    cardsByGuid.put(guid, map);
                 }
             }
         }
@@ -584,7 +583,7 @@ public class Anki2Importer extends Importer {
                 }
                 NoteTriple dnid = mNotes.get(guid);
                 // does the card already exist in the dst col?
-                if (mCards.containsKey(guid) && mCards.get(guid).containsKey(ord)) {
+                if (cardsByGuid.containsKey(guid) && cardsByGuid.get(guid).containsKey(ord)) {
                     // fixme: in future, could update if newer mod time
                     continue;
                 }
@@ -816,7 +815,7 @@ public class Anki2Importer extends Importer {
             mCol.getSched().maybeRandomizeDeck(did);
         }
         // make sure new position is correct
-        mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
+        mDst.set_config("nextPos", mDst.getDb().queryLongScalar(
                 "select max(due)+1 from cards where type = " + CARD_TYPE_NEW));
         mDst.save();
     }

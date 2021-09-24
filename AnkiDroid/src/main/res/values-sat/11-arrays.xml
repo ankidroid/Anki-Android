@@ -35,7 +35,7 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>ᱥᱟᱵᱩᱵᱮᱲᱟ ᱨᱤᱯᱚᱴ ᱢᱮ</item>
+        <item>ᱜᱷᱤᱲᱜᱮ ᱨᱤᱯᱚᱴ ᱢᱮ</item>
         <item>ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</item>
         <item>ᱠᱩᱞᱤᱧ ᱢᱮ</item>
     </string-array>
@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
     <string name="gesture_flag_green">ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
     <string name="gesture_flag_blue">ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">ᱜᱳᱞᱟᱯᱤ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ</string>
+    <string name="gesture_flag_turquoise">ᱯᱷᱤᱨᱚᱡᱟ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱚᱞ ᱢᱮ</string>
+    <string name="gesture_flag_purple">ᱵᱮᱝᱜᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱳᱜᱟᱹᱞ ᱢᱮ</string>
     <string name="gesture_flag_remove">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
     <string name="gesture_page_up">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
     <string name="gesture_page_down">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>

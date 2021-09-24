@@ -45,6 +45,7 @@
     <string name="statistics">Statystyki</string>
     <string name="settings">Ustawienia</string>
     <string name="help">Pomoc</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Prześlij opinię</string>
     <string name="studyoptions_due_today">Na dziś:</string>
     <string name="studyoptions_new_total">Łącznie nowych kart:</string>
@@ -124,9 +125,9 @@
     <string name="menu_flag_card_two">Pomarańczowa flaga</string>
     <string name="menu_flag_card_three">Zielona flaga</string>
     <string name="menu_flag_card_four">Niebieska flaga</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Różowa flaga</string>
+    <string name="menu_flag_card_six">Turkusowa flaga</string>
+    <string name="menu_flag_card_seven">Fioletowa flaga</string>
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_select">Zaznacz tekst</string>
@@ -249,4 +250,5 @@
         <item quantity="many">%1$d kart (0 do przejrzenia)</item>
         <item quantity="other">%1$d kart (0 do przejrzenia)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Kopia %s</string>
 </resources>

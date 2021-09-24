@@ -27,6 +27,8 @@ import android.util.Pair;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
+import com.ichi2.libanki.Deck;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -208,7 +210,7 @@ public class Finder {
             } else if (c == '-') {
                 if (token.length() != 0) {
                     token += c;
-                } else if (tokens.size() == 0 || !"-".equals(tokens.get(tokens.size() - 1))) {
+                } else if (tokens.isEmpty() || !"-".equals(tokens.get(tokens.size() - 1))) {
                     tokens.add("-");
                 }
                 // normal character
@@ -415,7 +417,7 @@ public class Finder {
             return new Pair<>("", false);
         }
         // use deck default
-        String type = mCol.getConf().getString("sortType");
+        String type = mCol.get_config_string("sortType");
         String sort = null;
         if (type.startsWith("note")) {
             if (type.startsWith("noteCrt")) {
@@ -444,7 +446,7 @@ public class Finder {
             // deck has invalid sort order; revert to noteCrt
             sort = "n.id, c.ord";
         }
-        boolean sortBackwards = mCol.getConf().getBoolean("sortBackwards");
+        boolean sortBackwards = mCol.get_config_boolean("sortBackwards");
         return new Pair<>(" ORDER BY " + sort, sortBackwards);
     }
 
@@ -698,7 +700,7 @@ public class Finder {
                 }
             }
         }
-        if (ids == null || ids.size() == 0) {
+        if (ids == null || ids.isEmpty()) {
             return null;
         }
         String sids = Utils.ids2str(ids);
@@ -765,7 +767,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>(mCol.getModels().count());
+        Map<Long, Object[]> mods = HashUtil.HashMapInit(mCol.getModels().count());
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
@@ -915,7 +917,7 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>(nids.size());
         String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>(col.getModels().count());
+        Map<Long, java.util.Collection<Long>> midToNid = HashUtil.HashMapInit(col.getModels().count());
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
@@ -1008,7 +1010,7 @@ public class Finder {
         search += "'" + fieldName + ":*'";
         // go through notes
         List<Long> nids = col.findNotes(search);
-        Map<String, List<Long>> vals = new HashMap<>(nids.size());
+        Map<String, List<Long>> vals = HashUtil.HashMapInit(nids.size());
         List<Pair<String, List<Long>>> dupes = new ArrayList<>(nids.size());
         Map<Long, Integer> fields = new HashMap<>();
         try (Cursor cur = col.getDb().query(

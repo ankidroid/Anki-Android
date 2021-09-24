@@ -151,7 +151,6 @@
     <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
     <string name="import_title">Mengimpor</string>
-    <string name="import_select_title">Pilih berkas untuk diimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
     <string name="import_message_add_confirm">Tambah \"%s\" ke dalam koleksi? Ini dapat memakan waktu lama</string>
@@ -185,14 +184,12 @@
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
     <string name="export_successful">Berkas \"%s\" diekspor. Apakah kamu ingin mengirimnya dengan aplikasi lain?</string>
     <string name="export_email_subject">Flashcard AnkiDroid terekspor: %s</string>
-    <string name="export_email_text"><![CDATA[        Hai!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Ini adalah dek flashcard Anki dikirim dari <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Coba buka menggunakan salah satu <a href="http://ankisrs.net/#download">Distribusi Anki</a> yang ada dan selamat belajar mudah dan efisien!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
-    <string name="import_hint">Untuk mengimpor kartu, taruh berkas apkg ke dalam direktori “%s” dan tekan “OK”</string>
-    <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
@@ -336,19 +333,23 @@
     <string name="email_id_empty">Alamat surel diperlukan</string>
     <string name="password_empty">Kata Sandi diperlukan</string>
     <string name="back_pressed_once">Mohon tekan sekali lagi untuk keluar</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">Mohon tekan sekali lagi untuk kembali</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Unduh dek</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="cancel_download">Batalkan pengunduhan</string>
+    <string name="cancel_download_question_title">Batalkan pengunduhan?</string>
+    <string name="downloading_file">Mengunduh %s</string>
+    <string name="import_deck">Impor Dek</string>
+    <string name="something_wrong">Ada yang tidak beres, coba lagi</string>
+    <string name="download_failed">Gagal mengunduh</string>
+    <string name="deck_download_progress_message">Anda dapat menggunakan aplikasi lain selagi unduhan berjalan</string>
+    <string name="check_network">Harap periksa koneksi jaringan Anda.</string>
+    <string name="search_using_deck_name">Cari berdasarkan nama dek</string>
+    <string name="home">Beranda</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Dipindah ke %s</string>
+    <string name="import_mapped_to_tags">Dipindah ke Tag</string>
+    <string name="import_mapped_to_nothing">Diabaikan</string>
 </resources>

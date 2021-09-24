@@ -145,12 +145,18 @@ public class CompatV26 extends CompatV23 implements Compat {
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
-        audioManager.requestAudioFocus(audioFocusRequest);
+        // requestAudioFocus needs NonNull argument
+        if (audioFocusRequest != null) {
+            audioManager.requestAudioFocus(audioFocusRequest);
+        }
     }
 
     @Override
     public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
-        audioManager.abandonAudioFocusRequest(audioFocusRequest);
+        // abandonAudioFocusRequest needs NonNull argument
+        if (audioFocusRequest != null) {
+            audioManager.abandonAudioFocusRequest(audioFocusRequest);
+        }
     }
 }

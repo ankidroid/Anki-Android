@@ -112,8 +112,8 @@
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
     <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
     <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
-    <string name="custom_study_new_extend">Увеличить/уменьшить («-3») лимит новых на сегодня</string>
-    <string name="custom_study_rev_extend">Увеличить/уменьшить («-3») лимит повторяемых на сегодня</string>
+    <string name="custom_study_new_extend">Увеличить или уменьшить («-3») лимит новых на сегодня</string>
+    <string name="custom_study_rev_extend">Увеличить или уменьшить («-3») лимит повторяемых на сегодня</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
@@ -265,4 +265,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Откройте страницу предварительного просмотра колоды, содержащую количество карточек для просмотра сегодня.</string>
+    <string name="import_deck_package">Пакет колоды (.apkg)</string>
+    <string name="import_collection_package">Пакет коллекции (.colpkg)</string>
 </resources>

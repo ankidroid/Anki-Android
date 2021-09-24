@@ -99,4 +99,11 @@ public class Counts {
     public int hashCode() {
         return Arrays.asList(mNew, mRev, mLrn).hashCode();
     }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "[" + mNew + ", " + mLrn + ", " + mRev + "]";
+    }
 }

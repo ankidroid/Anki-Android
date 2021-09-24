@@ -154,7 +154,6 @@
     <string name="show_hint">Afficher %s</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
-    <string name="import_select_title">Sélectionner un fichier à importer</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Ceci peut prendre un long moment</string>
@@ -188,14 +187,12 @@
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du fichier Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes mémoire</string>
-    <string name="export_email_text"><![CDATA[        Salut !
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Ceci est un paquet Anki envoyé depuis <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Essayez de l’ouvrir avec une des <a href="http://ankisrs.net/#download">Distributions Anki</a> disponibles et amusez-vous à apprendre rapidement et efficacement !
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Erreur lors de l\'exportation du fichier apkg</string>
-    <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire « %s » et touchez « OK »</string>
-    <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options des paquets</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
@@ -351,17 +348,21 @@
     <string name="back_pressed_once">Réappuyez sur la touche Retour pour quitter</string>
     <string name="back_pressed_once_reviewer">Réappuyez sur la touche retour pour revenir en arrière.</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
-    <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="percentage">%s %%</string>
+    <string name="download_deck">Télécharger le paquet</string>
+    <string name="try_again">Réessayer</string>
+    <string name="cancel_download">Annuler le téléchargement</string>
+    <string name="cancel_download_question_title">Annuler le téléchargement ?</string>
+    <string name="downloading_file">Téléchargement de %s</string>
+    <string name="import_deck">Importer le paquet</string>
+    <string name="something_wrong">Quelque chose s\'est mal passé, veuillez réessayer</string>
+    <string name="download_failed">Le téléchargement a échoué</string>
+    <string name="deck_download_progress_message">Vous pouvez utiliser d\'autres applications pendant que le téléchargement est en cours d\'exécution</string>
+    <string name="check_network">Veuillez vérifier votre connexion réseau</string>
+    <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
+    <string name="home">Accueil</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Classé dans %s</string>
+    <string name="import_mapped_to_tags">Classé dans les Étiquettes</string>
+    <string name="import_mapped_to_nothing">Ignoré</string>
 </resources>

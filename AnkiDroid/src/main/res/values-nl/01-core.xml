@@ -45,6 +45,7 @@
     <string name="statistics">Statistieken</string>
     <string name="settings">Instellingen</string>
     <string name="help">Help</string>
+    <string name="drawing">Tekening</string>
     <string name="send_feedback">Feedback versturen</string>
     <string name="studyoptions_due_today">Vandaag te overhoren:</string>
     <string name="studyoptions_new_total">Aantal nieuwe kaarten:</string>
@@ -95,7 +96,7 @@
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
     <string name="create_shortcut">Snelkoppeling maken</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Blader door kaarten</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

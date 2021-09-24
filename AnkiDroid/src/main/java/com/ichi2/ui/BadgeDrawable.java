@@ -63,15 +63,15 @@ public class BadgeDrawable extends DrawableWrapper {
 
     private void invalidateSize() {
         // This goes out of bounds - it seems to be fine
-        int mSize = (int) (getIntrinsicWidth() * getIconScale());
+        int size = (int) (getIntrinsicWidth() * getIconScale());
 
-        mPaint.setTextSize((float) (mSize * 0.8));
+        mPaint.setTextSize((float) (size * 0.8));
 
         int left = (int) getLeft();
         int bottom = (int) getBottom();
 
-        int right = left + mSize;
-        int top = bottom - mSize;
+        int right = left + size;
+        int top = bottom - size;
         if (mBadge != null) {
             mBadge.setBounds(left, top, right, bottom);
         }

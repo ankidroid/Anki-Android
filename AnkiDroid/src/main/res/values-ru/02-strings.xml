@@ -97,8 +97,8 @@
         <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Изменить лимит новых на сегодня</string>
-    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых на сегодня</string>
+    <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
+    <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
     <string name="custom_study_review_forgotten">Повторить забытые</string>
     <string name="custom_study_review_ahead">Повторить с опережением</string>
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
@@ -160,7 +160,6 @@
     <string name="show_hint">Показать %s</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
-    <string name="import_select_title">Выберите файл для импорта</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
@@ -194,13 +193,12 @@
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
-    <string name="export_email_text"><![CDATA[Привет!
-<br/><br/>
-Это колода карточек, отправленная из приложения <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-Установите на компьютер приложение <a href="http://ankisrs.net/#download">Anki</a>, чтобы открыть эту колоду и наслаждаться легким и эффективным обучением!]]></string>
+    <string name="export_email_text_new"><![CDATA[        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        ]]></string>
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
-    <string name="import_hint">Чтобы импортировать карточки, поместите файл apkg в папку %s и нажмите ОК</string>
-    <string name="upgrade_import_no_file_found">Файл для импорта %1$s не найден</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
@@ -377,16 +375,20 @@
     <string name="back_pressed_once_reviewer">Нажмите «Назад» ещё раз, чтобы вернуться</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Скачать колоду</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="cancel_download">Отменить загрузку</string>
+    <string name="cancel_download_question_title">Отменить загрузку?</string>
+    <string name="downloading_file">Загружается %s</string>
+    <string name="import_deck">Импортировать колоду</string>
+    <string name="something_wrong">Что-то пошло не так, попробуйте еще раз</string>
+    <string name="download_failed">Загрузка не удалась</string>
+    <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
+    <string name="check_network">Проверьте подключение к Интернету</string>
+    <string name="search_using_deck_name">Искать по названию колоды</string>
+    <string name="home">Домой</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Сопоставлено с %s</string>
+    <string name="import_mapped_to_tags">Сопоставлено с метками</string>
+    <string name="import_mapped_to_nothing">Проигнорировано</string>
 </resources>

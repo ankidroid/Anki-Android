@@ -26,13 +26,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ArrayUtilTest {
-    private final Integer[] sampleItems = new Integer[] {1, 2, 3, 4, 5, 6};
+    private final Integer[] mSampleItems = new Integer[] {1, 2, 3, 4, 5, 6};
 
 
     @Test
     public void arrayToArrayList() {
         List<Integer> list = new ArrayList<>();
-        Collections.addAll(list, sampleItems);
-        assertThat(ArrayUtil.toArrayList(sampleItems), is(list));
+        Collections.addAll(list, mSampleItems);
+        assertThat(ArrayUtil.toArrayList(mSampleItems), is(list));
     }
 }

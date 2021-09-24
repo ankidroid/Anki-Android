@@ -71,6 +71,8 @@ public class AnalyticsConstantsTest {
         listOfConstantFields.add("fora");
         listOfConstantFields.add("nciku");
         listOfConstantFields.add("eijiro");
+        listOfConstantFields.add("Import APKG");
+        listOfConstantFields.add("Import COLPKG");
     }
 
     @NonNull
@@ -81,11 +83,11 @@ public class AnalyticsConstantsTest {
 
     @RunWith(Parameterized.class)
     public static class AnalyticsConstantsFieldValuesTest {
-        private final String analyticsString;
+        private final String mAnalyticsString;
 
 
         public AnalyticsConstantsFieldValuesTest(String analyticsString) {
-            this.analyticsString = analyticsString;
+            this.mAnalyticsString = analyticsString;
         }
 
 
@@ -103,7 +105,7 @@ public class AnalyticsConstantsTest {
         @Test
         public void checkAnalyticsString() throws IllegalAccessException {
             assertEquals("Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
-                    analyticsString, getStringFromReflection(analyticsString));
+                    mAnalyticsString, getStringFromReflection(mAnalyticsString));
         }
 
 

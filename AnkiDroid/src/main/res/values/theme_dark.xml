@@ -119,6 +119,7 @@
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
+        <item name="editTextDisabled">@color/material_grey_500</item>
     </style>
 
     <!-- Preferences screens -->

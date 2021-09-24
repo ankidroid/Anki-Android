@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
     <string name="initializing_tts">Lanĉado de parol-sintezilo&#8230;</string>
     <string name="tts_no_tts">ne paroli</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>fulmokartoj por Androido</h2>AnkiDroid estas aplikaĵo por lerni per kartoj. Ĝi estas plene kongrua kun skribotabla programo <a href=\"%2$s\">Anki</a>. Vi povas krei kaj elŝuti lernilojn ambaŭ ĉe komputilo kaj poŝtelefono kaj samtempigi ilin per la servo AnkiWeb.]]></item>
         <item><![CDATA[Por helpi al ni igi AnkiDroid pli bona, bonvolu raporti erarojn per la <a href=\"%1$s\">erar-spurilo</a>, ideoj pri novaj eblaĵoj ankaŭ estas laŭdindaj. En kaze de problemoj, vi trovos solvojn ĉe la <a href=\"%2$s\">vikio</a> (malesperante) aŭ pridiskutu ilin ĉe la <a href=\"%3$s\">forumo</a>.]]></item>
@@ -165,7 +165,7 @@
     <string name="empty_cards_deleted">Forigis kartojn: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Ne povis akiri permeson al la mikrofono.</string>
-    <string name="multimedia_editor_camera_permission_refused">Ne povis akiri permeson al la fotilo. Iuj funkcioj ne eblos.</string>
+    <string name="multimedia_editor_camera_permission_refused">Ne povis akiri permeson al la fotilo. Iuj eblaĵoj ne eblos.</string>
     <string name="multimedia_editor_failed">Fiaskis malfermi redaktilon de plurmedioj</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
@@ -249,4 +249,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Malfermu la kartaran sumigon enhavantan nombron de kartoj por montri hodiaŭ.</string>
+    <string name="import_deck_package">Kartaro (.apkg)</string>
+    <string name="import_collection_package">Kolekto (.colpkg)</string>
 </resources>

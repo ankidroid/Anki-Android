@@ -45,6 +45,7 @@
     <string name="statistics">Estatísticas</string>
     <string name="settings">Axustes</string>
     <string name="help">Axuda</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Enviar suxestións</string>
     <string name="studyoptions_due_today">Pendentes hoxe:</string>
     <string name="studyoptions_new_total">Total de cartóns novos:</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -34,6 +34,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -184,7 +185,7 @@ public class Sched extends SchedV2 {
      */
     @Override
     public void unburyCards() {
-        mCol.getConf().put("lastUnburied", mToday);
+        mCol.set_config("lastUnburied", mToday);
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
         mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
     }
@@ -216,7 +217,7 @@ public class Sched extends SchedV2 {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         List<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         for (Deck deck : decks) {
             if (isCancelled(cancelListener)) {
@@ -387,7 +388,7 @@ public class Sched extends SchedV2 {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
@@ -592,7 +593,7 @@ public class Sched extends SchedV2 {
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.get_config_int("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -1109,7 +1110,7 @@ public class Sched extends SchedV2 {
             update(deck);
         }
         // unbury if the day has rolled over
-        int unburied = mCol.getConf().optInt("lastUnburied", 0);
+        int unburied = mCol.get_config("lastUnburied", 0);
         if (unburied < mToday) {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
         }

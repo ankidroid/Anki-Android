@@ -45,6 +45,7 @@
     <string name="statistics">統計資料</string>
     <string name="settings">設定</string>
     <string name="help">幫助</string>
+    <string name="drawing">繪圖</string>
     <string name="send_feedback">傳送問題回報</string>
     <string name="studyoptions_due_today">今天到期:</string>
     <string name="studyoptions_new_total">新卡片數量:</string>
@@ -91,7 +92,7 @@
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
     <string name="create_shortcut">建立捷徑</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">瀏覽卡片</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
@@ -110,9 +111,9 @@
     <string name="menu_flag_card_two">橙色標記</string>
     <string name="menu_flag_card_three">綠色標記</string>
     <string name="menu_flag_card_four">藍色標記</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">粉紅色標記</string>
+    <string name="menu_flag_card_six">藍綠色標記</string>
+    <string name="menu_flag_card_seven">紫色標記</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_select">選取文字</string>
@@ -183,11 +184,11 @@
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
     <string name="card_template_editor_deck_override">牌組覆蓋</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">插入欄位</string>
+    <string name="card_template_editor_select_field">欄位選擇</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">這會創建%1$d卡片，要繼續嗎?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
@@ -224,6 +225,7 @@
     <string name="sync_conflict_title_new">選擇要保留的收藏</string>
     <string name="sync_conflict_replace_title">取代收藏</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d 張卡片待複習（0張到期)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 複製</string>
 </resources>

@@ -57,9 +57,9 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         Collection col = CollectionHelper.getInstance().getCol(context);
         mStoringDirectory = new File(col.getMedia().dir());
 
-        Button mBtnLibrary = new Button(mActivity);
-        mBtnLibrary.setText(mActivity.getText(R.string.multimedia_editor_image_field_editing_library));
-        mBtnLibrary.setOnClickListener(v -> {
+        Button btnLibrary = new Button(mActivity);
+        btnLibrary.setText(mActivity.getText(R.string.multimedia_editor_image_field_editing_library));
+        btnLibrary.setOnClickListener(v -> {
             Intent i = new Intent();
             i.setType("audio/*");
             String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
@@ -71,7 +71,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), ACTIVITY_SELECT_AUDIO_CLIP);
         });
 
-        layout.addView(mBtnLibrary, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT);
 
         mTvAudioClip = new FixedTextView(mActivity);
         if (mField.getAudioPath() == null) {

@@ -53,9 +53,9 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -216,16 +216,16 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
         View v = requireActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
         TextView textView1 = v.findViewById(R.id.custom_study_details_text1);
         TextView textView2 = v.findViewById(R.id.custom_study_details_text2);
-        final EditText mEditText = v.findViewById(R.id.custom_study_details_edittext2);
+        final EditText editText = v.findViewById(R.id.custom_study_details_edittext2);
         // Set the text
         textView1.setText(getText1());
         textView2.setText(getText2());
-        mEditText.setText(getDefaultValue());
+        editText.setText(getDefaultValue());
         // Give EditText focus and show keyboard
-        mEditText.setSelectAllOnFocus(true);
-        mEditText.requestFocus();
+        editText.setSelectAllOnFocus(true);
+        editText.requestFocus();
         if (dialogId == CUSTOM_STUDY_NEW || dialogId == CUSTOM_STUDY_REV) {
-            mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
+            editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
         }
         // deck id
         final long did = requireArguments().getLong("did");
@@ -240,7 +240,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                     // Get the value selected by user
                     int n;
                     try {
-                        n = Integer.parseInt(mEditText.getText().toString());
+                        n = Integer.parseInt(editText.getText().toString());
                     } catch (Exception e) {
                         Timber.w(e);
                         // This should never happen because we disable positive button for non-parsable inputs
@@ -295,7 +295,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 })
                 .onNegative((dialog, which) -> mCustomStudyListener.dismissAllDialogFragments());
         final MaterialDialog dialog = builder.build();
-        mEditText.addTextChangedListener(new TextWatcher() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -309,7 +309,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
             @Override
             public void afterTextChanged(Editable editable) {
                 try {
-                    Integer.parseInt(mEditText.getText().toString());
+                    Integer.parseInt(editText.getText().toString());
                     dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
                 } catch (Exception e) {
                     Timber.w(e);
@@ -325,7 +325,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>(10);
+        HashMap<Integer, String> keyValueMap = HashUtil.HashMapInit(10);
         keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
         keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
         keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));
@@ -358,7 +358,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
                 break;
         }
         List<String> arr = new ArrayList<>(selectedTags.size());
-        if (selectedTags.size() > 0) {
+        if (!selectedTags.isEmpty()) {
             for (String tag : selectedTags) {
                 arr.add(String.format("tag:'%s'", tag));
             }
@@ -473,7 +473,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment implements
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
         Deck dyn;
         long did = requireArguments().getLong("did");
-        Decks decks = mCollection.getDecks();
+        DeckManager decks = mCollection.getDecks();
         String deckToStudyName = decks.get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
         Deck cur = decks.byName(customStudyDeck);

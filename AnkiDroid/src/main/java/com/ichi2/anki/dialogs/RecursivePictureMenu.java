@@ -97,8 +97,8 @@ public class RecursivePictureMenu extends DialogFragment {
                 Item val = items.get(position);
                 textView.setText(val.mText);
                 textView.setOnClickListener((l) -> val.execute((AnkiActivity) requireActivity()));
-                int mIcon = val.mIcon;
-                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(mIcon, 0, 0, 0);
+                int icon = val.mIcon;
+                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0);
             }
 
 

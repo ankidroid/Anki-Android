@@ -26,7 +26,7 @@ import com.ichi2.anki.AnkiDroidApp;
 
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
 public class NumberRangePreference extends android.preference.EditTextPreference {
 
     protected final int mMin;

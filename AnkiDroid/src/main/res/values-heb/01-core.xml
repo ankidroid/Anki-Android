@@ -45,6 +45,7 @@
     <string name="statistics">סטטיסטיקה</string>
     <string name="settings">הגדרות</string>
     <string name="help">עזרה</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">שליחת משוב</string>
     <string name="studyoptions_due_today">להיום:</string>
     <string name="studyoptions_new_total">סך כל הקלפים החדשים:</string>
@@ -125,9 +126,9 @@
     <string name="menu_flag_card_two">דגל כתום</string>
     <string name="menu_flag_card_three">דגל ירוק</string>
     <string name="menu_flag_card_four">דגל כחול</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">דגל ורוד</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_seven">דגל סגול</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_select">בחירת טקסט</string>
@@ -198,8 +199,8 @@
     <string name="card_template_editor_styling">סגנון</string>
     <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הקלפים</string>
     <string name="card_template_editor_deck_override">שכתוב חפיסה</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">הוסף שדה</string>
+    <string name="card_template_editor_select_field">בחר שדה</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">This will create %1$d card. Proceed?</item>
@@ -237,8 +238,8 @@
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">שגיאה במסנן %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_message_new">לא ניתן לחבר את האוספים. איזה אחד לשמור?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">אנקידרויד</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
@@ -250,4 +251,5 @@
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -160,7 +160,6 @@
     <string name="show_hint">Показати %s</string>
     <string name="info_rate">Оцініть AnkiDroid</string>
     <string name="import_title">Імпортування</string>
-    <string name="import_select_title">Виберіть файл для імпорту</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_message_add_confirm">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
@@ -194,14 +193,12 @@
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_successful">Файл “%s” було експортовано. Ви хочете відправити його до іншої програми?</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
-    <string name="export_email_text"><![CDATA[        Привіт!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Ці картки Anki надіслані з <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Спробуйте відкрити використовуючи одну з наявних <a href="http://ankisrs.net/#download">Anki дистрибутивів </a> і насолоджуйтесь легким і ефективним навчанням!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
-    <string name="import_hint">Щоб імпортувати картки, помістіть apkg файл в папку %s і натисніть ОК</string>
-    <string name="upgrade_import_no_file_found">Файл для імпорту %1$s не знайдено</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Навчальні налаштування</string>
@@ -390,4 +387,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

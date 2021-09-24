@@ -305,7 +305,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
     private void enableGesture(Gesture gesture) {
         Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
         String k = getKey(gesture);
-        settings.putString(k, ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON.toPreferenceString());
+        settings.putString(k, ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1.toPreferenceString());
         settings.apply();
     }
 

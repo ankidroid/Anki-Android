@@ -36,6 +36,7 @@ public interface DroidBackend {
 
     /** Whether a call to {@link DroidBackend#openCollectionDatabase(String)} will generate a schema and indices for the database */
     boolean databaseCreationCreatesSchema();
+    boolean databaseCreationInitializesData();
 
     boolean isUsingRustBackend();
 
@@ -67,7 +68,7 @@ public interface DroidBackend {
 
     @RustV1Cleanup("backend.newDeckConfigLegacy")
     default DeckConfig new_deck_config_legacy() {
-        return new DeckConfig(Decks.DEFAULT_CONF);
+        return new DeckConfig(Decks.DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG);
     }
 
     void useNewTimezoneCode(Collection col);

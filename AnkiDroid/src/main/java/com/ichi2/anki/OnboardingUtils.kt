@@ -18,7 +18,11 @@
 package com.ichi2.anki
 
 import android.content.Context
-import java.util.BitSet
+import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
+import timber.log.Timber
+import java.util.*
+import kotlin.collections.HashSet
 
 class OnboardingUtils {
 
@@ -28,11 +32,25 @@ class OnboardingUtils {
          * Preference can be toggled by visiting 'Advanced' settings in the app.
          */
         const val SHOW_ONBOARDING = "showOnboarding"
+        @VisibleForTesting
+        val featureConstants: MutableSet<String> = HashSet()
+
+        /** Register this feature category as an onboarding feature.
+         * It ensures it gets reset if asked. */
+        fun addFeature(featureCategory: String) {
+            featureConstants.add(featureCategory)
+        }
+
+        /** Register all feature categories as onboarding features.
+         * They all get reset when reset is pressed. */
+        fun addFeatures(featureCategory: Iterable<String>) {
+            featureCategory.forEach(::addFeature)
+        }
 
         /**
          * Check if the tutorial for a feature should be displayed or not.
          */
-        fun <T> isVisited(featureIdentifier: T, context: Context): Boolean where T : Enum<T>, T : OnboardingFlag {
+        fun isVisited(featureIdentifier: OnboardingFlag, context: Context): Boolean {
             // Return if onboarding is not enabled.
             if (!AnkiDroidApp.getSharedPrefs(context).getBoolean(SHOW_ONBOARDING, false)) {
                 return true
@@ -48,7 +66,7 @@ class OnboardingUtils {
         /**
          * Set the tutorial for a feature as visited.
          */
-        fun <T> setVisited(featureIdentifier: T, context: Context) where T : Enum<T>, T : OnboardingFlag {
+        fun setVisited(featureIdentifier: OnboardingFlag, context: Context) {
             val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
 
             // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
@@ -63,6 +81,19 @@ class OnboardingUtils {
         private fun getAllVisited(context: Context, featureConstant: String): BitSet {
             val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureConstant, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
+        }
+
+        fun reset(context: Context) {
+            Timber.i("Resetting all onboarding")
+            reset(context, featureConstants)
+        }
+
+        private fun reset(context: Context, featureConstants: Collection<String>) {
+            AnkiDroidApp.getSharedPrefs(context).edit {
+                featureConstants.forEach {
+                    this@edit.putLong(it, 0)
+                }
+            }
         }
     }
 }

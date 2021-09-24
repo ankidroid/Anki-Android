@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
@@ -46,6 +47,7 @@ import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 /** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
@@ -261,7 +263,7 @@ public class CompatV21 implements Compat {
 
     @Override
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public String saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
+    public Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File ankiDroidFolder = new File(pictures, "AnkiDroid");
         if (!ankiDroidFolder.exists()) {
@@ -270,6 +272,6 @@ public class CompatV21 implements Compat {
         }
         File imageFile = new File(ankiDroidFolder, baseFileName + "." + extension);
         bitmap.compress(format, quality, new FileOutputStream(imageFile));
-        return imageFile.getAbsolutePath();
+        return Uri.fromFile(imageFile);
     }
 }

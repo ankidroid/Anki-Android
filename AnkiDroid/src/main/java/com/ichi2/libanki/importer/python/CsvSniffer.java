@@ -26,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.ichi2.libanki.importer.CsvException;
+import com.ichi2.utils.HashUtil;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -136,7 +137,7 @@ public class CsvSniffer {
         }
 
 
-        Map<Character, Integer> quotes = new HashMap<>(matches.size());
+        Map<Character, Integer> quotes = HashUtil.HashMapInit(matches.size());
         Map<Character, Integer> delims = new HashMap<>();
         int spaces = 0;
         for (Group m : matches) {
@@ -283,7 +284,7 @@ public class CsvSniffer {
             double consistency = 1.0;
             // minimum consistency threshold
             double threshold = 0.9;
-            while (delims.size() == 0 && consistency >= threshold) {
+            while (delims.isEmpty() && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
                     Tuple value = entry.getValue();
                     if (value.first > 0 && value.second > 0) {

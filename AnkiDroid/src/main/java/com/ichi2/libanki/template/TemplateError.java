@@ -59,9 +59,9 @@ public abstract class TemplateError extends NoSuchElementException {
         public final @NonNull String mFound;
 
 
-        public WrongConditionalClosed(@NonNull String mExpected, @NonNull String mFound) {
-            this.mExpected = mExpected;
-            this.mFound = mFound;
+        public WrongConditionalClosed(@NonNull String expected, @NonNull String found) {
+            this.mExpected = expected;
+            this.mFound = found;
         }
 
 

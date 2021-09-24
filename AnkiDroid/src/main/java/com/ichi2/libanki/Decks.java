@@ -30,7 +30,7 @@ import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 
 import com.ichi2.utils.DeckComparator;
-import com.ichi2.utils.DeckNameComparator;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
@@ -64,11 +64,15 @@ import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
-public class Decks {
+public class Decks extends DeckManager {
 
-    // Invalid id, represents an id on an unfound deck
+    /** Invalid id, represents an id on an unfound deck */
     public static final long NOT_FOUND_DECK_ID = -1L;
-    
+    /** Configuration saving the current deck */
+    public static final String CURRENT_DECK = "curDeck";
+    /** Configuration saving the set of active decks (i.e. current decks and its descendants) */
+    public static final String ACTIVE_DECKS = "activeDecks";
+
 
     //not in libAnki
     @SuppressWarnings("WeakerAccess")
@@ -105,7 +109,8 @@ public class Decks {
                 // list of (search, limit, order); we only use first element for now
                 + "\"terms\": [[\"\", 100, 0]],"
                 + "\"resched\": true,"
-                + "\"return\": true" // currently unused
+                + "\"previewDelay\": 10,"
+                + "\"browserCollapsed\": false"
             + "}";
 
     public static final String DEFAULT_CONF = ""
@@ -169,7 +174,7 @@ public class Decks {
          * @param size The expected number of deck to keep
          */
         private NameMap(int size) {
-            mNameMap = new HashMap<>(size);
+            mNameMap = HashUtil.HashMapInit(size);
         }
 
 
@@ -252,10 +257,11 @@ public class Decks {
     }
 
 
-    public void load(String decks, String dconf) {
+    @Override
+    public void load(@NonNull String decks, @NonNull String dconf) {
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
-        mDecks = new HashMap<>(decksarray.length());
+        mDecks = HashUtil.HashMapInit(decksarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
                 Deck o = new Deck(decksarray.getJSONObject(id));
@@ -266,25 +272,35 @@ public class Decks {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
-        mDconf = new HashMap<>(confarray.length());
+        mDconf = HashUtil.HashMapInit(confarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
-                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id), DeckConfig.Source.DECK_CONFIG));
             }
         }
         mChanged = false;
     }
 
 
+    /** {@inheritDoc} */
+    @Override
     public void save() {
-        save(null);
+        save((JSONObject) null);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void save(@NonNull Deck g) {
+        save((JSONObject) g);
+    }
 
-    /**
-     * Can be called with either a deck or a deck configuration.
-     */
-    public void save(JSONObject g) {
+    /** {@inheritDoc} */
+    @Override
+    public void save(@NonNull DeckConfig g) {
+        save((JSONObject) g);
+    }
+
+    private void save(JSONObject g) {
         if (g != null) {
             g.put("mod", mCol.getTime().intTime());
             g.put("usn", mCol.usn());
@@ -293,6 +309,7 @@ public class Decks {
     }
 
 
+    @Override
     public void flush() {
         ContentValues values = new ContentValues();
         if (mChanged) {
@@ -317,7 +334,9 @@ public class Decks {
      * ***********************************************************
      */
 
-    public Long id_for_name(String name) {
+    @Nullable
+    @Override
+    public Long id_for_name(@NonNull String name) {
         name = usable_name(name);
         Deck deck = byName(name);
         if (deck != null) {
@@ -326,15 +345,12 @@ public class Decks {
         return null;
     }
 
-    public Long id(String name) throws FilteredAncestor {
+    @Override
+    public long id(@NonNull String name) throws FilteredAncestor {
         return id(name, DEFAULT_DECK);
     }
 
-    public Long id_safe(String name) {
-        return id_safe(name, DEFAULT_DECK);
-    }
-
-    private String usable_name(String name) {
+    private String usable_name(@NonNull String name) {
         name = strip(name);
         name = name.replace("\"", "");
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
@@ -344,7 +360,7 @@ public class Decks {
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
-    public Long id(String name, String type) throws FilteredAncestor {
+    public long id(@NonNull String name, @NonNull String type) throws FilteredAncestor {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
@@ -363,8 +379,8 @@ public class Decks {
      * @param type The json encoding of the deck, except for name and id
      * @return the deck's id
      */
-    private Long id_create_name_valid(String name, String type) {
-        Long id;
+    private long id_create_name_valid(@NonNull String name, @NonNull String type) {
+        long id;
         Deck g = new Deck(type);
         g.put("name", name);
         do {
@@ -380,10 +396,9 @@ public class Decks {
     }
 
 
-    /**
-     * Same as id, but rename ancestors if filtered to avoid failure
-     */
-    public Long id_safe(String name, String type)  {
+    /** {@inheritDoc} */
+    @Override
+    public long id_safe(@NonNull String name, @NonNull String type)  {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
@@ -396,20 +411,8 @@ public class Decks {
         return id_create_name_valid(name, type);
     }
 
-
-    public void rem(long did) {
-        rem(did, true);
-    }
-
-
-    public void rem(long did, boolean cardsToo) {
-        rem(did, cardsToo, true);
-    }
-
-
-    /**
-     * Remove the deck. If cardsToo, delete any cards inside.
-     */
+    /** {@inheritDoc} */
+    @Override
     public void rem(long did, boolean cardsToo, boolean childrenToo) {
         Deck deck = get(did, false);
         if (did == 1) {
@@ -461,15 +464,9 @@ public class Decks {
         save();
     }
 
-
-    public List<String> allNames() {
-        return allNames(true);
-    }
-
-
-    /**
-     * An unsorted list of all deck names.
-     */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public List<String> allNames(boolean dyn) {
         List<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
@@ -487,40 +484,22 @@ public class Decks {
     }
 
 
-    /**
-     * A list of all decks.
-     */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public List<Deck> all() {
         return new ArrayList<>(mDecks.values());
     }
 
 
-    /**
-     * Return the same deck list from all() but sorted using a comparator that ensures the same
-     * sorting order for decks as the desktop client.
-     *
-     * This method does not exist in the original python module but *must* be used for any user
-     * interface components that display a deck list to ensure the ordering is consistent.
-     */
-    public List<Deck> allSorted() {
-        List<Deck> decks = all();
-        Collections.sort(decks, DeckComparator.INSTANCE);
-        return decks;
-    }
-
-    @VisibleForTesting
-    public List<String> allSortedNames() {
-        List<String> names = allNames();
-        Collections.sort(names, DeckNameComparator.INSTANCE);
-        return names;
-    }
-
-
+    @NonNull
+    @Override
     public Set<Long> allIds() {
         return mDecks.keySet();
     }
 
 
+    @Override
     public void collapse(long did) {
         Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
@@ -536,20 +515,13 @@ public class Decks {
     }
 
 
-    /**
-     * Return the number of decks.
-     */
+    /** {@inheritDoc} */
+    @Override
     public int count() {
         return mDecks.size();
     }
 
-    /** Obtains the deck from the DeckID, or default if the deck was not found */
-    @CheckResult
-    public @NonNull Deck get(long did) {
-        return get(did, true);
-    }
-
-
+    @Override
     @CheckResult
     public Deck get(long did, boolean _default) {
         if (mDecks.containsKey(did)) {
@@ -562,19 +534,17 @@ public class Decks {
     }
 
 
-    /**
-     * Get deck with NAME, ignoring case.
-     */
+    /** {@inheritDoc} */
+    @Override
     @CheckResult
     public @Nullable Deck byName(String name) {
         return mNameMap.get(name);
     }
 
 
-    /**
-     * Add or update an existing deck. Used for syncing and merging.
-     */
-    public void update(Deck g) {
+    /** {@inheritDoc} */
+    @Override
+    public void update(@NonNull Deck g) {
         long id = g.getLong("id");
         JSONObject oldDeck = get(id, false);
         if (oldDeck != null) {
@@ -589,10 +559,9 @@ public class Decks {
         save();
     }
 
-    /**
-     * Rename deck prefix to NAME if not exists. Updates children.
-     */
-    public void rename(Deck g, String newName) throws DeckRenameException {
+    /** {@inheritDoc} */
+    @Override
+    public void rename(@NonNull Deck g, @NonNull String newName) throws DeckRenameException {
         newName = strip(newName);
         // make sure target node doesn't already exist
         Deck deckWithThisName = byName(newName);
@@ -720,8 +689,9 @@ public class Decks {
      * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
      * @throws FilteredAncestor if a parent is filtered
      */
+    @NonNull
     @VisibleForTesting
-    protected String _ensureParents(String name) throws FilteredAncestor {
+    protected String _ensureParents(@NonNull String name) throws FilteredAncestor {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
@@ -748,13 +718,10 @@ public class Decks {
     }
 
 
-    /**
-     * Similar as ensure parent, to use when the method can't fail and it's better to allow more change to ancestor's names.
-     * @param name The name whose parents should exists
-     * @return The name similar to input, changed as required, and as little as required, so that no ancestor is filtered and the parent's name is an existing deck.
-     */
+    /** {@inheritDoc} */
+    @NonNull
     @VisibleForTesting
-    protected  String _ensureParentsNotFiltered(String name) {
+    protected String _ensureParentsNotFiltered(String name) {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
@@ -791,14 +758,16 @@ public class Decks {
      */
 
 
-    /**
-     * A list of all deck config.
-     */
-    public ArrayList<DeckConfig> allConf() {
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
+    public List<DeckConfig> allConf() {
         return new ArrayList<>(mDconf.values());
     }
 
 
+    @NonNull
+    @Override
     public DeckConfig confForDid(long did) {
         Deck deck = get(did, false);
         assert deck != null;
@@ -812,32 +781,27 @@ public class Decks {
             return conf;
         }
         // dynamic decks have embedded conf
-        return new DeckConfig(deck);
+        return new DeckConfig(deck, DeckConfig.Source.DECK_EMBEDDED);
     }
 
 
+    @Override
     public DeckConfig getConf(long confId) {
         return mDconf.get(confId);
     }
 
 
-    public void updateConf(DeckConfig g) {
+    @Override
+    public void updateConf(@NonNull DeckConfig g) {
         mDconf.put(g.getLong("id"), g);
         save();
     }
 
-
-    public long confId(String name) {
-        return confId(name, DEFAULT_CONF);
-    }
-
-
-    /**
-     * Create a new configuration and return id.
-     */
-    public long confId(String name, String cloneFrom) {
+    /** {@inheritDoc} */
+    @Override
+    public long confId(@NonNull String name, @NonNull String cloneFrom) {
         long id;
-        DeckConfig c = new DeckConfig(cloneFrom);
+        DeckConfig c = new DeckConfig(cloneFrom, DeckConfig.Source.DECK_CONFIG);
         do {
             id = mCol.getTime().intTimeMS();
         } while (mDconf.containsKey(id));
@@ -849,10 +813,8 @@ public class Decks {
     }
 
 
-    /**
-     * Remove a configuration and update all decks using it.
-     * @throws ConfirmModSchemaException 
-     */
+    /** {@inheritDoc} */
+    @Override
     public void remConf(long id) throws ConfirmModSchemaException {
         assert id != 1;
         mCol.modSchema();
@@ -870,12 +832,15 @@ public class Decks {
     }
 
 
-    public void setConf(Deck grp, long id) {
+    @Override
+    public void setConf(@NonNull Deck grp, long id) {
         grp.put("conf", id);
         save(grp);
     }
 
 
+    @NonNull
+    @Override
     public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
         for(Deck deck : mDecks.values()) {
@@ -887,7 +852,8 @@ public class Decks {
     }
 
 
-    public void restoreToDefault(DeckConfig conf) {
+    @Override
+    public void restoreToDefault(@NonNull DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
         DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
         _new.put("id", conf.getLong("id"));
@@ -906,12 +872,7 @@ public class Decks {
      * ***********************************************************
      */
 
-
-    public String name(long did) {
-        return name(did, false);
-    }
-
-
+    @NonNull
     public String name(long did, boolean _default) {
         Deck deck = get(did, _default);
         if (deck != null) {
@@ -943,26 +904,23 @@ public class Decks {
     }
 
 
-    public Long[] cids(long did) {
-        return cids(did, false);
-    }
-
-
-    public Long[] cids(long did, boolean children) {
+    @NonNull
+    @Override
+    public List<Long> cids(long did, boolean children) {
         if (!children) {
-            return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
+            return mCol.getDb().queryLongList("select id from cards where did=?", did);
         }
         java.util.Collection<Long> values = children(did).values();
         List<Long> dids = new ArrayList<>(values.size() + 1);
         dids.add(did);
         dids.addAll(values);
-        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
+        return mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids));
     }
 
 
     private static final Pattern spaceAroundSeparator = Pattern.compile("\\s*::\\s*");
     @VisibleForTesting
-    static String strip(String deckName) {
+    static String strip(@NonNull String deckName) {
         //Ends of components are either the ends of the deck name, or near the ::.
         //Deal with all spaces around ::
         deckName = spaceAroundSeparator.matcher(deckName).replaceAll("::");
@@ -979,7 +937,7 @@ public class Decks {
 
     private void _checkDeckTree() {
         List<Deck> decks = allSorted();
-        Map<String, Deck> names = new HashMap<>(decks.size());
+        Map<String, Deck> names = HashUtil.HashMapInit(decks.size());
 
         for (Deck deck: decks) {
             String deckName = deck.getString("name");
@@ -1044,6 +1002,7 @@ public class Decks {
         }
     }
 
+    @Override
     public void checkIntegrity() {
         _recoverOrphans();
         _checkDeckTree();
@@ -1056,25 +1015,26 @@ public class Decks {
      */
 
 
-    /**
-     * The currently active dids. Make sure to copy before modifying.
-     */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public LinkedList<Long> active() {
-        JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
+        JSONArray activeDecks = mCol.get_config_array(ACTIVE_DECKS);
         LinkedList<Long> result = new LinkedList<>();
         addAll(result, activeDecks.longIterable());
         return result;
     }
 
 
-    /**
-     * The currently selected did.
-     */
+    /** {@inheritDoc} */
+    @Override
     public long selected() {
-        return mCol.getConf().getLong("curDeck");
+        return mCol.get_config_long(CURRENT_DECK);
     }
 
 
+    @NonNull
+    @Override
     public Deck current() {
         if (get(selected()) == null || !mDecks.containsKey(selected())) {
             select(Consts.DEFAULT_DECK_ID); // Select default deck if the selected deck is null
@@ -1083,14 +1043,13 @@ public class Decks {
     }
 
 
-    /**
-     * Select a new branch.
-     */
+    /** {@inheritDoc} */
+    @Override
     public void select(long did) {
         String name = mDecks.get(did).getString("name");
 
         // current deck
-        mCol.getConf().put("curDeck", did);
+        mCol.set_config(CURRENT_DECK, did);
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
@@ -1098,17 +1057,14 @@ public class Decks {
         for (Long n : actv.values()) {
             activeDecks.put(n);
         }
-        mCol.getConf().put("activeDecks", activeDecks);
-        mCol.setMod();
+
+        mCol.set_config(ACTIVE_DECKS, activeDecks);
     }
 
 
-    /**
-     * All children of did as nodes of (key:name, value:id)
-     *
-     * TODO: There is likely no need for this collection to be a TreeMap. This method should not
-     * need to sort on behalf of select().
-     */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public TreeMap<String, Long> children(long did) {
         String name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
@@ -1130,6 +1086,8 @@ public class Decks {
         }
     }
 
+    @NonNull
+    @Override
     public List<Long> childDids(long did, Node childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
@@ -1137,6 +1095,8 @@ public class Decks {
     }
 
 
+    @NonNull
+    @Override
     public Node childMap() {
 
         Node childMap = new Node();
@@ -1178,9 +1138,9 @@ public class Decks {
         return parentsNames;
     }
 
-    /**
-     * All parents of did.
-     */
+    /** {@inheritDoc} */
+    @NonNull
+    @Override
     public List<Deck> parents(long did) {
         // get parent and grandparent names
         String[] parents = parentsNames(get(did).getString("name"));
@@ -1201,6 +1161,7 @@ public class Decks {
      */
 
 
+    @Override
     public void beforeUpload() {
         boolean changed_decks = Utils.markAsUploaded(all());
         boolean changed_conf = Utils.markAsUploaded(allConf());
@@ -1218,9 +1179,8 @@ public class Decks {
      */
 
 
-    /**
-     * Return a new dynamic deck and set it as the current deck.
-     */
+    /** {@inheritDoc} */
+    @Override
     public long newDyn(String name) throws FilteredAncestor {
         long did = id(name, defaultDynamicDeck);
         select(did);
@@ -1228,6 +1188,7 @@ public class Decks {
     }
 
 
+    @Override
     public boolean isDyn(long did) {
         return get(did).isDyn();
     }
@@ -1276,25 +1237,10 @@ public class Decks {
         return sParentCache.get(deckName);
     }
 
-    public String getActualDescription() {
-        return current().optString("desc","");
-    }
-
     @VisibleForTesting
     @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
-    }
-
-    public Long[] allDynamicDeckIds() {
-        Set<Long> ids = allIds();
-        ArrayList<Long> validValues = new ArrayList<>(ids.size());
-        for (Long did : ids) {
-            if (isDyn(did)) {
-                validValues.add(did);
-            }
-        }
-        return validValues.toArray(new Long[0]);
     }
 
     public static boolean isDynamic(Collection col, long deckId) {
@@ -1303,22 +1249,5 @@ public class Decks {
 
     public static boolean isDynamic(Deck deck) {
         return deck.isDyn();
-    }
-
-    /** Retruns the fully qualified name of the subdeck, or null if unavailable */
-    @Nullable
-    public String getSubdeckName(long did, @Nullable String subdeckName) {
-        if (TextUtils.isEmpty(subdeckName)) {
-            return null;
-        }
-        String newName = subdeckName.replaceAll("\"", "");
-        if (TextUtils.isEmpty(newName)) {
-            return null;
-        }
-        Deck deck = get(did, false);
-        if (deck == null) {
-            return null;
-        }
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName;
     }
 }

@@ -52,10 +52,10 @@
     <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିକୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="delete_card_title">ନୋଟ୍ ଅପସାରଣ କରିବେ କି?</string>
     <string name="changed_deck_message">%sକୁ ଘୁଞ୍ଚିଗଲା</string>
-    <string name="card_browser_show_marked">ଚିହ୍ନିତ (କାର୍ଡ) ଛାଣନ୍ତୁ</string>
-    <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (କାର୍ଡ) ଛାଣନ୍ତୁ</string>
-    <string name="card_browser_search_by_tag">ଟ୍ୟାଗ୍ ଅନୁସାରେ ଛାଣନ୍ତୁ</string>
-    <string name="card_browser_search_by_flag">ପତାକା ଅନୁସାରେ ଛାଣନ୍ତୁ</string>
+    <string name="card_browser_show_marked">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="card_browser_search_by_tag">ଟ୍ୟାଗ୍ ଅନୁସାରେ ଶୋଧନ</string>
+    <string name="card_browser_search_by_flag">ପତାକା ଅନୁସାରେ ଶୋଧନ</string>
     <string name="card_browser_list_my_searches">ମୋ ସନ୍ଧାନଗୁଡ଼ିକ</string>
     <string name="card_browser_list_my_searches_save">ସନ୍ଧାନ ସଂରକ୍ଷିତ କର</string>
     <string name="card_browser_list_my_searches_title">ଗୋଟେ ସଂରକ୍ଷିତ ସନ୍ଧାନ ବାଛନ୍ତୁ </string>
@@ -102,8 +102,8 @@
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">ତ୍ରୁଟି </string>
     <string name="card_info_average_time">ହାରାହାରି ସମୟ</string>
     <string name="card_info_total_time">ସମୁଦାୟ ସମୟ</string>
-    <string name="card_info_card_type">ପତ୍ର ପ୍ରକାର </string>
-    <string name="card_info_note_type">ନୋଟ ପ୍ରକାର </string>
+    <string name="card_info_card_type">ପତ୍ର ପ୍ରକାର</string>
+    <string name="card_info_note_type">ନୋଟ୍ ପ୍ରକାର</string>
     <string name="card_info_deck_name">ତାସଖଣ୍ଡ ନାମ </string>
     <string name="card_info_card_id">କାର୍ଡ ପରିଚୟ</string>
     <string name="card_info_note_id">ନୋଟ୍ ପରିଚୟ</string>
@@ -114,6 +114,6 @@
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">ଶିଖୁଛନ୍ତି</string>
     <string name="card_info_revlog_review">ସମୀକ୍ଷାଧିନ</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
-    <string name="card_info_revlog_filtered">ଛାଣିତ</string>
+    <string name="card_info_revlog_filtered">ଶୋଧିତ</string>
     <string name="card_info_ease_not_applicable">ପ୍ର/ନୁ</string>
 </resources>

@@ -81,7 +81,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int mType = getArguments().getInt("dialogType");
+        int type = getArguments().getInt("dialogType");
         Resources res = getResources();
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.cancelable(true)
@@ -94,7 +94,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             Timber.w(e);
         }
 
-        switch (mType) {
+        switch (type) {
             case DIALOG_LOAD_FAILED: {
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity

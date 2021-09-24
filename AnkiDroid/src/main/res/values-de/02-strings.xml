@@ -154,7 +154,6 @@
     <string name="show_hint">%s anzeigen</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
-    <string name="import_select_title">Zu importierende Datei auswählen</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
@@ -188,14 +187,12 @@
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        Dies ist ein Stapel Anki-Lernkarten gesendet von <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Versuche es mit einer der verfügbaren <a href="http://ankisrs.net/#download">Anki-Distributionen</a> zu öffnen und genieße einfaches und effektives Lernen!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Fehler beim Exportieren der APKG-Datei</string>
-    <string name="import_hint">Speichern Sie die APKG-Datei ins Verzeichnis »%s« und tippen Sie dann auf »OK« zum Importieren der Karten</string>
-    <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
     <string name="menu__deck_options">Stapeloptionen</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>
@@ -351,17 +348,21 @@
     <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
     <string name="back_pressed_once_reviewer">Drücken Sie erneut auf Zurück, um zurückzukehren</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
-    <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="percentage">%s %%</string>
+    <string name="download_deck">Stapel herunterladen</string>
+    <string name="try_again">Erneut versuchen</string>
+    <string name="cancel_download">Herunterladen abbrechen</string>
+    <string name="cancel_download_question_title">Herunterladen abbrechen?</string>
+    <string name="downloading_file">%s wird heruntergeladen</string>
+    <string name="import_deck">Stapel importieren</string>
+    <string name="something_wrong">Ein Fehler ist aufgetreten, bitte versuchen Sie es erneut</string>
+    <string name="download_failed">Herunterladen gescheitert</string>
+    <string name="deck_download_progress_message">Während des Herunterladens können Sie andere Apps verwenden</string>
+    <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
+    <string name="search_using_deck_name">Über Stapelnamen suchen</string>
+    <string name="home">Start</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">%s zugeordnet</string>
+    <string name="import_mapped_to_tags">Schlagwörtern zugeordnet</string>
+    <string name="import_mapped_to_nothing">Ignoriert</string>
 </resources>

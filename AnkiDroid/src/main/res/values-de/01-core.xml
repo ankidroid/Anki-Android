@@ -45,6 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Einstellungen</string>
     <string name="help">Hilfe</string>
+    <string name="drawing">Zeichnung</string>
     <string name="send_feedback">Rückmeldung senden</string>
     <string name="studyoptions_due_today">Heute fällig:</string>
     <string name="studyoptions_new_total">Neue Karten gesamt:</string>
@@ -95,7 +96,7 @@
     <string name="unbury">Nicht mehr aufschieben</string>
     <string name="rename_deck">Stapel umbenennen</string>
     <string name="create_shortcut">Verknüpfung erstellen</string>
-    <string name="browse_cards">Hund</string>
+    <string name="browse_cards">Karten durchsuchen</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
@@ -114,9 +115,9 @@
     <string name="menu_flag_card_two">Orange Flagge</string>
     <string name="menu_flag_card_three">Grüne Flagge</string>
     <string name="menu_flag_card_four">Blaue Flagge</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Rosa Flagge</string>
+    <string name="menu_flag_card_six">Türkise Flagge</string>
+    <string name="menu_flag_card_seven">Violette Flagge</string>
     <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
     <string name="menu_select">Text auswählen</string>
@@ -233,4 +234,5 @@
         <item quantity="one">%1$d Karte (0 fällig)</item>
         <item quantity="other">%1$d Karten (0 fällig)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s Kopie</string>
 </resources>

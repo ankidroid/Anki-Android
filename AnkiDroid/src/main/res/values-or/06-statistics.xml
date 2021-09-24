@@ -50,7 +50,7 @@
     <string name="stats_cards">କାର୍ଡଗୁଡ଼ିକ</string>
     <string name="stats_cards_intervals">ଦିଆଯାଇଥିବା ବ୍ୟବଧାନ ସହିତ କାର୍ଡଗୁଡ଼ିକ</string>
     <string name="stats_cumulative_cards">ସମ୍ମିଳିତ ପତ୍ର </string>
-    <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡିକ |</string>
+    <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡ଼ିକ</string>
     <string name="stats_cumulative_time_minutes">ସମ୍ମିଳିତ ମିନିଟ୍</string>
     <string name="stats_cumulative_time_hours">ସମ୍ମିଳିତ ଘଣ୍ଟା</string>
     <string name="stats_cumulative">ସମ୍ମିଳିତ</string>
@@ -71,7 +71,7 @@
     <string name="stats_answer_type">ଉତ୍ତର ପ୍ରକାର</string>
     <string name="stats_today_again_count">ପୁନର୍ବାର ଗଣନା: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; ସଠିକ୍)</string>
-    <string name="stats_today_type_breakdown">ଶିଖୁଛନ୍ତି: &lt;b&gt;%1$d&lt;/b&gt;, ସମୀକ୍ଷା: &lt;b&gt;%2$d&lt;/b&gt; , ପୁନଃ ଶିକ୍ଷାଧିନ: &lt;b&gt;%3$d&lt;/b&gt; ,ଶୋଧିତ: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">ଶିଖୁଛନ୍ତି: &lt;b&gt;%1$d&lt;/b&gt;, ସମୀକ୍ଷା: &lt;b&gt;%2$d&lt;/b&gt;, ପୁନଃ ଶିକ୍ଷାଧିନ: &lt;b&gt;%3$d&lt;/b&gt;, ଶୋଧିତ: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">ପରିପକ୍ୱ ପତ୍ରଗୁଡ଼ିକରେ ସଠିକ୍ ଉତ୍ତର: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">ଆଜି କୌଣସି ପରିପକ୍ୱ ପତ୍ର ଅଧ୍ୟୟନ କରାଯାଇ ନାହିଁ</string>
     <string name="stats_overview_forecast_total">ମୋଟ: &lt;b&gt;%1$d&lt;/b&gt; ସମୀକ୍ଷା</string>
@@ -117,11 +117,11 @@
     <string name="stats_weekly_breakdown">ସପ୍ତାହକ୍ରମେ ଦେଖିବା </string>
     <string name="stats_answer_buttons">ଉତ୍ତର ବଟନ୍</string>
     <string-array name="stats_day_time_strings">
-        <item>4AM</item>
-        <item>10AM</item>
-        <item>4PM</item>
-        <item>10PM</item>
-        <item>3AM</item>
+        <item>୪AM</item>
+        <item>୧୦AM</item>
+        <item>୪PM</item>
+        <item>୧୦PM</item>
+        <item>୩AM</item>
     </string-array>
     <string-array name="stats_week_days">
         <item>ରବି</item>

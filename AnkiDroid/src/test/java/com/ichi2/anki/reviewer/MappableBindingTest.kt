@@ -16,21 +16,30 @@
 package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
+import com.ichi2.anki.cardviewer.ViewerCommand
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.not
 import org.junit.Test
 
 class MappableBindingTest {
     @Test
     fun equalityTest() {
-        val allBindings = PeripheralCommand.getDefaultCommands()
-            .map { x -> x.binding }
-            .map(this::fromBinding)
-            .toList()
+        val allBindings = getAllBindings()
 
         assertThat(allBindings, hasItem(unicodeCharacter('@')))
         assertThat(allBindings, hasItem(keyCode(KeyEvent.KEYCODE_1)))
     }
+
+    @Test
+    fun inequalityTest() {
+        val allBindings = getAllBindings()
+        // pick an arbitrary key which is not mapped
+        assertThat(allBindings, not(hasItem(unicodeCharacter('a'))))
+        assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_A))))
+    }
+
+    private fun getAllBindings() = ViewerCommand.getAllDefaultBindings()
 
     @Suppress("SameParameterValue")
     private fun keyCode(code: Int) = fromBinding(BindingTest.keyCode(code))
@@ -39,6 +48,6 @@ class MappableBindingTest {
     private fun unicodeCharacter(char: Char) = fromBinding(BindingTest.unicodeCharacter(char))
 
     private fun fromBinding(binding: Binding): Any {
-        return MappableBinding(binding, CardSide.BOTH)
+        return MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))
     }
 }

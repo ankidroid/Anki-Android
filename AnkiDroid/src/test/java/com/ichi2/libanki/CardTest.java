@@ -1,11 +1,8 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -14,10 +11,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,6 +21,7 @@ import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 public class CardTest extends RobolectricTest {
@@ -74,7 +70,7 @@ public class CardTest extends RobolectricTest {
         col.addNote(note);
         assertEquals(1, note.numberOfCards());
         Model m = col.getModels().current();
-        Models mm = col.getModels();
+        ModelManager mm = col.getModels();
         // adding a new template should automatically create cards
         JSONObject t = Models.newTemplate("rev");
         t.put("qfmt", "{{Front}}");
@@ -132,11 +128,11 @@ public class CardTest extends RobolectricTest {
     @Test
     public void test_gen_or() throws ConfirmModSchemaException {
         Collection col = getCol();
-        Models models = col.getModels();
+        ModelManager models = col.getModels();
         Model model = models.byName("Basic");
-        JSONArray flds = model.getJSONArray("flds");
-        models.renameField(model, flds.getJSONObject(0), "A");
-        models.renameField(model, flds.getJSONObject(1), "B");
+        assertNotNull(model);
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B");
         JSONObject fld2 = models.newField("C");
         fld2.put("ord", NULL);
         models.addField(model, fld2);
@@ -189,13 +185,12 @@ public class CardTest extends RobolectricTest {
     @Test
     public void test_gen_not() throws ConfirmModSchemaException {
         Collection col = getCol();
-        Models models = col.getModels();
+        ModelManager models = col.getModels();
         Model model = models.byName("Basic");
-        JSONArray flds = model.getJSONArray("flds");
+        assertNotNull(model);
         JSONArray tmpls = model.getJSONArray("tmpls");
-
-        models.renameField(model, flds.getJSONObject(0), "First");
-        models.renameField(model, flds.getJSONObject(1), "Front");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First");
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front");
         JSONObject fld2 = models.newField("AddIfEmpty");
         fld2.put("name", "AddIfEmpty");
         models.addField(model, fld2);
@@ -252,7 +247,7 @@ public class CardTest extends RobolectricTest {
         // Test runs as the 7th of august 2020, 9h00
         Note n = addNoteUsingBasicModel("Front", "Back");
         Card c = n.firstCard();
-        Decks decks = col.getDecks();
+        DeckManager decks = col.getDecks();
 
         Calendar cal = Calendar.getInstance();
         cal.set(2021, 2, 19, 7, 42, 42);

@@ -58,11 +58,13 @@ import android.widget.TextView;
 
 import com.canhub.cropper.CropImage;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
+import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
@@ -73,6 +75,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -82,6 +86,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     static final int ACTIVITY_SELECT_IMAGE = 1;
     private static final int ACTIVITY_TAKE_PICTURE = 2;
     private static final int ACTIVITY_CROP_PICTURE = 3;
+    private static final int ACTIVITY_DRAWING = 4;
     private static final int IMAGE_SAVE_MAX_WIDTH = 1920;
 
     private ImageView mImagePreview;
@@ -158,20 +163,27 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mCropButton.setOnClickListener(v -> mViewModel = requestCrop(mViewModel));
         mCropButton.setVisibility(View.INVISIBLE);
 
-        Button mBtnGallery = new Button(mActivity);
-        mBtnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
-        mBtnGallery.setOnClickListener(v -> {
+        Button btnGallery = new Button(mActivity);
+        btnGallery.setText(gtxt(R.string.multimedia_editor_image_field_editing_galery));
+        btnGallery.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_PICK);
             i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE);
         });
 
-        Button mBtnCamera = new Button(mActivity);
-        mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
-        mBtnCamera.setOnClickListener(v -> mViewModel = captureImage(context));
+
+        Button btnDraw = new Button(mActivity);
+        btnDraw.setText(gtxt(R.string.drawing));
+        btnDraw.setOnClickListener(v -> {
+            mActivity.startActivityForResultWithoutAnimation(new Intent(mActivity, DrawingActivity.class), ACTIVITY_DRAWING);
+        });
+
+        Button btnCamera = new Button(mActivity);
+        btnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
+        btnCamera.setOnClickListener(v -> mViewModel = captureImage(context));
 
         if (!canUseCamera(context)) {
-            mBtnCamera.setVisibility(View.INVISIBLE);
+            btnCamera.setVisibility(View.INVISIBLE);
         }
 
         setPreviewImage(mViewModel.mImagePath, getMaxImageSize());
@@ -179,8 +191,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
         layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mImageFileSizeWarning, ViewGroup.LayoutParams.MATCH_PARENT);
-        layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
-        layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(btnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
+        // drew image appear far larger in preview in devices API < 24 #9439
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            layout.addView(btnDraw, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
+        if (com.ichi2.utils.CheckCameraPermission.manifestContainsPermission(context)) {
+            layout.addView(btnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
@@ -378,7 +396,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
             handleTakePictureResult();
-        } else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)) {
+        } else if (requestCode == ACTIVITY_DRAWING) {
+            // receive image from drawing activity
+            Uri savedImagePath = (Uri) data.getExtras().get(DrawingActivity.EXTRA_RESULT_WHITEBOARD);;
+            handleDrawingResult(savedImagePath);
+        }
+
+        else if ((requestCode == ACTIVITY_CROP_PICTURE) || (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (result != null) {
                 handleCropResult(result);
@@ -432,6 +456,28 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         setTemporaryMedia(imagePath);
 
         Timber.i("handleSelectImageIntent() Decoded image: '%s'", imagePath);
+    }
+
+
+    private void handleDrawingResult(Uri imageUri) {
+        if (imageUri == null) {
+            Timber.w("handleDrawingResult() no image Uri provided");
+            showSomethingWentWrong();
+            return;
+        }
+
+        File internalizedPick = internalizeUri(imageUri);
+        if (internalizedPick == null) {
+            Timber.w("handleDrawingResult() unable to internalize image from Uri %s", imageUri);
+            showSomethingWentWrong();
+            return;
+        }
+
+        String drewImagePath = internalizedPick.getAbsolutePath();
+        mViewModel = new ImageViewModel(drewImagePath, imageUri);
+        setTemporaryMedia(drewImagePath);
+
+        Timber.i("handleDrawingResult() Decoded image: '%s'", drewImagePath);
     }
 
     private @Nullable File internalizeUri(Uri uri) {
@@ -669,11 +715,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      * @param file the file to get URI for
      * @return current image path's uri
      */
-    private static Uri getUriForFile(File file, Context mActivity) {
+    private static Uri getUriForFile(File file, Context activity) {
         Timber.d("getUriForFile() %s", file);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return FileProvider.getUriForFile(mActivity, mActivity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
+                return FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".apkgfileprovider", file);
             }
         } catch (Exception e) {
             // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
@@ -769,16 +815,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         public final @Nullable Uri mImageUri;
         public boolean isPreExistingImage = false;
 
-        private ImageViewModel(@Nullable String mImagePath, @Nullable Uri mImageUri) {
-            this.mImagePath = mImagePath;
-            this.mImageUri = mImageUri;
+        private ImageViewModel(@Nullable String imagePath, @Nullable Uri imageUri) {
+            this.mImagePath = imagePath;
+            this.mImageUri = imageUri;
         }
 
 
         public static ImageViewModel fromBundle(Bundle savedInstanceState) {
-            String mImagePath = savedInstanceState.getString("mImagePath");
-            Uri mImageUri = savedInstanceState.getParcelable("mImageUri");
-            return new ImageViewModel(mImagePath, mImageUri);
+            String imagePath = savedInstanceState.getString("mImagePath");
+            Uri imageUri = savedInstanceState.getParcelable("mImageUri");
+            return new ImageViewModel(imagePath, imageUri);
         }
 
         public void enrich(Bundle savedInstanceState) {
@@ -792,11 +838,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
 
 
-        public ImageViewModel replaceNullValues(IField mField, Context context) {
+        public ImageViewModel replaceNullValues(IField field, Context context) {
             String newImagePath = mImagePath;
             Uri newImageUri = mImageUri;
             if (newImagePath == null) {
-                newImagePath = mField.getImagePath();
+                newImagePath = field.getImagePath();
             }
             if (newImageUri == null && newImagePath != null) {
                 newImageUri = getUriForFile(new File(newImagePath), context);

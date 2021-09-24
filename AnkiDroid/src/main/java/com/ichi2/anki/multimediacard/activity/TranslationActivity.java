@@ -313,7 +313,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         mPossibleTranslations = parseJson(resp, mLangCodeTo);
 
-        if (mPossibleTranslations.size() == 0) {
+        if (mPossibleTranslations.isEmpty()) {
             if (!mSource.toLowerCase(Locale.getDefault()).contentEquals(mSource)) {
                 showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case));
             }

@@ -144,7 +144,8 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         // Request permission to use the camera if image field
-        if (field instanceof ImageField && !Permissions.canUseCamera(this)) {
+        if (field instanceof ImageField && CheckCameraPermission.manifestContainsPermission(this) &&
+                !Permissions.canUseCamera(this)) {
             Timber.d("Requesting Camera Permissions");
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
                     REQUEST_CAMERA_PERMISSION);

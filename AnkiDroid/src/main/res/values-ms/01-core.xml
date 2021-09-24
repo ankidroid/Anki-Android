@@ -45,6 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Tetapan</string>
     <string name="help">Bantuan</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">Beri maklum balas</string>
     <string name="studyoptions_due_today">Tamat hari ini:</string>
     <string name="studyoptions_new_total">Jumlah kad baharu:</string>
@@ -81,7 +82,7 @@
     <string name="ease_button_hard">Susah</string>
     <string name="ease_button_good">Baik</string>
     <string name="ease_button_easy">Senang</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
+    <string name="studyoptions_congrats_undo">Batal %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>
     <string name="undo_action_review">last review</string>
@@ -225,4 +226,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

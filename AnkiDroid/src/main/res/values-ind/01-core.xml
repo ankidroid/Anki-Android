@@ -45,6 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Pengaturan</string>
     <string name="help">Bantuan</string>
+    <string name="drawing">Menggambar</string>
     <string name="send_feedback">Kirim Masukan</string>
     <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
     <string name="studyoptions_new_total">Total kartu baru:</string>
@@ -109,9 +110,9 @@
     <string name="menu_flag_card_two">Panji jingga</string>
     <string name="menu_flag_card_three">Panji hijau</string>
     <string name="menu_flag_card_four">Panji Biru</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Bendera pink</string>
+    <string name="menu_flag_card_six">Bendera toska</string>
+    <string name="menu_flag_card_seven">Bendera ungu</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_select">Pilih teks</string>
@@ -182,11 +183,11 @@
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_card_browser_appearance">Tampilan Peramban Kartu</string>
     <string name="card_template_editor_deck_override">Paksa Lokasi Dek</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Masukkan bidang</string>
+    <string name="card_template_editor_select_field">Pilih bidang</string>
     <string name="card_template_editor_cant_delete">Setidaknya satu tipe kartu diperlukan.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">Ini akan membuat %1$d kartu. Lanjutkan?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>
@@ -226,4 +227,5 @@
         <item quantity="other">%1$d kartu (0 jatuh tempo)
 %1$d kartu (0 jatuh tempo)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

@@ -154,7 +154,6 @@
     <string name="show_hint">Dākhavā %s</string>
     <string name="info_rate">AnkiDroid rēṭa karā</string>
     <string name="import_title">Āyāta karīta āhē</string>
-    <string name="import_select_title">Āyāta karaṇyāsāṭhī ēka phā\'ila nivaḍā</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Jōḍā</string>
     <string name="import_message_replace_confirm">Hē āpalē vidyamāna saṅkalana haṭavēla āṇi phā\'ilacyā ḍēṭāśī punarsthita karēla%s</string>
     <string name="import_message_add_confirm">\"%s\" saṅgrahāmadhyē jōḍāyacē? Yāsa barāca vēḷa lāgū śakatō</string>
@@ -188,14 +187,12 @@
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">Phā\'ila \"%s\" niryāta karaṇyāta ālī. Āpaṇa dusaryā a̔ĕpasaha pāṭhavū icchitā?</string>
     <string name="export_email_subject">AnkiDroid niryāta phlĕśakārḍa: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Apkg phā\'ila niryāta karatānā truṭī</string>
-    <string name="import_hint">Ēpīkējī phā\'ilalā nirdēśikā \"%s\" madhyē ṭhēvā āṇi kārḍa āyāta karaṇyāsāṭhī\"ōkē\" lā sparśa karā</string>
-    <string name="upgrade_import_no_file_found">Āyāta karaṇyāyōgya %1$s phā\'īla āḍhaḷalī nāhī</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -364,4 +361,8 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

@@ -10,7 +10,7 @@
         android:key="advanced_statistics_enabled"
         android:summary="@string/enable_advanced_statistics_summ"
         android:title="@string/enable_advanced_statistics_title"/>
-    <com.ichi2.ui.SeekBarPreference
+    <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="0"
         android:dependency="advanced_statistics_enabled"
         android:key="advanced_forecast_stats_compute_n_days"
@@ -19,7 +19,7 @@
         android:title="@string/advanced_forecast_stats_compute_n_days_title"
         app:interval="1"
         app:min="0" />
-    <com.ichi2.ui.SeekBarPreference
+    <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="90"
         android:dependency="advanced_statistics_enabled"
         android:key="advanced_forecast_stats_compute_precision"
@@ -29,7 +29,7 @@
         android:title="@string/advanced_forecast_stats_compute_precision_title"
         app:interval="1"
         app:min="0" />
-    <com.ichi2.ui.SeekBarPreference
+    <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="1"
         android:dependency="advanced_statistics_enabled"
         android:key="advanced_forecast_stats_mc_n_iterations"

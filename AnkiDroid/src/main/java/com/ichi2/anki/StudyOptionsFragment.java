@@ -558,13 +558,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         public final int mEta;
 
 
-        public DeckStudyData(int mNewCardsToday, int mLrnCardsToday, int mRevCardsToday, int mNumberOfNewCardsInDeck, int mNumberOfCardsInDeck, int mEta) {
-            this.mNewCardsToday = mNewCardsToday;
-            this.mLrnCardsToday = mLrnCardsToday;
-            this.mRevCardsToday = mRevCardsToday;
-            this.mNumberOfNewCardsInDeck = mNumberOfNewCardsInDeck;
-            this.mNumberOfCardsInDeck = mNumberOfCardsInDeck;
-            this.mEta = mEta;
+        public DeckStudyData(int newCardsToday, int lrnCardsToday, int revCardsToday, int numberOfNewCardsInDeck, int numberOfCardsInDeck, int eta) {
+            this.mNewCardsToday = newCardsToday;
+            this.mLrnCardsToday = lrnCardsToday;
+            this.mRevCardsToday = revCardsToday;
+            this.mNumberOfNewCardsInDeck = numberOfNewCardsInDeck;
+            this.mNumberOfCardsInDeck = numberOfCardsInDeck;
+            this.mEta = eta;
         }
     }
 

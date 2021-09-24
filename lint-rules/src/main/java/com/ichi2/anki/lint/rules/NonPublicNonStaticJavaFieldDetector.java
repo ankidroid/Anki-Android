@@ -27,12 +27,14 @@ import org.jetbrains.uast.UElement;
 import org.jetbrains.uast.UVariable;
 import org.jetbrains.uast.UastVisibility;
 
+import java.util.EnumSet;
+
 /**
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#non-public-non-static-field-names-should-start-with-m
  */
 public class NonPublicNonStaticJavaFieldDetector extends JavaFieldNamingPatternDetector {
 
-    private static final Implementation implementation = new Implementation(NonPublicNonStaticJavaFieldDetector.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(NonPublicNonStaticJavaFieldDetector.class, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES));
 
     public static Issue ISSUE = Issue.create(
             "NonPublicNonStaticFieldName",

@@ -79,16 +79,16 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
                 // Generate report
                 final StringBuilder report = new StringBuilder();
-                if (invalid.size() > 0) {
+                if (!invalid.isEmpty()) {
                     report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size()));
                 }
-                if (unused.size() > 0) {
+                if (!unused.isEmpty()) {
                     if (report.length() > 0) {
                         report.append("\n");
                     }
                     report.append(String.format(res().getString(R.string.check_media_unused), unused.size()));
                 }
-                if (nohave.size() > 0) {
+                if (!nohave.isEmpty()) {
                     if (report.length() > 0) {
                         report.append("\n");
                     }

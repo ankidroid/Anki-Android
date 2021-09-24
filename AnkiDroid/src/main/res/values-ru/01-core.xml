@@ -45,6 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
+    <string name="drawing">Рисование</string>
     <string name="send_feedback">Отправить отзыв</string>
     <string name="studyoptions_due_today">На сегодня:</string>
     <string name="studyoptions_new_total">Всего новых карточек:</string>
@@ -236,12 +237,12 @@
     <string name="wrong_tag_closed">Найдено \'{{/%1$s}}\', но ожидалось \'{{/%2$s}}\'</string>
     <string name="filter_error">Ошибка в фильтре %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите сохранить?</string>
+    <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите оставить?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Заменить коллекцию на AnkiDroid коллекцией из AnkiWeb?</string>
+    <string name="sync_conflict_remote_confirm_new">Заменить коллекцию AnkiDroid коллекцией с AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Заменить коллекцию на AnkiWeb коллекцией из AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Выберите коллекцию для сохранения</string>
+    <string name="sync_conflict_title_new">Выберите, какую коллекцию оставить</string>
     <string name="sync_conflict_replace_title">Заменить коллекцию</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d карточка (0 к просмотру)</item>
@@ -249,4 +250,5 @@
         <item quantity="many">%1$d карточек (0 к просмотру)</item>
         <item quantity="other">%1$d карточек (0 к просмотру)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
 </resources>

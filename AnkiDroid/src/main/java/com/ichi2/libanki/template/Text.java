@@ -26,8 +26,8 @@ public class Text extends ParsedNode {
     private final String mText;
 
 
-    public Text(String mText) {
-        this.mText = mText;
+    public Text(String text) {
+        this.mText = text;
     }
 
 

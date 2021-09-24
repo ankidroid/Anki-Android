@@ -41,6 +41,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
@@ -200,7 +201,9 @@ public class DeckPickerTest extends RobolectricTest {
         AbstractSched sched = col.getSched();
 
         DeckConfig dconf = col.getDecks().getConf(1);
+        assertNotNull(dconf);
         dconf.getJSONObject("new").put("perDay", 10);
+        col.getDecks().save(dconf);
         for (int i = 0; i < 11; i++) {
             addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
         }
@@ -398,7 +401,7 @@ public class DeckPickerTest extends RobolectricTest {
             setupColV16();
 
             // corrupt col
-            DbUtils.performQuery(getTargetContext(), "drop table deck_config");
+            DbUtils.performQuery(getTargetContext(), "drop table decks");
 
             InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
@@ -437,6 +440,24 @@ public class DeckPickerTest extends RobolectricTest {
 
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
         assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
+    }
+    
+    @Test
+    public void checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
+        addDeck("Hello World");
+        // Reason for using 2 as the number of decks -> This deck + Default deck
+        assertThat("Deck added", getCol().getDecks().count(), is(2));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("Deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(true));
+    }
+
+    @Test
+    public void checkIfReturnsFalseWhenNoDeckIsDisplayed() {
+        // Only default deck would be there in the count, hence using the value as 1.
+        // Default deck does not get displayed in the DeckPicker if the default deck is empty.
+        assertThat("Contains only default deck", getCol().getDecks().count(), is(1));
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        assertThat("No deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(false));
     }
 
 

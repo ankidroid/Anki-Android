@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">जेश्चर</string>
     <string name="pref_cat_gestures_summ">बटणांऐवजी नळ आणि स्वाइप वापरा</string>
     <string name="pref_cat_actions" maxLength="41">Actions</string>
+    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">आधुनिक</string>
     <string name="pref_cat_advanced_summ">ऑप्टिमायझेशन आणि प्रायोगिक वैशिष्ट्ये</string>
     <string name="pref_cat_performance" maxLength="41">परफॉर्मन्स</string>
@@ -190,7 +192,6 @@
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">पुष्टी</string>
-    <string name="sched_ver_2to1">हे शिक्षणात कोणतीही कार्ड रीसेट करेल, फिल्टर केलेले डेक साफ करा आणि वेळापत्रक तयार करेल. पुढे जायचे?</string>
     <string name="sched_ver_1to2">प्रायोगिक शेड्यूलरमुळे चुकीचे शेड्यूलिंग होऊ शकते. कृपया खात्री करा की आपण दस्तऐवजीकरण प्रथम वाचले आहे. पुढे जायचे?</string>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन कालबाह्य अक्षम करा</string>
@@ -228,6 +229,8 @@
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Select tags</string>
@@ -322,4 +325,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

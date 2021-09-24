@@ -34,7 +34,6 @@ Most of the code is:
 
  */
 package com.ichi2.utils;
-import junit.framework.TestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,15 +46,11 @@ import java.util.*;
 import androidx.annotation.NonNull;
 
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static junit.framework.TestCase.*;
@@ -964,34 +959,34 @@ public class JSONObjectTest {
     *************************************************************************** */
 
 
-    private final String emptyJson = "{}";
-    private final String correctJsonBasic = "{\"key1\":\"value1\"}";
-    private final String correctJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}";
-    private final String correctJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
-    private final String correctJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
-    private final String noOpeningBracket = "\"key1\":\"value1\"}";
-    private final String extraOpeningBracket = "{{\"key1\": \"value1\"}";
-    private final String noClosingBracket = "{\"key1\":value1";
-    private final String wrongKeyValueSeparator = "{\"key1\":\"value1\",\"key2\" \"value2\"}";
-    private final String duplicateKey = "{\"key1\":\"value1\",\"key1\":\"value2\"}";
+    private final String mEmptyJson = "{}";
+    private final String mCorrectJsonBasic = "{\"key1\":\"value1\"}";
+    private final String mCorrectJsonNested = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":\"value2\"}";
+    private final String mCorrectJsonWithArray = "{\"key1\":\"value1\",\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
+    private final String mCorrectJsonNestedWithArray = "{\"key1\":{\"key1a\":\"value1a\",\"key1b\":\"value1b\"},\"key2\":[{\"key2a\":\"value2a\"},{\"key2b\":\"value2b\"}],\"key3\":\"value3\"}";
+    private final String mNoOpeningBracket = "\"key1\":\"value1\"}";
+    private final String mExtraOpeningBracket = "{{\"key1\": \"value1\"}";
+    private final String mNoClosingBracket = "{\"key1\":value1";
+    private final String mWrongKeyValueSeparator = "{\"key1\":\"value1\",\"key2\" \"value2\"}";
+    private final String mDuplicateKey = "{\"key1\":\"value1\",\"key1\":\"value2\"}";
 
-    private JSONObject correctJsonObjectBasic;
-    private JSONObject correctJsonObjectNested;
-    private JSONObject correctJsonObjectWithArray;
-    private JSONObject correctJsonObjectNestedWithArray;
-    Map<String, Boolean> booleanMap;
+    private JSONObject mCorrectJsonObjectBasic;
+    private JSONObject mCorrectJsonObjectNested;
+    private JSONObject mCorrectJsonObjectWithArray;
+    private JSONObject mCorrectJsonObjectNestedWithArray;
+    Map<String, Boolean> mBooleanMap;
 
     @Before
     @Test
     public void setUp() {
-        correctJsonObjectBasic = new JSONObject(correctJsonBasic);
-        correctJsonObjectNested = new JSONObject(correctJsonNested);
-        correctJsonObjectWithArray = new JSONObject(correctJsonWithArray);
-        correctJsonObjectNestedWithArray = new JSONObject(correctJsonNestedWithArray);
+        mCorrectJsonObjectBasic = new JSONObject(mCorrectJsonBasic);
+        mCorrectJsonObjectNested = new JSONObject(mCorrectJsonNested);
+        mCorrectJsonObjectWithArray = new JSONObject(mCorrectJsonWithArray);
+        mCorrectJsonObjectNestedWithArray = new JSONObject(mCorrectJsonNestedWithArray);
 
-        booleanMap = new HashMap<>();
+        mBooleanMap = new HashMap<>();
         for (int i = 0 ; i < 10 ; ++i) {
-            booleanMap.put("key" + i, i%2 == 0);
+            mBooleanMap.put("key" + i, i%2 == 0);
         }
     }
 
@@ -1005,48 +1000,48 @@ public class JSONObjectTest {
     @Test
     public void formatTest() {
         // Correct formats
-        new JSONObject(correctJsonBasic);
-        new JSONObject(correctJsonNested);
-        new JSONObject(correctJsonWithArray);
-        new JSONObject(emptyJson);
+        new JSONObject(mCorrectJsonBasic);
+        new JSONObject(mCorrectJsonNested);
+        new JSONObject(mCorrectJsonWithArray);
+        new JSONObject(mEmptyJson);
 
         // Incorrect formats
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(noOpeningBracket));
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(extraOpeningBracket));
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(noClosingBracket));
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(wrongKeyValueSeparator));
-        Assert.assertThrows(JSONException.class, () -> new JSONObject(duplicateKey));
+        Assert.assertThrows(JSONException.class, () -> new JSONObject(mNoOpeningBracket));
+        Assert.assertThrows(JSONException.class, () -> new JSONObject(mExtraOpeningBracket));
+        Assert.assertThrows(JSONException.class, () -> new JSONObject(mNoClosingBracket));
+        Assert.assertThrows(JSONException.class, () -> new JSONObject(mWrongKeyValueSeparator));
+        Assert.assertThrows(JSONException.class, () -> new JSONObject(mDuplicateKey));
     }
 
     @Test
     public void copyJsonTest() {
-        Assert.assertEquals(correctJsonObjectBasic.toString(), new JSONObject(correctJsonObjectBasic).toString());
-        Assert.assertEquals(correctJsonObjectNested.toString(), new JSONObject(correctJsonObjectNested).toString());
-        Assert.assertEquals(correctJsonObjectWithArray.toString(), new JSONObject(correctJsonObjectWithArray).toString());
+        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), new JSONObject(mCorrectJsonObjectBasic).toString());
+        Assert.assertEquals(mCorrectJsonObjectNested.toString(), new JSONObject(mCorrectJsonObjectNested).toString());
+        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), new JSONObject(mCorrectJsonObjectWithArray).toString());
     }
 
     @Test
     public void objectToObjectTest() {
-        Assert.assertEquals(correctJsonObjectBasic.toString(), JSONObject.objectToObject(correctJsonObjectBasic).toString());
-        Assert.assertEquals(correctJsonObjectNested.toString(), JSONObject.objectToObject(correctJsonObjectNested).toString());
-        Assert.assertNotEquals(correctJsonObjectNested.toString(), JSONObject.objectToObject(correctJsonObjectWithArray).toString());
+        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject.objectToObject(mCorrectJsonObjectBasic).toString());
+        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectNested).toString());
+        Assert.assertNotEquals(mCorrectJsonObjectNested.toString(), JSONObject.objectToObject(mCorrectJsonObjectWithArray).toString());
     }
 
     @Test
     public void getTest() {
-        JSONObject correctJsonObjectBasicCopy = new JSONObject(correctJsonBasic);
+        JSONObject correctJsonObjectBasicCopy = new JSONObject(mCorrectJsonBasic);
         correctJsonObjectBasicCopy.put("int-key", 2);
         correctJsonObjectBasicCopy.put("int_key", 6);
         correctJsonObjectBasicCopy.put("long_key", 2L);
         correctJsonObjectBasicCopy.put("double_key", 2d);
         correctJsonObjectBasicCopy.putOpt("boolean_key", (boolean) true);
-        correctJsonObjectBasicCopy.putOpt("object_key", correctJsonBasic);
+        correctJsonObjectBasicCopy.putOpt("object_key", mCorrectJsonBasic);
 
         Assert.assertEquals(6, correctJsonObjectBasicCopy.getInt("int_key"));
         Assert.assertEquals(2L, correctJsonObjectBasicCopy.getLong("long_key"));
         Assert.assertEquals(2d, correctJsonObjectBasicCopy.getDouble("double_key"), 1e-10);
         Assert.assertTrue(correctJsonObjectBasicCopy.getBoolean("boolean_key"));
-        Assert.assertEquals(correctJsonBasic, correctJsonObjectBasicCopy.get("object_key"));
+        Assert.assertEquals(mCorrectJsonBasic, correctJsonObjectBasicCopy.get("object_key"));
 
         // Check that putOpt doesn't add pair when one is null
         correctJsonObjectBasicCopy.putOpt("boolean_key_2", null);
@@ -1077,11 +1072,11 @@ public class JSONObjectTest {
         JSONObjectSubType jsonObjectSubType = new JSONObjectSubType();
 
         // Clone base JSONObject Type into JSONObjectSubType
-        correctJsonObjectNestedWithArray.deepClonedInto(jsonObjectSubType);
+        mCorrectJsonObjectNestedWithArray.deepClonedInto(jsonObjectSubType);
 
         // Test by passing result of base JSONObject's toString() to removeQuotes()
         // This is already done in the JSONObjectSubType object
-        Assert.assertEquals(removeQuotes(correctJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString());
+        Assert.assertEquals(removeQuotes(mCorrectJsonObjectNestedWithArray.toString()), jsonObjectSubType.toString());
     }
 
 
@@ -1090,14 +1085,14 @@ public class JSONObjectTest {
      */
     @Test
     public void deepCloneReferenceTest() {
-        JSONObject clone = correctJsonObjectBasic.deepClone();
+        JSONObject clone = mCorrectJsonObjectBasic.deepClone();
         // Both objects should point to different memory address
-        Assert.assertNotEquals(clone, correctJsonObjectBasic);
+        Assert.assertNotEquals(clone, mCorrectJsonObjectBasic);
     }
 
     @Test
     public void fromMapTest() {
-        JSONObject fromMapJsonObject = JSONObject.fromMap(booleanMap);
+        JSONObject fromMapJsonObject = JSONObject.fromMap(mBooleanMap);
         for (int i = 0 ; i < 10 ; ++i) {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key" + i), i%2 == 0);
         }

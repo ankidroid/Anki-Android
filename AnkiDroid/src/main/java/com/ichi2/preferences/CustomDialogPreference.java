@@ -26,7 +26,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see implementation at ResetLanguageDialogPreference
 public class CustomDialogPreference extends android.preference.DialogPreference implements DialogInterface.OnClickListener {
     private final Context mContext;
 
@@ -54,11 +54,6 @@ public class CustomDialogPreference extends android.preference.DialogPreference 
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confSetSubdecks", true);
                 editor.commit();
-            } else {
-                // Main Preferences :: Reset Languages
-                if (MetaDB.resetLanguages(mContext)) {
-                    UIUtils.showThemedToast(this.getContext(), AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), true);
-                }
             }
         }
     }

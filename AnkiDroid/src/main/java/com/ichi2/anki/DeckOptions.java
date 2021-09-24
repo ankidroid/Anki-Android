@@ -55,12 +55,12 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
 
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.NamedJSONComparator;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private final Map<String, String> mValues = new HashMap<>(30); // At most as many as in cacheValues
+        private final Map<String, String> mValues = HashUtil.HashMapInit(30); // At most as many as in cacheValues
         private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
         private final List<OnSharedPreferenceChangeListener> mListeners = new LinkedList<>();
@@ -808,7 +808,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void buildLists() {
         android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
-        ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
+        List<DeckConfig> confs = mCol.getDecks().allConf();
         Collections.sort(confs, NamedJSONComparator.INSTANCE);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];

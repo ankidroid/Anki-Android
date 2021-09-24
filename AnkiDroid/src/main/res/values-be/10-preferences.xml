@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Жэсты</string>
     <string name="pref_cat_gestures_summ">Выкарыстоўваць націскі і чырканні замест кнопак</string>
     <string name="pref_cat_actions" maxLength="41">Дзеянні</string>
+    <string name="pref_cat_controls" maxLength="41">Кіраванне</string>
+    <string name="pref_cat_controls_summ">Наладжванне клавіятуры і іншых прылад</string>
     <string name="pref_cat_advanced" maxLength="41">Дадаткова</string>
     <string name="pref_cat_advanced_summ">Аптымізацыя і эксперыментальныя магчымасці</string>
     <string name="pref_cat_performance" maxLength="41">Прадукцыйнасць</string>
@@ -190,7 +192,6 @@
     <string name="sched_v2" maxLength="41">2-ая версія планіроўшчыка</string>
     <string name="sched_v2_summ">Уключыць новы планіроўшчык. Падчас наступнай сінхранізацыі змены будуць запісаныя ў адным напрамку.</string>
     <string name="sched_ver_toggle_title">Пацвердзіць</string>
-    <string name="sched_ver_2to1">Гэта скіне ўсе вашы вывучаныя карткі, ачысціць фільтраваныя калоды і зменіць версію планіроўшчыка. Працягнуць?</string>
     <string name="sched_ver_1to2">Эксперыментальны планіроўшчык можа стаць прычынаю памылковага планавання. Пераканайцеся, што вы азнаёміліся з дакументацыяй. Працягнуць?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>
@@ -228,6 +229,8 @@
     <string name="custom_sync_server_base_url_invalid">Памылковы адрас сінхранізацыі</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Спасылка для медыяфайлаў</string>
     <string name="custom_sync_server_media_url_invalid">Памылковая спасылка сінхранізацыі медыяфайлаў</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Супастаўленне каманд</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Змяненні параметраў у групавой калодзе закране некалькі калод. Калі вы хочаце змяніць толькі бягучую калоду, калі ласка, спачатку дадайце новую групу параметраў</string>
     <string name="studyoptions_limit_select_tags">Выберыце меткі</string>
@@ -326,4 +329,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">П: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">А: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Выдаліць “%s”</string>
+    <string name="bindings_already_bound">Ужо прызначана \"%s\"</string>
 </resources>

@@ -48,6 +48,7 @@ import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -472,7 +473,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn, @Nullable CancelListener cancelListener) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<>(mCol.getDecks().count());
+        HashMap<Long, Integer> pcounts = HashUtil.HashMapInit(mCol.getDecks().count());
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
             if (isCancelled(cancelListener)) return -1;
@@ -527,7 +528,7 @@ public class SchedV2 extends AbstractSched {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         List<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(decks.size());
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
@@ -687,7 +688,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        boolean dayLearnFirst = mCol.get_config("dayLearnFirst", false);
         if (dayLearnFirst) {
             c = _getLrnDayCard();
             if (c != null) {
@@ -730,7 +731,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        boolean dayLearnFirst = mCol.get_config("dayLearnFirst", false);
         if (dayLearnFirst) {
             if (_fillLrnDay()) {
                 return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
@@ -899,7 +900,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _updateNewCardRatio() {
-        if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
+        if (mCol.get_config_int("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
             if (mNewCount != 0) {
                 mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
                 // if there are cards to review, ensure modulo >= 2
@@ -920,7 +921,7 @@ public class SchedV2 extends AbstractSched {
         if (mHaveCounts && mNewCount == 0) {
             return false;
         }
-        @Consts.NEW_CARD_ORDER int spread = mCol.getConf().getInt("newSpread");
+        @Consts.NEW_CARD_ORDER int spread = mCol.get_config_int("newSpread");
         if (spread == Consts.NEW_CARDS_LAST) {
             return false;
         } else if (spread == Consts.NEW_CARDS_FIRST) {
@@ -1015,7 +1016,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     private boolean _updateLrnCutoff(boolean force) {
-        long nextCutoff = getTime().intTime() + mCol.getConf().getInt("collapseTime");
+        long nextCutoff = getTime().intTime() + mCol.get_config_int("collapseTime");
         if (nextCutoff - mLrnCutoff > 60 || force) {
             mLrnCutoff = nextCutoff;
             return true;
@@ -1076,7 +1077,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
+        long cutoff = getTime().intTime() + mCol.get_config_long("collapseTime");
         mLrnQueue.clear();
         /* Difference with upstream: Current card can't come in the queue.
              *
@@ -1107,7 +1108,7 @@ public class SchedV2 extends AbstractSched {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
@@ -1123,7 +1124,7 @@ public class SchedV2 extends AbstractSched {
         if (_fillLrn()) {
             long cutoff = getTime().intTime();
             if (collapse) {
-                cutoff += mCol.getConf().getInt("collapseTime");
+                cutoff += mCol.get_config_int("collapseTime");
             }
             // mLrnCount -= 1; see decrementCounts()
             return mLrnQueue.getFirstDue() < cutoff;
@@ -1275,7 +1276,7 @@ public class SchedV2 extends AbstractSched {
             int fuzz = new Random().nextInt(Math.max(maxExtra, 1));
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(Consts.QUEUE_TYPE_LRN);
-            if (card.getDue() < (getTime().intTime() + mCol.getConf().getInt("collapseTime"))) {
+            if (card.getDue() < (getTime().intTime() + mCol.get_config_int("collapseTime"))) {
                 mLrnCount += 1;
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -1476,7 +1477,7 @@ public class SchedV2 extends AbstractSched {
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.get_config_int("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -2196,16 +2197,16 @@ public class SchedV2 extends AbstractSched {
             update(deck);
         }
         // unbury if the day has rolled over
-        int unburied = mCol.getConf().optInt("lastUnburied", 0);
+        int unburied = mCol.get_config("lastUnburied", 0);
         if (unburied < mToday) {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
-            mCol.getConf().put("lastUnburied", mToday);
+            mCol.set_config("lastUnburied", mToday);
         }
     }
 
 
     private long _dayCutoff() {
-        int rolloverTime = mCol.getConf().optInt("rollover", 4);
+        int rolloverTime = mCol.get_config("rollover", 4);
         if (rolloverTime < 0) {
             rolloverTime = 24 + rolloverTime;
         }
@@ -2234,7 +2235,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     private int _rolloverHour() {
-        return getCol().getConf().optInt("rollover", 4);
+        return getCol().get_config("rollover", 4);
     }
 
     // New timezone handling
@@ -2242,8 +2243,7 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     public boolean _new_timezone_enabled() {
-        JSONObject conf = getCol().getConf();
-        return conf.has("creationOffset") && !conf.isNull("creationOffset");
+        return getCol().has_config_not_null("creationOffset");
     }
 
     @Nullable
@@ -2264,29 +2264,25 @@ public class SchedV2 extends AbstractSched {
     @Override
     public int _current_timezone_offset() throws BackendNotSupportedException {
         if (getCol().getServer()) {
-            return getCol().getConf().optInt("localOffset", 0);
+            return getCol().get_config("localOffset", 0);
         } else {
             return getCol().getBackend().local_minutes_west(getTime().intTime());
         }
     }
 
     private int _creation_timezone_offset() {
-        return getCol().getConf().optInt("creationOffset", 0);
+        return getCol().get_config("creationOffset", 0);
     }
 
     @Override
     public void set_creation_offset() throws BackendNotSupportedException {
         int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
-        getCol().getConf().put("creationOffset", mins_west);
-        getCol().setMod();
+        getCol().set_config("creationOffset", mins_west);
     }
 
     @Override
     public void clear_creation_offset() {
-        if (getCol().getConf().has("creationOffset")) {
-            getCol().getConf().remove("creationOffset");
-            getCol().setMod();
-        }
+        getCol().remove_config("creationOffset");
     }
 
     protected void update(@NonNull Deck g) {
@@ -2435,7 +2431,7 @@ public class SchedV2 extends AbstractSched {
             return context.getString(R.string.sched_end);
         }
         String s = Utils.timeQuantityNextIvl(context, ivl);
-        if (ivl < mCol.getConf().getInt("collapseTime")) {
+        if (ivl < mCol.get_config_int("collapseTime")) {
             s = context.getString(R.string.less_than_time, s);
         }
         return s;
@@ -2760,7 +2756,7 @@ public class SchedV2 extends AbstractSched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<>(nids.size());
+        HashMap<Long, Long> due = HashUtil.HashMapInit(nids.size());
         if (shuffle) {
             Collections.shuffle(nids);
         }

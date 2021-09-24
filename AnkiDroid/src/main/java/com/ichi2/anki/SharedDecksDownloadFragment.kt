@@ -74,7 +74,7 @@ class SharedDecksDownloadFragment : Fragment() {
      */
     private lateinit var mDownloadManager: DownloadManager
 
-    var mIsDownloadInProgress = false
+    var isDownloadInProgress = false
 
     private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
 
@@ -104,7 +104,7 @@ class SharedDecksDownloadFragment : Fragment() {
         mCheckNetworkInfoText = view.findViewById(R.id.check_network_info_text)
 
         val fileToBeDownloaded = arguments?.getSerializable(DOWNLOAD_FILE) as DownloadFile
-        mDownloadManager = (activity as SharedDecksActivity).mDownloadManager
+        mDownloadManager = (activity as SharedDecksActivity).downloadManager
 
         downloadFile(fileToBeDownloaded)
 
@@ -139,8 +139,8 @@ class SharedDecksDownloadFragment : Fragment() {
         activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         val currentFileName = URLUtil.guessFileName(
-            fileToBeDownloaded.mUrl, fileToBeDownloaded.mContentDisposition,
-            fileToBeDownloaded.mMimeType
+            fileToBeDownloaded.url, fileToBeDownloaded.contentDisposition,
+            fileToBeDownloaded.mimeType
         )
 
         val downloadRequest = generateDeckDownloadRequest(fileToBeDownloaded, currentFileName)
@@ -148,7 +148,7 @@ class SharedDecksDownloadFragment : Fragment() {
         // Store unique download ID to be used when onReceive() of BroadcastReceiver gets executed.
         mDownloadId = mDownloadManager.enqueue(downloadRequest)
         mFileName = currentFileName
-        mIsDownloadInProgress = true
+        isDownloadInProgress = true
         Timber.d("Download ID -> $mDownloadId")
         Timber.d("File name -> $mFileName")
         view?.findViewById<TextView>(R.id.downloading_title)?.text = getString(R.string.downloading_file, mFileName)
@@ -156,13 +156,13 @@ class SharedDecksDownloadFragment : Fragment() {
     }
 
     private fun generateDeckDownloadRequest(fileToBeDownloaded: DownloadFile, currentFileName: String): DownloadManager.Request {
-        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(fileToBeDownloaded.mUrl))
-        request.setMimeType(fileToBeDownloaded.mMimeType)
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(fileToBeDownloaded.url))
+        request.setMimeType(fileToBeDownloaded.mimeType)
 
-        val cookies = CookieManager.getInstance().getCookie(fileToBeDownloaded.mUrl)
+        val cookies = CookieManager.getInstance().getCookie(fileToBeDownloaded.url)
 
         request.addRequestHeader("Cookie", cookies)
-        request.addRequestHeader("User-Agent", fileToBeDownloaded.mUserAgent)
+        request.addRequestHeader("User-Agent", fileToBeDownloaded.userAgent)
 
         request.setTitle(currentFileName)
 
@@ -419,7 +419,7 @@ class SharedDecksDownloadFragment : Fragment() {
         }
 
         unregisterReceiver()
-        mIsDownloadInProgress = false
+        isDownloadInProgress = false
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
         removeCancelConfirmationDialog()
@@ -434,7 +434,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 .onPositive { _, _ ->
                     mDownloadManager.remove(mDownloadId)
                     unregisterReceiver()
-                    mIsDownloadInProgress = false
+                    isDownloadInProgress = false
                     activity?.onBackPressed()
                 }
                 .onNegative { dialog, _ ->

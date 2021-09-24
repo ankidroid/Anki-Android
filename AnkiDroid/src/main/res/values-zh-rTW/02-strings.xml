@@ -151,7 +151,6 @@
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
-    <string name="import_select_title">選擇欲匯入的檔案</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
     <string name="import_message_add_confirm">新增「%s」到集合嗎？這可能會花上好一段時間</string>
@@ -185,14 +184,12 @@
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
-    <string name="export_email_text"><![CDATA[        你好！
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        這是從 <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a> 分享的 Anki 單字卡牌組。
-        使用任一 <a href="http://ankisrs.net/#download">Anki 用戶端</a>打開它，享受輕鬆高效的學習吧！
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
-    <string name="import_hint">若你要匯入卡片，請將 apkg 檔案放在「%s」目錄下，然後按OK</string>
-    <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
@@ -336,19 +333,23 @@
     <string name="email_id_empty">電子郵件地址是必填項</string>
     <string name="password_empty">密碼是必填項</string>
     <string name="back_pressed_once">再按一次返回鍵以退出</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">再按一次返回鍵以返回</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">下載牌組</string>
+    <string name="try_again">再试一次</string>
+    <string name="cancel_download">取消下載</string>
+    <string name="cancel_download_question_title">取消下載？</string>
+    <string name="downloading_file">下載 %s 中</string>
+    <string name="import_deck">匯入牌組</string>
+    <string name="something_wrong">出了點問題，請再試一次</string>
+    <string name="download_failed">下載失敗</string>
+    <string name="deck_download_progress_message">在下載同時你可以使用其他的APP</string>
+    <string name="check_network">請檢查你的網絡連接</string>
+    <string name="search_using_deck_name">按卡片名字搜索</string>
+    <string name="home">首页</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">對應於%s</string>
+    <string name="import_mapped_to_tags">對應標籤</string>
+    <string name="import_mapped_to_nothing">忽略</string>
 </resources>

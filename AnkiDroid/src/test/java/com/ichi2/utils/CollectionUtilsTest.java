@@ -16,7 +16,6 @@
 
 package com.ichi2.utils;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CollectionUtilsTest {
 
-    List<Integer> testList = new ArrayList<Integer>() {{
+    List<Integer> mTestList = new ArrayList<Integer>() {{
         add(1);
         add(2);
         add(3);
@@ -36,7 +35,7 @@ public class CollectionUtilsTest {
 
     @Test
     public void testGetLastListElement() {
-        assertThat(CollectionUtils.getLastListElement(testList), is(3));
+        assertThat(CollectionUtils.getLastListElement(mTestList), is(3));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -48,7 +47,7 @@ public class CollectionUtilsTest {
     @Test
     public void testAddAll() {
         List<Integer> toTest = new ArrayList<>();
-        CollectionUtils.addAll(toTest, testList);
+        CollectionUtils.addAll(toTest, mTestList);
         assertEqualsArrayList(new Integer [] {1, 2, 3}, toTest);
     }
 }

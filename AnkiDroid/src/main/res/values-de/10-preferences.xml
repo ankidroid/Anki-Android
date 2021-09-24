@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gesten</string>
     <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
     <string name="pref_cat_actions" maxLength="41">Aktionen</string>
+    <string name="pref_cat_controls" maxLength="41">Steuerung</string>
+    <string name="pref_cat_controls_summ">Tastaturen und andere Geräte konfigurieren</string>
     <string name="pref_cat_advanced" maxLength="41">Erweitert</string>
     <string name="pref_cat_advanced_summ">Optimierung und experimentelle Funktionen</string>
     <string name="pref_cat_performance" maxLength="41">Leistung</string>
@@ -94,7 +96,7 @@
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch" maxLength="41">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">hallo</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Vollbild-Navigationsleiste</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Navigationsleiste öffnen, wenn rechts von überall auf dem Bildschirm gewischt wird</string>
     <string name="gestures_swipe_up" maxLength="41">Nach oben wischen</string>
     <string name="gestures_swipe_down" maxLength="41">Nach unten wischen</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">V2-Zeitplaner</string>
     <string name="sched_v2_summ">Aktiviert den neuen Zeitplaner. Erzwingt Änderungen in eine Richtung bei der nächsten Synchronisation</string>
     <string name="sched_ver_toggle_title">Bestätigen</string>
-    <string name="sched_ver_2to1">Dies wird alle in der Lernphase befindlichen Karten zurücksetzen, gefilterte Stapel löschen und die Version des Zeitplaners ändern. Möchten Sie fortfahren?</string>
     <string name="sched_ver_1to2">Der experimentelle Zeitplaner könnte eine falsche Zeitplanung verursachen. Bitte lesen Sie zuerst die Dokumentation. Möchten Sie fortfahren?</string>
     <string name="pref_keep_screen_on" maxLength="41">Bildschirm eingeschaltet lassen</string>
     <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Synchronisations-URL ungültig</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediensynchronisations-URL</string>
     <string name="custom_sync_server_media_url_invalid">Mediensynchronisations-URL ungültig</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Befehlszuordnung</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
     <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>
@@ -321,4 +324,7 @@
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s ’ entfernen</string>
+    <string name="bindings_already_bound">Bereits an %s gebunden</string>
 </resources>

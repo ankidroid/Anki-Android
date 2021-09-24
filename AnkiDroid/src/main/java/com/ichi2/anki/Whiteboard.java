@@ -20,7 +20,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -32,9 +31,12 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.net.Uri;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
@@ -44,7 +46,6 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.DisplayUtils;
 
 import java.io.FileNotFoundException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +57,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
+import static com.ichi2.anki.cardviewer.CardAppearance.isInNightMode;
+
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
@@ -63,6 +66,8 @@ import timber.log.Timber;
 public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
+    @Nullable
+    private static WhiteboardMultiTouchMethods mWhiteboardMultiTouchMethods;
 
     private final Paint mPaint;
     private final UndoList mUndo = new UndoList();
@@ -70,7 +75,7 @@ public class Whiteboard extends View {
     private Canvas mCanvas;
     private final Path mPath;
     private final Paint mBitmapPaint;
-    private final WeakReference<AbstractFlashcardViewer> mCardViewer;
+    private final AnkiActivity mAnkiActivity;
 
     private float mX;
     private float mY;
@@ -87,24 +92,28 @@ public class Whiteboard extends View {
     private final int mForegroundColor;
     private final LinearLayout mColorPalette;
 
+    private final Boolean mHandleMultiTouch;
+
     @Nullable
     private OnPaintColorChangeListener mOnPaintColorChangeListener;
 
-    public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted) {
-        super(cardViewer, null);
-        mCardViewer = new WeakReference<>(cardViewer);
+    public Whiteboard(AnkiActivity activity, Boolean handleMultiTouch, boolean inverted) {
+        super(activity, null);
 
-        Button whitePenColorButton = cardViewer.findViewById(R.id.pen_color_white);
-        Button blackPenColorButton = cardViewer.findViewById(R.id.pen_color_black);
+        mAnkiActivity = activity;
+        mHandleMultiTouch = handleMultiTouch;
+
+        Button whitePenColorButton = activity.findViewById(R.id.pen_color_white);
+        Button blackPenColorButton = activity.findViewById(R.id.pen_color_black);
 
         if (!inverted) {
-                whitePenColorButton.setVisibility(View.GONE);
-                blackPenColorButton.setOnClickListener(this::onClick);
-                mForegroundColor = Color.BLACK;
+            whitePenColorButton.setVisibility(View.GONE);
+            blackPenColorButton.setOnClickListener(this::onClick);
+            mForegroundColor = Color.BLACK;
         } else {
-                blackPenColorButton.setVisibility(View.GONE);
-                whitePenColorButton.setOnClickListener(this::onClick);
-                mForegroundColor = Color.WHITE;
+            blackPenColorButton.setVisibility(View.GONE);
+            whitePenColorButton.setOnClickListener(this::onClick);
+            mForegroundColor = Color.WHITE;
         }
 
         mPaint = new Paint();
@@ -120,17 +129,36 @@ public class Whiteboard extends View {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = cardViewer.findViewById(R.id.whiteboard_editor);
+        mColorPalette = activity.findViewById(R.id.whiteboard_editor);
 
-        cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
-        cardViewer.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
+        activity.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
+        activity.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
+        activity.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
+        activity.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
+        activity.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
     }
 
     public int getCurrentStrokeWidth() {
-        return AnkiDroidApp.getSharedPrefs(mCardViewer.get()).getInt("whiteBoardStrokeWidth", 6);
+        return AnkiDroidApp.getSharedPrefs(mAnkiActivity).getInt("whiteBoardStrokeWidth", 6);
+    }
+
+
+    public static Whiteboard createInstance(AnkiActivity context, boolean handleMultiTouch, @Nullable WhiteboardMultiTouchMethods whiteboardMultiTouchMethods) {
+
+        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(context);
+        Whiteboard whiteboard = new Whiteboard(context, handleMultiTouch, isInNightMode(sharedPrefs));
+
+        mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods;
+        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        whiteboard.setLayoutParams(lp2);
+        FrameLayout fl = context.findViewById(R.id.whiteboard);
+        fl.addView(whiteboard);
+
+        whiteboard.setEnabled(true);
+
+        return whiteboard;
     }
 
     @Override
@@ -199,8 +227,8 @@ public class Whiteboard extends View {
                     boolean didErase = mUndo.erase((int) event.getX(), (int) event.getY());
                     if (didErase) {
                         mUndo.apply();
-                        if (undoEmpty() && mCardViewer.get() != null) {
-                            mCardViewer.get().supportInvalidateOptionsMenu();
+                        if (undoEmpty() && mAnkiActivity != null) {
+                            mAnkiActivity.supportInvalidateOptionsMenu();
                         }
                     }
                 }
@@ -212,7 +240,7 @@ public class Whiteboard extends View {
 
     // Parse multitouch input to scroll the card behind the whiteboard or click on elements
     private boolean handleMultiTouchEvent(MotionEvent event) {
-        if (event.getPointerCount() == 2) {
+        if (mHandleMultiTouch && event.getPointerCount() == 2) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_POINTER_DOWN:
                     reinitializeSecondFinger(event);
@@ -237,8 +265,8 @@ public class Whiteboard extends View {
         mBitmap.eraseColor(0);
         mUndo.clear();
         invalidate();
-        if (mCardViewer.get() != null) {
-            mCardViewer.get().supportInvalidateOptionsMenu();
+        if (mAnkiActivity != null) {
+            mAnkiActivity.supportInvalidateOptionsMenu();
         }
     }
 
@@ -249,8 +277,8 @@ public class Whiteboard extends View {
     public void undo() {
         mUndo.pop();
         mUndo.apply();
-        if (undoEmpty() && mCardViewer.get() != null) {
-            mCardViewer.get().supportInvalidateOptionsMenu();
+        if (undoEmpty() && mAnkiActivity != null) {
+            mAnkiActivity.supportInvalidateOptionsMenu();
         }
     }
 
@@ -312,8 +340,8 @@ public class Whiteboard extends View {
         mUndoModeActive = true;
         // kill the path so we don't double draw
         mPath.reset();
-        if (mUndo.size() == 1 && mCardViewer.get() != null) {
-            mCardViewer.get().supportInvalidateOptionsMenu();
+        if (mUndo.size() == 1 && mAnkiActivity != null) {
+            mAnkiActivity.supportInvalidateOptionsMenu();
         }
     }
 
@@ -353,9 +381,8 @@ public class Whiteboard extends View {
     private boolean trySecondFingerClick(MotionEvent event) {
         if (mSecondFingerPointerId == event.getPointerId(event.getActionIndex())) {
             updateSecondFinger(event);
-            AbstractFlashcardViewer cardViewer = mCardViewer.get();
-            if (mSecondFingerWithinTapTolerance && cardViewer != null) {
-                cardViewer.tapOnCurrentCard((int) mSecondFingerX, (int) mSecondFingerY);
+            if (mSecondFingerWithinTapTolerance && mWhiteboardMultiTouchMethods != null) {
+                mWhiteboardMultiTouchMethods.tapOnCurrentCard((int) mSecondFingerX, (int) mSecondFingerY);
                 return true;
             }
         }
@@ -367,9 +394,8 @@ public class Whiteboard extends View {
     private boolean trySecondFingerScroll(MotionEvent event) {
         if (updateSecondFinger(event) && !mSecondFingerWithinTapTolerance) {
             int dy = (int) (mSecondFingerY0 - mSecondFingerY);
-            AbstractFlashcardViewer cardViewer = mCardViewer.get();
-            if (dy != 0 && cardViewer != null) {
-                cardViewer.scrollCurrentCardBy(dy);
+            if (dy != 0 && mWhiteboardMultiTouchMethods != null) {
+                mWhiteboardMultiTouchMethods.scrollCurrentCardBy(dy);
                 mSecondFingerX0 = mSecondFingerX;
                 mSecondFingerY0 = mSecondFingerY;
             }
@@ -409,14 +435,14 @@ public class Whiteboard extends View {
 
 
     private void handleWidthChangeDialog() {
-        WhiteBoardWidthDialog whiteBoardWidthDialog = new WhiteBoardWidthDialog(mCardViewer.get(), getCurrentStrokeWidth());
+        WhiteBoardWidthDialog whiteBoardWidthDialog = new WhiteBoardWidthDialog(mAnkiActivity, getCurrentStrokeWidth());
         whiteBoardWidthDialog.onStrokeWidthChanged(this::saveStrokeWidth);
         whiteBoardWidthDialog.showStrokeWidthDialog();
     }
 
     private void saveStrokeWidth(int wbStrokeWidth) {
         mPaint.setStrokeWidth((float) wbStrokeWidth);
-        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mCardViewer.get()).edit();
+        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit();
         edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth);
         edit.apply();
     }
@@ -436,8 +462,8 @@ public class Whiteboard extends View {
     }
 
 
-    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
-        this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
+    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener onPaintColorChangeListener) {
+        this.mOnPaintColorChangeListener = onPaintColorChangeListener;
     }
 
 
@@ -489,14 +515,14 @@ public class Whiteboard extends View {
             for (Iterator<WhiteboardAction> iterator = mList.iterator(); iterator.hasNext(); ) {
                 WhiteboardAction action = iterator.next();
 
-                Path mPath = action.getPath();
-                if (mPath != null) { // → line
-                    boolean lineRegionSuccess = lineRegion.setPath(mPath, clip);
+                Path path = action.getPath();
+                if (path != null) { // → line
+                    boolean lineRegionSuccess = lineRegion.setPath(path, clip);
                     if (!lineRegionSuccess) {
                         // Small lines can be perfectly vertical/horizontal,
                         // thus giving us an empty region, which would make them undeletable.
                         // For this edge case, we create a Region ourselves.
-                        mPath.computeBounds(bounds, true);
+                        path.computeBounds(bounds, true);
                         lineRegion = new Region(new Rect((int) bounds.left, (int) bounds.top, (int) bounds.right + 1, (int) bounds.bottom + 1));
                     }
                 } else { // → point
@@ -513,7 +539,7 @@ public class Whiteboard extends View {
         }
 
         public boolean empty() {
-            return mList.size() == 0;
+            return mList.isEmpty();
         }
     }
 
@@ -585,7 +611,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    protected String saveWhiteboard(Time time) throws FileNotFoundException {
+    protected Uri saveWhiteboard(Time time) throws FileNotFoundException {
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         if (mForegroundColor != Color.BLACK) {

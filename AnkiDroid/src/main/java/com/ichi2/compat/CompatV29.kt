@@ -20,6 +20,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
+import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
@@ -42,7 +43,7 @@ class CompatV29 : CompatV26(), Compat {
         }
     }
 
-    override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): String {
+    override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {
         val imagesCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         val destDir = File(Environment.DIRECTORY_PICTURES, "AnkiDroid")
         val date = CollectionHelper.getInstance().getTimeSafe(context).intTimeMS()
@@ -65,7 +66,7 @@ class CompatV29 : CompatV26(), Compat {
         newImage.clear()
         newImage.put(MediaStore.Images.Media.IS_PENDING, 0)
         context.contentResolver.update(newImageUri, newImage, null, null)
-        return newImageUri.path.toString()
+        return newImageUri
     }
 
     companion object {

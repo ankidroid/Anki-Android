@@ -160,7 +160,6 @@
     <string name="show_hint">Pokaż %s</string>
     <string name="info_rate">Oceń AnkiDroid</string>
     <string name="import_title">Importowanie</string>
-    <string name="import_select_title">Wybierz plik do importu</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
@@ -194,14 +193,12 @@
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
-    <string name="export_email_text"><![CDATA[        Cześć!
+    <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        To jest talia fiszek programu Anki wysłana z <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Spróbuj ją otworzyć używając jednej z dostępnych <a href="http://ankisrs.net/#download">wersji Anki</a> i ciesz się łatwą i efektywną nauką!
+        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
+        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
         ]]></string>
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
-    <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
-    <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
     <string name="menu__deck_options">Opcje talii</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcje nauki</string>
@@ -375,19 +372,23 @@
     <string name="email_id_empty">Adres e-mail jest wymagany</string>
     <string name="password_empty">Hasło jest wymagane</string>
     <string name="back_pressed_once">Naciśnij ponownie, aby wyjść</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">Naciśnij ponownie przycisk wstecz by powrócić</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="download_deck">Pobierz talię</string>
+    <string name="try_again">Spróbuj ponownie</string>
+    <string name="cancel_download">Anuluj pobieranie</string>
+    <string name="cancel_download_question_title">Anulować pobieranie?</string>
+    <string name="downloading_file">Pobieranie: %s</string>
+    <string name="import_deck">Importuj talię</string>
+    <string name="something_wrong">Coś poszło nie tak, spróbuj ponownie</string>
+    <string name="download_failed">Pobieranie nie powiodło się</string>
+    <string name="deck_download_progress_message">Możesz używać innych aplikacji podczas pobierania</string>
+    <string name="check_network">Sprawdź swoje połączenie internetowe</string>
+    <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="home">Home</string>
+    <!-- Importing -->
+    <string name="import_mapped_to_field">Mapped to %s</string>
+    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_nothing">Ignored</string>
 </resources>

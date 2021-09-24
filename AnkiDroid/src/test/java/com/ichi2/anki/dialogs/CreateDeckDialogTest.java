@@ -19,7 +19,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.FilteredAncestor;
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +56,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
                 // a deck was created
                 try {
                     isCreated.set(true);
-                    final Decks decks = activity.getCol().getDecks();
+                    final DeckManager decks = activity.getCol().getDecks();
                     assertThat(id, is(decks.id(deckName)));
                 } catch (FilteredAncestor filteredAncestor) {
                     throw new RuntimeException(filteredAncestor);
@@ -81,7 +81,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 try {
                     isCreated.set(true);
-                    final Decks decks = activity.getCol().getDecks();
+                    final DeckManager decks = activity.getCol().getDecks();
                     String deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName);
                     assertThat(id, is(decks.id(deckNameWithParentName)));
                 } catch (FilteredAncestor filteredAncestor) {
@@ -105,7 +105,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck was created
                 isCreated.set(true);
-                final Decks decks = activity.getCol().getDecks();
+                final DeckManager decks = activity.getCol().getDecks();
                 assertThat(id, is(decks.byName(deckName).getLong("id")));
             });
 
@@ -128,7 +128,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
             createDeckDialog.setOnNewDeckCreated((id) -> {
                 // a deck name was renamed
                 isCreated.set(true);
-                final Decks decks = activity.getCol().getDecks();
+                final DeckManager decks = activity.getCol().getDecks();
                 assertThat(deckNewName, is(decks.name(id)));
             });
 

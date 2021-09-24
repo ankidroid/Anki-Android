@@ -45,6 +45,7 @@
     <string name="statistics">统计</string>
     <string name="settings">设置</string>
     <string name="help">帮助</string>
+    <string name="drawing">绘图</string>
     <string name="send_feedback">反馈</string>
     <string name="studyoptions_due_today">今天待复习：</string>
     <string name="studyoptions_new_total">新卡片数量：</string>
@@ -65,7 +66,7 @@
         <item quantity="other">剩余 %d 小时 %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">剩余 %d 天 %d</item>
+        <item quantity="other">还剩%d天</item>
     </plurals>
     <string name="no_cards_placeholder_title">收藏为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
@@ -95,7 +96,7 @@
     <string name="menu_add_note">添加笔记</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帐户</string>
     <string name="menu_dismiss_note">隐藏/删除</string>
-    <string name="menu_bury_card">隐藏卡片</string>
+    <string name="menu_bury_card">搁置卡片</string>
     <string name="menu_bury_note">搁置笔记</string>
     <string name="menu_suspend_card">暂停卡片</string>
     <string name="menu_suspend_note">暂停笔记</string>
@@ -225,4 +226,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d 张卡片 (0到期)</item>
     </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
 </resources>

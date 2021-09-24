@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -37,7 +38,7 @@ import com.ichi2.libanki.CollectionGetter;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
+import com.ichi2.libanki.ModelManager;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
@@ -86,10 +87,10 @@ public class RobolectricTest implements CollectionGetter {
 
     private static boolean mBackground = true;
 
-    private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
+    private final ArrayList<ActivityController<?>> mControllersForCleanup = new ArrayList<>();
 
     protected void saveControllerForCleanup(ActivityController<?> controller) {
-        controllersForCleanup.add(controller);
+        mControllersForCleanup.add(controller);
     }
 
     protected boolean useInMemoryDatabase() {
@@ -150,7 +151,7 @@ public class RobolectricTest implements CollectionGetter {
     public void tearDown() {
 
         // If you don't clean up your ActivityControllers you will get OOM errors
-        for (ActivityController<?> controller : controllersForCleanup) {
+        for (ActivityController<?> controller : mControllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString());
             try {
                 controller.destroy();
@@ -159,7 +160,7 @@ public class RobolectricTest implements CollectionGetter {
                 // No exception here should halt test execution since tests are over anyway.
             }
         }
-        controllersForCleanup.clear();
+        mControllersForCleanup.clear();
 
         try {
             if (CollectionHelper.getInstance().colIsOpen()) {
@@ -271,6 +272,10 @@ public class RobolectricTest implements CollectionGetter {
 
     }
 
+    protected SharedPreferences getPreferences() {
+        return AnkiDroidApp.getSharedPrefs(getTargetContext());
+    }
+
 
     protected String getResourceString(int res) {
         return getTargetContext().getString(res);
@@ -310,7 +315,7 @@ public class RobolectricTest implements CollectionGetter {
     }
 
     protected Model getCurrentDatabaseModelCopy(String modelName) throws JSONException {
-        Models collectionModels = getCol().getModels();
+        ModelManager collectionModels = getCol().getModels();
         return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
@@ -380,7 +385,7 @@ public class RobolectricTest implements CollectionGetter {
 
 
     private void addField(Model model, String name) {
-        Models models = getCol().getModels();
+        ModelManager models = getCol().getModels();
 
         try {
             models.addField(model, models.newField(name));

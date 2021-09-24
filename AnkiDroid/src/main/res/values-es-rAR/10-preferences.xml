@@ -55,6 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_gestures_summ">Usar toques y deslizamientos en lugar de botones</string>
     <string name="pref_cat_actions" maxLength="41">Acciones</string>
+    <string name="pref_cat_controls" maxLength="41">Controles</string>
+    <string name="pref_cat_controls_summ">Configurar teclados y otros dispositivos</string>
     <string name="pref_cat_advanced" maxLength="41">Avanzado</string>
     <string name="pref_cat_advanced_summ">Optimización y características experimentales</string>
     <string name="pref_cat_performance" maxLength="41">Rendimiento</string>
@@ -101,7 +103,7 @@
     <string name="gestures_swipe_left" maxLength="41">Deslizar hacia la izquierda</string>
     <string name="gestures_swipe_right" maxLength="41">Deslizar hacia la derecha</string>
     <string name="gestures_double_tap" maxLength="41">Doble toque</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Toque Largo</string>
     <string name="gestures_tap_top" maxLength="41">Presione arriba</string>
     <string name="gestures_tap_left" maxLength="41">Presione izquierda</string>
     <string name="gestures_tap_right" maxLength="41">Presione derecha</string>
@@ -164,12 +166,12 @@
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_backup_max" maxLength="41">Número máximo de copias de seguridad</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
+    <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="show_estimates" maxLength="41">Mostar el botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
+    <string name="show_large_answer_buttons_summ">Mostrar botón de respuesta en 2 filas</string>
     <string name="show_top_bar" maxLength="41">Mostrar Barra Superior</string>
     <string name="show_top_bar_summ">Mostrar recuento de tarjetas, banderas y marcas en la barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
@@ -189,7 +191,6 @@
     <string name="sched_v2" maxLength="41">Planificador V2</string>
     <string name="sched_v2_summ">Activar el programador experimental. Fuerza los cambios en una dirección en la próxima sincronización</string>
     <string name="sched_ver_toggle_title">Confirmar</string>
-    <string name="sched_ver_2to1">Esto restablecerá cualquier carta en el aprendizaje, limpiará mazos filtrados y cambiará la versión del programador. ¿Proceder?</string>
     <string name="sched_ver_1to2">El programador experimental podría causar una programación incorrecta. Por favor, asegúrese de haber leído la documentación primero. ¿Proceder?</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
@@ -208,9 +209,9 @@
     <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
+    <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Presione dos veces para regresar o salir</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estadísticas avanzadas</string>
@@ -227,6 +228,8 @@
     <string name="custom_sync_server_base_url_invalid">Url de sincronización no inválido</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Sincronizar media url</string>
     <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Mapeo de comandos</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Los cambios en las opciones del grupo de mazos afectarán a varios mazos. Si desea cambiar sólo el mazo actual, primero añada un nuevo grupo de opciones</string>
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
@@ -293,7 +296,7 @@
     <string name="deck_conf_cram_order" maxLength="41">Tarjetas seleccionadas por</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
     <string name="deck_conf_cram_steps" maxLength="41">Pasos personalizados (en minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificaciones de recordatorio para mazos en este grupo de mazos</string>
@@ -310,15 +313,18 @@
     <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en el revisor</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Abrir el Registro de Cambios</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Agregar gesto</string>
+    <string name="binding_add_key">Añadir botón</string>
+    <string name="key_picker_default_press_key">Presione una tecla</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
+    <string name="card_side_question">Pregunta</string>
+    <string name="card_side_answer">Respuesta</string>
+    <string name="card_side_both">Preguntas y respuestas</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Eliminar ‘%s’</string>
+    <string name="bindings_already_bound">Ya vinculado a %s</string>
 </resources>
