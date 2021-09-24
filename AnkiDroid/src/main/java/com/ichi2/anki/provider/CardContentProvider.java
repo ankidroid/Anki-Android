@@ -44,13 +44,13 @@ import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.ModelManager;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
@@ -1039,8 +1039,8 @@ public class CardContentProvider extends ContentProvider {
                 }
                 try {
                     did = col.getDecks().id(deckName);
-                } catch (FilteredAncestor filteredSubdeck) {
-                    throw new IllegalArgumentException("Deck " + deckName + " has filtered ancestor " + filteredSubdeck.getFilteredAncestorName());
+                } catch (DeckRenameException filteredSubdeck) {
+                    throw new IllegalArgumentException(filteredSubdeck.getMessage());
                 }
                 Deck deck = col.getDecks().get(did);
                 if (deck != null) {

@@ -18,8 +18,8 @@ package com.ichi2.anki.dialogs;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.DeckManager;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +58,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
                     isCreated.set(true);
                     final DeckManager decks = activity.getCol().getDecks();
                     assertThat(id, is(decks.id(deckName)));
-                } catch (FilteredAncestor filteredAncestor) {
+                } catch (DeckRenameException filteredAncestor) {
                     throw new RuntimeException(filteredAncestor);
                 }
             });
@@ -69,7 +69,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
     }
 
     @Test
-    public void testCreateSubDeckFunction() throws FilteredAncestor {
+    public void testCreateSubDeckFunction() throws DeckRenameException {
         Long deckParentId = getCol().getDecks().id("Deck Name");
 
         mActivityScenario.onActivity(activity -> {
@@ -84,7 +84,7 @@ public class CreateDeckDialogTest extends RobolectricTest {
                     final DeckManager decks = activity.getCol().getDecks();
                     String deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName);
                     assertThat(id, is(decks.id(deckNameWithParentName)));
-                } catch (FilteredAncestor filteredAncestor) {
+                } catch (DeckRenameException filteredAncestor) {
                     throw new RuntimeException(filteredAncestor);
                 }
             });

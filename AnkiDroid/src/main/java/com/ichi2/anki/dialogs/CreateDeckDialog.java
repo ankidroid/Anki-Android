@@ -25,7 +25,6 @@ import com.ichi2.anki.MaterialEditTextDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.ui.FixedEditText;
@@ -123,8 +122,8 @@ public class CreateDeckDialog {
             Timber.i("CreateDeckDialog::createFilteredDeck...");
             long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().newDyn(deckName);
             mOnNewDeckCreated.accept(newDeckId);
-        } catch (FilteredAncestor filteredAncestor) {
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.decks_rename_filtered_nosubdecks), false);
+        } catch (DeckRenameException ex) {
+            UIUtils.showThemedToast(mContext, ex.getLocalizedMessage(mContext.getResources()), false);
             return false;
         }
         return true;
@@ -136,7 +135,7 @@ public class CreateDeckDialog {
             Timber.i("CreateDeckDialog::createNewDeck");
             long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().id(deckName);
             mOnNewDeckCreated.accept(newDeckId);
-        } catch (FilteredAncestor filteredAncestor) {
+        } catch (DeckRenameException filteredAncestor) {
             Timber.w(filteredAncestor);
             return false;
         }
@@ -183,8 +182,6 @@ public class CreateDeckDialog {
                 Timber.w(e);
                 // We get a localized string from libanki to explain the error
                 UIUtils.showThemedToast(mContext, e.getLocalizedMessage(mContext.getResources()), false);
-            } catch (FilteredAncestor filteredAncestor) {
-                Timber.w(filteredAncestor);
             }
         }
     }

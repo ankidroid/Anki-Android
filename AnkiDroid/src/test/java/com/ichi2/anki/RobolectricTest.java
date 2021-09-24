@@ -25,7 +25,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.async.ForegroundTaskManager;
 import com.ichi2.async.SingleTaskManager;
 import com.ichi2.async.TaskDelegate;
@@ -42,6 +41,7 @@ import com.ichi2.libanki.ModelManager;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
@@ -397,7 +397,7 @@ public class RobolectricTest implements CollectionGetter {
     protected long addDeck(String deckName) {
         try {
             return getCol().getDecks().id(deckName);
-        } catch (FilteredAncestor filteredAncestor) {
+        } catch (DeckRenameException filteredAncestor) {
             throw new RuntimeException(filteredAncestor);
         }
     }
@@ -405,7 +405,7 @@ public class RobolectricTest implements CollectionGetter {
     protected long addDynamicDeck(String name) {
         try {
             return getCol().getDecks().newDyn(name);
-        } catch (FilteredAncestor filteredAncestor) {
+        } catch (DeckRenameException filteredAncestor) {
             throw new RuntimeException(filteredAncestor);
         }
     }

@@ -19,7 +19,6 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.exception.FilteredAncestor
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.DeckNameComparator
@@ -48,7 +47,7 @@ abstract class DeckManager {
      */
 
     abstract fun id_for_name(name: String): Long?
-    @Throws(FilteredAncestor::class)
+    @Throws(DeckRenameException::class)
     abstract fun id(name: String): Long
     /** Same as id, but rename ancestors if filtered to avoid failure */
     fun id_safe(name: String) = id_safe(name, Decks.DEFAULT_DECK)
@@ -169,7 +168,7 @@ abstract class DeckManager {
      */
 
     /** Return a new dynamic deck and set it as the current deck. */
-    @Throws(FilteredAncestor::class)
+    @Throws(DeckRenameException::class)
     abstract fun newDyn(name: String): Long
     abstract fun isDyn(did: Long): Boolean
 

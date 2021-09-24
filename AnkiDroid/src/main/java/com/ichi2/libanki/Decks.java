@@ -27,7 +27,6 @@ import android.text.TextUtils;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
-import com.ichi2.anki.exception.FilteredAncestor;
 
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.HashUtil;
@@ -346,7 +345,7 @@ public class Decks extends DeckManager {
     }
 
     @Override
-    public long id(@NonNull String name) throws FilteredAncestor {
+    public long id(@NonNull String name) throws DeckRenameException {
         return id(name, DEFAULT_DECK);
     }
 
@@ -360,7 +359,7 @@ public class Decks extends DeckManager {
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
      */
-    public long id(@NonNull String name, @NonNull String type) throws FilteredAncestor {
+    public long id(@NonNull String name, @NonNull String type) throws DeckRenameException {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
@@ -576,11 +575,8 @@ public class Decks extends DeckManager {
              * the code in order do this change. */
         }
         // ensure we have parents and none is a filtered deck
-        try {
-            newName = _ensureParents(newName);
-        } catch (FilteredAncestor filteredSubdeck) {
-            throw new DeckRenameException(DeckRenameException.FILTERED_NOSUBDECKS);
-        }
+        newName = _ensureParents(newName);
+
         // rename children
         String oldName = g.getString("name");
         for (Deck grp : all()) {
@@ -687,11 +683,11 @@ public class Decks extends DeckManager {
      *
      * @param name The name whose parents should exists
      * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
-     * @throws FilteredAncestor if a parent is filtered
+     * @throws DeckRenameException if a parent is filtered
      */
     @NonNull
     @VisibleForTesting
-    protected String _ensureParents(@NonNull String name) throws FilteredAncestor {
+    protected String _ensureParents(@NonNull String name) throws DeckRenameException {
         String s = "";
         String[] path = path(name);
         if (path.length < 2) {
@@ -710,7 +706,7 @@ public class Decks extends DeckManager {
             s = name(did);
             Deck deck = get(did);
             if (deck.isDyn()) {
-                throw new FilteredAncestor(s);
+                throw DeckRenameException.filteredAncestor(name, s);
             }
         }
         name = s + "::" + path[path.length - 1];
@@ -1181,7 +1177,7 @@ public class Decks extends DeckManager {
 
     /** {@inheritDoc} */
     @Override
-    public long newDyn(String name) throws FilteredAncestor {
+    public long newDyn(String name) throws DeckRenameException {
         long did = id(name, defaultDynamicDeck);
         select(did);
         return did;

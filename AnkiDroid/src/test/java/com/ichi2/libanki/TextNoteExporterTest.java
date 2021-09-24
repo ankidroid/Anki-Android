@@ -16,7 +16,7 @@ package com.ichi2.libanki;
 import android.text.TextUtils;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.exception.FilteredAncestor;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +89,7 @@ public class TextNoteExporterTest extends RobolectricTest {
 
         try {
             n2.model().put("did", mCollection.getDecks().id("new col"));
-        } catch (FilteredAncestor filteredAncestor) {
+        } catch (DeckRenameException filteredAncestor) {
             filteredAncestor.printStackTrace();
         }
         mCollection.addNote(n2);

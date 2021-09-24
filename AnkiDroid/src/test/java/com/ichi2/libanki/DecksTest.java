@@ -2,7 +2,6 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
-import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.utils.JSONObject;
 
 import org.apache.http.util.Asserts;
@@ -80,7 +79,7 @@ public class DecksTest extends RobolectricTest {
      ******************/
 
     @Test
-    public void test_basic() throws FilteredAncestor {
+    public void test_basic() {
         Collection col = getCol();
         DeckManager decks = col.getDecks();
         // we start with a standard col
@@ -127,7 +126,7 @@ public class DecksTest extends RobolectricTest {
 
 
     @Test
-    public void test_remove() throws FilteredAncestor {
+    public void test_remove() {
         Collection col = getCol();
         // create a new col, and add a note/card to it
         long deck1 = addDeck("deck1");
@@ -146,7 +145,7 @@ public class DecksTest extends RobolectricTest {
 
 
     @Test
-    public void test_rename() throws DeckRenameException, FilteredAncestor {
+    public void test_rename() throws DeckRenameException {
         Collection col = getCol();
         long id = addDeck("hello::world");
         // should be able to rename into a completely different branch, creating
@@ -235,7 +234,7 @@ public class DecksTest extends RobolectricTest {
      */
 
     @Test
-    public void curDeckIsLong() throws FilteredAncestor {
+    public void curDeckIsLong() {
         // Regression for #8092
         Collection col = getCol();
         DeckManager decks = col.getDecks();
@@ -268,7 +267,7 @@ public class DecksTest extends RobolectricTest {
     }
 
     @Test
-    public void testEnsureParents() throws FilteredAncestor {
+    public void testEnsureParents() throws DeckRenameException {
         Collection col = getCol();
         Decks decks = (Decks) col.getDecks();
         addDeck("test");
@@ -280,15 +279,15 @@ public class DecksTest extends RobolectricTest {
         assertNull(decks.byName("  test :: sub "));
 
         decks.newDyn("filtered");
-        assertThrows(FilteredAncestor.class, () -> decks._ensureParents("filtered:: sub :: subdeck"));
+        assertThrows(DeckRenameException.class, () -> decks._ensureParents("filtered:: sub :: subdeck"));
     }
 
     @Test
-    public void descendantOfFiltered() throws FilteredAncestor {
+    public void descendantOfFiltered() throws DeckRenameException {
         Collection col = getCol();
         DeckManager decks = col.getDecks();
         long filtered_id = decks.newDyn("filtered");
-        assertThrows(FilteredAncestor.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
+        assertThrows(DeckRenameException.class,  () -> decks.id("filtered::subdeck::subsubdeck"));
 
         long subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck");
         Deck subdeck = decks.get(subdeck_id);
@@ -296,7 +295,7 @@ public class DecksTest extends RobolectricTest {
     }
 
     @Test
-    public void testEnsureParentsNotFiltered() throws FilteredAncestor {
+    public void testEnsureParentsNotFiltered() throws DeckRenameException {
         Collection col = getCol();
         Decks decks = (Decks) col.getDecks();
         addDeck("test");
