@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">Attiva/disattiva contrassegno aracione</string>
     <string name="gesture_flag_green">Attiva/disattiva contrassegno verde</string>
     <string name="gesture_flag_blue">Attiva/disattiva contrassegno blu</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Attiva/Disattiva contrassegno rosa</string>
+    <string name="gesture_flag_turquoise">Attiva/Disattiva contrassegno turchese</string>
+    <string name="gesture_flag_purple">Attiva/disattiva contrassegno viola</string>
     <string name="gesture_flag_remove">Rimuovi il contrassegno</string>
     <string name="gesture_page_up">Vai su</string>
     <string name="gesture_page_down">Vai giù</string>

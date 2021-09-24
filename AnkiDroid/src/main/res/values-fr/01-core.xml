@@ -192,8 +192,8 @@
     <string name="card_template_editor_select_field">Sélectionner un champ</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">Cela va créer %1$d carte. Continuer ?</item>
-        <item quantity="other">Cela va créer %1$d cartes. Continuer ?</item>
+        <item quantity="one">Ceci va créer %1$d carte. Continuer ?</item>
+        <item quantity="other">Ceci va créer %1$d cartes. Continuer ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>

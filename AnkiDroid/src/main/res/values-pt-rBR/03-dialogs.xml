@@ -81,8 +81,8 @@
         <item quantity="other">Remarcar cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Intervalo atual: %d dia</item>
+        <item quantity="other">Intervalo atual: %d dias</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Remarcar para revisão em x dias:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -90,7 +90,7 @@
         <item quantity="other">%d cards reagendados</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Um novo card está sendo reagendado. O reagendamento também transforma os novos cards em cards de revisão. Usar a opção \'reposicionar o card\' para mudar a posição do novo card dentro da nova fila.</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">O reagendamento também redefine como o agendador lida com o card no futuro (o espaçamento será configurado para %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">O reagendamento também redefine como o agendador lida com o card no futuro (a retenção será configurada para %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Selecione o baralho no seu gerenciador de arquivos ou visite a página about:downloads para importá-lo</string>
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
@@ -164,18 +164,18 @@
     <string name="empty_cards_count">Cards a deletar: %d</string>
     <string name="empty_cards_deleted">Cards deletados: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
+    <string name="multimedia_editor_audio_permission_refused">Não foi possível obter permissão de microfone.</string>
+    <string name="multimedia_editor_camera_permission_refused">Não foi possível obter a permissão da câmera. Funcionalidade foi desativada.</string>
     <string name="multimedia_editor_failed">Falha ao abrir o Editor de Multimídia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Permissão de gravação de áudio negada</string>
     <!-- Initial collection load -->
-    <string name="collection_load_welcome_request_permissions_title">Welcome to AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_title">Bem-vindo ao AnkiDroid!</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requer acesso ao armazenamento. Usamos exclusivamente para armazenar a sua coleção, mídia de cards e backups. Nosso código é open-source, escrito por voluntários e confiável por milhões.\n\nSe você tiver alguma dúvida, por favor, acesse nosso manual no app ou visite nossos fóruns de suporte.\n\nObrigado por experimentar o AnkiDroid!\n— Equipe de Desenvolvimento AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Ocorreu um erro desconhecido ao exibir o Editor Avançado</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Atualizado</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid foi atualizado. Esta atualização inclui correções para possíveis problemas de banco de dados, e recomendamos que você execute a verificação de banco de dados agora.</string>
     <string name="integrity_check_continue_anyway">Continuar assim mesmo</string>
     <string name="integrity_check_insufficient_space">Verificar a Base de Dados usa uma grande quantidade de armazenamento temporário.\n\nÉ altamente recomendável que você tenha pelo menos %s espaço livre no seu dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVocê tem atualmente %s livre.</string>

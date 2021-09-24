@@ -183,7 +183,7 @@
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="time_limit_summ">XXX ମିନିଟ୍</string>
-    <string name="new_timezone" maxLength="41">ନୂତନ ସମୟ କ୍ଷେତ୍ର ପରିଚାଳନା</string>
+    <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
     <string name="day_offset_with_description" maxLength="41">ପରବର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ (0 ଅର୍ଥ ମଧ୍ୟରାତ୍ରି, 23 ହେଉଛି 11 PM)</string>
     <string name="day_offset_summ">ମଧ୍ୟରାତ୍ରିରୁ XXX ଘଣ୍ଟା ପରେ</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>

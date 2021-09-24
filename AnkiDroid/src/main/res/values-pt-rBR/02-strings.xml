@@ -67,14 +67,14 @@
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
     <string name="corrupt_font">Arquivo de fonte %s danificado</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">Erro desconhecido</string>
+    <string name="webview_crash_unknwon_detailed">Isso foi causado por um erro interno no WebView</string>
+    <string name="webview_crash_oom">Memória Insuficiente</string>
+    <string name="webview_crash_oom_details">O WebView foi encerrado pelo sistema. Isso normalmente acontece quando o aplicativo fica sem memória, muitas vezes devido a fontes ou mídias grandes.</string>
+    <string name="webview_crash_nonfatal">WebView renderer crashou. Causa: %s</string>
+    <string name="webview_crash_fatal">Erro Fatal: WebView renderer crashou. Causa: %s</string>
+    <string name="webview_crash_loop_dialog_title">Falha no System Rendering WebView</string>
+    <string name="webview_crash_loop_dialog_content">O System WebView falhou ao renderizar o card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Questão</item>
@@ -90,10 +90,10 @@
         <item>Falhas</item>
         <item>Revisões</item>
         <item>Intervalo</item>
-        <item>Espaçamento</item>
-        <item>Due</item>
+        <item>Retenção</item>
+        <item>Pendente</item>
         <item>Card Modificado</item>
-        <item>Created</item>
+        <item>Criado</item>
         <item>Nota modificada</item>
     </string-array>
     <!-- Custom study options -->
@@ -113,7 +113,7 @@
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum card.\nPor favor, escolha outro tipo de nota, ou clique em \'Cards\' e adicione uma substituição de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
     <string name="saving_facts">Salvando nota</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Salvando tipo de nota</string>
     <string name="save">Salvar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecione</string>
@@ -152,7 +152,7 @@
     <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
     <string name="delete_deck">Excluindo baralho&#8230;</string>
     <string name="show_hint">Mostrar %s</string>
-    <string name="info_rate">Qualifique o AnkiDroid</string>
+    <string name="info_rate">Avalie o AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
@@ -173,7 +173,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
     <string name="import_replacing">Substituindo coleção&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_include_schedule">Incluir agendamento</string>
     <string name="export_include_media">Incluir a média</string>
     <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
     <string name="export_successful">Arquivo \"%s\" foi exportado. Deseja enviá-lo com um outro app?</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Oi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        Este é um baralho de flashcards Anki enviado do <a href="%1$s">AnkiDroid</a>.
+        Tente abri-lo usando uma das <a href="%2$s">distribuições Anki</a> disponíveis e desfrute de um aprendizado fácil e eficiente!
         ]]></string>
     <string name="export_unsuccessful">Erro ao exportar arquivo apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
@@ -254,9 +254,9 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="activity_start_failed_load_url">O carregamento \'%s\' falhou.</string>
+    <string name="activity_start_failed">O sistema não tem um aplicativo instalado que possa executar esta ação.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[As imagens da câmera podem ser grandes. Você pode querer comprimir e redimensionar as imagens na pasta de mídia.]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
     <string name="web_page_error">Erro ao carregar página: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Link de página externa não é suportado no card.</string>

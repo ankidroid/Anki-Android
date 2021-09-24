@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ 	Zaur Molotnikov & Bibek Shrestha
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- Main editor popup menu items -->
+    <string name="multimedia_editor_popup_image">Annanghe un\'immàgine</string>
+    <string name="multimedia_editor_popup_audio_clip">Annanghe un\'estratu àudio</string>
+    <string name="multimedia_editor_popup_audio">Registra su sonu</string>
+    <string name="multimedia_editor_popup_text">Editore avantzadu</string>
+    <string name="multimedia_editor_popup_cloze">Iscantzellamentu cloze</string>
+    <string name="multimedia_editor_popup_clear_field">Isbòida su campu</string>
+    <!-- Translation activity (Glosbe) -->
+    <string name="multimedia_editor_trans_poweredglosbe">Funtzionat gràtzias a glosbe.com</string>
+    <!-- these are like translate f r o m  and t o  some othe languages -->
+    <string name="multimedia_editor_trans_from">Dae</string>
+    <string name="multimedia_editor_trans_to">A</string>
+    <!-- imperative for the button title -->
+    <string name="multimedia_editor_trans_translate">Borta</string>
+    <!-- waiting message -->
+    <string name="multimedia_editor_trans_translating_online">Bortende in lìnia</string>
+    <!-- pick the right translation imperative -->
+    <string name="multimedia_editor_trans_pick_translation">Issèbera sa tradutzione</string>
+    <!-- from controller -->
+    <!-- dialog title to ask for translation source -->
+    <string name="multimedia_editor_trans_pick_translation_source">Issèbera su ditzionàriu</string>
+    <!-- dialog asking to install ColorDict -->
+    <string name="multimedia_editor_trans_install_color_dict">In antis installa ColorDict</string>
+    <!-- Pronunciation activity (Beolingus) -->
+    <string name="multimedia_editor_pron_load">Càrriga</string>
+    <string name="multimedia_editor_pron_looking_up">Chirca de sa pronùntzia</string>
+    <!-- in controller when fails -->
+    <string name="multimedia_editor_pron_pronunciation_failed">Pronùntzia fallida</string>
+    <string name="multimedia_editor_word_search_try_lower_case">Proa a impreare petzi caràteres minùsculos</string>
+    <string name="multimedia_editor_poweredbeolingus">Funtzionat gràtzias a Beolingus</string>
+    <!-- Field editing general -->
+    <!-- these are button names to convert field type -->
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Testu</string>
+    <string name="multimedia_editor_field_editing_image">Immàgine</string>
+    <string name="multimedia_editor_field_editing_audio">Registratzione àudio</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Estratu àudio</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fatu</string>
+    <!-- Text field editing -->
+    <!-- buttons -->
+    <string name="multimedia_editor_text_field_editing_search_label">Chirca:</string>
+    <string name="multimedia_editor_text_field_editing_say">Pronùntzia</string>
+    <string name="multimedia_editor_text_field_editing_clear">Isbòida</string>
+    <string name="multimedia_editor_text_field_editing_clone">Clona dae</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Tradutzione</string>
+    <!-- message to user, when there is no text or many words, but the user tries something -->
+    <string name="multimedia_editor_text_field_editing_no_text">Inserta unu pagu de testu, in antis</string>
+    <string name="multimedia_editor_text_field_editing_many_words">Su ditzionàriu de sòlitu s\'isetat una paràula ebbia</string>
+    <!-- message when cloning -->
+    <string name="multimedia_editor_text_field_editing_clone_source">Piga dae</string>
+    <!-- Multimedia card editor activity -->
+    <!-- for buttons -->
+    <!-- delete confirmation -->
+    <!-- Image editing -->
+    <!-- for buttons -->
+    <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
+    <string name="multimedia_editor_image_field_editing_photo">Fotocàmera</string>
+    <string name="multimedia_editor_image_field_editing_library">Biblioteca</string>
+    <!-- General -->
+    <!-- message on the progress dialog for the user to wait, means process -->
+    <string name="multimedia_editor_general_downloading">Iscarrighende</string>
+    <!-- when process finishes -->
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Fatu</string>
+    <!-- General word search and failures -->
+    <string name="multimedia_editor_error_word_not_found">Paràula no agatada</string>
+    <!-- failure when contacting glosbe or similar -->
+    <string name="multimedia_editor_trans_getting_failure">Faddina de tradutzione</string>
+    <string name="multimedia_editor_searching_word">Chirchende sa paràula</string>
+    <!-- General -->
+    <string name="multimedia_editor_progress_wait_title">Iseta</string>
+    <!-- not a good message, when an unexpected error happens -->
+    <string name="multimedia_editor_something_wrong">B\'at àpidu unu problema</string>
+    <string name="multimedia_editor_png_paste_error">Faddina in sa cunversione de s\'immàgine in punta de billete a su formadu png: %s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Allega unu cuntenutu multimediale a su campu %1$s</string>
+    <string name="multimedia_editor_attach_media">Allega unu documentu multimediale</string>
+    <!-- Audio view -->
+    <!-- Message when recording fails -->
+    <string name="multimedia_editor_audio_view_recording_failed">Registratzione fallida</string>
+    <string name="multimedia_editor_audio_view_playing_failed">Riprodutzione fallida</string>
+    <string name="multimedia_editor_audio_view_create_failed">Creatzione de sa barra de sas ainas de registratzione fallida</string>
+    <!-- Activity titles -->
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Campu de modìfica</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Tradutzione</string>
+    <!-- Network failure -->
+    <string name="network_no_connection">Peruna connessione</string>
+    <!-- Crop function-->
+    <string name="crop_image">Cheres segare cust\'immàgine?</string>
+    <string name="crop_button">Sega s\'immàgine</string>
+    <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres segare?</string>
+    <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
+    <string name="activity_result_unexpected">S\'aplicatzione at frunidu unu valore no isetadu. Dias pòdere dèpere impreare un\'aplicatzione diferente</string>
+</resources>

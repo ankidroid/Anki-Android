@@ -120,7 +120,7 @@
     <string name="saving_changes">Salvataggio delle modifiche ...</string>
     <string name="reordering_cards">Riordino le carte...</string>
     <string name="field_remapping">%1$s (di \'%2$s\')</string>
-    <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
+    <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro/a di voler continuare?</string>
     <string name="timebox_reached_title">Limita di tempo raggiunta</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta studiata in %2$s</item>
@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">Salvataggio pacchetto di Anki fallito</string>
     <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Ciao!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        Questo è un mazzo di carte Anki inviato da <a href="%1$s">AnkiDroid</a>.
+        Prova ad aprirlo usando una delle distribuzioni <a href="%2$s">Anki</a> disponibili e goditi un apprendimento semplice ed efficiente!
         ]]></string>
     <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opzioni</string>
@@ -346,23 +346,23 @@
     <string name="email_id_empty">L\'indirizzo di posta elettronica è obbligatorio.</string>
     <string name="password_empty">La password è obbligatoria</string>
     <string name="back_pressed_once">Premi di nuovo indietro per uscire</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">Premi di nuovo per tornare</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Scarica il mazzo</string>
+    <string name="try_again">Riprova</string>
+    <string name="cancel_download">Annulla lo scaricamento</string>
+    <string name="cancel_download_question_title">Annullare lo scaricamento?</string>
+    <string name="downloading_file">Scaricamento di %s</string>
+    <string name="import_deck">Importa il mazzo</string>
+    <string name="something_wrong">Qualcosa è andato storto, si prega di riprovare</string>
+    <string name="download_failed">Scaricamento non riuscito</string>
+    <string name="deck_download_progress_message">È possibile utilizzare altre applicazioni mentre lo scaricamento è in esecuzione</string>
+    <string name="check_network">Controlla la tua connessione di rete</string>
+    <string name="search_using_deck_name">Cerca usando il nome del mazzo</string>
+    <string name="home">Pagina principale</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">Classificato in %s</string>
+    <string name="import_mapped_to_tags">Classificato nelle Etichette</string>
+    <string name="import_mapped_to_nothing">Ignorato</string>
 </resources>

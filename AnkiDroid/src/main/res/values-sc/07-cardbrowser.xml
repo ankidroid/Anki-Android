@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- CardBrowser -->
+    <plurals name="card_browser_subtitle">
+        <item quantity="one">%d carta ammustrada</item>
+        <item quantity="other">%d cartas ammustradas</item>
+    </plurals>
+    <string name="card_browser_all_decks">Totu sos matzos</string>
+    <string name="card_browser_delete_card">Iscantzella sas notas</string>
+    <string name="card_browser_suspend_card">Suspende cartas</string>
+    <string name="card_browser_change_deck">Càmbia matzu</string>
+    <string name="card_browser_unsuspend_card">Boga sa sospensione a sas cartas</string>
+    <string name="card_browser_mark_card">Marca sas notas</string>
+    <string name="card_browser_unmark_card">Boga sa marcadura a sas notas</string>
+    <string name="delete_card_title">Iscantzellare sa nota?</string>
+    <string name="changed_deck_message">Mòvidu cara a %s</string>
+    <string name="card_browser_show_marked">Filtra sas marcadas</string>
+    <string name="card_browser_show_suspended">Filtra sas suspèndidas</string>
+    <string name="card_browser_search_by_tag">Filtra pro eticheta</string>
+    <string name="card_browser_search_by_flag">Filtra pro bandera</string>
+    <string name="card_browser_list_my_searches">Chircas meas</string>
+    <string name="card_browser_list_my_searches_save">Sarva sa chirca</string>
+    <string name="card_browser_list_my_searches_title">Issèbera una chirca sarvada</string>
+    <string name="card_browser_list_my_searches_new_name">Nùmene pro sa chirca atuale</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes sarvare una chirca chene unu nùmene</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Su nùmene esistit giai</string>
+    <string name="card_browser_list_my_searches_remove_content">Iscantzellare “%1$s”?</string>
+    <string name="card_browser_change_display_order">Modìfica s\'òrdine de visualizatzione</string>
+    <string name="card_browser_change_display_order_title">Issèbera s\'òrdine de visualizatzione</string>
+    <string name="card_browser_change_display_order_reverse">Ischerta unu campu duas bortas pro lu furriare</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Iscadidas</string>
+    <string name="card_details_tags">Etichetas</string>
+    <string-array name="card_browser_order_labels">
+        <item>Pro campu de ordinamentu</item>
+        <item>Perunu òrdine (prus lestru)</item>
+        <item>Pro data de iscadèntzia</item>
+        <item>Pro data de modìfica de sa carta</item>
+        <item>Pro data de modìfica de sa nota</item>
+        <item>Pro data de creatzione</item>
+        <item>Pro faddinas</item>
+        <item>Pro revisiones</item>
+        <item>Pro fatzilitade</item>
+        <item>Pro intervallu</item>
+    </string-array>
+    <string name="card_browser_select_all">Ischerta totu</string>
+    <string name="card_browser_select_none">Boga s\'ischerta</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(noa)</string>
+    <string name="card_browser_due_filtered_card">(filtradu)</string>
+    <string name="card_browser_interval_learning_card">(imparòngiu)</string>
+    <string name="card_browser_no_cards_in_deck">Peruna carta agatada in su matzu ‘%s’</string>
+    <string name="card_browser_search_all_decks">Chirca in totu sos matzos</string>
+    <string name="card_browser_unknown_deck_name">Disconnotu</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d carta iscantzellada</item>
+        <item quantity="other">%d cartas iscantzelladas</item>
+    </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Annànghidu</string>
+    <string name="card_info_first_review">Prima revisione</string>
+    <string name="card_info_latest_review">Ùrtima revisione</string>
+    <string name="card_info_interval">Intervallu</string>
+    <string name="card_info_ease">Fatzilidade</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Revisiones</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Faddinas</string>
+    <string name="card_info_average_time">Tempus mèdiu</string>
+    <string name="card_info_total_time">Tempus totale</string>
+    <string name="card_info_card_type">Casta de carta</string>
+    <string name="card_info_note_type">Casta de nota</string>
+    <string name="card_info_deck_name">Nùmene de su matzu</string>
+    <string name="card_info_card_id">Id carta</string>
+    <string name="card_info_note_id">Id nota</string>
+    <string name="card_info_revlog_time">Tempus</string>
+    <string name="card_info_revlog_date">Data</string>
+    <string name="card_info_revlog_rating">Valutatzione</string>
+    <string name="card_info_revlog_type">Casta</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Impara</string>
+    <string name="card_info_revlog_review">Revisiona</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Torra a imparare</string>
+    <string name="card_info_revlog_filtered">Filtradu</string>
+    <string name="card_info_ease_not_applicable">N/D</string>
+</resources>

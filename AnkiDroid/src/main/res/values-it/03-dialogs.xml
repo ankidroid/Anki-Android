@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="initializing_tts">Inizializzo TTS&#8230;</string>
     <string name="tts_no_tts">Non parlare</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nFile inutilizzati:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/> Flashcards per Android</h2>AnkiDroid è un\'applicazione di flashcard che è pienamente compatibile con il software desktop <a href=\"%2$s\"> Anki</a>. Si può creare, scaricare e studiare materiale su entrambi AnkiDroid o Anki Desktop e sincronizzarli facilmente con AnkiWeb.]]></item>
         <item><![CDATA[Per aiutarci a rendere AnkiDroid migliore, segnala i bug a <a href=\"%1$s\">gestione problemi</a>; proposte di nuove funzioni sono benvenute. Trova risposte sulla <a href=\"%2$s\"> wiki</a> o avvia una discussione sul <a href=\"%3$s\">forum</a>.]]></item>
@@ -249,6 +249,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Aprire la pagina panoramica del mazzo contenente il numero di carte da vedere oggi.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">Pacchetto mazzo (.apkg)</string>
+    <string name="import_collection_package">Pacchetto di raccolta (.colpkg)</string>
 </resources>

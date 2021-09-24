@@ -67,7 +67,7 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Largura do traço</string>
     <string name="use_input_tag" maxLength="41">Digite a resposta no card</string>
-    <string name="use_input_tag_summ">Use um espaço dentro do card para digitar a resposta</string>
+    <string name="use_input_tag_summ">Use um campo no card para digitar a resposta</string>
     <string name="dictionary" maxLength="41">Dicionário de busca</string>
     <string name="reset_languages" maxLength="41">Redefinir línguas</string>
     <string name="reset_languages_summ">Redefinir as atribuições de linguagem (Texto para fala e dicionários) para todos os baralhos</string>
@@ -173,7 +173,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Mostrar botão de resposta em 2 linhas</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de cards, sinalizador e marca na barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de cards, sinalização e marca na barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cards restantes</string>
     <string name="show_eta" maxLength="41">Mostrar tempo restante estimado</string>
@@ -251,7 +251,7 @@
     <string name="deck_conf_graduating_ivl" maxLength="41">Intervalo de graduação</string>
     <string name="deck_conf_days">XXX dia(s)</string>
     <string name="deck_conf_easy_ivl" maxLength="41">Intervalo fácil</string>
-    <string name="deck_conf_start_ease" maxLength="41">Espaçamento inicial</string>
+    <string name="deck_conf_start_ease" maxLength="41">Retenção inicial</string>
     <string name="deck_conf_max_rev" maxLength="41">Máximo de revisões/dia</string>
     <string name="deck_conf_new_bury" maxLength="41">Enterrar cards novos relacionados</string>
     <string name="deck_conf_new_bury_summ">Cards novos relacionados serão enterrados até o dia seguinte</string>

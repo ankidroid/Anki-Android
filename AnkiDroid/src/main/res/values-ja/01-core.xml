@@ -187,7 +187,7 @@
     <string name="card_template_editor_select_field">フィールドを選択</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">%1$d 枚のカードを作成します。続行しますか？</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>

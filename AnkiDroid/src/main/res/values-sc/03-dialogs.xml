@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="check_db_title">Verificare sa base de datos?</string>
+    <string name="check_db_warning">Bi diat pòdere chèrrere tempus meda</string>
+    <string name="check_db_acknowledge">Base de datos verificada</string>
+    <string name="check_db_acknowledge_shrunk">Base de datos verificada e otimizada.\n
+                                                  Minimada de %d MB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Iscantzella su matzu</string>
+    <string name="delete_deck_default_deck">Su matzu predefinidu non si podet iscantzellare</string>
+    <string name="delete_deck_title">Iscantzellare su matzu?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Iscantzellare totu sas cartas in %1$s? Cuntenet %2$d carta.</item>
+        <item quantity="other">Iscantzellare totu sas cartas in %1$s? Cuntenet %2$d cartas.</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Torrare a imbiare totu sas cartas in %s a sos matzos originales issoro?</string>
+    <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
+    <string name="initializing_tts">Initzializende sa sìntesi vocale TTS&#8230;</string>
+    <string name="tts_no_tts">Non chistiones</string>
+    <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
+    <string-array name="about_content">
+        <item><![CDATA[AnkiDroid est publicadu in suta de sa &lt;a href="%1$s"&gt;litzèntzia GNU-GPL v3&lt;/a&gt; e su còdighe de orìgine suo est a disponimentu &lt;a href="%2$s"&gt;in GitHub&lt;/a&gt;.]]></item>
+        <item><![CDATA[Fintzas chie no est un\'isvilupadore podet agiudare. Pro nàrrere, podes &lt;a href="%1$s"&gt;agiudare a bortare&lt;/a&gt; AnkiDroid, atualizare sa wiki, frunire ischermadas, o iscrìere in su blog tuo in subra de AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid est unu &amp;lt;a href="%1$s"&amp;gt;programma a còdighe abertu&amp;lt;a/&amp;gt;, duncas totu cantos sunt incoragiados a &amp;lt;a href="%2$s"&amp;gt;contribuire&amp;lt;/a&amp;gt; :-)]]></item>
+        <item><![CDATA[Pro nos agiudare a megiorare AnkiDroid pro praghere sinnala sos errores in su &lt;a href="%1$s"&gt;sinnaladore de errores&lt;/a&gt;; fintzas sas ideas pro funtzionalidades noas sunt bene bènnidas. Agata rispostas in &lt;a href="%2$s"&gt;sa wiki&lt;/a&gt; o aberi un\'arresonu in &lt;a href="%3$s"&gt;su forum&lt;/a&gt;.]]></item>
+        <item><![CDATA[&lt;h2&gt;%1$s:&lt;br/&gt;Cartas mnemònicas pro Android&lt;/h2&gt;AnkiDroid est un aplicatzione a cartas mnemònicas chi est cumpatìbile de su totu cun su programma pro elaboradores de iscrivania &lt;a href="%2$s"&gt;Anki&lt;/a&gt;. Podes creare, iscarrigare e istudiare materiale siat in AnkiDroid siat in Anki Desktop, e los podes sincronizare in manera fàtzile cun AnkiWeb.]]></item>
+    </string-array>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antiprima</string>
+    <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>
+    <string name="reposition_card_dialog_message">Positzione de incumintzu:</string>
+    <string name="reposition_card_not_new_error">Petzi sas cartas noas si podent torrare a positzionare</string>
+    <plurals name="reposition_card_dialog_acknowledge">
+        <item quantity="one">%d carta torrada a positzionare</item>
+        <item quantity="other">%d cartas torradas a positzionare</item>
+    </plurals>
+    <string name="reset_card_dialog_title">Reseta su progressu de sa carta</string>
+    <string name="reset_card_dialog_message">Custa carta s\'at a pònnere a sa fine de sa lista de cartas noa</string>
+    <plurals name="reset_cards_dialog_acknowledge">
+        <item quantity="one">%d carta resetada</item>
+        <item quantity="other">%d cartas resetadas</item>
+    </plurals>
+    <!-- Reschedule Card Dialog -->
+    <plurals name="reschedule_cards_dialog_title">
+        <item quantity="one">Torra a pranificare sa carta</item>
+        <item quantity="other">Torra a pranificare sas cartas</item>
+    </plurals>
+    <plurals name="reschedule_card_dialog_interval">
+        <item quantity="one">Intervallu atuale: %d die</item>
+        <item quantity="other">Intervallu atuale: %d dies</item>
+    </plurals>
+    <string name="reschedule_card_dialog_message">Torra a pranificare pro sa revisione in x dies</string>
+    <plurals name="reschedule_cards_dialog_acknowledge">
+        <item quantity="one">%d carta torrada a pranificare</item>
+        <item quantity="other">%d cartas torradas a pranificare</item>
+    </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">Una carta noes est in fase de ripranificatzione. Su de torrare a pranificare una carta trasformat fintzas sas cartas noas in cartas de revisione. also turns new cards into review cards. Imprea s\'optzione ‘torra a positzionare sa carta’ pro mudare sa positzione de una carta noa in sa lista noa</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Sa ripranificatzione resetat fintzas sa manera de tratare sas cartas chi su pranificadore at a impreare in su benidore (sa fatzilidade s\'at a impostare %d%%)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Ischerta su matzu in su navigadore de documentos tuo o bìsita sa pàgina about:downloads pro l\'importare</string>
+    <string name="answering_error_title">Faddina de sa base de datos</string>
+    <string name="answering_error_message">Iscritura in sa colletzione fallida. Sa base de datos diat pòdere èssere corrùmpida o bi diat pòdere no èssere logu bastante in su discu.\n
+                                             \n
+                                             Si custu acontesset prus de su sòlitu proa a verificare sa base de datos, ariparare sa colletzione o a la ripristinare dae una còpia de seguresa. Incarca in “optziones” pro lu fàghere.\n
+                                             \\O diat pòdere èssere fintzas unu problema de AnkiDroid; pro praghere sinnala s\'errore pro nos permìtere de lu verificare.</string>
+    <string name="answering_error_report">Sinnala una faddina</string>
+    <string name="repair_deck_dialog">Cheres a beru proare a riparare sa base de datos?\n
+                   \n
+                   In antis de incumintzare cun sa proa s\'at a creare una còpia in sa suta-cartella “%s”.</string>
+    <string name="intent_aedict_empty">Sa categoria “default” est bòida</string>
+    <string name="intent_aedict_category">Pro annànghere cartas a AnkiDroid boga totu sas categorias de Notepad o annanghe·nde una ponende·li “default” comente nùmene</string>
+    <string name="custom_study_new_total_new">Cartas noas in su matzu: %d</string>
+    <string name="custom_study_rev_total_rev">De revisionare in su matzu: %d</string>
+    <string name="custom_study_new_extend">Ismànnia/mìnima (“-3”) su lìmite de cartas noas de oe de</string>
+    <string name="custom_study_rev_extend">Ismànnia/mìnima (“-3”) su lìmite de revisiones de oe de</string>
+    <string name="custom_study_forgotten">Revisiona sas cartas ismentigadas in sas ùrtimas x dies:</string>
+    <string name="custom_study_ahead">Revisiona in antìtzipu de x dies:</string>
+    <string name="custom_study_random">Ischerta x cartas a casu dae su matzu:</string>
+    <string name="custom_study_preview">Ammustra s\'antiprima de sas cartas noas annànghidas in sas ùrtimas x dies:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Ricostrutzione de su matzu de istùdiu personalizadu fallida</string>
+    <string name="importing_collection">Importende sa colletzione&#8230;</string>
+    <string name="import_media_count">Importende sos documentos multimediales %1$d%%&#8230;</string>
+    <string name="import_progress">• Importende notas: %1$d%%\n
+                              • Importende cartas: %2$d%%\n
+                              • Post-elaboratzione: %3$d%%</string>
+    <string name="import_update_details">%1$d de %2$d notas chi esistint atualizadas.</string>
+    <string name="import_update_ignored">Unas cantas atualizatziones sunt istadas ignoradas ca sa casta de nota est cambiada</string>
+    <string name="import_complete_count">Cartas importadas: %d</string>
+    <string name="sd_card_full_title">S\'ischeda SD est prena</string>
+    <string name="sd_card_almost_full_title">S\'ischeda SD est belle prena</string>
+    <string name="no_space_to_downgrade_title">Non b\'at ispàtziu</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
+    <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
+    <string name="restore_backup">Sa colletzione tua s\'at a remplasare cun una còpia prus betza. Cale si siat progressu non sarvadu s\'at a pèrdere.</string>
+    <string name="dialog_cancel">Annulla</string>
+    <string name="dialog_ok">AB</string>
+    <string name="dialog_no">Nono</string>
+    <string name="dialog_continue">Sighi</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
+    <string name="dialog_positive_delete">Iscantzella</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disabìlita</string>
+    <string name="dialog_positive_overwrite">Subraiscrie</string>
+    <string name="dialog_positive_remove">Boga</string>
+    <string name="dialog_positive_repair">Acontza</string>
+    <string name="dialog_positive_replace">Remplasa</string>
+    <string name="dialog_positive_restore">Riprìstina</string>
+    <string name="dialog_positive_set">Imposta</string>
+    <string name="lookup_button_content">Chirca</string>
+    <string name="dialog_collection_path_not_dir">S\'àndala dislindada non fiat una cartella vàlida</string>
+    <!-- Media checking -->
+    <string name="check_media_title">Verificare sos mèdios?</string>
+    <string name="check_media_warning">In casu de colletziones multimediales mannas bi diat pòdere chèrrere tempus meda</string>
+    <string name="check_media_message">Vetifichende sos mèdios&#8230;</string>
+    <string name="check_media_acknowledge">Mèdios verificados</string>
+    <string name="check_media_failed">Verìfica de sos mèdios fallida</string>
+    <string name="check_media_invalid">Documentos cun una codìfica non vàlida: %d</string>
+    <string name="check_media_unused">Documentos in sa cartella de sos mèdios ma chi non benint impreados dae peruna carta: %d</string>
+    <string name="check_media_nohave">Documentos impreados in sas cartas ma chi mancant in sa cartella de sos mèdios: %d</string>
+    <string name="check_media_no_unused_missing">Perunu documentu no impreadu o chi manchet agatadu</string>
+    <string name="check_media_db_updated">Base de datos multimediales torrada a fraigare</string>
+    <string name="check_media_delete_unused">Iscantzella sos no impreados</string>
+    <string name="delete_media_message">Iscantzellende mèdios&#8230;</string>
+    <string name="delete_media_result_title">Resurtadu de s\'iscantzelladura</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d documentu iscantzelladu</item>
+        <item quantity="other">%d documentos iscantzellados</item>
+    </plurals>
+    <!-- Tags Dialog Options -->
+    <string name="tags_dialog_option_all_cards">Totu sas cartas</string>
+    <string name="tags_dialog_option_new_cards">Noas</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">De revisionare</string>
+    <!-- Empty cards -->
+    <string name="emtpy_cards_finding">Agatende sas cartas bòidas&#8230;</string>
+    <string name="confirm_cancel">Cheres annullare?</string>
+    <string name="empty_cards_none">Peruna carta bòida</string>
+    <string name="empty_cards_count">Cartas de iscantzellare: %d</string>
+    <string name="empty_cards_deleted">Cartas iscantzelladas: %d</string>
+    <!-- Multimedia - Edit Field Activity -->
+    <string name="multimedia_editor_audio_permission_refused">No est istadu possìbile otènnere su permissu pro su micròfonu.</string>
+    <string name="multimedia_editor_camera_permission_refused">No est istadu possìbile otènnere  su permissu pro sa fotocàmera. Sa funtzionalidade est istada disabilitada.</string>
+    <string name="multimedia_editor_failed">Abertura de s\'Editore Multimediale fallida</string>
+    <!-- Multimedia - Audio View -->
+    <string name="multimedia_editor_audio_permission_denied">Permissu de registratzione àudio negadu</string>
+    <!-- Initial collection load -->
+    <string name="collection_load_welcome_request_permissions_title">Bene bènnidu in AnkiDroid!</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid tenet bisòngiu de su permissu de archiviatzione, chi impreamus petzi pro sarvare sa colletzione de AnkiDroid tua, sos elementos multimediales de sas cartas mnemònicas e sas còpias de seguresa. Su còdighe nostru est a flashcard media and backups. Su còdighe nostru est a mitza aberta, iscritu dae voluntàrios, e cunsideradu degnu de fide dae milliones de persones.\n
+                                                \n
+                                                Si tenes cale si siat pregunta aberi su manuale integradu in s\'aplicatzione o bìsita sos forums de suportu nostros.\n
+                                                \n
+                                                Ti torramus gràtzias pro àere isseberadu de proare AnkiDroid!\n
+                                                — Iscuadra de isvilupu de AnkiDroid</string>
+    <string name="mutimedia_editor_assertion_failed">B\'at àpidu una faddina disconnota in sa visualizatzione de s\'editore avantzadu</string>
+    <!-- Database Integrity Check -->
+    <string name="integrity_check_startup_title">AnkiDroid est istadu atualizadu</string>
+    <string name="integrity_check_startup_content">AnkiDroid est istadu atualizadu. Custa atualizatzione incluet acontzos pro problemas possìbiles de sa base de datos, e ti cussigiamus de fàghere como una verìfica de sa base de datos.</string>
+    <string name="integrity_check_continue_anyway">Sighi su matessi</string>
+    <string name="integrity_check_insufficient_space">Sa verìfica de sa base de datos impreat meda memòria temporànea.\n
+                              \n
+                              Ti cunsigiamus de tènnere a su nessi %s de ispàtziu lìberu in su dispositivu tuo in antis de sighire.</string>
+    <string name="integrity_check_insufficient_space_extra_content">Como tenes %s lìberos.</string>
+    <string name="integrity_check_fixed_no_home_deck">Sunt istadas recuperadas %d cartas cun matzos de orìgine non curretos. Pòmpia·ti su manuale pro àteras informatziones.</string>
+    <string name="video_creation_error">Riprodutzione de su vìdeu fallida</string>
+    <!-- Card Browser -->
+    <string name="card_browser_deck_change_error">Cambiamentu de su matzu fallidu</string>
+    <!-- AbstractFlashCardViewer -->
+    <string name="card_viewer_url_decode_error">Errore decodifichende sos datos dae sa carta</string>
+    <!-- Deck Options -->
+    <string name="deck_options_corrupt">Elaboratzione de sas optziones de su matzu fallida: %s</string>
+    <!-- Database Errors-->
+    <string name="database_locked_title">Base de datos blocada</string>
+    <string name="database_locked_summary">Sa base de datos de AnkiDroid l\'est giai impreende un\'àtera aplicatzione. Pro praghere serra s\'àtera aplicatzione e a pustis torra a abèrrere AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Versione de sa base de datos non cumpatìbile</string>
+    <string name="incompatible_database_version_summary">Sa base de datos est una versione prus avantzada de sas chi custa versione de AnkiDroid potzat gestire. Atualiza AnkiDroid o cunverte sa base de datos a una versione prus betza pro l\'aberrere\n
+                              \n
+                              Versione suportada: %1$d\n
+                              Versione de sa base de datos: %2$d\n
+                              \n
+                              Sas optziones chi sighint ant a subraiscrìere sa colletzione atuale tua, si est possìbile cun una versione cumpatìbile de sa base de datos:</string>
+    <!-- Deck Picker Background-->
+    <string name="background_image_applied">Immàgine de isfundu aplicada</string>
+    <string name="background_image_removed">Immàgine de isfundu bogada</string>
+    <string name="no_image_selected">Peruna immàgine ischertada</string>
+    <string name="error_selecting_image">Faddina in sa seletzione de s\'immàgine. Leghe·ti su manuale. %s</string>
+    <string name="error_deleting_image">Faddina iscantzellende s\'immàgine</string>
+    <string name="failed_to_apply_background_image">Aplicatzione de s\'immàgine de isfundu %s fallida</string>
+    <string name="background_image_too_large">S\'isfundu de s\'isseberadore de matzos est tropu largu</string>
+    <string name="image_max_size_allowed">Mannària màssima de s\'immàgine %d MB permìtidos</string>
+    <!-- Global Intent handler -->
+    <!-- Also used by Card Browser, not renaming to save translators effort -->
+    <string name="intent_handler_failed_no_storage_permission">Mancat su permissu netzessàriu pro s\'archiviatzione. Dae su permissu pro s\'archiviatzione e torra a proare a fàghere s\'atzione tua.</string>
+    <!-- Browser Appearance -->
+    <string name="card_template_editor_card_browser_appearance_failed">Carrigamentu de s\'aparèntzia de su navigadore de cartas fallidu</string>
+    <!-- Boot Service -->
+    <string name="boot_service_failed_to_schedule_notifications">Pranificatzione de sos avisos fallida</string>
+    <string name="boot_service_too_many_notifications">Tropu avisos pranificados. Unos cantos no ant a apàrrere</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Issèberu de sa limba de su tecladu</string>
+    <string name="locale_selection_dialog_summary">Unos cantos teclados a prus limbas, a esèmpiu GBoard, suportant su càmbiu de limba durante sa modìfica de su testu\'\n
+                            \n
+                            Pro praghere pedi sa funtzionalidade “setImeHintLocales” a su produtore de su tecladu tuo si cussu tecladu non mudat de limba.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Impreu de AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manuale de Anki</string>
+    <string name="help_item_anki_manual">Manuale de Anki</string>
+    <string name="help_item_ankidroid_faq">PF de Anki</string>
+    <string name="help_title_get_help">Pedi agiudu</string>
+    <string name="help_item_mailing_list">Lista de posta eletrònica</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Sinnala una faddina in su còdighe</string>
+    <string name="help_title_support_ankidroid">Suporta AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Dona</string>
+    <string name="help_item_support_develop_ankidroid">Isvilupa</string>
+    <string name="help_item_support_rate_ankidroid">Vota</string>
+    <string name="help_item_support_other_ankidroid">Àteru</string>
+    <string name="help_title_community">Comunidade</string>
+    <string name="help_item_anki_forums">Forums de Anki</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
+    <string name="help_title_privacy">Riservadesa</string>
+    <string name="help_item_ankidroid_privacy_policy">Polìtica de riservadesa de AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Polìtica de riservadesa de AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Tèrmines e cunditziones de AnkiWeb</string>
+    <string name="help_title_send_exception">Imbia unu raportu in subra de sa risolutzione de problemas</string>
+    <string name="help_dialog_exception_report_debounce">Sinnalatzione giai imbiada</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">In %d segundu diat pòdere incumintzare una sincronizatzione automàtica</item>
+        <item quantity="other">In %d segundos diat pòdere incumintzare una sincronizatzione automàtica</item>
+    </plurals>
+    <string name="deck_picker_new">Nùmeru de cartas noas de pompiare oe in custu matzu.</string>
+    <string name="deck_picker_rev">Nùmeru de cartas chi iscadint oe in custu matzu.</string>
+    <string name="deck_picker_lrn">Nùmeru de cartas de imparare in custu matzu.</string>
+    <!-- This description is valid fos
+    sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
+    for the sake of simplicity and because V1 will leave.-->
+    <string name="deck_picker_counts">Aberi sa pàgina de sa panoràmica de su matzu chi cuntenet su nùmeru de cartas de pompiare oe.</string>
+    <string name="import_deck_package">Pachete de su matzu (.apkg)</string>
+    <string name="import_collection_package">Pachete de colletzione (.colpkg)</string>
+</resources>
