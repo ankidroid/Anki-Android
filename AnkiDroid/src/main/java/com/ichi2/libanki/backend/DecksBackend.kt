@@ -26,6 +26,7 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.jsonToArray
 import com.ichi2.libanki.backend.BackendUtils.toByteString
+import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.JSONObject
 import java8.util.Optional
 import net.ankiweb.rsdroid.BackendV1
@@ -68,8 +69,6 @@ interface DecksBackend {
     fun remove_deck(did: did)
 }
 
-class DeckRenameError(message: String) : Exception(message)
-
 /** WIP: Backend implementation for usage in Decks.kt */
 class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
 
@@ -99,12 +98,13 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
             .toMutableList()
     }
 
+    @Throws(DeckRenameException::class)
     override fun add_or_update_deck_legacy(deck: DeckV16, preserve_usn: Boolean): did {
         try {
             val addOrUpdateResult = backend.addOrUpdateDeckLegacy(deck.to_json_bytes(), preserve_usn)
             return addOrUpdateResult.did
         } catch (ex: BackendDeckIsFilteredException) {
-            throw DeckRenameError("deck was filtered")
+            throw DeckRenameException.filteredAncestor(deck.name, "")
         }
     }
 
