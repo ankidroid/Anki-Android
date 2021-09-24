@@ -31,7 +31,7 @@ languages = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 
              'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got',
              'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk',
              'km', 'kn', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'ml-IN', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no',
-             'or', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sat', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE',
+             'or', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sat', 'sc', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE',
              'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK',
              'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
 # languages which are localized for more than one region
