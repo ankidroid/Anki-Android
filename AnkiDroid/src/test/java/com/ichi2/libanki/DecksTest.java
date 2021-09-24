@@ -1,7 +1,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 import com.ichi2.utils.JSONObject;
 

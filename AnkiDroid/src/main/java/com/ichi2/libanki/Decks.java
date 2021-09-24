@@ -26,7 +26,7 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.DeckRenameException;
+import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.anki.exception.FilteredAncestor;
 
 import com.ichi2.utils.DeckComparator;
