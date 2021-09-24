@@ -35,8 +35,10 @@ abstract class DeckManager {
 
     abstract fun load(decks: String, dconf: String)
     @RustCleanup("Unused in V16")
+    /** @throws DeckRenameException */
     abstract fun save()
-    /** Can be called with either a deck or a deck configuration. */
+    /** Can be called with either a deck or a deck configuration.
+     * @throws DeckRenameException */
     abstract fun save(g: Deck)
     abstract fun save(g: DeckConfig)
     abstract fun flush()
@@ -89,7 +91,10 @@ abstract class DeckManager {
     @CheckResult
     abstract fun byName(name: String): Deck?
 
-    /** Add or update an existing deck. Used for syncing and merging. */
+    /**
+     * Add or update an existing deck. Used for syncing and merging.
+     * @throws DeckRenameException
+     */
     abstract fun update(g: Deck)
 
     /** Rename deck prefix to NAME if not exists. Updates children. */

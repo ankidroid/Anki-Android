@@ -36,6 +36,7 @@ import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.DeckNameId
 import com.ichi2.libanki.backend.DeckTreeNode
 import com.ichi2.libanki.backend.DecksBackend
+import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.CollectionUtils
 import com.ichi2.utils.JSONArray
@@ -182,6 +183,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     /* Registry save/load */
 
+    @Throws(DeckRenameException::class)
     private fun save(grp: DeckConfigV16) {
         when (grp) {
             is DeckConfigV16.Config -> save(grp)
@@ -194,6 +196,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         Timber.w(Exception("Decks.save() called - probably a bug"))
     }
 
+    @Throws(DeckRenameException::class)
     override fun save(g: Deck) {
         save(DeckV16.Generic(g))
     }
@@ -207,6 +210,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         this.update_config(g)
     }
 
+    @Throws(DeckRenameException::class)
     fun save(g: DeckV16) {
         this.update(g, preserve_usn = false)
     }
@@ -234,6 +238,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
+    @Throws(DeckRenameException::class)
     fun id(name: str, create: bool = true, type: Int = 0): Optional<did> {
         val id = this.id_for_name(name)
         if (id != null) {
@@ -346,11 +351,13 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return null
     }
 
+    @Throws(DeckRenameException::class)
     override fun update(g: Deck) {
         // we preserve USN here as this method is used for syncing and merging
         update(DeckV16.Generic(g), preserve_usn = true)
     }
 
+    @Throws(DeckRenameException::class)
     override fun rename(g: Deck, newName: String) {
         rename(DeckV16.Generic(g), newName)
     }
