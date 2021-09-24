@@ -26,10 +26,13 @@ import android.media.ThumbnailUtils;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TimePicker;
 
+import com.ichi2.anki.R;
+import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.async.ProgressSenderAndCancelListener;
 import com.ichi2.utils.FileUtil;
 
@@ -223,6 +226,24 @@ public class CompatV21 implements Compat {
     @Override
     public void setFullscreen(Window window) {
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public void hideSystembars(Window window) {
+            window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE
+        );
+    }
+
+    @Override
+    public boolean isImmersiveSystemUiVisible(Window window) {
+       return (window.getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
 
 

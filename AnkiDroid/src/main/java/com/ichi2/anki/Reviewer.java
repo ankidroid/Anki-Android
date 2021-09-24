@@ -78,6 +78,7 @@ import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -1155,28 +1156,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
+
     private void setFullScreen(final AbstractFlashcardViewer a) {
         //Hide System Bars
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getWindow().setDecorFitsSystemWindows(false);
-            WindowInsetsController controller = getWindow().getInsetsController();
-            if (controller != null) {
-                controller.hide(WindowInsets.Type.statusBars() | WindowInsets.Type.navigationBars());
-                controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-            }
-        } else {
-            // Set appropriate flags to enable Sticky Immersive mode.
-            a.getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LOW_PROFILE
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE
-            );
-        }
+        CompatHelper.getCompat().hideSystembars(getWindow());
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
         FullScreenMode fullscreenMode = FullScreenMode.fromPreference(prefs);
@@ -1257,13 +1240,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 });
     }
 
-    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
     private boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return (activity.getWindow().getDecorView().getWindowInsetsController().getSystemBarsAppearance()) == 0;
-        } else {
-            return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-        }
+       return CompatHelper.getCompat().isImmersiveSystemUiVisible(activity.getWindow());
     }
 
     private void createWhiteboard() {
