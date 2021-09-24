@@ -45,7 +45,7 @@
     <string name="statistics">Statistiche</string>
     <string name="settings">Impostazioni</string>
     <string name="help">Guida</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Disegno</string>
     <string name="send_feedback">Invia commenti</string>
     <string name="studyoptions_due_today">Scadono oggi:</string>
     <string name="studyoptions_new_total">Totale carte nuove:</string>
@@ -115,9 +115,9 @@
     <string name="menu_flag_card_two">Contrassegno arancione</string>
     <string name="menu_flag_card_three">Contrassegno verde</string>
     <string name="menu_flag_card_four">Contrassegno blu</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Contrassegno rosa</string>
+    <string name="menu_flag_card_six">Contrassegno turchese</string>
+    <string name="menu_flag_card_seven">Contrassegno viola</string>
     <string name="menu_edit_tags">Modifica etichette</string>
     <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
     <string name="menu_select">Seleziona testo</string>
@@ -192,8 +192,8 @@
     <string name="card_template_editor_select_field">Seleziona campo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Questo creerà %1$d carta. Continuare?</item>
+        <item quantity="other">Questo creerà %1$d carte. Continuare?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminare il tipo di carta «%2$s», e la sua carta %1$d?</item>
@@ -234,5 +234,5 @@
         <item quantity="one">%1$d carta (0 dovute)</item>
         <item quantity="other">%1$d carta (0 dovute)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copia</string>
 </resources>

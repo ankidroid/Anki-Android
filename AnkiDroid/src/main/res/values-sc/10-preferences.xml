@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- generic strings -->
+    <string name="disabled">Disabilitadu</string>
+    <string name="enabled">Abilitadu</string>
+    <!-- preferences.xml categories-->
+    <string name="pref_cat_general_summ">Impostatziones generales</string>
+    <string name="pref_cat_reviewing" maxLength="41">Revisione</string>
+    <string name="pref_cat_reviewing_summ">Impostatziones de revisiones non ligadas a matzos ispetzìficos</string>
+    <string name="pref_cat_reviewer_behaviour" maxLength="41">Cumportamentu</string>
+    <string name="pref_cat_flashcard" maxLength="41">Visualizatzione</string>
+    <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
+    <string name="pref_cat_appearance" maxLength="41">Aparèntzia</string>
+    <string name="pref_cat_appearance_summ">Muda sos temas e su caràtere predefinidu</string>
+    <string name="pref_cat_themes" maxLength="41">Temas</string>
+    <string name="pref_cat_fonts" maxLength="41">Caràtere</string>
+    <string name="pref_cat_gestures" maxLength="41">Gestos</string>
+    <string name="pref_cat_gestures_summ">Imprea tocos e trisinadas in logu de sos butones</string>
+    <string name="pref_cat_actions" maxLength="41">Atziones</string>
+    <string name="pref_cat_controls" maxLength="41">Controllos</string>
+    <string name="pref_cat_controls_summ">Cunfigura sos teclados e sos àteros dispositivos</string>
+    <string name="pref_cat_advanced" maxLength="41">Avantzadas</string>
+    <string name="pref_cat_advanced_summ">Otimizatzione e funtzionalidades isperimentales</string>
+    <string name="pref_cat_performance" maxLength="41">Prestatziones</string>
+    <string name="pref_cat_workarounds" maxLength="41">Solutziones alternativas</string>
+    <string name="pref_cat_plugins" maxLength="41">Estensiones</string>
+    <string name="about_title" maxLength="41">Informatziones in subra de AnkiDroid</string>
+    <string name="about_version">Versione:</string>
+    <!-- preferences.xml entries-->
+    <string name="whiteboard_stroke_width" maxLength="41">Grussària de du tratu</string>
+    <string name="use_input_tag" maxLength="41">Iscrie sa risposta in sa carta</string>
+    <string name="use_input_tag_summ">I</string>
+    <string name="dictionary" maxLength="41">Ditzionàriu de chirca</string>
+    <string name="reset_languages" maxLength="41">Reseta sas limbas</string>
+    <string name="reset_languages_summ">Reseta sos assignamentos de sas limbas (pro su sintetizadore vocale e sos ditzionàrios) pro totu sos matzos</string>
+    <string name="reset_languages_question">Resetare totu sos assignamentos de limbas?</string>
+    <string name="reset_confirmation">Totu sos istados resetados</string>
+    <string name="card_zoom" maxLength="41">Ismanniamentu de sas cartas</string>
+    <string name="image_zoom" maxLength="41">Ismanniamentu de s\'immàgine</string>
+    <string name="button_size" maxLength="41">Mannària de su butone de risposta</string>
+    <string name="card_browser_font_size" maxLength="41">Dimensionamentu de sos caràteres de su navigadore de cartas</string>
+    <string name="card_browser_hide_media" maxLength="41">Ammustra sos nùmenes de sos documentos in su navigadore de cartas</string>
+    <string name="card_browser_hide_media_summary">Ammustra sos nùmenes de sos documentos multimediales in sos campos pregunta/risposta de su navigadore de cartas</string>
+    <string name="col_path" maxLength="41">Cartella de AnkiDroid</string>
+    <string name="fullscreen_review" maxLength="41">Modalidade a ischermu intreu</string>
+    <string name="full_screen_off">Istudadu</string>
+    <string name="full_screen_system">Cua sas barras de sistema</string>
+    <string name="full_screen_complete">Cua sas barras de sistema e sos butones de risposta</string>
+    <string name="full_screen_error_gestures">Depes abilitare sos gestos pro cuare sos butones de risposta</string>
+    <string name="answer_buttons_position" maxLength="41">Positzione de su butone de sas rispostas</string>
+    <string-array name="answer_buttons_position_labels">
+        <item>In bassu</item>
+        <item>In artu</item>
+    </string-array>
+    <string name="gestures" maxLength="41">Abìlita sos gestos</string>
+    <string name="gestures_summ">Assigna gestos a atziones che a sas rispostas e a sas modìficas de sas cartas.</string>
+    <string name="gestures_allow_links" maxLength="41">Ignora sos gestos tàtiles in sos ligàmenes</string>
+    <string name="gestures_allow_links_summary">Sos gestos tàtiles non s\'ant a elaborare si as a incarcare in unu ligàmene/impòsitu</string>
+    <string name="gestures_corner_touch" maxLength="41">Tocu a 9 puntos</string>
+    <string name="gestures_corner_touch_summary">Permiti sos gestos tàtiles in sos àngulos de s\'ischermu</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannellu de navigatzione a ischermu intreu</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Aberi su pannellu de navigatzione cando trìsinas cara a dereta dae cale si siat puntu de s\'ischermu</string>
+    <string name="gestures_swipe_up" maxLength="41">Trìsina cara a artu</string>
+    <string name="gestures_swipe_down" maxLength="41">Trìsina cara a bassu</string>
+    <string name="gestures_swipe_left" maxLength="41">Trìsina cara a manca</string>
+    <string name="gestures_swipe_right" maxLength="41">Trìsina cara a dereta</string>
+    <string name="gestures_double_tap" maxLength="41">Tocu dòpiu</string>
+    <string name="gestures_long_tap" maxLength="41">Tocu longu</string>
+    <string name="gestures_tap_top" maxLength="41">Toca in susu</string>
+    <string name="gestures_tap_left" maxLength="41">Toca a manca</string>
+    <string name="gestures_tap_right" maxLength="41">Toca a dereta</string>
+    <string name="gestures_tap_bottom" maxLength="41">Toca in bassu</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Toca in artu a manca</string>
+    <string name="gestures_corner_tap_top_center">Toca in artu in su tzentru</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Toca in artu a dereta</string>
+    <string name="gestures_corner_tap_middle_left">Toca in tzentru a manca</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Toca in su tzentru</string>
+    <string name="gestures_corner_tap_middle_right">Toca in tzentru a dereta</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Toca in bassu a manca</string>
+    <string name="gestures_corner_tap_bottom_center">Toca in bassu in su tzentru</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Toca in bassu a dereta</string>
+    <string name="gestures_volume_up" maxLength="41">Àrtzia su volume</string>
+    <string name="gestures_volume_down" maxLength="41">Abbassa su volume</string>
+    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
+    <string name="more_scrolling_buttons_summ">Imprea fintzas sos butones kanji/katakana e emoji/kao-moji pro iscùrrere</string>
+    <string name="card_browser_enable_external_context_menu">Menù ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Abilitat su menù de cuntestu ‘%s’ globalmente</string>
+    <string name="double_scrolling_gap" maxLength="41">Iscurrimentu dòpiu</string>
+    <string name="double_scrolling_gap_summ">Addopiat sa distàntzia de iscurrimentu cun eReader</string>
+    <string name="swipe_sensitivity" maxLength="41">Sensibilidade de sa trisinadura</string>
+    <string name="tts" maxLength="41">Sìntesi de sa boghe (TTS)</string>
+    <string name="tts_summ">Leghet sa pregunta e sa risposta si non b\'est unu documentu sonoru inclùdidu</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Recùpera sos mèdios cun sa sincronizatzione</string>
+    <string name="sync_fetch_missing_media_summ">Recùpera in manera automàtica sos elementos multimediales chi mancant in su mentres chi ses sincronizende</string>
+    <string name="sync_account" maxLength="41">Contu de AnkiWeb</string>
+    <string name="sync_account_summ_logged_out">Non ses intradu</string>
+    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
+    <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
+    <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
+    <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>
+    <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
+    <string name="day_theme" maxLength="41">Tema pro sa die</string>
+    <string name="night_theme" maxLength="41">Tema pro sa note</string>
+    <string name="default_font" maxLength="41">Caràtere predefinidu</string>
+    <string name="override_font" maxLength="41">Aplicabilidade de su caràtere predefinidu</string>
+    <string name="language" maxLength="41">Limba</string>
+    <string name="language_system">Limba de sistema</string>
+    <string name="notification_pref" maxLength="41">Notìficas</string>
+    <string name="notification_pref_title" maxLength="41">Notìfica cando</string>
+    <string name="never_notify">Non notìfiches mai</string>
+    <string name="notify_when_pending">Messàgios in isetu a disponimentu</string>
+    <string name="notification_minimum_cards_due">Prus de %d cartas iscadidas</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Lampìgiu</string>
+    <string name="timeout_answer_text" maxLength="41">Ammustra sa risposta in automàticu</string>
+    <string name="timeout_answer_summ">Ammustra sa risposta in manera automàtica chene atziones de s\'impreadore. Su ritardu incluet su tempus pro sos documentos sonoros riproduidos in automàticu.</string>
+    <string name="timeout_answer_seconds" maxLength="41">Tempus in antis de ammustrare sa risposta</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
+    <string name="timeout_question_seconds" maxLength="41">Tempus in antis de ammustrare sa pregunta imbeniente</string>
+    <string name="select_locale_title">Seletziona sa limba</string>
+    <string name="software_render" maxLength="41">Disabìlita su renderizadore fìsicu (hardware) de sas cartas</string>
+    <string name="software_render_summ">Su renderizadore fìsicu (hardware) est prus lestru ma diat pòdere tènnere problemas, mescamente in Android 8/8.1. Si non resesses a bìdere cantos de s\'interfache de impreu proa custa impostatzione.</string>
+    <string name="safe_display" maxLength="41">Modalidade visualizatzione segura</string>
+    <string name="safe_display_summ">Disabìlita totu sas animatziones e imprea una manera prus segura de disinnare sas cartas. Diat podere èssere netzessàriu pro sos dispositivos a tinta digitale.</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disabìlita sa modalidade de modìfica a campu sìngulu</string>
+    <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
+    <string name="disable_extended_text_ui_summ">Permitet su menù de cuntestu \'Iscantzellamentu cloze\' in sa modalidade orizontale</string>
+    <string name="vertical_centering" maxLength="41">Allìnia a tzentru</string>
+    <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
+    <string name="pref_backup_max" maxLength="41">Nùmeru màssimu de còpias de seguresa</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Intervallu de tempus tocu dòpiu (ms)</string>
+    <string name="pref_double_tap_time_interval_summary">Su de duos tocos in sos butones de risposta s\'at a ignorare si custu tempus no at a èssere coladu. Custu prevenit tocos dòpios atzidentales</string>
+    <string name="show_estimates" maxLength="41">Ammustra s\'iscadèntzia de sos butones</string>
+    <string name="show_estimates_summ">Ammustra s\'iscadèntzia imbieniente in subra de sos butones de risposta</string>
+    <string name="show_large_answer_buttons" maxLength="41">Ammustra sos butones de risposta mannos</string>
+    <string name="show_large_answer_buttons_summ">Ammustra su butone de risposta in duas rigas</string>
+    <string name="show_top_bar" maxLength="41">Ammustra sa barra superiore</string>
+    <string name="show_top_bar_summ">Ammustra su nùmeru de cartas, sa bandera e su marcadore in sa barra de susu</string>
+    <string name="show_progress" maxLength="41">Ammustra ite mancat</string>
+    <string name="show_progress_summ">Ammustra su nùmeru de cartas chi mancant</string>
+    <string name="show_eta" maxLength="41">Ammustra su tempus chi mancat</string>
+    <string name="show_eta_summ">Ammustra su tempus chi mancat</string>
+    <string name="use_current" maxLength="41">Matzu pro sas cartas noas</string>
+    <string name="new_spread" maxLength="41">Positzione de sas cartas noas</string>
+    <string name="learn_cutoff" maxLength="41">Lìmite pro s\'antitzipatzione de s\'imparu</string>
+    <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
+    <string name="time_limit_summ">XXX min</string>
+    <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
+    <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
+    <string name="day_offset_summ">XXX oras a pustis de mesanote</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mesanote</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">Pranificadore V2</string>
+    <string name="sched_v2_summ">Abìlita su pranificadore nou. Fortzat modìficas cara a un\'ala in sa sincronizatzione imbeniente</string>
+    <string name="sched_ver_toggle_title">Cunfirma</string>
+    <string name="sched_ver_1to2">Su pranificadore isperimentale diat pòdere causare una pranificatzione isballiada. Assegura·ti, in antis, de t\'àere leghidu sa documentatzione. Cheres sighire?</string>
+    <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
+    <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>
+    <string name="convert_fen_text" maxLength="41">Suportu pro sa notatzione de sos iscacos</string>
+    <string name="convert_fen_text_summ">Disinna s\'iscachiera in sa notatzione Forsyth–Edwards. Sa notatzione depet abarrare serrada in sas etichetas [fen][/fen].</string>
+    <string name="enable_api_title" maxLength="41">Abìlita s\'API de AnkiDroid</string>
+    <string name="enable_api_summary">Permite a àteras aplicatziones de si connètere a AnkiDroid e lèghere / iscrìere datos chene s\'interventu tuo</string>
+    <string name="custom_buttons" maxLength="41">Butones de sa barra de s\'aplicatzione</string>
+    <string name="custom_buttons_summary">Personaliza sas atziones de sa barra de s\'aplicatzione</string>
+    <string name="custom_buttons_setting_always_show">Ammustra semper</string>
+    <string name="custom_buttons_setting_if_room">Ammustra si b\'at logu</string>
+    <string name="custom_buttons_setting_menu_only">Menù ebbia</string>
+    <string name="reset_custom_buttons" maxLength="41">Torra a sos paràmetros predefinidos</string>
+    <string name="thirdparty_apps_title" maxLength="41">Aplicatziones API esternas (de tertzas partes)</string>
+    <string name="thirdparty_apps_summary">Pòmpia·ti una lista de aplicatziones chi impreant s\'API de AnkiDroid che a ditzionàrios o àteras ainas.</string>
+    <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
+    <string name="html_javascript_debugging_summ">Abìlita sas connessiones remotas WebView, e sarva s\'HTML de sa carta in sa cartella de AnkiDroid</string>
+    <!-- Paste clipboard image as png option -->
+    <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
+    <string name="paste_as_png_summary">Comente impostatzione predefinida Anki incollat sas immàgines in punta de billete in formadu JPG pro savare logu in sa memòria. Pro incollare sas immàgines in formadu PNG podes, imbetzes, impreare custa optzione.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Incarca 2 bortas in segus pro essire</string>
+    <string name="exit_via_double_tap_back_summ">Pro evitare de essire in manera atzidentale dae su revisionadore o dae s\'aplicatzione</string>
+    <!-- Advanced statistics settings -->
+    <string name="advanced_statistics_title" maxLength="41">Istatìsticas avantzadas</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">Abìlita sas istatìsticas avantzadas</string>
+    <string name="enable_advanced_statistics_summ">Ammustra istatìsticas de previsione basadas in subra de unu càrculu o simulatzione de reviones futuras (abilitadu) o in subra de sas revisiones imbenientes giai pranificadas (disabilitadu).</string>
+    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Càrcula sas primas n dies, sìmula su restu</string>
+    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Pretzisione de càrculu</string>
+    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nùmeru de iteratziones de sa simulatzione</string>
+    <!-- Custom sync server settings -->
+    <string name="custom_sync_server_title" maxLength="41">Serbidore de sincronizatzione personalizadu</string>
+    <string name="custom_sync_server_enable_title" maxLength="41">Imprea unu serbidore de sincronizatzione personalizadu</string>
+    <string name="custom_sync_server_enable_summary">Si non cheres impreare su servìtziu proprietàriu de AnkiWeb podes dislindare unu serbidore alternativu inoghe</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronizatzione</string>
+    <string name="custom_sync_server_base_url_invalid">Url de sincronizatzione non vàlidu</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronizatzione multimediale</string>
+    <string name="custom_sync_server_media_url_invalid">Url de sincronizatzione multimediale non vàlidu</string>
+    <!-- Key Bindings -->
+    <string name="controls_main_category" maxLength="41">Mapadura de sos cumandos</string>
+    <!-- studyoptions -->
+    <string name="deck_conf_group_summ">Sas modìficas a sas optziones de su grupu de matzos ant a influentzare prus de unu matzu. Si cheres mudare petzi su matzu de como pro praghere in antis annanghe unu grupu de optziones nou</string>
+    <string name="studyoptions_limit_select_tags">Seletziona sas etichetas</string>
+    <!-- Deck configurations -->
+    <string name="deck_conf_deck_description" maxLength="41">Descritzione de su matzu (matzu de como ebbia)</string>
+    <string name="deck_conf_group" maxLength="41">Grupu de optziones</string>
+    <plurals name="deck_conf_group_summ">
+        <item quantity="one">%1$s\n
+                                     %2$d matzu impreat custu grupu</item>
+        <item quantity="other">%1$s\n
+                                     %2$d matzos impreant custu grupu</item>
+    </plurals>
+    <string name="deck_conf_new_cards" maxLength="41">Cartas noas</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisiones</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Faddinas</string>
+    <string name="deck_conf_general" maxLength="41">Generale</string>
+    <string name="deck_conf_reminders" maxLength="41">Avisos</string>
+    <string name="deck_conf_steps" maxLength="41">Passos (in minutos)</string>
+    <string name="deck_conf_order" maxLength="41">Òrdine</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">Cartas noas/die</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Intervallu de promotzione</string>
+    <string name="deck_conf_days">XXX die(s)</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Intervallu fàtzile</string>
+    <string name="deck_conf_start_ease" maxLength="41">Fatzilidade de incumintzu</string>
+    <string name="deck_conf_max_rev" maxLength="41">Nùmeru màssimu de revisiones/die</string>
+    <string name="deck_conf_new_bury" maxLength="41">Interra sas cartas noas ligadas</string>
+    <string name="deck_conf_new_bury_summ">Sas cartas noas ligadas abarrant interradas finas a sa die a pustis</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Interra sas revisiones ligadas</string>
+    <string name="deck_conf_rev_bury_summ">Sas revisiones ligadas abarrant interradas finas a sa die a pustis</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Imprea sas impostatziones generales</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Imprea sas impostatziones generales de \'Risposta automàtica de visualizatzione\' in logu de cussas pro custu grupu.</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Bonus de fatzilidade</string>
+    <string name="deck_conf_hard_factor" maxLength="41">Intervallu difìtzile</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Modificadore de intervallu</string>
+    <string name="deck_conf_max_ivl" maxLength="41">Intervallu màssimu</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">Intervallu nou</string>
+    <string name="deck_conf_min_ivl" maxLength="41">Intervallu mìnimu</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Lìmite de sas sambisuas</string>
+    <string name="deck_conf_fails">XXX faddina(s)</string>
+    <string name="deck_conf_leech_action" maxLength="41">Atzione sambisua</string>
+    <string name="deck_conf_max_time" maxLength="41">Tempus màssimu de risposta</string>
+    <string name="deck_conf_seconds">XXX segundos</string>
+    <string name="deck_conf_timer" maxLength="41">Ammustra su cronòmetru de risposta</string>
+    <string name="deck_conf_autoplay" maxLength="41">Riprodui s\'àudio automaticamente</string>
+    <string name="deck_conf_replayq" maxLength="41">Torra a riproduire sa pregunta</string>
+    <string name="deck_conf_replayq_summ">Cando sa risposta benit ammustrada torra a riproduire s\'àudio siat de sa pregunta e siat de sa risposta</string>
+    <string name="deck_conf_manage" maxLength="41">Amministratzione de sos grupos</string>
+    <string name="deck_conf_manage_summ">Annanghe e càmbia grupos de optziones</string>
+    <string name="deck_conf_current_group" maxLength="41">Grupu atuale</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Muda de nùmene</string>
+    <string name="deck_conf_reset" maxLength="41">Riprìstina sos valores predefinidos</string>
+    <string name="deck_conf_reset_message">Boles fàghere torrare su grupu de optziones atuale a sos valores predefinidos?</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Annanghe</string>
+    <string name="deck_conf_add_summ">Crea una còpia de su grupu de optziones atuale</string>
+    <string name="deck_conf_remove_message">Bogare su grupu de atziones atuale?</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">Imposta pro totu sos suta-matzos</string>
+    <plurals name="deck_conf_set_subdecks_summ">
+        <item quantity="one">%s suta-matzu at a impreare custu grupu</item>
+        <item quantity="other">%s suta-matzos ant a impreare custu grupu</item>
+    </plurals>
+    <string name="deck_conf_set_subdecks_message">Impostare su grupu de optziones atuales a totu sos suta-matzos de custu matzu?</string>
+    <string name="pref_browser_editor_font" maxLength="41">Caràtere de su navigadore e de s\'editore</string>
+    <string name="deck_conf_cram_filter" maxLength="41">Filtru</string>
+    <string name="deck_conf_cram_search" maxLength="41">Chirca</string>
+    <string name="deck_conf_cram_limit" maxLength="41">Lìmita a</string>
+    <string name="deck_conf_cram_order" maxLength="41">cartas ischertadas pro</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Torra a pranificare</string>
+    <string name="deck_conf_cram_reschedule_summ">Torra a pranificare sas cartas in base a sas rispostas meas in custu matzu</string>
+    <string name="deck_conf_cram_filter_2_check">Abìlita su de duos filtru</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Passos personalizados (in minutos)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Dislinda sos passos personalizados</string>
+    <string name="deck_conf_reminders_enabled" maxLength="41">Abìlita sas notìficas pro custu grupu de matzos</string>
+    <string name="deck_conf_reminders_time" maxLength="41">Ammentami·lu a sas</string>
+    <!-- analytics options -->
+    <string name="analytics_dialog_title">Agiuda·nos a megiorare AnkiDroid!</string>
+    <string name="analytics_title" maxLength="41">Cumpartzi s\'impreu de sas funtzionalidades</string>
+    <string name="analytics_summ">Podes contribuire a AnkiDroid agiudende s\'iscuadra de isvilupu a bìdere ite funtzionalidades impreat sa gente</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Remplasa sas lìnias noas cun s\'HTML</string>
+    <string name="note_editor_replace_newlines_summ">In s\'editore de notas cunverte cada istàntzia de &amp;lt;br&amp;gt; in lìnias noas cando ses modifichende una carta.</string>
+    <string name="no_code_formatting" maxLength="41">Formatatzione simpre de sa risposta</string>
+    <string name="no_code_formatting_summ">Acontzat su problema de ‘􏿾’ chi aparit in sos resurtados de sas rispostas iscritas</string>
+    <string name="type_in_answer_focus" maxLength="41">Pone in evidèntzia ‘iscrie sa risposta’</string>
+    <string name="type_in_answer_focus_summ">Pone in evidèntzia in automàticu su campu ‘iscrie sa risposta’ in su revisore</string>
+    <!-- Open Changelog-->
+    <string name="open_changelog">Aberi su registru de sas modìficas</string>
+    <string name="binding_add_gesture">Annanghe unu gestu</string>
+    <string name="binding_add_key">Annanghe una tecla</string>
+    <string name="key_picker_default_press_key">Incarca una tecla</string>
+    <!-- Select card side -->
+    <string name="card_side_selection_title">Seletziona su ladu de sa carta</string>
+    <string name="card_side_question">Pregunta</string>
+    <string name="card_side_answer">Risposta</string>
+    <string name="card_side_both">Pregunta e risposta</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">P: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
+    <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
+    <!-- Binding Preference -->
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Boga ‘%s’</string>
+    <string name="bindings_already_bound">Giai assotziadu a %s</string>
+</resources>

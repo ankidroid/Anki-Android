@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="yes">eja</string>
+    <!-- Navigation drawer items-->
+    <string name="decks">Matzos</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigadore de cartas</string>
+    <string name="statistics">Istatìsticas</string>
+    <string name="settings">Impostatziones</string>
+    <string name="help">Agiudu</string>
+    <string name="drawing">Disinnu</string>
+    <string name="send_feedback">Imbia cummentos</string>
+    <string name="studyoptions_due_today">Iscadint oe:</string>
+    <string name="studyoptions_new_total">Cartas noas totales:</string>
+    <string name="studyoptions_total_cards">Cartas totales:</string>
+    <string name="studyoptions_eta">Tempus previstu (min):</string>
+    <string name="studyoptions_start">Istùdia</string>
+    <!-- DeckPicker.java -->
+    <string name="expand">Ismànnia</string>
+    <string name="collapse">Mìnima</string>
+    <string name="study_more">Istùdia de prus</string>
+    <plurals name="deckpicker_title">
+        <item quantity="one">%1$d carta de revisionare (%2$s)</item>
+        <item quantity="other">%1$d cartas de revisionare (%2$s)</item>
+    </plurals>
+    <plurals name="reviewer_window_title">
+        <item quantity="one">Mancat %d minutu</item>
+        <item quantity="other">Mancant %d minutos</item>
+    </plurals>
+    <plurals name="reviewer_window_title_hours">
+        <item quantity="one">Mancat %d ora %d</item>
+        <item quantity="other">Mancant %d oras %d</item>
+    </plurals>
+    <plurals name="reviewer_window_title_days">
+        <item quantity="one">Mancat %d die %d</item>
+        <item quantity="other">Mancant %d dies %d</item>
+    </plurals>
+    <string name="no_cards_placeholder_title">Sa colletzione est bòida</string>
+    <string name="no_cards_placeholder_description">Incumintza a annànghere cartas\n
+                        impreende s\'icona +.</string>
+    <!-- The deck picker via AnkiStatsTaskHandler.java -->
+    <plurals name="studied_cards_today">
+        <item quantity="one">%1$d carta istudiada in %2$s oe</item>
+        <item quantity="other">%1$d cartas istudiadas in %2$s oe</item>
+    </plurals>
+    <!-- flashcard_portrait.xml -->
+    <string name="type_answer_hint">Iscrie sa risposta</string>
+    <string name="show_answer">Ammustra sa risposta</string>
+    <string name="hide_answer">Cua sa risposta</string>
+    <string name="ease_button_again">Torra</string>
+    <string name="ease_button_hard">Difìtzile</string>
+    <string name="ease_button_good">Bonu</string>
+    <string name="ease_button_easy">Fàtzile</string>
+    <string name="studyoptions_congrats_undo">Annulla %s</string>
+    <string name="menu_import">Importa</string>
+    <string name="undo">Annulla</string>
+    <string name="undo_action_review">ùrtima revisione</string>
+    <string name="undo_action_change_deck_multi">càmbia matzu</string>
+    <string name="move_all_to_deck">Move totu a intro de su matzu</string>
+    <string name="unbury">Disinterra</string>
+    <string name="rename_deck">Càmbia nùmene a su matzu</string>
+    <string name="create_shortcut">Crea un\'incurtzada</string>
+    <string name="browse_cards">Esplora sas cartas</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Annanghe</string>
+    <string name="menu_add_note">Annanghe una nota</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincroniza unu contu</string>
+    <string name="menu_dismiss_note">Cua / iscantzella</string>
+    <string name="menu_bury_card">Interra sa carta</string>
+    <string name="menu_bury_note">Interra sa nota</string>
+    <string name="menu_suspend_card">Suspende sa carta</string>
+    <string name="menu_suspend_note">Suspende sa nota</string>
+    <string name="menu_bury">Interra</string>
+    <string name="menu_suspend">Suspende</string>
+    <string name="menu_delete_note">Iscantzella sa nota</string>
+    <string name="menu_flag">Bandera</string>
+    <string name="menu_flag_card">Marca sa carta cun una bandera</string>
+    <string name="menu_flag_card_zero">Peruna bandera</string>
+    <string name="menu_flag_card_one">Bandera ruja</string>
+    <string name="menu_flag_card_two">Bandera arantzu</string>
+    <string name="menu_flag_card_three">Bandera birde</string>
+    <string name="menu_flag_card_four">Bandera biaita</string>
+    <string name="menu_flag_card_five">Bandera rosa</string>
+    <string name="menu_flag_card_six">Bandera turchesa</string>
+    <string name="menu_flag_card_seven">Bandera pùrpura</string>
+    <string name="menu_edit_tags">Modìfica sas etichetas</string>
+    <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n
+                                             %s</string>
+    <string name="menu_select">Seletziona su testu</string>
+    <string name="menu_lookup">Testu de chirca</string>
+    <string name="menu_search">Chirca in %1$s</string>
+    <string name="menu_mark_note">Marca sa nota</string>
+    <string name="menu_unmark_note">Boga sa marcadura a sa nota</string>
+    <string name="menu_toggle_mic_tool_bar">Verìfica sa pronùntzia</string>
+    <string name="new_deck">Crea unu matzu</string>
+    <string name="new_dynamic_deck">Crea unu matzu filtradu</string>
+    <string name="night_mode">Modalidade pro sa note</string>
+    <string name="directory_inaccessible">Sa cartella de AnkiDroid no est atzessìbile</string>
+    <!--This is shown when AnkiDroid starts up with no storage permissions.
+    The user is taken to the "App Info" screen, and needs to click "Permissions" and
+    grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
+    of the permissions/app info screen will differ between devices. -->
+    <string name="startup_no_storage_permission">Dae a AnkiDroid su permissu de Archiviatzione pro sighire</string>
+    <!--
+        The time_quantities are units of time. They are used without
+        plurals or dots.
+        s, min, h, d, are standard (ISO 31-1) units and should usually
+        not be translated, at least not for languages using the Latin
+        alphabet.
+    -->
+    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_minutes">%d min</string>
+    <string name="time_quantity_hours_minutes">%1$d o %2$d m</string>
+    <string name="time_quantity_hours">%d o</string>
+    <string name="time_quantity_days">%d d</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d o</string>
+    <string name="time_quantity_months">%.1f me</string>
+    <string name="time_quantity_years">%.1f a</string>
+    <!-- or "%.1f a" -->
+    <string name="rebuild_filtered_deck">Torrende a fraigare su matzu filtradu&#8230;</string>
+    <string name="rebuild_cram_label">Torra a fraigare</string>
+    <string name="empty_cram_label">Isbòida</string>
+    <string name="create_subdeck">Crea unu suta-matzu</string>
+    <string name="empty_filtered_deck">Isboidende su matzu filtradu&#8230;</string>
+    <string name="custom_study_deck_name">Sessione de istùdiu personalizada</string>
+    <string name="custom_study_deck_exists">In antis càmbia su nùmene a su matzu de istùdiu personalizadu chi esistit</string>
+    <string name="empty_deck">Custu matzu est bòidu</string>
+    <string name="search_deck">Chirca de matzos</string>
+    <string name="empty_deck_add_note">Annanghe una carta</string>
+    <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
+    <string name="studyoptions_empty">Su matzu est bòidu. Incarca su butone + pro annànghere cuntenutos noos.</string>
+    <string name="studyoptions_limit_reached">Ses arribbadu a su lìmite de istùdiu pro oe</string>
+    <string name="studyoptions_empty_schedule">Peruna carta pranificada de istudiare</string>
+    <string name="studyoptions_congrats_finished">Bene meda! Pro como as agabbadu.</string>
+    <string name="studyoptions_congrats_more_rev">Ses arribbadu a su lìmite pro oe, ma bi sunt galu cartas de revisionare. Podes aumentare su lìmite in sas optziones.</string>
+    <string name="studyoptions_congrats_more_new">Ses arribbadu a su lìmite de oe. Bi sunt àteras cartas noas a disponimentu; podes aumentare su lìmite in sas optziones, ma custu at a fàghere crèschere su càrrigu de traballu pro sas revisiones a tèrmine curtzu.</string>
+    <string name="studyoptions_congrats_custom">Pro istudiare in foras de sa pranificatzione normale toca su butone “Istùdiu personalizadu”</string>
+    <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
+    <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
+    <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
+    <string name="button_sync">Sincroniza</string>
+    <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
+    <string name="continue_sync">Sighi a sincronizare</string>
+    <string name="sync_cancelled">Sincronizatzione annullada</string>
+    <string name="sync_cancel_message">Annullende&#8230;\n
+    Bi diat pòdere chèrrere unu pagu de tempus.</string>
+    <string name="export">Esporta</string>
+    <string name="export_collection">Esporta sa colletzione</string>
+    <string name="export_deck">Esporta su matzu</string>
+    <string name="nothing">Nudda</string>
+    <!-- Card template editor -->
+    <string name="title_activity_template_editor">Castas de cartas</string>
+    <string name="card_template_editor_front">Mollu de su fronte</string>
+    <string name="card_template_editor_back">Mollu de sa parte de segus</string>
+    <string name="card_template_editor_styling">Istile</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Aparèntzia de su navigadore de cartas</string>
+    <string name="card_template_editor_deck_override">Subraiscritura de su matzu</string>
+    <string name="card_template_editor_insert_field">Inserta unu campu</string>
+    <string name="card_template_editor_select_field">Seletziona unu campu</string>
+    <string name="card_template_editor_cant_delete">B\'at bisòngiu de a su nessi una casta de cartas</string>
+    <plurals name="card_template_editor_confirm_add">
+        <item quantity="one">Custu at a creare %1$d carta. Cheres sighire?</item>
+        <item quantity="other">Custu at a creare %1$d cartas. Cheres sighire?</item>
+    </plurals>
+    <plurals name="card_template_editor_confirm_delete">
+        <item quantity="one">Cheres iscantzellare sa casta de cartas “%2$s” e sa carta chi cuntenet?</item>
+        <item quantity="other">Cheres iscantzellare sa casta de cartas “%2$s” e sas %1$d cartas suas?</item>
+    </plurals>
+    <string name="invalid_template">No est istadu possìbile generare una carta</string>
+    <string name="card_template_editor_would_delete_note">Iscantzellende custa casta de carta dias iscantzellare una o prus notas. Pro praghere in antis crea e sarva una casta de carta noa.</string>
+    <string name="card_template_editor_save_error">Impossìbile sarvare sas modìficas a su mollu de carta: %s</string>
+    <string name="template_for_current_card_deleted">Sa casta de carta pro sa carta atuale est istada iscantzellada.</string>
+    <!-- Card Browser Appearance -->
+    <string name="card_template_browser_appearance_title">Aparèntzia de su navigadore</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
+    <!-- card Info -->
+    <string name="card_info_title">Info de sa carta</string>
+    <!-- Permissions -->
+    <string name="read_write_permission_label">Leghe e iscrie in sa base de datos de AnkiDroid</string>
+    <string name="read_write_permission_description">atzede a sas notas, a sas cartas, a sas castas de notas e a sos matzos chi esistint giai, e crea·nde de noos</string>
+    <!-- Context Menu -->
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigadore de cartas</string>
+    <string name="context_menu_anki_card_label">Carta Anki</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tenet unu problema:&lt;br &gt;&lt;/br&gt;%2$s</string>
+    <string name="more_information">Àteras informatziones</string>
+    <string name="no_field">S\'est agatadu \'{{%1$s}}\', ma non b\'at perunu campu chi si mutat \'%1$s\'.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' agatadu, ma mancat \'{{#%1$s}}\' o \'{{^%1$s}}\'.</string>
+    <string name="missing_closing_bracket">Mancat \'}}\' in \'%s\'.</string>
+    <string name="open_tag_not_closed">Mancat \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">Agatadu \'{{/%1$s}}\', ma fiat isetadu \'{{/%2$s}}\'</string>
+    <string name="filter_error">Faddina in su filtru %s</string>
+    <!-- Sync conflict -->
+    <string name="sync_conflict_message_new">Sas colletziones non si podent cumbinare.\n
+    Cale colletzione cheres mantènnere·?</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">Cheres remplasare sa colletzione tua in AnkiDroid cun sa colletzione tua dae AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Cheres remplasare sa colletzione tua in AnkiWeb cun sa colletzione tua dae AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Issèbera sa colletzione de mantènnere</string>
+    <string name="sync_conflict_replace_title">Remplasa sa colletzione</string>
+    <plurals name="deckpicker_title_zero_due">
+        <item quantity="one">%1$d carta (0 de revisionare)</item>
+        <item quantity="other">%1$d cartas (0 de revisionare)</item>
+    </plurals>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s còpia</string>
+</resources>

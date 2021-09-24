@@ -44,7 +44,7 @@
     <string name="sync_error">ସିଙ୍କ୍ ତ୍ରୁଟି</string>
     <string name="vague_error">ତ୍ରୁଟି</string>
     <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="menu_get_shared_decks">ଅଂଶୀଦାର ହୋଇଥିବା ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
+    <string name="menu_get_shared_decks">ଅଂଶିଦାରୀ ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
     <string name="connection_error_message">ଏକ ନେଟୱର୍କ ତ୍ରୁଟି ଘଟିଛି</string>
     <string name="not_logged_in_title">AnkiWeb ରେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେବା ବ୍ୟବହାର କରିବାକୁ ଆପଣ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିବା ଆବଶ୍ୟକ ଅଟେ। ଆପଣ ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପରେ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ।</string>
@@ -69,8 +69,8 @@
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_title">ସମକାଳୀନତା </string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
-    <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ୍ %2$sଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟ ମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ କରନ୍ତୁ।</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ କ୍ଷେତ୍ର ସମ୍ଭବତ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ୍%2$s ଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ୍ କରନ୍ତୁ।</string>
+    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଛି</string>
     <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତ ଭୁଲ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସମକାଳୀକ ହୋଇଛି</string>

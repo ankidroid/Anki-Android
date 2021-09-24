@@ -63,8 +63,10 @@
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Настройки</string>
     <string name="deckpreferences_title">Параметры для XXX</string>
-    <string name="sync_prepare_syncing">Подготавливается синхронизация&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Подготавливается полная синхронизация&#8230;</string>
+    <string name="sync_prepare_syncing">Подготавливается 
+синхронизация&#8230;</string>
+    <string name="sync_preparing_full_sync_message">Подготавливается 
+полная синхронизация&#8230;</string>
     <string name="sync_uploading_message">Выгружается&#8230;</string>
     <string name="sync_downloading_message">Загружается&#8230;</string>
     <string name="sync_title">Синхронизация</string>
@@ -93,7 +95,8 @@
     <string name="sync_generic_error">Произошла ошибка. Попробуйте позже.</string>
     <string name="sync_check_upload_file">Файл проверяется перед выгрузкой&#8230;</string>
     <string name="sync_check_download_file">Проверяется загруженный файл&#8230;</string>
-    <string name="sync_media_find">Медиафайлы сравниваются&#8230;</string>
+    <string name="sync_media_find">Медиафайлы 
+сравниваются&#8230;</string>
     <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
     <string name="sync_media_success">Медиафайлы сихронизированы</string>
     <string name="sync_media_changes_count">Будут выгружены %d изменённых медиафайлов</string>

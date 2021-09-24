@@ -32,6 +32,7 @@ nl: AnkiDroid flitskaarten
 or: AnkiDroid ଫ୍ଲାସକାର୍ଡ
 pl: AnkiDroid – Fiszki
 ru: AnkiDroid: карточки для запоминания
+sc: Cartas mnemònicas de AnkiDroid
 sk: AnkiDroid kartičky
 sl: Pomnilne kartice AnkiDroid 
 sr: AnkiDroid флеш-картице

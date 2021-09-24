@@ -55,7 +55,7 @@
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtrar suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por tag</string>
-    <string name="card_browser_search_by_flag">Filtrar por Sinalizado</string>
+    <string name="card_browser_search_by_flag">Filtrar por Sinalização</string>
     <string name="card_browser_list_my_searches">Minhas buscas</string>
     <string name="card_browser_list_my_searches_save">Salvar busca</string>
     <string name="card_browser_list_my_searches_title">Escolha uma busca salva</string>
@@ -76,7 +76,7 @@
         <item>Por data de modificação do card.</item>
         <item>Por tempo programado</item>
         <item>Por intervalo</item>
-        <item>Por espaçamento</item>
+        <item>Por retenção</item>
         <item>Por revisões</item>
         <item>Por falhas</item>
     </string-array>
@@ -97,7 +97,7 @@
     <string name="card_info_first_review">Primeira Revisão</string>
     <string name="card_info_latest_review">Última Revisão</string>
     <string name="card_info_interval">Intervalo</string>
-    <string name="card_info_ease">Espaçamento</string>
+    <string name="card_info_ease">Retenção</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Revisões</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Falhas</string>
     <string name="card_info_average_time">Tempo Médio</string>

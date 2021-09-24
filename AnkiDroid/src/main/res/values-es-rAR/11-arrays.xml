@@ -107,9 +107,9 @@
     <string name="gesture_flag_orange">Cambiar Bandera Naranja</string>
     <string name="gesture_flag_green">Cambiar Bandera verde</string>
     <string name="gesture_flag_blue">Cambiar Bandera Azul</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Cambiar Bandera Rosa</string>
+    <string name="gesture_flag_turquoise">Cambiar Bandera Turquesa</string>
+    <string name="gesture_flag_purple">Cambiar Bandera Morada</string>
     <string name="gesture_flag_remove">Eliminar Bandera</string>
     <string name="gesture_page_up">Página Arriba</string>
     <string name="gesture_page_down">Página Abajo</string>

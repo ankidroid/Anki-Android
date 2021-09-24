@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Espera</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Agregar contenido multimedia al campo %1$s</string>
     <string name="multimedia_editor_attach_media">Adjuntar media</string>
     <!-- Audio view -->

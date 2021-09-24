@@ -109,15 +109,15 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalização</string>
-    <string name="menu_flag_card">Sinalizar cartão</string>
-    <string name="menu_flag_card_zero">Sem marcação</string>
-    <string name="menu_flag_card_one">Marcação vermelha</string>
-    <string name="menu_flag_card_two">Marcação laranja</string>
-    <string name="menu_flag_card_three">Marcação verde</string>
-    <string name="menu_flag_card_four">Marcação azul</string>
-    <string name="menu_flag_card_five">Portuguese brazilian</string>
-    <string name="menu_flag_card_six">Bandeira turquesa</string>
-    <string name="menu_flag_card_seven">Bandeira roxa</string>
+    <string name="menu_flag_card">Sinalizar card</string>
+    <string name="menu_flag_card_zero">Sem sinalização</string>
+    <string name="menu_flag_card_one">Sinalização vermelha</string>
+    <string name="menu_flag_card_two">Sinalização laranja</string>
+    <string name="menu_flag_card_three">Sinalização verde</string>
+    <string name="menu_flag_card_four">Sinalização azul</string>
+    <string name="menu_flag_card_five">Sinalização rosa</string>
+    <string name="menu_flag_card_six">Sinalização turquesa</string>
+    <string name="menu_flag_card_seven">Sinalização roxa</string>
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_select">Selecionar texto</string>
@@ -202,7 +202,7 @@
     <string name="invalid_template">Não foi possível gerar o card</string>
     <string name="card_template_editor_would_delete_note">Excluir este tipo de card resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de card.</string>
     <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de card: %s</string>
-    <string name="template_for_current_card_deleted">O modelo para o cartão atual foi excluído.</string>
+    <string name="template_for_current_card_deleted">O modelo para o card atual foi excluído.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>

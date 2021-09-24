@@ -192,8 +192,8 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Esto creará %1$d tarjeta. ¿Continuar?</item>
+        <item quantity="other">Esto creará %1$d tarjetas. ¿Continuar?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
@@ -231,8 +231,8 @@
     <string name="sync_conflict_title_new">Selecciona la colección a mantener</string>
     <string name="sync_conflict_replace_title">Reemplazar colección</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d tarjeta (0 pendiente)</item>
+        <item quantity="other">%1$d tarjetas (0 pendiente)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copiar</string>
 </resources>
