@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.view.Window;
+import android.net.Uri;
 import android.widget.TimePicker;
 
 import com.ichi2.async.ProgressSenderAndCancelListener;
