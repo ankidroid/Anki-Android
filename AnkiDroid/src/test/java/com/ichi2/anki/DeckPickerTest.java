@@ -21,6 +21,9 @@ import com.ichi2.utils.ResourceLoader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
@@ -46,6 +49,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -416,17 +420,17 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    public void notEnoughSpaceToBackupShowsError() {
+    public void notEnoughSpaceToBackupBeforeDowngradeShowsError() {
         Class<DeckPickerNoSpaceForBackup> clazz = DeckPickerNoSpaceForBackup.class;
-        try {
-            setupColV16();
+        try (MockedStatic<InitialActivity> initialActivityMock = mockStatic(InitialActivity.class, Mockito.CALLS_REAL_METHODS)) {
+            initialActivityMock
+                .when(() -> InitialActivity.getStartupFailureType(any()))
+                .thenAnswer((Answer<InitialActivity.StartupFailure>) invocation -> InitialActivity.StartupFailure.DATABASE_DOWNGRADE_REQUIRED);
 
             InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
             DeckPickerNoSpaceForBackup deckPicker = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
-            waitForAsyncTasksToComplete();
 
-            assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
             assertThat("A downgrade failed dialog should be shown", deckPicker.mDisplayedDowngradeFailed, is(true));
         } finally {
             InitialActivityWithConflictTest.setupForDefault();
