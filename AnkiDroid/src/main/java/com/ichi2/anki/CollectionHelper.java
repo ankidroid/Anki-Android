@@ -275,7 +275,19 @@ public class CollectionHelper {
 
     /**
      * Get the absolute path to a directory that is suitable to be the default starting location
-     * for the AnkiDroid folder.
+     * for the AnkiDroid folder. This path is stored as the value for the 'defaultAnkiDroidDir' preference since it can
+     * change due to multiple folder support by AnkiDroid.
+     * <p>
+     * If the 'defaultAnkiDroidDir' preference doesn't exist, there are two cases that must be handled:
+     * <ul>
+     *     <li>Fresh Install: Using {@link CollectionHelper#createNewDefaultAnkiDroidDirectory(Context)}, return an
+     *     app-specific directory if {@link AnkiDroidApp#TESTING_SCOPED_STORAGE} is set to <code>true</code> so that
+     *     fresh installs don't have to have their data migrated to a scoped directory, their data can simply be
+     *     initialized in a scoped directory. Else return a legacy storage directory.</li>
+     *
+     *     <li>Existing install: Return a legacy storage directory for now since it is the migration flow's
+     *     responsibility to change the 'defaultAnkiDroidDir' preference to a scoped directory.</li>
+     * </ul>
      * <p>
      * Currently, this is a folder named "AnkiDroid" at the top level of the non-app-specific external storage directory.
      * <p><br>
@@ -332,10 +344,54 @@ public class CollectionHelper {
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
     public static String getDefaultAnkiDroidDirectory(@NonNull Context context) {
-        if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
-            return getAppSpecificExternalAnkiDroidDirectory(context);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        String currentDefaultDir = preferences.getString("defaultAnkiDroidDir", null);
+        if (currentDefaultDir != null) {
+            return currentDefaultDir;
         }
-        return getLegacyAnkiDroidDirectory();
+
+        // If deckPath doesn't exist, this is a fresh install, so return a scoped default directory
+        if (!preferences.contains("deckPath")) {
+            return createNewDefaultAnkiDroidDirectory(context);
+        } else {
+            // This isn't a fresh install, return a legacy directory for now
+            // Note: Migration flow will change the defaultAnkiDroidDir preference to scoped
+            currentDefaultDir = getLegacyAnkiDroidDirectory();
+            preferences.edit().putString("defaultAnkiDroidDir", currentDefaultDir);
+            return currentDefaultDir;
+        }
+    }
+
+    /**
+     * Creates a new directory which will AnkiDroid will default to. Creates the directory in a scoped directory if
+     * scoped storage functionality is enabled using {@link AnkiDroidApp#TESTING_SCOPED_STORAGE}. Else, it returns the
+     * existing default legacy directory.
+     */
+    public static String createNewDefaultAnkiDroidDirectory(@NonNull Context context) {
+        String defaultDirPath;
+        if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
+            // Take the base app-specific storage directory reserved for AnkiDroid on the primary external storage volume
+            // Create a new directory for AnkiDroid (there may be multiple under the app-specific directory)
+            String baseScopedDirectory = getAppSpecificExternalAnkiDroidDirectory(context);
+            String baseFileName = "AnkiDroid";
+            int ankiDirCount = 1;
+            File newScopedAnkiDir = new File(baseScopedDirectory, baseFileName + ankiDirCount);
+
+            // Increment number appended to AnkiDroid to obtain a new potentially unique directory name
+            while (newScopedAnkiDir.exists()) {
+                ankiDirCount += 1;
+                newScopedAnkiDir = new File(baseScopedDirectory, baseFileName + ankiDirCount);
+            }
+
+            newScopedAnkiDir.mkdirs();
+            defaultDirPath = newScopedAnkiDir.getAbsolutePath();
+        } else {
+            defaultDirPath = getLegacyAnkiDroidDirectory();
+        }
+
+        Timber.i("New default AnkiDroid directory created at: %s", defaultDirPath);
+        AnkiDroidApp.getSharedPrefs(context).edit().putString("defaultAnkiDroidDir", defaultDirPath).apply();
+        return defaultDirPath;
     }
 
 
