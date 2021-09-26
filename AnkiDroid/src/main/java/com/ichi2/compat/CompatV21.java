@@ -182,6 +182,7 @@ public class CompatV21 implements Compat {
                     renameSuccessful = false;
                     break;
                 }
+                ioTask.doProgress((int) destFile.length() / 1024);
             }
             if (renameSuccessful) {
                 srcDir.delete();
