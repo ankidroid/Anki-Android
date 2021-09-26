@@ -408,4 +408,7 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 
+    <!-- Syncing -->
+    <string name="sync_blocked_during_migration">Sync not available during user data migration</string>
+
 </resources>

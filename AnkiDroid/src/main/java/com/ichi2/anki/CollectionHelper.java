@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ichi2.anki.exception.StorageAccessException;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
@@ -37,7 +38,9 @@ import com.ichi2.utils.FileUtil;
 import net.ankiweb.rsdroid.BackendException;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
@@ -621,6 +624,29 @@ public class CollectionHelper {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public void setColForTests(Collection col) {
         this.mCollection = col;
+    }
+
+    /**
+     * Copies all the files, not directories from the current AnkiDroid directory to the directory at destPath
+     * @param destPath Path of the directory where the files from the current AnkiDroid directory are to be copied
+     * @throws IOException If destPath doesn't denote an actual directory or an IO error occurred while copying
+     */
+    public static void copyCollection(Context context, String destPath) throws IOException {
+        String sourcePath = AnkiDroidApp.getSharedPrefs(context).getString("deckPath", getDefaultAnkiDroidDirectory(context));
+        File sourceDir = new File(sourcePath);
+        File destDir = new File(destPath);
+        final File[] srcFiles = FileUtil.listFiles(sourceDir);
+
+        // Copy all files, not directories, from srcDir to destDir
+        for(final File srcFile : srcFiles) {
+            if (srcFile.isDirectory()) {
+                continue;
+            }
+            final File destFile = new File(destDir, srcFile.getName());
+            OutputStream out = new FileOutputStream(destFile, false);
+            CompatHelper.getCompat().copyFile(srcFile.getAbsolutePath(), out);
+            out.close();
+        }
     }
 
     public static String getMigrationSourcePath(Context context) {
