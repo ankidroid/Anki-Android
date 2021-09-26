@@ -336,7 +336,11 @@ public class DB {
      * @return The full path to this database file.
      */
     public String getPath() {
-        return mDatabase.getPath();
+        String path = mDatabase.getPath();
+        if (path == null) {
+            return ":memory:";
+        }
+        return path;
     }
 
 
