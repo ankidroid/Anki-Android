@@ -19,6 +19,7 @@
 package com.ichi2.async;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.Pair;
 
@@ -37,6 +38,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -62,6 +64,7 @@ import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Computation;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -86,6 +89,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -236,6 +240,139 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         TaskManager.removeTask(this);
         if (mListener != null) {
             mListener.onCancelled();
+        }
+    }
+
+    /**
+     * Migrates media files in 'collection.media' and backup files from 'backups' from sourceDir to destinationDir.
+     * Copies the most recent backup file to the source/latest-backup directory from the source/backup directory
+     * before migrating the backup folder. This has the effect of leaving the most recent backup file in the source
+     * directory once migration is complete.
+     * Assumes user data is stored in a Legacy Storage Directory before this function is called.
+     * <p><br>
+     * If data is migrated successfully, the migrationSourcePath preference is removed since migration is complete and we don't
+     * need to keep track of the previous directory anymore.
+     * <p><br>
+     * TODO: Allow move directory only (and not copy) once AnkiDroid is fully functional under Scoped Storage.
+     */
+    public static class MigrateUserData extends TaskDelegate<Integer, Boolean> {
+        File mSourceDir;
+        File mDestinationDir;
+        int mMigrationOption;
+
+        @IntDef({COPY, MOVE})
+        public @interface MigrationOption {}
+        public static final int COPY = 0;
+        public static final int MOVE = 1;
+
+        public MigrateUserData(File sourceDir, File destinationDir, @MigrationOption int migrationOption) {
+            mSourceDir = sourceDir;
+            mDestinationDir = destinationDir;
+            mMigrationOption = migrationOption;
+        }
+
+        private boolean migrate(File sourceDir, File destinationDir, ProgressSenderAndCancelListener<Integer> listener) {
+            Timber.i("Migrating %s to %s", sourceDir, destinationDir);
+            try {
+                if (mMigrationOption == COPY) {
+                    CompatHelper.getCompat().copyDirectory(sourceDir, destinationDir, listener, false);
+                } else {
+                    CompatHelper.getCompat().moveDirectory(sourceDir, destinationDir, listener);
+                }
+            } catch (IOException e) {
+                Timber.w(e, "Error occurred while migrating folder: %s", sourceDir);
+                return false;
+            }
+            return true;
+        }
+
+        private boolean preserveLatestBackup() {
+            File backupSourceDir = new File(mSourceDir, "backup");
+            File[] backupFiles;
+
+            try {
+                backupFiles = FileUtil.listFiles(backupSourceDir);
+            } catch (IOException e) {
+                Timber.w(e, "Error occurred while listing contents of backup source directory: %s", backupSourceDir.getAbsolutePath());
+                return false;
+            }
+            File latestBackupFile;
+
+            if (backupFiles.length == 0) {
+                return true;
+            }
+
+            // Find the most recent backup file by comparing each file's last modified time
+            latestBackupFile = backupFiles[0];
+            for (final File backupFile : backupFiles) {
+                if (!backupFile.isDirectory() && backupFile.lastModified() > latestBackupFile.lastModified()) {
+                    latestBackupFile = backupFile;
+                }
+            }
+
+            // Copy the most recently modified file to mSourceDirectory, the parent folder of the backupSourceDir
+            // Since this is meant to be preserved in the source directory even after the 'backup' folder has been migrated
+            File latestBackupDir = new File(mSourceDir, "latest-backup");
+            latestBackupDir.mkdirs();
+            try {
+                CompatHelper.getCompat().copyFile(latestBackupFile.getAbsolutePath(),
+                        new File(latestBackupDir, latestBackupFile.getName()).getAbsolutePath());
+                return true;
+            } catch (IOException e) {
+                Timber.w(e, "Error while preserving latest backup: %s", latestBackupFile.getAbsolutePath());
+                return false;
+            }
+        }
+
+        @Override
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> listener) {
+            File mediaSourceDir = new File(mSourceDir, "collection.media");
+            File mediaDestinationDir = new File(mDestinationDir, "collection.media");
+            File backupSourceDir = new File(mSourceDir, "backup");
+            File backupDestinationDir = new File(mDestinationDir, "backup");
+
+            Timber.i("Starting Media & Backups Migration %s to %s", mediaSourceDir.getAbsolutePath(), mediaDestinationDir.getAbsolutePath());
+
+            // Migrate media folder from mSourceDir to mDestinationDir
+            if (!migrate(mediaSourceDir, mediaDestinationDir, listener)) {
+                return false;
+            }
+
+            // Copy the latest backup file (meant to be left in the source directory after migration) outside the backup folder
+            if (!preserveLatestBackup()) {
+                return false;
+            }
+
+            // Migrate the backup folder to the destination directory
+            if (!migrate(backupSourceDir, backupDestinationDir, listener)) {
+                return false;
+            }
+
+            Timber.i("Completed Media & Backups Migration");
+
+            // Remove legacy path preference since Migration of collection, media, and backups is complete
+            // Hence, nothing is left to migrate and we don't need to keep track of migrationSourcePath
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(col.getContext());
+            preferences.edit().remove("migrationSourcePath").commit();
+
+            if (mMigrationOption == COPY) {
+                return true;
+            }
+
+            // Make best effort to clean up source directory after migration
+            // If any error occurs, ignore and consider migration to be complete
+            File[] sourceDirFiles = mSourceDir.listFiles();
+
+            if (sourceDirFiles == null) {
+                return true;
+            }
+
+            // Delete files and empty directories from source folder
+            for (final File sourceDirFile : sourceDirFiles) {
+                sourceDirFile.delete();
+            }
+
+            return true;
         }
     }
 
