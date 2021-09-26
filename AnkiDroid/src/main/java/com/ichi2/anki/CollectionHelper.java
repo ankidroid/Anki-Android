@@ -566,4 +566,8 @@ public class CollectionHelper {
     public void setColForTests(Collection col) {
         this.mCollection = col;
     }
+
+    public static String getMigrationSourcePath(Context context) {
+        return AnkiDroidApp.getSharedPrefs(context).getString("migrationSourcePath", getDefaultAnkiDroidDirectory(context));
+    }
 }
