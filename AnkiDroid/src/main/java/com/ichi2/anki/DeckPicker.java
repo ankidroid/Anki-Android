@@ -509,7 +509,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * */
     public void handleStartup() {
         if (Permissions.hasStorageAccessPermission(this)) {
-            StartupFailure failure = InitialActivity.getStartupFailureType(this);
+            handleStartupScenarios();
+        } else {
+            requestStoragePermission();
+        }
+    }
+
+    /**
+     * Shows startup screens if everything the app needs to function is in order. If not, handles errors.
+     */
+    private void handleStartupScenarios() {
+        StartupFailure failure = InitialActivity.getStartupFailureType(this);
             if (failure == null) {
                 // Show any necessary dialogs (e.g. changelog, special messages, etc)
                 SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
@@ -520,9 +530,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 handleStartupFailure(failure);
                 mStartupError = true;
             }
-        } else {
-            requestStoragePermission();
-        }
     }
 
 
