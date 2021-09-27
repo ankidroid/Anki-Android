@@ -83,6 +83,7 @@ public class Models extends ModelManager {
             + "\\\\begin{document}\\n"
             + "\", "
             + "\"latexPost\": \"\\\\end{document}\", "
+            + "\"latexsvg\": false,"
             + "\"mod\": 0, "
             + "\"usn\": 0, "
             + "\"vers\": [], " // FIXME: remove when other clients have caught up
