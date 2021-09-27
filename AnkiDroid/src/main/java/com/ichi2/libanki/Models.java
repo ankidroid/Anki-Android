@@ -90,12 +90,12 @@ public class Models extends ModelManager {
             + Consts.MODEL_STD
             + ", "
             + "\"css\": \".card {\\n"
-            + " font-family: arial;\\n"
-            + " font-size: 20px;\\n"
-            + " text-align: center;\\n"
-            + " color: black;\\n"
-            + " background-color: white;\\n"
-            + "}\""
+            + "  font-family: arial;\\n"
+            + "  font-size: 20px;\\n"
+            + "  text-align: center;\\n"
+            + "  color: black;\\n"
+            + "  background-color: white;\\n"
+            + "}\n\""
             + "}";
 
     private static final String defaultField = "{\"name\": \"\", " + "\"ord\": null, " + "\"sticky\": false, " +
