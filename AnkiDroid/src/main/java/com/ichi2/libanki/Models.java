@@ -100,9 +100,7 @@ public class Models extends ModelManager {
 
     private static final String defaultField = "{\"name\": \"\", " + "\"ord\": null, " + "\"sticky\": false, " +
     // the following alter editing, and are used as defaults for the template wizard
-            "\"rtl\": false, " + "\"font\": \"Arial\", " + "\"size\": 20, " +
-            // reserved for future use
-            "\"media\": [] }";
+            "\"rtl\": false, " + "\"font\": \"Arial\", " + "\"size\": 20 }";
 
     private static final String defaultTemplate = "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", "
             + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"Arial\"," +
