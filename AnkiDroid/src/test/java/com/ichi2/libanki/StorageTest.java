@@ -166,7 +166,17 @@ public class StorageTest extends RobolectricTest {
             }
 
             mConf = col.getConf().toString();
-            throw new NotImplementedException("models etc...");
+            mModels = loadModelsV16(col);
+            throw new NotImplementedException("decks/dconf/tags");
+        }
+
+        /** Extract models from models.all() and reformat as the JSON style used in the `col.models` column */
+        private String loadModelsV16(Collection col) {
+            JSONObject ret = new JSONObject();
+            for (Model m : col.getModels().all()) {
+                ret.put(m.getString("id"), m);
+            }
+            return ret.toString(0);
         }
 
 
@@ -219,18 +229,22 @@ public class StorageTest extends RobolectricTest {
         }
 
 
-        protected void assertModelsEqual(CollectionData expected) {
+        protected void assertModelsEqual(CollectionData expectedData) {
             JSONObject actualJson = new JSONObject(this.mModels);
-            JSONObject expectedJson = new JSONObject(expected.mModels);
+            JSONObject expectedJson = new JSONObject(expectedData.mModels);
 
             renameKeys(actualJson);
             renameKeys(expectedJson);
 
             for (String k : actualJson) {
                 remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "id");
+                // mod is set in V11, but not in V16
+                remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "mod");
             }
 
-            assertThat(actualJson.toString(4), is(expectedJson.toString(4)));
+            String actual = JsonUtils.toOrderedString(actualJson);
+            String expected = JsonUtils.toOrderedString(expectedJson);
+            assertThat(actual, is(expected));
         }
 
 
