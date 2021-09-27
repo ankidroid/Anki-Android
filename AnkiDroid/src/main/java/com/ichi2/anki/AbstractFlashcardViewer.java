@@ -47,6 +47,7 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.app.ActionBar;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
@@ -2608,6 +2609,51 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    /**
+     * Local media represented by uri may not be present in the current AnkiDroid directory if user data migration
+     * is in progress and this media file hasn't been migrated to the new AnkiDroid directory.
+     *
+     * Given a uri that identifies a local media file that doesn't exist in the current AnkiDroid directory, this
+     * method finds the file in the directory at the 'migrationSourcePath' preference and copies the file to the
+     * current AnkiDroid directory so that the media requested by the user is available immediately, and the user
+     * doesn't have to wait for migration to complete to access it.
+     */
+    public static void fetchMediaFromMigrationSource(Context context, Uri uri) {
+        // May need to migrate only if the uri represents a local media file on the device
+        String destinationPath = uri.getPath();
+        if (destinationPath == null || !uri.toString().startsWith("file:///")) {
+            return;
+        }
+
+        // If the file represented by the uri exists, there is no need to fetch it from the migration source directory
+        DocumentFile urlFile = DocumentFile.fromSingleUri(context, uri);
+        if (urlFile == null || urlFile.exists()) {
+            return;
+        }
+
+        // Attempt to fetch the file from the migration source directory only if migration is in progress, otherwise we cannot expect to find the file there
+        String migrationSourcePath = AnkiDroidApp.getSharedPrefs(context).getString("migrationSourcePath", null);
+        if (migrationSourcePath == null) {
+            return;
+        }
+
+        // Fetch the file from the migration source directory and copy it to the current directory (where we couldn't find it since it hasn't been migrated yet)
+        Timber.i("Preempting media request for %s", destinationPath);
+        File destinationFile = new File(destinationPath);
+        File sourceFile = new File(migrationSourcePath + File.separator + "collection.media" + File.separator + destinationFile.getName());
+
+        if (!sourceFile.exists()) {
+            return;
+        }
+
+        try {
+            CompatHelper.getCompat().copyFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath());
+        } catch (IOException e) {
+            Timber.w("Error trying to fetch media from migration source from %s to %s",
+                    sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath());
+        }
+    }
+
     protected class CardViewerWebClient extends WebViewClient {
         private WebViewAssetLoader mLoader;
 
@@ -2630,6 +2676,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         @SuppressWarnings("deprecation") // required for lower APIs (I think)
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            fetchMediaFromMigrationSource(view.getContext(), Uri.parse(url));
+
             // response is null if nothing required
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
@@ -2653,6 +2701,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (result != null) {
                 return result;
             }
+
+            fetchMediaFromMigrationSource(view.getContext(), url);
 
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
                 String scheme = url.getScheme().trim();

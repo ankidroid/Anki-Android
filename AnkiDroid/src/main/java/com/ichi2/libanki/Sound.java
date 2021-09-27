@@ -348,6 +348,8 @@ public class Sound {
         Uri soundUri = Uri.parse(soundPath);
         mCurrentAudioUri = soundUri;
 
+        AbstractFlashcardViewer.fetchMediaFromMigrationSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
+
         final OnErrorListener errorHandler = errorListener == null ?
                 (mp, what, extra, path) -> {
                     Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
