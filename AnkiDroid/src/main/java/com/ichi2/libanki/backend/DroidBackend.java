@@ -16,21 +16,28 @@
 
 package com.ichi2.libanki.backend;
 
+import android.content.Context;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
+import com.ichi2.libanki.utils.Time;
 
 import net.ankiweb.rsdroid.RustV1Cleanup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 /**
  * Interface to the rust backend listing all currently supported functionality.
  */
 public interface DroidBackend {
+    /** Should only be called from "Storage.java" */
+    Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time);
+
     DB openCollectionDatabase(String path);
     void closeCollection();
 

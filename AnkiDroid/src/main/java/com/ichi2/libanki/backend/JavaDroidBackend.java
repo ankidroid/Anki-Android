@@ -16,12 +16,17 @@
 
 package com.ichi2.libanki.backend;
 
+import android.content.Context;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
+import com.ichi2.libanki.utils.Time;
 
 import net.ankiweb.rsdroid.RustCleanup;
+
+import androidx.annotation.NonNull;
 
 /**
  * A class which implements the Rust backend functionality in Java - this is to allow moving our current Java code to
@@ -31,6 +36,12 @@ import net.ankiweb.rsdroid.RustCleanup;
  */
 @RustCleanup("After the rust conversion is complete - this will be removed")
 public class JavaDroidBackend implements DroidBackend {
+    @Override
+    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
+        return new Collection(context, db, path, server, log, time, this);
+    }
+
+
     @Override
     public DB openCollectionDatabase(String path) {
         return new DB(path);
