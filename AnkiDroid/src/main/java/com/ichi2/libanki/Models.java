@@ -105,7 +105,7 @@ public class Models extends ModelManager {
 
     private static final String defaultTemplate = "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", "
             + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"Arial\"," +
-            "\"bsize\": 12 }";
+            "\"bsize\": 0 }";
 
     // /** Regex pattern used in removing tags from text before diff */
     // private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
