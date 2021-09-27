@@ -149,7 +149,7 @@ public class Storage {
         // remove did from notes
         if (db.queryScalar("SELECT ver FROM col") == 2) {
             db.execute("ALTER TABLE notes RENAME TO notes2");
-            _addSchema(db, time);
+            _addSchema(db, true, time);
             db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
             db.execute("DROP TABLE notes2");
             db.execute("UPDATE col SET ver = 3");
@@ -320,17 +320,12 @@ public class Storage {
             db.execute("PRAGMA page_size = 4096");
             db.execute("PRAGMA legacy_file_format = 0");
             db.execute("VACUUM");
-            _addSchema(db, time);
+            _addSchema(db, true, time);
             _updateIndices(db);
         }
 
         db.execute("ANALYZE");
         return Consts.SCHEMA_VERSION;
-    }
-
-
-    private static void _addSchema(DB db, @NonNull Time time) {
-        _addSchema(db, true, time);
     }
 
 
