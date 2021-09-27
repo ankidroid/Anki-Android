@@ -16,15 +16,19 @@
 
 package com.ichi2.libanki.backend;
 
+import android.content.Context;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
+import com.ichi2.libanki.utils.Time;
 
 import net.ankiweb.rsdroid.BackendFactory;
 
 import BackendProto.AdBackend;
+import androidx.annotation.NonNull;
 
 /** The Backend in Rust */
 public class RustDroidBackend implements DroidBackend {
@@ -38,6 +42,10 @@ public class RustDroidBackend implements DroidBackend {
         this.mBackend = backend;
     }
 
+    @Override
+    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
+        return new Collection(context, db, path, server, log, time, this);
+    }
 
     @Override
     public DB openCollectionDatabase(String path) {
