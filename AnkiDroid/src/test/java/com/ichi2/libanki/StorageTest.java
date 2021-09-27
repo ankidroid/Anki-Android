@@ -20,6 +20,7 @@ import android.database.Cursor;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.JsonUtils;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
@@ -182,15 +183,17 @@ public class StorageTest extends RobolectricTest {
         }
 
 
-        protected void assertConfEqual(CollectionData expected) {
+        protected void assertConfEqual(CollectionData expectedData) {
             JSONObject actualJson = new JSONObject(this.mConf);
-            JSONObject expectedJson = new JSONObject(expected.mConf);
+            JSONObject expectedJson = new JSONObject(expectedData.mConf);
 
             remove(actualJson, expectedJson, "curModel");
             remove(actualJson, expectedJson, "creationOffset");
             remove(actualJson, expectedJson, "localOffset");
 
-            assertThat(actualJson.toString(), is(expectedJson.toString()));
+            String actual = JsonUtils.toOrderedString(actualJson);
+            String expected = JsonUtils.toOrderedString(expectedJson);
+            assertThat(actual, is(expected));
         }
     }
 
