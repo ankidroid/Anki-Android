@@ -23,11 +23,14 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.JsonUtils;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.database.NotImplementedException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +40,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 
 /** Regression test for Rust */
 @RunWith(AndroidJUnit4.class)
@@ -74,13 +78,13 @@ public class StorageTest extends RobolectricTest {
     }
 
 
-    protected void remove(JSONObject actualJson, JSONObject expectedJson, String key) {
+    protected static void remove(JSONObject actualJson, JSONObject expectedJson, String key) {
         actualJson.remove(key);
         expectedJson.remove(key);
     }
 
 
-    protected void renameKeys(JSONObject actualJson) {
+    protected static void renameKeys(JSONObject actualJson) {
         List<Pair<String, String>> keys = new ArrayList<>();
         Iterator<String> keyIt = actualJson.keys();
         while (keyIt.hasNext()) {
@@ -101,18 +105,28 @@ public class StorageTest extends RobolectricTest {
 
     protected CollectionData getResults() {
         CollectionData results = new CollectionData();
-        try (Cursor c = getCol().getDb().query("select * from col")) {
-            c.moveToFirst();
-
-
-            for (int i = 0; i < c.getColumnCount(); i++) {
-                results.loadV11(i, c.getString(i));
-            }
-        }
+        Collection col = getCol();
+        results.loadFromCollection(col);
         return results;
     }
 
-    public class CollectionData {
+    public static class CollectionData {
+        public static final int CONF = 8;
+        public static final int MODELS = 9;
+        public static final int DECKS = 10;
+        public static final int DCONF = 11;
+        public static final int TAGS = 12;
+
+        public static final HashSet<Integer> mV11OnlyColumns = new HashSet<>();
+
+        static {
+            mV11OnlyColumns.add(CONF);
+            mV11OnlyColumns.add(MODELS);
+            mV11OnlyColumns.add(DECKS);
+            mV11OnlyColumns.add(DCONF);
+            mV11OnlyColumns.add(TAGS);
+        }
+
         String mId;
         String mCrt;
         String mMod;
@@ -128,6 +142,43 @@ public class StorageTest extends RobolectricTest {
         String mTags;
 
 
+
+        public void loadFromCollection(Collection col) {
+            if (col instanceof CollectionV16) {
+                loadV16(col);
+            } else {
+                loadV11(col);
+            }
+        }
+
+
+        private void loadV16(Collection col) {
+            try (Cursor c = col.getDb().query("select * from col")) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    if (mV11OnlyColumns.contains(i)) {
+                        assertThat(c.getString(i), isEmptyOrNullString());
+                        continue;
+                    }
+
+                    loadV11(i, c.getString(i));
+                }
+            }
+
+            mConf = col.getConf().toString();
+            throw new NotImplementedException("models etc...");
+        }
+
+
+        private void loadV11(Collection col) {
+            try (Cursor c = col.getDb().query("select * from col")) {
+                c.moveToFirst();
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    loadV11(i, c.getString(i));
+                }
+            }
+        }
+
         public void loadV11(int i, String string) {
             switch (i) {
                 case 0: mId = string; return;
@@ -138,11 +189,11 @@ public class StorageTest extends RobolectricTest {
                 case 5: mDty = string; return;
                 case 6: mUsn = string; return;
                 case 7: mLs = string; return;
-                case 8: mConf = string; return;
-                case 9: mModels = string; return;
-                case 10: mDecks = string; return;
-                case 11: mDConf = string; return;
-                case 12: mTags = string; return;
+                case CONF: mConf = string; return;
+                case MODELS: mModels = string; return;
+                case DECKS: mDecks = string; return;
+                case DCONF: mDConf = string; return;
+                case TAGS: mTags = string; return;
                 default: throw new IllegalStateException("unknown i: " + i);
             }
         }
