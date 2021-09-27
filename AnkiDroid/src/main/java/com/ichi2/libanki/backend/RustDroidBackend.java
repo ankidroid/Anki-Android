@@ -26,6 +26,7 @@ import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 import com.ichi2.libanki.utils.Time;
 
 import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
 
 import BackendProto.AdBackend;
 import androidx.annotation.NonNull;
@@ -49,7 +50,7 @@ public class RustDroidBackend implements DroidBackend {
 
     @Override
     public DB openCollectionDatabase(String path) {
-        return new DB(path, mBackend);
+        return new DB(path, () -> new RustSQLiteOpenHelperFactory(mBackend));
     }
 
 

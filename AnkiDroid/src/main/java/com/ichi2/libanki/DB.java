@@ -31,9 +31,6 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
-import net.ankiweb.rsdroid.BackendFactory;
-import net.ankiweb.rsdroid.database.RustSQLiteOpenHelperFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -69,13 +66,13 @@ public class DB {
     /**
      * Open a connection to the SQLite collection database.
      */
-    public DB(String ankiFilename, @Nullable BackendFactory backendFactory) {
+    public DB(String ankiFilename, @Nullable OpenHelperFactory openHelperFactory) {
 
         SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
                 .name(ankiFilename)
                 .callback(getDBCallback())
                 .build();
-        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(backendFactory).create(configuration);
+        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(openHelperFactory).create(configuration);
         // Note: This line creates the database and schema when executed using a Rust backend
         mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
         mDatabase.disableWriteAheadLogging();
@@ -95,9 +92,9 @@ public class DB {
     }
 
 
-    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory(@Nullable BackendFactory backendFactory) {
-        if (backendFactory != null) {
-            return new RustSQLiteOpenHelperFactory(backendFactory);
+    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory(@Nullable OpenHelperFactory openHelper) {
+        if (openHelper != null) {
+            return openHelper.getFactory();
         }
 
         if (sqliteOpenHelperFactory == null) {
@@ -379,5 +376,10 @@ public class DB {
         } else {
             Timber.w("Not in a transaction. Cannot end transaction.");
         }
+    }
+
+    @FunctionalInterface
+    public interface OpenHelperFactory {
+        SupportSQLiteOpenHelper.Factory getFactory();
     }
 }
