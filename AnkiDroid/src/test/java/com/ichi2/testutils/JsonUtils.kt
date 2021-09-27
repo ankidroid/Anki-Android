@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import org.json.JSONException
 import org.json.JSONStringer
@@ -33,6 +34,29 @@ object JsonUtils {
         return stringer.toString()
     }
 
+    @JvmStatic
+    fun JSONArray.toOrderedString(): String {
+        val stringer = JSONStringer()
+        writeTo(stringer)
+        return stringer.toString()
+    }
+
+    private fun JSONArray.values() = sequence {
+        var i = 0
+        while (i < this@values.length()) {
+            yield(this@values[i])
+            i++
+        }
+    }
+
+    private fun JSONArray.writeTo(stringer: JSONStringer) {
+        stringer.array()
+        for (value in this.values()) {
+            stringer.value(toOrderedString(value))
+        }
+        stringer.endArray()
+    }
+
     private fun JSONObject.iterateEntries() = sequence {
         for (k in this@iterateEntries) {
             yield(Pair(k, this@iterateEntries.get(k)))
@@ -43,8 +67,16 @@ object JsonUtils {
     private fun JSONObject.writeTo(stringer: JSONStringer) {
         stringer.`object`()
         for ((key, value) in this.iterateEntries().toList().sortedBy { x -> x.first }) {
-            stringer.key(key).value(value)
+            stringer.key(key).value(toOrderedString(value))
         }
         stringer.endObject()
+    }
+
+    private fun toOrderedString(value: Any): Any {
+        return when (value) {
+            is JSONObject -> { JSONObject(value.toOrderedString()) }
+            is JSONArray -> { JSONArray(value.toOrderedString()) }
+            else -> { value }
+        }
     }
 }
