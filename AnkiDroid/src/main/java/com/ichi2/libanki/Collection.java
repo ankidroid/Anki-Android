@@ -106,10 +106,10 @@ public class Collection implements CollectionGetter {
     private boolean mServer;
     //private double mLastSave;
     private final Media mMedia;
-    private final DeckManager mDecks;
-    private ModelManager mModels;
-    private final TagManager mTags;
-    private ConfigManager mConf;
+    protected DeckManager mDecks;
+    protected ModelManager mModels;
+    protected TagManager mTags;
+    protected ConfigManager mConf;
 
     private AbstractSched mSched;
 
@@ -129,7 +129,7 @@ public class Collection implements CollectionGetter {
     private LinkedBlockingDeque<UndoAction> mUndo;
 
     private final String mPath;
-    private final DroidBackend mDroidBackend;
+    protected final DroidBackend mDroidBackend;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -176,8 +176,7 @@ public class Collection implements CollectionGetter {
         //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo();
         mMedia = new Media(this, server);
-        mDecks = new Decks(this);
-        mTags = new Tags(this);
+        mTags = initTags();
         load();
         if (mCrt == 0) {
             mCrt = UIUtils.getDayStart(getTime()) / 1000;
@@ -188,6 +187,37 @@ public class Collection implements CollectionGetter {
         if (!get_config("newBury", false)) {
             set_config("newBury", true);
         }
+    }
+
+
+
+    protected DeckManager initDecks(String deckConf) {
+        DeckManager deckManager = new Decks(this);
+        // getModels().load(loadColumn("models")); This code has been
+        // moved to `CollectionHelper::loadLazyCollection` for
+        // efficiency Models are loaded lazily on demand. The
+        // application layer can asynchronously pre-fetch those parts;
+        // otherwise they get loaded when required.
+        deckManager.load(loadColumn("decks"), deckConf);
+        return deckManager;
+    }
+
+
+    @NonNull
+    protected ConfigManager initConf(String conf) {
+        return new Config(conf);
+    }
+
+    @NonNull
+    protected TagManager initTags() {
+        return new Tags(this);
+    }
+
+    @NonNull
+    protected ModelManager initModels() {
+        Models models = new Models(this);
+        models.load(loadColumn("models"));
+        return models;
     }
 
 
@@ -271,7 +301,7 @@ public class Collection implements CollectionGetter {
             mDty = cursor.getInt(3) == 1; // No longer used
             mUsn = cursor.getInt(4);
             mLs = cursor.getLong(5);
-            mConf = new Config(cursor.getString(6));
+            mConf = initConf(cursor.getString(6));
             deckConf = cursor.getString(7);
             mTags.load(cursor.getString(8));
         } finally {
@@ -279,12 +309,7 @@ public class Collection implements CollectionGetter {
                 cursor.close();
             }
         }
-        // getModels().load(loadColumn("models")); This code has been
-        // moved to `CollectionHelper::loadLazyCollection` for
-        // efficiency Models are loaded lazily on demand. The
-        // application layer can asynchronously pre-fetch those parts;
-        // otherwise they get loaded when required.
-        mDecks.load(loadColumn("decks"), deckConf);
+        mDecks = initDecks(deckConf);
     }
 
     private static int sChunk = 0;
@@ -2043,10 +2068,9 @@ public class Collection implements CollectionGetter {
      *
      * @return The model manager
      */
-    public synchronized ModelManager getModels() {
+    public final synchronized ModelManager getModels() {
         if (mModels == null) {
-            mModels = new Models(this);
-            mModels.load(loadColumn("models"));
+            mModels = initModels();
         }
         return mModels;
     }
