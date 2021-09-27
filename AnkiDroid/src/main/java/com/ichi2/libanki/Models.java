@@ -86,7 +86,6 @@ public class Models extends ModelManager {
             + "\"latexsvg\": false,"
             + "\"mod\": 0, "
             + "\"usn\": 0, "
-            + "\"vers\": [], " // FIXME: remove when other clients have caught up
             + "\"type\": "
             + Consts.MODEL_STD
             + ", "
