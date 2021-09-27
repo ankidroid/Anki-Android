@@ -55,4 +55,15 @@ class ConfigTest : RobolectricTest() {
 
         assertThat("key removed", col.has_config_not_null("aa"), equalTo(false))
     }
+
+    @Test
+    fun get_config_uses_default() {
+        assertThat(col.get_config("hello", 1L), equalTo(1L))
+
+        val json = col.conf
+        json.put("hello", JSONObject.NULL)
+        col.conf = json
+
+        assertThat(col.get_config("hello", 1L), equalTo(1L))
+    }
 }

@@ -2143,7 +2143,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public Boolean get_config(@NonNull String key, @Nullable Boolean defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue;
         }
         return mConf.getBoolean(key);
@@ -2152,7 +2152,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public Long get_config(@NonNull String key, @Nullable Long defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue;
         }
         return mConf.getLong(key);
@@ -2161,7 +2161,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public Integer get_config(@NonNull String key, @Nullable Integer defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue;
         }
         return mConf.getInt(key);
@@ -2169,7 +2169,7 @@ public class Collection implements CollectionGetter {
 
     @Contract("_, !null -> !null")
     public Double get_config(@NonNull String key, @Nullable Double defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue;
         }
         return mConf.getDouble(key);
@@ -2178,7 +2178,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public String get_config(@NonNull String key, @Nullable String defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue;
         }
         return mConf.getString(key);
@@ -2188,7 +2188,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public JSONObject get_config(@NonNull String key, @Nullable JSONObject defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue == null ? null : new JSONObject(defaultValue);
         }
         return new JSONObject(mConf.getJSONObject(key));
@@ -2198,7 +2198,7 @@ public class Collection implements CollectionGetter {
     @Nullable
     @Contract("_, !null -> !null")
     public JSONArray get_config(@NonNull String key, @Nullable JSONArray defaultValue) {
-        if (!mConf.has(key)) {
+        if (mConf.isNull(key)) {
             return defaultValue == null ? null : new JSONArray(defaultValue);
         }
         return new JSONArray(mConf.getJSONArray(key));
