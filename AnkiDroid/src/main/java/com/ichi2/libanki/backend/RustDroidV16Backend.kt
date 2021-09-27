@@ -16,6 +16,7 @@
 package com.ichi2.libanki.backend
 
 import android.content.Context
+import androidx.sqlite.db.SupportSQLiteOpenHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.DB
@@ -37,4 +38,28 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
 
     override fun createCollection(context: Context, db: DB, path: String?, server: Boolean, log: Boolean, time: Time): Collection =
         CollectionV16(context, db, path, server, log, time, this)
+
+    override fun openCollectionDatabase(path: String?): DB {
+        return DB(path) { RustV2SQLiteOpenHelperFactory(backendFactory) }
+    }
+
+    /**
+     * A [SupportSQLiteOpenHelper.Factory] which will upgrade the collection
+     * to the schema of the backend on open
+     */
+    class RustV2SQLiteOpenHelperFactory(@Suppress("UNUSED") private val backendFactory: BackendFactory) : SupportSQLiteOpenHelper.Factory {
+        override fun create(configuration: SupportSQLiteOpenHelper.Configuration): SupportSQLiteOpenHelper {
+            TODO("Needs backend upgrade")
+            // return RustV2SupportSQLiteOpenHelper(configuration, backendFactory)
+        }
+    }
+    /*
+    Cannot override until a backend upgrade
+    class RustV2SupportSQLiteOpenHelper(configuration: SupportSQLiteOpenHelper.Configuration, backendFactory: BackendFactory?) : RustSupportSQLiteOpenHelper(configuration, backendFactory) {
+        override fun openCollection(backend: BackendV1, configuration: SupportSQLiteOpenHelper.Configuration) {
+            // openCollection upgrades the database to the version of the backend
+            backend.openCollection(configuration.name, "", "", "")
+        }
+    }
+    */
 }
