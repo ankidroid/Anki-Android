@@ -72,7 +72,8 @@ public enum ViewerCommand {
     COMMAND_ABORT_AND_SYNC(R.string.gesture_abort_sync, 34),
     COMMAND_RECORD_VOICE(R.string.record_voice, 35),
     COMMAND_REPLAY_VOICE(R.string.replay_voice, 36),
-    COMMAND_TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard, 37);
+    COMMAND_TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard, 37),
+    COMMAND_SHOW_HINT(R.string.toggle_hint,38);
 
     private final int mResourceId;
     private final int mPreferenceValue;
@@ -187,6 +188,8 @@ public enum ViewerCommand {
                 return from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, ModifierKeys.shift()));
             case COMMAND_UNDO:
                 return from(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH));
+            case COMMAND_SHOW_HINT:
+                return from(keyCode(KeyEvent.KEYCODE_H, CardSide.QUESTION));
             case COMMAND_TOGGLE_FLAG_RED:
                 return from(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ModifierKeys.ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ModifierKeys.ctrl()));
             case COMMAND_TOGGLE_FLAG_ORANGE:
