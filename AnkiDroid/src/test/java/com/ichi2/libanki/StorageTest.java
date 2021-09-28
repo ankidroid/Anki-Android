@@ -23,8 +23,6 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.JsonUtils;
 import com.ichi2.utils.JSONObject;
 
-import net.ankiweb.rsdroid.database.NotImplementedException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -167,7 +165,26 @@ public class StorageTest extends RobolectricTest {
 
             mConf = col.getConf().toString();
             mModels = loadModelsV16(col);
-            throw new NotImplementedException("decks/dconf/tags");
+            mDecks = loadDecksV16(col);
+            mDConf = loadDConf(col);
+            mTags = ""; // by default this is empty
+        }
+
+
+        private String loadDecksV16(Collection col) {
+            JSONObject ret = new JSONObject();
+            for (Deck deck : col.getDecks().all()) {
+                ret.put(deck.getString("id"), deck);
+            }
+            return ret.toString(0);
+        }
+
+        private String loadDConf(Collection col) {
+            JSONObject ret = new JSONObject();
+            for (DeckConfig dcof : col.getDecks().allConf()) {
+                ret.put(dcof.getString("id"), dcof);
+            }
+            return ret.toString(0);
         }
 
         /** Extract models from models.all() and reformat as the JSON style used in the `col.models` column */
@@ -222,10 +239,34 @@ public class StorageTest extends RobolectricTest {
             assertConfEqual(expected);
 
             assertModelsEqual(expected);
-
-            assertThat(this.mDecks, equalTo(expected.mDecks));
-            assertThat(this.mDConf, equalTo(expected.mDConf));
+            assertJsonEqual(this.mDecks, expected.mDecks, "mod");
+            assertJsonEqual(this.mDConf, expected.mDConf);
             assertThat(this.mTags, equalTo(expected.mTags));
+        }
+
+
+        protected void assertJsonEqual(String actual, String expected, String... keysToRemove) {
+            JSONObject expectedRawJson = new JSONObject(expected);
+            JSONObject actualRawJson = new JSONObject(actual);
+
+            for (String k : keysToRemove) {
+                removeFromAllObjects(expectedRawJson, actualRawJson, k);
+            }
+
+            String expectedJson = JsonUtils.toOrderedString(expectedRawJson);
+            String actualJson = JsonUtils.toOrderedString(actualRawJson);
+
+            assertThat(actualJson, equalTo(expectedJson));
+        }
+
+        /** Removes a given key from all sub-objects, example: for all deck ids, remove the "name" */
+        private void removeFromAllObjects(JSONObject actualJson, JSONObject expectedJson, String key) {
+            for (String id : actualJson) {
+                actualJson.getJSONObject(id).remove(key);
+            }
+            for (String id : expectedJson) {
+                expectedJson.getJSONObject(id).remove(key);
+            }
         }
 
 
