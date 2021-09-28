@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.text.format.Formatter;
+import android.util.Pair;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
@@ -57,6 +59,8 @@ public class CollectionHelper {
     private Collection mCollection;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
+    public static final String MEDIA_DIR_NAME = "collection.media";
+    private LinkedBlockingDeque<Pair<File, Integer>> mediaMigrationDeque;
 
     /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
@@ -445,6 +449,10 @@ public class CollectionHelper {
         return context.getFilesDir().getAbsolutePath();
     }
 
+    public static String getCollectionMediaPath(@NonNull String ankiDroidDirPath) {
+        return new File(ankiDroidDirPath, MEDIA_DIR_NAME).getAbsolutePath();
+    }
+
     /**
      *
      * @return the path to the actual {@link Collection} file
@@ -651,5 +659,13 @@ public class CollectionHelper {
 
     public static String getMigrationSourcePath(Context context) {
         return AnkiDroidApp.getSharedPrefs(context).getString("migrationSourcePath", getDefaultAnkiDroidDirectory(context));
+    }
+
+    public void setMediaMigrationDeque(LinkedBlockingDeque<Pair<File, Integer>> deque) {
+        mediaMigrationDeque = deque;
+    }
+
+    public LinkedBlockingDeque<Pair<File, Integer>> getMediaMigrationDeque() {
+        return mediaMigrationDeque;
     }
 }

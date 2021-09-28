@@ -86,6 +86,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
@@ -243,6 +244,76 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
+    public static class MediaMigrationProducer extends TaskDelegate<Integer, Boolean> {
+        LinkedBlockingDeque<Pair<File, Integer>> mDeque;
+        File mSourceDir;
+        File mDestinationDir;
+        public static final int ACTION_RENAME = 0;
+        public static final int ACTION_COPY_AND_DELETE = 1;
+        public static final int ACTION_PREEMPT = 2;
+        public static final int ACTION_FINISH = 3;
+        public static final int ACTION_ABORT = 4;
+
+        public MediaMigrationProducer(LinkedBlockingDeque<Pair<File, Integer>> deque, File sourceDir, File destinationDir) {
+            mDeque = deque;
+            mSourceDir = sourceDir;
+            mDestinationDir = destinationDir;
+        }
+
+        public void renameDirectoryProducer(@NonNull final File srcDir, @NonNull final File destDir) throws IOException, InterruptedException {
+            // If destDir doesn't exist, attempt to rename srcDir to destDir
+            if (!destDir.exists()) {
+                mDeque.put(new Pair<>(srcDir, ACTION_RENAME));
+                return;
+            }
+
+            // Otherwise, attempt to move the contents of srcDir by renaming
+            for (final File file : FileUtil.listFiles(srcDir)) {
+                mDeque.put(new Pair<>(file, ACTION_RENAME));
+            }
+        }
+
+        public void copyAndDeleteDirectoryProducer(@NonNull File srcDir, @NonNull File destDir) throws IOException, InterruptedException {
+            // If destDir exists, it must be a directory. If not, create it
+            FileUtil.ensureFileIsDirectory(destDir);
+
+            final File[] srcFiles = FileUtil.listFiles(srcDir);
+
+            // Copy the contents of srcDir to destDir
+            for (final File srcFile : srcFiles) {
+                final File destFile = new File(destDir, srcFile.getName());
+                if (srcFile.isDirectory()) {
+                    copyAndDeleteDirectoryProducer(srcFile, destFile);
+                } else if (srcFile.length() != destFile.length()) {
+                    mDeque.put(new Pair<>(srcFile, ACTION_COPY_AND_DELETE));
+                }
+            }
+        }
+
+        @Override
+        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> collectionTask) {
+            boolean complete = true;
+            int action;
+            try {
+                renameDirectoryProducer(mSourceDir, mDestinationDir);
+                copyAndDeleteDirectoryProducer(mSourceDir, mDestinationDir);
+                action = ACTION_FINISH;
+            } catch (IOException | InterruptedException e) {
+                Timber.w(e, "Error while migrating media");
+                complete = false;
+                action = ACTION_ABORT;
+            }
+
+            // Send message indicating whether input is complete or not
+            try {
+                mDeque.put(new Pair<>(null, action));
+            } catch (InterruptedException e) {
+                Timber.e(e, "Error in media migration producer: adding end of messages marker");
+            }
+            return complete;
+        }
+    }
+
     /**
      * Migrates media files in 'collection.media' and backup files from 'backups' from sourceDir to destinationDir.
      * Copies the most recent backup file to the source/latest-backup directory from the source/backup directory
@@ -256,6 +327,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
      * TODO: Allow move directory only (and not copy) once AnkiDroid is fully functional under Scoped Storage.
      */
     public static class MigrateUserData extends TaskDelegate<Integer, Boolean> {
+        LinkedBlockingDeque<Pair<File, Integer>> mDeque;
         File mSourceDir;
         File mDestinationDir;
         int mMigrationOption;
@@ -265,7 +337,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         public static final int COPY = 0;
         public static final int MOVE = 1;
 
-        public MigrateUserData(File sourceDir, File destinationDir, @MigrationOption int migrationOption) {
+        public MigrateUserData(LinkedBlockingDeque<Pair<File, Integer>> deque, File sourceDir, File destinationDir, @MigrationOption int migrationOption) {
+            mDeque = deque;
             mSourceDir = sourceDir;
             mDestinationDir = destinationDir;
             mMigrationOption = migrationOption;
@@ -324,6 +397,74 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
         }
 
+        public boolean moveDirectoryConsumer(Context context, LinkedBlockingDeque<Pair<File, Integer>> deque, File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> listener)
+                throws IOException {
+            boolean attemptRename = true;
+            // The main producer sends a fixed number of messages to this consumer, this variable keeps track of whether that input has ended
+            boolean endOfFixedProducerInput = false;
+            while (true) {
+                // If the main producer has sent all of its messages and there are no more in the queue, consumer can stop
+                if (deque.peek() == null && endOfFixedProducerInput) {
+                    return true;
+                }
+                Pair<File, Integer> message = null;
+                try {
+                    message = deque.take();
+                } catch (InterruptedException e) {
+                    Timber.w(e);
+                }
+                File srcFile = message.first;
+                Integer action = message.second;
+
+                // No more input will be received from the main producer that is traversing the source directory
+                if (action == MediaMigrationProducer.ACTION_FINISH) {
+                    srcDir.delete();
+                    endOfFixedProducerInput = true;
+
+                    // Removing the `migrationSourcePath` preference, then checking the queue once again gives us a change
+                    // of catching any messages sent by another producer before exiting
+
+                    // Remove legacy path preference since Migration of collection, media, and backups is complete
+                    // Hence, nothing is left to migrate and we don't need to keep track of migrationSourcePath
+                    // Other producers are expected to stop sending messages once this preference is removed
+                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+                    preferences.edit().remove("migrationSourcePath").commit();
+                    continue;
+                } else if (action == MediaMigrationProducer.ACTION_ABORT) {
+                    return false;
+                }
+
+                if (!srcFile.exists()) {
+                    continue;
+                }
+
+                String srcPath = srcFile.getAbsolutePath();
+                File destFile = new File(destDir.getAbsolutePath() + srcPath.substring(srcDir.getAbsolutePath().length()));
+
+                // Attempt to rename and update attemptRename accordingly
+                // If one rename fails, the following renames are also expected to fail
+                if (action == MediaMigrationProducer.ACTION_RENAME && attemptRename) {
+                    if (srcFile.renameTo(destFile)) {
+                        listener.doProgress((int) destFile.length() / 1024);
+                    } else {
+                        attemptRename = false;
+                    }
+                }
+
+                // If a copy and delete task is received but all renames have been successful, then data has been copied
+                if (action == MediaMigrationProducer.ACTION_COPY_AND_DELETE && attemptRename) {
+                    deque.clear();
+                    return true;
+                }
+
+                // If rename wasn't attempted or it failed, and the srcFile still exists, move the file directly
+                if (!attemptRename && !srcFile.isDirectory()) {
+                    CompatHelper.getCompat().copyFile(srcFile.getAbsolutePath(), destFile.getAbsolutePath());
+                }
+                srcFile.delete();
+            }
+        }
+
         @Override
         protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Integer> listener) {
             File mediaSourceDir = new File(mSourceDir, "collection.media");
@@ -333,27 +474,22 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
             Timber.i("Starting Media & Backups Migration %s to %s", mediaSourceDir.getAbsolutePath(), mediaDestinationDir.getAbsolutePath());
 
-            // Migrate media folder from mSourceDir to mDestinationDir
-            if (!migrate(mediaSourceDir, mediaDestinationDir, listener)) {
-                return false;
-            }
-
             // Copy the latest backup file (meant to be left in the source directory after migration) outside the backup folder
-            if (!preserveLatestBackup()) {
-                return false;
+            // Migrate the backup folder to the destination directory
+            if (backupSourceDir.exists()) {
+                preserveLatestBackup();
+                migrate(backupSourceDir, backupDestinationDir, listener);
             }
 
-            // Migrate the backup folder to the destination directory
-            if (!migrate(backupSourceDir, backupDestinationDir, listener)) {
+            // Migrate media folder from mSourceDir to mDestinationDir
+            try {
+                moveDirectoryConsumer(col.getContext(), mDeque, mediaSourceDir, mediaDestinationDir, listener);
+            } catch (IOException e) {
+                Timber.w(e, "Error during user media migration from %s to %s", mediaSourceDir, mediaDestinationDir);
                 return false;
             }
 
             Timber.i("Completed Media & Backups Migration");
-
-            // Remove legacy path preference since Migration of collection, media, and backups is complete
-            // Hence, nothing is left to migrate and we don't need to keep track of migrationSourcePath
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(col.getContext());
-            preferences.edit().remove("migrationSourcePath").commit();
 
             if (mMigrationOption == COPY) {
                 return true;

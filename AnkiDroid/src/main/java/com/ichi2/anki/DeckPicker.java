@@ -146,6 +146,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -523,7 +524,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * */
     public void handleStartup() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-
         // Resume migration if migrationSourcePath exists
         if (preferences.contains("migrationSourcePath")) {
             startOrResumeMigration();
@@ -571,7 +571,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
         handleStartupScenarios();
-        startService(new Intent(this, MigrationService.class));
+        CollectionHelper.getInstance().setMediaMigrationDeque(new LinkedBlockingDeque<>());
+        Intent migrationServiceIntent = new Intent(this, MigrationService.class);
+        migrationServiceIntent.putExtra("deque", CollectionHelper.getInstance().getMediaMigrationDeque());
+        startService(migrationServiceIntent);
     }
 
     /**

@@ -2647,10 +2647,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         try {
-            CompatHelper.getCompat().copyFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath());
-        } catch (IOException e) {
-            Timber.w("Error trying to fetch media from migration source from %s to %s",
-                    sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath());
+            CollectionHelper.getInstance().getMediaMigrationDeque().putFirst(new Pair<>(sourceFile, CollectionTask.MediaMigrationProducer.ACTION_PREEMPT));
+        } catch (InterruptedException e) {
+            Timber.w(e, "Error while preempting media request by requesting copy from %s to %s", sourceFile, destinationFile);
         }
     }
 

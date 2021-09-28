@@ -20,16 +20,20 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Pair
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
-import com.ichi2.async.*
+import com.ichi2.async.CollectionTask
 import com.ichi2.async.CollectionTask.MigrateUserData.MOVE
+import com.ichi2.async.CoroutineTask
+import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.utils.FileUtil
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.LinkedBlockingDeque
 
 class MigrationService : Service() {
 
@@ -41,6 +45,7 @@ class MigrationService : Service() {
     lateinit var notificationBuilder: NotificationCompat.Builder
     lateinit var notificationManager: NotificationManagerCompat
     lateinit var listener: TaskListenerWithContext<Context, Int, Boolean>
+    private var deque: LinkedBlockingDeque<Pair<File?, Int>>? = null
     var cancelled = false
 
     private inner class MigrateUserDataListener(sourceSize: Long?) : TaskListenerWithContext<Context, Int?, Boolean?>(this) {
@@ -133,17 +138,33 @@ class MigrationService : Service() {
         }
     }
 
-    override fun onCreate() {
-        val sourceDir = File(CollectionHelper.getMigrationSourcePath(this))
-        val destDir = File(CollectionHelper.getDefaultAnkiDroidDirectory(this))
-        CoroutineTask(
-            CollectionTask.MigrateUserData(sourceDir, destDir, MOVE),
-            MigrateUserDataListener(FileUtil.getDirectorySize(sourceDir))
-        ).execute()
-    }
+    private fun getRestartBehavior() = START_STICKY
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
+        deque = intent?.extras?.get("deque") as LinkedBlockingDeque<Pair<File?, Int>>
+        if (deque == null) {
+            stopSelf()
+            return getRestartBehavior()
+        }
+
+        val sourceDir = File(CollectionHelper.getMigrationSourcePath(this))
+        val destDir = File(CollectionHelper.getDefaultAnkiDroidDirectory(this))
+
+        CoroutineTask(
+            CollectionTask.MediaMigrationProducer(
+                deque,
+                File(CollectionHelper.getCollectionMediaPath(sourceDir.absolutePath)),
+                File(CollectionHelper.getCollectionMediaPath(destDir.absolutePath))
+            ),
+            null
+        ).execute()
+
+        CoroutineTask(
+            CollectionTask.MigrateUserData(deque, sourceDir, destDir, MOVE),
+            MigrateUserDataListener(FileUtil.getDirectorySize(sourceDir))
+        ).execute()
+
+        return getRestartBehavior()
     }
 
     override fun onBind(intent: Intent): IBinder? {
