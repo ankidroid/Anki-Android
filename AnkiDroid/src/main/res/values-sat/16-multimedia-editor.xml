@@ -58,7 +58,7 @@
     <string name="multimedia_editor_trans_install_color_dict">ᱯᱩᱭᱞᱩ ColorDict ᱜᱟᱺᱣᱛᱟᱦᱟᱭ ᱢᱮ</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">ᱞᱳᱰ</string>
-    <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="multimedia_editor_pron_looking_up">ᱩᱪᱨᱚᱬ ᱠᱚ ᱧᱮᱞ-ᱧᱮᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">ᱩᱪᱨᱚᱬ ᱵᱟᱝᱜᱟᱱ ᱞᱮᱱᱟ</string>
     <string name="multimedia_editor_word_search_try_lower_case">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱹᱴᱤᱡ ᱟᱠᱷᱚᱨ ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
@@ -116,7 +116,7 @@
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ᱮᱰᱤᱴᱤᱝ ᱡᱟᱭᱜᱟ</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">ᱛᱚᱨᱡᱚᱢᱟ </string>
     <!-- Network failure -->
-    <string name="network_no_connection">ᱵᱟᱝ ᱡᱚᱲᱟᱹᱣ</string>
+    <string name="network_no_connection">ᱡᱚᱯᱨᱟᱣ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- Crop function-->
     <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
     <string name="crop_button">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ </string>

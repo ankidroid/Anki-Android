@@ -56,11 +56,11 @@
     <string name="tts_no_tts">Non chistiones</string>
     <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
     <string-array name="about_content">
-        <item><![CDATA[AnkiDroid est publicadu in suta de sa &lt;a href="%1$s"&gt;litzèntzia GNU-GPL v3&lt;/a&gt; e su còdighe de orìgine suo est a disponimentu &lt;a href="%2$s"&gt;in GitHub&lt;/a&gt;.]]></item>
-        <item><![CDATA[Fintzas chie no est un\'isvilupadore podet agiudare. Pro nàrrere, podes &lt;a href="%1$s"&gt;agiudare a bortare&lt;/a&gt; AnkiDroid, atualizare sa wiki, frunire ischermadas, o iscrìere in su blog tuo in subra de AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid est unu &amp;lt;a href="%1$s"&amp;gt;programma a còdighe abertu&amp;lt;a/&amp;gt;, duncas totu cantos sunt incoragiados a &amp;lt;a href="%2$s"&amp;gt;contribuire&amp;lt;/a&amp;gt; :-)]]></item>
-        <item><![CDATA[Pro nos agiudare a megiorare AnkiDroid pro praghere sinnala sos errores in su &lt;a href="%1$s"&gt;sinnaladore de errores&lt;/a&gt;; fintzas sas ideas pro funtzionalidades noas sunt bene bènnidas. Agata rispostas in &lt;a href="%2$s"&gt;sa wiki&lt;/a&gt; o aberi un\'arresonu in &lt;a href="%3$s"&gt;su forum&lt;/a&gt;.]]></item>
-        <item><![CDATA[&lt;h2&gt;%1$s:&lt;br/&gt;Cartas mnemònicas pro Android&lt;/h2&gt;AnkiDroid est un aplicatzione a cartas mnemònicas chi est cumpatìbile de su totu cun su programma pro elaboradores de iscrivania &lt;a href="%2$s"&gt;Anki&lt;/a&gt;. Podes creare, iscarrigare e istudiare materiale siat in AnkiDroid siat in Anki Desktop, e los podes sincronizare in manera fàtzile cun AnkiWeb.]]></item>
+        <item><![CDATA[<h2>%1$s:<br/>Cartas mnemònicas pro Android</h2>AnkiDroid est un\'aplicatzione a cartas mnemònicas chi est cumpatìbile de su totu cun su programma de iscrivania <a href=\"%2$s\">Anki</a>. Podes creare, iscarrigare e imparare materiale siat in AnkiDroid siat in Anki Desktop, e los podes sincronizare in manera fàtzile impreende AnkiWeb.]]></item>
+        <item><![CDATA[Pro nos agiudare a megiorare AnkiDroid sinnala·nos sas faddinas de còdighe in <a href=\"%1$s\">s\'arrastadore de errores</a>; sunt benebènnidas fintzas sas ideas pro funtzionalidades noas. Busca rispostas in <a href=\"%2$s\">sa wiki</a> o incumintza un\'arresonu in <a href=\"%3$s\">su forum</a>.]]></item>
+        <item><![CDATA[AnkiDroid est unu <a href=\"%1$s\">programma a còdighe abertu<a/>, duncas totu cantos sunt incoragiados a <a href=\"%2$s\">contribuire</a> :-)]]></item>
+        <item><![CDATA[Fintzas chie no est un\'isvilupadore podet agiudare. Pro nàrrere, podes <a href=\"%1$s\">agiudare a bortare</a> AnkiDroid, atualizare sa wiki, frunire ischermadas, o iscrìere in su blog tuo in subra de AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid est publicadu in suta de sa <a href=\"%1$s\">litzèntzia GNU-GPL v3</a> e su còdighe de orìgine suo est a disponimentu <a href=\"%2$s\">in GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antiprima</string>
     <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>

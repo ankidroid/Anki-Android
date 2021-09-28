@@ -248,7 +248,7 @@
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
-    <string name="less_than_time">&amp;lt; %s</string>
+    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Custu matzu esistit giai</string>
     <string name="decks_rename_filtered_nosubdecks">Unu matzu filtradu non podet cuntènnere suta-matzos</string>
     <string name="filtered_deck_name">Matzu filtradu</string>
