@@ -134,7 +134,7 @@ public class Decks extends DeckManager {
                     + "\"leechAction\": " + Consts.LEECH_SUSPEND
                 + "},"
                 + "\"rev\": {"
-                    + "\"perDay\": 100,"
+                    + "\"perDay\": 200,"
                     + "\"ease4\": 1.3,"
                     + "\"fuzz\": 0.05,"
                     + "\"minSpace\": 1," // not currently used
