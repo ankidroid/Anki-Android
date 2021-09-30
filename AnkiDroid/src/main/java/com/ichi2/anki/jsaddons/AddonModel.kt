@@ -19,6 +19,7 @@ package com.ichi2.anki.jsaddons
 
 import android.content.SharedPreferences
 import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
+import com.ichi2.anki.jsaddons.NpmUtils.NOTE_EDITOR_ADDON
 
 /**
  * This class used in NpmPackageDownloader by ObjectMapper to map npm package.json to AddonModel
@@ -83,9 +84,13 @@ fun AddonModel.isValidAnkiDroidAddon(): Boolean {
     }
 
     // if fields are empty
-    if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() || icon.isNullOrBlank() ||
+    if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() ||
         ankidroidJsApi.isEmpty() || addonType.isEmpty() || homepage.isEmpty()
     ) {
+        return false
+    }
+
+    if (addonType == NOTE_EDITOR_ADDON && icon.isNullOrBlank()) {
         return false
     }
 
