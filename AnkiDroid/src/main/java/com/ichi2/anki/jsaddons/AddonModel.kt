@@ -32,6 +32,7 @@ import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
 class AddonModel {
     val name: String? = null // name of npm package, it unique for each package listed on npm
     val addonTitle: String? = null // for showing in AnkiDroid
+    val icon: String? = null // only required for note editor (single character recommended)
     val version: String? = null
     val description: String? = null
     val main: String? = null
@@ -82,7 +83,7 @@ fun AddonModel.isValidAnkiDroidAddon(): Boolean {
     }
 
     // if fields are empty
-    if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() ||
+    if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() || icon.isNullOrBlank() ||
         ankidroidJsApi.isEmpty() || addonType.isEmpty() || homepage.isEmpty()
     ) {
         return false

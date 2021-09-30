@@ -429,4 +429,7 @@
     <string name="addon_type" comment="Addon type reviewer or note-editor">Type </string>
     <string name="addon_author">Author</string>
     <string name="addon_license">License</string>
+    <string name="addon_homepage">Homepage</string>
+    <string name="addon_update">Update</string>
+    <string name="addon_details">Details</string>
 </resources>
