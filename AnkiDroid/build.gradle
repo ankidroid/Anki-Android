@@ -306,7 +306,7 @@ dependencies {
     implementation 'com.arcao:slf4j-timber:3.1'
     // TODO: Re-enable Timber inspections in lint-release.xml after https://github.com/JakeWharton/timber/issues/408
     implementation 'com.jakewharton.timber:timber:5.0.1'
-    implementation 'org.jsoup:jsoup:1.14.2'
+    implementation 'org.jsoup:jsoup:1.14.3'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
