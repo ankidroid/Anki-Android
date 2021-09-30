@@ -82,6 +82,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.jsaddons.AddonModel;
+import com.ichi2.anki.jsaddons.NpmUtils;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
@@ -1902,7 +1903,9 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         // list note editor enabled addons from directory and insert in mToolbar
-        listEnabledAddonsFromDir();
+        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support_prefs", false)) {
+            listEnabledAddonsFromDir();
+        }
 
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
