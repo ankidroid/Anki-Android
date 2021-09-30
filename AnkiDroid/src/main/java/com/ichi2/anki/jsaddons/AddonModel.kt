@@ -18,6 +18,7 @@
 package com.ichi2.anki.jsaddons
 
 import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
+import com.ichi2.anki.jsaddons.NpmUtils.NOTE_EDITOR_ADDON
 
 /**
  * This class used in NpmPackageDownloader by ObjectMapper to map npm package.json to AddonModel
@@ -31,6 +32,7 @@ import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
 class AddonModel {
     val name: String? = null // name of npm package, it unique for each package listed on npm
     val addonTitle: String? = null // for showing in AnkiDroid
+    val icon: String? = null // only required for note editor (single character recommended)
     val version: String? = null
     val description: String? = null
     val main: String? = null
@@ -63,6 +65,10 @@ fun AddonModel.isValidAnkiDroidAddon(): Boolean {
     if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() ||
         ankidroidJsApi.isEmpty() || addonType.isEmpty() || homepage.isEmpty()
     ) {
+        return false
+    }
+
+    if (addonType == NOTE_EDITOR_ADDON && icon.isNullOrBlank()) {
         return false
     }
 
