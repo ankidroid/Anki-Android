@@ -18,7 +18,6 @@
 package com.ichi2.anki.jsaddons
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.net.Uri
@@ -26,6 +25,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.fasterxml.jackson.core.JacksonException
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -52,7 +52,7 @@ class NpmPackageDownloader {
      * for valid addon npm package - show button
      * for invalid addon npm package - hide button
      */
-    class ShowHideInstallButton(private val context: Context, private val npmPackageName: String) : TaskDelegate<Void?, String?>() {
+    class InstallButtonTask(private val context: Context, private val npmPackageName: String) : TaskDelegate<Void?, String?>() {
 
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>): String? {
             val url = URL(context.getString(R.string.npmjs_registry, npmPackageName))
@@ -60,11 +60,8 @@ class NpmPackageDownloader {
         }
 
         /**
-         * Using Jackson the latest package.json for the addon fetched, then mapped to AddonModel
-         * For valid package it gets tarball url from mapped AddonModel,
-         * then downloads and extract to AnkiDroid/addons folder using {@code extractAndCopyAddonTgz} and toast with success message returned
-         *
-         * For invalid addon or for exception occurred, it returns message to respective to the errors from catch block
+         * Here Jackson used to map package.json from given url https://www.npmjs.org/package/addon-name to AddonModel
+         * For valid package it readValue url and gets tarball url from mapped AddonModel
          *
          * @param url npmjs.org package registry url http://registry.npmjs.org/ankidroid-js-addon-.../latest
          * @return tarballUrl if valid addon else message explaining errors
@@ -72,6 +69,7 @@ class NpmPackageDownloader {
         fun getTarBallUrl(url: URL): String? {
             try {
                 // mapping for json fetched from http://registry.npmjs.org/ankidroid-js-addon-.../latest
+                // Note: here IO operation happening
                 val mapper = ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 val addonModel = mapper.readValue(url, AddonModel::class.java)
@@ -82,8 +80,7 @@ class NpmPackageDownloader {
                 }
 
                 // get tarball url to download it cache folder
-                val tarballUrl = addonModel.dist!!["tarball"]
-                return tarballUrl
+                return addonModel.dist!!["tarball"]
 
                 // addonTitle sent to list the addons in recycler view
             } catch (e: JacksonException) {
@@ -111,7 +108,7 @@ class NpmPackageDownloader {
      *
      * in onPostExecute after page loaded result is tarballUrl, show hidden button and set OnClickListener for calling another Task which download and extract .tgz file
      */
-    class ShowHideInstallButtonListener(
+    class InstallButtonListener(
         private val activity: Activity,
         private val downloadButton: Button,
         private val addonName: String
@@ -152,17 +149,14 @@ class NpmPackageDownloader {
             // show when 'Install Addon' at bottom right button clicked
             // when yes button click then shown download dialog with progress bar
             downloadButton.setOnClickListener {
-                val builder = AlertDialog.Builder(activity)
-                builder.setTitle(R.string.confirm_install)
-                builder.setMessage(context.getString(R.string.confirm_addon_install_message, addonName))
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        downloadRunnable.run()
-                    }
-                    .setNegativeButton(R.string.dialog_no) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                val alert = builder.create()
-                alert.show()
+                val builder = MaterialDialog.Builder(activity)
+                    .title(R.string.confirm_install)
+                    .content(context.getString(R.string.confirm_addon_install_message, addonName))
+                    .positiveText(R.string.yes)
+                    .negativeText(R.string.dialog_no)
+                    .onPositive { _, _ -> downloadRunnable.run() }
+                    .onNegative { dialog, _ -> dialog.dismiss() }
+                builder.show()
             }
 
             // result will .tgz url for valid npm package else message explaining errors
