@@ -1,6 +1,5 @@
 package com.ichi2.anki.jsaddons
 
-import android.app.Dialog
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
@@ -26,14 +25,14 @@ class NpmPackageDownloaderTest : RobolectricTest() {
     @Throws(ExecutionException::class, InterruptedException::class)
     fun getTarBallUrlTest() {
         val validUrl = URL(context.getString(R.string.npmjs_registry, VALID_ADDON_PACKAGE_NAME))
-        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)
+        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)!!.data
 
         // url will like this, version may be changed for new file
         // https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz
         assertTrue("Valid .tgz file", (result!!.startsWith("https://") && (result!!.endsWith(".tgz"))))
 
         val inValidUrl = URL(context.getString(R.string.npmjs_registry, NOT_VALID_ADDON_PACKAGE_NAME))
-        result = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(inValidUrl)
+        result = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(inValidUrl)!!.message
 
         // for invalid package url, result will be error
         assertFalse("Not a valid .tgz url", result!!.startsWith("https://"))
@@ -44,10 +43,7 @@ class NpmPackageDownloaderTest : RobolectricTest() {
     @Throws(ExecutionException::class, InterruptedException::class)
     fun downloadPackageTest() {
         val validUrl = URL(context.getString(R.string.npmjs_registry, VALID_ADDON_PACKAGE_NAME))
-
-        // url will like this, version may be changed for new file
-        val url: String = "https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz"
-        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)
+        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)!!.data
 
         // use the .tgz url to download
         result = NpmPackageDownloader.DownloadAddon(context, result!!).downloadPackage()
@@ -64,13 +60,12 @@ class NpmPackageDownloaderTest : RobolectricTest() {
 
         // url will like this, version may be changed for new file
         // https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz
-        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)
+        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)!!.data
 
         // download .tgz file from previous result
         val downloadFilePath = HttpFetcher.downloadFileToSdCardMethod(result, context, "addons", "GET")
 
         // is file extracted successfully
-        var progressDialog = Dialog(context)
         var extracted: String = NpmPackageDownloader.ExtractAddon(context, result!!, VALID_ADDON_PACKAGE_NAME)
             .extractAndCopyAddonTgz(downloadFilePath, VALID_ADDON_PACKAGE_NAME)
 

@@ -52,9 +52,9 @@ class NpmPackageDownloader {
      * for valid addon npm package - show button
      * for invalid addon npm package - hide button
      */
-    class InstallButtonTask(private val context: Context, private val npmPackageName: String) : TaskDelegate<Void?, String?>() {
+    class InstallButtonTask(private val context: Context, private val npmPackageName: String) : TaskDelegate<Void?, NetworkResult<String?>?>() {
 
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>): String? {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>): NetworkResult<String?>? {
             val url = URL(context.getString(R.string.npmjs_registry, npmPackageName))
             return getTarBallUrl(url)
         }
@@ -66,8 +66,8 @@ class NpmPackageDownloader {
          * @param url npmjs.org package registry url http://registry.npmjs.org/ankidroid-js-addon-.../latest
          * @return tarballUrl if valid addon else message explaining errors
          */
-        fun getTarBallUrl(url: URL): String? {
-            try {
+        fun getTarBallUrl(url: URL): NetworkResult<String?>? {
+            return try {
                 // mapping for json fetched from http://registry.npmjs.org/ankidroid-js-addon-.../latest
                 // Note: here IO operation happening
                 val mapper = ObjectMapper()
@@ -76,29 +76,19 @@ class NpmPackageDownloader {
 
                 // check if fields like ankidroidJsApi, addonType exists or not
                 if (!addonModel.isValidAnkiDroidAddon()) {
-                    return context.getString(R.string.is_not_valid_js_addon, npmPackageName)
+                    NetworkResult.Failure(context.getString(R.string.is_not_valid_js_addon, npmPackageName), "InstallButtonTask::Invalid Addon")
+                } else {
+                    // get tarball url to download it cache folder
+                    NetworkResult.Success(addonModel.dist!!["tarball"])
                 }
-
-                // get tarball url to download it cache folder
-                return addonModel.dist!!["tarball"]
-
-                // addonTitle sent to list the addons in recycler view
             } catch (e: JacksonException) {
-                // json format is not valid as required by AnkiDroid JS Addon specifications
-                // also ObjectMapper failed to parse the fields for e.g. requested fields in AddonModel is String but
-                // package.json contains array, so it may leads to parse exception or mapping exception
-                Timber.w(e.localizedMessage)
-                return context.getString(R.string.is_not_valid_js_addon, npmPackageName)
+                NetworkResult.Failure(context.getString(R.string.is_not_valid_js_addon, npmPackageName), e.localizedMessage)
             } catch (e: UnknownHostException) {
-                // user not connected to internet
-                Timber.w(e.localizedMessage)
-                return context.getString(R.string.network_no_connection)
+                NetworkResult.Failure(context.getString(R.string.network_no_connection), e.localizedMessage)
             } catch (e: NullPointerException) {
-                Timber.w(e.localizedMessage)
-                return context.getString(R.string.error_occur_downloading_addon, npmPackageName)
+                NetworkResult.Failure(context.getString(R.string.error_occur_downloading_addon, npmPackageName), e.localizedMessage)
             } catch (e: IOException) {
-                Timber.w(e.localizedMessage)
-                return context.getString(R.string.error_occur_downloading_addon, npmPackageName)
+                NetworkResult.Failure(context.getString(R.string.error_occur_downloading_addon, npmPackageName), e.localizedMessage)
             }
         }
     }
@@ -112,16 +102,17 @@ class NpmPackageDownloader {
         private val activity: Activity,
         private val downloadButton: Button,
         private val addonName: String
-    ) : TaskListener<Void?, String?>() {
+    ) : TaskListener<Void?, NetworkResult<String?>?>() {
 
         var context: Context = activity.applicationContext
         override fun onPreExecute() {
             // nothing to do
         }
 
-        override fun onPostExecute(result: String?) {
+        override fun onPostExecute(result: NetworkResult<String?>?) {
             // show download dialog with progress bar
             // there are three task, 1) download, 2) extract and 3) complete
+            var url = ""
             val downloadRunnable = Runnable {
                 val progressDialog = Dialog(activity)
                 progressDialog.setContentView(R.layout.addon_progress_bar_layout)
@@ -130,7 +121,7 @@ class NpmPackageDownloader {
                 // call another task which download .tgz file and extract and copy to addons folder
                 // here result is tarBallUrl
                 val cancellable = TaskManager.launchCollectionTask(
-                    DownloadAddon(activity, result!!),
+                    DownloadAddon(activity, url),
                     DownloadAddonListener(activity, addonName, progressDialog)
                 )
 
@@ -160,19 +151,23 @@ class NpmPackageDownloader {
             }
 
             // result will .tgz url for valid npm package else message explaining errors
-            if (result != null) {
-                // show download button at bottom right with "Install Addon" when string starts with url
-                // the result return from previous collection task
-                if (result.startsWith("https://")) {
+            when (result) {
+                is NetworkResult.Success -> {
+                    // show download button at bottom right with "Install Addon"
+                    // when the result return from previous collection task is valid url
                     downloadButton.visibility = View.VISIBLE
-                } else {
+                    url = result.data!!
+                }
+
+                is NetworkResult.Failure -> {
                     // show snackbar where to seek help and wiki for the errors
                     val helpUrl = Uri.parse(context.getString(R.string.link_help))
                     val activity = activity as AnkiActivity?
                     UIUtils.showSnackbar(
-                        activity, result, false, R.string.help,
-                        { v -> activity?.openUrl(helpUrl) }, null, null
+                        activity, result.message, false, R.string.help,
+                        { activity?.openUrl(helpUrl) }, null, null
                     )
+                    Timber.w(result.data)
                 }
             }
         }
@@ -325,5 +320,13 @@ class NpmPackageDownloader {
             okButton.setText(R.string.dialog_ok)
             okButton.setOnClickListener { progressDialog.dismiss() }
         }
+    }
+
+    sealed class NetworkResult<T>(
+        val data: T? = null,
+        val message: String? = null
+    ) {
+        class Success<T>(data: T) : NetworkResult<T>(data)
+        class Failure<T>(message: String?, data: T? = null) : NetworkResult<T>(data, message)
     }
 }
