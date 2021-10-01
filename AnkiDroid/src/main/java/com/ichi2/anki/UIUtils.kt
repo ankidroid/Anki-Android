@@ -1,53 +1,55 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import com.google.android.material.snackbar.Snackbar;
+package com.ichi2.anki
 
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
+import android.app.Activity
+import android.content.Context
+import android.graphics.Color
+import android.util.DisplayMetrics
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.async.CollectionTask.SaveCollection
+import com.ichi2.async.TaskListener
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.utils.Time
+import timber.log.Timber
+import java.util.*
+import kotlin.jvm.JvmOverloads
 
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ichi2.async.CollectionTask;
-
-import java.util.Calendar;
-
-import timber.log.Timber;
-import com.ichi2.async.TaskListener;
-import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.utils.Time;
-
-public class UIUtils {
-
-    public static void showThemedToast(Context context, String text, boolean shortLength) {
-        Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
-    }
-    public static void showThemedToast(Context context, CharSequence text, boolean shortLength) {
-        UIUtils.showThemedToast(context, text.toString(), shortLength);
-    }
-    public static void showThemedToast(Context context, @StringRes int textResource, boolean shortLength) {
-        Toast.makeText(context, textResource, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+object UIUtils {
+    @JvmStatic
+    fun showThemedToast(context: Context?, text: String?, shortLength: Boolean) {
+        Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
     }
 
+    @JvmStatic
+    fun showThemedToast(context: Context?, text: CharSequence?, shortLength: Boolean) {
+        showThemedToast(context, text.toString(), shortLength)
+    }
+
+    @JvmStatic
+    fun showThemedToast(context: Context?, @StringRes textResource: Int, shortLength: Boolean) {
+        Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
+    }
 
     /**
      * Show a simple Toast-like Snackbar with no actions.
      * To enable swipe-to-dismiss, the Activity layout should include a CoordinatorLayout with id "root_layout"
      */
-    public static Snackbar showSimpleSnackbar(Activity activity, int mainTextResource, boolean shortLength) {
-        View root = activity.findViewById(R.id.root_layout);
-        return showSnackbar(activity, mainTextResource, shortLength, -1, null, root);
+    @JvmStatic
+    fun showSimpleSnackbar(activity: Activity, mainTextResource: Int, shortLength: Boolean): Snackbar? {
+        val root = activity.findViewById<View>(R.id.root_layout)
+        return showSnackbar(activity, mainTextResource, shortLength, -1, null, root)
     }
-    public static Snackbar showSimpleSnackbar(Activity activity, String mainText, boolean shortLength) {
-        View root = activity.findViewById(R.id.root_layout);
-        return showSnackbar(activity, mainText, shortLength, -1, null, root, null);
+
+    @JvmStatic
+    fun showSimpleSnackbar(activity: Activity, mainText: String?, shortLength: Boolean): Snackbar? {
+        val root = activity.findViewById<View>(R.id.root_layout)
+        return showSnackbar(activity, mainText, shortLength, -1, null, root, null)
     }
 
     /**
@@ -59,101 +61,110 @@ public class UIUtils {
      * @param root View Snackbar will attach to. Should be CoordinatorLayout for swipe-to-dismiss to work.
      * @return Snackbar object
      */
-    public static Snackbar showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
-                                int actionTextResource, View.OnClickListener listener, View root) {
-        return showSnackbar(activity, mainTextResource,shortLength,actionTextResource,listener,root, null);
+    @JvmStatic
+    @JvmOverloads
+    fun showSnackbar(
+        activity: Activity,
+        mainTextResource: Int,
+        shortLength: Boolean,
+        actionTextResource: Int,
+        listener: View.OnClickListener?,
+        root: View?,
+        callback: Snackbar.Callback? = null
+    ): Snackbar? {
+        val mainText = activity.resources.getString(mainTextResource)
+        return showSnackbar(activity, mainText, shortLength, actionTextResource, listener, root, callback)
     }
 
-
-    public static Snackbar showSnackbar(Activity activity, int mainTextResource, boolean shortLength,
-                                int actionTextResource, View.OnClickListener listener, View root,
-                                Snackbar.Callback callback) {
-        String mainText = activity.getResources().getString(mainTextResource);
-        return showSnackbar(activity, mainText, shortLength, actionTextResource, listener, root, callback);
+    @JvmStatic
+    fun showSnackbar(
+        activity: Activity,
+        mainText: String?,
+        shortLength: Boolean,
+        actionTextResource: Int,
+        listener: View.OnClickListener?,
+        root: View?,
+        callback: Snackbar.Callback?
+    ): Snackbar? {
+        return showSnackbar(activity, mainText, if (shortLength) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG, actionTextResource, listener, root, callback)
     }
 
-    public static Snackbar showSnackbar(Activity activity, String mainText, boolean shortLength,
-                                        int actionTextResource, View.OnClickListener listener, View root,
-                                        Snackbar.Callback callback) {
-        return showSnackbar(activity, mainText, shortLength ? Snackbar.LENGTH_SHORT : Snackbar.LENGTH_LONG, actionTextResource, listener, root, callback);
-    }
-
-    public static Snackbar showSnackbar(Activity activity, String mainText, int length,
-                                int actionTextResource, View.OnClickListener listener, View root,
-                                Snackbar.Callback callback) {
+    @JvmStatic
+    fun showSnackbar(
+        activity: Activity,
+        mainText: String?,
+        length: Int,
+        actionTextResource: Int,
+        listener: View.OnClickListener?,
+        root: View?,
+        callback: Snackbar.Callback?
+    ): Snackbar? {
+        var root = root
         if (root == null) {
-            root = activity.findViewById(android.R.id.content);
+            root = activity.findViewById(android.R.id.content)
             if (root == null) {
-                Timber.e("Could not show Snackbar due to null View");
-                return null;
+                Timber.e("Could not show Snackbar due to null View")
+                return null
             }
         }
-        Snackbar sb = getSnackbar(activity, mainText, length, actionTextResource, listener, root, callback);
-        sb.show();
-
-        return sb;
+        val sb = getSnackbar(activity, mainText, length, actionTextResource, listener, root, callback)
+        sb.show()
+        return sb
     }
 
-
-    @NonNull
-    public static Snackbar getSnackbar(Activity activity, String mainText, int length, int actionTextResource, View.OnClickListener listener, @NonNull View root, Snackbar.Callback callback) {
-        Snackbar sb = Snackbar.make(root, mainText, length);
+    @JvmStatic
+    fun getSnackbar(activity: Activity?, mainText: String?, length: Int, actionTextResource: Int, listener: View.OnClickListener?, root: View, callback: Snackbar.Callback?): Snackbar {
+        val sb = Snackbar.make(root, mainText!!, length)
         if (listener != null) {
-            sb.setAction(actionTextResource, listener);
+            sb.setAction(actionTextResource, listener)
         }
         if (callback != null) {
-            sb.addCallback(callback);
+            sb.addCallback(callback)
         }
         // Make the text white to avoid interference from our theme colors.
-        View view = sb.getView();
-        TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
-        TextView action = view.findViewById(com.google.android.material.R.id.snackbar_action);
+        val view = sb.view
+        val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        val action = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
         if (tv != null && action != null) {
-            tv.setTextColor(Color.WHITE);
-            action.setTextColor(ContextCompat.getColor(activity, R.color.material_light_blue_500));
-            tv.setMaxLines(2);  // prevent tablets from truncating to 1 line
+            tv.setTextColor(Color.WHITE)
+            action.setTextColor(ContextCompat.getColor(activity!!, R.color.material_light_blue_500))
+            tv.maxLines = 2 // prevent tablets from truncating to 1 line
         }
-        return sb;
+        return sb
     }
 
-
-    public static float getDensityAdjustedValue(Context context, float value) {
-        return context.getResources().getDisplayMetrics().density * value;
+    @JvmStatic
+    fun getDensityAdjustedValue(context: Context, value: Float): Float {
+        return context.resources.displayMetrics.density * value
     }
 
-
-    public static long getDayStart(Time time) {
-        Calendar cal = time.calendar();
-        if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
-            cal.roll(Calendar.DAY_OF_YEAR, -1);
+    @JvmStatic
+    fun getDayStart(time: Time): Long {
+        val cal = time.calendar()
+        if (cal[Calendar.HOUR_OF_DAY] < 4) {
+            cal.roll(Calendar.DAY_OF_YEAR, -1)
         }
-        cal.set(Calendar.HOUR_OF_DAY, 4);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTimeInMillis();
+        cal[Calendar.HOUR_OF_DAY] = 4
+        cal[Calendar.MINUTE] = 0
+        cal[Calendar.SECOND] = 0
+        cal[Calendar.MILLISECOND] = 0
+        return cal.timeInMillis
     }
 
-
-    public static void saveCollectionInBackground() {
-        saveCollectionInBackground(false);
-    }
-
-    public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
+    @JvmStatic
+    @JvmOverloads
+    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            TaskListener<Void, Void> listener = new TaskListener<Void, Void>() {
-                @Override
-                public void onPreExecute() {
-                    Timber.d("saveCollectionInBackground: start");
+            val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
+                override fun onPreExecute() {
+                    Timber.d("saveCollectionInBackground: start")
                 }
 
-
-                @Override
-                public void onPostExecute(Void v) {
-                    Timber.d("saveCollectionInBackground: finished");
+                override fun onPostExecute(v: Void?) {
+                    Timber.d("saveCollectionInBackground: finished")
                 }
-            };
-            TaskManager.launchCollectionTask(new CollectionTask.SaveCollection(syncIgnoresDatabaseModification), listener);
+            }
+            TaskManager.launchCollectionTask(SaveCollection(syncIgnoresDatabaseModification), listener)
         }
     }
 
@@ -164,7 +175,8 @@ public class UIUtils {
      * @param context Context to get resources and device specific display metrics.
      * @return A float value to represent px value which is equivalent to the passed dp value.
      */
-    public static float convertDpToPixel(float dp, Context context){
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    @JvmStatic
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 }
