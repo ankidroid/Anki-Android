@@ -24,7 +24,6 @@ import android.view.Menu
 import com.ichi2.anki.jsaddons.AddonDownloadActivity
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import timber.log.Timber
-import java.io.File
 
 /**
  * A menu 'Addons' added to side Navigation drawer
@@ -42,12 +41,11 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         initNavigationDrawer(findViewById(android.R.id.content))
 
         // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = getString(R.string.js_addons)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.js_addons)
         showBackIcon()
         hideProgressBar()
-        listAddonsFromDir()
     }
 
     override fun getSubtitleText(): String {
@@ -58,9 +56,6 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
      * It adds a **Get More Addons** menu button to Addnon Browser screen
      * When **Get More Addons** button is clicked,
      * then it opens url https://www.npmjs.com/search?q=keywords:ankidroid-js-addon
-     *
-     * @param menu
-     * @return true
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.addon_browser, menu)
@@ -71,17 +66,5 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
             true
         }
         return super.onCreateOptionsMenu(menu)
-    }
-
-    fun listAddonsFromDir() {
-        // TODO
-        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-
-        // AnkiDroid/addons/
-        val addonsDir = File(currentAnkiDroidDirectory, "addons")
-        if (!addonsDir.exists()) {
-            addonsDir.mkdirs()
-        }
-        Timber.d("List addon from directory.")
     }
 }
