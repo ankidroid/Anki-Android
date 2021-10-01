@@ -22,8 +22,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
@@ -42,45 +40,23 @@ class AddonDownloadActivity : AnkiActivity() {
 
     private lateinit var mWebView: WebView
 
-    private var mShouldHistoryBeCleared = false
-
     private lateinit var mDownloadButton: Button
     private lateinit var mActivity: Activity
 
-    /**
-     * Handle condition when page finishes loading and history needs to be cleared.
-     * Currently, this condition arises when user presses the home button on the toolbar.
-     *
-     * History should not be cleared before the page finishes loading otherwise there would be
-     * an extra entry in the history since the previous page would not get cleared.
-     */
     private val mWebViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
-            // Clear history if mShouldHistoryBeCleared is true and set it to false
-            if (mShouldHistoryBeCleared) {
-                mWebView.clearHistory()
-                mShouldHistoryBeCleared = false
-            }
+            mDownloadButton.visibility = View.GONE
 
             // get addon name from url
-            val addonName = NpmUtils.getAddonNameFromUrl(url!!)
-            if (addonName == null) {
-                mDownloadButton.visibility = View.GONE
-            } else {
-                // call background task for adding "Install Addon" button at right bottom corner
-                TaskManager.launchCollectionTask(
-                    NpmPackageDownloader.ShowHideInstallButton(applicationContext, addonName),
-                    NpmPackageDownloader.ShowHideInstallButtonListener(mActivity, mDownloadButton, addonName)
-                )
-            }
+            val addonName = NpmUtils.getAddonNameFromUrl(url!!) ?: return
+
+            // call background task for adding "Install Addon" button at right bottom corner
+            TaskManager.launchCollectionTask(
+                NpmPackageDownloader.InstallButtonTask(applicationContext, addonName),
+                NpmPackageDownloader.InstallButtonListener(mActivity, mDownloadButton, addonName)
+            )
 
             super.onPageFinished(view, url)
-        }
-
-        override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-            // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
-            mShouldHistoryBeCleared = false
-            super.onReceivedError(view, request, error)
         }
     }
 
@@ -149,7 +125,6 @@ class AddonDownloadActivity : AnkiActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.home) {
-            mShouldHistoryBeCleared = true
             mWebView.loadUrl(resources.getString(R.string.ankidroid_js_addon_npm_search_url))
         }
         return super.onOptionsItemSelected(item)
