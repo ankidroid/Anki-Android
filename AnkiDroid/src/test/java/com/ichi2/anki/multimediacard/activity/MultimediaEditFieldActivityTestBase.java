@@ -66,9 +66,9 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
         return testCardTemplatePreviewer.getFieldController();
     }
 
-    protected MultimediaEditFieldActivity setupActivityMock(IFieldController controller, MultimediaEditFieldActivity mActivity) {
+    protected MultimediaEditFieldActivity setupActivityMock(IFieldController controller, MultimediaEditFieldActivity ActivityMultimedia) {
         MultimediaEditFieldActivity activity = Mockito.mock(MultimediaEditFieldActivity.class);
-        when(activity.getResources()).thenReturn(mActivity.getResources());
+        when(activity.getResources()).thenReturn(ActivityMultimedia.getResources());
         controller.setEditingActivity(activity);
         return activity;
     }

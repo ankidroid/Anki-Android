@@ -53,9 +53,9 @@ public class AudioPlayerTest extends RobolectricTest {
         mFile = tempFolder.newFile("testaudio.wav");
 
         ShadowMediaPlayer testPlayer = new ShadowMediaPlayer();
-        DataSource mFileSource = DataSource.toDataSource(mFile.getAbsolutePath());
-        ShadowMediaPlayer.MediaInfo mFileInfo = new ShadowMediaPlayer.MediaInfo();
-        testPlayer.addMediaInfo(mFileSource, mFileInfo);
+        DataSource FileSource = DataSource.toDataSource(mFile.getAbsolutePath());
+        ShadowMediaPlayer.MediaInfo FileInfo = new ShadowMediaPlayer.MediaInfo();
+        testPlayer.addMediaInfo(FileSource, FileInfo);
     }
 
     @Test

@@ -64,10 +64,10 @@ public class TextNoteExporterTest extends RobolectricTest {
     private List<Note> mNoteList;
 
 
-    public TextNoteExporterTest(boolean mIncludeId, boolean mIncludeTags, boolean mIncludeHTML) {
-        this.mIncludeId = mIncludeId;
-        this.mIncludeTags = mIncludeTags;
-        this.mIncludeHTML = mIncludeHTML;
+    public TextNoteExporterTest(boolean IncludeId, boolean IncludeTags, boolean IncludeHTML) {
+        this.mIncludeId = IncludeId;
+        this.mIncludeTags = IncludeTags;
+        this.mIncludeHTML = IncludeHTML;
     }
 
 

@@ -119,7 +119,7 @@ public class AnalyticsTest {
                     .thenReturn(new SpyGoogleAnalyticsBuilder());
 
             // This is actually a Mockito Spy of GoogleAnalyticsImpl
-            GoogleAnalytics mAnalytics = UsageAnalytics.initialize(mMockContext);
+            GoogleAnalytics Analytics = UsageAnalytics.initialize(mMockContext);
 
             // no root cause
             Exception exception = mock(Exception.class);
@@ -139,7 +139,7 @@ public class AnalyticsTest {
 
             // prepare analytics so we can inspect what happens
             ExceptionHit spyHit = spy(new ExceptionHit());
-            doReturn(spyHit).when(mAnalytics).exception();
+            doReturn(spyHit).when(Analytics).exception();
 
             try {
                 UsageAnalytics.sendAnalyticsException(grandparentException, false);
@@ -149,7 +149,7 @@ public class AnalyticsTest {
             verify(grandparentException).getCause();
             verify(parentException).getCause();
             verify(childException).getCause();
-            verify(mAnalytics).exception();
+            verify(Analytics).exception();
             verify(spyHit).exceptionDescription(ArgumentMatchers.anyString());
             verify(spyHit).sendAsync();
             Assert.assertEquals(spyHit.exceptionDescription(), "child exception toString()");

@@ -33,8 +33,8 @@ import static org.mockito.Mockito.mock;
  */
 public class BackendEmulatingOpenConflict extends RustDroidBackend {
 
-    public BackendEmulatingOpenConflict(BackendFactory mBackend) {
-        super(mBackend);
+    public BackendEmulatingOpenConflict(BackendFactory Backend) {
+        super(Backend);
     }
 
 
