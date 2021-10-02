@@ -38,6 +38,8 @@ permission notice:
     DEALINGS IN THE SOFTWARE.
 */
 
+// Example of class name: "/com/ichi2/anki/UIUtils.kt"
+// Ensure that it should start with a / (slash)
 def className = ""
 
 static def isKotlinCompile(Object t) {
