@@ -21,6 +21,7 @@ import android.database.Cursor;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.testutils.JsonUtils;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
@@ -282,11 +283,53 @@ public class StorageTest extends RobolectricTest {
                 remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "id");
                 // mod is set in V11, but not in V16
                 remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "mod");
+
+                removeSingletonReq(actualJson.getJSONObject(k), expectedJson.getJSONObject(k));
+
+
             }
 
             String actual = JsonUtils.toOrderedString(actualJson);
             String expected = JsonUtils.toOrderedString(expectedJson);
             assertThat(actual, is(expected));
+        }
+
+        /** A req over a singleton can either be "any" or "all". Remove singletons which match */
+        private void removeSingletonReq(JSONObject actualJson, JSONObject expectedJson) {
+            JSONArray areq = actualJson.optJSONArray("req");
+            JSONArray ereq = expectedJson.optJSONArray("req");
+
+            if (areq == null || ereq == null) {
+                return;
+            }
+
+            List<Integer> toRemove = new ArrayList<>();
+            for (int i = 0; i < Math.min(areq.length(), ereq.length()); i++) {
+                JSONArray a = areq.getJSONArray(i);
+                JSONArray e = ereq.getJSONArray(i);
+
+                if (areEqualSingletonReqs(a, e)) {
+                    toRemove.add(i);
+                }
+            }
+
+            Collections.reverse(toRemove);
+
+            for (int i : toRemove) {
+                areq.remove(i);
+                ereq.remove(i);
+            }
+        }
+
+
+        private boolean areEqualSingletonReqs(JSONArray a, JSONArray e) {
+            JSONArray areq = a.getJSONArray(2);
+            JSONArray breq = e.getJSONArray(2);
+            if (areq.length() != 1 || breq.length() != 1) {
+                return false;
+            }
+
+            return areq.getInt(0) == breq.getInt(0);
         }
 
 
