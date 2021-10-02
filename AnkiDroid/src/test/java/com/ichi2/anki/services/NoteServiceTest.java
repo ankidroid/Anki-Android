@@ -91,10 +91,10 @@ public class NoteServiceTest extends RobolectricTest {
     @Test
     public void importAudioClipToDirectoryTest() throws IOException {
 
-        File FileAudio = folder.newFile("testaudio.wav");
+        File fileAudio = folder.newFile("testaudio.wav");
 
         //writes a line in the file so the file's length isn't 0
-        try(FileWriter fileWriter = new FileWriter(FileAudio)) {
+        try(FileWriter fileWriter = new FileWriter(fileAudio)) {
             fileWriter.write("line1");
         }
 
@@ -102,12 +102,12 @@ public class NoteServiceTest extends RobolectricTest {
         testAudioClip.setNumFields(1);
 
         AudioClipField audioField = new AudioClipField();
-        audioField.setAudioPath(FileAudio.getAbsolutePath());
+        audioField.setAudioPath(fileAudio.getAbsolutePath());
         testAudioClip.setField(0, audioField);
 
         NoteService.saveMedia(mTestCol, testAudioClip);
 
-        File outFile = new File(mTestCol.getMedia().dir(), FileAudio.getName());
+        File outFile = new File(mTestCol.getMedia().dir(), fileAudio.getName());
 
         assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), audioField.getAudioPath());
 
@@ -117,10 +117,10 @@ public class NoteServiceTest extends RobolectricTest {
     @Test
     public void importImageToDirectoryTest() throws IOException {
 
-        File FileImage = folder.newFile("testimage.png");
+        File fileImage = folder.newFile("testimage.png");
 
         //writes a line in the file so the file's length isn't 0
-        try(FileWriter fileWriter = new FileWriter(FileImage)) {
+        try(FileWriter fileWriter = new FileWriter(fileImage)) {
             fileWriter.write("line1");
         }
 
@@ -128,12 +128,12 @@ public class NoteServiceTest extends RobolectricTest {
         testImage.setNumFields(1);
 
         ImageField imgField = new ImageField();
-        imgField.setImagePath(FileImage.getAbsolutePath());
+        imgField.setImagePath(fileImage.getAbsolutePath());
         testImage.setField(0, imgField);
 
         NoteService.saveMedia(mTestCol, testImage);
 
-        File outFile = new File(mTestCol.getMedia().dir(), FileImage.getName());
+        File outFile = new File(mTestCol.getMedia().dir(), fileImage.getName());
 
         assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), imgField.getImagePath());
     }

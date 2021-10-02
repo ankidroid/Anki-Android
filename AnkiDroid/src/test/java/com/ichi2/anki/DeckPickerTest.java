@@ -75,20 +75,20 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void verifyCodeMessages() {
 
-        Map<Integer, String> CodeResponsePairs = new HashMap<>();
+        Map<Integer, String> codeResponsePairs = new HashMap<>();
         final Context context = getTargetContext();
-        CodeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
-        CodeResponsePairs.put(409, context.getString(R.string.sync_error_409));
-        CodeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));
-        CodeResponsePairs.put(500, context.getString(R.string.sync_error_500_unknown));
-        CodeResponsePairs.put(501, context.getString(R.string.sync_error_501_upgrade_required));
-        CodeResponsePairs.put(502, context.getString(R.string.sync_error_502_maintenance));
-        CodeResponsePairs.put(503, context.getString(R.string.sync_too_busy));
-        CodeResponsePairs.put(504, context.getString(R.string.sync_error_504_gateway_timeout));
+        codeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
+        codeResponsePairs.put(409, context.getString(R.string.sync_error_409));
+        codeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));
+        codeResponsePairs.put(500, context.getString(R.string.sync_error_500_unknown));
+        codeResponsePairs.put(501, context.getString(R.string.sync_error_501_upgrade_required));
+        codeResponsePairs.put(502, context.getString(R.string.sync_error_502_maintenance));
+        codeResponsePairs.put(503, context.getString(R.string.sync_too_busy));
+        codeResponsePairs.put(504, context.getString(R.string.sync_error_504_gateway_timeout));
 
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
-                for (Map.Entry<Integer, String> entry : CodeResponsePairs.entrySet()) {
+                for (Map.Entry<Integer, String> entry : codeResponsePairs.entrySet()) {
                     assertEquals(deckPicker.rewriteError(entry.getKey()), entry.getValue());
                 }
             });
