@@ -137,6 +137,7 @@ public class Decks extends DeckManager {
                 + "\"rev\": {"
                     + "\"perDay\": 200,"
                     + "\"ease4\": 1.3,"
+                    + "\"hardFactor\": 1.2,"
                     + "\"ivlFct\": 1,"
                     + "\"maxIvl\": 36500,"
                     // may not be set on old decks
