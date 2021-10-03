@@ -121,7 +121,6 @@ public class Decks extends DeckManager {
                     + "\"delays\": [1, 10],"
                     + "\"ints\": [1, 4, 7]," // 7 is not currently used
                     + "\"initialFactor\": "+Consts.STARTING_FACTOR+","
-                    + "\"separate\": true,"
                     + "\"order\": " + Consts.NEW_CARDS_DUE + ","
                     + "\"perDay\": 20,"
                     // may not be set on old decks
@@ -138,8 +137,6 @@ public class Decks extends DeckManager {
                 + "\"rev\": {"
                     + "\"perDay\": 200,"
                     + "\"ease4\": 1.3,"
-                    + "\"fuzz\": 0.05,"
-                    + "\"minSpace\": 1," // not currently used
                     + "\"ivlFct\": 1,"
                     + "\"maxIvl\": 36500,"
                     // may not be set on old decks
