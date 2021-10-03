@@ -90,8 +90,8 @@ public class Decks extends DeckManager {
                 + "\"collapsed\": false,"
                 + "\"browserCollapsed\": false,"
                 // added in beta11
-                + "\"extendNew\": 10,"
-                + "\"extendRev\": 50"
+                + "\"extendNew\": 0,"
+                + "\"extendRev\": 0"
             + "}";
 
     private static final String defaultDynamicDeck = ""
