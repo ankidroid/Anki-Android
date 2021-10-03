@@ -33,6 +33,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.core.util.Pair;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -169,7 +170,11 @@ public class StorageTest extends RobolectricTest {
             mModels = loadModelsV16(col);
             mDecks = loadDecksV16(col);
             mDConf = loadDConf(col);
-            mTags = ""; // by default this is empty
+            mTags = new JSONObject(col.mTags.all().stream()
+                    .map(x -> new Pair<>(x, 0))
+                    .collect(Collectors.toMap(x -> x.first, x -> x.second))
+            )
+                    .toString();
         }
 
 
