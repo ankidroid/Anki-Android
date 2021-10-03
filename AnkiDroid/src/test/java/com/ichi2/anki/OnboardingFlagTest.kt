@@ -89,12 +89,12 @@ class OnboardingFlagTest : RobolectricTest() {
         assertTrue(isVisited(SecondEnum.LAST))
     }
 
-    private enum class FirstEnum(var mValue: Int) : OnboardingFlag {
+    private enum class FirstEnum(var valueFirst: Int) : OnboardingFlag {
         FIRST(0),
         MIDDLE(1);
 
         override fun getOnboardingEnumValue(): Int {
-            return mValue
+            return valueFirst
         }
 
         override fun getFeatureConstant(): String {
@@ -102,12 +102,12 @@ class OnboardingFlagTest : RobolectricTest() {
         }
     }
 
-    private enum class SecondEnum(var mValue: Int) : OnboardingFlag {
+    private enum class SecondEnum(var valueSecond: Int) : OnboardingFlag {
         MIDDLE(0),
         LAST(1);
 
         override fun getOnboardingEnumValue(): Int {
-            return mValue
+            return valueSecond
         }
 
         override fun getFeatureConstant(): String {

@@ -49,9 +49,9 @@ public class MockTime extends Time {
     /** Time in milisecond since epoch. */
     @Override
     public long intTimeMS() {
-        long mTime = this.mTime;
+        long time = this.mTime;
         this.mTime += mStep;
-        return mTime;
+        return time;
     }
 
     protected long getTime() {
