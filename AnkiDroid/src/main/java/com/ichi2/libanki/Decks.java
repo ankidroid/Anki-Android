@@ -132,7 +132,7 @@ public class Decks extends DeckManager {
                     + "\"minInt\": 1,"
                     + "\"leechFails\": 8,"
                     // type 0=suspend, 1=tagonly
-                    + "\"leechAction\": " + Consts.LEECH_SUSPEND
+                    + "\"leechAction\": " + Consts.LEECH_TAGONLY
                 + "},"
                 + "\"rev\": {"
                     + "\"perDay\": 200,"
