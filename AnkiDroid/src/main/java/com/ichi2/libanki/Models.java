@@ -103,7 +103,7 @@ public class Models extends ModelManager {
             "\"rtl\": false, " + "\"font\": \"Arial\", " + "\"size\": 20 }";
 
     private static final String defaultTemplate = "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", "
-            + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"Arial\"," +
+            + "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"\"," +
             "\"bsize\": 0 }";
 
     // /** Regex pattern used in removing tags from text before diff */
