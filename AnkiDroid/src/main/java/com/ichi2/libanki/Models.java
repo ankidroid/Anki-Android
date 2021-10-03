@@ -295,7 +295,6 @@ public class Models extends ModelManager {
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
         m.put("tmpls", new JSONArray());
-        m.put("tags", new JSONArray());
         m.put("id", 0);
         return m;
     }
