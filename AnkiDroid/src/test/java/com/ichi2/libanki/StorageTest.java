@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -173,7 +174,7 @@ public class StorageTest extends RobolectricTest {
             mTags = new JSONObject(col.mTags.all().stream()
                     .map(x -> new Pair<>(x, 0))
                     .collect(Collectors.toMap(x -> x.first, x -> x.second))
-            )
+                    )
                     .toString();
         }
 
@@ -247,8 +248,33 @@ public class StorageTest extends RobolectricTest {
 
             assertModelsEqual(expected);
             assertJsonEqual(this.mDecks, expected.mDecks, "mod");
-            assertJsonEqual(this.mDConf, expected.mDConf);
+            assertDConfEqual(this.mDConf, expected.mDConf);
             assertThat(this.mTags, equalTo(expected.mTags));
+        }
+
+
+        private void assertDConfEqual(String actualConf, String expectedConf) {
+            actualConf = removeUnusedNewIntervalValue(actualConf);
+            expectedConf = removeUnusedNewIntervalValue(expectedConf);
+
+            assertJsonEqual(actualConf, expectedConf);
+        }
+
+
+        @NonNull
+        private String removeUnusedNewIntervalValue(String actualDecks) {
+            // remove ints[2] - this is unused. And Anki Desktop is inconsistent with the initial value
+
+            // permalinks for defaults (0 is used):
+            // 0: https://github.com/ankitects/anki/blob/7ba35b7249e1ac829843f365105a13c6209d4f57/rslib/src/deckconfig/schema11.rs#L340
+            // 7: https://github.com/ankitects/anki/blob/7ba35b7249e1ac829843f365105a13c6209d4f57/rslib/src/deckconfig/schema11.rs#L92
+            JSONObject obj = new JSONObject(actualDecks);
+            for (String key : obj.names().toStringList()) {
+                obj.getJSONObject(key).getJSONObject("new").getJSONArray("ints").remove(2);
+            }
+
+
+            return obj.toString();
         }
 
 
