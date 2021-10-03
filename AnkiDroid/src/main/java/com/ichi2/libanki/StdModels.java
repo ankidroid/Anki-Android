@@ -134,7 +134,7 @@ public class StdModels {
         String txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name);
         JSONObject fm = mm.newField(txt);
         mm.addFieldInNewModel(m, fm);
-        String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
+        String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name_new);
         fm = mm.newField(fieldExtraName);
         mm.addFieldInNewModel(m, fm);
         String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
