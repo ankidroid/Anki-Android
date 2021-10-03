@@ -116,6 +116,7 @@ public class Decks extends DeckManager {
     public static final String DEFAULT_CONF = ""
             + "{"
                 + "\"name\": \"Default\","
+                + "\"dyn\": false," // previously optional. Default was false
                 + "\"new\": {"
                     + "\"delays\": [1, 10],"
                     + "\"ints\": [1, 4, 7]," // 7 is not currently used
