@@ -64,5 +64,11 @@ class AutomaticAnswerSettings(
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
             return AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
+
+        @JvmStatic
+        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
+            // deck specific options take precedence over general (preference-based) options
+            return queryDeckSpecificOptions(col, col.decks.selected()) ?: queryFromPreferences(preferences)
+        }
     }
 }
