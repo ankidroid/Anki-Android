@@ -17,9 +17,12 @@
 package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
+import android.os.Handler
 import com.ichi2.libanki.Collection
 
+// TODO: Settings should not be aware of the target
 class AutomaticAnswerSettings(
+    target: AutomaticallyAnswered,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val questionDelaySeconds: Int = 60,
     private val answerDelaySeconds: Int = 20
@@ -35,9 +38,49 @@ class AutomaticAnswerSettings(
     @get:JvmName("autoAdvanceQuestion")
     val autoAdvanceQuestion; get() = questionDelaySeconds > 0
 
+    private val showAnswerTask = Runnable(target::automaticShowAnswer)
+    private val showQuestionTask = Runnable(target::automaticShowQuestion)
+
+    /**
+     * Handler for the delay in auto showing question and/or answer
+     * One toggle for both question and answer, could set longer delay for auto next question
+     */
+    @Suppress("Deprecation") //  #7111: new Handler()
+    val timeoutHandler = Handler()
+
+    fun delayedShowQuestion(delay: Long) {
+        timeoutHandler.postDelayed(showQuestionTask, delay)
+    }
+
+    fun delayedShowAnswer(delay: Long) {
+        timeoutHandler.postDelayed(showAnswerTask, delay)
+    }
+
+    fun stopShowingQuestion() {
+        timeoutHandler.removeCallbacks(showQuestionTask)
+    }
+
+    fun stopShowingAnswer() {
+        timeoutHandler.removeCallbacks(showAnswerTask)
+    }
+
+    fun stopAll() {
+        stopShowingAnswer()
+        stopShowingQuestion()
+    }
+
+    interface AutomaticallyAnswered {
+        fun automaticShowAnswer()
+        fun automaticShowQuestion()
+    }
+
     companion object {
         @JvmStatic
-        fun queryDeckSpecificOptions(col: Collection, selectedDid: Long): AutomaticAnswerSettings? {
+        fun queryDeckSpecificOptions(
+            target: AutomaticallyAnswered,
+            col: Collection,
+            selectedDid: Long
+        ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
             if (col.decks.isDyn(selectedDid)) {
@@ -54,21 +97,26 @@ class AutomaticAnswerSettings(
             val useTimer = revOptions.optBoolean("timeoutAnswer", false)
             val waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60)
             val waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(useTimer, waitQuestionSecond, waitAnswerSecond)
+            return AutomaticAnswerSettings(target, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
         @JvmStatic
-        fun queryFromPreferences(preferences: SharedPreferences): AutomaticAnswerSettings {
+        fun queryFromPreferences(target: AutomaticallyAnswered, preferences: SharedPreferences): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
+            return AutomaticAnswerSettings(target, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
         @JvmStatic
-        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
+        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options
-            return queryDeckSpecificOptions(col, col.decks.selected()) ?: queryFromPreferences(preferences)
+            return queryDeckSpecificOptions(target, col, col.decks.selected()) ?: queryFromPreferences(target, preferences)
+        }
+
+        @JvmStatic
+        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswerSettings {
+            return AutomaticAnswerSettings(target)
         }
     }
 }
