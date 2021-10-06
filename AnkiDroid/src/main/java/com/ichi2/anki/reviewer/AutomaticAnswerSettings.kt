@@ -16,6 +16,9 @@
 
 package com.ichi2.anki.reviewer
 
+import android.content.SharedPreferences
+import com.ichi2.libanki.Collection
+
 class AutomaticAnswerSettings(
     @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val questionDelaySeconds: Int = 60,
@@ -31,4 +34,35 @@ class AutomaticAnswerSettings(
 
     @get:JvmName("autoAdvanceQuestion")
     val autoAdvanceQuestion; get() = questionDelaySeconds > 0
+
+    companion object {
+        @JvmStatic
+        fun queryDeckSpecificOptions(col: Collection, selectedDid: Long): AutomaticAnswerSettings? {
+            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
+            // but be prepared to go with all default if it's a dynamic deck
+            if (col.decks.isDyn(selectedDid)) {
+                return null
+            }
+
+            val revOptions = col.decks.confForDid(selectedDid).getJSONObject("rev")
+
+            if (revOptions.optBoolean("useGeneralTimeoutSettings", true)) {
+                // we want to use the general settings, no need for per-deck settings
+                return null
+            }
+
+            val useTimer = revOptions.optBoolean("timeoutAnswer", false)
+            val waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60)
+            val waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20)
+            return AutomaticAnswerSettings(useTimer, waitQuestionSecond, waitAnswerSecond)
+        }
+
+        @JvmStatic
+        fun queryFromPreferences(preferences: SharedPreferences): AutomaticAnswerSettings {
+            val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
+            val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
+            val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
+            return AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
+        }
+    }
 }
