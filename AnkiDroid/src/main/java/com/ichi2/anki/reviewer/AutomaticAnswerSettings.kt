@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.os.Handler
+import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.Collection
 
 // TODO: Settings should not be aware of the target
@@ -28,15 +29,12 @@ class AutomaticAnswerSettings(
     private val answerDelaySeconds: Int = 20
 ) {
 
-    val questionDelayMilliseconds: Long; get() = questionDelaySeconds * 1000L
-    val answerDelayMilliseconds: Long; get() = answerDelaySeconds * 1000L
+    private val questionDelayMilliseconds = questionDelaySeconds * 1000L
+    private val answerDelayMilliseconds = answerDelaySeconds * 1000L
 
     // a wait of zero means auto-advance is disabled
-    @get:JvmName("autoAdvanceAnswer")
-    val autoAdvanceAnswer; get() = answerDelaySeconds > 0
-
-    @get:JvmName("autoAdvanceQuestion")
-    val autoAdvanceQuestion; get() = questionDelaySeconds > 0
+    private val autoAdvanceAnswer; get() = answerDelaySeconds > 0
+    private val autoAdvanceQuestion; get() = questionDelaySeconds > 0
 
     private val showAnswerTask = Runnable(target::automaticShowAnswer)
     private val showQuestionTask = Runnable(target::automaticShowQuestion)
@@ -46,12 +44,15 @@ class AutomaticAnswerSettings(
      * One toggle for both question and answer, could set longer delay for auto next question
      */
     @Suppress("Deprecation") //  #7111: new Handler()
+    @VisibleForTesting
     val timeoutHandler = Handler()
 
+    @VisibleForTesting
     fun delayedShowQuestion(delay: Long) {
         timeoutHandler.postDelayed(showQuestionTask, delay)
     }
 
+    @VisibleForTesting
     fun delayedShowAnswer(delay: Long) {
         timeoutHandler.postDelayed(showAnswerTask, delay)
     }
@@ -69,26 +70,32 @@ class AutomaticAnswerSettings(
         stopShowingQuestion()
     }
 
-    fun onDisplayQuestion(reschedule: Boolean, additionalDelay: Long) {
+    fun onDisplayQuestion() {
         if (!useTimer) return
         if (!autoAdvanceAnswer) return
 
         stopShowingAnswer()
-
-        if (!reschedule) return
-        val delay: Long = answerDelayMilliseconds + additionalDelay
-        delayedShowAnswer(delay)
     }
 
-    fun onDisplayAnswer(reschedule: Boolean, additionalDelay: Long) {
+    fun onDisplayAnswer() {
         if (!useTimer) return
         if (!autoAdvanceQuestion) return
 
         stopShowingQuestion()
+    }
 
-        if (!reschedule) return
-        val delay: Long = questionDelayMilliseconds + additionalDelay
-        delayedShowQuestion(delay)
+    @JvmOverloads
+    fun scheduleDisplayAnswer(additionalDelay: Long = 0) {
+        if (!useTimer) return
+        if (!autoAdvanceAnswer) return
+        delayedShowAnswer(answerDelayMilliseconds + additionalDelay)
+    }
+
+    @JvmOverloads
+    fun scheduleDisplayQuestion(additionalDelay: Long = 0) {
+        if (!useTimer) return
+        if (!autoAdvanceQuestion) return
+        delayedShowQuestion(questionDelayMilliseconds + additionalDelay)
     }
 
     interface AutomaticallyAnswered {
