@@ -243,7 +243,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
 
-    protected AutomaticAnswerSettings mAutomaticAnswerSettings = new AutomaticAnswerSettings();
+    @NonNull protected AutomaticAnswerSettings mAutomaticAnswerSettings = new AutomaticAnswerSettings();
 
     protected TypeAnswer mTypeAnswer;
 
@@ -1705,10 +1705,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
-        boolean prefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        int prefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-        int prefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
-        mAutomaticAnswerSettings = new AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond);
+        mAutomaticAnswerSettings = AutomaticAnswerSettings.queryFromPreferences(preferences);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
@@ -1736,23 +1733,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes");
 
-            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
-            // but be prepared to go with all default if it's a dynamic deck
-            JSONObject revOptions = new JSONObject();
-            long selectedDid = getCol().getDecks().selected();
-            if (!getCol().getDecks().isDyn(selectedDid)) {
-                revOptions = getCol().getDecks().confForDid(selectedDid).getJSONObject("rev");
+            AutomaticAnswerSettings perDeckSettings = AutomaticAnswerSettings.queryDeckSpecificOptions(col, getCol().getDecks().selected());
+            if (perDeckSettings != null) {
+                mAutomaticAnswerSettings = perDeckSettings;
             }
-
-            if (revOptions.optBoolean("useGeneralTimeoutSettings", true)) {
-                // we want to use the general settings, no need for per-deck settings
-                return;
-            }
-
-            boolean useTimer = revOptions.optBoolean("timeoutAnswer", false);
-            int waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
-            int waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
-            mAutomaticAnswerSettings = new AutomaticAnswerSettings(useTimer, waitQuestionSecond, waitAnswerSecond);
         } catch (Exception ex) {
             Timber.w(ex);
             onCollectionLoadError();
