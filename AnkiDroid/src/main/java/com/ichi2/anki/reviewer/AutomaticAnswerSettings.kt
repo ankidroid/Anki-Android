@@ -69,6 +69,28 @@ class AutomaticAnswerSettings(
         stopShowingQuestion()
     }
 
+    fun onDisplayQuestion(reschedule: Boolean, additionalDelay: Long) {
+        if (!useTimer) return
+        if (!autoAdvanceAnswer) return
+
+        stopShowingAnswer()
+
+        if (!reschedule) return
+        val delay: Long = answerDelayMilliseconds + additionalDelay
+        delayedShowAnswer(delay)
+    }
+
+    fun onDisplayAnswer(reschedule: Boolean, additionalDelay: Long) {
+        if (!useTimer) return
+        if (!autoAdvanceQuestion) return
+
+        stopShowingQuestion()
+
+        if (!reschedule) return
+        val delay: Long = questionDelayMilliseconds + additionalDelay
+        delayedShowQuestion(delay)
+    }
+
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
         fun automaticShowQuestion()
