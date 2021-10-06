@@ -13,102 +13,79 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
+import android.webkit.URLUtil
+import android.webkit.WebResourceRequest
+import com.ichi2.utils.FunctionalInterfaces
+import timber.log.Timber
+import java.io.File
+import java.lang.Exception
 
-import android.webkit.URLUtil;
-import android.webkit.WebResourceRequest;
+/** Handles logic for displaying help for missing media files  */
+class MissingImageHandler {
 
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
-
-import java.io.File;
-
-import androidx.annotation.NonNull;
-import timber.log.Timber;
-
-/** Handles logic for displaying help for missing media files */
-public class MissingImageHandler {
-
-    /** Specify a maximum number of times to display, as it's somewhat annoying */
-    public static final int MAX_DISPLAY_TIMES = 2;
-
-    private int mMissingMediaCount = 0;
-    private boolean mHasShownInefficientImage = false;
-    private boolean mHasExecuted = false;
-
-
-    public MissingImageHandler() {
-
+    companion object {
+        /** Specify a maximum number of times to display, as it's somewhat annoying  */
+        const val MAX_DISPLAY_TIMES = 2
     }
 
-    public void processFailure(WebResourceRequest request, @NonNull Consumer<String> onFailure) {
+    private var mMissingMediaCount = 0
+    private var mHasShownInefficientImage = false
+    private var mHasExecuted = false
+    fun processFailure(request: WebResourceRequest?, onFailure: FunctionalInterfaces.Consumer<String?>) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
-        if (request == null || mHasExecuted) {
-            return;
-        }
+        if (request == null || mHasExecuted) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
-        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) {
-            return;
-        }
+        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) return
 
-        String url = request.getUrl().toString();
+        val url = request.url.toString()
         // We could do better here (external images failing due to no HTTPS), but failures can occur due to no network.
         // As we don't yet check the error data, we don't know.
         // Therefore limit this feature to the common case of local files, which should always work.
-        if (!url.contains("collection.media")) {
-            return;
-        }
+        if (!url.contains("collection.media")) return
 
         try {
-            String filename = URLUtil.guessFileName(url, null, null);
-            onFailure.consume(filename);
-            mMissingMediaCount++;
-        } catch (Exception e) {
-            Timber.w(e, "Failed to notify UI of media failure");
+            val filename = URLUtil.guessFileName(url, null, null)
+            onFailure.consume(filename)
+            mMissingMediaCount++
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to notify UI of media failure")
         } finally {
-            mHasExecuted = true;
+            mHasExecuted = true
         }
     }
 
-
-    public void processMissingSound(File file, @NonNull Consumer<String> onFailure) {
+    fun processMissingSound(file: File?, onFailure: FunctionalInterfaces.Consumer<String?>) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
-        if (file == null) {
-            return;
-        }
+        if (file == null) return
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
-        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) {
-            return;
-        }
+        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) return
 
         try {
-            String fileName = file.getName();
-            onFailure.consume(fileName);
+            val fileName = file.name
+            onFailure.consume(fileName)
             if (!mHasExecuted) {
-                mMissingMediaCount++;
+                mMissingMediaCount++
             }
-        } catch (Exception e) {
-            Timber.w(e, "Failed to notify UI of media failure");
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to notify UI of media failure")
         } finally {
-            mHasExecuted = true;
+            mHasExecuted = true
         }
     }
 
-    public void onCardSideChange() {
-        mHasExecuted = false;
+    fun onCardSideChange() {
+        mHasExecuted = false
     }
 
+    fun processInefficientImage(onFailure: Runnable) {
+        if (mHasShownInefficientImage) return
 
-    public void processInefficientImage(Runnable onFailure) {
-        if (mHasShownInefficientImage) {
-            return;
-        }
-
-        mHasShownInefficientImage = true;
-
-        onFailure.run();
+        mHasShownInefficientImage = true
+        onFailure.run()
     }
 }
