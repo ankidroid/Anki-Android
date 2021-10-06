@@ -1900,15 +1900,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         hideEaseButtons();
 
         // If the user wants to show the answer automatically
-        if (mAutomaticAnswerSettings.useTimer()) {
-            if (mAutomaticAnswerSettings.autoAdvanceAnswer()) {
-                mAutomaticAnswerSettings.stopShowingAnswer();
-                if (!mSpeakText) {
-                    long delay = mAutomaticAnswerSettings.getAnswerDelayMilliseconds() + mUseTimerDynamicMS;
-                    mAutomaticAnswerSettings.delayedShowAnswer(delay);
-                }
-            }
-        }
+        mAutomaticAnswerSettings.onDisplayQuestion(!mSpeakText, mUseTimerDynamicMS);
 
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
@@ -1950,15 +1942,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
         displayAnswerBottomBar();
         // If the user wants to show the next question automatically
-        if (mAutomaticAnswerSettings.useTimer()) {
-            if (mAutomaticAnswerSettings.autoAdvanceQuestion()) {
-                mAutomaticAnswerSettings.stopShowingQuestion();
-                if (!mSpeakText) {
-                    long delay = mAutomaticAnswerSettings.getQuestionDelayMilliseconds() + mUseTimerDynamicMS;
-                    mAutomaticAnswerSettings.delayedShowQuestion(delay);
-                }
-            }
-        }
+        mAutomaticAnswerSettings.onDisplayAnswer(!mSpeakText, mUseTimerDynamicMS);
     }
 
 
