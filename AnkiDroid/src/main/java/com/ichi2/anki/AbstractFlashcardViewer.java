@@ -1705,7 +1705,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
-        mAutomaticAnswerSettings = AutomaticAnswerSettings.queryFromPreferences(preferences);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
@@ -1732,11 +1731,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes");
-
-            AutomaticAnswerSettings perDeckSettings = AutomaticAnswerSettings.queryDeckSpecificOptions(col, getCol().getDecks().selected());
-            if (perDeckSettings != null) {
-                mAutomaticAnswerSettings = perDeckSettings;
-            }
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            mAutomaticAnswerSettings = AutomaticAnswerSettings.createInstance(preferences, col);
         } catch (Exception ex) {
             Timber.w(ex);
             onCollectionLoadError();
