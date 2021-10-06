@@ -1759,16 +1759,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
             mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
             mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
-        } catch (JSONException e) {
-            Timber.e(e, "Unable to restoreCollectionPreferences");
-            throw new RuntimeException(e);
-        } catch (NullPointerException npe) {
-            // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
-            Timber.w(npe);
-            Intent deckPicker = new Intent(this, DeckPicker.class);
-            deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithAnimation(deckPicker, START);
+        } catch (Exception ex) {
+            Timber.w(ex);
+            onCollectionLoadError();
         }
     }
 
