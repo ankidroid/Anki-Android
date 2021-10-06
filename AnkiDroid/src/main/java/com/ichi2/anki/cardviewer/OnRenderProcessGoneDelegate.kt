@@ -13,166 +13,131 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
-
-import android.annotation.TargetApi;
-import android.content.res.Resources;
-import android.os.Build;
-import android.webkit.RenderProcessGoneDetail;
-import android.webkit.WebView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-
-import java.util.concurrent.locks.Lock;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.Lifecycle;
-import timber.log.Timber;
-
-import static androidx.lifecycle.Lifecycle.State.STARTED;
+import android.annotation.TargetApi
+import android.os.Build
+import android.webkit.RenderProcessGoneDetail
+import android.webkit.WebView
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.Lifecycle
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import timber.log.Timber
 
 /**
  * Fix for:
  * #5780 - WebView Renderer OOM crashes reviewer
  * #8459 - WebView Renderer crash dialog displays when app is minimised (Android 11 - Google Pixel 3A)
  */
-public class OnRenderProcessGoneDelegate {
-
-    private final AbstractFlashcardViewer mTarget;
-    private final Lifecycle mLifecycle;
+open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
+    lateinit var lifecycle: Lifecycle
 
     /**
      * Last card that the WebView Renderer crashed on.
      * If we get 2 crashes on the same card, then we likely have an infinite loop and want to exit gracefully.
      */
-    @Nullable
-    private Long mLastCrashingCardId = null;
+    private var mLastCrashingCardId: Long? = null
 
-    public OnRenderProcessGoneDelegate(AbstractFlashcardViewer target) {
-        this.mTarget = target;
-        this.mLifecycle = target.getLifecycle();
-    }
-
-    /** Fix: #5780 - WebView Renderer OOM crashes reviewer */
+    /** Fix: #5780 - WebView Renderer OOM crashes reviewer  */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
-        Timber.i("Obtaining write lock for card");
-        Lock writeLock = mTarget.getWriteLock();
-        WebView cardWebView = mTarget.getWebView();
-        Timber.i("Obtained write lock for card");
+    fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+        Timber.i("Obtaining write lock for card")
+        val writeLock = target.writeLock
+        val cardWebView = target.webView
+        Timber.i("Obtained write lock for card")
         try {
-            writeLock.lock();
-            if (cardWebView == null || !cardWebView.equals(view)) {
-                //A view crashed that wasn't ours.
-                //We have nothing to handle. Returning false is a desire to crash, so return true.
-                Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
-                return true;
+            writeLock.lock()
+            if (cardWebView == null || cardWebView != view) {
+                // A view crashed that wasn't ours.
+                // We have nothing to handle. Returning false is a desire to crash, so return true.
+                Timber.i("Unrelated WebView Renderer terminated. Crashed: %b", detail.didCrash())
+                return true
             }
-
-            Timber.e("WebView Renderer process terminated. Crashed: %b",  detail.didCrash());
-
-            mTarget.destroyWebViewFrame();
+            Timber.e("WebView Renderer process terminated. Crashed: %b", detail.didCrash())
+            target.destroyWebViewFrame()
 
             // Only show one message per branch
-
-            if (!canRecoverFromWebViewRendererCrash()) {
-                Timber.e("Unrecoverable WebView Render crash");
-                if (!activityIsMinimised()) {
-                    displayFatalError(detail);
+            when {
+                !canRecoverFromWebViewRendererCrash() -> {
+                    Timber.e("Unrecoverable WebView Render crash")
+                    if (!activityIsMinimised()) displayFatalError(detail)
+                    target.finishWithoutAnimation()
+                    return true
                 }
-                mTarget.finishWithoutAnimation();
-                return true;
-            }
+                !activityIsMinimised() -> {
+                    // #8459 - if the activity is minimised, this is much more likely to happen multiple times and it is
+                    // likely not a permanent error due to a bad card, so don't increment mLastCrashingCardId
+                    val currentCardId = target.currentCard.id
+                    if (webViewRendererLastCrashedOnCard(currentCardId)) {
+                        Timber.e("Web Renderer crash loop on card: %d", currentCardId)
+                        displayRenderLoopDialog(currentCardId, detail)
+                        return true
+                    }
 
-            if (!activityIsMinimised()) {
-                // #8459 - if the activity is minimised, this is much more likely to happen multiple times and it is
-                // likely not a permanent error due to a bad card, so don't increment mLastCrashingCardId
-                long currentCardId = mTarget.getCurrentCard().getId();
-
-                if (webViewRendererLastCrashedOnCard(currentCardId)) {
-                    Timber.e("Web Renderer crash loop on card: %d", currentCardId);
-                    displayRenderLoopDialog(currentCardId, detail);
-                    return true;
+                    // This logic may need to be better defined. The card could have changed by the time we get here.
+                    mLastCrashingCardId = currentCardId
+                    displayNonFatalError(detail)
                 }
-
-                // This logic may need to be better defined. The card could have changed by the time we get here.
-                mLastCrashingCardId = currentCardId;
-
-                displayNonFatalError(detail);
-            } else {
-                Timber.d("WebView crashed while app was minimised - OOM was safe to handle silently");
+                else -> Timber.d("WebView crashed while app was minimised - OOM was safe to handle silently")
             }
 
             // If we get here, the error is non-fatal and we should re-render the WebView
-
-
-            mTarget.recreateWebViewFrame();
+            target.recreateWebViewFrame()
         } finally {
-            writeLock.unlock();
-            Timber.d("Relinquished writeLock");
+            writeLock.unlock()
+            Timber.d("Relinquished writeLock")
         }
-        mTarget.displayCardQuestion();
+        target.displayCardQuestion()
 
-        //We handled the crash and can continue.
-        return true;
+        // We handled the crash and can continue.
+        return true
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
-    protected void displayFatalError(RenderProcessGoneDetail detail) {
+    protected open fun displayFatalError(detail: RenderProcessGoneDetail) {
         if (activityIsMinimised()) {
-            Timber.d("Not showing toast - screen isn't visible");
-            return;
+            Timber.d("Not showing toast - screen isn't visible")
+            return
         }
-        String errorMessage = mTarget.getResources().getString(R.string.webview_crash_fatal, getErrorCause(detail));
-        UIUtils.showThemedToast(mTarget, errorMessage, false);
+        val errorMessage = target.resources.getString(R.string.webview_crash_fatal, getErrorCause(detail))
+        showThemedToast(target, errorMessage, false)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
-    protected void displayNonFatalError(RenderProcessGoneDetail detail) {
+    protected open fun displayNonFatalError(detail: RenderProcessGoneDetail) {
         if (activityIsMinimised()) {
-            Timber.d("Not showing toast - screen isn't visible");
-            return;
+            Timber.d("Not showing toast - screen isn't visible")
+            return
         }
-        String nonFatalError = mTarget.getResources().getString(R.string.webview_crash_nonfatal, getErrorCause(detail));
-        UIUtils.showThemedToast(mTarget, nonFatalError, false);
+        val nonFatalError = target.resources.getString(R.string.webview_crash_nonfatal, getErrorCause(detail))
+        showThemedToast(target, nonFatalError, false)
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @NonNull
-    protected String getErrorCause(RenderProcessGoneDetail detail) {
-        //It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
-        int errorCauseId = detail.didCrash() ? R.string.webview_crash_unknown : R.string.webview_crash_oom;
-        return mTarget.getResources().getString(errorCauseId);
+    protected fun getErrorCause(detail: RenderProcessGoneDetail): String {
+        // It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
+        val errorCauseId = if (detail.didCrash()) R.string.webview_crash_unknown else R.string.webview_crash_oom
+        return target.resources.getString(errorCauseId)
     }
-
 
     @TargetApi(Build.VERSION_CODES.O)
-    protected void displayRenderLoopDialog(long currentCardId, RenderProcessGoneDetail detail) {
-        String cardInformation = Long.toString(currentCardId);
-        Resources res = mTarget.getResources();
-
-        String errorDetails = detail.didCrash()
-                ? res.getString(R.string.webview_crash_unknwon_detailed)
-                : res.getString(R.string.webview_crash_oom_details);
-        new MaterialDialog.Builder(mTarget)
-                .title(res.getString(R.string.webview_crash_loop_dialog_title))
-                .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
-                .positiveText(R.string.dialog_ok)
-                .cancelable(false)
-                .canceledOnTouchOutside(false)
-                .onPositive((materialDialog, dialogAction) -> onCloseRenderLoopDialog())
-                .show();
+    protected open fun displayRenderLoopDialog(currentCardId: Long, detail: RenderProcessGoneDetail) {
+        val cardInformation = java.lang.Long.toString(currentCardId)
+        val res = target.resources
+        val errorDetails = if (detail.didCrash()) res.getString(R.string.webview_crash_unknwon_detailed) else res.getString(R.string.webview_crash_oom_details)
+        MaterialDialog.Builder(target)
+            .title(res.getString(R.string.webview_crash_loop_dialog_title))
+            .content(res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+            .positiveText(R.string.dialog_ok)
+            .cancelable(false)
+            .canceledOnTouchOutside(false)
+            .onPositive { materialDialog: MaterialDialog?, dialogAction: DialogAction? -> onCloseRenderLoopDialog() }
+            .show()
     }
-
 
     /**
      * Issue 8459
@@ -180,20 +145,18 @@ public class OnRenderProcessGoneDelegate {
      * but this does not cause .onDestroy() to be called
      *
      * We do not want to show toasts or increment the "crash" counter if this occurs. Just handle the issue
-     * */
-    private boolean activityIsMinimised() {
+     */
+    private fun activityIsMinimised(): Boolean {
         // See diagram on https://developer.android.com/topic/libraries/architecture/lifecycle#lc
         // STARTED is after .start(), the activity goes to CREATED after .onStop()
-        return !mLifecycle.getCurrentState().isAtLeast(STARTED);
+        lifecycle = target.lifecycle
+        return !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
+    private fun webViewRendererLastCrashedOnCard(cardId: Long): Boolean =
+        mLastCrashingCardId != null && mLastCrashingCardId == cardId
 
-    private boolean webViewRendererLastCrashedOnCard(long cardId) {
-        return mLastCrashingCardId != null && mLastCrashingCardId == cardId;
-    }
-
-
-    private boolean canRecoverFromWebViewRendererCrash() {
+    private fun canRecoverFromWebViewRendererCrash(): Boolean =
         // DEFECT
         // If we don't have a card to render, we're in a bad state. The class doesn't currently track state
         // well enough to be able to know exactly where we are in the initialisation pipeline.
@@ -201,16 +164,7 @@ public class OnRenderProcessGoneDelegate {
         // We should fix this, but it's very unlikely that we'll ever get here. Logs will tell
 
         // Revisit webViewCrashedOnCard() if changing this. Logic currently assumes we have a card.
-        return mTarget.getCurrentCard() != null;
-    }
+        target.currentCard != null
 
-
-    protected void onCloseRenderLoopDialog() {
-        mTarget.finishWithoutAnimation();
-    }
-
-
-    public AbstractFlashcardViewer getTarget() {
-        return mTarget;
-    }
+    protected fun onCloseRenderLoopDialog() = target.finishWithoutAnimation()
 }
