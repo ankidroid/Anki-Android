@@ -401,7 +401,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return;
             }
             mLastClickTime = getElapsedRealTime();
-            mAutomaticAnswerSettings.stopShowingAnswer();
+            mAutomaticAnswerSettings.onShowAnswer();
             displayCardAnswer();
         }
     };
@@ -454,7 +454,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         view.setPressed(true);
                     }
                     mLastClickTime = getElapsedRealTime();
-                    mAutomaticAnswerSettings.stopShowingQuestion();
+                    mAutomaticAnswerSettings.onSelectEase();
                     int id = view.getId();
                     if (id == R.id.flashcard_layout_ease1) {
                         Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
