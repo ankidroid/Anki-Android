@@ -68,6 +68,7 @@ import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
+import com.ichi2.anki.reviewer.AnswerButtons;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
@@ -904,26 +905,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
-        int[] backgroundIds;
-        if (animationEnabled()) {
-            backgroundIds = new int [] {
-                    R.attr.againButtonRippleRef,
-                    R.attr.hardButtonRippleRef,
-                    R.attr.goodButtonRippleRef,
-                    R.attr.easyButtonRippleRef};
-        } else {
-            backgroundIds = new int [] {
-                    R.attr.againButtonRef,
-                    R.attr.hardButtonRef,
-                    R.attr.goodButtonRef,
-                    R.attr.easyButtonRef};
-        }
-        final int[] background = Themes.getResFromAttr(this, backgroundIds);
-        final int[] textColor = Themes.getColorFromAttr(this, new int [] {
-                R.attr.againButtonTextColor,
-                R.attr.hardButtonTextColor,
-                R.attr.goodButtonTextColor,
-                R.attr.easyButtonTextColor});
+        final int[] background = AnswerButtons.getBackgroundColors(this);
+        final int[] textColor = AnswerButtons.getTextColors(this);
         mEase1Layout.setVisibility(View.VISIBLE);
         mEase1Layout.setBackgroundResource(background[0]);
         mEase4Layout.setBackgroundResource(background[3]);
