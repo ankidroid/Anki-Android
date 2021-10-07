@@ -9,6 +9,7 @@ import android.webkit.RenderProcessGoneDetail;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
+import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings;
 import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.libanki.Model;
@@ -271,7 +272,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     public void noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
         ActivityController<NonAbstractFlashcardViewer> controller = getViewerController(true);
         NonAbstractFlashcardViewer viewer = controller.get();
-        viewer.mAutomaticAnswer = new AutomaticAnswer(viewer, new AutomaticAnswerSettings(true, 5, 5));
+        viewer.mAutomaticAnswer = new AutomaticAnswer(viewer, new AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5));
         viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER);
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true));
         controller.pause();

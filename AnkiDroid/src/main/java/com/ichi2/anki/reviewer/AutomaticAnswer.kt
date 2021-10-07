@@ -18,7 +18,12 @@ package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
 import android.os.Handler
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.R
+import com.ichi2.anki.Reviewer
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
 import timber.log.Timber
 
@@ -55,7 +60,7 @@ import timber.log.Timber
  */
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    private val settings: AutomaticAnswerSettings
+    @VisibleForTesting val settings: AutomaticAnswerSettings
 ) {
 
     /** Whether any tasks should be executed/scheduled.
@@ -76,7 +81,7 @@ class AutomaticAnswer(
             Timber.d("showQuestion: disabled")
             return@Runnable
         }
-        target.automaticShowQuestion()
+        target.automaticShowQuestion(settings.answerAction)
     }
 
     /**
@@ -93,6 +98,7 @@ class AutomaticAnswer(
             Timber.d("showQuestion: disabled")
             return
         }
+        Timber.i("Automatically showing question in %dms", delay)
         timeoutHandler.postDelayed(showQuestionTask, delay)
     }
 
@@ -102,14 +108,17 @@ class AutomaticAnswer(
             Timber.d("showAnswer: disabled")
             return
         }
+        Timber.i("Automatically showing answer in %dms", delay)
         timeoutHandler.postDelayed(showAnswerTask, delay)
     }
 
     private fun stopShowQuestionTask() {
+        Timber.i("stop: automatically show question")
         timeoutHandler.removeCallbacks(showQuestionTask)
     }
 
     private fun stopShowAnswerTask() {
+        Timber.i("stop: automatically show answer")
         timeoutHandler.removeCallbacks(showAnswerTask)
     }
 
@@ -142,7 +151,7 @@ class AutomaticAnswer(
     // region TODO: These attempt to stop a race condition between a manual answer and the automated answer
     // I don't believe this is thread-safe
 
-    /**  Stops the current automatic display if the user has selected an answer */
+    /** Stops the current automatic display if the user has selected an answer */
     fun onSelectEase() {
         stopShowQuestionTask()
     }
@@ -182,16 +191,18 @@ class AutomaticAnswer(
 
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
-        fun automaticShowQuestion()
+        fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
 
     companion object {
         @JvmStatic
+        @CheckResult
         fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
             return AutomaticAnswer(target, AutomaticAnswerSettings())
         }
 
         @JvmStatic
+        @CheckResult
         fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(preferences, col)
             return AutomaticAnswer(target, settings)
@@ -205,6 +216,7 @@ class AutomaticAnswer(
  * * Enabled
  * * Time to show answer (20s)
  * * Time to show next question (60s)
+ * * Automatic action: the action to take when reviewing
  *
  * ### Deck Options - Reviews - Automatic Display Answer
  *
@@ -215,6 +227,7 @@ class AutomaticAnswer(
  * * Enabled, etc...
  */
 class AutomaticAnswerSettings(
+    val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val questionDelaySeconds: Int = 60,
     private val answerDelaySeconds: Int = 20
@@ -235,6 +248,7 @@ class AutomaticAnswerSettings(
          */
         @JvmStatic
         fun queryDeckSpecificOptions(
+            action: AutomaticAnswerAction,
             col: Collection,
             selectedDid: Long
         ): AutomaticAnswerSettings? {
@@ -254,21 +268,92 @@ class AutomaticAnswerSettings(
             val useTimer = revOptions.optBoolean("timeoutAnswer", false)
             val waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60)
             val waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(useTimer, waitQuestionSecond, waitAnswerSecond)
+            return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
         @JvmStatic
-        fun queryFromPreferences(preferences: SharedPreferences): AutomaticAnswerSettings {
+        fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
+            return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
         @JvmStatic
         fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
-            // deck specific options take precedence over general (preference-based) options
-            return queryDeckSpecificOptions(col, col.decks.selected()) ?: queryFromPreferences(preferences)
+            // deck specific options take precedence over general (preference-based) options.
+            // the action can only be set via preferences (but is stored in the collection).
+            val action = getAction(col)
+            return queryDeckSpecificOptions(action, col, col.decks.selected()) ?: queryFromPreferences(preferences, action)
+        }
+
+        private fun getAction(col: Collection): AutomaticAnswerAction {
+            return try {
+                val value: Int = col.get_config(AutomaticAnswerAction.CONFIG_KEY, null as Int?) ?: return AutomaticAnswerAction.BURY_CARD
+                AutomaticAnswerAction.fromPreferenceValue(value)
+            } catch (e: Exception) {
+                AutomaticAnswerAction.BURY_CARD
+            }
+        }
+    }
+}
+
+/**
+ * Represents a value from [R.array.automatic_answer_values]/[R.array.automatic_answer_options]
+ * Executed when answering a card (showing the question).
+ */
+enum class AutomaticAnswerAction(private val preferenceValue: Int) {
+    /** Default: least invasive action */
+    BURY_CARD(0),
+    ANSWER_AGAIN(1),
+    ANSWER_HARD(2),
+    ANSWER_GOOD(3),
+    ANSWER_EASY(4);
+
+    fun execute(reviewer: Reviewer) {
+        val numberOfButtons = reviewer.buttonCount
+        val actualAction = handleInvalidButtons(numberOfButtons)
+        val action = actualAction.toCommand(numberOfButtons)
+        Timber.i("Executing %s", action)
+        reviewer.executeCommand(action)
+    }
+
+    /** Handle **Hard/Easy** uf they don't appear */
+    private fun handleInvalidButtons(numberOfButtons: Int): AutomaticAnswerAction {
+        return when (this) {
+            ANSWER_HARD -> if (AnswerButtons.canAnswerHard(numberOfButtons)) ANSWER_HARD else ANSWER_GOOD
+            ANSWER_EASY -> if (AnswerButtons.canAnswerEasy(numberOfButtons)) ANSWER_EASY else ANSWER_GOOD
+            // Again and Good always appear. So does Bury
+            else -> this
+        }
+    }
+
+    /** Convert to a [ViewerCommand] */
+    private fun toCommand(numberOfButtons: Int): ViewerCommand {
+        return when (this) {
+            BURY_CARD -> ViewerCommand.COMMAND_BURY_CARD
+            ANSWER_AGAIN -> AGAIN.toViewerCommand(numberOfButtons)
+            ANSWER_HARD -> HARD.toViewerCommand(numberOfButtons)
+            ANSWER_GOOD -> GOOD.toViewerCommand(numberOfButtons)
+            ANSWER_EASY -> EASY.toViewerCommand(numberOfButtons)
+        }
+    }
+
+    companion object {
+        /**
+         * An integer representing the action when Automatic Answer flips a card from answer to question
+         *
+         * 0 represents "bury", 1-4 represents the named buttons
+         *
+         * Although AnkiMobile and AnkiDroid have the feature, this config key is currently AnkiDroid only
+         *
+         * @see AutomaticAnswerAction
+         */
+        const val CONFIG_KEY = "automaticAnswerAction"
+
+        /** convert from [R.array.automatic_answer_values] ([R.array.automatic_answer_options]) to the enum */
+        fun fromPreferenceValue(i: Int): AutomaticAnswerAction {
+            return values().firstOrNull { it.preferenceValue == i } ?: BURY_CARD
         }
     }
 }

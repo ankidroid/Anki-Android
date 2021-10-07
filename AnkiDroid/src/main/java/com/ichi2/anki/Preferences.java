@@ -48,6 +48,7 @@ import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.StorageAccessException;
+import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
@@ -162,12 +163,29 @@ public class Preferences extends AnkiActivity {
     private static final String PASTE_PNG = "pastePNG";
 
     /**
+     * Represents in Android preferences the collection's "Automatic Answer" action.
+     *
+     * An integer representing the action when "Automatic Answer" flips a card from answer to question
+     *
+     * 0 represents "bury", 1-4 represents the named buttons
+     *
+     * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
+     *
+     * Although AnkiMobile and AnkiDroid have the feature, this config key is currently AnkiDroid only
+     *
+     * We use the same key in the collection config
+     *
+     * @see com.ichi2.anki.reviewer.AutomaticAnswerAction#CONFIG_KEY
+     */
+    private static final String AUTOMATIC_ANSWER_ACTION = "automaticAnswerAction";
+
+    /**
      * The number of cards that should be due today in a deck to justify adding a notification.
      */
     public static final String MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification";
     private static final String NEW_TIMEZONE_HANDLING = "newTimezoneHandling";
     private static final String [] sCollectionPreferences = {SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING};
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION};
 
     /** The collection path when Preferences was opened  */
     private String mOldCollectionPath = null;
@@ -319,6 +337,9 @@ public class Preferences extends AnkiActivity {
                             break;
                         case USE_CURRENT:
                             ((ListPreference)pref).setValueIndex(col.get_config("addToCur", true) ? 0 : 1);
+                            break;
+                        case AUTOMATIC_ANSWER_ACTION:
+                            ((ListPreference)pref).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0));
                             break;
                         case NEW_SPREAD:
                             ((ListPreference)pref).setValueIndex(col.get_config_int("newSpread"));
@@ -666,6 +687,10 @@ public class Preferences extends AnkiActivity {
                         break;
                     case USE_CURRENT:
                         preferencesActivity.getCol().set_config("addToCur", "0".equals(((ListPreference) pref).getValue()));
+                        preferencesActivity.getCol().setMod();
+                        break;
+                    case AUTOMATIC_ANSWER_ACTION:
+                        preferencesActivity.getCol().set_config(AutomaticAnswerAction.CONFIG_KEY, Integer.parseInt(((ListPreference) pref).getValue()));
                         preferencesActivity.getCol().setMod();
                         break;
                     case DAY_OFFSET: {

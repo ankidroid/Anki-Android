@@ -132,7 +132,7 @@ class AutomaticAnswerTest {
             answerShown = true
         }
 
-        override fun automaticShowQuestion() {
+        override fun automaticShowQuestion(action: AutomaticAnswerAction) {
             questionShown = true
         }
     }
