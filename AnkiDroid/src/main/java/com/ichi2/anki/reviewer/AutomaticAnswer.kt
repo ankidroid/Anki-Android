@@ -21,20 +21,10 @@ import android.os.Handler
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.Collection
 
-// TODO: Settings should not be aware of the target
-class AutomaticAnswerSettings(
+class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    @get:JvmName("useTimer") val useTimer: Boolean = false,
-    private val questionDelaySeconds: Int = 60,
-    private val answerDelaySeconds: Int = 20
+    private val settings: AutomaticAnswerSettings
 ) {
-
-    private val questionDelayMilliseconds = questionDelaySeconds * 1000L
-    private val answerDelayMilliseconds = answerDelaySeconds * 1000L
-
-    // a wait of zero means auto-advance is disabled
-    private val autoAdvanceAnswer; get() = answerDelaySeconds > 0
-    private val autoAdvanceQuestion; get() = questionDelaySeconds > 0
 
     private val showAnswerTask = Runnable(target::automaticShowAnswer)
     private val showQuestionTask = Runnable(target::automaticShowQuestion)
@@ -71,15 +61,15 @@ class AutomaticAnswerSettings(
     }
 
     fun onDisplayQuestion() {
-        if (!useTimer) return
-        if (!autoAdvanceAnswer) return
+        if (!settings.useTimer) return
+        if (!settings.autoAdvanceAnswer) return
 
         stopShowingAnswer()
     }
 
     fun onDisplayAnswer() {
-        if (!useTimer) return
-        if (!autoAdvanceQuestion) return
+        if (!settings.useTimer) return
+        if (!settings.autoAdvanceQuestion) return
 
         stopShowingQuestion()
     }
@@ -99,16 +89,20 @@ class AutomaticAnswerSettings(
 
     @JvmOverloads
     fun scheduleDisplayAnswer(additionalDelay: Long = 0) {
-        if (!useTimer) return
-        if (!autoAdvanceAnswer) return
-        delayedShowAnswer(answerDelayMilliseconds + additionalDelay)
+        if (!settings.useTimer) return
+        if (!settings.autoAdvanceAnswer) return
+        delayedShowAnswer(settings.answerDelayMilliseconds + additionalDelay)
     }
 
     @JvmOverloads
     fun scheduleDisplayQuestion(additionalDelay: Long = 0) {
-        if (!useTimer) return
-        if (!autoAdvanceQuestion) return
-        delayedShowQuestion(questionDelayMilliseconds + additionalDelay)
+        if (!settings.useTimer) return
+        if (!settings.autoAdvanceQuestion) return
+        delayedShowQuestion(settings.questionDelayMilliseconds + additionalDelay)
+    }
+
+    fun isEnabled(): Boolean {
+        return settings.useTimer
     }
 
     interface AutomaticallyAnswered {
@@ -118,8 +112,34 @@ class AutomaticAnswerSettings(
 
     companion object {
         @JvmStatic
+        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
+            return AutomaticAnswer(target, AutomaticAnswerSettings())
+        }
+
+        @JvmStatic
+        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
+            val settings = AutomaticAnswerSettings.createInstance(preferences, col)
+            return AutomaticAnswer(target, settings)
+        }
+    }
+}
+
+class AutomaticAnswerSettings(
+    @get:JvmName("useTimer") val useTimer: Boolean = false,
+    private val questionDelaySeconds: Int = 60,
+    private val answerDelaySeconds: Int = 20
+) {
+
+    val questionDelayMilliseconds = questionDelaySeconds * 1000L
+    val answerDelayMilliseconds = answerDelaySeconds * 1000L
+
+    // a wait of zero means auto-advance is disabled
+    val autoAdvanceAnswer; get() = answerDelaySeconds > 0
+    val autoAdvanceQuestion; get() = questionDelaySeconds > 0
+
+    companion object {
+        @JvmStatic
         fun queryDeckSpecificOptions(
-            target: AutomaticallyAnswered,
             col: Collection,
             selectedDid: Long
         ): AutomaticAnswerSettings? {
@@ -139,26 +159,21 @@ class AutomaticAnswerSettings(
             val useTimer = revOptions.optBoolean("timeoutAnswer", false)
             val waitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60)
             val waitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(target, useTimer, waitQuestionSecond, waitAnswerSecond)
+            return AutomaticAnswerSettings(useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
         @JvmStatic
-        fun queryFromPreferences(target: AutomaticallyAnswered, preferences: SharedPreferences): AutomaticAnswerSettings {
+        fun queryFromPreferences(preferences: SharedPreferences): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)
-            return AutomaticAnswerSettings(target, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
+            return AutomaticAnswerSettings(prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
         @JvmStatic
-        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
+        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options
-            return queryDeckSpecificOptions(target, col, col.decks.selected()) ?: queryFromPreferences(target, preferences)
-        }
-
-        @JvmStatic
-        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswerSettings {
-            return AutomaticAnswerSettings(target)
+            return queryDeckSpecificOptions(col, col.decks.selected()) ?: queryFromPreferences(preferences)
         }
     }
 }

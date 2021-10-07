@@ -101,7 +101,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.AutomaticAnswerSettings;
+import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
@@ -170,7 +170,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods, AutomaticAnswerSettings.AutomaticallyAnswered {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods, AutomaticAnswer.AutomaticallyAnswered {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -243,7 +243,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
 
-    @NonNull protected AutomaticAnswerSettings mAutomaticAnswerSettings = AutomaticAnswerSettings.defaultInstance(this);
+    @NonNull protected AutomaticAnswer mAutomaticAnswer = AutomaticAnswer.defaultInstance(this);
 
     protected TypeAnswer mTypeAnswer;
 
@@ -401,7 +401,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return;
             }
             mLastClickTime = getElapsedRealTime();
-            mAutomaticAnswerSettings.onShowAnswer();
+            mAutomaticAnswer.onShowAnswer();
             displayCardAnswer();
         }
     };
@@ -454,7 +454,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         view.setPressed(true);
                     }
                     mLastClickTime = getElapsedRealTime();
-                    mAutomaticAnswerSettings.onSelectEase();
+                    mAutomaticAnswer.onSelectEase();
                     int id = view.getId();
                     if (id == R.id.flashcard_layout_ease1) {
                         Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
@@ -851,7 +851,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         super.onPause();
         Timber.d("onPause()");
 
-        mAutomaticAnswerSettings.stopAll();
+        mAutomaticAnswer.stopAll();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
@@ -1731,7 +1731,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes");
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            mAutomaticAnswerSettings = AutomaticAnswerSettings.createInstance(this, preferences, col);
+            mAutomaticAnswer = AutomaticAnswer.createInstance(this, preferences, col);
         } catch (Exception ex) {
             Timber.w(ex);
             onCollectionLoadError();
@@ -1809,9 +1809,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     class ReadTextListener implements ReadText.ReadTextListener {
         public void onDone() {
             if (ReadText.getmQuestionAnswer() == SoundSide.QUESTION) {
-                mAutomaticAnswerSettings.scheduleDisplayAnswer();
+                mAutomaticAnswer.scheduleDisplayAnswer();
             } else if (ReadText.getmQuestionAnswer() == SoundSide.ANSWER) {
-                mAutomaticAnswerSettings.scheduleDisplayQuestion();
+                mAutomaticAnswer.scheduleDisplayQuestion();
             }
         }
     }
@@ -1891,9 +1891,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         hideEaseButtons();
 
         // If the user wants to show the answer automatically
-        mAutomaticAnswerSettings.onDisplayQuestion();
+        mAutomaticAnswer.onDisplayQuestion();
         if (!mSpeakText) {
-            mAutomaticAnswerSettings.scheduleDisplayAnswer(mUseTimerDynamicMS);
+            mAutomaticAnswer.scheduleDisplayAnswer(mUseTimerDynamicMS);
         }
 
 
@@ -1937,9 +1937,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
         displayAnswerBottomBar();
         // If the user wants to show the next question automatically
-        mAutomaticAnswerSettings.onDisplayAnswer();
+        mAutomaticAnswer.onDisplayAnswer();
         if (!mSpeakText) {
-            mAutomaticAnswerSettings.scheduleDisplayQuestion(mUseTimerDynamicMS);
+            mAutomaticAnswer.scheduleDisplayQuestion(mUseTimerDynamicMS);
         }
     }
 
@@ -2018,7 +2018,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
             mSoundPlayer.addSounds(mBaseUrl, newContent, SoundSide.QUESTION);
-            if (mAutomaticAnswerSettings.useTimer() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+            if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
@@ -2086,13 +2086,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     playSounds(SoundSide.QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
                     playSounds(SoundSide.ANSWER);
-                    if (mAutomaticAnswerSettings.useTimer()) {
+                    if (mAutomaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER);
                     }
                 } else { // question is displayed
                     playSounds(SoundSide.QUESTION);
                     // If the user wants to show the answer automatically
-                    if (mAutomaticAnswerSettings.useTimer()) {
+                    if (mAutomaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER);
                     }
                 }
@@ -2648,7 +2648,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        mAutomaticAnswerSettings.stopAll();
+        mAutomaticAnswer.stopAll();
         mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
