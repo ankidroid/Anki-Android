@@ -20,6 +20,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.OnboardingUtils.Companion.addFeatures
 import com.ichi2.anki.OnboardingUtils.Companion.isVisited
@@ -50,6 +51,7 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
  */
 
 // Contains classes for various screens. Each sub-class has methods to show onboarding tutorials.
+// TODO: Move OnboardingUtils.featureConstants to a DI container rather than a mutable singleton
 abstract class Onboarding<Feature>(
     private val context: Context,
     val tutorials: MutableList<TutorialArguments<Feature>>
@@ -63,8 +65,18 @@ abstract class Onboarding<Feature>(
         const val CARD_BROWSER_ONBOARDING = "CardBrowserOnboarding"
 
         init {
+            addDefaultFeatures()
+        }
+
+        @VisibleForTesting
+        fun resetOnboardingForTesting() {
+            OnboardingUtils.featureConstants.clear()
+            addDefaultFeatures()
+        }
+
+        private fun addDefaultFeatures() {
             addFeatures(
-                listOf<String>(
+                listOf(
                     DECK_PICKER_ONBOARDING,
                     REVIEWER_ONBOARDING,
                     NOTE_EDITOR_ONBOARDING,

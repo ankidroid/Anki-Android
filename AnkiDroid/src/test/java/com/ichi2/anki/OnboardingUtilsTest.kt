@@ -18,8 +18,9 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.isType
-import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.reflect.full.companionObject
@@ -27,21 +28,19 @@ import kotlin.reflect.full.companionObject
 @RunWith(AndroidJUnit4::class)
 class OnboardingUtilsTest : RobolectricTest() {
 
+    @Before
+    override fun setUp() {
+        super.setUp()
+        Onboarding.resetOnboardingForTesting() // #9597 - global needs resetting
+    }
+
     @Test
     fun resetResetAllElementsFromOnboarding() {
-        executeOnboardingInit()
-
         val onboardingIdentifierCount = Onboarding::class.companionObject!!.members.filter { it.isFinal && it.isType<String>() }.size
         // featureConstants is internally used in reset()
         val featuresAvailableForReset = OnboardingUtils.featureConstants.size
-        assertThat("All onboarding identifiers are available for reset", onboardingIdentifierCount, equalTo(featuresAvailableForReset))
+        assertThat("All onboarding identifiers are available for reset", onboardingIdentifierCount, CoreMatchers.equalTo(featuresAvailableForReset))
     }
 
     enum class Feature : OnboardingFlag
-
-    private fun executeOnboardingInit() {
-        // Creating an object is mandatory to execute Onboarding's init code.
-        object : Onboarding<Feature>(targetContext, mutableListOf()) {
-        }
-    }
 }
