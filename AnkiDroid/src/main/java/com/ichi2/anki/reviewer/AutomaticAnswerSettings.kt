@@ -57,11 +57,11 @@ class AutomaticAnswerSettings(
         timeoutHandler.postDelayed(showAnswerTask, delay)
     }
 
-    fun stopShowingQuestion() {
+    private fun stopShowingQuestion() {
         timeoutHandler.removeCallbacks(showQuestionTask)
     }
 
-    fun stopShowingAnswer() {
+    private fun stopShowingAnswer() {
         timeoutHandler.removeCallbacks(showAnswerTask)
     }
 
@@ -83,6 +83,19 @@ class AutomaticAnswerSettings(
 
         stopShowingQuestion()
     }
+
+    // region TODO: These attempt to stop a race condition between a manual answer and the automated answer
+    // I don't believe this is thread-safe
+
+    fun onSelectEase() {
+        stopShowingQuestion()
+    }
+
+    fun onShowAnswer() {
+        stopShowingAnswer()
+    }
+
+    // endregion
 
     @JvmOverloads
     fun scheduleDisplayAnswer(additionalDelay: Long = 0) {
