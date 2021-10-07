@@ -17,12 +17,13 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.isType
-import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.reflect.KCallable
 import kotlin.reflect.full.companionObject
 
 @RunWith(AndroidJUnit4::class)
@@ -36,11 +37,13 @@ class OnboardingUtilsTest : RobolectricTest() {
 
     @Test
     fun resetResetAllElementsFromOnboarding() {
-        val onboardingIdentifierCount = Onboarding::class.companionObject!!.members.filter { it.isFinal && it.isType<String>() }.size
+        val onboardingIdentifiers = Onboarding::class.companionObject!!.members.filter { it.isFinal && it.isType<String>() }.map { getConstantValue(it) }
         // featureConstants is internally used in reset()
-        val featuresAvailableForReset = OnboardingUtils.featureConstants.size
-        assertThat("All onboarding identifiers are available for reset", onboardingIdentifierCount, CoreMatchers.equalTo(featuresAvailableForReset))
+        val featuresAvailableForReset = OnboardingUtils.featureConstants
+        assertThat("All onboarding identifiers are available for reset", onboardingIdentifiers, containsInAnyOrder(featuresAvailableForReset))
     }
 
     enum class Feature : OnboardingFlag
+
+    private fun getConstantValue(it: KCallable<*>): String = it.call(null) as String
 }
