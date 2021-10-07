@@ -69,6 +69,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.AnswerButtons;
+import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
@@ -895,7 +896,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mOnboarding.onAnswerShown();
         int buttonCount;
         try {
-            buttonCount = mSched.answerButtons(mCurrentCard);
+            buttonCount = getButtonCount();
         } catch (RuntimeException e) {
             AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
@@ -967,6 +968,20 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
         }
     }
+
+    public int getButtonCount() {
+        return mSched.answerButtons(mCurrentCard);
+    }
+
+
+    @Override
+    public void automaticShowQuestion(@NonNull AutomaticAnswerAction action) {
+        // explicitly do not call super
+        if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
+            action.execute(this);
+        }
+    }
+
 
     @Override
     protected SharedPreferences restorePreferences() {
