@@ -27,16 +27,18 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-class AutomaticAnswerSettingsTest {
+class AutomaticAnswerTest {
 
     @Test
     fun stopAllWorks() {
-        val target: AutomaticAnswerSettings.AutomaticallyAnswered = mock()
-        val answer = AutomaticAnswerSettings(
-            useTimer = true,
-            questionDelaySeconds = 10,
-            answerDelaySeconds = 10,
-            target = target
+        val target: AutomaticAnswer.AutomaticallyAnswered = mock()
+        val answer = AutomaticAnswer(
+            target = target,
+            settings = AutomaticAnswerSettings(
+                useTimer = true,
+                questionDelaySeconds = 10,
+                answerDelaySeconds = 10
+            )
         )
 
         answer.delayedShowQuestion(0)
