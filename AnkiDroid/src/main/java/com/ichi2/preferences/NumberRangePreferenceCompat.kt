@@ -34,23 +34,28 @@ open class NumberRangePreferenceCompat : EditTextPreference {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
+        defaultValue = getDefaultValueFromAttributes(attrs)
     }
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
+        defaultValue = getDefaultValueFromAttributes(attrs)
     }
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
+        defaultValue = getDefaultValueFromAttributes(attrs)
     }
-    constructor(context: Context?) : super(context)
+    constructor(context: Context?) : super(context) {
+        defaultValue = null
+    }
+
+    val defaultValue: String?
 
     var min = 0
-        get() = field
-        protected set(value) { field = value }
+        protected set
     var max = 0
-        get() = field
-        private set(value) { field = value }
+        private set
 
     /** The maximum available number of digits */
     val maxDigits: Int get() = max.toString().length
@@ -62,7 +67,7 @@ open class NumberRangePreferenceCompat : EditTextPreference {
      * their Integer equivalents.
      */
     override fun getPersistedString(defaultReturnValue: String?): String? {
-        return getPersistedInt(min).toString()
+        return getPersistedInt(getDefaultValue()).toString()
     }
 
     override fun persistString(value: String): Boolean {
@@ -126,12 +131,29 @@ open class NumberRangePreferenceCompat : EditTextPreference {
     }
 
     /**
+     * Returns the default Value, or null if not specified
+     *
+     * This method should only be called once from the constructor.
+     */
+    private fun getDefaultValueFromAttributes(attrs: AttributeSet?): String? {
+        return attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
+    }
+
+    /**
      * Get the persisted value held by this preference.
      *
      * @return the persisted value.
      */
     fun getValue(): Int {
-        return getPersistedInt(min)
+        return getPersistedInt(getDefaultValue())
+    }
+
+    private fun getDefaultValue(): Int {
+        return try {
+            return defaultValue?.toInt() ?: min
+        } catch (e: Exception) {
+            min
+        }
     }
 
     /**
