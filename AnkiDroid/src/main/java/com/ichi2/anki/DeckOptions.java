@@ -226,6 +226,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 newInts.put(value);
                                 newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").optInt(2, 7));
                                 mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
@@ -234,6 +235,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
                                 newInts.put(value);
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").optInt(2, 7));
                                 mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
