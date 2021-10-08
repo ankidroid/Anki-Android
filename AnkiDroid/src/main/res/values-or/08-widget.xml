@@ -50,8 +50,8 @@
         <item quantity="other">%dଟି ପତ୍ର ବାକି ଅଛି</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%dଟେ ମିନିଟ ବାକି ଅଛି</item>
-        <item quantity="other">%d ମିନିଟ ବାକି ଅଛି</item>
+        <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
+        <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
     </plurals>
     <string name="widget_add_note_button">ନୂତନ Ankidroid ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
 </resources>

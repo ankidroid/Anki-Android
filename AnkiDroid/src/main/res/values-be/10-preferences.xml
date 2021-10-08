@@ -49,7 +49,7 @@
     <string name="pref_cat_flashcard" maxLength="41">Экран</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Знешні выгляд</string>
-    <string name="pref_cat_appearance_summ">Змена тэмы і шрыфтоў</string>
+    <string name="pref_cat_appearance_summ">Змена тэмы і стандартны шрыфт</string>
     <string name="pref_cat_themes" maxLength="41">Тэмы</string>
     <string name="pref_cat_fonts" maxLength="41">Шрыфты</string>
     <string name="pref_cat_gestures" maxLength="41">Жэсты</string>
@@ -140,8 +140,8 @@
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="day_theme" maxLength="41">Дзённая тэма</string>
     <string name="night_theme" maxLength="41">Начная тэма</string>
-    <string name="default_font" maxLength="41">Шрыфт па змаўчанні</string>
-    <string name="override_font" maxLength="41">Ужыванне шрыфту па змаўчанні</string>
+    <string name="default_font" maxLength="41">Стандартны шрыфт</string>
+    <string name="override_font" maxLength="41">Ужыванне стандартнага шрыфту</string>
     <string name="language" maxLength="41">Мова</string>
     <string name="language_system">Сістэмная мова</string>
     <string name="notification_pref" maxLength="41">Апавяшчэнні</string>
@@ -204,14 +204,14 @@
     <string name="custom_buttons_setting_always_show">Заўсёды паказваць</string>
     <string name="custom_buttons_setting_if_room">Паказваць, калі ёсць месца</string>
     <string name="custom_buttons_setting_menu_only">Толькі меню</string>
-    <string name="reset_custom_buttons" maxLength="41">Скід па змаўчанні</string>
+    <string name="reset_custom_buttons" maxLength="41">Скінуць да стандартных</string>
     <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену выявы як PNG</string>
-    <string name="paste_as_png_summary">Па змаўчанні, праграма ўстаўляе выявы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі выяваў PNG замест JPG.</string>
+    <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе выявы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі выяваў PNG замест JPG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
     <string name="exit_via_double_tap_back_summ">Для прадухілення нечаканага выхаду з праграмы</string>
     <!-- Advanced statistics settings -->
@@ -281,8 +281,8 @@
     <string name="deck_conf_manage_summ">Дадаць і змяніць параметры групы</string>
     <string name="deck_conf_current_group" maxLength="41">Бягучая група</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Перайменаваць</string>
-    <string name="deck_conf_reset" maxLength="41">Скінуць налады</string>
-    <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў да пачатковых?</string>
+    <string name="deck_conf_reset" maxLength="41">Скінуць да стандартных</string>
+    <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў да першапачатковых значэнняў?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Дадаць</string>
     <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
     <string name="deck_conf_remove_message">Выдаліць бягучыя групавыя параметры?</string>

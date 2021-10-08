@@ -45,7 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Налаштування</string>
     <string name="help">Допомога</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">креслення</string>
     <string name="send_feedback">Надіслати відгук</string>
     <string name="studyoptions_due_today">На сьогодні:</string>
     <string name="studyoptions_new_total">Всього нових карток:</string>
@@ -125,7 +125,7 @@
     <string name="menu_flag_card_two">Помаранчевий прапорець</string>
     <string name="menu_flag_card_three">Зелений прапорець</string>
     <string name="menu_flag_card_four">Синій прапорець</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">Рожевий прапор</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Редагувати примітки</string>

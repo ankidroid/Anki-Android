@@ -41,7 +41,7 @@
     <string name="yes">ହଁ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ଡେକଗୁଡ଼ିକ</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">କାର୍ଡ ବ୍ରାଉଜର୍</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
     <string name="settings">ସେଟିଂସମୂହ</string>
     <string name="help">ସହାୟତା</string>
@@ -76,7 +76,7 @@
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">ଆଜି %2$s ରେ %1$dଟେ ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
+        <item quantity="one">ଆଜି %2$s ରେ %1$dଟିଏ ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
         <item quantity="other">ଆଜି %2$s ରେ %1$dଟି ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
@@ -89,7 +89,7 @@
     <string name="ease_button_easy">ସହଜ</string>
     <string name="studyoptions_congrats_undo">%s ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
     <string name="menu_import">ଆମଦାନି କରନ୍ତୁ</string>
-    <string name="undo">ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
+    <string name="undo">ପୂର୍ବବତ୍</string>
     <string name="undo_action_review">ଶେଷ ସମୀକ୍ଷା</string>
     <string name="undo_action_change_deck_multi">ଡେକ୍ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="move_all_to_deck">ସମସ୍ତକୁ ଡେକ୍ କୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
@@ -100,16 +100,16 @@
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
-    <string name="menu_dismiss_note">ଲୁଚାନ୍ତୁ / ଅପସାରଣ କରନ୍ତୁ</string>
-    <string name="menu_bury_card">କାର୍ଡ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="menu_dismiss_note">ଲୁଚାନ୍ତୁ / ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="menu_bury_card">ପତ୍ର ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="menu_bury_note">ନୋଟ୍ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="menu_suspend_card">କାର୍ଡ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="menu_suspend_card">ପତ୍ର ନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="menu_suspend_note">ନୋଟ୍ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="menu_bury">ସ୍ଥଗିତ ରଖନ୍ତୁ</string>
     <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
-    <string name="menu_delete_note">ନୋଟ୍ ଅପସାରଣ କରନ୍ତୁ</string>
+    <string name="menu_delete_note">ନୋଟ୍ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="menu_flag">ପତାକା</string>
-    <string name="menu_flag_card">କାର୍ଡକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
+    <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
     <string name="menu_flag_card_zero">ପତାକା ନାହିଁ</string>
     <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
     <string name="menu_flag_card_two">କମଳା ପତାକା</string>
@@ -186,7 +186,7 @@
     <string name="card_template_editor_front">ସାମ୍ନା ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_back">ପଛ ଟେମ୍ପଲେଟ୍</string>
     <string name="card_template_editor_styling">ଶୈଳିକରଣ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">କାର୍ଡ ବ୍ରାଉଜରର ରୂପ</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ପତ୍ର ବ୍ରାଉଜରର ରୂପ</string>
     <string name="card_template_editor_deck_override">ତାସଖଣ୍ଡର ନବଲିଖନ</string>
     <string name="card_template_editor_insert_field">କ୍ଷେତ୍ର ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="card_template_editor_select_field">କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>
@@ -196,11 +196,11 @@
         <item quantity="other">ଏହା %1$dଟି ପତ୍ର ସୃଷ୍ଟି କରିବ। ଅଗ୍ରସର ହେବେ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟେ କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
-        <item quantity="other">\"%2$s\" କାର୍ଡ ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି କାର୍ଡ କୁ ଅପସାରଣ କରିବେ କି?</item>
+        <item quantity="one">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟିଏ ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
+        <item quantity="other">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
     </plurals>
     <string name="invalid_template">ଗୋଟିଏ ପତ୍ର ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ</string>
-    <string name="card_template_editor_would_delete_note">ଏହି ପତ୍ର ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ପତ୍ର ପ୍ରକାର ସୃଷ୍ଟି ଏବଂ ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
+    <string name="card_template_editor_would_delete_note">ଏହି ପତ୍ର ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ପତ୍ର ପ୍ରକାର ସୃଷ୍ଟି କରି ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">ପତ୍ର ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
     <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ ପତ୍ର ପାଇଁ ପତ୍ର ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
     <!-- Card Browser Appearance -->
@@ -212,8 +212,8 @@
     <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
     <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଏବଂ ଡେକ୍ ପ୍ରବେଶ କରିବା ବ୍ୟତୀତ ନୂତନଗୁଡ଼ିକୁ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">କାର୍ଡ ବ୍ରାଉଜର୍</string>
-    <string name="context_menu_anki_card_label">Anki କାର୍ଡ</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ବ୍ରାଉଜର୍</string>
+    <string name="context_menu_anki_card_label">Anki ପତ୍ର</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$sରେ ଏକ ସମସ୍ୟା ଅଛି:<br/>%2$s</string>
     <string name="more_information">ଅଧିକ ସୂଚନା</string>
     <string name="no_field">\'{{%1$s}}\' ମିଳିଲା, କିନ୍ତୁ \'%1$s\' ନାମକ କୌଣସି କ୍ଷେତ୍ର ନାହିଁ।</string>

@@ -47,7 +47,7 @@
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ଶିଖୁଛନ୍ତି</string>
     <string name="statistics_cram">ମୁଖସ୍ଥ</string>
-    <string name="stats_cards">କାର୍ଡଗୁଡ଼ିକ</string>
+    <string name="stats_cards">ପତ୍ର</string>
     <string name="stats_cards_intervals">ଦିଆଯାଇଥିବା ବ୍ୟବଧାନ ସହିତ କାର୍ଡଗୁଡ଼ିକ</string>
     <string name="stats_cumulative_cards">ସମ୍ମିଳିତ ପତ୍ର </string>
     <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡ଼ିକ</string>
@@ -60,8 +60,8 @@
     <string name="stats_minutes">ମିନିଟ୍</string>
     <string name="stats_hours">ଘଣ୍ଟା</string>
     <string name="stats_percentage">ଶତକଡ଼ା</string>
-    <string name="stats_period_month">ଗୋଟେ ମାସ</string>
-    <string name="stats_period_year">ଗୋଟେ ବର୍ଷ</string>
+    <string name="stats_period_month">୧ ମାସ</string>
+    <string name="stats_period_year">୧ ବର୍ଷ</string>
     <string name="stats_period_lifetime">ତାସଖଣ୍ଡ ବୟସ</string>
     <string name="stats_deck_collection">ସଂଗ୍ରହ</string>
     <string name="stats_time_of_day">ଦିନର ସମୟ</string>

@@ -120,7 +120,7 @@
     <!-- Crop function-->
     <string name="crop_image">Хочаце абрэзаць гэту выяву?</string>
     <string name="crop_button">Абрэзаць выяву</string>
-    <string name="save_dialog_content">Памер бягучай выявы складае %s МБ. Па змаўчанні памер выявы абмежаваны да 1 МБ. Хочаце абрэзаць гэту выяву?</string>
+    <string name="save_dialog_content">Памер бягучай выявы складае %s МБ. Стандартна, памер выявы абмежаваны да 1 МБ. Хочаце абрэзаць гэту выяву?</string>
     <string name="select_image_failed">"Не атрымалася выбраць выяву. Паўтарыце спробу"</string>
     <string name="activity_result_unexpected">Праграма вярнула нечаканае значэнне. Паспрабуйце скарыстацца іншай праграмай</string>
 </resources>
