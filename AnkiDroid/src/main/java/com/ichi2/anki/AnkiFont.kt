@@ -55,13 +55,13 @@ class AnkiFont private constructor(val name: String, private val family: String,
          * Factory for AnkiFont creation. Creates a typeface wrapper from a font file representing.
          *
          * @param ctx Activity context, needed to access assets
-         * @param path Path to typeface file, needed when this is a custom font.
+         * @param filePath Path to typeface file, needed when this is a custom font.
          * @param fromAssets True if the font is to be found in assets of application
          * @return A new AnkiFont object or null if the file can't be interpreted as typeface.
          */
         @JvmStatic
-        fun createAnkiFont(ctx: Context, path: String, fromAssets: Boolean): AnkiFont? {
-            var path = path
+        fun createAnkiFont(ctx: Context, filePath: String, fromAssets: Boolean): AnkiFont? {
+            var path = filePath
             val fontfile = File(path)
             val name = Utils.splitFilename(fontfile.name)[0]
             var family = name
@@ -71,29 +71,29 @@ class AnkiFont private constructor(val name: String, private val family: String,
             }
             val tf = getTypeface(ctx, path) // unable to create typeface
                 ?: return null
-            if (tf.isBold || name.toLowerCase(Locale.ROOT).contains("bold")) {
+            if (tf.isBold || name.lowercase().contains("bold")) {
                 attributes.add("font-weight: bolder;")
                 family = family.replaceFirst("(?i)-?Bold".toRegex(), "")
-            } else if (name.toLowerCase(Locale.ROOT).contains("light")) {
+            } else if (name.lowercase().contains("light")) {
                 attributes.add("font-weight: lighter;")
                 family = family.replaceFirst("(?i)-?Light".toRegex(), "")
             } else {
                 attributes.add("font-weight: normal;")
             }
-            if (tf.isItalic || name.toLowerCase(Locale.ROOT).contains("italic")) {
+            if (tf.isItalic || name.lowercase().contains("italic")) {
                 attributes.add("font-style: italic;")
                 family = family.replaceFirst("(?i)-?Italic".toRegex(), "")
-            } else if (name.toLowerCase(Locale.ROOT).contains("oblique")) {
+            } else if (name.lowercase().contains("oblique")) {
                 attributes.add("font-style: oblique;")
                 family = family.replaceFirst("(?i)-?Oblique".toRegex(), "")
             } else {
                 attributes.add("font-style: normal;")
             }
-            if (name.toLowerCase(Locale.ROOT).contains("condensed") || name.toLowerCase(Locale.ROOT).contains("narrow")) {
+            if (name.lowercase().contains("condensed") || name.lowercase().contains("narrow")) {
                 attributes.add("font-stretch: condensed;")
                 family = family.replaceFirst("(?i)-?Condensed".toRegex(), "")
                 family = family.replaceFirst("(?i)-?Narrow(er)?".toRegex(), "")
-            } else if (name.toLowerCase(Locale.ROOT).contains("expanded") || name.toLowerCase(Locale.ROOT).contains("wide")) {
+            } else if (name.lowercase().contains("expanded") || name.lowercase().contains("wide")) {
                 attributes.add("font-stretch: expanded;")
                 family = family.replaceFirst("(?i)-?Expanded".toRegex(), "")
                 family = family.replaceFirst("(?i)-?Wide(r)?".toRegex(), "")

@@ -234,6 +234,10 @@ task installGitHook(type: Copy) {
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.allWarningsAsErrors = true
+}
+
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"

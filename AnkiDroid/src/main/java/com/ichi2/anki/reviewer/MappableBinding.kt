@@ -161,6 +161,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = "1/" + TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
 
+        @Suppress("UNUSED_PARAMETER")
         @CheckResult
         fun fromString(s: String, v: Version = Version.ONE): MappableBinding? {
             if (s.isEmpty()) {

@@ -153,7 +153,7 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
     }
 
     override fun deck_tree(now: Long, top_deck_id: Long): DeckTreeNode {
-        val tree = backend.deckTree(now, top_deck_id)
+        backend.deckTree(now, top_deck_id)
         throw NotImplementedException()
     }
 
