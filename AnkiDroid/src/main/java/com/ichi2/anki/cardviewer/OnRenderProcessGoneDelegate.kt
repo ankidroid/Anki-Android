@@ -135,7 +135,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
             .positiveText(R.string.dialog_ok)
             .cancelable(false)
             .canceledOnTouchOutside(false)
-            .onPositive { materialDialog: MaterialDialog?, dialogAction: DialogAction? -> onCloseRenderLoopDialog() }
+            .onPositive { _: MaterialDialog?, _: DialogAction? -> onCloseRenderLoopDialog() }
             .show()
     }
 

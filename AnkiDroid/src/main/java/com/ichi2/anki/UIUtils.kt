@@ -96,10 +96,10 @@ object UIUtils {
         length: Int,
         actionTextResource: Int,
         listener: View.OnClickListener?,
-        root: View?,
+        rootView: View?,
         callback: Snackbar.Callback?
     ): Snackbar? {
-        var root = root
+        var root = rootView
         if (root == null) {
             root = activity.findViewById(android.R.id.content)
             if (root == null) {
