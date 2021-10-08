@@ -178,7 +178,7 @@
     <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
     <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
     <string name="studyoptions_congrats_more_new">Dnešní limit byl dosažen. K dispozici je více nových karet, v možnostech můžete zvýšit limit, ale to zvýší vaše krátkodobé vytížení.</string>
-    <string name="studyoptions_congrats_custom">Jestliže chcete studovat mimo normální plán, klepněte na tlačítko „Vlastní učení“</string>
+    <string name="studyoptions_congrats_custom">Jestliže chcete studovat mimo normální plán, klepněte na tlačítko „Vlastní učení“.</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
@@ -250,5 +250,5 @@
         <item quantity="many">%1$d karty (0 ke zkoušení)</item>
         <item quantity="other">%1$d karet (0 ke zkoušení)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
 </resources>

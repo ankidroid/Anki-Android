@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        سلام!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="">ankidroid برای شما ارسال شده است</a>.
+        برای استفاده از آن یکی از نسخه‌های در دسترس <a href="">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
@@ -282,8 +282,8 @@
     <string name="note_importer_error_first_field_matched">فیلد اول مطابق با: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
     <string name="note_importer_error_appeared_twice">دوبار در فایل %s وجود دارد</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="note_importer_error_empty_notes">یک یا تعداد بیشتری یادداشت، درون‌ریزی نشدند زیرا کارتی تولید نکردند. این اتفاق می‌تواند زمانی رخ دهد که فیلدهای خالی داشته و یا نتوانسته باشید نگاشت محتوای داخل متن روی فیلدها را به درستی انجام دهید.</string>
+    <string name="csv_importer_error_invalid_field_count">\'%1$s\' دارای %2$d فیلد است، تعداد مورد انتظار: %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">

@@ -45,7 +45,7 @@
     <string name="statistics">Statystyki</string>
     <string name="settings">Ustawienia</string>
     <string name="help">Pomoc</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">rysunek</string>
     <string name="send_feedback">Prześlij opinię</string>
     <string name="studyoptions_due_today">Na dziś:</string>
     <string name="studyoptions_new_total">Łącznie nowych kart:</string>
@@ -210,7 +210,7 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
         <item quantity="few">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
-        <item quantity="many">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
+        <item quantity="many">Czy usunąć typ kart “%2$s” oraz %1$d kart tego rodzaju?</item>
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
     <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>

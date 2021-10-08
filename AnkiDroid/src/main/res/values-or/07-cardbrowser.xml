@@ -40,17 +40,17 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%dଟିଏ କାର୍ଡ ପ୍ରଦର୍ଶିତ</item>
-        <item quantity="other">%dଟି କାର୍ଡ ପ୍ରଦର୍ଶିତ</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ଦେଖାଯାଇଛି</item>
+        <item quantity="other">%dଟି ପତ୍ର ଦେଖାଯାଇଛି</item>
     </plurals>
     <string name="card_browser_all_decks">ସମସ୍ତ ତାସଖଣ୍ଡ</string>
-    <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ</string>
-    <string name="card_browser_suspend_card">କାର୍ଡଗୁଡ଼ିଙ୍କୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="card_browser_delete_card">ନୋଟଗୁଡ଼ିକୁ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="card_browser_suspend_card">ପତ୍ରଗୁଡ଼ିକୁ ନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="card_browser_change_deck">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
-    <string name="card_browser_unsuspend_card">କାର୍ଡଗୁଡ଼ିଙ୍କୁ ଅନିଲମ୍ବିତ କରନ୍ତୁ</string>
+    <string name="card_browser_unsuspend_card">ପତ୍ରଗୁଡ଼ିକୁ ଅନିଲମ୍ବିତ କରନ୍ତୁ</string>
     <string name="card_browser_mark_card">ନୋଟଗୁଡ଼ିକୁ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="card_browser_unmark_card">ନୋଟଗୁଡ଼ିକୁ ଅଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="delete_card_title">ନୋଟ୍ ଅପସାରଣ କରିବେ କି?</string>
+    <string name="delete_card_title">ନୋଟ୍ ବିଲୋପ କରିବେ କି?</string>
     <string name="changed_deck_message">%sକୁ ଘୁଞ୍ଚିଗଲା</string>
     <string name="card_browser_show_marked">ଚିହ୍ନିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
     <string name="card_browser_show_suspended">ନିଲମ୍ବିତ (ପତ୍ର) ଶୋଧନ କରନ୍ତୁ</string>
@@ -58,7 +58,7 @@
     <string name="card_browser_search_by_flag">ପତାକା ଅନୁସାରେ ଶୋଧନ</string>
     <string name="card_browser_list_my_searches">ମୋ ସନ୍ଧାନଗୁଡ଼ିକ</string>
     <string name="card_browser_list_my_searches_save">ସନ୍ଧାନ ସଂରକ୍ଷିତ କର</string>
-    <string name="card_browser_list_my_searches_title">ଗୋଟେ ସଂରକ୍ଷିତ ସନ୍ଧାନ ବାଛନ୍ତୁ </string>
+    <string name="card_browser_list_my_searches_title">ଏକ ସଞ୍ଚିତ ସନ୍ଧାନ ବାଛନ୍ତୁ</string>
     <string name="card_browser_list_my_searches_new_name">ସାମ୍ପ୍ରତିକ ସନ୍ଧାନ ପାଇଁ ନାମ </string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ଆପଣ ନାମ ବିନା ସନ୍ଧାନ ସଞ୍ଚୟ କରିପାରିବେ ନାହିଁ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ନାମ ବିଦ୍ୟମାନ ଅଛି</string>
@@ -89,8 +89,8 @@
     <string name="card_browser_search_all_decks">ସବୁ ତାସଖଣ୍ଡରେ ଖୋଜନ୍ତୁ</string>
     <string name="card_browser_unknown_deck_name">ଅଜ୍ଞାତ</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%dଟିଏ କାର୍ଡ ବିଲୋପ ହେଲା</item>
-        <item quantity="other">%dଟି କାର୍ଡ ବିଲୋପ ହେଲା</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ବିଲୋପ ହେଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ବିଲୋପ ହେଲା</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">ଯୋଡ଼ା ଯାଇଛି</string>
@@ -105,8 +105,8 @@
     <string name="card_info_card_type">ପତ୍ର ପ୍ରକାର</string>
     <string name="card_info_note_type">ନୋଟ୍ ପ୍ରକାର</string>
     <string name="card_info_deck_name">ତାସଖଣ୍ଡ ନାମ </string>
-    <string name="card_info_card_id">କାର୍ଡ ପରିଚୟ</string>
-    <string name="card_info_note_id">ନୋଟ୍ ପରିଚୟ</string>
+    <string name="card_info_card_id">ପତ୍ର ID</string>
+    <string name="card_info_note_id">ନୋଟ୍ ID</string>
     <string name="card_info_revlog_time">ସମୟ</string>
     <string name="card_info_revlog_date">ତାରିଖ</string>
     <string name="card_info_revlog_rating">ମୂଲ୍ୟାୟନ</string>

@@ -169,7 +169,7 @@
     <string name="import_error_exception">Erro ao importar o pacote\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
-    <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos do anki: \n %s</string>
+    <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
     <string name="import_replacing">Substituindo coleção&#8230;</string>
@@ -269,7 +269,7 @@
     <string name="restore_default">Restaurar Padrões</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a  tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, ative a tela cheia para usar \"Mostrar Menu de Opções\" usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>

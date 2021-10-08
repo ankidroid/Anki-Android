@@ -51,12 +51,12 @@
     <!-- MyAccount.java -->
     <string name="username">ଇମେଲ୍ ଠିକଣା</string>
     <string name="password">ପାସ୍ଓ୍ୱାର୍ଡ଼</string>
-    <string name="log_in"> ଲଗ୍ ଇନ୍</string>
+    <string name="log_in">ଲଗ୍‌ ଇନ୍‌</string>
     <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା ଅଟେ!</string>
     <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
     <string name="sign_up">ସାଇନ୍ ଅପ୍</string>
     <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
-    <string name="log_out">ପ୍ରସ୍ଥାନ କର</string>
+    <string name="log_out">ଲଗ୍ ଆଉଟ୍</string>
     <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
     <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍ଓ୍ୱାର୍ଡ଼</string>
     <string name="reset_password">ପାସ୍ଓ୍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
@@ -67,20 +67,20 @@
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_title">ସମକାଳୀନତା </string>
+    <string name="sync_title">ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ୍%2$s ଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଛି</string>
-    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତ ଭୁଲ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
+    <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭବତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
-    <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସମକାଳୀକ ହୋଇଛି</string>
+    <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସିଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
     <string name="sync_log_error_specific">ସିଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ବାର୍ତ୍ତା: %2$s</string>
     <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ। ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ।\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ।</string>
     <string name="sync_too_busy">ସର୍ଭର୍ ବ୍ୟସ୍ତ ଅଛି। ପରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_remote_db_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଡାଟାବେସ୍ ଦୁର୍ନୀତିଗ୍ରସ୍ତ ଥିଲା। ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_overwrite_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଦ୍ୱାରା ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହ ଓଭର୍ ରାଇଟ୍ ହୋଇପାରିବ ନାହିଁ</string>
     <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି। ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ବହୁତ ବଡ଼ ଫାଇଲ୍ ଅଛି।</string>
-    <string name="sync_write_access_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ SD କାର୍ଡରେ ସଂରକ୍ଷିତ ହୋଇପାରିବ ନାହିଁ। କାର୍ଡଟି କେବଳ ପଠନୀୟ ଭାବରେ ମାଉଣ୍ଟ ହୋଇଛି କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।</string>
+    <string name="sync_write_access_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ SD କାର୍ଡରେ ସଂରକ୍ଷିତ ହୋଇପାରିବ ନାହିଁ। କାର୍ଡଟି କେବଳ ପଠନଯୋଗ୍ୟ ଭାବରେ ମାଉଣ୍ଟ ହୋଇଛି କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।</string>
     <string name="sync_error_invalid_sync_server">ବିକଶିତ ସେଟିଂସ୍ ରେ କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ଅବୈଧ ଅଟେ (%s)। ଦୟାକରି ଏକ ବୈଧ ସର୍ଭର ପ୍ରବେଶ କରନ୍ତୁ, କିମ୍ବା ସେଟିଂଟିକୁ ଅକ୍ଷମ କରନ୍ତୁ।</string>
     <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
     <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
@@ -116,7 +116,7 @@
     <string name="sync_error_413_collection_size">ଆପଣଙ୍କ ସଂଗ୍ରହ କିମ୍ୱା ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ସିଙ୍କ୍ କରିବାକୁ ବହୁତ ବଡ଼ ଅଟେ।</string>
     <string name="sync_error_500_unknown">AnkiWeb ଏକ ତ୍ରୁଟିର ସମ୍ମୁଖୀନ ହେଲା। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନର୍ବାର ଚେଷ୍ଟା କରନ୍ତୁ, ଏବଂ ଯଦି ସମସ୍ୟା ଜାରି ରହେ, ଦୟାକରି ଏକ ତ୍ରୁଟି ରିପୋର୍ଟ ଦାଖଲ କରନ୍ତୁ।</string>
     <string name="sync_error_501_upgrade_required">ଦୟାକରି AnkiDroid ର ସର୍ବଶେଷ ସଂସ୍କରଣକୁ ଅଦ୍ୟତନ କରନ୍ତୁ</string>
-    <string name="sync_error_502_maintenance">ଆଙ୍କିୱେବ୍ ରକ୍ଷଣାବେକ୍ଷଣ ଅଧୀନରେ ଅଛି । ଦୟାକରି କିଛି ମିନିଟ୍ ମଧ୍ୟରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="sync_error_502_maintenance">AnkiWeb ରକ୍ଷଣାବେକ୍ଷଣରେ ଅଛି। ଦୟାକରି କିଛି ମିନିଟରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout ତ୍ରୁଟି ପ୍ରାପ୍ତ ହେଲା।</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">ସିଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
