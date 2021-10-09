@@ -16,159 +16,74 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
-
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathMeasure;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Region;
-import android.net.Uri;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
-import com.ichi2.anki.dialogs.WhiteBoardWidthDialog;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.libanki.utils.TimeUtils;
-import com.ichi2.utils.DisplayUtils;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContextCompat;
-import timber.log.Timber;
-
-import static com.ichi2.anki.cardviewer.CardAppearance.isInNightMode;
+import android.annotation.SuppressLint
+import android.graphics.*
+import android.net.Uri
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import androidx.core.content.ContextCompat
+import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
+import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
+import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.TimeUtils
+import com.ichi2.utils.DisplayUtils.getDisplayDimensions
+import timber.log.Timber
+import java.io.FileNotFoundException
+import java.util.*
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
 @SuppressLint("ViewConstructor")
-public class Whiteboard extends View {
+class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Boolean) : View(activity, null) {
+    private val mPaint: Paint
+    private val mUndo = UndoList()
+    private var mBitmap: Bitmap? = null
+    private var mCanvas: Canvas? = null
+    private val mPath: Path
+    private val mBitmapPaint: Paint
+    private val mAnkiActivity: AnkiActivity?
+    private var mX = 0f
+    private var mY = 0f
+    private var mSecondFingerX0 = 0f
+    private var mSecondFingerY0 = 0f
+    private var mSecondFingerX = 0f
+    private var mSecondFingerY = 0f
+    private var mSecondFingerPointerId = 0
+    private var mSecondFingerWithinTapTolerance = false
+    var isCurrentlyDrawing = false
+        private set
 
-    private static final float TOUCH_TOLERANCE = 4;
-    @Nullable
-    private static WhiteboardMultiTouchMethods mWhiteboardMultiTouchMethods;
+    /**
+     * @return true if the undo queue has had any strokes added to it since the last clear
+     */
+    var isUndoModeActive = false
+        private set
 
-    private final Paint mPaint;
-    private final UndoList mUndo = new UndoList();
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-    private final Path mPath;
-    private final Paint mBitmapPaint;
-    private final AnkiActivity mAnkiActivity;
+    @get:CheckResult
+    @get:VisibleForTesting
+    var foregroundColor = 0
+    private val mColorPalette: LinearLayout
+    private val mHandleMultiTouch: Boolean
+    private var mOnPaintColorChangeListener: OnPaintColorChangeListener? = null
+    val currentStrokeWidth: Int
+        get() = AnkiDroidApp.getSharedPrefs(mAnkiActivity).getInt("whiteBoardStrokeWidth", 6)
 
-    private float mX;
-    private float mY;
-    private float mSecondFingerX0;
-    private float mSecondFingerY0;
-    private float mSecondFingerX;
-    private float mSecondFingerY;
-
-    private int mSecondFingerPointerId;
-
-    private boolean mSecondFingerWithinTapTolerance;
-    private boolean mCurrentlyDrawing = false;
-    private boolean mUndoModeActive = false;
-    private final int mForegroundColor;
-    private final LinearLayout mColorPalette;
-
-    private final Boolean mHandleMultiTouch;
-
-    @Nullable
-    private OnPaintColorChangeListener mOnPaintColorChangeListener;
-
-    public Whiteboard(AnkiActivity activity, Boolean handleMultiTouch, boolean inverted) {
-        super(activity, null);
-
-        mAnkiActivity = activity;
-        mHandleMultiTouch = handleMultiTouch;
-
-        Button whitePenColorButton = activity.findViewById(R.id.pen_color_white);
-        Button blackPenColorButton = activity.findViewById(R.id.pen_color_black);
-
-        if (!inverted) {
-            whitePenColorButton.setVisibility(View.GONE);
-            blackPenColorButton.setOnClickListener(this::onClick);
-            mForegroundColor = Color.BLACK;
-        } else {
-            blackPenColorButton.setVisibility(View.GONE);
-            whitePenColorButton.setOnClickListener(this::onClick);
-            mForegroundColor = Color.WHITE;
-        }
-
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(mForegroundColor);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth((float) getCurrentStrokeWidth());
-        createBitmap();
-        mPath = new Path();
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-
-        // selecting pen color to draw
-        mColorPalette = activity.findViewById(R.id.whiteboard_editor);
-
-        activity.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
-        activity.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
-        activity.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
-        activity.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
-        activity.findViewById(R.id.stroke_width).setOnClickListener(this::onClick);
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        canvas.drawColor(0)
+        canvas.drawBitmap(mBitmap!!, 0f, 0f, mBitmapPaint)
+        canvas.drawPath(mPath, mPaint)
     }
-
-    public int getCurrentStrokeWidth() {
-        return AnkiDroidApp.getSharedPrefs(mAnkiActivity).getInt("whiteBoardStrokeWidth", 6);
-    }
-
-
-    public static Whiteboard createInstance(AnkiActivity context, boolean handleMultiTouch, @Nullable WhiteboardMultiTouchMethods whiteboardMultiTouchMethods) {
-
-        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(context);
-        Whiteboard whiteboard = new Whiteboard(context, handleMultiTouch, isInNightMode(sharedPrefs));
-
-        mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods;
-        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        whiteboard.setLayoutParams(lp2);
-        FrameLayout fl = context.findViewById(R.id.whiteboard);
-        fl.addView(whiteboard);
-
-        whiteboard.setEnabled(true);
-
-        return whiteboard;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        canvas.drawColor(0);
-        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath(mPath, mPaint);
-    }
-
 
     /** Handle motion events to draw using the touch screen or to interact with the flashcard behind
      * the whiteboard by using a second finger.
@@ -176,10 +91,9 @@ public class Whiteboard extends View {
      * @param event The motion event.
      * @return True if the event was handled, false otherwise
      */
-    public boolean handleTouchEvent(MotionEvent event) {
-        return handleDrawEvent(event) || handleMultiTouchEvent(event);
+    fun handleTouchEvent(event: MotionEvent): Boolean {
+        return handleDrawEvent(event) || handleMultiTouchEvent(event)
     }
-
 
     /**
      * Handle motion events to draw using the touch screen. Only simple touch events are processed,
@@ -187,451 +101,433 @@ public class Whiteboard extends View {
      *
      * @param event The motion event.
      * @return True if the event was handled, false otherwise or when drawing was aborted due to
-     *              detection of a multitouch event.
+     * detection of a multitouch event.
      */
-    private boolean handleDrawEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
-                drawStart(x, y);
-                invalidate();
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                if (mCurrentlyDrawing) {
-                    for (int i = 0; i < event.getHistorySize(); i++) {
-                        drawAlong(event.getHistoricalX(i), event.getHistoricalY(i));
+    private fun handleDrawEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+        return when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                drawStart(x, y)
+                invalidate()
+                true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (isCurrentlyDrawing) {
+                    var i = 0
+                    while (i < event.historySize) {
+                        drawAlong(event.getHistoricalX(i), event.getHistoricalY(i))
+                        i++
                     }
-                    drawAlong(x, y);
-                    invalidate();
-                    return true;
+                    drawAlong(x, y)
+                    invalidate()
+                    return true
                 }
-                return false;
-            case MotionEvent.ACTION_UP:
-                if (mCurrentlyDrawing) {
-                    drawFinish();
-                    invalidate();
-                    return true;
+                false
+            }
+            MotionEvent.ACTION_UP -> {
+                if (isCurrentlyDrawing) {
+                    drawFinish()
+                    invalidate()
+                    return true
                 }
-                return false;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                if (mCurrentlyDrawing) {
-                    drawAbort();
+                false
+            }
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                if (isCurrentlyDrawing) {
+                    drawAbort()
                 }
-                return false;
-            // not present in docs: https://developer.android.com/reference/android/view/MotionEvent
-            case 211: // POINTER_DOWN with S-Pen-button
-            case 213: // MOVE with S-Pen-button
-                if (event.getButtonState() == MotionEvent.BUTTON_STYLUS_PRIMARY && !undoEmpty()) {
-                    boolean didErase = mUndo.erase((int) event.getX(), (int) event.getY());
+                false
+            }
+            211, 213 -> {
+                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY && !undoEmpty()) {
+                    val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
                     if (didErase) {
-                        mUndo.apply();
+                        mUndo.apply()
                         if (undoEmpty() && mAnkiActivity != null) {
-                            mAnkiActivity.supportInvalidateOptionsMenu();
+                            mAnkiActivity.invalidateOptionsMenu()
                         }
                     }
                 }
-                return true;
-            default:
-                return false;
+                true
+            }
+            else -> false
         }
     }
 
     // Parse multitouch input to scroll the card behind the whiteboard or click on elements
-    private boolean handleMultiTouchEvent(MotionEvent event) {
-        if (mHandleMultiTouch && event.getPointerCount() == 2) {
-            switch (event.getActionMasked()) {
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    reinitializeSecondFinger(event);
-                    return true;
-                case MotionEvent.ACTION_MOVE:
-                    return trySecondFingerScroll(event);
-                case MotionEvent.ACTION_POINTER_UP:
-                    return trySecondFingerClick(event);
-                default:
-                    return false;
+    private fun handleMultiTouchEvent(event: MotionEvent): Boolean {
+        return if (mHandleMultiTouch && event.pointerCount == 2) {
+            when (event.actionMasked) {
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    reinitializeSecondFinger(event)
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> trySecondFingerScroll(event)
+                MotionEvent.ACTION_POINTER_UP -> trySecondFingerClick(event)
+                else -> false
             }
-        }
-        return false;
+        } else false
     }
-
 
     /**
      * Clear the whiteboard.
      */
-    public void clear() {
-        mUndoModeActive = false;
-        mBitmap.eraseColor(0);
-        mUndo.clear();
-        invalidate();
-        if (mAnkiActivity != null) {
-            mAnkiActivity.supportInvalidateOptionsMenu();
-        }
+    fun clear() {
+        isUndoModeActive = false
+        mBitmap!!.eraseColor(0)
+        mUndo.clear()
+        invalidate()
+        mAnkiActivity?.invalidateOptionsMenu()
     }
-
 
     /**
      * Undo the last stroke
      */
-    public void undo() {
-        mUndo.pop();
-        mUndo.apply();
+    fun undo() {
+        mUndo.pop()
+        mUndo.apply()
         if (undoEmpty() && mAnkiActivity != null) {
-            mAnkiActivity.supportInvalidateOptionsMenu();
+            mAnkiActivity.invalidateOptionsMenu()
         }
     }
 
-
-    /** @return Whether there are strokes to undo */
-    public boolean undoEmpty() {
-        return mUndo.empty();
-    }
-
-    /**
-     * @return true if the undo queue has had any strokes added to it since the last clear
+    /** @return Whether there are strokes to undo
      */
-    public boolean isUndoModeActive() {
-        return mUndoModeActive;
+    fun undoEmpty(): Boolean {
+        return mUndo.empty()
     }
 
-    private void createBitmap(int w, int h) {
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-        clear();
+    private fun createBitmap(w: Int, h: Int) {
+        val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        mBitmap = bitmap
+        mCanvas = Canvas(bitmap)
+        clear()
     }
 
-
-    private void createBitmap() {
+    private fun createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        final Point p = getDisplayDimensions();
-        int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize);
+        val p = displayDimensions
+        val bitmapSize = Math.max(p.x, p.y)
+        createBitmap(bitmapSize, bitmapSize)
     }
 
-    private void drawStart(float x, float y) {
-        mCurrentlyDrawing = true;
-        mPath.reset();
-        mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
+    private fun drawStart(x: Float, y: Float) {
+        isCurrentlyDrawing = true
+        mPath.reset()
+        mPath.moveTo(x, y)
+        mX = x
+        mY = y
     }
 
-
-    private void drawAlong(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
+    private fun drawAlong(x: Float, y: Float) {
+        val dx = Math.abs(x - mX)
+        val dy = Math.abs(y - mY)
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-            mX = x;
-            mY = y;
+            mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2)
+            mX = x
+            mY = y
         }
     }
 
-
-    private void drawFinish() {
-        mCurrentlyDrawing = false;
-        PathMeasure pm = new PathMeasure(mPath, false);
-        mPath.lineTo(mX, mY);
-        Paint paint = new Paint(mPaint);
-        WhiteboardAction action = pm.getLength() > 0 ? new DrawPath(new Path(mPath), paint) : new DrawPoint(mX, mY, paint);
-        action.apply(mCanvas);
-        mUndo.add(action);
-        mUndoModeActive = true;
+    private fun drawFinish() {
+        isCurrentlyDrawing = false
+        val pm = PathMeasure(mPath, false)
+        mPath.lineTo(mX, mY)
+        val paint = Paint(mPaint)
+        val action = if (pm.length > 0) DrawPath(Path(mPath), paint) else DrawPoint(mX, mY, paint)
+        action.apply(mCanvas!!)
+        mUndo.add(action)
+        isUndoModeActive = true
         // kill the path so we don't double draw
-        mPath.reset();
+        mPath.reset()
         if (mUndo.size() == 1 && mAnkiActivity != null) {
-            mAnkiActivity.supportInvalidateOptionsMenu();
+            mAnkiActivity.invalidateOptionsMenu()
         }
     }
 
-
-    private void drawAbort() {
-        drawFinish();
-        undo();
+    private fun drawAbort() {
+        drawFinish()
+        undo()
     }
-
 
     // call this with an ACTION_POINTER_DOWN event to start a new round of detecting drag or tap with
     // a second finger
-    private void reinitializeSecondFinger(MotionEvent event) {
-        mSecondFingerWithinTapTolerance = true;
-        mSecondFingerPointerId = event.getPointerId(event.getActionIndex());
-        mSecondFingerX0 = event.getX(event.findPointerIndex(mSecondFingerPointerId));
-        mSecondFingerY0 = event.getY(event.findPointerIndex(mSecondFingerPointerId));
+    private fun reinitializeSecondFinger(event: MotionEvent) {
+        mSecondFingerWithinTapTolerance = true
+        mSecondFingerPointerId = event.getPointerId(event.actionIndex)
+        mSecondFingerX0 = event.getX(event.findPointerIndex(mSecondFingerPointerId))
+        mSecondFingerY0 = event.getY(event.findPointerIndex(mSecondFingerPointerId))
     }
 
-    private boolean updateSecondFinger(MotionEvent event) {
-        int pointerIndex = event.findPointerIndex(mSecondFingerPointerId);
+    private fun updateSecondFinger(event: MotionEvent): Boolean {
+        val pointerIndex = event.findPointerIndex(mSecondFingerPointerId)
         if (pointerIndex > -1) {
-            mSecondFingerX = event.getX(pointerIndex);
-            mSecondFingerY = event.getY(pointerIndex);
-            float dx = Math.abs(mSecondFingerX0 - mSecondFingerX);
-            float dy = Math.abs(mSecondFingerY0 - mSecondFingerY);
+            mSecondFingerX = event.getX(pointerIndex)
+            mSecondFingerY = event.getY(pointerIndex)
+            val dx = Math.abs(mSecondFingerX0 - mSecondFingerX)
+            val dy = Math.abs(mSecondFingerY0 - mSecondFingerY)
             if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-                mSecondFingerWithinTapTolerance = false;
+                mSecondFingerWithinTapTolerance = false
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     // call this with an ACTION_POINTER_UP event to check whether it matches a tap of the second finger
     // if so, forward a click action and return true
-    private boolean trySecondFingerClick(MotionEvent event) {
-        if (mSecondFingerPointerId == event.getPointerId(event.getActionIndex())) {
-            updateSecondFinger(event);
+    private fun trySecondFingerClick(event: MotionEvent): Boolean {
+        if (mSecondFingerPointerId == event.getPointerId(event.actionIndex)) {
+            updateSecondFinger(event)
             if (mSecondFingerWithinTapTolerance && mWhiteboardMultiTouchMethods != null) {
-                mWhiteboardMultiTouchMethods.tapOnCurrentCard((int) mSecondFingerX, (int) mSecondFingerY);
-                return true;
+                mWhiteboardMultiTouchMethods!!.tapOnCurrentCard(mSecondFingerX.toInt(), mSecondFingerY.toInt())
+                return true
             }
         }
-        return false;
+        return false
     }
 
     // call this with an ACTION_MOVE event to check whether it is within the threshold for a tap of the second finger
     // in this case perform a scroll action
-    private boolean trySecondFingerScroll(MotionEvent event) {
+    private fun trySecondFingerScroll(event: MotionEvent): Boolean {
         if (updateSecondFinger(event) && !mSecondFingerWithinTapTolerance) {
-            int dy = (int) (mSecondFingerY0 - mSecondFingerY);
+            val dy = (mSecondFingerY0 - mSecondFingerY).toInt()
             if (dy != 0 && mWhiteboardMultiTouchMethods != null) {
-                mWhiteboardMultiTouchMethods.scrollCurrentCardBy(dy);
-                mSecondFingerX0 = mSecondFingerX;
-                mSecondFingerY0 = mSecondFingerY;
+                mWhiteboardMultiTouchMethods!!.scrollCurrentCardBy(dy)
+                mSecondFingerX0 = mSecondFingerX
+                mSecondFingerY0 = mSecondFingerY
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
-    private static Point getDisplayDimensions() {
-        return DisplayUtils.getDisplayDimensions(AnkiDroidApp.getInstance().getApplicationContext());
-    }
-
-
-    public void onClick(View view) {
-
-        int id = view.getId();
+    fun onClick(view: View) {
+        val id = view.id
         if (id == R.id.pen_color_white) {
-            setPenColor(Color.WHITE);
+            penColor = Color.WHITE
         } else if (id == R.id.pen_color_black) {
-            setPenColor(Color.BLACK);
+            penColor = Color.BLACK
         } else if (id == R.id.pen_color_red) {
-            int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
-            setPenColor(redPenColor);
+            val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
+            penColor = redPenColor
         } else if (id == R.id.pen_color_green) {
-            int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
-            setPenColor(greenPenColor);
+            val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
+            penColor = greenPenColor
         } else if (id == R.id.pen_color_blue) {
-            int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
-            setPenColor(bluePenColor);
+            val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
+            penColor = bluePenColor
         } else if (id == R.id.pen_color_yellow) {
-            int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
-            setPenColor(yellowPenColor);
+            val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+            penColor = yellowPenColor
         } else if (id == R.id.stroke_width) {
-            handleWidthChangeDialog();
+            handleWidthChangeDialog()
         }
     }
 
-
-    private void handleWidthChangeDialog() {
-        WhiteBoardWidthDialog whiteBoardWidthDialog = new WhiteBoardWidthDialog(mAnkiActivity, getCurrentStrokeWidth());
-        whiteBoardWidthDialog.onStrokeWidthChanged(this::saveStrokeWidth);
-        whiteBoardWidthDialog.showStrokeWidthDialog();
+    private fun handleWidthChangeDialog() {
+        val whiteBoardWidthDialog = WhiteBoardWidthDialog(mAnkiActivity!!, currentStrokeWidth)
+        whiteBoardWidthDialog.onStrokeWidthChanged { wbStrokeWidth: Int -> saveStrokeWidth(wbStrokeWidth) }
+        whiteBoardWidthDialog.showStrokeWidthDialog()
     }
 
-    private void saveStrokeWidth(int wbStrokeWidth) {
-        mPaint.setStrokeWidth((float) wbStrokeWidth);
-        SharedPreferences.Editor edit = AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit();
-        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth);
-        edit.apply();
+    private fun saveStrokeWidth(wbStrokeWidth: Int) {
+        mPaint.strokeWidth = wbStrokeWidth.toFloat()
+        val edit = AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit()
+        edit.putInt("whiteBoardStrokeWidth", wbStrokeWidth)
+        edit.apply()
     }
 
-    public void setPenColor(int color) {
-        Timber.d("Setting pen color to %d", color);
-        mPaint.setColor(color);
-        mColorPalette.setVisibility(View.GONE);
-        if (mOnPaintColorChangeListener != null) {
-            mOnPaintColorChangeListener.onPaintColorChange(color);
+    @get:VisibleForTesting
+    var penColor: Int
+        get() = mPaint.color
+        set(color) {
+            Timber.d("Setting pen color to %d", color)
+            mPaint.color = color
+            mColorPalette.visibility = GONE
+            if (mOnPaintColorChangeListener != null) {
+                mOnPaintColorChangeListener!!.onPaintColorChange(color)
+            }
         }
+
+    fun setOnPaintColorChangeListener(onPaintColorChangeListener: OnPaintColorChangeListener?) {
+        mOnPaintColorChangeListener = onPaintColorChangeListener
     }
-
-    @VisibleForTesting
-    public int getPenColor() {
-        return mPaint.getColor();
-    }
-
-
-    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener onPaintColorChangeListener) {
-        this.mOnPaintColorChangeListener = onPaintColorChangeListener;
-    }
-
 
     /**
      * Keep a list of all points and paths so that the last stroke can be undone
      * pop() removes the last stroke from the list, and apply() redraws it to whiteboard.
      */
-    private class UndoList {
-        private final List<WhiteboardAction> mList = new ArrayList<>();
-
-        public void add(WhiteboardAction action) {
-            mList.add(action);
+    private inner class UndoList {
+        private val mList: MutableList<WhiteboardAction> = ArrayList()
+        fun add(action: WhiteboardAction) {
+            mList.add(action)
         }
 
-        public void clear() {
-            mList.clear();
+        fun clear() {
+            mList.clear()
         }
 
-        public int size() {
-            return mList.size();
+        fun size(): Int {
+            return mList.size
         }
 
-        public void pop() {
-            mList.remove(mList.size() - 1);
+        fun pop() {
+            mList.removeAt(mList.size - 1)
         }
 
-        public void apply() {
-            mBitmap.eraseColor(0);
-
-            for (WhiteboardAction action : mList) {
-                action.apply(mCanvas);
+        fun apply() {
+            mBitmap!!.eraseColor(0)
+            for (action in mList) {
+                action.apply(mCanvas!!)
             }
-            invalidate();
+            invalidate()
         }
 
-        public boolean erase(int x, int y) {
-            boolean didErase = false;
-            Region clip = new Region(0, 0, getDisplayDimensions().x, getDisplayDimensions().y);
-            Path eraserPath = new Path();
-            eraserPath.addRect(x - 10, y - 10, x + 10, y + 10, Path.Direction.CW);
-            Region eraserRegion = new Region();
-            eraserRegion.setPath(eraserPath, clip);
+        fun erase(x: Int, y: Int): Boolean {
+            var didErase = false
+            val clip = Region(0, 0, displayDimensions.x, displayDimensions.y)
+            val eraserPath = Path()
+            eraserPath.addRect((x - 10).toFloat(), (y - 10).toFloat(), (x + 10).toFloat(), (y + 10).toFloat(), Path.Direction.CW)
+            val eraserRegion = Region()
+            eraserRegion.setPath(eraserPath, clip)
 
             // used inside the loop – created here to make things a little more efficient
-            RectF bounds = new RectF();
-            Region lineRegion = new Region();
+            val bounds = RectF()
+            var lineRegion = Region()
 
             // we delete elements while iterating, so we need to use an iterator in order to avoid java.util.ConcurrentModificationException
-            for (Iterator<WhiteboardAction> iterator = mList.iterator(); iterator.hasNext(); ) {
-                WhiteboardAction action = iterator.next();
-
-                Path path = action.getPath();
+            val iterator = mList.iterator()
+            while (iterator.hasNext()) {
+                val action = iterator.next()
+                val path = action.path
                 if (path != null) { // → line
-                    boolean lineRegionSuccess = lineRegion.setPath(path, clip);
+                    val lineRegionSuccess = lineRegion.setPath(path, clip)
                     if (!lineRegionSuccess) {
                         // Small lines can be perfectly vertical/horizontal,
                         // thus giving us an empty region, which would make them undeletable.
                         // For this edge case, we create a Region ourselves.
-                        path.computeBounds(bounds, true);
-                        lineRegion = new Region(new Rect((int) bounds.left, (int) bounds.top, (int) bounds.right + 1, (int) bounds.bottom + 1));
+                        path.computeBounds(bounds, true)
+                        lineRegion = Region(Rect(bounds.left.toInt(), bounds.top.toInt(), bounds.right.toInt() + 1, bounds.bottom.toInt() + 1))
                     }
                 } else { // → point
-                    Point p = action.getPoint();
-                    lineRegion = new Region(p.x, p.y, p.x + 1, p.y + 1);
+                    val p = action.point
+                    lineRegion = Region(p!!.x, p.y, p.x + 1, p.y + 1)
                 }
-
                 if (!lineRegion.quickReject(eraserRegion) && lineRegion.op(eraserRegion, Region.Op.INTERSECT)) {
-                    iterator.remove();
-                    didErase = true;
+                    iterator.remove()
+                    didErase = true
                 }
             }
-            return didErase;
+            return didErase
         }
 
-        public boolean empty() {
-            return mList.isEmpty();
+        fun empty(): Boolean {
+            return mList.isEmpty()
         }
     }
 
     private interface WhiteboardAction {
-        void apply(@NonNull Canvas canvas);
-
-        Path getPath();
-
-        Point getPoint();
+        fun apply(canvas: Canvas)
+        val path: Path?
+        val point: Point?
     }
 
-    private static class DrawPoint implements WhiteboardAction {
-
-        private final float mX;
-        private final float mY;
-        private final Paint mPaint;
-
-
-        public DrawPoint(float x, float y, Paint paint) {
-            mX = x;
-            mY = y;
-            mPaint = paint;
+    private class DrawPoint(private val x: Float, private val y: Float, private val paint: Paint) : WhiteboardAction {
+        override fun apply(canvas: Canvas) {
+            canvas.drawPoint(x, y, paint)
         }
 
+        override val path: Path?
+            get() = null
 
-        @Override
-        public void apply(@NonNull Canvas canvas) {
-            canvas.drawPoint(mX, mY, mPaint);
-        }
-
-        @Override
-        public Path getPath() {
-            return null;
-        }
-
-
-        public Point getPoint() {
-            return new Point((int) mX, (int) mY);
-        }
+        override val point: Point
+            get() = Point(x.toInt(), y.toInt())
     }
 
-    private static class DrawPath implements WhiteboardAction {
-        private final Path mPath;
-        private final Paint mPaint;
-
-        public DrawPath(Path path, Paint paint) {
-            mPath = path;
-            mPaint = paint;
+    private class DrawPath(override val path: Path, private val paint: Paint) : WhiteboardAction {
+        override fun apply(canvas: Canvas) {
+            canvas.drawPath(path, paint)
         }
 
-
-        @Override
-        public void apply(@NonNull Canvas canvas) {
-            canvas.drawPath(mPath, mPaint);
-        }
-
-        @Override
-        public Path getPath() {
-            return mPath;
-        }
-
-        @Override
-        public Point getPoint() {
-            return null;
-        }
+        override val point: Point?
+            get() = null
     }
 
-    public boolean isCurrentlyDrawing() {
-        return mCurrentlyDrawing;
-    }
-
-    protected Uri saveWhiteboard(Time time) throws FileNotFoundException {
-        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        if (mForegroundColor != Color.BLACK) {
-            canvas.drawColor(Color.BLACK);
+    @Throws(FileNotFoundException::class)
+    fun saveWhiteboard(time: Time?): Uri {
+        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        if (foregroundColor != Color.BLACK) {
+            canvas.drawColor(Color.BLACK)
         } else {
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.WHITE)
         }
-        this.draw(canvas);
-        String baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time);
+        draw(canvas)
+        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
         // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
-        return CompatHelper.getCompat().saveImage(getContext(), bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95);
+        return CompatHelper.getCompat().saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
     }
 
-    @VisibleForTesting
-    @CheckResult
-    protected int getForegroundColor() {
-        return mForegroundColor;
+    interface OnPaintColorChangeListener {
+        fun onPaintColorChange(color: Int?)
     }
 
-    public interface OnPaintColorChangeListener {
-        void onPaintColorChange(@Nullable Integer color);
+    companion object {
+        private const val TOUCH_TOLERANCE = 4f
+        private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
+        @JvmStatic
+        fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
+            val sharedPrefs = AnkiDroidApp.getSharedPrefs(context)
+            val whiteboard = Whiteboard(context, handleMultiTouch, isInNightMode(sharedPrefs))
+            mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
+            val lp2 = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            whiteboard.layoutParams = lp2
+            val fl = context.findViewById<FrameLayout>(R.id.whiteboard)
+            fl.addView(whiteboard)
+            whiteboard.isEnabled = true
+            return whiteboard
+        }
+
+        private val displayDimensions: Point
+            get() = getDisplayDimensions(AnkiDroidApp.getInstance().applicationContext)
+    }
+
+    init {
+        mAnkiActivity = activity
+        mHandleMultiTouch = handleMultiTouch
+        val whitePenColorButton = activity.findViewById<Button>(R.id.pen_color_white)
+        val blackPenColorButton = activity.findViewById<Button>(R.id.pen_color_black)
+        if (!inverted) {
+            whitePenColorButton.visibility = GONE
+            blackPenColorButton.setOnClickListener { view: View -> onClick(view) }
+            foregroundColor = Color.BLACK
+        } else {
+            blackPenColorButton.visibility = GONE
+            whitePenColorButton.setOnClickListener { view: View -> onClick(view) }
+            foregroundColor = Color.WHITE
+        }
+        mPaint = Paint()
+        mPaint.isAntiAlias = true
+        mPaint.isDither = true
+        mPaint.color = foregroundColor
+        mPaint.style = Paint.Style.STROKE
+        mPaint.strokeJoin = Paint.Join.ROUND
+        mPaint.strokeCap = Paint.Cap.ROUND
+        mPaint.strokeWidth = currentStrokeWidth.toFloat()
+        createBitmap()
+        mPath = Path()
+        mBitmapPaint = Paint(Paint.DITHER_FLAG)
+
+        // selecting pen color to draw
+        mColorPalette = activity.findViewById(R.id.whiteboard_editor)
+        activity.findViewById<View>(R.id.pen_color_red).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.stroke_width).setOnClickListener { view: View -> onClick(view) }
     }
 }
