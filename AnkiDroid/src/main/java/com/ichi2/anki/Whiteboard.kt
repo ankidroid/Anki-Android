@@ -47,8 +47,8 @@ import java.util.*
 class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Boolean) : View(activity, null) {
     private val mPaint: Paint
     private val mUndo = UndoList()
-    private var mBitmap: Bitmap? = null
-    private var mCanvas: Canvas? = null
+    private lateinit var mBitmap: Bitmap
+    private lateinit var mCanvas: Canvas
     private val mPath: Path
     private val mBitmapPaint: Paint
     private val mAnkiActivity: AnkiActivity = activity
@@ -81,7 +81,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawColor(0)
-        canvas.drawBitmap(mBitmap!!, 0f, 0f, mBitmapPaint)
+        canvas.drawBitmap(mBitmap, 0f, 0f, mBitmapPaint)
         canvas.drawPath(mPath, mPaint)
     }
 
@@ -175,7 +175,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      */
     fun clear() {
         isUndoModeActive = false
-        mBitmap!!.eraseColor(0)
+        mBitmap.eraseColor(0)
         mUndo.clear()
         invalidate()
         mAnkiActivity.invalidateOptionsMenu()
@@ -236,7 +236,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         mPath.lineTo(mX, mY)
         val paint = Paint(mPaint)
         val action = if (pm.length > 0) DrawPath(Path(mPath), paint) else DrawPoint(mX, mY, paint)
-        action.apply(mCanvas!!)
+        action.apply(mCanvas)
         mUndo.add(action)
         isUndoModeActive = true
         // kill the path so we don't double draw
@@ -378,9 +378,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         }
 
         fun apply() {
-            mBitmap!!.eraseColor(0)
+            mBitmap.eraseColor(0)
             for (action in mList) {
-                action.apply(mCanvas!!)
+                action.apply(mCanvas)
             }
             invalidate()
         }
