@@ -51,7 +51,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private var mCanvas: Canvas? = null
     private val mPath: Path
     private val mBitmapPaint: Paint
-    private val mAnkiActivity: AnkiActivity?
+    private val mAnkiActivity: AnkiActivity = activity
     private var mX = 0f
     private var mY = 0f
     private var mSecondFingerX0 = 0f
@@ -144,7 +144,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                     val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
                     if (didErase) {
                         mUndo.apply()
-                        if (undoEmpty() && mAnkiActivity != null) {
+                        if (undoEmpty()) {
                             mAnkiActivity.invalidateOptionsMenu()
                         }
                     }
@@ -178,7 +178,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         mBitmap!!.eraseColor(0)
         mUndo.clear()
         invalidate()
-        mAnkiActivity?.invalidateOptionsMenu()
+        mAnkiActivity.invalidateOptionsMenu()
     }
 
     /**
@@ -187,7 +187,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     fun undo() {
         mUndo.pop()
         mUndo.apply()
-        if (undoEmpty() && mAnkiActivity != null) {
+        if (undoEmpty()) {
             mAnkiActivity.invalidateOptionsMenu()
         }
     }
@@ -241,7 +241,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         isUndoModeActive = true
         // kill the path so we don't double draw
         mPath.reset()
-        if (mUndo.size() == 1 && mAnkiActivity != null) {
+        if (mUndo.size() == 1) {
             mAnkiActivity.invalidateOptionsMenu()
         }
     }
@@ -327,7 +327,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     private fun handleWidthChangeDialog() {
-        val whiteBoardWidthDialog = WhiteBoardWidthDialog(mAnkiActivity!!, currentStrokeWidth)
+        val whiteBoardWidthDialog = WhiteBoardWidthDialog(mAnkiActivity, currentStrokeWidth)
         whiteBoardWidthDialog.onStrokeWidthChanged { wbStrokeWidth: Int -> saveStrokeWidth(wbStrokeWidth) }
         whiteBoardWidthDialog.showStrokeWidthDialog()
     }
@@ -497,7 +497,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     init {
-        mAnkiActivity = activity
         mHandleMultiTouch = handleMultiTouch
         val whitePenColorButton = activity.findViewById<Button>(R.id.pen_color_white)
         val blackPenColorButton = activity.findViewById<Button>(R.id.pen_color_black)
