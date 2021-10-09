@@ -199,7 +199,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         @CheckResult
         @JvmStatic
         fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
-            val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue
+            val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)
         }
 

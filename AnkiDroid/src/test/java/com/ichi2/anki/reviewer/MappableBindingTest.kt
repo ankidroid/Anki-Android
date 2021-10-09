@@ -39,7 +39,7 @@ class MappableBindingTest {
         assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_A))))
     }
 
-    private fun getAllBindings() = ViewerCommand.getAllDefaultBindings()
+    private fun getAllBindings() = ViewerCommand.allDefaultBindings
 
     @Suppress("SameParameterValue")
     private fun keyCode(code: Int) = fromBinding(BindingTest.keyCode(code))
