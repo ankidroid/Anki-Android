@@ -14,19 +14,17 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.cardviewer;
+package com.ichi2.anki.cardviewer
 
-import com.ichi2.libanki.Sound;
-import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.Sound
+import com.ichi2.libanki.Utils
+import java.util.regex.Pattern
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+object TypedAnswer {
 
-public class TypedAnswer {
-
-    /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
-    private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
+    /** Regex pattern used in removing tags from text before diff  */
+    private val sSpanPattern = Pattern.compile("</?span[^>]*>")
+    private val sBrPattern = Pattern.compile("<br\\s?/?>")
 
     /**
      * Clean up the correct answer text, so it can be used for the comparison with the typed text
@@ -34,16 +32,17 @@ public class TypedAnswer {
      * @param answer The content of the field the text typed by the user is compared to.
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
-    public static String cleanCorrectAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
+    @JvmStatic
+    fun cleanCorrectAnswer(answer: String?): String? {
+        if (answer == null || "" == answer) {
+            return ""
         }
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTML(answer.trim()));
-        String answerText = matcher.replaceAll("");
-        matcher = sBrPattern.matcher(answerText);
-        answerText = matcher.replaceAll("\n");
-        matcher = Sound.SOUND_PATTERN.matcher(answerText);
-        answerText = matcher.replaceAll("");
-        return Utils.nfcNormalized(answerText);
+        var matcher = sSpanPattern.matcher(Utils.stripHTML(answer.trim { it <= ' ' }))
+        var answerText = matcher.replaceAll("")
+        matcher = sBrPattern.matcher(answerText)
+        answerText = matcher.replaceAll("\n")
+        matcher = Sound.SOUND_PATTERN.matcher(answerText)
+        answerText = matcher.replaceAll("")
+        return Utils.nfcNormalized(answerText)
     }
 }
