@@ -43,7 +43,7 @@ class DrawingActivity : AnkiActivity() {
         enableToolbar()
         mColorPalette = findViewById(R.id.whiteboard_editor)
         mWhiteboard = Whiteboard.createInstance(this, true, null)
-        mWhiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> mWhiteboard.handleTouchEvent(event) }
+        mWhiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> mWhiteboard.handleTouchEvent(event!!) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
