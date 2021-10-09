@@ -1,8 +1,12 @@
+//noinspection MissingCopyrightHeader #8659
+
 package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Intent;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
