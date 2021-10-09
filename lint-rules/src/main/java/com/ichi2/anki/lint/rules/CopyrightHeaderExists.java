@@ -33,6 +33,7 @@ import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UElement;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -55,7 +56,7 @@ public class CopyrightHeaderExists extends Detector implements SourceCodeScanner
             "Or search in Settings for 'Copyright'" +
             "A GPLv3 template is available:\n" +
             "https://github.com/ankidroid/Anki-Android/issues/8211#issuecomment-825269673";
-    private static final Implementation implementation = new Implementation(CopyrightHeaderExists.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(CopyrightHeaderExists.class, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES));
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,
