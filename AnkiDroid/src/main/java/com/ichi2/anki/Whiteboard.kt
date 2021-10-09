@@ -39,6 +39,8 @@ import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import timber.log.Timber
 import java.io.FileNotFoundException
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -73,7 +75,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     @get:VisibleForTesting
     var foregroundColor = 0
     private val mColorPalette: LinearLayout
-    private val mHandleMultiTouch: Boolean
+    private val mHandleMultiTouch: Boolean = handleMultiTouch
     private var mOnPaintColorChangeListener: OnPaintColorChangeListener? = null
     val currentStrokeWidth: Int
         get() = AnkiDroidApp.getSharedPrefs(mAnkiActivity).getInt("whiteBoardStrokeWidth", 6)
@@ -208,7 +210,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private fun createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
         val p = displayDimensions
-        val bitmapSize = Math.max(p.x, p.y)
+        val bitmapSize = max(p.x, p.y)
         createBitmap(bitmapSize, bitmapSize)
     }
 
@@ -221,8 +223,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     private fun drawAlong(x: Float, y: Float) {
-        val dx = Math.abs(x - mX)
-        val dy = Math.abs(y - mY)
+        val dx = abs(x - mX)
+        val dy = abs(y - mY)
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
             mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2)
             mX = x
@@ -265,8 +267,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         if (pointerIndex > -1) {
             mSecondFingerX = event.getX(pointerIndex)
             mSecondFingerY = event.getY(pointerIndex)
-            val dx = Math.abs(mSecondFingerX0 - mSecondFingerX)
-            val dy = Math.abs(mSecondFingerY0 - mSecondFingerY)
+            val dx = abs(mSecondFingerX0 - mSecondFingerX)
+            val dy = abs(mSecondFingerY0 - mSecondFingerY)
             if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
                 mSecondFingerWithinTapTolerance = false
             }
@@ -304,25 +306,32 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     fun onClick(view: View) {
-        val id = view.id
-        if (id == R.id.pen_color_white) {
-            penColor = Color.WHITE
-        } else if (id == R.id.pen_color_black) {
-            penColor = Color.BLACK
-        } else if (id == R.id.pen_color_red) {
-            val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
-            penColor = redPenColor
-        } else if (id == R.id.pen_color_green) {
-            val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
-            penColor = greenPenColor
-        } else if (id == R.id.pen_color_blue) {
-            val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
-            penColor = bluePenColor
-        } else if (id == R.id.pen_color_yellow) {
-            val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
-            penColor = yellowPenColor
-        } else if (id == R.id.stroke_width) {
-            handleWidthChangeDialog()
+        when (view.id) {
+            R.id.pen_color_white -> {
+                penColor = Color.WHITE
+            }
+            R.id.pen_color_black -> {
+                penColor = Color.BLACK
+            }
+            R.id.pen_color_red -> {
+                val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
+                penColor = redPenColor
+            }
+            R.id.pen_color_green -> {
+                val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
+                penColor = greenPenColor
+            }
+            R.id.pen_color_blue -> {
+                val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
+                penColor = bluePenColor
+            }
+            R.id.pen_color_yellow -> {
+                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+                penColor = yellowPenColor
+            }
+            R.id.stroke_width -> {
+                handleWidthChangeDialog()
+            }
         }
     }
 
@@ -497,7 +506,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     init {
-        mHandleMultiTouch = handleMultiTouch
         val whitePenColorButton = activity.findViewById<Button>(R.id.pen_color_white)
         val blackPenColorButton = activity.findViewById<Button>(R.id.pen_color_black)
         if (!inverted) {
