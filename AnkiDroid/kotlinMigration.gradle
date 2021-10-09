@@ -40,7 +40,7 @@ permission notice:
 
 // Example of class name: "/com/ichi2/anki/UIUtils.kt"
 // Ensure that it should start with a / (slash)
-def className = ""
+def className = "/com/ichi2/anki/Whiteboard.kt"
 
 static def isKotlinCompile(Object t) {
     def clazz = t.class
