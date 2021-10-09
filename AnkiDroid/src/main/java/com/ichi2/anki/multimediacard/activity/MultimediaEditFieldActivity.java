@@ -217,11 +217,6 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO_RECORDING);
         menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.AUDIO_CLIP);
         menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
-
-        /* To check whether Camera Permission is asked in AndroidManifest.xml */
-        if (!CheckCameraPermission.manifestContainsPermission(this)) {
-            menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(false);
-        }
         return true;
     }
 
