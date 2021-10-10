@@ -1,3 +1,21 @@
+/****************************************************************************************
+ * Copyright (c) 2021 Mani infinyte01@gmail.com                                         *
+ *                                                                                      *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.                  *
+ *                                                                                      *
+ * *************************************************************************************/
+
 package com.ichi2.anki.jsaddons
 
 import android.content.Context
@@ -29,7 +47,7 @@ class NpmPackageDownloaderTest : RobolectricTest() {
 
         // url will like this, version may be changed for new file
         // https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz
-        assertTrue("Valid .tgz file", (result!!.startsWith("https://") && (result!!.endsWith(".tgz"))))
+        assertTrue("Valid .tgz file", (result!!.startsWith("https://") && (result.endsWith(".tgz"))))
 
         val inValidUrl = URL(context.getString(R.string.npmjs_registry, NOT_VALID_ADDON_PACKAGE_NAME))
         result = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(inValidUrl)!!.message
@@ -49,7 +67,7 @@ class NpmPackageDownloaderTest : RobolectricTest() {
         result = NpmPackageDownloader.DownloadAddon(context, result!!).downloadPackage()
 
         // compare success message
-        assertTrue("Valid .tgz file", result!!.endsWith(".tgz"))
+        assertTrue("Valid .tgz file", result.endsWith(".tgz"))
     }
 
     @Test
@@ -60,13 +78,13 @@ class NpmPackageDownloaderTest : RobolectricTest() {
 
         // url will like this, version may be changed for new file
         // https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz
-        var result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)!!.data
+        val result: String? = NpmPackageDownloader.InstallButtonTask(context, VALID_ADDON_PACKAGE_NAME).getTarBallUrl(validUrl)!!.data
 
         // download .tgz file from previous result
         val downloadFilePath = HttpFetcher.downloadFileToSdCardMethod(result, context, "addons", "GET")
 
         // is file extracted successfully
-        var extracted: String = NpmPackageDownloader.ExtractAddon(context, result!!, VALID_ADDON_PACKAGE_NAME)
+        val extracted: String = NpmPackageDownloader.ExtractAddon(context, result!!, VALID_ADDON_PACKAGE_NAME)
             .extractAndCopyAddonTgz(downloadFilePath, VALID_ADDON_PACKAGE_NAME)
 
         assertEquals(extracted, context.getString(R.string.addon_install_complete, VALID_ADDON_PACKAGE_NAME))

@@ -1,9 +1,25 @@
+/****************************************************************************************
+ * Copyright (c) 2021 Mani <infinyte01@gmail.com>                                       *
+ *                                                                                      *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.jsaddons
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
-import android.view.View
 import com.evgenii.jsevaluator.JsEvaluator
 import com.evgenii.jsevaluator.interfaces.JsCallback
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -22,7 +38,7 @@ import java.util.*
 
 class NoteEditorAddon(private val activity: NoteEditor) {
     private val mContext: Context = activity.applicationContext
-    lateinit var mEditFields: LinkedList<FieldEditText>
+    private lateinit var mEditFields: LinkedList<FieldEditText>
 
     fun listEnabledAddonsFromDir(toolbar: Toolbar) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(mContext)
@@ -61,8 +77,8 @@ class NoteEditorAddon(private val activity: NoteEditor) {
                 }
 
                 val bmp: Drawable = toolbar.createDrawableForString(addonModel.icon)
-                val v: View = toolbar.insertItem(0, bmp, runJsCode(jsEvaluator, addonsIndexJs))
-                v.setOnLongClickListener { discard: View? -> true }
+                toolbar.insertItem(0, bmp, runJsCode(jsEvaluator, addonsIndexJs))
+                // v.setOnLongClickListener { discard: View? -> true }
             } catch (e: IOException) {
                 Timber.w(e)
             }
@@ -140,23 +156,21 @@ class NoteEditorAddon(private val activity: NoteEditor) {
         val addToFields = jsonObject.optJSONObject("addToFields")
         Timber.d("js addon: %s", jsonObject.toString())
 
-        if (addToFields != null) {
-            val size = addToFields.names().length()
-
-            for (i in 0 until size) {
-                val keyIndex = Objects.requireNonNull(addToFields.names()).getString(i)
-                val value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i))
-                Timber.d("js addon key::value : %s :: %s", keyIndex, value)
-                val field: FieldEditText = mEditFields.get(keyIndex.toInt())
-                field.setText(value)
-            }
+        val size = addToFields?.names()?.length()
+        for (i in 0 until size!!) {
+            val keyIndex = Objects.requireNonNull(addToFields.names()).getString(i)
+            val value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i))
+            Timber.d("js addon key::value : %s :: %s", keyIndex, value)
+            val field: FieldEditText = mEditFields.get(keyIndex.toInt())
+            field.setText(value)
         }
+
         changeEditFieldWithSelectedText(changedText, changeType)
     }
 
     private fun getSelectedText(): String {
-        var startSelection = 0
-        var endSelection = 0
+        var startSelection: Int
+        var endSelection: Int
         var selectedText = ""
 
         for (e in mEditFields) {
@@ -171,9 +185,9 @@ class NoteEditorAddon(private val activity: NoteEditor) {
     }
 
     private fun changeEditFieldWithSelectedText(changedText: String, changeType: String) {
-        var startSelection = 0
-        var endSelection = 0
-        var selectedText = ""
+        var startSelection: Int
+        var endSelection: Int
+        var selectedText: String
 
         for (e in mEditFields) {
             if (e.isFocused) {
