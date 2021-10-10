@@ -162,10 +162,10 @@ class NpmPackageDownloader {
                 is NetworkResult.Failure -> {
                     // show snackbar where to seek help and wiki for the errors
                     val helpUrl = Uri.parse(context.getString(R.string.link_help))
-                    val activity = activity as AnkiActivity?
+                    val activity1 = activity as AnkiActivity?
                     UIUtils.showSnackbar(
                         activity, result.message, false, R.string.help,
-                        { activity?.openUrl(helpUrl) }, null, null
+                        { activity1?.openUrl(helpUrl) }, null, null
                     )
                     Timber.w(result.data)
                 }
@@ -255,10 +255,6 @@ class NpmPackageDownloader {
          * @param npmPackageName addon name, e.g ankidroid-js-addon-progress-bar
          */
         fun extractAndCopyAddonTgz(tarballPath: String, npmPackageName: String): String {
-            if (tarballPath == null) {
-                return context.getString(R.string.failed_to_extract_addon_package, addonName)
-            }
-
             val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
 
             // AnkiDroid/addons/js-addons
