@@ -15,18 +15,22 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.content.Context
 import androidx.annotation.CheckResult
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.jsaddons.NpmUtils.getEnabledAddonsContent
 import java.lang.IllegalStateException
 
-class CardTemplate(template: String) {
+class CardTemplate(template: String, context: Context) {
     private var mPreStyle: String? = null
     private var mPreScript: String? = null
     private var mPreClass: String? = null
     private var mPreContent: String? = null
     private var mPostContent: String? = null
+    private var mContext: Context? = null
     @CheckResult
     fun render(content: String, style: String, script: String, cardClass: String): String {
-        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent
+        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent + setAddons(mContext)
     }
 
     init {
@@ -41,6 +45,7 @@ class CardTemplate(template: String) {
         val classIndex = template.indexOf(classDelim)
         val contentIndex = template.indexOf(contentDelim)
         try {
+            mContext = context
             mPreStyle = template.substring(0, styleIndex)
             mPreScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
             mPreClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
@@ -49,5 +54,11 @@ class CardTemplate(template: String) {
         } catch (ex: StringIndexOutOfBoundsException) {
             throw IllegalStateException("The card template had replacement string order, or content changed", ex)
         }
+    }
+
+    fun setAddons(context: Context?): String {
+        return if (AnkiDroidApp.getSharedPrefs(context).getBoolean("javascript_addons_support_prefs", false)) {
+            getEnabledAddonsContent(context!!)
+        } else ""
     }
 }
