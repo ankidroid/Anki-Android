@@ -1,4 +1,4 @@
-name: Publish
+name: Release
 
 on:
   workflow_dispatch:
@@ -43,22 +43,17 @@ jobs:
 
       - name: GIT Setup
         run: |
-          git config --global user.name 'Mike Hardy'
-          git config --global user.email 'github@mikehardy.net'
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
           git remote set-url origin git@github.com:$GITHUB_REPOSITORY
         shell: bash
-
-      - uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Credential Prep
         run: |
           echo "KSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
           echo "KEYPWD=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $GITHUB_ENV
+          echo "TAG=js-addons-v1.0.2" >> $GITHUB_ENV
           mkdir ~/src
-          echo "${{ secrets.AMAZON_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
-          echo "${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
           echo "${{ secrets.RELEASES_PUBLISH_TOKEN }}" | base64 -d > ~/src/my-github-personal-access-token.gz
           echo "${{ secrets.KEYSTORE }}" | base64 -d > ~/src/android-keystore.gz
           cd ~/src
@@ -66,4 +61,4 @@ jobs:
         shell: bash
 
       - name: Build and Release
-        run: ./tools/release.sh
+        run: ./tools/local-release.sh
