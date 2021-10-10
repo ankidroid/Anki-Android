@@ -42,6 +42,10 @@ import static org.hamcrest.Matchers.is;
  * ... 	pp(r)
  * ['John "Da Man"', 'Rep', '120 Fake St.', 'Falsey', ' NJ', '00000']
  */
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * CsvSniffer
+ * sniff
+ */
 public class CsvProcessIntegrationTest {
     @Test
     public void quotedDelimiterTest() {

@@ -43,6 +43,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 
 /** Regression test for Rust */
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.util.List#sort
+ */
 @RunWith(AndroidJUnit4.class)
 public class StorageTest extends RobolectricTest {
 

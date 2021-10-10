@@ -32,6 +32,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
 
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.nio.file.Path#
+ * java.nio.file.Paths#
+ * java.nio.file.Files#
+ */
 @RunWith(AndroidJUnit4.class)
 public class TextCardExporterTest extends RobolectricTest {
     private Collection mCol;

@@ -38,6 +38,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.nio.file.Path#
+ * java.nio.file.Files#
+ * java.io.BufferedReader#lines
+ */
 @RunWith(ParameterizedRobolectricTestRunner.class)
 public class TextNoteExporterTest extends RobolectricTest {
 

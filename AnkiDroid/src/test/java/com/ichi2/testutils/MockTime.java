@@ -21,6 +21,10 @@ import com.ichi2.libanki.utils.Time;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.util.Calendar.Builder#
+ * new java.util.Calendar.Builder
+ */
 public class MockTime extends Time {
 
     /** Number of miliseconds between each call. */

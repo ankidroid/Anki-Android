@@ -20,6 +20,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.nio.file.Files#readAllBytes
+ * java.nio.file.Paths#get
+ */
 public class TestUtils {
 
     /** get the MD5 checksum (in hex) for the given filename */

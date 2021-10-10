@@ -83,6 +83,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.lang.String#join
+ */
 public class RobolectricTest implements CollectionGetter {
 
     private static boolean mBackground = true;

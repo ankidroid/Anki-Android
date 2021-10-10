@@ -43,7 +43,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static com.ichi2.libanki.Utils.nonEmptyFields;
 import static org.junit.Assert.assertEquals;
 
-
+/* @RequiresApi(api = Build.VERSION_CODES.O)
+ * java.nio.file.Paths#get
+ */
 @RunWith(AndroidJUnit4.class)
 public class UtilsTest {
 
