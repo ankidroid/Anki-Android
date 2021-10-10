@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.jsaddons
 
+import android.content.SharedPreferences
 import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.NpmUtils.NOTE_EDITOR_ADDON
 
@@ -54,7 +55,7 @@ class AddonModel {
      */
     fun updatePrefs(preferences: SharedPreferences, jsAddonKey: String?, remove: Boolean) {
         val reviewerEnabledAddonSet = preferences.getStringSet(jsAddonKey, HashSet())
-        val newStrSet: MutableSet<String> = HashSet(reviewerEnabledAddonSet)
+        val newStrSet: MutableSet<String> = HashSet(reviewerEnabledAddonSet!!)
         if (remove) {
             newStrSet.remove(name)
         } else {

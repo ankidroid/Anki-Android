@@ -84,9 +84,9 @@ object NpmUtils {
         // set of enabled reviewer addons only
         val reviewerEnabledAddonSet = preferences.getStringSet(REVIEWER_ADDON, HashSet())
         // make a copy of prefs and modify it (ConcurrentModificationException)
-        val newStrSet: MutableSet<String> = HashSet(reviewerEnabledAddonSet)
+        val newStrSet: MutableSet<String> = HashSet(reviewerEnabledAddonSet!!)
 
-        for (enabledAddon in reviewerEnabledAddonSet!!) {
+        for (enabledAddon in reviewerEnabledAddonSet) {
             try {
                 // AnkiDroid/addons/js-addons/package/index.js
                 // here enabledAddon is id of npm package which may not contain ../ or other bad path
