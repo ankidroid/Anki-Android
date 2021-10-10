@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.jsaddons
 
-import android.content.SharedPreferences
 import com.ichi2.anki.jsaddons.NpmUtils.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.NpmUtils.NOTE_EDITOR_ADDON
 

@@ -21,7 +21,6 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -52,16 +51,11 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         initNavigationDrawer(findViewById(android.R.id.content))
 
         // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = getString(R.string.js_addons)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.js_addons)
         showBackIcon()
-
-        mAddonsListRecyclerView = findViewById(R.id.addons)
-        mAddonsListRecyclerView.layoutManager = LinearLayoutManager(this)
-
         hideProgressBar()
-        listAddonsFromDir()
     }
 
     override fun getSubtitleText(): String {
@@ -72,9 +66,6 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
      * It adds a **Get More Addons** menu button to Addnon Browser screen
      * When **Get More Addons** button is clicked,
      * then it opens url https://www.npmjs.com/search?q=keywords:ankidroid-js-addon
-     *
-     * @param menu
-     * @return true
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.addon_browser, menu)
