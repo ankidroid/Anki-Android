@@ -2368,25 +2368,25 @@ public class NoteEditor extends AnkiActivity implements
 
     // For note editor addon
     public static class NoteData {
-        private String noteType;
-        private String deckName;
-        private List<String> fieldsNameList;
-        private LinkedList<FieldEditText> editFields;
+        private String mNoteType;
+        private String mDeckName;
+        private List<String> mFieldsNameList;
+        private LinkedList<FieldEditText> mEditFields;
 
         public String getNoteType() {
-            return noteType;
+            return mNoteType;
         }
 
         public String getDeckName() {
-            return deckName;
+            return mDeckName;
         }
 
         public List<String> getFieldsNameList() {
-            return fieldsNameList;
+            return mFieldsNameList;
         }
 
         public LinkedList<FieldEditText> getEditFields() {
-            return editFields;
+            return mEditFields;
         }
     }
 
@@ -2398,10 +2398,10 @@ public class NoteEditor extends AnkiActivity implements
      */
     public NoteData getNoteData() {
         NoteData data = new NoteData();
-        data.deckName = mNoteTypeSpinner.getSelectedItem().toString();
-        data.noteType = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
-        data.fieldsNameList = getCurrentlySelectedModel().getFieldsNames();
-        data.editFields = mEditFields;
+        data.mDeckName = mNoteTypeSpinner.getSelectedItem().toString();
+        data.mNoteType = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
+        data.mFieldsNameList = getCurrentlySelectedModel().getFieldsNames();
+        data.mEditFields = mEditFields;
         return data;
     }
 }
