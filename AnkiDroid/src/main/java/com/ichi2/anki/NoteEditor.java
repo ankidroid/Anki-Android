@@ -53,12 +53,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -66,12 +64,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.evgenii.jsevaluator.JsEvaluator;
-import com.evgenii.jsevaluator.interfaces.JsCallback;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
@@ -81,8 +73,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.jsaddons.AddonModel;
-import com.ichi2.anki.jsaddons.NpmUtils;
+import com.ichi2.anki.jsaddons.NoteEditorAddon;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
@@ -120,7 +111,6 @@ import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
-import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
 import com.ichi2.widget.WidgetStatus;
@@ -128,29 +118,20 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.StringJoiner;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 
-import static com.ichi2.anki.jsaddons.NpmUtils.NOTE_EDITOR_ADDON;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
@@ -1904,7 +1885,8 @@ public class NoteEditor extends AnkiActivity implements
 
         // list note editor enabled addons from directory and insert in mToolbar
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("javascript_addons_support_prefs", false)) {
-            listEnabledAddonsFromDir();
+            NoteEditorAddon noteEditorAddon = new NoteEditorAddon(this);
+            noteEditorAddon.listEnabledAddonsFromDir(mToolbar);
         }
 
         // Let the user add more buttons (always at the end).
@@ -2384,190 +2366,42 @@ public class NoteEditor extends AnkiActivity implements
         }
     }
 
+    // For note editor addon
+    public static class NoteData {
+        private String noteType;
+        private String deckName;
+        private List<String> fieldsNameList;
+        private LinkedList<FieldEditText> editFields;
 
-    public void listEnabledAddonsFromDir() {
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
-        File addonsHomeDir = new File(currentAnkiDroidDirectory, "addons");
-
-        if (!addonsHomeDir.exists()) {
-            addonsHomeDir.mkdirs();
+        public String getNoteType() {
+            return noteType;
         }
 
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        Set<String> noteEditorEnabledAddonSet = preferences.getStringSet(NOTE_EDITOR_ADDON, new HashSet<>());
+        public String getDeckName() {
+            return deckName;
+        }
 
-        JsEvaluator jsEvaluator = new JsEvaluator(this);
+        public List<String> getFieldsNameList() {
+            return fieldsNameList;
+        }
 
-        for (String enabledAddon : noteEditorEnabledAddonSet) {
-            try {
-                // AnkiDroid/addons/js-addons/package/index.js
-                // here enabledAddon is id of npm package which may not contain ../ or other bad path
-                String joinedPath = new StringJoiner("/")
-                        .add(currentAnkiDroidDirectory)
-                        .add("addons")
-                        .add(enabledAddon)
-                        .add("package")
-                        .toString();
-
-                // user removed content from folder and prefs not updated then remove it
-                File addonsPackageJson = new File(joinedPath, "package.json");
-                File addonsIndexJs = new File(joinedPath, "index.js");
-
-                ObjectMapper mapper = new ObjectMapper()
-                        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-                AddonModel addonModel = mapper.readValue(addonsPackageJson, AddonModel.class);
-                Timber.i("Addon::%s", addonModel.getName());
-
-                if (!addonsPackageJson.exists() || !addonsIndexJs.exists()) {
-                    // skip this and list next addon
-                    continue;
-                }
-
-                Drawable bmp = mToolbar.createDrawableForString(addonModel.getIcon());
-                bmp.setTint(Themes.getColorFromAttr(this, R.attr.toolbarIconColor));
-                View v = mToolbar.insertItem(0, bmp, runJsCode(jsEvaluator, addonsIndexJs));
-
-                v.setOnLongClickListener(discard -> {
-                    return true;
-                });
-
-            } catch (IOException e) {
-                Timber.w(e);
-            }
+        public LinkedList<FieldEditText> getEditFields() {
+            return editFields;
         }
     }
 
 
-    public Runnable runJsCode(JsEvaluator jsEvaluator, File indexJs) {
-        return () -> {
-            StringBuilder content = new StringBuilder();
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(indexJs));
-                String line;
-
-                while ((line = br.readLine()) != null) {
-                    content.append(line);
-                    content.append('\n');
-                }
-                br.close();
-
-                String noteType = mNoteTypeSpinner.getSelectedItem().toString();
-                String deckName = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
-                List<String> fieldsNameList = getCurrentlySelectedModel().getFieldsNames();
-                String selectedText = getSelectedText();
-                int fieldsCount = fieldsNameList.size();
-
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("noteType", noteType);
-                jsonObject.put("deckName", deckName);
-                jsonObject.put("fieldsName", new JSONArray(fieldsNameList));
-                jsonObject.put("fieldsCount", fieldsCount);
-                jsonObject.put("selectedText", selectedText);
-
-                jsEvaluator.callFunction(content.toString(),
-                        new JsCallback() {
-                            @Override
-                            public void onResult(String result) {
-                                jsAddonParseResult(result);
-                            }
-
-                            @Override
-                            public void onError(String errorMessage) {
-                                UIUtils.showThemedToast(getApplicationContext(), "Error calling addon function\n" + errorMessage, false);
-                            }
-                        }, "AnkiJSFunction", jsonObject.toString()); // name in index.js in addon folder must be AnkiJSFunction
-                } catch (IOException e) {
-                    Timber.e(e.getLocalizedMessage());
-                }
-        };
-    }
-
-
-    private void jsAddonParseResult(String result) {
-        /*
-         * parse result in json format
-         *
-         * { "changedText": "some changed text...",
-         *   "addToFields": { "0": "some text to field one",
-         *   "2": "some text to field two"
-         *   "3": "some text to field three"
-         *   ...
-         *   ... },
-         *   "changeOption": "replace"
-         *  }
-         *
-         *  change option - replace, append, clear, default - with selected text
-         **/
-
-        JSONObject jsonObject = new JSONObject(result);
-        String changedText = jsonObject.optString("changedText", "");
-        String changeType = jsonObject.optString("changeType", "");
-
-        JSONObject addToFields = jsonObject.optJSONObject("addToFields");
-        Timber.d("js addon: %s", jsonObject.toString());
-
-        if (addToFields != null) {
-            int size = addToFields.names().length();
-            for (int i = 0; i < size; i++) {
-                String keyIndex = Objects.requireNonNull(addToFields.names()).getString(i);
-                String value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i));
-                Timber.d("js addon key::value : %s :: %s", keyIndex, value);
-                FieldEditText field = mEditFields.get(Integer.parseInt(keyIndex));
-                field.setText(value);
-            }
-        }
-        changeEditFieldWithSelectedText(changedText, changeType);
-    }
-
-    private String getSelectedText() {
-        int startSelection = 0;
-        int endSelection = 0;
-        String selectedText = "";
-        for (FieldEditText e : mEditFields) {
-            if (e.isFocused()) {
-                startSelection = e.getSelectionStart();
-                endSelection = e.getSelectionEnd();
-                selectedText = Objects.requireNonNull(e.getText()).toString().substring(startSelection, endSelection);
-                break;
-            }
-        }
-        return selectedText;
-    }
-
-    private void changeEditFieldWithSelectedText(String changedText, String changeType) {
-        int startSelection = 0;
-        int endSelection = 0;
-        String selectedText = "";
-        for (FieldEditText e : mEditFields) {
-            if (e.isFocused()) {
-                startSelection = e.getSelectionStart();
-                endSelection = e.getSelectionEnd();
-                selectedText = Objects.requireNonNull(e.getText()).toString().substring(startSelection, endSelection);
-                String editTextStr = e.getText().toString();
-
-                switch(changeType) {
-                    case "replace":
-                        editTextStr = editTextStr.replace(selectedText, changedText);
-                        e.setText(editTextStr);
-                        break;
-
-                    case "append":
-                        String appendText = selectedText + changedText;
-                        editTextStr = editTextStr.replace(selectedText, appendText);
-                        e.setText(editTextStr);
-                        break;
-
-                    case "clear":
-                        editTextStr = editTextStr.replace(selectedText, "");
-                        e.setText(editTextStr);
-                        break;
-
-                    default:
-                        // do nothing
-                }
-                break;
-            }
-        }
+    /**
+     * Get deck name, note type and fields name in the model
+     *
+     * @return NoteData class with three values
+     */
+    public NoteData getNoteData() {
+        NoteData data = new NoteData();
+        data.deckName = mNoteTypeSpinner.getSelectedItem().toString();
+        data.noteType = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
+        data.fieldsNameList = getCurrentlySelectedModel().getFieldsNames();
+        data.editFields = mEditFields;
+        return data;
     }
 }
