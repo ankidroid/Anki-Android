@@ -98,9 +98,9 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         Timber.d("List addon from directory.")
 
         val addonsList: MutableList<AddonModel> = ArrayList()
-        try {
-            val files = addonsDir.listFiles()
-            for (file in files!!) {
+        val files = addonsDir.listFiles()
+        for (file in files!!) {
+            try {
                 Timber.d("Addons: %s", file.name)
                 val mapper = ObjectMapper()
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -110,12 +110,11 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
                 if (addonModel.isValidAnkiDroidAddon()) {
                     addonsList.add(addonModel)
                 }
+            } catch (e: IOException) {
+                Timber.w(e.localizedMessage)
+                UIUtils.showThemedToast(this, getString(R.string.is_not_valid_js_addon, file.name), false)
             }
-
-            mAddonsListRecyclerView.adapter = AddonsAdapter(addonsList)
-        } catch (e: IOException) {
-            Timber.w(e.localizedMessage)
-            UIUtils.showThemedToast(this, getString(R.string.is_not_valid_js_addon), false)
         }
+        mAddonsListRecyclerView.adapter = AddonsAdapter(addonsList)
     }
 }
