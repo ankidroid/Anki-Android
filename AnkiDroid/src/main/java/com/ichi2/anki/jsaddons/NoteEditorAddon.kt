@@ -156,15 +156,17 @@ class NoteEditorAddon(private val activity: NoteEditor) {
         val addToFields = jsonObject.optJSONObject("addToFields")
         Timber.d("js addon: %s", jsonObject.toString())
 
-        val size = addToFields?.names()?.length()
-        for (i in 0 until size!!) {
-            val keyIndex = Objects.requireNonNull(addToFields.names()).getString(i)
-            val value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i))
-            Timber.d("js addon key::value : %s :: %s", keyIndex, value)
-            val field: FieldEditText = mEditFields.get(keyIndex.toInt())
-            field.setText(value)
-        }
+        if (addToFields != null) {
+            val size = addToFields.names()?.length()
 
+            for (i in 0 until size!!) {
+                val keyIndex = Objects.requireNonNull(addToFields.names()).getString(i)
+                val value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i))
+                Timber.d("js addon key::value : %s :: %s", keyIndex, value)
+                val field: FieldEditText = mEditFields.get(keyIndex.toInt())
+                field.setText(value)
+            }
+        }
         changeEditFieldWithSelectedText(changedText, changeType)
     }
 
