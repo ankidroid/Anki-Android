@@ -61,4 +61,4 @@ jobs:
         shell: bash
 
       - name: Build and Release
-        run: ./tools/local-release.sh
+        run: ./gradlew assembleDebug
