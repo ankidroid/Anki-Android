@@ -17,17 +17,14 @@
 
 package com.ichi2.anki.jsaddons
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Point
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -38,11 +35,6 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 
 class AddonDetailsDialog(private val context1: Context, private var addonModel: AddonModel) : DialogFragment() {
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(getScreenWidth(), WindowManager.LayoutParams.WRAP_CONTENT)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         isCancelable = true
@@ -131,12 +123,5 @@ class AddonDetailsDialog(private val context1: Context, private var addonModel: 
         viewDivider.layoutParams = params
         viewDivider.setBackgroundColor(ContextCompat.getColor(context1, R.color.material_blue_grey_050))
         return viewDivider
-    }
-
-    private fun getScreenWidth(): Int {
-        val size = Point()
-        val activity: Activity = context1 as Activity
-        activity.windowManager.defaultDisplay.getSize(size)
-        return size.x
     }
 }
