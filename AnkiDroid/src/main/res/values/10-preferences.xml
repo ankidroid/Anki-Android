@@ -327,6 +327,6 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="bindings_already_bound">Already bound to %s</string>
 
     <!-- javascript addons support -->
-    <string name="javascript_addons_support">JavaScript Addons Support</string>
+    <string name="javascript_addons_support" maxLength="41">JavaScript Addons Support</string>
     <string name="javascript_addons_support_summ">Add JavaScript addons to Note Editor and Reviewer</string>
 </resources>
