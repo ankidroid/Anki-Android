@@ -21,6 +21,7 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -55,7 +56,12 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.js_addons)
         showBackIcon()
+
+        mAddonsListRecyclerView = findViewById(R.id.addons)
+        mAddonsListRecyclerView.layoutManager = LinearLayoutManager(this)
+
         hideProgressBar()
+        listAddonsFromDir()
     }
 
     override fun getSubtitleText(): String {
@@ -78,7 +84,7 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun listAddonsFromDir() {
+    private fun listAddonsFromDir() {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
 
         // AnkiDroid/addons/
