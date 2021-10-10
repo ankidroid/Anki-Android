@@ -104,7 +104,7 @@ android {
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
 
             // hide addon menu in side nav, will be remove after all jsaddons PR merged
-            resValue 'bool', 'anki_show_addon_menu', "false"
+            resValue 'bool', 'anki_show_addon_menu', "true"
         }
     }
 
