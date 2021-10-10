@@ -54,7 +54,7 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
     override fun register(
         tags: Iterable<String>,
         usn: Int?,
-        clear: Boolean
+        clear_first: Boolean
     ) {
 
         val preserve_usn: Boolean
@@ -68,7 +68,7 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
         }
 
         backend.register_tags(
-            tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear
+            tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear_first
         )
     }
 
@@ -91,7 +91,7 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
                     " ".join(col.db.queryStringList("select distinct tags from notes" + lim))
                 )
             ),
-            clear = clear,
+            clear_first = clear,
         )
     }
 
@@ -105,7 +105,7 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
             return list(set(split(" ".join(res))))
         }
         val dids = mutableListOf(did)
-        for ((name, id) in col.decks.children(did)) {
+        for ((_, id) in col.decks.children(did)) {
             dids.add(id)
         }
         query = basequery + " AND c.did IN " + ids2str(dids)

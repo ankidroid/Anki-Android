@@ -92,13 +92,13 @@ public class TagsDialogTest {
             assertThat(dialog, notNullValue());
 
             final View body = dialog.getCustomView();
-            final RadioGroup mOptionsGroup  = body.findViewById(R.id.tags_dialog_options_radiogroup);
+            final RadioGroup optionsGroup = body.findViewById(R.id.tags_dialog_options_radiogroup);
 
-            assertEquals(mOptionsGroup.getVisibility(), View.VISIBLE);
+            assertEquals(optionsGroup.getVisibility(), View.VISIBLE);
 
             final int expectedOption = 1;
 
-            mOptionsGroup.getChildAt(expectedOption).performClick();
+            optionsGroup.getChildAt(expectedOption).performClick();
 
             dialog.getActionButton(DialogAction.POSITIVE).callOnClick();
 
@@ -142,13 +142,13 @@ public class TagsDialogTest {
 
 
             final View body = dialog.getCustomView();
-            final RadioGroup mOptionsGroup  = body.findViewById(R.id.tags_dialog_options_radiogroup);
+            final RadioGroup optionsGroup = body.findViewById(R.id.tags_dialog_options_radiogroup);
 
-            assertEquals(mOptionsGroup.getVisibility(), View.VISIBLE);
+            assertEquals(optionsGroup.getVisibility(), View.VISIBLE);
 
             final int expectedOption = 2;
 
-            mOptionsGroup.getChildAt(expectedOption).performClick();
+            optionsGroup.getChildAt(expectedOption).performClick();
 
             dialog.getActionButton(DialogAction.POSITIVE).callOnClick();
 

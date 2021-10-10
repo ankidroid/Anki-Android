@@ -64,8 +64,8 @@
     <string name="hide_whiteboard">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
     <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
-    <string name="leech_suspend_notification">ପତ୍ର ଲିଚ ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
-    <string name="leech_notification">ପତ୍ରକୁ ଲିଚ ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
+    <string name="leech_suspend_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
+    <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="corrupt_font">ଖରାପ ଫଣ୍ଟ ଫାଇଲ୍ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
     <string name="webview_crash_unknwon_detailed">ଏହା WebView ରେ ଏକ ଆନ୍ତରିକ ତ୍ରୁଟି ଯୋଗୁଁ ହେଇଛି</string>
@@ -74,11 +74,11 @@
     <string name="webview_crash_nonfatal">WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
-    <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' କାର୍ଡ କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' ପତ୍ର କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>ପ୍ରଶ୍ନ</item>
-        <item>ବର୍ଗୀକରଣ କ୍ଷେତ୍ର</item>
+        <item>ସଜାଣି କ୍ଷେତ୍ର</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>ଉତ୍ତର</item>
@@ -92,7 +92,7 @@
         <item>ଅନ୍ତରାଳ</item>
         <item>ସହଜତା</item>
         <item>ବାକି</item>
-        <item>କାର୍ଡ ସଂଶୋଧିତ</item>
+        <item>ପତ୍ର ସଂଶୋଧିତ</item>
         <item>ସୃଷ୍ଟି ହୋଇଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
@@ -102,7 +102,7 @@
     <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
     <string name="custom_study_review_ahead">ଆଗୁଆ ସମୀକ୍ଷା</string>
     <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
-    <string name="custom_study_preview_new">ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କର</string>
+    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
@@ -141,8 +141,8 @@
     <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="default_conf_delete_error">ଡିଫଲ୍ଟ ବିକଳ୍ପ ସମୂହକୁ ହଟାଯାଇ ପାରିବନାହିଁ</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">%dଟିଏ କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
-        <item quantity="other">%dଟି କାର୍ଡ ଯୋଗ କରାଯାଇଛି</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ଯୋଗ କରାଯାଇଛି</item>
+        <item quantity="other">%dଟି ପତ୍ର ଯୋଗ କରାଯାଇଛି</item>
     </plurals>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
@@ -150,9 +150,9 @@
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ଡେକ୍ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck">ଡେକ୍ ଅପସାରଣ କରୁଅଛି&#8230;</string>
+    <string name="delete_deck">ଡେକ୍ ବିଲୋପ ହେଉଛି&#8230;</string>
     <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
-    <string name="info_rate">AnkiDroid ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
+    <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
@@ -169,7 +169,7 @@
     <string name="import_error_exception">ପ୍ୟାକେଜ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ମାନୁଆଲ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
+    <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବରେ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
     <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
@@ -178,13 +178,13 @@
     <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
-    <string name="export_in_progress">Anki ପ୍ୟାକେଜ୍ ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
-    <string name="export_successful_title">Anki ପ୍ୟାକେଜ୍ ପଠାଇବେ କି?</string>
+    <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
+    <string name="export_successful_title">Anki package ପଠାଇବେ କି?</string>
     <string name="export_send_button">ପଠାନ୍ତୁ</string>
     <string name="export_save_button">ଫାଇଲ ରେ ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା କରିବା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଂରକ୍ଷଣ କରାଯାଉଛି...</string>
-    <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ ଆଙ୍କି ପ୍ୟାକେଜ୍ ସଂରକ୍ଷିତ ହେଲା </string>
-    <string name="export_save_apkg_unsuccessful">ଆଙ୍କି ପ୍ୟାକେଜ୍ ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
+    <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
+    <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text_new"><![CDATA[        ନମସ୍କାର!
@@ -203,8 +203,8 @@
     <string name="steps_error">ପର୍ଯ୍ୟାୟଟି ୦ ଠାରୁ ଅଧିକ ଗୋଟେ ସଂଖ୍ୟା ହବା ଉଚିତ</string>
     <string name="steps_min_error">ଅତିକାମରେ ୧ଟିଏ ପର୍ଯ୍ୟାୟ ଆବଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
-    <string name="sched_unbury_action">ତାଙ୍କୁ ଦେଖିବାକୁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
-    <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ହୋଇଥିବା ପତ୍ର ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାଯାଇଥିଲା</string>
+    <string name="sched_unbury_action">ସେଗୁଡ଼ିକୁ ଦେଖିବା ପାଇଁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
+    <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
     <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ, ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
@@ -252,7 +252,7 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ ପାଇଁ ନୂତନତମ Anki ସଂସ୍କରଣ ଆବଶ୍ୟକ।</string>
+    <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ Anki ର ଏକ ନୂତନ ସଂସ୍କରଣ ଆବଶ୍ୟକ କରେ।</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ଧାରଣ କରିବା ବିଫଳ ହୋଇଛି।</string>
     <string name="activity_start_failed">ଏହି ସିଷ୍ଟମରେ ଏହି କାମ କରିବାଯୋଗ୍ୟ ଆପ୍ ସଂସ୍ଥାପିତ ହେଇନାହିଁ।</string>
@@ -263,7 +263,7 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ଉଦ୍ଧାର ହେଇଥିବା ପତ୍ରଗୁଡ଼ିକ</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ପୃଷ୍ଠଭୂମି</string>
+    <string name="background_image_title">ପୃଷ୍ଠପଟ</string>
     <string name="choose_an_image">ଗୋଟେ ଛବି ବାଛନ୍ତୁ</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
@@ -310,7 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
-    <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକ ଅଟେ</string>
+    <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକୀୟ</string>
     <string name="cannot_load_http_resource">http ସମ୍ପଦ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
@@ -333,7 +333,7 @@
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="toolbar_item_explain_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବାକୁ HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଟୁଲବାର୍ ଆଇଟମ୍ କୁ ହଟାଇବା ପାଇଁ ତାହା ଉପରେ ଲମ୍ବା ଦବାନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ହଟାଇବେ?</string>
-    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ, ଦୟାକରି ମାନୁଆଲ୍ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡିବାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡିପାରେ </string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>
@@ -343,8 +343,8 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ</string>
-    <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ</string>
+    <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ ଅଟେ</string>
+    <string name="password_empty">ପାସ୍ଓ୍ୱାର୍ଡ଼ ଆବଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->

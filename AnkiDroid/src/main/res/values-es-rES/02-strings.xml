@@ -187,10 +187,10 @@
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_successful">Se exportó el archivo \"%s\". ¿Quieres enviarlo con otra aplicación?</string>
     <string name="export_email_subject">Tarjetas AnkiDroid exportadas: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        ¡Hola!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        Esto es un mazo de tarjetas Anki enviado desde <a href="%1$s">AnkiDroid</a>.
+        ¡Prueba usando una de las <a href="%2$s">distribuciones Anki</a> y disfruta un aprendizaje fácil y eficiente!
         ]]></string>
     <string name="export_unsuccessful">Error al exportar el archivo apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
@@ -362,7 +362,7 @@
     <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
     <string name="home">Inicio</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_field">Mapeado a %s</string>
+    <string name="import_mapped_to_tags">Mapeado a Tags</string>
     <string name="import_mapped_to_nothing">Ignorado</string>
 </resources>

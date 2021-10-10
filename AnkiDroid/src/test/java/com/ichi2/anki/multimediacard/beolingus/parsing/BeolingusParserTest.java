@@ -1,3 +1,5 @@
+//noinspection MissingCopyrightHeader #8659
+
 package com.ichi2.anki.multimediacard.beolingus.parsing;
 
 import org.junit.Test;

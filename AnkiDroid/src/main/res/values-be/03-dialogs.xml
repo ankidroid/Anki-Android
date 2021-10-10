@@ -43,7 +43,7 @@
     <string name="check_db_acknowledge">База даных праверана</string>
     <string name="check_db_acknowledge_shrunk">База даных праверана і аптымізавана.\nПамер зменшаны на %d МБ.</string>
     <string name="contextmenu_deckpicker_delete_deck">Выдаліць калоду</string>
-    <string name="delete_deck_default_deck">Нельга выдаліць асноўную калоду</string>
+    <string name="delete_deck_default_deck">Нельга выдаліць стандартную калоду</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Выдаліць усе карткі ў %1$s? Яна змяшчае %2$d картку.</item>
@@ -108,7 +108,7 @@
     <string name="answering_error_message">Адбылася памылка падчас запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; калі ласка, паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
     <string name="repair_deck_dialog">Аднавіць базу даных?\n\nПерад тым, як пачнецца аднаўленне, копія базы даных будзе змешчана ў створаную падпапку \'%s\'.</string>
-    <string name="intent_aedict_empty">Катэгорыя па змаўчанні нічога не змяшчае</string>
+    <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
     <string name="custom_study_new_total_new">Новых картак у калодзе: %d</string>
     <string name="custom_study_rev_total_rev">Картак для паўтарэння: %d</string>

@@ -1,3 +1,5 @@
+//noinspection MissingCopyrightHeader #8659
+
 package com.wildplot.android.rendering;
 
 import org.mockito.ArgumentMatcher;

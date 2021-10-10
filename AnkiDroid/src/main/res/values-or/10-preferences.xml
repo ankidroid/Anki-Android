@@ -42,9 +42,9 @@
     <string name="disabled">ଅକ୍ଷମ</string>
     <string name="enabled">ସକ୍ଷମ</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general_summ">ସାଧାରଣ ସେଟିଂସମୂହ</string>
+    <string name="pref_cat_general_summ">ସାଧାରଣ ସେଟିଂସ୍</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
-    <string name="pref_cat_reviewing_summ">ଅଣ-ତାସଖଣ୍ଡ ନିର୍ଦ୍ଦିଷ୍ଟ ସମୀକ୍ଷକ ସେଟିଂସମୂହ</string>
+    <string name="pref_cat_reviewing_summ">ଅଣ-ତାସଖଣ୍ଡ ନିର୍ଦ୍ଦିଷ୍ଟ ସମୀକ୍ଷକ ସେଟିଂସ୍</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">ଆଚରଣ</string>
     <string name="pref_cat_flashcard" maxLength="41">ପ୍ରଦର୍ଶନ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
@@ -76,9 +76,9 @@
     <string name="card_zoom" maxLength="41">ପତ୍ର ଜୁମ୍</string>
     <string name="image_zoom" maxLength="41">ଛବି ଜୁମ୍</string>
     <string name="button_size" maxLength="41">ଉତ୍ତର ବଟନ ଆକାର</string>
-    <string name="card_browser_font_size" maxLength="41">କାର୍ଡ ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
-    <string name="card_browser_hide_media" maxLength="41">କାର୍ଡ ବ୍ରାଉଜରରେ ଫାଇଲ ନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
-    <string name="card_browser_hide_media_summary">କାର୍ଡ ବ୍ରାଉଜର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_font_size" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
+    <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜରରେ ଫାଇଲନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜରର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରିନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
@@ -133,17 +133,17 @@
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
-    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସମକାଳୀକରଣ</string>
+    <string name="automatic_sync_choice" maxLength="41">ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ରୋନାଇଜେସନ୍</string>
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
-    <string name="sync_status_badge" maxLength="41">ସମକାଳୀକରଣ ସ୍ତିତ୍ତ୍ୱ ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
-    <string name="night_theme" maxLength="41">ରାତି ଥିମ୍</string>
+    <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
     <string name="default_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ</string>
     <string name="override_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ ପ୍ରୟୋଗତା</string>
     <string name="language" maxLength="41">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
-    <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡିକ</string>
+    <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ</string>
     <string name="notification_pref_title" maxLength="41">କେତେବେଳେ ସୂଚିତ କରିବି</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ </string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
@@ -165,7 +165,7 @@
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
-    <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା </string>
+    <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ବ୍ୟବଧାନ (ମିଲିସେକେଣ୍ଡ୍)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
@@ -253,21 +253,21 @@
     <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା</string>
     <string name="deck_conf_max_rev" maxLength="41">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିଙ୍କୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ କାର୍ଡଗୁଡ଼ିକ ପରବର୍ତ୍ତୀ ଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷା ପରଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀ ପାଇଁ ସେଟିଂ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ପ୍ରଦର୍ଶନ ଉତ୍ତର\' ସେଟିଂସମୂହ ବ୍ୟବହାର କରନ୍ତୁ।</string>
+    <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂସ୍ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
     <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_ivl_fct" maxLength="41">ବ୍ୟବଧାନ ପରିବର୍ତ୍ତନକାରୀ</string>
     <string name="deck_conf_max_ivl" maxLength="41">ସର୍ବାଧିକ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">ନୂତନ ବ୍ୟବଧାନ</string>
     <string name="deck_conf_min_ivl" maxLength="41">ସର୍ବନିମ୍ନ ବ୍ୟବଧାନ</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
+    <string name="deck_conf_leech_thres" maxLength="41">ଜୋକ (leech) ଦୁଆରସୀମା</string>
     <string name="deck_conf_fails">XXX (ଟି) ତ୍ରୁଟି</string>
-    <string name="deck_conf_leech_action" maxLength="41">ଲିଚ ଆକ୍ସନ </string>
+    <string name="deck_conf_leech_action" maxLength="41">ଜୋକ (leech) କାର୍ଯ୍ୟ</string>
     <string name="deck_conf_max_time" maxLength="41">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
     <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ୍</string>
     <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>

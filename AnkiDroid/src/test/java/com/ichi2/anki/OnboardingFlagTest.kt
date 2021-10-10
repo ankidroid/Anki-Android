@@ -20,6 +20,7 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.OnboardingUtils.Companion.SHOW_ONBOARDING
+import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -37,6 +38,11 @@ class OnboardingFlagTest : RobolectricTest() {
     @Before
     fun setShowOnboardingPreference() {
         AnkiDroidApp.getSharedPrefs(targetContext).edit().putBoolean(SHOW_ONBOARDING, true).apply()
+    }
+
+    @After
+    fun after() {
+        Onboarding.resetOnboardingForTesting() // #9597 - global needs resetting
     }
 
     @Test
@@ -89,12 +95,12 @@ class OnboardingFlagTest : RobolectricTest() {
         assertTrue(isVisited(SecondEnum.LAST))
     }
 
-    private enum class FirstEnum(var mValue: Int) : OnboardingFlag {
+    private enum class FirstEnum(var valueFirst: Int) : OnboardingFlag {
         FIRST(0),
         MIDDLE(1);
 
         override fun getOnboardingEnumValue(): Int {
-            return mValue
+            return valueFirst
         }
 
         override fun getFeatureConstant(): String {
@@ -102,12 +108,12 @@ class OnboardingFlagTest : RobolectricTest() {
         }
     }
 
-    private enum class SecondEnum(var mValue: Int) : OnboardingFlag {
+    private enum class SecondEnum(var valueSecond: Int) : OnboardingFlag {
         MIDDLE(0),
         LAST(1);
 
         override fun getOnboardingEnumValue(): Int {
-            return mValue
+            return valueSecond
         }
 
         override fun getFeatureConstant(): String {

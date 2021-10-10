@@ -317,13 +317,13 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     override fun collapse(did: did) {
-        val deck = this.get(did)!!.toV16()
+        val deck = this.get(did).toV16()
         deck.collapsed = !deck.collapsed
         this.save(deck)
     }
 
     fun collapseBrowser(did: did) {
-        val deck = this.get(did)!!.toV16()
+        val deck = this.get(did).toV16()
         val collapsed = deck.browserCollapsed
         deck.browserCollapsed = !collapsed
         this.save(deck)
@@ -579,7 +579,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             return this.col.db.queryLongList("select id from cards where did=?", did)
         }
         val dids = mutableListOf(did)
-        for ((name, id) in this.children(did)) {
+        for ((_, id) in this.children(did)) {
             dids.append(id)
         }
         return this.col.db.queryLongList("select id from cards where did in " + ids2str(dids))
@@ -611,7 +611,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     override fun current(): Deck {
-        return this.get(this.selected())!!
+        return this.get(this.selected())
     }
 
     /** Select a new branch. */
@@ -627,7 +627,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     }
 
     /** don't use this, it will likely go away */
-    fun update_active() {
+    override fun update_active() {
         this.select(this.current().id)
     }
 
@@ -687,7 +687,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     /** All children of did, as (name, id). */
     override fun children(did: did): TreeMap<str, did> {
-        val name: str = this.get(did)!!.toV16().name
+        val name: str = this.get(did).toV16().name
         val actv = TreeMap<str, did>()
         for (g in this.all_names_and_ids()) {
             if (g.name.startsWith(name + "::")) {
@@ -719,10 +719,11 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return out
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun childDids(did: did, childMap: childMapNode): MutableList<did> {
         fun gather(node: childMapNode, arr: MutableList<did>) {
-            for ((did, child) in node.items()) {
-                arr.append(did)
+            for ((itemDid, child) in node.items()) {
+                arr.append(itemDid)
                 gather(child as childMapNode, arr)
             }
         }
@@ -731,6 +732,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return arr
     }
 
+    @Suppress("UNCHECKED_CAST")
     @RustCleanup("used to return childMapNode")
     override fun childMap(): Decks.Node {
         val nameMap = this.nameMap()
@@ -755,6 +757,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return childMap.toNode()
     }
 
+    @Suppress("UNCHECKED_CAST")
     @RustCleanup("needs testing")
     fun childMapNode.toNode(): Decks.Node {
         val ret = Decks.Node()
@@ -798,7 +801,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
             if (nameMap.isPresent) {
                 deck = nameMap.get()[parent_name]!!
             } else {
-                deck = this.get(this.id(parent_name))!!
+                deck = this.get(this.id(parent_name))
             }
             parents.append(deck)
         }
@@ -842,7 +845,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
     // 1 for dyn, 0 for standard
     override fun isDyn(did: did): Boolean {
-        return this.get(did)!!.toV16().dyn != 0
+        return this.get(did).toV16().dyn != 0
     }
 
     fun Deck?.toV16Optional(): Optional<DeckV16> {

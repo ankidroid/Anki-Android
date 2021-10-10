@@ -1,3 +1,5 @@
+//noinspection MissingCopyrightHeader #8659
+
 package com.ichi2.anki;
 
 import android.content.Context;
@@ -75,20 +77,20 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void verifyCodeMessages() {
 
-        Map<Integer, String> mCodeResponsePairs = new HashMap<>();
+        Map<Integer, String> codeResponsePairs = new HashMap<>();
         final Context context = getTargetContext();
-        mCodeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
-        mCodeResponsePairs.put(409, context.getString(R.string.sync_error_409));
-        mCodeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));
-        mCodeResponsePairs.put(500, context.getString(R.string.sync_error_500_unknown));
-        mCodeResponsePairs.put(501, context.getString(R.string.sync_error_501_upgrade_required));
-        mCodeResponsePairs.put(502, context.getString(R.string.sync_error_502_maintenance));
-        mCodeResponsePairs.put(503, context.getString(R.string.sync_too_busy));
-        mCodeResponsePairs.put(504, context.getString(R.string.sync_error_504_gateway_timeout));
+        codeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
+        codeResponsePairs.put(409, context.getString(R.string.sync_error_409));
+        codeResponsePairs.put(413, context.getString(R.string.sync_error_413_collection_size));
+        codeResponsePairs.put(500, context.getString(R.string.sync_error_500_unknown));
+        codeResponsePairs.put(501, context.getString(R.string.sync_error_501_upgrade_required));
+        codeResponsePairs.put(502, context.getString(R.string.sync_error_502_maintenance));
+        codeResponsePairs.put(503, context.getString(R.string.sync_too_busy));
+        codeResponsePairs.put(504, context.getString(R.string.sync_error_504_gateway_timeout));
 
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
-                for (Map.Entry<Integer, String> entry : mCodeResponsePairs.entrySet()) {
+                for (Map.Entry<Integer, String> entry : codeResponsePairs.entrySet()) {
                     assertEquals(deckPicker.rewriteError(entry.getKey()), entry.getValue());
                 }
             });
