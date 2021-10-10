@@ -408,7 +408,6 @@
     <string name="failed">Failed</string>
     <string name="success">Success</string>
     <string name="addon_install_complete">%s addon installation complete</string>
-    <string name="npmjs_package_url">https://www.npmjs.org/package/%s</string>
     <string name="ankidroid_js_addon_npm_search_url">https://www.npmjs.com/search?q=keywords:ankidroid-js-addon</string>
     <string name="ankidroid_js_addon_npm_search_query_url">https://www.npmjs.com/search?q=</string>
     <string name="search_using_addon_name">Search using addon name</string>
@@ -420,7 +419,6 @@
     <string name="addon_enabled">%s addon enabled</string>
     <string name="addon_disabled">%s addon disabled</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
-    <string name="updating_addon">Updating %s addon</string>
     <string name="failed_to_remove_addon">Failed to remove addon. Try again or remove it manually</string>
     <string name="addon_version">Version</string>
     <string name="ankidroid_js_api_version">AnkiDroid JS API Version</string>
