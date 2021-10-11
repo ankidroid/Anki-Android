@@ -39,6 +39,7 @@ import org.robolectric.shadows.ShadowActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -343,6 +344,20 @@ public class NoteEditorTest extends RobolectricTest {
         NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
 
         assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized(), is(true));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void addToCurrentWithNoDeckSelectsDefault_issue_9616() {
+        getCol().getConf().put("addToCur", false);
+        Model cloze = Objects.requireNonNull(getCol().getModels().byName("Cloze"));
+        cloze.remove("did");
+        getCol().getModels().save(cloze);
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        editor.setCurrentlySelectedModel(cloze.getLong("id"));
+
+        assertThat(editor.getDeckId(), is(Consts.DEFAULT_DECK_ID));
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
