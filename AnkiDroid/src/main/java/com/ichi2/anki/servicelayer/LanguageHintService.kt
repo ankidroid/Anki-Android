@@ -18,7 +18,10 @@ package com.ichi2.anki.servicelayer
 
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.ModelManager
 import com.ichi2.utils.JSONObject
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -35,5 +38,14 @@ object LanguageHintService {
             return null
         }
         return Locale.forLanguageTag(field.getString("ad-hint-locale"))
+    }
+
+    @JvmStatic
+    fun setLanguageHintForField(models: ModelManager, model: Model, fieldPos: Int, selectedLocale: Locale) {
+        val field = model.getField(fieldPos)
+        field.put("ad-hint-locale", selectedLocale.toLanguageTag())
+        models.save(model)
+
+        Timber.i("Set field locale to %s", selectedLocale)
     }
 }
