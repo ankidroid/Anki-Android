@@ -39,8 +39,19 @@ permission notice:
 */
 
 // Example of class name: "/com/ichi2/anki/UIUtils.kt"
-// Ensure that it should start with a / (slash)
+// Ensure that it starts with '/' (slash)
+def source = Source.MAIN
 def className = ""
+
+enum Source {
+    MAIN("/src/main/java"),
+    TEST("/src/test/java"),
+    ANDROID_TEST("/src/androidTest/java") // untested
+    public String path
+    private Source(String pathSubset) {
+        this.path = pathSubset
+    }
+}
 
 static def isKotlinCompile(Object t) {
     def clazz = t.class
@@ -81,7 +92,7 @@ task copySingleFileInGradle {
     if (className.isEmpty()) return
 
     doFirst {
-        def path = projectDir.absolutePath + "/src/main/java" + className
+        def path = projectDir.absolutePath + source.path + className
         def newPath = path.replace(".kt", ".java")
 
         def src = new File(path)
@@ -94,7 +105,7 @@ task deleteSingleFileInGradle {
     if (className.isEmpty()) return
 
     doFirst {
-        def path = projectDir.absolutePath + "/src/main/java" + className
+        def path = projectDir.absolutePath + source.path + className
         def newPath = path.replace(".kt", ".java")
         def dst = new File(newPath)
         if (dst.directory) {
