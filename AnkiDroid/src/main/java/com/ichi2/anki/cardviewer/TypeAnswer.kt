@@ -61,6 +61,14 @@ class TypeAnswer(
         private set
 
     /**
+     * @return true If entering input via EditText
+     * and if the current card has a {{type:field}} on the card template
+     */
+    fun validForEditText(): Boolean {
+        return !useInputTag && correct != null
+    }
+
+    /**
      * Extract type answer/cloze text and font/size
      * @param card The next card to display
      */
