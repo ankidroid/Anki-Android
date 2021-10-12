@@ -106,6 +106,7 @@ import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -1930,6 +1931,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
+            LanguageHintService.applyLanguageHint(mAnswerField, mTypeAnswer.getLanguageHint());
         } else {
             mAnswerField.setVisibility(View.GONE);
         }
