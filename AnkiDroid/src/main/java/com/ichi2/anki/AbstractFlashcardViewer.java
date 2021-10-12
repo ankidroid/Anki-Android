@@ -1667,7 +1667,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer() && mTypeAnswer.getAutoFocus()) {
+        if (mTypeAnswer.validForEditText() && mTypeAnswer.getAutoFocus()) {
             mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
@@ -1688,7 +1688,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility(mTypeAnswer.validForEditText() ? View.VISIBLE : View.GONE);
         mAnswerField.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 displayCardAnswer();
@@ -1797,7 +1797,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         updateActionBar();
 
         // Clean answer field
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setText("");
         }
 
@@ -1928,7 +1928,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         setInterface();
 
         String displayString = displayString(reload);
-        if (!mCurrentCard.isEmpty() && typeAnswer()) {
+        if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
         } else {
@@ -1994,7 +1994,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         }
@@ -2317,15 +2317,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /**
-     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
-     *         field to query
-     */
-    private boolean typeAnswer() {
-        return !mTypeAnswer.useInputTag() && null != mTypeAnswer.getCorrect();
-    }
-
-
     private void unblockControls() {
         mControlBlocked = ControlBlock.UNBLOCKED;
         mCardFrame.setEnabled(true);
@@ -2372,7 +2363,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mWhiteboard.setEnabled(true);
         }
 
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(true);
         }
         mTouchLayer.setVisibility(View.VISIBLE);
@@ -2437,7 +2428,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mWhiteboard.setEnabled(false);
         }
 
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(false);
         }
         invalidateOptionsMenu();
