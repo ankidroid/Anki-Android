@@ -21,8 +21,8 @@ import android.content.res.Resources
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
-import com.ichi2.anki.cardviewer.TypedAnswer.cleanCorrectAnswer
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.JSONArray
@@ -232,6 +232,30 @@ class TypeAnswer(
                 doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
             )
+        }
+
+        /** Regex pattern used in removing tags from text before diff  */
+        private val spanPattern = Pattern.compile("</?span[^>]*>")
+        private val brPattern = Pattern.compile("<br\\s?/?>")
+
+        /**
+         * Clean up the correct answer text, so it can be used for the comparison with the typed text
+         *
+         * @param answer The content of the field the text typed by the user is compared to.
+         * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
+         */
+        @JvmStatic
+        fun cleanCorrectAnswer(answer: String?): String {
+            if (answer == null || "" == answer) {
+                return ""
+            }
+            var matcher = spanPattern.matcher(Utils.stripHTML(answer.trim { it <= ' ' }))
+            var answerText = matcher.replaceAll("")
+            matcher = brPattern.matcher(answerText)
+            answerText = matcher.replaceAll("\n")
+            matcher = Sound.SOUND_PATTERN.matcher(answerText)
+            answerText = matcher.replaceAll("")
+            return Utils.nfcNormalized(answerText)
         }
 
         /**

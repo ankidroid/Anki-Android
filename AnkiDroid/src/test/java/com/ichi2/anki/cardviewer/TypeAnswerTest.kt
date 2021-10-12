@@ -17,8 +17,11 @@
 package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.cardviewer.TypeAnswer.Companion.cleanCorrectAnswer
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.contentForCloze
 import com.ichi2.testutils.EmptyApplication
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -225,6 +228,15 @@ $!"""
         assertEquals("test", contentForCloze(cloze1, 1))
         val cloze2 = "This is {{c1::test}} which is containing {{c1::test}} word twice {{c1::test2}}"
         assertEquals("test, test, test2", contentForCloze(cloze2, 1))
+    }
+
+    @Test
+    fun testMediaIsNotExpected() {
+        // #0096 - Anki Desktop did not expect media.
+        val input = "ya[sound:36_ya.mp3]<div><img src=\"paste-efbfdfbff329f818e3b5568e578234d0d0054067.png\" /><br /></div>"
+        val expected = "ya"
+        val actual: String = cleanCorrectAnswer(input)
+        MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
     }
 
     private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =
