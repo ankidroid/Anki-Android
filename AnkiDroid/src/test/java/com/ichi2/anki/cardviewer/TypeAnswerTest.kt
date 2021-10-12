@@ -232,5 +232,5 @@ $!"""
             doNotUseCodeFormatting = false,
             useInputTag = false,
             autoFocus = false
-        ).typeAnswerFilter(answer, correctAnswer, userAnswer)
+        ).filterAnswer(answer, correctAnswer, userAnswer)
 }

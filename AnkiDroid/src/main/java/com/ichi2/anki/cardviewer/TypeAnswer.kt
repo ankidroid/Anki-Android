@@ -149,12 +149,21 @@ class TypeAnswer(
         return m.replaceAll(sb.toString())
     }
 
-    fun typeAnswerFilter(answer: String): String {
+    /**
+     * Fill the placeholder for the type comparison: `[[type:(.+?)]]`
+     *
+     * Replaces with the HTML for the correct answer, and the comparison to the correct answer if appropriate.
+     *
+     * @param answer The card content on the back of the card
+     *
+     * @return The formatted answer text with `[[type:(.+?)]]` replaced with HTML
+     */
+    fun filterAnswer(answer: String): String {
         val userAnswer = cleanTypedAnswer(input)
         val correctAnswer = cleanCorrectAnswer(correct)
         Timber.d("correct answer = %s", correctAnswer)
         Timber.d("user answer = %s", userAnswer)
-        return typeAnswerFilter(answer, userAnswer, correctAnswer)
+        return filterAnswer(answer, userAnswer, correctAnswer)
     }
 
     /**
@@ -165,7 +174,7 @@ class TypeAnswer(
      * @param correctAnswer The correct answer, taken from the note.
      * @return The formatted answer text
      */
-    fun typeAnswerFilter(answer: String, userAnswer: String, correctAnswer: String): String {
+    fun filterAnswer(answer: String, userAnswer: String, correctAnswer: String): String {
         val m: Matcher = PATTERN.matcher(answer)
         val diffEngine = DiffEngine()
         val sb = StringBuilder()
