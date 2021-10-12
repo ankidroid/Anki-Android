@@ -17,6 +17,7 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
+import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -82,6 +83,19 @@ class TypeAnswer(
                 doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
             )
+        }
+
+        /**
+         * Clean up the typed answer text, so it can be used for the comparison with the correct answer
+         *
+         * @param answer The answer text typed by the user.
+         * @return The typed answer text, cleaned up.
+         */
+        @JvmStatic
+        fun cleanTypedAnswer(answer: String?): String? {
+            return if (answer == null || "" == answer) {
+                ""
+            } else Utils.nfcNormalized(answer.trim())
         }
     }
 }

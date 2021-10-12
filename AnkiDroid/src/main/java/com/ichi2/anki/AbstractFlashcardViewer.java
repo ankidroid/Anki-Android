@@ -131,7 +131,6 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.Computation;
-import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
@@ -2111,20 +2110,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /**
-     * Clean up the typed answer text, so it can be used for the comparison with the correct answer
-     *
-     * @param answer The answer text typed by the user.
-     * @return The typed answer text, cleaned up.
-     */
-    protected String cleanTypedAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
-        }
-        return Utils.nfcNormalized(answer.trim());
-    }
-
-
     protected void displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons();
@@ -2155,9 +2140,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Clean up the user answer and the correct answer
         String userAnswer;
         if (mTypeAnswer.useInputTag()) {
-            userAnswer = cleanTypedAnswer(mTypeInput);
+            userAnswer = TypeAnswer.cleanTypedAnswer(mTypeInput);
         } else {
-            userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+            userAnswer = TypeAnswer.cleanTypedAnswer(mAnswerField.getText().toString());
         }
         String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
         Timber.d("correct answer = %s", correctAnswer);
