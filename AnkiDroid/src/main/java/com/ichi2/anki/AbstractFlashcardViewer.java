@@ -93,6 +93,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.TypeAnswer;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
@@ -193,9 +194,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
-
-    // Type answer patterns
-    private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)]]");
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -749,7 +747,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTypeCorrect = null;
         mTypeInput = "";
         String q = mCurrentCard.q(false);
-        Matcher m = sTypeAnsPat.matcher(q);
+        Matcher m = TypeAnswer.PATTERN.matcher(q);
         int clozeIdx = 0;
         if (!m.find()) {
             return;
@@ -798,7 +796,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The formatted question text
      */
     private String typeAnsQuestionFilter(String buf) {
-        Matcher m = sTypeAnsPat.matcher(buf);
+        Matcher m = TypeAnswer.PATTERN.matcher(buf);
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
@@ -836,7 +834,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     @VisibleForTesting
     String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
-        Matcher m = sTypeAnsPat.matcher(buf);
+        Matcher m = TypeAnswer.PATTERN.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
         sb.append(mDoNotUseCodeFormatting ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
