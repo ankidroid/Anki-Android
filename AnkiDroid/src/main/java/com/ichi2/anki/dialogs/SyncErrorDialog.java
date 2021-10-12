@@ -41,6 +41,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE = 8;
     public static final int DIALOG_MEDIA_SYNC_ERROR = 9;
     public static final int DIALOG_SYNC_CORRUPT_COLLECTION = 10;
+    public static final int DIALOG_SYNC_BASIC_CHECK_ERROR = 11;
 
     public interface SyncErrorDialogListener {
         void showSyncErrorDialog(int dialogType);
@@ -51,6 +52,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         Collection getCol();
         void mediaCheck();
         void dismissAllDialogFragments();
+        void integrityCheck();
     }
 
 
@@ -185,6 +187,15 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         .cancelable(false)
                         .show();
 
+            }
+            case DIALOG_SYNC_BASIC_CHECK_ERROR: {
+                return builder.positiveText(R.string.check_db)
+                        .negativeText(R.string.dialog_cancel)
+                        .onPositive((dialog, which) -> {
+                            ((SyncErrorDialogListener) getActivity()).integrityCheck();
+                            dismissAllDialogFragments();
+                        })
+                        .show();
             }
             default:
                 return null;
