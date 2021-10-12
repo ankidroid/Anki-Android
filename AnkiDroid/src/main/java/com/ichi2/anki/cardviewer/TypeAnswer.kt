@@ -112,6 +112,43 @@ class TypeAnswer(
         }
     }
 
+    /**
+     * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
+     * warning is displayed
+     *
+     * @param buf The question text
+     * @return The formatted question text
+     */
+    fun filterQuestion(buf: String): String? {
+        val m = PATTERN.matcher(buf)
+        if (warning != null) {
+            return m.replaceFirst(warning!!)
+        }
+        val sb = java.lang.StringBuilder()
+        if (useInputTag) {
+            // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
+            // shouldOverrideUrlLoading() in createWebView() in this file.
+            sb.append(
+                """<center>
+<input type="text" name="typed" id="typeans" onfocus="taFocus();" onblur="taBlur(this);" onKeyPress="return taKey(this, event)" autocomplete="off" """
+            )
+            // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
+            // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
+            if (!TextUtils.isEmpty(font) && size > 0) {
+                sb.append("style=\"font-family: '").append(font).append("'; font-size: ")
+                    .append(size).append("px;\" ")
+            }
+            sb.append(">\n</center>\n")
+        } else {
+            sb.append("<span id=\"typeans\" class=\"typePrompt")
+            if (useInputTag) {
+                sb.append(" typeOff")
+            }
+            sb.append("\">........</span>")
+        }
+        return m.replaceAll(sb.toString())
+    }
+
     fun typeAnswerFilter(answer: String): String {
         val userAnswer = cleanTypedAnswer(input)
         val correctAnswer = cleanCorrectAnswer(correct)
