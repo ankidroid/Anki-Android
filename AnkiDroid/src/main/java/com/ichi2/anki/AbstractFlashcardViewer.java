@@ -93,6 +93,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.TypeAnswer;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
@@ -105,7 +106,6 @@ import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -130,12 +130,10 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.Computation;
-import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.MaxExecFunction;
@@ -153,7 +151,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -193,9 +190,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Time to wait in milliseconds before resuming fullscreen mode **/
     protected static final int INITIAL_HIDE_DELAY = 200;
-
-    // Type answer patterns
-    private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)]]");
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -259,8 +253,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mOptWaitAnswerSecond;
     protected int mOptWaitQuestionSecond;
 
-    protected boolean mUseInputTag;
-    private boolean mDoNotUseCodeFormatting;
+    protected TypeAnswer mTypeAnswer;
 
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
@@ -268,14 +261,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
-
-    // Answer card & cloze deletion variables
-    private String mTypeCorrect = null;
-    // The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
-    private String mTypeInput = "";  // What the learner actually typed
-    private String mTypeFont = "";  // Font face of the compare to field
-    private int mTypeSize = 0;  // Its font size
-    private String mTypeWarning;
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
@@ -381,9 +366,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
-
-    /** Preference: Whether the user wants to focus "type in answer" */
-    private boolean mFocusTypeAnswer;
 
     /** Preference: Whether the user wants press back twice to return to the main screen" */
     private boolean mExitViaDoubleTapBack;
@@ -609,7 +591,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mWhiteboard.clear();
             }
 
-            updateTypeAnswerInfo();
+            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
@@ -662,7 +644,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
-                updateTypeAnswerInfo();
+                mTypeAnswer.updateInfo(mCurrentCard, getResources());
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion();
@@ -741,172 +723,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-
-    /**
-     * Extract type answer/cloze text and font/size
-     */
-    private void updateTypeAnswerInfo() {
-        mTypeCorrect = null;
-        mTypeInput = "";
-        String q = mCurrentCard.q(false);
-        Matcher m = sTypeAnsPat.matcher(q);
-        int clozeIdx = 0;
-        if (!m.find()) {
-            return;
-        }
-        String fldTag = m.group(1);
-        // if it's a cloze, extract data
-        if (fldTag.startsWith("cloze:")) {
-            // get field and cloze position
-            clozeIdx = mCurrentCard.getOrd() + 1;
-            fldTag = fldTag.split(":")[1];
-        }
-        // loop through fields for a match
-        JSONArray flds = mCurrentCard.model().getJSONArray("flds");
-        for (JSONObject fld: flds.jsonObjectIterable()) {
-            String name = fld.getString("name");
-            if (name.equals(fldTag)) {
-                mTypeCorrect = mCurrentCard.note().getItem(name);
-                if (clozeIdx != 0) {
-                    // narrow to cloze
-                    mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
-                }
-                mTypeFont = fld.getString("font");
-                mTypeSize = fld.getInt("size");
-                break;
-            }
-        }
-        if (mTypeCorrect == null) {
-            if (clozeIdx != 0) {
-                mTypeWarning = getResources().getString(R.string.empty_card_warning);
-            } else {
-                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fldTag);
-            }
-        } else if ("".equals(mTypeCorrect)) {
-            mTypeCorrect = null;
-        } else {
-            mTypeWarning = null;
-        }
-    }
-
-
-    /**
-     * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
-     * warning is displayed
-     *
-     * @param buf The question text
-     * @return The formatted question text
-     */
-    private String typeAnsQuestionFilter(String buf) {
-        Matcher m = sTypeAnsPat.matcher(buf);
-        if (mTypeWarning != null) {
-            return m.replaceFirst(mTypeWarning);
-        }
-        StringBuilder sb = new StringBuilder();
-        if (mUseInputTag) {
-            // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
-            // shouldOverrideUrlLoading() in createWebView() in this file.
-            sb.append("<center>\n<input type=\"text\" name=\"typed\" id=\"typeans\" onfocus=\"taFocus();\" " +
-                    "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
-            // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
-            // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
-            if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
-                sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
-                        .append(mTypeSize).append("px;\" ");
-            }
-            sb.append(">\n</center>\n");
-        } else {
-            sb.append("<span id=\"typeans\" class=\"typePrompt");
-            if (mUseInputTag) {
-                sb.append(" typeOff");
-            }
-            sb.append("\">........</span>");
-        }
-        return m.replaceAll(sb.toString());
-    }
-
-
-    /**
-     * Fill the placeholder for the type comparison. Show the correct answer, and the comparison if appropriate.
-     *
-     * @param buf The answer text
-     * @param userAnswer Text typed by the user, or empty.
-     * @param correctAnswer The correct answer, taken from the note.
-     * @return The formatted answer text
-     */
-    @VisibleForTesting
-    String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
-        Matcher m = sTypeAnsPat.matcher(buf);
-        DiffEngine diffEngine = new DiffEngine();
-        StringBuilder sb = new StringBuilder();
-        sb.append(mDoNotUseCodeFormatting ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
-
-
-        // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
-
-        if (!TextUtils.isEmpty(userAnswer)) {
-            // The user did type something.
-            if (userAnswer.equals(correctAnswer)) {
-                // and it was right.
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)));
-                sb.append("<span id=\"typecheckmark\">\u2714</span>"); // Heavy check mark
-            } else {
-                // Answer not correct.
-                // Only use the complex diff code when needed, that is when we have some typed text that is not
-                // exactly the same as the correct text.
-                String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
-                // We know we get back two strings.
-                sb.append(Matcher.quoteReplacement(diffedStrings[0]));
-                sb.append("<br><span id=\"typearrow\">&darr;</span><br>");
-                sb.append(Matcher.quoteReplacement(diffedStrings[1]));
-            }
-        } else {
-            if (!mUseInputTag) {
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)));
-            } else {
-                sb.append(Matcher.quoteReplacement(correctAnswer));
-            }
-        }
-        sb.append(mDoNotUseCodeFormatting ? "</span></div>" : "</code></div>");
-        return m.replaceAll(sb.toString());
-    }
-
-    /**
-     * Return the correct answer to use for {{type::cloze::NN}} fields.
-     *
-     * @param txt The field text with the clozes
-     * @param idx The index of the cloze to use
-     * @return If the cloze strings are the same, return a single cloze string, otherwise, return
-     *         a string with a comma-separeted list of strings with the correct index.
-     */
-    @VisibleForTesting
-    protected String contentForCloze(String txt, int idx) {
-        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
-        Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
-        Matcher m = re.matcher(txt);
-        List<String> matches = new ArrayList<>();
-
-        String groupOne;
-        int colonColonIndex = -1;
-        while (m.find()) {
-            groupOne = m.group(1);
-            colonColonIndex = groupOne.indexOf("::");
-            if (colonColonIndex > -1) {
-                // Cut out the hint.
-                groupOne = groupOne.substring(0, colonColonIndex);
-            }
-            matches.add(groupOne);
-        }
-
-        Set<String> uniqMatches = new HashSet<>(matches); // Allow to check whether there are distinct strings
-
-        // Make it consistent with the Desktop version (see issue #8229)
-        if (uniqMatches.size() == 1) {
-            return matches.get(0);
-        } else {
-            return TextUtils.join(", ", matches);
-        }
-    }
 
     @SuppressWarnings("deprecation") //  #7111: new Handler()
     private final Handler mTimerHandler = new Handler();
@@ -1681,7 +1497,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.getSettings().setAllowFileAccess(true);
 
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
-        webView.setFocusableInTouchMode(mUseInputTag);
+        webView.setFocusableInTouchMode(mTypeAnswer.useInputTag());
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
@@ -1850,7 +1666,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer() && mFocusTypeAnswer) {
+        if (mTypeAnswer.autoFocusEditText()) {
             mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
@@ -1871,7 +1687,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility(mTypeAnswer.validForEditText() ? View.VISIBLE : View.GONE);
         mAnswerField.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 displayCardAnswer();
@@ -1893,8 +1709,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        mUseInputTag = preferences.getBoolean("useInputTag", false);
-        mDoNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false);
+        mTypeAnswer = TypeAnswer.createInstance(preferences);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -1907,7 +1722,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
-        mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
         mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
         mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false);
@@ -1982,7 +1796,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         updateActionBar();
 
         // Clean answer field
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setText("");
         }
 
@@ -2097,7 +1911,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         } else {
             String question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
-            question = typeAnsQuestionFilter(question);
+            question = mTypeAnswer.filterQuestion(question);
 
             Timber.v("question: '%s'", question);
 
@@ -2113,7 +1927,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         setInterface();
 
         String displayString = displayString(reload);
-        if (!mCurrentCard.isEmpty() && typeAnswer()) {
+        if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
         } else {
@@ -2153,32 +1967,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
 
-
-    /**
-     * Clean up the correct answer text, so it can be used for the comparison with the typed text
-     *
-     * @param answer The content of the field the text typed by the user is compared to.
-     * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
-     */
-    protected String cleanCorrectAnswer(String answer) {
-        return TypedAnswer.cleanCorrectAnswer(answer);
-    }
-
-
-    /**
-     * Clean up the typed answer text, so it can be used for the comparison with the correct answer
-     *
-     * @param answer The answer text typed by the user.
-     * @return The typed answer text, cleaned up.
-     */
-    protected String cleanTypedAnswer(String answer) {
-        if (answer == null || "".equals(answer)) {
-            return "";
-        }
-        return Utils.nfcNormalized(answer.trim());
-    }
-
-
     protected void displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons();
@@ -2193,7 +1981,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         }
@@ -2207,17 +1995,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
-        String userAnswer;
-        if (mUseInputTag) {
-            userAnswer = cleanTypedAnswer(mTypeInput);
-        } else {
-            userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        if (!mTypeAnswer.useInputTag()) {
+            mTypeAnswer.setInput(mAnswerField.getText().toString());
         }
-        String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
-        Timber.d("correct answer = %s", correctAnswer);
-        Timber.d("user answer = %s", userAnswer);
-
-        answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+        answer = mTypeAnswer.filterAnswer(answer);
 
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
@@ -2523,15 +2304,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /**
-     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a
-     *         field to query
-     */
-    private boolean typeAnswer() {
-        return !mUseInputTag && null != mTypeCorrect;
-    }
-
-
     private void unblockControls() {
         mControlBlocked = ControlBlock.UNBLOCKED;
         mCardFrame.setEnabled(true);
@@ -2578,7 +2350,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mWhiteboard.setEnabled(true);
         }
 
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(true);
         }
         mTouchLayer.setVisibility(View.VISIBLE);
@@ -2643,7 +2415,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mWhiteboard.setEnabled(false);
         }
 
-        if (typeAnswer()) {
+        if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(false);
         }
         invalidateOptionsMenu();
@@ -3547,14 +3319,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             if (url.startsWith("typeblurtext:")) {
                 // Store the text the javascript has send us…
-                mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
+                mTypeAnswer.setInput(decodeUrl(url.replaceFirst("typeblurtext:", "")));
                 // … and show the “SHOW ANSWER” button again.
                 mFlipCardLayout.setVisibility(View.VISIBLE);
                 return true;
             }
             if (url.startsWith("typeentertext:")) {
                 // Store the text the javascript has send us…
-                mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
+                mTypeAnswer.setInput(decodeUrl(url.replaceFirst("typeentertext:", "")));
                 // … and show the answer.
                 mFlipCardLayout.performClick();
                 return true;
@@ -3797,7 +3569,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     protected String getTypedInputText() {
-        return mTypeInput;
+        return mTypeAnswer.getInput();
     }
 
     @SuppressLint("WebViewApiAvailability")
@@ -3906,7 +3678,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     String getCorrectTypedAnswer() {
-        return mTypeCorrect;
+        return mTypeAnswer.getCorrect();
     }
 
     @VisibleForTesting

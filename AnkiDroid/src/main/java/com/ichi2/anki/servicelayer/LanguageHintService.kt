@@ -14,13 +14,26 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils
+package com.ichi2.anki.servicelayer
 
-/** Use when code can be changed after further conversion to Kotlin */
-@Target(
-    AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION
-)
-@Retention(AnnotationRetention.SOURCE)
-@MustBeDocumented
-annotation class KotlinCleanup(val value: String)
+import android.widget.EditText
+import androidx.annotation.CheckResult
+import com.ichi2.utils.JSONObject
+import java.util.*
+
+/**
+ * The language that a keyboard should open with when an [EditText] is selected
+ * Used for a workflow improvement when adding a note
+ */
+typealias LanguageHint = Locale
+
+object LanguageHintService {
+    @JvmStatic
+    @CheckResult
+    fun getLanguageHintForField(field: JSONObject): LanguageHint? {
+        if (!field.has("ad-hint-locale")) {
+            return null
+        }
+        return Locale.forLanguageTag(field.getString("ad-hint-locale"))
+    }
+}

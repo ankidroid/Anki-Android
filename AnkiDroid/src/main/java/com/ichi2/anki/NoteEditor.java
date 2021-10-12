@@ -53,12 +53,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -89,6 +87,7 @@ import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
 import com.ichi2.anki.noteeditor.CustomToolbarButton;
 import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.ui.NoteTypeSpinnerUtils;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
@@ -98,6 +97,7 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -112,7 +112,6 @@ import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
-import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
 import com.ichi2.widget.WidgetStatus;
@@ -122,7 +121,6 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -1677,18 +1675,13 @@ public class NoteEditor extends AnkiActivity implements
         editText.setEnabled(enabled);
     }
 
-
+    @Nullable
     private Locale getHintLocaleForField(String name) {
         JSONObject field = getFieldByName(name);
         if (field == null) {
             return null;
         }
-        String languageTag = field.optString("ad-hint-locale", null);
-        if (languageTag == null) {
-            return null;
-        }
-
-        return Locale.forLanguageTag(languageTag);
+        return LanguageHintService.getLanguageHintForField(field);
     }
 
     @NonNull
@@ -2081,7 +2074,7 @@ public class NoteEditor extends AnkiActivity implements
                 getCol().getDecks().save(currentDeck);
                 // Update deck
                 if (!getCol().get_config("addToCur", true)) {
-                    mCurrentDid = model.getLong("did");
+                    mCurrentDid = model.optLong("did", Consts.DEFAULT_DECK_ID);
                 }
 
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
@@ -2308,6 +2301,15 @@ public class NoteEditor extends AnkiActivity implements
         return mEditFields.get(index);
     }
 
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void setCurrentlySelectedModel(long mid) {
+        int position = mAllModelIds.indexOf(mid);
+        if (position == -1) {
+            throw new IllegalStateException(mid + " not found");
+        }
+        mNoteTypeSpinner.setSelection(position);
+    }
 
     private class EditFieldTextWatcher implements TextWatcher {
         private final int mIndex;
