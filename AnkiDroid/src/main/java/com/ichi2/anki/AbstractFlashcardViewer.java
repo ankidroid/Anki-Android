@@ -2011,7 +2011,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mTypeAnswer.useInputTag()) {
             mTypeAnswer.setInput(mAnswerField.getText().toString());
         }
-        answer = mTypeAnswer.typeAnswerFilter(answer);
+        answer = mTypeAnswer.filterAnswer(answer);
 
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
