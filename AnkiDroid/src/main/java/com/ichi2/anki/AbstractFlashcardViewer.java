@@ -106,7 +106,6 @@ import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -1967,18 +1966,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
-
-
-    /**
-     * Clean up the correct answer text, so it can be used for the comparison with the typed text
-     *
-     * @param answer The content of the field the text typed by the user is compared to.
-     * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
-     */
-    protected String cleanCorrectAnswer(String answer) {
-        return TypedAnswer.cleanCorrectAnswer(answer);
-    }
-
 
     protected void displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
