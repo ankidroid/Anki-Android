@@ -23,6 +23,8 @@ import com.ichi2.utils.KotlinCleanup;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 @KotlinCleanup("combine with TypeAnswer")
 public class TypedAnswer {
 
@@ -36,6 +38,7 @@ public class TypedAnswer {
      * @param answer The content of the field the text typed by the user is compared to.
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
+    @NonNull
     public static String cleanCorrectAnswer(String answer) {
         if (answer == null || "".equals(answer)) {
             return "";

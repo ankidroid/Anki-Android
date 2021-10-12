@@ -21,10 +21,12 @@ import android.content.res.Resources
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.TypedAnswer.cleanCorrectAnswer
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.JSONArray
+import timber.log.Timber
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -110,6 +112,14 @@ class TypeAnswer(
         }
     }
 
+    fun typeAnswerFilter(answer: String): String {
+        val userAnswer = cleanTypedAnswer(input)
+        val correctAnswer = cleanCorrectAnswer(correct)
+        Timber.d("correct answer = %s", correctAnswer)
+        Timber.d("user answer = %s", userAnswer)
+        return typeAnswerFilter(answer, userAnswer, correctAnswer)
+    }
+
     /**
      * Fill the placeholder for the type comparison. Show the correct answer, and the comparison if appropriate.
      *
@@ -173,7 +183,7 @@ class TypeAnswer(
          * @return The typed answer text, cleaned up.
          */
         @JvmStatic
-        fun cleanTypedAnswer(answer: String?): String? {
+        fun cleanTypedAnswer(answer: String?): String {
             return if (answer == null || "" == answer) {
                 ""
             } else Utils.nfcNormalized(answer.trim())
