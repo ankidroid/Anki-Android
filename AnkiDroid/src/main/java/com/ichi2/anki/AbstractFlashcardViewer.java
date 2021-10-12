@@ -257,8 +257,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mOptWaitAnswerSecond;
     protected int mOptWaitQuestionSecond;
 
-    protected boolean mUseInputTag;
-    private boolean mDoNotUseCodeFormatting;
+    protected TypeAnswer mTypeAnswer;
 
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
@@ -379,9 +378,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
-
-    /** Preference: Whether the user wants to focus "type in answer" */
-    private boolean mFocusTypeAnswer;
 
     /** Preference: Whether the user wants press back twice to return to the main screen" */
     private boolean mExitViaDoubleTapBack;
@@ -801,7 +797,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return m.replaceFirst(mTypeWarning);
         }
         StringBuilder sb = new StringBuilder();
-        if (mUseInputTag) {
+        if (mTypeAnswer.useInputTag()) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
             sb.append("<center>\n<input type=\"text\" name=\"typed\" id=\"typeans\" onfocus=\"taFocus();\" " +
@@ -815,7 +811,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             sb.append(">\n</center>\n");
         } else {
             sb.append("<span id=\"typeans\" class=\"typePrompt");
-            if (mUseInputTag) {
+            if (mTypeAnswer.useInputTag()) {
                 sb.append(" typeOff");
             }
             sb.append("\">........</span>");
@@ -837,7 +833,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Matcher m = TypeAnswer.PATTERN.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        sb.append(mDoNotUseCodeFormatting ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
+        sb.append(mTypeAnswer.doNotUseCodeFormatting() ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
 
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
@@ -859,13 +855,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sb.append(Matcher.quoteReplacement(diffedStrings[1]));
             }
         } else {
-            if (!mUseInputTag) {
+            if (!mTypeAnswer.useInputTag()) {
                 sb.append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)));
             } else {
                 sb.append(Matcher.quoteReplacement(correctAnswer));
             }
         }
-        sb.append(mDoNotUseCodeFormatting ? "</span></div>" : "</code></div>");
+        sb.append(mTypeAnswer.doNotUseCodeFormatting() ? "</span></div>" : "</code></div>");
         return m.replaceAll(sb.toString());
     }
 
@@ -1679,7 +1675,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.getSettings().setAllowFileAccess(true);
 
         // Problems with focus and input tags is the reason we keep the old type answer mechanism for old Androids.
-        webView.setFocusableInTouchMode(mUseInputTag);
+        webView.setFocusableInTouchMode(mTypeAnswer.useInputTag());
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
@@ -1848,7 +1844,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer() && mFocusTypeAnswer) {
+        if (typeAnswer() && mTypeAnswer.getAutoFocus()) {
             mAnswerField.focusWithKeyboard();
         } else {
             mFlipCardLayout.requestFocus();
@@ -1891,8 +1887,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        mUseInputTag = preferences.getBoolean("useInputTag", false);
-        mDoNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false);
+        mTypeAnswer = TypeAnswer.createInstance(preferences);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
@@ -1905,7 +1900,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
-        mFocusTypeAnswer = preferences.getBoolean("autoFocusTypeInAnswer", false);
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false);
         mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
         mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false);
@@ -2206,7 +2200,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
         String userAnswer;
-        if (mUseInputTag) {
+        if (mTypeAnswer.useInputTag()) {
             userAnswer = cleanTypedAnswer(mTypeInput);
         } else {
             userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
@@ -2526,7 +2520,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *         field to query
      */
     private boolean typeAnswer() {
-        return !mUseInputTag && null != mTypeCorrect;
+        return !mTypeAnswer.useInputTag() && null != mTypeCorrect;
     }
 
 

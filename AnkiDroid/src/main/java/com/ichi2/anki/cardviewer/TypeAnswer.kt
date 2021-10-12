@@ -16,13 +16,28 @@
 
 package com.ichi2.anki.cardviewer
 
+import android.content.SharedPreferences
 import java.util.regex.Pattern
 
-class TypeAnswer {
+class TypeAnswer(
+    @get:JvmName("useInputTag") val useInputTag: Boolean,
+    @get:JvmName("doNotUseCodeFormatting") val doNotUseCodeFormatting: Boolean,
+    /** Preference: Whether the user wants to focus "type in answer" */
+    val autoFocus: Boolean
+) {
 
     companion object {
         @JvmField
         /** Regular expression in card data for a 'type answer' after processing has occurred */
         val PATTERN: Pattern = Pattern.compile("\\[\\[type:(.+?)]]")
+
+        @JvmStatic
+        fun createInstance(preferences: SharedPreferences): TypeAnswer {
+            return TypeAnswer(
+                useInputTag = preferences.getBoolean("useInputTag", false),
+                doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
+                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
+            )
+        }
     }
 }
