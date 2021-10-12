@@ -725,41 +725,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /**
-     * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
-     * warning is displayed
-     *
-     * @param buf The question text
-     * @return The formatted question text
-     */
-    private String typeAnsQuestionFilter(String buf) {
-        Matcher m = TypeAnswer.PATTERN.matcher(buf);
-        if (mTypeAnswer.getWarning() != null) {
-            return m.replaceFirst(mTypeAnswer.getWarning());
-        }
-        StringBuilder sb = new StringBuilder();
-        if (mTypeAnswer.useInputTag()) {
-            // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
-            // shouldOverrideUrlLoading() in createWebView() in this file.
-            sb.append("<center>\n<input type=\"text\" name=\"typed\" id=\"typeans\" onfocus=\"taFocus();\" " +
-                    "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
-            // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
-            // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
-            if (!TextUtils.isEmpty(mTypeAnswer.getFont()) && mTypeAnswer.getSize() > 0) {
-                sb.append("style=\"font-family: '").append(mTypeAnswer.getFont()).append("'; font-size: ")
-                        .append(mTypeAnswer.getSize()).append("px;\" ");
-            }
-            sb.append(">\n</center>\n");
-        } else {
-            sb.append("<span id=\"typeans\" class=\"typePrompt");
-            if (mTypeAnswer.useInputTag()) {
-                sb.append(" typeOff");
-            }
-            sb.append("\">........</span>");
-        }
-        return m.replaceAll(sb.toString());
-    }
-
     @SuppressWarnings("deprecation") //  #7111: new Handler()
     private final Handler mTimerHandler = new Handler();
 
@@ -1947,7 +1912,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         } else {
             String question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
-            question = typeAnsQuestionFilter(question);
+            question = mTypeAnswer.filterQuestion(question);
 
             Timber.v("question: '%s'", question);
 
