@@ -2043,17 +2043,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
-        String userAnswer;
-        if (mTypeAnswer.useInputTag()) {
-            userAnswer = TypeAnswer.cleanTypedAnswer(mTypeAnswer.getInput());
-        } else {
-            userAnswer = TypeAnswer.cleanTypedAnswer(mAnswerField.getText().toString());
+        if (!mTypeAnswer.useInputTag()) {
+            mTypeAnswer.setInput(mAnswerField.getText().toString());
         }
-        String correctAnswer = cleanCorrectAnswer(mTypeAnswer.getCorrect());
-        Timber.d("correct answer = %s", correctAnswer);
-        Timber.d("user answer = %s", userAnswer);
-
-        answer =  mTypeAnswer.typeAnswerFilter(answer, userAnswer, correctAnswer);
+        answer = mTypeAnswer.typeAnswerFilter(answer);
 
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
