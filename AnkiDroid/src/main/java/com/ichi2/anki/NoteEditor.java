@@ -87,6 +87,7 @@ import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
 import com.ichi2.anki.noteeditor.CustomToolbarButton;
 import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.ui.NoteTypeSpinnerUtils;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
@@ -1674,18 +1675,13 @@ public class NoteEditor extends AnkiActivity implements
         editText.setEnabled(enabled);
     }
 
-
+    @Nullable
     private Locale getHintLocaleForField(String name) {
         JSONObject field = getFieldByName(name);
         if (field == null) {
             return null;
         }
-        String languageTag = field.optString("ad-hint-locale", null);
-        if (languageTag == null) {
-            return null;
-        }
-
-        return Locale.forLanguageTag(languageTag);
+        return LanguageHintService.getLanguageHintForField(field);
     }
 
     @NonNull
