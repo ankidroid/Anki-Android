@@ -4,8 +4,11 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.LocaleList;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.anki.servicelayer.LanguageHintService;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 
@@ -13,6 +16,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -26,11 +31,14 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SH
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
+import static com.ichi2.libanki.StdModels.BASIC_TYPING_MODEL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -67,6 +75,14 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
         public String getTypedInput() {
             return super.getTypedInputText();
+        }
+
+        public String getHintLocale() {
+            LocaleList imeHintLocales = this.mAnswerField.getImeHintLocales();
+            if (imeHintLocales == null) {
+                return null;
+            }
+            return imeHintLocales.toLanguageTags();
         }
     }
 
@@ -205,10 +221,49 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat(viewer.mAnswered, notNullValue());
     }
 
+    @Test
+    public void defaultLanguageIsNull() {
+        NonAbstractFlashcardViewer viewer = getViewer();
+        assertThat(viewer.getHintLocale(), nullValue());
+    }
+
+    @Test
+    public void typedLanguageIsSet() {
+        Model withLanguage = BASIC_TYPING_MODEL.add(getCol(), "a");
+        Model normal = BASIC_TYPING_MODEL.add(getCol(), "b");
+        int typedField = 1; // BACK
+
+        LanguageHintService.setLanguageHintForField(getCol().getModels(), withLanguage, typedField, new Locale("ja"));
+
+        addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni");
+        addNoteUsingModelName(normal.getString("name"), "one", "two");
+
+        NonAbstractFlashcardViewer viewer = getViewer(false);
+
+        assertThat("A model with a language hint (japanese) should use it", viewer.getHintLocale(), equalTo("ja"));
+
+        showNextCard(viewer);
+
+        assertThat("A default model should have no preference", viewer.getHintLocale(), nullValue());
+    }
+
+
+    private void showNextCard(NonAbstractFlashcardViewer viewer) {
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+    }
+
+
     private NonAbstractFlashcardViewer getViewer() {
-        @NonNull Note n = getCol().newNote();
-        n.setField(0, "a");
-        getCol().addNote(n);
+        return getViewer(true);
+    }
+
+    private NonAbstractFlashcardViewer getViewer(boolean addCard) {
+        if (addCard) {
+            @NonNull Note n = getCol().newNote();
+            n.setField(0, "a");
+            getCol().addNote(n);
+        }
 
         ActivityController<NonAbstractFlashcardViewer> multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
                 .create().start().resume().visible();

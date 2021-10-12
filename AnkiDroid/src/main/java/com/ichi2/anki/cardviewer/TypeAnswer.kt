@@ -21,6 +21,8 @@ import android.content.res.Resources
 import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
+import com.ichi2.anki.servicelayer.LanguageHint
+import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
@@ -49,6 +51,9 @@ class TypeAnswer(
         private set
     /** The font size of the 'compare to' field */
     var size = 0
+        private set
+
+    var languageHint: LanguageHint? = null
         private set
 
     /**
@@ -104,6 +109,7 @@ class TypeAnswer(
                 }
                 font = fld.getString("font")
                 size = fld.getInt("size")
+                languageHint = LanguageHintService.getLanguageHintForField(fld)
                 break
             }
         }
