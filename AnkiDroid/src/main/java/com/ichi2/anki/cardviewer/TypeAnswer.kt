@@ -68,6 +68,10 @@ class TypeAnswer(
         return !useInputTag && correct != null
     }
 
+    fun autoFocusEditText(): Boolean {
+        return validForEditText() && autoFocus
+    }
+
     /**
      * Extract type answer/cloze text and font/size
      * @param card The next card to display
