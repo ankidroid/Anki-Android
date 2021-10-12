@@ -819,52 +819,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return m.replaceAll(sb.toString());
     }
 
-
-    /**
-     * Fill the placeholder for the type comparison. Show the correct answer, and the comparison if appropriate.
-     *
-     * @param buf The answer text
-     * @param userAnswer Text typed by the user, or empty.
-     * @param correctAnswer The correct answer, taken from the note.
-     * @return The formatted answer text
-     */
-    @VisibleForTesting
-    String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
-        Matcher m = TypeAnswer.PATTERN.matcher(buf);
-        DiffEngine diffEngine = new DiffEngine();
-        StringBuilder sb = new StringBuilder();
-        sb.append(mTypeAnswer.doNotUseCodeFormatting() ? "<div><span id=\"typeans\">" : "<div><code id=\"typeans\">");
-
-
-        // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
-
-        if (!TextUtils.isEmpty(userAnswer)) {
-            // The user did type something.
-            if (userAnswer.equals(correctAnswer)) {
-                // and it was right.
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)));
-                sb.append("<span id=\"typecheckmark\">\u2714</span>"); // Heavy check mark
-            } else {
-                // Answer not correct.
-                // Only use the complex diff code when needed, that is when we have some typed text that is not
-                // exactly the same as the correct text.
-                String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
-                // We know we get back two strings.
-                sb.append(Matcher.quoteReplacement(diffedStrings[0]));
-                sb.append("<br><span id=\"typearrow\">&darr;</span><br>");
-                sb.append(Matcher.quoteReplacement(diffedStrings[1]));
-            }
-        } else {
-            if (!mTypeAnswer.useInputTag()) {
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)));
-            } else {
-                sb.append(Matcher.quoteReplacement(correctAnswer));
-            }
-        }
-        sb.append(mTypeAnswer.doNotUseCodeFormatting() ? "</span></div>" : "</code></div>");
-        return m.replaceAll(sb.toString());
-    }
-
     /**
      * Return the correct answer to use for {{type::cloze::NN}} fields.
      *
@@ -2209,7 +2163,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
 
-        answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+        answer =  mTypeAnswer.typeAnswerFilter(answer, userAnswer, correctAnswer);
 
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
