@@ -23,4 +23,4 @@ package com.ichi2.utils
 )
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class KotlinCleanup(val message: String)
+annotation class KotlinCleanup(val value: String)
