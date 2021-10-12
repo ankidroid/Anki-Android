@@ -18,10 +18,12 @@ package com.ichi2.anki.cardviewer;
 
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.KotlinCleanup;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@KotlinCleanup("combine with TypeAnswer")
 public class TypedAnswer {
 
     /** Regex pattern used in removing tags from text before diff */
