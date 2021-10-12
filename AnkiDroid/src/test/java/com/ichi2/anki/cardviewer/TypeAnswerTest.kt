@@ -17,6 +17,7 @@
 package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.cardviewer.TypeAnswer.Companion.contentForCloze
 import com.ichi2.testutils.EmptyApplication
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -215,6 +216,15 @@ $!"""
 $!"""
         // Make sure $! as typed shows up as $!
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "", "$!"))
+    }
+
+    @Test
+    fun testClozeWithRepeatedWords() {
+        // 8229
+        val cloze1 = "This is {{c1::test}} which is containing {{c1::test}} word twice"
+        assertEquals("test", contentForCloze(cloze1, 1))
+        val cloze2 = "This is {{c1::test}} which is containing {{c1::test}} word twice {{c1::test2}}"
+        assertEquals("test, test, test2", contentForCloze(cloze2, 1))
     }
 
     private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =

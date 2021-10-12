@@ -135,7 +135,6 @@ import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.MaxExecFunction;
@@ -153,7 +152,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -264,14 +262,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
-
-    // Answer card & cloze deletion variables
-    private String mTypeCorrect = null;
-    // The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
-    private String mTypeInput = "";  // What the learner actually typed
-    private String mTypeFont = "";  // Font face of the compare to field
-    private int mTypeSize = 0;  // Its font size
-    private String mTypeWarning;
 
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
@@ -602,7 +592,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mWhiteboard.clear();
             }
 
-            updateTypeAnswerInfo();
+            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
@@ -655,7 +645,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 mNoMoreCards = false; // other handlers use this, toggle state every time through
                 // Start reviewing next card
-                updateTypeAnswerInfo();
+                mTypeAnswer.updateInfo(mCurrentCard, getResources());
                 hideProgressBar();
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion();
@@ -736,54 +726,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     /**
-     * Extract type answer/cloze text and font/size
-     */
-    private void updateTypeAnswerInfo() {
-        mTypeCorrect = null;
-        mTypeInput = "";
-        String q = mCurrentCard.q(false);
-        Matcher m = TypeAnswer.PATTERN.matcher(q);
-        int clozeIdx = 0;
-        if (!m.find()) {
-            return;
-        }
-        String fldTag = m.group(1);
-        // if it's a cloze, extract data
-        if (fldTag.startsWith("cloze:")) {
-            // get field and cloze position
-            clozeIdx = mCurrentCard.getOrd() + 1;
-            fldTag = fldTag.split(":")[1];
-        }
-        // loop through fields for a match
-        JSONArray flds = mCurrentCard.model().getJSONArray("flds");
-        for (JSONObject fld: flds.jsonObjectIterable()) {
-            String name = fld.getString("name");
-            if (name.equals(fldTag)) {
-                mTypeCorrect = mCurrentCard.note().getItem(name);
-                if (clozeIdx != 0) {
-                    // narrow to cloze
-                    mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
-                }
-                mTypeFont = fld.getString("font");
-                mTypeSize = fld.getInt("size");
-                break;
-            }
-        }
-        if (mTypeCorrect == null) {
-            if (clozeIdx != 0) {
-                mTypeWarning = getResources().getString(R.string.empty_card_warning);
-            } else {
-                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fldTag);
-            }
-        } else if ("".equals(mTypeCorrect)) {
-            mTypeCorrect = null;
-        } else {
-            mTypeWarning = null;
-        }
-    }
-
-
-    /**
      * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
      * warning is displayed
      *
@@ -792,8 +734,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     private String typeAnsQuestionFilter(String buf) {
         Matcher m = TypeAnswer.PATTERN.matcher(buf);
-        if (mTypeWarning != null) {
-            return m.replaceFirst(mTypeWarning);
+        if (mTypeAnswer.getWarning() != null) {
+            return m.replaceFirst(mTypeAnswer.getWarning());
         }
         StringBuilder sb = new StringBuilder();
         if (mTypeAnswer.useInputTag()) {
@@ -803,9 +745,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     "onblur=\"taBlur(this);\" onKeyPress=\"return taKey(this, event)\" autocomplete=\"off\" ");
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
-            if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
-                sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
-                        .append(mTypeSize).append("px;\" ");
+            if (!TextUtils.isEmpty(mTypeAnswer.getFont()) && mTypeAnswer.getSize() > 0) {
+                sb.append("style=\"font-family: '").append(mTypeAnswer.getFont()).append("'; font-size: ")
+                        .append(mTypeAnswer.getSize()).append("px;\" ");
             }
             sb.append(">\n</center>\n");
         } else {
@@ -816,43 +758,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             sb.append("\">........</span>");
         }
         return m.replaceAll(sb.toString());
-    }
-
-    /**
-     * Return the correct answer to use for {{type::cloze::NN}} fields.
-     *
-     * @param txt The field text with the clozes
-     * @param idx The index of the cloze to use
-     * @return If the cloze strings are the same, return a single cloze string, otherwise, return
-     *         a string with a comma-separeted list of strings with the correct index.
-     */
-    @VisibleForTesting
-    protected String contentForCloze(String txt, int idx) {
-        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
-        Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
-        Matcher m = re.matcher(txt);
-        List<String> matches = new ArrayList<>();
-
-        String groupOne;
-        int colonColonIndex = -1;
-        while (m.find()) {
-            groupOne = m.group(1);
-            colonColonIndex = groupOne.indexOf("::");
-            if (colonColonIndex > -1) {
-                // Cut out the hint.
-                groupOne = groupOne.substring(0, colonColonIndex);
-            }
-            matches.add(groupOne);
-        }
-
-        Set<String> uniqMatches = new HashSet<>(matches); // Allow to check whether there are distinct strings
-
-        // Make it consistent with the Desktop version (see issue #8229)
-        if (uniqMatches.size() == 1) {
-            return matches.get(0);
-        } else {
-            return TextUtils.join(", ", matches);
-        }
     }
 
     @SuppressWarnings("deprecation") //  #7111: new Handler()
@@ -2140,11 +2045,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Clean up the user answer and the correct answer
         String userAnswer;
         if (mTypeAnswer.useInputTag()) {
-            userAnswer = TypeAnswer.cleanTypedAnswer(mTypeInput);
+            userAnswer = TypeAnswer.cleanTypedAnswer(mTypeAnswer.getInput());
         } else {
             userAnswer = TypeAnswer.cleanTypedAnswer(mAnswerField.getText().toString());
         }
-        String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
+        String correctAnswer = cleanCorrectAnswer(mTypeAnswer.getCorrect());
         Timber.d("correct answer = %s", correctAnswer);
         Timber.d("user answer = %s", userAnswer);
 
@@ -2459,7 +2364,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *         field to query
      */
     private boolean typeAnswer() {
-        return !mTypeAnswer.useInputTag() && null != mTypeCorrect;
+        return !mTypeAnswer.useInputTag() && null != mTypeAnswer.getCorrect();
     }
 
 
@@ -3478,14 +3383,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             if (url.startsWith("typeblurtext:")) {
                 // Store the text the javascript has send us…
-                mTypeInput = decodeUrl(url.replaceFirst("typeblurtext:", ""));
+                mTypeAnswer.setInput(decodeUrl(url.replaceFirst("typeblurtext:", "")));
                 // … and show the “SHOW ANSWER” button again.
                 mFlipCardLayout.setVisibility(View.VISIBLE);
                 return true;
             }
             if (url.startsWith("typeentertext:")) {
                 // Store the text the javascript has send us…
-                mTypeInput = decodeUrl(url.replaceFirst("typeentertext:", ""));
+                mTypeAnswer.setInput(decodeUrl(url.replaceFirst("typeentertext:", "")));
                 // … and show the answer.
                 mFlipCardLayout.performClick();
                 return true;
@@ -3728,7 +3633,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     protected String getTypedInputText() {
-        return mTypeInput;
+        return mTypeAnswer.getInput();
     }
 
     @SuppressLint("WebViewApiAvailability")
@@ -3837,7 +3742,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     String getCorrectTypedAnswer() {
-        return mTypeCorrect;
+        return mTypeAnswer.getCorrect();
     }
 
     @VisibleForTesting

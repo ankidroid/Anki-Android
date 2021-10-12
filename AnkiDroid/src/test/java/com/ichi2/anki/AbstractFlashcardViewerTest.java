@@ -189,19 +189,6 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat(nafv.getCardContent(), containsString("David"));
     }
 
-
-    @Test
-    public void testClozeWithRepeatedWords() {
-        // 8229
-        NonAbstractFlashcardViewer nafv = getViewer();
-
-        String cloze1 = "This is {{c1::test}} which is containing {{c1::test}} word twice";
-        assertEquals("test", nafv.contentForCloze(cloze1, 1));
-
-        String cloze2 = "This is {{c1::test}} which is containing {{c1::test}} word twice {{c1::test2}}";
-        assertEquals("test, test, test2", nafv.contentForCloze(cloze2, 1));
-    }
-
     @Test
     public void testCommandPerformsAnswerCard() {
         // Regression for #8527/#8572
