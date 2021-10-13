@@ -17,6 +17,7 @@
 package com.ichi2.anki.reviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -31,9 +32,8 @@ class AutomaticAnswerTest {
 
     @Test
     fun stopAllWorks() {
-        val target: AutomaticAnswer.AutomaticallyAnswered = mock()
         val answer = AutomaticAnswer(
-            target = target,
+            target = automaticallyAnsweredMock(),
             settings = AutomaticAnswerSettings(
                 useTimer = true,
                 questionDelaySeconds = 10,
@@ -50,4 +50,26 @@ class AutomaticAnswerTest {
 
         assertThat(answer.timeoutHandler.hasMessages(0), equalTo(false))
     }
+
+    @Test
+    fun noExecutionIfTimerIsZero_issue8923() {
+        val answer = AutomaticAnswer(
+            target = automaticallyAnsweredMock(),
+            settings = AutomaticAnswerSettings(
+                useTimer = true,
+                questionDelaySeconds = 0,
+                answerDelaySeconds = 0
+            )
+        )
+
+        answer.scheduleAutomaticDisplayQuestion(10)
+
+        assertThat("no messages even if delay provided", answer.timeoutHandler.hasMessages(0), equalTo(false))
+
+        answer.scheduleAutomaticDisplayAnswer(10)
+
+        assertThat("no messages even if delay provided", answer.timeoutHandler.hasMessages(0), equalTo(false))
+    }
+
+    private fun automaticallyAnsweredMock(): AutomaticallyAnswered = mock()
 }
