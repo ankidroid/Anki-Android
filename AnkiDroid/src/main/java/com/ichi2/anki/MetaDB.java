@@ -251,16 +251,7 @@ public class MetaDB {
         openDBIfClosed(context);
         String language = "";
         String query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1";
-        String[] queryArgs = new String[] {Long.toString(did), Integer.toString(ord), Integer.toString(qa.getInt())};
-        boolean isCloze = ((Reviewer) context).getCurrentCard().model().isCloze();
-
-        // If the context is a reviewer and the card is a cloze type, ignore the ord in the query
-        if (context instanceof Reviewer && isCloze) {
-            query = "SELECT language FROM languages WHERE did = ? AND qa = ? LIMIT 1";
-            queryArgs = new String[] {Long.toString(did), Integer.toString(qa.getInt())};
-        }
-
-        try (Cursor cur = mMetaDb.rawQuery(query, queryArgs)) {
+        try (Cursor cur = mMetaDb.rawQuery(query, new String[] {Long.toString(did), Integer.toString(ord), Integer.toString(qa.getInt())})) {
             Timber.v("getLanguage: %s", query);
             if (cur.moveToNext()) {
                 language = cur.getString(0);
