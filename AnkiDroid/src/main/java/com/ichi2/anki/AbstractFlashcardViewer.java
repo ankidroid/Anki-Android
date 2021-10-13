@@ -2375,6 +2375,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean buryCard() {
+        UIUtils.showThemedToast(this, R.string.buried_card, true);
         return dismiss(new CollectionTask.BuryCard(mCurrentCard));
     }
 
