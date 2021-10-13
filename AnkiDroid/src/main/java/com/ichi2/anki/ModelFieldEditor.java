@@ -31,6 +31,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -601,11 +602,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addFieldLocaleHint(@NonNull Locale selectedLocale) {
-        String input = selectedLocale.toLanguageTag();
-        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
-        field.put("ad-hint-locale", input);
-        mCol.getModels().save();
-        Timber.i("Set field locale to %s", selectedLocale);
+        LanguageHintService.setLanguageHintForField(getCol().getModels(), mMod, mCurrentPos, selectedLocale);
         String format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.getDisplayName());
         UIUtils.showSimpleSnackbar(this, format, true);
     }

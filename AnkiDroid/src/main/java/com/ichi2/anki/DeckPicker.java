@@ -1765,7 +1765,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             break;
                         case BASIC_CHECK_FAILED:
                             dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
-                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_BASIC_CHECK_ERROR, joinSyncMessages(dialogMessage, syncMessage));
                             break;
                         case DB_ERROR:
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);

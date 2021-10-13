@@ -16,14 +16,22 @@
 
 package com.ichi2.anki.servicelayer
 
+import android.os.Build
+import android.os.LocaleList
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.ModelManager
 import com.ichi2.utils.JSONObject
+import timber.log.Timber
 import java.util.*
 
 /**
  * The language that a keyboard should open with when an [EditText] is selected
- * Used for a workflow improvement when adding a note
+ *
+ * Used so a user doesn't need to change keyboard languages when adding a note, or typing answers
+ *
+ * [2021] GBoard is the only known keyboard which supports this API
  */
 typealias LanguageHint = Locale
 
@@ -35,5 +43,20 @@ object LanguageHintService {
             return null
         }
         return Locale.forLanguageTag(field.getString("ad-hint-locale"))
+    }
+
+    @JvmStatic
+    fun setLanguageHintForField(models: ModelManager, model: Model, fieldPos: Int, selectedLocale: Locale) {
+        val field = model.getField(fieldPos)
+        field.put("ad-hint-locale", selectedLocale.toLanguageTag())
+        models.save(model)
+
+        Timber.i("Set field locale to %s", selectedLocale)
+    }
+
+    @JvmStatic
+    fun EditText.applyLanguageHint(languageHint: LanguageHint?) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        this.imeHintLocales = if (languageHint != null) LocaleList(languageHint) else null
     }
 }

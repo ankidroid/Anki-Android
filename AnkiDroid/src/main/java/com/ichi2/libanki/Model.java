@@ -76,6 +76,10 @@ public class Model extends JSONObject {
         return getJSONArray("flds").toStringList("name");
     }
 
+    public JSONObject getField(int pos) {
+        return getJSONArray("flds").getJSONObject(pos);
+    }
+
     public List<String> getTemplatesNames() {
         return getJSONArray("tmpls").toStringList("name");
     }

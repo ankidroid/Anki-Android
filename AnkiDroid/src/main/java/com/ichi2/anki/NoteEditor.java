@@ -68,7 +68,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.IntegerDialog;
-import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
@@ -2151,9 +2150,8 @@ public class NoteEditor extends AnkiActivity implements
      * button in the text selection menu.
      */
     @TargetApi(23)
-    private class ActionModeCallback implements ActionMode.Callback, LocaleSelectionDialog.LocaleSelectionDialogHandler {
+    private class ActionModeCallback implements ActionMode.Callback {
         private final FieldEditText mTextBox;
-        private final Field mField;
         private final int mClozeMenuId = View.generateViewId();
         @RequiresApi(Build.VERSION_CODES.N)
         private final int mSetLanguageId = View.generateViewId();
@@ -2161,7 +2159,6 @@ public class NoteEditor extends AnkiActivity implements
         private ActionModeCallback(FieldEditText textBox, Field field) {
             super();
             mTextBox = textBox;
-            mField = field;
         }
 
         @Override
@@ -2206,24 +2203,6 @@ public class NoteEditor extends AnkiActivity implements
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
-        }
-
-        @Override
-        @RequiresApi(Build.VERSION_CODES.N)
-        public void onSelectedLocale(@NonNull Locale selectedLocale) {
-            mField.setHintLocale(selectedLocale);
-            mTextBox.setHintLocale(selectedLocale);
-
-            dismissAllDialogFragments();
-
-            //NICE_TO_HAVE: show the new keyboard and focus the field here.
-        }
-
-
-        @Override
-        @RequiresApi(Build.VERSION_CODES.N)
-        public void onLocaleSelectionCancelled() {
-            dismissAllDialogFragments();
         }
     }
 
@@ -2349,18 +2328,6 @@ public class NoteEditor extends AnkiActivity implements
         public Field(JSONObject fieldObject, Collection collection) {
             this.mField = fieldObject;
             this.mCol = collection;
-        }
-
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        public void setHintLocale(@NonNull Locale selectedLocale) {
-            String input = selectedLocale.toLanguageTag();
-            mField.put("ad-hint-locale", input);
-            try {
-                mCol.getModels().save();
-            } catch (Exception e) {
-                Timber.w(e, "Failed to save hint locale");
-            }
         }
     }
 }
