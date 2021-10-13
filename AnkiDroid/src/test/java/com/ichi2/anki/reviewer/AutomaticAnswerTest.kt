@@ -25,30 +25,26 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class AutomaticAnswerTest {
 
     @Test
-    fun stopAllWorks() {
-        val answer = AutomaticAnswer(
-            target = automaticallyAnsweredMock(),
-            settings = AutomaticAnswerSettings(
-                useTimer = true,
-                questionDelaySeconds = 10,
-                answerDelaySeconds = 10
-            )
-        )
+    fun disableWorks() {
+        val answer = validAnswer(automaticallyAnsweredMock())
 
         answer.delayedShowQuestion(0)
         answer.delayedShowAnswer(0)
 
         assertThat(answer.timeoutHandler.hasMessages(0), equalTo(true))
+        assertThat(answer.isDisabled, equalTo(false))
 
-        answer.stopAll()
+        answer.disable()
 
         assertThat(answer.timeoutHandler.hasMessages(0), equalTo(false))
+        assertThat(answer.isDisabled, equalTo(true))
     }
 
     @Test
@@ -69,6 +65,76 @@ class AutomaticAnswerTest {
         answer.scheduleAutomaticDisplayAnswer(10)
 
         assertThat("no messages even if delay provided", answer.timeoutHandler.hasMessages(0), equalTo(false))
+    }
+
+    @Test
+    fun testEnableDisable() {
+        val answer = validAnswer(automaticallyAnsweredMock())
+        assertThat(answer.isDisabled, equalTo(false))
+        answer.disable()
+        assertThat(answer.isDisabled, equalTo(true))
+        answer.enable()
+        assertThat(answer.isDisabled, equalTo(false))
+    }
+
+    /** Ensures [disableStopsImmediateCallAnswer] can fail */
+    @Test
+    fun immediateCall() {
+        val answerValue = AutoAnswerMock()
+        val answer = validAnswer(answerValue)
+
+        answer.scheduleAutomaticDisplayAnswer()
+        waitForTaskCompletion()
+        assertThat(answerValue.answerShown, equalTo(true))
+
+        answer.scheduleAutomaticDisplayQuestion()
+        waitForTaskCompletion()
+        assertThat(answerValue.questionShown, equalTo(true))
+    }
+
+    @Test
+    fun disableStopsImmediateCallAnswer() {
+        val answerValue = AutoAnswerMock()
+        val answer = validAnswer(answerValue)
+        answer.scheduleAutomaticDisplayAnswer()
+        answer.disable()
+        assertThat("call did not complete early", answerValue.answerShown, equalTo(false))
+        waitForTaskCompletion()
+        assertThat("call not executed due to disable", answerValue.answerShown, equalTo(false))
+    }
+
+    @Test
+    fun disableStopsImmediateCallQuestion() {
+        val answerValue = AutoAnswerMock()
+        val answer = validAnswer(answerValue)
+        answer.scheduleAutomaticDisplayQuestion()
+        answer.disable()
+        assertThat("call did not complete early", answerValue.questionShown, equalTo(false))
+        waitForTaskCompletion()
+        assertThat("call not executed due to disable", answerValue.questionShown, equalTo(false))
+    }
+
+    private fun waitForTaskCompletion() {
+        runUiThreadTasksIncludingDelayedTasks()
+    }
+
+    private fun validAnswer(automaticallyAnswered: AutomaticallyAnswered? = null) = AutomaticAnswer(
+        target = automaticallyAnswered ?: automaticallyAnsweredMock(),
+        settings = AutomaticAnswerSettings(
+            useTimer = true,
+            questionDelaySeconds = 10,
+            answerDelaySeconds = 10
+        )
+    )
+
+    private class AutoAnswerMock(var answerShown: Boolean = false, var questionShown: Boolean = false) : AutomaticallyAnswered {
+        override fun automaticShowAnswer() {
+            answerShown = true
+        }
+
+        override fun automaticShowQuestion() {
+            questionShown = true
+        }
     }
 
     private fun automaticallyAnsweredMock(): AutomaticallyAnswered = mock()

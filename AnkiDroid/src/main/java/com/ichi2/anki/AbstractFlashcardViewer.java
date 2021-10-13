@@ -365,7 +365,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Preference: Whether the user wants press back twice to return to the main screen" */
     private boolean mExitViaDoubleTapBack;
 
-    private final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
+    @VisibleForTesting
+    final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -854,7 +855,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         super.onPause();
         Timber.d("onPause()");
 
-        mAutomaticAnswer.stopAll();
+        mAutomaticAnswer.disable();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
@@ -872,6 +873,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         resumeTimer();
         // Set the context for the Sound manager
         mSoundPlayer.setContext(new WeakReference<>(this));
+        mAutomaticAnswer.enable();
         // Reset the activity title
         setTitle();
         updateActionBar();
@@ -2652,7 +2654,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        mAutomaticAnswer.stopAll();
+        mAutomaticAnswer.disable();
         mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);

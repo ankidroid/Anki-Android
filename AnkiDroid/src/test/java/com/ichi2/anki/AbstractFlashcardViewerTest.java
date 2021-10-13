@@ -5,8 +5,11 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.LocaleList;
+import android.webkit.RenderProcessGoneDetail;
 
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.anki.reviewer.AutomaticAnswer;
+import com.ichi2.anki.reviewer.AutomaticAnswerSettings;
 import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
@@ -19,6 +22,7 @@ import org.robolectric.android.controller.ActivityController;
 
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -40,6 +44,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
@@ -83,6 +88,10 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
                 return null;
             }
             return imeHintLocales.toLanguageTags();
+        }
+
+        public boolean hasAutomaticAnswerQueued() {
+            return mAutomaticAnswer.getTimeoutHandler().hasMessages(0);
         }
     }
 
@@ -247,6 +256,31 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat("A default model should have no preference", viewer.getHintLocale(), nullValue());
     }
 
+    @Test
+    public void automaticAnswerDisabledProperty() {
+        ActivityController<NonAbstractFlashcardViewer> controller = getViewerController(true);
+        NonAbstractFlashcardViewer viewer = controller.get();
+        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled(), is(false));
+        controller.pause();
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled(), is(true));
+        controller.resume();
+        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled(), is(false));
+    }
+
+    @Test
+    public void noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
+        ActivityController<NonAbstractFlashcardViewer> controller = getViewerController(true);
+        NonAbstractFlashcardViewer viewer = controller.get();
+        viewer.mAutomaticAnswer = new AutomaticAnswer(viewer, new AutomaticAnswerSettings(true, 5, 5));
+        viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER);
+        assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true));
+        controller.pause();
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled(), is(true));
+        assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false));
+        viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.getWebView(), mock(RenderProcessGoneDetail.class));
+        assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false));
+    }
+
 
     private void showNextCard(NonAbstractFlashcardViewer viewer) {
         viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
@@ -254,11 +288,18 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
 
+    @CheckResult
     private NonAbstractFlashcardViewer getViewer() {
         return getViewer(true);
     }
 
+    @CheckResult
     private NonAbstractFlashcardViewer getViewer(boolean addCard) {
+        return getViewerController(addCard).get();
+    }
+
+    @CheckResult
+    private ActivityController<NonAbstractFlashcardViewer> getViewerController(boolean addCard) {
         if (addCard) {
             @NonNull Note n = getCol().newNote();
             n.setField(0, "a");
@@ -276,6 +317,6 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
         advanceRobolectricLooperWithSleep();
         advanceRobolectricLooperWithSleep();
-        return viewer;
+        return multimediaController;
     }
 }
