@@ -20,6 +20,7 @@ import android.content.SharedPreferences
 import android.os.Handler
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.Collection
+import timber.log.Timber
 
 /**
  * AnkiDroid contains a setting: "Automatic display answer" which displays the
@@ -57,8 +58,26 @@ class AutomaticAnswer(
     private val settings: AutomaticAnswerSettings
 ) {
 
-    private val showAnswerTask = Runnable(target::automaticShowAnswer)
-    private val showQuestionTask = Runnable(target::automaticShowQuestion)
+    /** Whether any tasks should be executed/scheduled.
+     *
+     * Ensures that auto answer does not occur if the reviewer is minimised
+     */
+    var isDisabled: Boolean = false
+        private set
+    private val showAnswerTask = Runnable {
+        if (isDisabled) {
+            Timber.d("showAnswer: disabled")
+            return@Runnable
+        }
+        target.automaticShowAnswer()
+    }
+    private val showQuestionTask = Runnable {
+        if (isDisabled) {
+            Timber.d("showQuestion: disabled")
+            return@Runnable
+        }
+        target.automaticShowQuestion()
+    }
 
     /**
      * Handler for the delay in auto showing question and/or answer
@@ -70,11 +89,19 @@ class AutomaticAnswer(
 
     @VisibleForTesting
     fun delayedShowQuestion(delay: Long) {
+        if (isDisabled) {
+            Timber.d("showQuestion: disabled")
+            return
+        }
         timeoutHandler.postDelayed(showQuestionTask, delay)
     }
 
     @VisibleForTesting
     fun delayedShowAnswer(delay: Long) {
+        if (isDisabled) {
+            Timber.d("showAnswer: disabled")
+            return
+        }
         timeoutHandler.postDelayed(showAnswerTask, delay)
     }
 
@@ -86,7 +113,12 @@ class AutomaticAnswer(
         timeoutHandler.removeCallbacks(showAnswerTask)
     }
 
-    fun stopAll() {
+    fun enable() {
+        isDisabled = false
+    }
+
+    fun disable() {
+        isDisabled = true
         stopShowAnswerTask()
         stopShowQuestionTask()
     }
