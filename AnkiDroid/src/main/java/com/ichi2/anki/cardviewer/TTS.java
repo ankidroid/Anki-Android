@@ -8,11 +8,14 @@ import android.speech.tts.TextToSpeech;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Sound;
+import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.template.TemplateFilters;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,12 @@ public class TTS {
     private ReadText mTTS;
 
     /**
+     * Returns the card ordinal for TTS language storage.
+     *
+     * The ordinal of a Cloze card denotes the cloze deletion, causing the TTS
+     * language to be requested and stored on every new highest cloze deletion when
+     * used normally.
+     *
      * @param card The card to check the type of before determining the ordinal.
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
@@ -50,7 +59,7 @@ public class TTS {
             return;
         }
         String clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        mTTS.readCardSide(cardSide, cardSideContent, AbstractFlashcardViewer.getDeckIdForCard(card), getOrdUsingCardType(card), clozeReplacement);
+        mTTS.readCardSide(cardSide, cardSideContent, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), clozeReplacement);
     }
 
     /**
@@ -62,6 +71,12 @@ public class TTS {
     public void selectTts(Context context, Card card, Sound.SoundSide qa) {
         String mTextToRead = qa == Sound.SoundSide.QUESTION ? card.q(true) : card.getPureAnswer();
         // get the text from the card
-        mTTS.selectTts(AbstractFlashcardViewer.getTextForTts(context, mTextToRead), AbstractFlashcardViewer.getDeckIdForCard(card), getOrdUsingCardType(card), qa);
+        mTTS.selectTts(getTextForTts(context, mTextToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa);
+    }
+
+    public String getTextForTts(Context context, String text) {
+        String clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement);
+        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
+        return Utils.stripHTML(clozeReplaced);
     }
 }

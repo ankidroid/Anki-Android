@@ -61,4 +61,16 @@ public class CardUtils {
         }
         return false;
     }
+
+    /**
+     * Returns the deck ID of the given {@link Card}.
+     *
+     * @param card The {@link Card} to get the deck ID
+     * @return The deck ID of the {@link Card}
+     */
+    public static long getDeckIdForCard(final Card card) {
+        // Try to get the configuration by the original deck ID (available in case of a cram deck),
+        // else use the direct deck ID (in case of a 'normal' deck.
+        return card.getODid() == 0 ? card.getDid() : card.getODid();
+    }
 }

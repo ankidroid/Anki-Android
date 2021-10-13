@@ -2175,10 +2175,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
-                        readCardText(mCurrentCard, SoundSide.QUESTION);
+                        mTTS.readCardText(this, mCurrentCard, SoundSide.QUESTION);
                     }
                     if (sDisplayAnswer) {
-                        readCardText(mCurrentCard, SoundSide.ANSWER);
+                        mTTS.readCardText(this, mCurrentCard, SoundSide.ANSWER);
                     }
                 } else {
                     mReplayOnTtsInit = true;
@@ -2210,33 +2210,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     /**
-     * Reads the text (using TTS) for the given side of a card.
-     *
-     * @param card     The card to play TTS for
-     * @param cardSide The side of the current card to play TTS for
-     */
-    private void readCardText(final Card card, final SoundSide cardSide) {
-        mTTS.readCardText(this, card, cardSide);
-    }
-
-    /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
      */
     protected void showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            if (!sDisplayAnswer) {
-                mTTS.selectTts(this, mCurrentCard, SoundSide.QUESTION);
-            } else {
-                mTTS.selectTts(this, mCurrentCard, SoundSide.ANSWER);
-            }
+            mTTS.selectTts(this, mCurrentCard, sDisplayAnswer ? SoundSide.ANSWER : SoundSide.QUESTION);
         }
-    }
-
-
-    public static String getTextForTts(Context context, String text) {
-        String clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
-        return Utils.stripHTML(clozeReplaced);
     }
 
 
@@ -2246,20 +2225,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The configuration for the current {@link Card}
      */
     private DeckConfig getConfigForCurrentCard() {
-        return getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
-    }
-
-
-    /**
-     * Returns the deck ID of the given {@link Card}.
-     *
-     * @param card The {@link Card} to get the deck ID
-     * @return The deck ID of the {@link Card}
-     */
-    public static long getDeckIdForCard(final Card card) {
-        // Try to get the configuration by the original deck ID (available in case of a cram deck),
-        // else use the direct deck ID (in case of a 'normal' deck.
-        return card.getODid() == 0 ? card.getDid() : card.getODid();
+        return getCol().getDecks().confForDid(CardUtils.getDeckIdForCard(mCurrentCard));
     }
 
 
