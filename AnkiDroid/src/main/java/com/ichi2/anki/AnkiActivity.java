@@ -390,13 +390,19 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 Timber.d("Asynchronously calling onCollectionLoaded");
                 onCollectionLoaded(col);
             } else {
-                Intent deckPicker = new Intent(this, DeckPicker.class);
-                deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityWithAnimation(deckPicker, START);
+                onCollectionLoadError();
             }
         });
     }
+
+    /** The action to take when there was an error loading the collection */
+    protected void onCollectionLoadError() {
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityWithAnimation(deckPicker, START);
+    }
+
 
     public void showProgressBar() {
         ProgressBar progressBar = findViewById(R.id.progress_bar);

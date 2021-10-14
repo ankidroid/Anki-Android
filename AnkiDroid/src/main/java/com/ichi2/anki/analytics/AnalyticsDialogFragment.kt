@@ -14,14 +14,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.analytics;
+package com.ichi2.anki.analytics
 
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.DialogFragment
 
-public abstract class AnalyticsDialogFragment extends DialogFragment {
-    @Override
-    public void onResume() {
-        super.onResume();
-        UsageAnalytics.sendAnalyticsScreenView(this);
+abstract class AnalyticsDialogFragment : DialogFragment() {
+    override fun onResume() {
+        super.onResume()
+        UsageAnalytics.sendAnalyticsScreenView(this)
     }
 }

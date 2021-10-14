@@ -102,6 +102,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
@@ -170,7 +171,7 @@ import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
-public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods, AutomaticAnswer.AutomaticallyAnswered {
 
     /**
      * Result codes that are returned when this activity finishes.
@@ -243,17 +244,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
 
-    protected boolean mOptUseGeneralTimerSettings;
-
-    protected boolean mUseTimer;
-    protected int mWaitAnswerSecond;
-    protected int mWaitQuestionSecond;
-
-    protected boolean mPrefUseTimer;
-
-    protected boolean mOptUseTimer;
-    protected int mOptWaitAnswerSecond;
-    protected int mOptWaitQuestionSecond;
+    @NonNull protected AutomaticAnswer mAutomaticAnswer = AutomaticAnswer.defaultInstance(this);
 
     protected TypeAnswer mTypeAnswer;
 
@@ -347,7 +338,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private final Sound mSoundPlayer = new Sound();
 
-    /** Time taken o play all medias in mSoundPlayer */
+    /**
+     * Time taken to play all medias in mSoundPlayer
+     * This is 0 if we have "Read card" enabled, as we can't calculate the duration.
+     */
     private long mUseTimerDynamicMS;
 
     /** File of the temporary mic record **/
@@ -372,8 +366,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** Preference: Whether the user wants press back twice to return to the main screen" */
     private boolean mExitViaDoubleTapBack;
 
-    private final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
+    @VisibleForTesting
+    final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
     private final TTS mTTS = new TTS();
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -411,7 +407,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return;
             }
             mLastClickTime = getElapsedRealTime();
-            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+            mAutomaticAnswer.onShowAnswer();
             displayCardAnswer();
         }
     };
@@ -464,7 +460,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         view.setPressed(true);
                     }
                     mLastClickTime = getElapsedRealTime();
-                    mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+                    mAutomaticAnswer.onSelectEase();
                     int id = view.getId();
                     if (id == R.id.flashcard_layout_ease1) {
                         Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
@@ -736,9 +732,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    protected int mPrefWaitAnswerSecond;
-    protected int mPrefWaitQuestionSecond;
-
 
     protected int getAnswerButtonCount() {
         return getCol().getSched().answerButtons(mCurrentCard);
@@ -828,7 +821,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         registerExternalStorageListener();
 
-        restoreCollectionPreferences();
+        restoreCollectionPreferences(col);
 
         initLayout();
 
@@ -864,8 +857,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         super.onPause();
         Timber.d("onPause()");
 
-        mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-        mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+        mAutomaticAnswer.disable();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
@@ -883,6 +875,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         resumeTimer();
         // Set the context for the Sound manager
         mSoundPlayer.setContext(new WeakReference<>(this));
+        mAutomaticAnswer.enable();
         // Reset the activity title
         setTitle();
         updateActionBar();
@@ -1718,9 +1711,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mPrefWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-        mPrefWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
@@ -1742,34 +1732,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void restoreCollectionPreferences() {
+    protected void restoreCollectionPreferences(Collection col) {
 
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            mShowNextReviewTime = getCol().get_config_boolean("estTimes");
-
-            // Dynamic don't have review options; attempt to get deck-specific auto-advance options
-            // but be prepared to go with all default if it's a dynamic deck
-            JSONObject revOptions = new JSONObject();
-            long selectedDid = getCol().getDecks().selected();
-            if (!getCol().getDecks().isDyn(selectedDid)) {
-                revOptions = getCol().getDecks().confForDid(selectedDid).getJSONObject("rev");
-            }
-
-            mOptUseGeneralTimerSettings = revOptions.optBoolean("useGeneralTimeoutSettings", true);
-            mOptUseTimer = revOptions.optBoolean("timeoutAnswer", false);
-            mOptWaitAnswerSecond = revOptions.optInt("timeoutAnswerSeconds", 20);
-            mOptWaitQuestionSecond = revOptions.optInt("timeoutQuestionSeconds", 60);
-        } catch (JSONException e) {
-            Timber.e(e, "Unable to restoreCollectionPreferences");
-            throw new RuntimeException(e);
-        } catch (NullPointerException npe) {
-            // NPE on collection only happens if the Collection is broken, follow AnkiActivity example
-            Timber.w(npe);
-            Intent deckPicker = new Intent(this, DeckPicker.class);
-            deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithAnimation(deckPicker, START);
+            mShowNextReviewTime = col.get_config_boolean("estTimes");
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            mAutomaticAnswer = AutomaticAnswer.createInstance(this, preferences, col);
+        } catch (Exception ex) {
+            Timber.w(ex);
+            onCollectionLoadError();
         }
     }
 
@@ -1826,47 +1798,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    /*
-     * Handler for the delay in auto showing question and/or answer One toggle for both question and answer, could set
-     * longer delay for auto next question
-     */
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
-    protected final Handler mTimeoutHandler = new Handler();
-
-    protected final Runnable mShowQuestionTask = new Runnable() {
-        @Override
-        public void run() {
-            // Assume hitting the "Again" button when auto next question
-            if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
-                mEase1Layout.performClick();
-            }
+    @Override
+    public void automaticShowQuestion() {
+        // Assume hitting the "Again" button when auto next question
+        if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
+            mEase1Layout.performClick();
         }
-    };
+    }
 
-    protected final Runnable mShowAnswerTask = new Runnable() {
-        @Override
-        public void run() {
-            if (mFlipCardLayout.isEnabled() && mFlipCardLayout.getVisibility() == View.VISIBLE) {
-                mFlipCardLayout.performClick();
-            }
+    @Override
+    public void automaticShowAnswer() {
+        if (mFlipCardLayout.isEnabled() && mFlipCardLayout.getVisibility() == View.VISIBLE) {
+            mFlipCardLayout.performClick();
         }
-    };
+    }
 
     class ReadTextListener implements ReadText.ReadTextListener {
         public void onDone() {
-            if(!mUseTimer) {
-                return;
-            }
             if (ReadText.getmQuestionAnswer() == SoundSide.QUESTION) {
-                long delay = mWaitAnswerSecond * 1000;
-                if (delay > 0) {
-                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-                }
+                mAutomaticAnswer.scheduleAutomaticDisplayAnswer();
             } else if (ReadText.getmQuestionAnswer() == SoundSide.ANSWER) {
-                long delay = mWaitQuestionSecond * 1000;
-                if (delay > 0) {
-                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-                }
+                mAutomaticAnswer.scheduleAutomaticDisplayQuestion();
             }
         }
     }
@@ -1945,27 +1897,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         updateCard(displayString);
         hideEaseButtons();
 
-        // Check if it should use the general 'Timeout settings' or the ones specific to this deck
-        if (mOptUseGeneralTimerSettings) {
-            mUseTimer = mPrefUseTimer;
-            mWaitAnswerSecond = mPrefWaitAnswerSecond;
-            mWaitQuestionSecond = mPrefWaitQuestionSecond;
-        } else {
-            mUseTimer = mOptUseTimer;
-            mWaitAnswerSecond = mOptWaitAnswerSecond;
-            mWaitQuestionSecond = mOptWaitQuestionSecond;
+        mAutomaticAnswer.onDisplayQuestion();
+        // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
+        if (!mSpeakText) {
+            mAutomaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS);
         }
 
-        // If the user wants to show the answer automatically
-        if (mUseTimer) {
-            long delay = mWaitAnswerSecond * 1000 + mUseTimerDynamicMS;
-            if (mWaitAnswerSecond > 0) {  // a wait of zero means auto-advance is disabled
-                mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-                if (!mSpeakText) {
-                    mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
-                }
-            }
-        }
 
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
@@ -2006,15 +1943,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mIsSelecting = false;
         updateCard(CardAppearance.enrichWithQADiv(answer, true));
         displayAnswerBottomBar();
-        // If the user wants to show the next question automatically
-        if (mUseTimer) {
-            long delay = mWaitQuestionSecond * 1000 + mUseTimerDynamicMS;
-            if (mWaitQuestionSecond > 0) {
-                mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-                if (!mSpeakText) {
-                    mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
-                }
-            }
+
+        mAutomaticAnswer.onDisplayAnswer();
+        // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
+        if (!mSpeakText) {
+            mAutomaticAnswer.scheduleAutomaticDisplayQuestion(mUseTimerDynamicMS);
         }
     }
 
@@ -2093,7 +2026,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
             mSoundPlayer.addSounds(mBaseUrl, newContent, SoundSide.QUESTION);
-            if (mUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+            if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
@@ -2161,13 +2094,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     playSounds(SoundSide.QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
                     playSounds(SoundSide.ANSWER);
-                    if (mUseTimer) {
+                    if (mAutomaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER);
                     }
                 } else { // question is displayed
                     playSounds(SoundSide.QUESTION);
                     // If the user wants to show the answer automatically
-                    if (mUseTimer) {
+                    if (mAutomaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER);
                     }
                 }
@@ -2677,8 +2610,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
 
-        mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-        mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+        mAutomaticAnswer.disable();
         mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
