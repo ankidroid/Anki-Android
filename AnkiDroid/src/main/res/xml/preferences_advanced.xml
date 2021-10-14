@@ -102,6 +102,14 @@
                 android:key="exitViaDoubleTapBack"
                 android:summary="@string/exit_via_double_tap_back_summ"
                 android:title="@string/exit_via_double_tap_back" />
+            <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
+            in older versions of Android (fixed between API 26 and API 30)
+             We don't want to allow this by default, but we want an override -->
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="mediaImportAllowAllFiles"
+                android:summary="@string/media_import_allow_all_files_summ"
+                android:title="@string/media_import_allow_all_files" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
