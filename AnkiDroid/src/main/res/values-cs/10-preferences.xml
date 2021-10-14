@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Pro návrat/ukončit stisknout zpět dvakrát</string>
     <string name="exit_via_double_tap_back_summ">Vyhnout se nechtěnému opuštění opakování nebo ukončení aplikace</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnout pokročilé statistiky</string>

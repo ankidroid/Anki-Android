@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">بشكل افتراضي يلصق أنكي الصور في الحافظة بصيغة JPG لتوفير مساحة القرص. تستطيع استخدام هذا الخيار للصق الصور بصيعة PNG بدلًا من ذلك.</string>
     <string name="exit_via_double_tap_back" maxLength="41">اضغط رجوع مرتين للعودة أو الخروج</string>
     <string name="exit_via_double_tap_back_summ">لتجنب مغادرة شاشة المراجعة أو التطبيق بدون قصد</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">إحصائيات متقدمة</string>
     <string name="enable_advanced_statistics_title" maxLength="41">تفعيل الإحصائيات المتقدمة</string>

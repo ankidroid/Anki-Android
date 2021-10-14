@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">ᱰᱤᱯᱷᱚᱞᱴ ᱞᱮᱠᱟᱛᱮ Anki ᱥᱯᱮᱥ ᱟᱨᱡᱟᱣ JPG ᱯᱷᱟᱹᱤᱞ ᱞᱮᱠᱟ ᱠᱞᱤᱯᱵᱚᱰ ᱨᱮ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱭ ᱯᱮᱥᱴᱟᱭ । ᱟᱢ ᱱᱚᱣᱟ ᱚᱯᱥᱚᱱ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ PNG ᱪᱤᱛᱟᱹᱨ ᱯᱮᱥᱴ ᱞᱟᱹᱜᱤᱫ ।</string>
     <string name="exit_via_double_tap_back" maxLength="41">ᱨᱩᱣᱟᱹᱲ/ᱩᱴᱷᱟᱹᱣᱜ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱫᱷᱟᱣ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="exit_via_double_tap_back_summ">ᱦᱩᱯᱠᱟᱹ  ᱧᱮᱧᱮᱞᱤᱭᱟᱹ ᱟᱨ ᱟᱯᱞᱤᱠᱮᱥᱚᱱ ᱥᱟᱦᱟ ᱞᱟᱹᱜᱤᱫ</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>

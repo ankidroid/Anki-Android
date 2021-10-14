@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振动</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">呼吸灯</string>
     <string name="timeout_answer_text" maxLength="41">自动显示答案</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">超时答案</string>
     <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
     <string name="timeout_answer_seconds" maxLength="41">显示答案时间</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
     <string name="exit_via_double_tap_back" maxLength="41">按两次返回键返回/退出</string>
     <string name="exit_via_double_tap_back_summ">避免意外离开审核者或应用程序</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
