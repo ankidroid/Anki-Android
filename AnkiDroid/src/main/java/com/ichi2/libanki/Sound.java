@@ -47,6 +47,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -315,9 +316,11 @@ public class Sound {
         return mMediaPlayer == null;
     }
 
-    /** Plays a sound without ensuring that the playAllListener will release the audio */
+    /**
+     * Plays a sound without ensuring that the playAllListener will release the audio
+     */
     @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
-    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
+    private void playSoundInternal(String soundPath, @NonNull OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
         mCurrentAudioUri = soundUri;
@@ -382,9 +385,7 @@ public class Sound {
                     Timber.d("Starting media player");
                     mMediaPlayer.start();
                 });
-                if (playAllListener != null) {
-                    mMediaPlayer.setOnCompletionListener(playAllListener);
-                }
+                mMediaPlayer.setOnCompletionListener(playAllListener);
                 mMediaPlayer.prepareAsync();
                 Timber.d("Requesting audio focus");
 
@@ -397,7 +398,10 @@ public class Sound {
                 CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
-                releaseSound();
+                if (!errorHandler.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNSUPPORTED, 0, soundPath)) {
+                    Timber.d("Force playing next sound.");
+                    playAllListener.onCompletion(mMediaPlayer);
+                }
             }
         }
     }
