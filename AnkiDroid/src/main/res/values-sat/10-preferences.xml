@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ᱛᱷᱟᱨᱼᱛᱷᱟᱨᱟᱣ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ᱫᱷᱩᱯᱼᱫᱷᱟᱯ ᱟᱨᱥᱟᱞ</string>
     <string name="timeout_answer_text" maxLength="41">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">ᱵᱮᱜᱚᱨ ᱟᱫᱮᱨ ᱛᱮ ᱟᱡᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱢᱮ ᱾ ᱟᱡ ᱛᱮ ᱥᱟᱲᱮ ᱨᱮᱫ ᱟᱱᱡᱚᱢ ᱠᱚ ᱮᱢᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱟᱜᱼᱟᱭ ᱾</string>
     <string name="timeout_answer_seconds" maxLength="41">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>

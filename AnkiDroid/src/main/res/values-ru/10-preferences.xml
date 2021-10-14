@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибросигнал</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мерцание светодиода</string>
     <string name="timeout_answer_text" maxLength="41">Автоматически показывать ответ</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
     <string name="timeout_answer_seconds" maxLength="41">Показать ответ через</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>

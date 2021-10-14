@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">हां</string>
+    <string name="yes">हाँ</string>
     <!-- Navigation drawer items-->
     <string name="decks">डेकस</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउज़र</string>
@@ -76,8 +76,8 @@
     <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">आज %2$s में %1$d कार्ड का अध्ययन किया</item>
-        <item quantity="other">%2$s में %1$d पत्तों का अध्ययन किया</item>
+        <item quantity="one">आज %2$s में %1$d पत्ते का अध्ययन किया</item>
+        <item quantity="other">आज %2$s में %1$d पत्तों का अध्ययन किया</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
@@ -123,7 +123,7 @@
     <string name="menu_select">पाठ का चयन करें</string>
     <string name="menu_lookup">मेनू_लुकअप</string>
     <string name="menu_search">लुकअप में %1$s</string>
-    <string name="menu_mark_note">मार्क नोट करें</string>
+    <string name="menu_mark_note">नोट चिह्नित करें</string>
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
     <string name="menu_toggle_mic_tool_bar">आप उच्चारण जाँचिये</string>
     <string name="new_deck">डेक बनाने</string>

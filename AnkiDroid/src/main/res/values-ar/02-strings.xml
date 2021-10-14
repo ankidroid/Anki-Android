@@ -199,10 +199,10 @@
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
     <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        مرحبًا!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        هذه رزمة بطاقات أنكي مرسلة من <a href="%1$s">أنكيدرويد</a>.
+        حاول فتحها باستخدام توزيعة من <a href="%2$s">توزيعات أنكي</a> المتوفرة واستمتع بتعلم سهل وفعال!
         ]]></string>
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
@@ -401,20 +401,21 @@
     <string name="back_pressed_once_reviewer">اضغط رجوع مجددًا للعودة</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">تنزيل الرزمة</string>
+    <string name="try_again">إعادة المحاولة</string>
+    <string name="cancel_download">إلغاء التنزيل</string>
+    <string name="cancel_download_question_title">هل تريد إلغاء التنزيل؟</string>
+    <string name="downloading_file">يجري تنزيل %s</string>
+    <string name="import_deck">استيراد رزمة</string>
+    <string name="something_wrong">حدث خطأ ما، حاول مجددًا</string>
+    <string name="download_failed">فشل التنزيل</string>
+    <string name="deck_download_progress_message">تستطيع استخدام التطبيقات الأخرى أثناء استمرار التنزيل</string>
+    <string name="check_network">تحقق من اتصالك بالشبكة</string>
+    <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
+    <string name="home">الصفحة الرئيسية</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">مُوزع إلى %s</string>
+    <string name="import_mapped_to_tags">موزع إلى الوسوم</string>
+    <string name="import_mapped_to_nothing">تم تجاهله</string>
+    <string name="buried_card">Buried card</string>
 </resources>

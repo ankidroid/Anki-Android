@@ -117,4 +117,6 @@
     <string name="gesture_toggle_whiteboard">Activar/desactivar pissarra</string>
     <string name="record_voice">Enregistra veu</string>
     <string name="replay_voice">Reproduir veu</string>
+    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
+    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
 </resources>

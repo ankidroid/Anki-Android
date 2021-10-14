@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">కదలుట</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">బ్లింక్ కాంతి</string>
     <string name="timeout_answer_text" maxLength="41">స్వయంచాలక ప్రదర్శన సమాధానం</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">వినియోగదారు ఇన్పుట్ లేకుండా స్వయంచాలకంగా సమాధానం చూపు. 
 ఆలస్యం స్వయంచాలకంగా ప్లే చేయబడిన ఆడియో ఫైల్లకు సమయాన్ని కలిగి ఉంటుంది.</string>
     <string name="timeout_answer_seconds" maxLength="41">సమాధానం చూపించడానికి సమయం</string>

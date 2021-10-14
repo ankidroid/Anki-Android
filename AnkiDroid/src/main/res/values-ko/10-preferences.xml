@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
     <string name="timeout_answer_text" maxLength="41">자동으로 정답 표시</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">사용자 입력 없이 자동으로 답변을 표시합니다. 지연에는 자동으로 재생되는 오디오 파일의 시간이 포함됩니다.</string>
     <string name="timeout_answer_seconds" maxLength="41">정답을 표시할 시간</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 초</string>

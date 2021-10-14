@@ -365,4 +365,5 @@
     <string name="import_mapped_to_field">%s ᱢᱭᱟᱯ ᱮ ᱠᱟᱱᱟ</string>
     <string name="import_mapped_to_tags">ᱴᱭᱟᱜᱽ ᱠᱚ ᱢᱭᱟᱯ-ᱟ ᱠᱟᱱᱟ</string>
     <string name="import_mapped_to_nothing">ᱵᱟᱝ ᱛᱩᱸᱠᱷᱤ ᱠᱟᱱᱟ</string>
+    <string name="buried_card">Buried card</string>
 </resources>

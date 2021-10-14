@@ -152,6 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
     <string name="timeout_answer_text" maxLength="41">Аўтаматычна паказваць адказ</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Аўтаматычна паказваць адказ без уводу даных карыстальнікам. Затрымка складаецца з часу аўтаматычнага прайгравання аўдыяфайлаў.</string>
     <string name="timeout_answer_seconds" maxLength="41">Час на паказ адказу</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек</string>

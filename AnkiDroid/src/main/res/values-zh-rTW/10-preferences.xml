@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">震動</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">提示燈</string>
     <string name="timeout_answer_text" maxLength="41">自動顯示答案</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">無需用戶輸入自動顯示答案。延遲時間包括自動播放音訊檔案的時間。</string>
     <string name="timeout_answer_seconds" maxLength="41">顯示答案的時間</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>

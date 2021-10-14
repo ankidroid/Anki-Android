@@ -152,6 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">कंपन होणे</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ब्लिंक लाइट</string>
     <string name="timeout_answer_text" maxLength="41">स्वयंचलित प्रदर्शन उत्तर</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">वापरकर्त्याच्या इनपुटशिवाय उत्तर स्वयंचलितपणे दर्शवा. विलंबात स्वयंचलितपणे प्ले केलेल्या ऑडिओ फायलींसाठी वेळ समाविष्ट आहे.</string>
     <string name="timeout_answer_seconds" maxLength="41">उत्तर दर्शविण्याची वेळ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX एस</string>

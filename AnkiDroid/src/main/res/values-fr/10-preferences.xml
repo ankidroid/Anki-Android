@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED de notification</string>
     <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Voir la réponse automatiquement sans intervention de l’utilisateur. Ceci comprend le temps utilisé par les fichiers audio joués automatiquements.</string>
     <string name="timeout_answer_seconds" maxLength="41">Temps avant d’afficher la réponse</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

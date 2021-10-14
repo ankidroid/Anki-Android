@@ -152,6 +152,7 @@ minit yang lalu.</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Bergetar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Berkedip lampu</string>
     <string name="timeout_answer_text" maxLength="41">Automatik paparan menjawab</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Menunjukkan menjawab secara automatik tanpa input pengguna. Kelewatan termasuk masa untuk automatik bermain fail audio.</string>
     <string name="timeout_answer_seconds" maxLength="41">Masa untuk menunjukkan menjawab</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
