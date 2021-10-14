@@ -56,14 +56,21 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
 
         Collection col = CollectionHelper.getInstance().getCol(context);
         mStoringDirectory = new File(col.getMedia().dir());
+        // #9639: .opus is application/octet-stream in API 26,
+        // requires a workaround as we don't want to enable application/octet-stream by default
+        boolean allowAllFiles = AnkiDroidApp.getSharedPrefs(context).getBoolean("mediaImportAllowAllFiles", false);
 
         Button btnLibrary = new Button(mActivity);
         btnLibrary.setText(mActivity.getText(R.string.multimedia_editor_image_field_editing_library));
         btnLibrary.setOnClickListener(v -> {
             Intent i = new Intent();
-            i.setType("audio/*");
-            String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
-            i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
+            i.setType(allowAllFiles ? "*/*" : "audio/*");
+            if (!allowAllFiles) {
+                // application/ogg takes precedence over "*/*" for application/octet-stream
+                // so don't add it if we're want */*
+                String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
+                i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
+            }
             i.setAction(Intent.ACTION_GET_CONTENT);
             // Only get openable files, to avoid virtual files issues with Android 7+
             i.addCategory(Intent.CATEGORY_OPENABLE);
