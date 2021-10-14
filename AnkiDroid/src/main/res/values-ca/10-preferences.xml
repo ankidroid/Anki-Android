@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Parpellejar el llum</string>
     <string name="timeout_answer_text" maxLength="41">Visualització automàtica de la resposta</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
     <string name="timeout_answer_seconds" maxLength="41">Temps per mostrar la resposta</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

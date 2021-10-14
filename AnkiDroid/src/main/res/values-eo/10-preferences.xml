@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
     <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
     <string name="timeout_answer_seconds" maxLength="41">Montri respondon post</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

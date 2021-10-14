@@ -57,7 +57,7 @@
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="initializing_tts">تهيئة نظام تحويل النص إلى كلام&#8230;</string>
     <string name="tts_no_tts">لا تنطق</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s<br/>بطاقات استذكار للأندرويد</h2>أنكيدرويد هو تطبيق بطاقات استذكار متوافق تمامًا مع برنامج الحاسوب <a href=\"%2$s\">أنكي</a>. تستطيع إنشاء مواد، وتنزيلها، وتعلمها في كل من أنكيدرويد وأنكي على الحاسوب، ومزامنة هذه المواد مع أنكي ويب بسهولة.]]></item>
         <item><![CDATA[للمساهمة في جعل أنكيدرويد أفضل، الرجاء الإبلاغ عن الأعطال في <a href=\"%1$s\">متعقب الأعطال</a>؛ اقتراحاتك لميزات جديدة مرحب بها أيضًا. ابحث عن أجوبة في <a href=\"%2$s\">الويكي</a> أو ابدأ نقاشًا في <a href=\"%3$s\">المنتدى</a>.]]></item>
@@ -281,6 +281,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">افتح صفحة مراجعة الرزمة،  والتي تحتوي عدد البطاقات التي تراها اليوم.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">حزمة رزمة (.apkg)</string>
+    <string name="import_collection_package">حزمة مجموعة (.colpkg)</string>
 </resources>

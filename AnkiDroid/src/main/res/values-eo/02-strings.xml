@@ -364,4 +364,5 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="import_mapped_to_field">Asignitaj al %s</string>
     <string name="import_mapped_to_tags">Asignitaj al etikedoj</string>
     <string name="import_mapped_to_nothing">Ignoritaj</string>
+    <string name="buried_card">Buried card</string>
 </resources>

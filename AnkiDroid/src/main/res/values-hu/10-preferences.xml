@@ -152,6 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Rezgés</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Villogó fény</string>
     <string name="timeout_answer_text" maxLength="41">Automatikusan mutassa a választ</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
     <string name="timeout_answer_seconds" maxLength="41">Válasz mutatása ennyi idő elteltével</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>

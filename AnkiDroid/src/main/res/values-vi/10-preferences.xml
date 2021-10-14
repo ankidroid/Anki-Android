@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Báo rung</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Nhấp nháy ánh sáng</string>
     <string name="timeout_answer_text" maxLength="41">Tự động hiển thị trả lời</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Hiển thị câu trả lời tự động mà không cần người dùng nhập. Độ trễ bao gồm thời gian cho các tệp âm thanh được phát tự động.</string>
     <string name="timeout_answer_seconds" maxLength="41">Thời gian để hiển thị câu trả lời</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

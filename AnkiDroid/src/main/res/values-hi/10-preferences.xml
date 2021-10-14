@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">वाइब्रेट</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">पलक लाइट</string>
     <string name="timeout_answer_text" maxLength="41">स्वचालित उत्तर प्रदर्शन</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं । देरी स्वचालित रूप से खेला ऑडियो फ़ाइलों के लिए समय शामिल है ।</string>
     <string name="timeout_answer_seconds" maxLength="41">जवाब दिखाने के लिए समय</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

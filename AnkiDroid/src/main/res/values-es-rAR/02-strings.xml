@@ -365,4 +365,5 @@
     <string name="import_mapped_to_field">Mapeado a %s</string>
     <string name="import_mapped_to_tags">Mapeado a Tags</string>
     <string name="import_mapped_to_nothing">Ignorado</string>
+    <string name="buried_card">Buried card</string>
 </resources>

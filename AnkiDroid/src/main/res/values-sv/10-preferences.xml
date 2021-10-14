@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrera</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinka</string>
     <string name="timeout_answer_text" maxLength="41">Visa svar automatiskt</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Visa svar automatiskt utan att användaren gör något. Fördröjningen inkluderar tiden som det tar för automatisk uppspelning av ljudfiler.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tid för att visa svar</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>

@@ -151,6 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
+    <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tijd om het antwoord te tonen</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
