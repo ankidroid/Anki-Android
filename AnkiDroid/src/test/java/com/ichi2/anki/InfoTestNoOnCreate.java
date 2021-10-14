@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.EmptyApplication;
 import com.ichi2.utils.LanguageUtil;
 
 import org.junit.Before;
@@ -24,14 +26,14 @@ import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
-import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-public class InfoTest extends RobolectricTest {
+@Config(application = EmptyApplication.class)
+public class InfoTestNoOnCreate extends RobolectricTest {
 
     @Parameter
     public String locale;
@@ -53,7 +55,6 @@ public class InfoTest extends RobolectricTest {
 
     @Test
     public void testCreatingActivityWithLocale() {
-        ActivityController<Info> infoController = Robolectric.buildActivity(Info.class).create();
-        saveControllerForCleanup(infoController);
+        AnkiAssert.assertDoesNotThrow(() -> Info.getAboutAnkiDroidHtml(getTargetContext().getResources(), "#FFFFFF"));
     }
 }

@@ -37,6 +37,7 @@ import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.utils.ViewGroupUtils;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
@@ -96,7 +97,6 @@ public class Info extends AnkiActivity {
             marketButton.setVisibility(View.GONE);
         }
 
-        StringBuilder sb = new StringBuilder();
 
         // Apply Theme colors
         TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] {android.R.attr.colorBackground, android.R.attr.textColor});
@@ -108,28 +108,8 @@ public class Info extends AnkiActivity {
 
         switch (type) {
             case TYPE_ABOUT: {
-                String[] content = res.getStringArray(R.array.about_content);
-                sb.append("<html><style>body {color:").append(textColor).append(";}</style>");
-
-                sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
-                sb.append(
-                        String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
-                        .append("<br/><br/>");
-                sb.append(
-                        String.format(content[1], res.getString(R.string.link_issue_tracker),
-                                res.getString(R.string.link_wiki), res.getString(R.string.link_forum))).append(
-                        "<br/><br/>");
-                sb.append(
-                        String.format(content[2], res.getString(R.string.link_wikipedia_open_source),
-                                res.getString(R.string.link_contribution))).append(" ");
-                sb.append(
-                        String.format(content[3], res.getString(R.string.link_translation),
-                                res.getString(R.string.link_donation))).append("<br/><br/>");
-                sb.append(
-                        String.format(content[4], res.getString(R.string.licence_wiki),
-                                res.getString(R.string.link_source))).append("<br/><br/>");
-                sb.append("</body></html>");
-                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+                String htmlContent = getAboutAnkiDroidHtml(res, textColor);
+                mWebView.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null);
                 Button debugCopy = (findViewById(R.id.right_button));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
                 debugCopy.setOnClickListener(v -> copyDebugInfo());
@@ -165,6 +145,34 @@ public class Info extends AnkiActivity {
                 finishWithoutAnimation();
                 break;
         }
+    }
+
+
+    @VisibleForTesting
+    static String getAboutAnkiDroidHtml(Resources res, String textColor) {
+        StringBuilder sb = new StringBuilder();
+        String[] content = res.getStringArray(R.array.about_content);
+        sb.append("<html><style>body {color:").append(textColor).append(";}</style>");
+
+        sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
+        sb.append(
+                String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
+                .append("<br/><br/>");
+        sb.append(
+                String.format(content[1], res.getString(R.string.link_issue_tracker),
+                        res.getString(R.string.link_wiki), res.getString(R.string.link_forum))).append(
+                "<br/><br/>");
+        sb.append(
+                String.format(content[2], res.getString(R.string.link_wikipedia_open_source),
+                        res.getString(R.string.link_contribution))).append(" ");
+        sb.append(
+                String.format(content[3], res.getString(R.string.link_translation),
+                        res.getString(R.string.link_donation))).append("<br/><br/>");
+        sb.append(
+                String.format(content[4], res.getString(R.string.licence_wiki),
+                        res.getString(R.string.link_source))).append("<br/><br/>");
+        sb.append("</body></html>");
+        return sb.toString();
     }
 
 
