@@ -215,6 +215,9 @@
     <string name="paste_as_png_summary">Východiskové nastavenie Anki ukladá obrázky do schránky ako JPG súbory aby sa ušetril ukladací priestor. Môžete použiť túto možnosť a ukladať obrázky ako PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Pre návrat/ukončenie stlačte dvakrát späť</string>
     <string name="exit_via_double_tap_back_summ">Vyhnúť sa nechcenému opusteniu opakovania alebo ukončeniu aplikácie</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilá štatistika</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnúť pokročilú štatistiku</string>

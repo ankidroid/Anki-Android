@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duoble premi por reiri/eliri</string>
     <string name="exit_via_double_tap_back_summ">Por eviti neatenditan eliron el la aplikaĵo</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>

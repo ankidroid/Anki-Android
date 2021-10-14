@@ -215,6 +215,9 @@
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
     <string name="exit_via_double_tap_back" maxLength="41">«Назад» двіч для повернення/виходу</string>
     <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу до оглядача чи додатку</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>

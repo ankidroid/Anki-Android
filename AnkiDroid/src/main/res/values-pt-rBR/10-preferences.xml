@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Por padrão, o Anki cola imagens na área de transferência como arquivos JPG para economizar espaço em disco. Você pode usar esta opção para colar como imagens PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Duplo toque em voltar para voltar/sair</string>
     <string name="exit_via_double_tap_back_summ">Para evitar saídas acidentais do revisor ou do aplicativo</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Habilitar estatísticas avançadas</string>

@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Presione dos veces para regresar o salir</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estadísticas avanzadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Activar estadísticas avanzadas</string>

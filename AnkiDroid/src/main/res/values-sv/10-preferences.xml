@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Som standard klistrar Anki in bilder från urklipp som JPG-filer för att spara diskutrymme. Du kan använda den här inställningen för att klistra in bilder som PNG-filer istället.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">För att undvika att av misstag lämna granskaren eller appen</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Avancerad statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktivera avancerad statistik</string>

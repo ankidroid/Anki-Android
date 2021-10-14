@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
     <string name="timeout_answer_text" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତ ଉତ୍ତର</string>
     <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ। ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ</string>
     <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -194,7 +194,7 @@
     <string name="sched_ver_toggle_title">ନିଶ୍ଚିତ କରନ୍ତୁ</string>
     <string name="sched_ver_1to2">ପରୀକ୍ଷାମୂଳକ ଅନୁସୂଚକ ଭୁଲ କାର୍ଯ୍ୟସୂଚୀ ସୃଷ୍ଟି କରିପାରେ। ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣ ପ୍ରଥମେ ଡକ୍ୟୁମେଣ୍ଟେସନ୍ ପଢ଼ିଛନ୍ତି। ଅଗ୍ରସର ହେବେ?</string>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରିନ୍ ସଚଳ ରଖନ୍ତୁ</string>
-    <string name="pref_keep_screen_on_summ">ଚିତ୍ରପଟ୍ଟକୁ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ </string>
+    <string name="pref_keep_screen_on_summ">ସ୍କ୍ରିନ୍ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
     <string name="convert_fen_text_summ">Forsyth–Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର। ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ ହେବା ଆବଶ୍ୟକ।</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>
     <string name="exit_via_double_tap_back" maxLength="41">ଫେରିବା/ପ୍ରସ୍ଥାନ କରିବାକୁ ଦୁଇଥର ବ୍ୟାକ୍ ଦବାଅ</string>
     <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ଲିକେସନ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>

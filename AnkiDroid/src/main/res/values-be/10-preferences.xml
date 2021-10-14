@@ -215,6 +215,9 @@
     <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе выявы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі выяваў PNG замест JPG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
     <string name="exit_via_double_tap_back_summ">Для прадухілення нечаканага выхаду з праграмы</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Пашыраная статыстыка</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Уключыць пашыраную статыстыку</string>

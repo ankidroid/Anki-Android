@@ -214,6 +214,9 @@
     <string name="paste_as_png_summary">Domyślnie by oszczędzać miejsce na dysku Anki wkleja obrazy ze schowka w formacie JPG. Możesz użyć tej opcji by zamiast tego używać formatu PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Kliknij dwa razy \"wstecz\" by wrócić/wyjść</string>
     <string name="exit_via_double_tap_back_summ">Aby uniknąć przypadkowego opuszczenia aplikacji lub ekranu powtórek</string>
+    <!-- Allow all files in media imports -->
+    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Zaawansowane statystyki</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Włącz zaawansowane statystyki</string>
