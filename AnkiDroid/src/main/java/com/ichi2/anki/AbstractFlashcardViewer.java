@@ -93,6 +93,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.TTS;
 import com.ichi2.anki.cardviewer.TypeAnswer;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
@@ -368,6 +369,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
+    private final TTS mTTS = new TTS();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -2108,10 +2110,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
-                        readCardText(mCurrentCard, SoundSide.QUESTION);
+                        mTTS.readCardText(this, mCurrentCard, SoundSide.QUESTION);
                     }
                     if (sDisplayAnswer) {
-                        readCardText(mCurrentCard, SoundSide.ANSWER);
+                        mTTS.readCardText(this, mCurrentCard, SoundSide.ANSWER);
                     }
                 } else {
                     mReplayOnTtsInit = true;
@@ -2143,45 +2145,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     /**
-     * Reads the text (using TTS) for the given side of a card.
-     *
-     * @param card     The card to play TTS for
-     * @param cardSide The side of the current card to play TTS for
-     */
-    private void readCardText(final Card card, final SoundSide cardSide) {
-        final String cardSideContent;
-        if (SoundSide.QUESTION == cardSide) {
-            cardSideContent = card.q(true);
-        } else if (SoundSide.ANSWER == cardSide) {
-            cardSideContent = card.getPureAnswer();
-        } else {
-            Timber.w("Unrecognised cardSide");
-            return;
-        }
-        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        ReadText.readCardSide(cardSide, cardSideContent, getDeckIdForCard(card), card.getOrd(), clozeReplacement);
-    }
-
-    /**
      * Shows the dialogue for selecting TTS for the current card and cardside.
      */
     protected void showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            if (!sDisplayAnswer) {
-                ReadText.selectTts(getTextForTts(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
-                        SoundSide.QUESTION);
-            } else {
-                ReadText.selectTts(getTextForTts(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
-                        mCurrentCard.getOrd(), SoundSide.ANSWER);
-            }
+            mTTS.selectTts(this, mCurrentCard, sDisplayAnswer ? SoundSide.ANSWER : SoundSide.QUESTION);
         }
-    }
-
-
-    private String getTextForTts(String text) {
-        String clozeReplacement = this.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
-        return Utils.stripHTML(clozeReplaced);
     }
 
 
@@ -2191,20 +2160,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @return The configuration for the current {@link Card}
      */
     private DeckConfig getConfigForCurrentCard() {
-        return getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
-    }
-
-
-    /**
-     * Returns the deck ID of the given {@link Card}.
-     *
-     * @param card The {@link Card} to get the deck ID
-     * @return The deck ID of the {@link Card}
-     */
-    private static long getDeckIdForCard(final Card card) {
-        // Try to get the configuration by the original deck ID (available in case of a cram deck),
-        // else use the direct deck ID (in case of a 'normal' deck.
-        return card.getODid() == 0 ? card.getDid() : card.getODid();
+        return getCol().getDecks().confForDid(CardUtils.getDeckIdForCard(mCurrentCard));
     }
 
 
