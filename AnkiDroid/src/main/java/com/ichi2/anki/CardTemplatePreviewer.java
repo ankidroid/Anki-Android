@@ -234,26 +234,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         if (mNoteEditorBundle != null) {
-            long newDid = mNoteEditorBundle.getLong("did");
-            if (col.getDecks().isDyn(newDid)) {
-                mCurrentCard.setODid(mCurrentCard.getDid());
-            }
-            mCurrentCard.setDid(newDid);
-
-            Note currentNote = mCurrentCard.note();
-            ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
-            NoteUtils.setTags(currentNote, tagsList);
-
-            Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
-            if (noteFields != null) {
-                for (String fieldOrd : noteFields.keySet()) {
-                    // In case the fields on the card are out of sync with the bundle
-                    int fieldOrdInt = Integer.parseInt(fieldOrd);
-                    if (fieldOrdInt < currentNote.getFields().length) {
-                        currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
-                    }
-                }
-            }
+            setFieldFromNoteEditorBundle(col);
         }
 
         displayCardQuestion();
@@ -268,6 +249,29 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return new PreviewerCard(col, cardListIndex);
     }
 
+    private void setFieldFromNoteEditorBundle(Collection col) {
+        assert (mNoteEditorBundle != null);
+        long newDid = mNoteEditorBundle.getLong("did");
+        if (col.getDecks().isDyn(newDid)) {
+            mCurrentCard.setODid(mCurrentCard.getDid());
+        }
+        mCurrentCard.setDid(newDid);
+
+        Note currentNote = mCurrentCard.note();
+        ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
+        NoteUtils.setTags(currentNote, tagsList);
+
+        Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
+        if (noteFields != null) {
+            for (String fieldOrd : noteFields.keySet()) {
+                // In case the fields on the card are out of sync with the bundle
+                int fieldOrdInt = Integer.parseInt(fieldOrd);
+                if (fieldOrdInt < currentNote.getFields().length) {
+                    currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
+                }
+            }
+        }
+    }
 
     /**
      * This method generates a note from a sample model, or fails if invalid. It does not currently have knowledge of field content
