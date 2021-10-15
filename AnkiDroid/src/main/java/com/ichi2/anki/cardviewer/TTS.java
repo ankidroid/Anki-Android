@@ -1,3 +1,19 @@
+/*
+ *  Copyright (c) 2021 Tyler Lewis <tyler.r.lewis1@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 // This time, we're going to be doing the most that we can using ReadText.java. Rather than the reimplementation
 // that happened with branch Cloze_TTS_#9590.
 package com.ichi2.anki.cardviewer;
@@ -69,9 +85,9 @@ public class TTS {
      * @param qa   The card question or card answer
      */
     public void selectTts(Context context, Card card, Sound.SoundSide qa) {
-        String mTextToRead = qa == Sound.SoundSide.QUESTION ? card.q(true) : card.getPureAnswer();
+        String textToRead = qa == Sound.SoundSide.QUESTION ? card.q(true) : card.getPureAnswer();
         // get the text from the card
-        mTTS.selectTts(getTextForTts(context, mTextToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa);
+        mTTS.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa);
     }
 
     public String getTextForTts(Context context, String text) {
