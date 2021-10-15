@@ -24,18 +24,14 @@ import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static com.ichi2.utils.FileOperation.getFileContents;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
@@ -100,15 +96,11 @@ public class TextNoteExporterTest extends RobolectricTest {
 
     @Test
     public void will_export_id_tags_html() throws IOException {
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textnote");
-        File exportedFile = new File(tempExportDir.toFile(), "export.txt");
+        File exportedFile = File.createTempFile("export", ".txt");
 
         mExporter.doExport(exportedFile.getAbsolutePath());
 
-        String[] lines;
-        try (BufferedReader reader = new BufferedReader(new FileReader(exportedFile))) {
-            lines = reader.lines().collect(Collectors.joining("\n")).split("\\n");
-        }
+        String lines[] = getFileContents(exportedFile).split("\n");
 
         assertEquals(mNoteList.size(), lines.length);
 

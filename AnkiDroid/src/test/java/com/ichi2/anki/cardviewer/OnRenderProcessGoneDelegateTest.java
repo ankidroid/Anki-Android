@@ -17,6 +17,7 @@
 package com.ichi2.anki.cardviewer;
 
 import android.content.res.Resources;
+import android.os.Build;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebView;
 
@@ -28,6 +29,7 @@ import org.junit.Test;
 import java.util.concurrent.locks.Lock;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Lifecycle;
 
 import static com.ichi2.utils.StrictMock.strictMock;
@@ -42,6 +44,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@RequiresApi(api = Build.VERSION_CODES.O) //onRenderProcessGone & RenderProcessGoneDetail
 public class OnRenderProcessGoneDelegateTest {
 
     @Test

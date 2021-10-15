@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -92,7 +93,7 @@ public class StorageTest extends RobolectricTest {
             keys.add(new Pair<>(name, actualJson.getJSONObject(name).getString("name")));
         }
 
-        keys.sort(Comparator.comparing(x -> x.second));
+        Collections.sort(keys, Comparator.comparing(x -> x.second));
 
         for (int i = 0; i < keys.size(); i++) {
             String keyName = keys.get(i).first;

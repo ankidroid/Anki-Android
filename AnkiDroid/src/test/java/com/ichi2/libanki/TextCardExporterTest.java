@@ -21,15 +21,13 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.FileOperation.getFileContents;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -60,12 +58,13 @@ public class TextCardExporterTest extends RobolectricTest {
 
     @Test
     public void testExportTextCardWithHTML() throws IOException {
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
-        File exportedFile = new File(tempExportDir.toFile(), "export.txt");
+        File exportedFile = File.createTempFile("export", ".txt");
 
         TextCardExporter exporter = new TextCardExporter(mCol, true);
         exporter.doExport(exportedFile.getAbsolutePath());
-        String content = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
+        // Getting all the content of the file as a string
+        String content = getFileContents(exportedFile);
+
         String expected = "";
         // Alternatively we can choose to strip styling from content, instead of adding styling to expected
         expected += String.format(Locale.US, "<style>%s</style>", mNoteList.get(0).model().getString("css"));
@@ -78,12 +77,12 @@ public class TextCardExporterTest extends RobolectricTest {
 
     @Test
     public void testExportTextCardWithoutHTML() throws IOException {
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-test_export_textcard");
-        File exportedFile = new File(tempExportDir.toFile(), "export.txt");
+        File exportedFile = File.createTempFile("export", ".txt");
 
         TextCardExporter exporter = new TextCardExporter(mCol, false);
         exporter.doExport(exportedFile.getAbsolutePath());
-        String content = new String(Files.readAllBytes(Paths.get(exportedFile.getAbsolutePath())));
+        // Getting all the content of the file as a string
+        String content = getFileContents(exportedFile);
         String expected = "foo\tbar\nbaz\tqux\n";
         assertEquals(expected, content);
     }
