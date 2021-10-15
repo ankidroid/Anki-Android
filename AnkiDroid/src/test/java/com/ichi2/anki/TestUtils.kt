@@ -14,23 +14,27 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
+import java.lang.Exception
+import java.lang.StringBuilder
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.security.MessageDigest
 
-public class TestUtils {
-
-    /** get the MD5 checksum (in hex) for the given filename */
-    public static String getMD5(String filename) throws Exception {
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(Files.readAllBytes(Paths.get(filename)));
-        StringBuilder hex = new StringBuilder();
-        for (byte b : md.digest()) {
-            hex.append(String.format("%02x", b));
+open class TestUtils {
+    /** get the MD5 checksum (in hex) for the given filename  */
+    companion object {
+        @JvmStatic
+        @Throws(Exception::class)
+        fun getMD5(filename: String?): String {
+            val md = MessageDigest.getInstance("MD5")
+            md.update(Files.readAllBytes(Paths.get(filename)))
+            val hex = StringBuilder()
+            for (b in md.digest()) {
+                hex.append(String.format("%02x", b))
+            }
+            return hex.toString()
         }
-        return hex.toString();
     }
 }
