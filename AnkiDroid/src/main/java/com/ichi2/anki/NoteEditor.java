@@ -2398,8 +2398,8 @@ public class NoteEditor extends AnkiActivity implements
      */
     public NoteData getNoteData() {
         NoteData data = new NoteData();
-        data.mDeckName = mNoteTypeSpinner.getSelectedItem().toString();
-        data.mNoteType = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
+        data.mNoteType = mNoteTypeSpinner.getSelectedItem().toString();
+        data.mDeckName = mDeckSpinnerSelection.getSpinner().getSelectedItem().toString();
         data.mFieldsNameList = getCurrentlySelectedModel().getFieldsNames();
         data.mEditFields = mEditFields;
         return data;
