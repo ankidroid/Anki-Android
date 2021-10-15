@@ -19,6 +19,7 @@ package com.ichi2.testutils;
 import com.ichi2.libanki.utils.Time;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class MockTime extends Time {
@@ -111,10 +112,10 @@ public class MockTime extends Time {
      * @return the time stamp of this instant in GMT calendar
      */
     public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second, int miliseconds) {
-        return (new Calendar.Builder()).
-                setTimeZone(TimeZone.getTimeZone("GMT")).
-                setCalendarType("gregorian").
-                setDate(year, month, date).
-                setTimeOfDay(hourOfDay, minute, second, miliseconds).build().getTimeInMillis();
+        TimeZone timeZone = TimeZone.getTimeZone("GMT");
+        Calendar gregorianCalendar = new GregorianCalendar(year, month, date, hourOfDay, minute, second);
+        gregorianCalendar.setTimeZone(timeZone);
+        gregorianCalendar.set(Calendar.MILLISECOND, miliseconds);
+        return (gregorianCalendar.getTimeInMillis());
     }
 }

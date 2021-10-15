@@ -16,10 +16,16 @@
 
 package com.ichi2.libanki.importer.python;
 
+import android.os.Build;
+
+import com.ichi2.utils.KotlinCleanup;
+
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.RequiresApi;
 
 import static com.ichi2.libanki.importer.python.CsvDialect.Quoting.QUOTE_MINIMAL;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,6 +48,8 @@ import static org.hamcrest.Matchers.is;
  * ... 	pp(r)
  * ['John "Da Man"', 'Rep', '120 Fake St.', 'Falsey', ' NJ', '00000']
  */
+@KotlinCleanup("fix the dependency to work under any Java version")
+@RequiresApi(api = Build.VERSION_CODES.O) //CsvSniffer & sniff
 public class CsvProcessIntegrationTest {
     @Test
     public void quotedDelimiterTest() {

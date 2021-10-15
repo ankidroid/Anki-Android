@@ -24,14 +24,12 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
@@ -41,6 +39,7 @@ import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Utils.nonEmptyFields;
+import static com.ichi2.utils.FileOperation.getFileResource;
 import static org.junit.Assert.assertEquals;
 
 
@@ -92,11 +91,10 @@ public class UtilsTest {
 
     @Test
     public void testCopyFile() throws Exception {
-        String resourcePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip").toURI()).toString();
-        URL resource = Objects.requireNonNull(getClass().getClassLoader()).getResource("path-traversal.zip");
+        String resourcePath = getFileResource("path-traversal.zip");
         File copy = File.createTempFile("testCopyFileToStream", ".zip");
         copy.deleteOnExit();
-        Utils.copyFile(new File(resource.toURI()), copy);
+        Utils.copyFile(new File(resourcePath), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
 

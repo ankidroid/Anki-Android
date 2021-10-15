@@ -19,6 +19,8 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.exception.EmptyMediaException;
+import com.ichi2.utils.CreateTempDir;
+import com.ichi2.utils.UnzipFile;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,16 +29,13 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.FileOperation.getFileContents;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -51,80 +50,86 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         return false;
     }
 
-
     @Test
     public void missingFileInDeckExportDoesSkipsFile() throws IOException, ImportExportException {
-        // arrange
+        // Arrange
         File mediaFilePath = addTempFileToMediaAndNote();
         if (!mediaFilePath.delete()) {
             throw new IllegalStateException("need to delete temp file for test to pass");
         }
 
         AnkiPackageExporter exporter = getExporterForDeckWithMedia();
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-missingFileInExportDoesNotThrowException-export");
+        File temp = CreateTempDir.tempDir("/AnkiDroid-missingFileInExportDoesNotThrowException-export");
 
-        File exportedFile = new File(tempExportDir.toFile(), "export.apkg");
+        File exportedFile = new File(temp.getAbsolutePath() + "/export.apkg");
 
-        // act
+        // Exporting
         exporter.exportInto(exportedFile.getAbsolutePath(), getTargetContext());
 
-        // assert
-        Path unzipDirectory = unzipFilesTo(tempExportDir, exportedFile);
+        // Unzipping the export.apkg file
+        UnzipFile.unzip(exportedFile, temp.getAbsolutePath() + "/unzipped");
 
+        String unzipDirectory = temp.getAbsolutePath() + "/unzipped";
 
-        File[] files = unzipDirectory.toFile().listFiles();
+        // Storing paths of unzipped files in a list
+        List<String> files = Arrays.asList(new File(unzipDirectory).list());
+        File file_names[] = new File[2];
+        int i = 0;
+        for (String x: files) {
+            File f = new File(unzipDirectory + "/" + x);
+            file_names[i++] = f;
+        }
 
-        // confirm the files
-        List<String> fileNames = Arrays.stream(files).map(File::getName).collect(Collectors.toList());
-        assertThat(fileNames, containsInAnyOrder("collection.anki2", "media"));
-        assertThat("Only two files should exist", fileNames, hasSize(2));
-        checkMediaExportStringIs(files, "{}");
+        // Checking the unzipped files
+        assertThat(files, containsInAnyOrder("collection.anki2", "media"));
+        assertThat("Only two files should exist", files, hasSize(2));
+        checkMediaExportStringIs(file_names, "{}");
     }
 
     @Test
     public void fileInExportIsCopied() throws IOException, ImportExportException {
-        // arrange
+        // Arrange
         File tempFileInCollection = addTempFileToMediaAndNote();
 
         AnkiPackageExporter exporter = getExporterForDeckWithMedia();
-        Path tempExportDir = Files.createTempDirectory("AnkiDroid-missingFileInExportDoesNotThrowException-export");
+        File temp = CreateTempDir.tempDir("/AnkiDroid-missingFileInExportDoesNotThrowException-export");
 
-        File exportedFile = new File(tempExportDir.toFile(), "export.apkg");
+        File exportedFile = new File(temp.getAbsolutePath() + "/export.apkg");
 
-        // act
+        // Exporting
         exporter.exportInto(exportedFile.getAbsolutePath(), getTargetContext());
 
-        // assert
-        Path unzipDirectory = unzipFilesTo(tempExportDir, exportedFile);
+        // Unzipping the export.apkg file
+        UnzipFile.unzip(exportedFile, temp.getAbsolutePath() + "/unzipped");
 
+        String unzipDirectory = temp.getAbsolutePath() + "/unzipped";
 
-        File[] files = unzipDirectory.toFile().listFiles();
-
-        // confirm the files
-        List<String> fileNames = Arrays.stream(files).map(File::getName).collect(Collectors.toList());
-        assertThat(fileNames, containsInAnyOrder("collection.anki2", "media", "0"));
-        assertThat("Three files should exist", fileNames, hasSize(3));
+        // Storing paths of unzipped files in a list
+        List<String> files = Arrays.asList(new File(unzipDirectory).list());
+        File fileNames[] = new File[3];
+        int i = 0;
+        for (String x : files) {
+            File f = new File(unzipDirectory + "/" + x);
+            fileNames[i++] = f;
+        }
+        // Checking the unzipped files
+        assertThat(files, containsInAnyOrder("collection.anki2", "media", "0"));
+        assertThat("Three files should exist", files, hasSize(3));
 
         // {"0":"filename.txt"}
         String expected = String.format("{\"0\":\"%s\"}", tempFileInCollection.getName());
-        checkMediaExportStringIs(files, expected);
+        checkMediaExportStringIs(fileNames, expected);
     }
 
 
     @Test
     public void stripHTML_will_remove_html_with_unicode_whitespace() {
         Exporter exporter = getExporterForDeckWithMedia();
-
-        final String res = exporter.stripHTML(String.join(
-                "\n",//delimiter
-                "\n\u205F\t<[sound",
-                ":test.mp3]>",
-                "\n\u2029\t",
-                "\u2004",
-                "<!-- Comment \n \u1680 --> <",
-                "tag\n>",
-                "<style><s>"
-        ));
+        final String text = "\n"+"\n\u205F\t<[sound:test.mp3]>" +
+                "\n\u2029" +
+                "\t\u2004" +
+                "<!-- Comment \n \u1680 --> <\"tag\\n><style><s>";
+        final String res = exporter.stripHTML(text);
 
         assertEquals("", res);
     }
@@ -135,7 +140,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
             if (!"media".equals(f.getName())) {
                 continue;
             }
-            List<String> lines = Files.readAllLines(Paths.get(f.getAbsolutePath()));
+            List<String> lines = Arrays.asList(getFileContents(f).split("\n"));
             assertThat(lines, contains(s));
             return;
         }
@@ -150,21 +155,6 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         AnkiPackageExporter exporter = new AnkiPackageExporter(getCol(), 1L, true, true);
         return exporter;
     }
-
-
-    private Path unzipFilesTo(Path tempDirWithPrefix, File fileToUnzip) throws IOException {
-        org.apache.commons.compress.archivers.zip.ZipFile exportReader = new org.apache.commons.compress.archivers.zip.ZipFile(fileToUnzip.getAbsolutePath());
-
-        Path unzipDirectory = tempDirWithPrefix.resolve("unzipped");
-        if (!unzipDirectory.toFile().mkdir()) {
-            throw new IllegalStateException(String.format("failed to make path %s", unzipDirectory));
-        }
-
-        // we need to unzip the zipped collection
-        Utils.unzipAllFiles(exportReader, unzipDirectory.toAbsolutePath().toString());
-        return unzipDirectory;
-    }
-
 
     private File addTempFileToMediaAndNote() throws IOException {
         File temp = File.createTempFile("AnkiDroid-missingFileInExportDoesNotThrowException", ".txt");
