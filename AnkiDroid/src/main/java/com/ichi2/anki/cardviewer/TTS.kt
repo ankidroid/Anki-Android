@@ -16,29 +16,20 @@
 
 // This time, we're going to be doing the most that we can using ReadText.java. Rather than the reimplementation
 // that happened with branch Cloze_TTS_#9590.
-package com.ichi2.anki.cardviewer;
+package com.ichi2.anki.cardviewer
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.speech.tts.TextToSpeech;
+import android.content.Context
+import com.ichi2.anki.CardUtils
+import com.ichi2.anki.R
+import com.ichi2.anki.ReadText
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Sound.SoundSide
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.template.TemplateFilters
+import timber.log.Timber
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.CardUtils;
-import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.R;
-import com.ichi2.anki.ReadText;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Sound;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.template.TemplateFilters;
-
-import java.util.ArrayList;
-
-import timber.log.Timber;
-
-public class TTS {
-    private ReadText mTTS;
+class TTS {
+    private val mTTS: ReadText? = null
 
     /**
      * Returns the card ordinal for TTS language storage.
@@ -50,11 +41,11 @@ public class TTS {
      * @param card The card to check the type of before determining the ordinal.
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
-    private int getOrdUsingCardType(Card card) {
-        if (card.model().isCloze()) {
-            return 0;
+    private fun getOrdUsingCardType(card: Card): Int {
+        return if (card.model().isCloze) {
+            0
         } else {
-            return card.getOrd();
+            card.ord
         }
     }
 
@@ -64,18 +55,18 @@ public class TTS {
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    public void readCardText(Context context, final Card card, final Sound.SoundSide cardSide) {
-        final String cardSideContent;
-        if (Sound.SoundSide.QUESTION == cardSide) {
-            cardSideContent = card.q(true);
-        } else if (Sound.SoundSide.ANSWER == cardSide) {
-            cardSideContent = card.getPureAnswer();
+    fun readCardText(context: Context, card: Card, cardSide: SoundSide) {
+        val cardSideContent: String
+        cardSideContent = if (SoundSide.QUESTION == cardSide) {
+            card.q(true)
+        } else if (SoundSide.ANSWER == cardSide) {
+            card.pureAnswer
         } else {
-            Timber.w("Unrecognised cardSide");
-            return;
+            Timber.w("Unrecognised cardSide")
+            return
         }
-        String clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        mTTS.readCardSide(cardSide, cardSideContent, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), clozeReplacement);
+        val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
+        ReadText.readCardSide(cardSide, cardSideContent, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), clozeReplacement)
     }
 
     /**
@@ -84,15 +75,15 @@ public class TTS {
      * @param card The card to read text from
      * @param qa   The card question or card answer
      */
-    public void selectTts(Context context, Card card, Sound.SoundSide qa) {
-        String textToRead = qa == Sound.SoundSide.QUESTION ? card.q(true) : card.getPureAnswer();
+    fun selectTts(context: Context, card: Card, qa: SoundSide) {
+        val textToRead = if (qa == SoundSide.QUESTION) card.q(true) else card.pureAnswer
         // get the text from the card
-        mTTS.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa);
+        ReadText.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa)
     }
 
-    public String getTextForTts(Context context, String text) {
-        String clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement);
-        String clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement);
-        return Utils.stripHTML(clozeReplaced);
+    fun getTextForTts(context: Context, text: String): String {
+        val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
+        val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
+        return Utils.stripHTML(clozeReplaced)
     }
 }
