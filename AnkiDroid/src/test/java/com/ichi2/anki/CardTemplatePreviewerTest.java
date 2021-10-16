@@ -20,9 +20,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -38,6 +38,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
 public class CardTemplatePreviewerTest extends RobolectricTest {
@@ -133,6 +137,113 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Assert.assertTrue(cardsList.size() == 2);
     }
 
+    @Test
+    public void singleTemplateFromNoteEditorHasNoNavigation() {
+        List<NoteService.NoteField> fields = new ArrayList<>();
+        fields.add(new Field(0, "Hello"));
+        fields.add(new Field(1, "World"));
+
+        Model basicModel = getCurrentDatabaseModelCopy("Basic");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), basicModel);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+
+
+        Bundle noteEditorBundle = new Bundle();
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields));
+        noteEditorBundle.putInt("ordinal", 0);
+        noteEditorBundle.putLong("did", 1);
+        intent.putExtra("noteEditorBundle", noteEditorBundle);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
+
+        assertThat("prev should not be visible", testCardTemplatePreviewer.previousButtonVisible(), is(false));
+        assertThat("next should not be visible", testCardTemplatePreviewer.nextButtonVisible(), is(false));
+    }
+
+
+    @Test
+    public void nonClozeFromNoteEditorHasMultipleCards() {
+        List<NoteService.NoteField> fields = new ArrayList<>();
+        fields.add(new Field(0, "Hello"));
+        fields.add(new Field(1, "World"));
+
+        Model basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), basicModel);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+
+
+        Bundle noteEditorBundle = new Bundle();
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields));
+        noteEditorBundle.putInt("ordinal", 0);
+        noteEditorBundle.putLong("did", 1);
+        intent.putExtra("noteEditorBundle", noteEditorBundle);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
+
+        assertTwoCards(testCardTemplatePreviewer);
+    }
+
+
+    @Test
+    public void clozeFromEditorHasMultipleCards() {
+        List<NoteService.NoteField> fields = new ArrayList<>();
+        fields.add(new Field(0, "{{c1::Hello}} {{c3::World}}"));
+        fields.add(new Field(1, "World"));
+
+        Model basicModel = getCurrentDatabaseModelCopy("Cloze");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), basicModel);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+
+
+        Bundle noteEditorBundle = new Bundle();
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields));
+        noteEditorBundle.putInt("ordinal", 0);
+        noteEditorBundle.putLong("did", 1);
+        intent.putExtra("noteEditorBundle", noteEditorBundle);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
+
+        assertTwoCards(testCardTemplatePreviewer);
+    }
+
+
+    @NonNull
+    protected Bundle getFieldsAsBundleForPreview(List<NoteService.NoteField> fields) {
+        return NoteService.getFieldsAsBundleForPreview(fields, false);
+    }
+
+
+    protected void assertTwoCards(TestCardTemplatePreviewer testCardTemplatePreviewer) {
+        assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), is(false));
+        assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), is(true));
+
+        testCardTemplatePreviewer.onNextTemplate();
+
+        assertThat("index is changed", testCardTemplatePreviewer.getTemplateIndex(), is(1));
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), is(true));
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), is(false));
+
+        testCardTemplatePreviewer.onNextTemplate();
+
+        // no effect
+        assertThat("index is changed", testCardTemplatePreviewer.getTemplateIndex(), is(1));
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), is(true));
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), is(false));
+
+        testCardTemplatePreviewer.onPreviousTemplate();
+
+        // previous
+        assertThat("index is changed", testCardTemplatePreviewer.getTemplateIndex(), is(0));
+        assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), is(false));
+        assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), is(true));
+    }
+
     private Card getSavedCard(Model model, int ordinal) {
         @NonNull Note n = getCol().newNote(model);
         List<String> fieldNames = model.getFieldsNames();
@@ -141,5 +252,29 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         }
         n.flush();
         return getCol().getNewLinkedCard(new Card(getCol()), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true);
+    }
+
+    private class Field implements NoteService.NoteField {
+
+        private final int mOrd;
+        private final String mText;
+
+
+        public Field(int ord, String text) {
+            this.mOrd = ord;
+            this.mText = text;
+        }
+
+        @Override
+        public int getOrd() {
+            return mOrd;
+        }
+
+
+        @Nullable
+        @Override
+        public String getFieldText() {
+            return mText;
+        }
     }
 }
