@@ -19,7 +19,10 @@
 
 package com.ichi2.anki.servicelayer;
 
+import android.os.Bundle;
+
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.FieldEditText;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
@@ -38,6 +41,10 @@ import com.ichi2.utils.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class NoteService {
@@ -209,5 +216,46 @@ public class NoteService {
                 AnkiDroidApp.sendExceptionReport(mediaException, "noteService::importMediaToDirectory");
             }
         }
+    }
+
+
+
+    /**
+     * @param replaceNewlines Converts {@link FieldEditText#NEW_LINE} to HTML linebreaks
+     */
+    @VisibleForTesting
+    @NonNull
+    @CheckResult
+    public static Bundle getFieldsAsBundleForPreview(java.util.Collection<? extends NoteField> editFields, boolean replaceNewlines) {
+        Bundle fields = new Bundle();
+        // Save the content of all the note fields. We use the field's ord as the key to
+        // easily map the fields correctly later.
+        if (editFields == null) {
+            return fields;
+        }
+        for (NoteField e : editFields) {
+            if (e == null || e.getFieldText() == null) {
+                continue;
+            }
+
+            String fieldValue = convertToHtmlNewline(e.getFieldText(), replaceNewlines);
+            fields.putString(Integer.toString(e.getOrd()), fieldValue);
+        }
+        return fields;
+    }
+
+    @NonNull
+    public static String convertToHtmlNewline(@NonNull String fieldData, boolean replaceNewlines) {
+        if (!replaceNewlines) {
+            return fieldData;
+        }
+        return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
+    }
+
+    public interface NoteField {
+        int getOrd();
+        // ideally shouldn't be nullable
+        @Nullable
+        String getFieldText();
     }
 }

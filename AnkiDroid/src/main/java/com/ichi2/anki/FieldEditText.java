@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Editable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
@@ -42,6 +43,7 @@ import androidx.core.view.inputmethod.EditorInfoCompat;
 import androidx.core.view.inputmethod.InputConnectionCompat;
 import timber.log.Timber;
 
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.ClipboardUtil;
@@ -52,7 +54,7 @@ import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 import static com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES;
 
 
-public class FieldEditText extends FixedEditText {
+public class FieldEditText extends FixedEditText implements NoteService.NoteField {
 
     @NonNull
     public static final String NEW_LINE = Objects.requireNonNull(System.getProperty("line.separator"));
@@ -104,6 +106,16 @@ public class FieldEditText extends FixedEditText {
 
     public int getOrd() {
         return mOrd;
+    }
+
+
+    @Override
+    public String getFieldText() {
+        Editable text = getText();
+        if (text == null) {
+            return null;
+        }
+        return text.toString();
     }
 
 

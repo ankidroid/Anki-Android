@@ -458,28 +458,10 @@ public class NoteEditor extends AnkiActivity implements
     }
 
 
-    /**
-     * Converts field values should to HTML linebreaks
-     */
+    @NonNull
     private Bundle getFieldsAsBundleForPreview() {
-        Bundle fields = new Bundle();
-        // Save the content of all the note fields. We use the field's ord as the key to
-        // easily map the fields correctly later.
-        if (mEditFields == null) {
-            //DA - I don't believe that this is required. Needs testing
-            mEditFields = new LinkedList<>();
-        }
-        for (FieldEditText e : mEditFields) {
-            if (e == null || e.getText() == null) {
-                continue;
-            }
-
-            String fieldValue = convertToHtmlNewline(e.getText().toString());
-            fields.putString(Integer.toString(e.getOrd()), fieldValue);
-        }
-        return fields;
+        return NoteService.getFieldsAsBundleForPreview(mEditFields, shouldReplaceNewlines());
     }
-
 
     // Finish initializing the activity after the collection has been correctly loaded
     @Override
@@ -1999,20 +1981,12 @@ public class NoteEditor extends AnkiActivity implements
         if (fieldText != null) {
             fieldContent = fieldText.toString();
         }
-        String correctedFieldContent = convertToHtmlNewline(fieldContent);
+        String correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines());
         if (!mEditorNote.values()[field.getOrd()].equals(correctedFieldContent)) {
             mEditorNote.values()[field.getOrd()] = correctedFieldContent;
             return true;
         }
         return false;
-    }
-
-
-    private String convertToHtmlNewline(@NonNull String fieldData) {
-        if (!shouldReplaceNewlines()) {
-            return fieldData;
-        }
-        return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
 
