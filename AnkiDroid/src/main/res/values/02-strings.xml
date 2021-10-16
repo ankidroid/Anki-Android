@@ -430,4 +430,6 @@
     <string name="addon_homepage">Homepage</string>
     <string name="addon_update">Update</string>
     <string name="addon_details">Details</string>
+    <string name="addon_config">Config</string>
+    <string name="config_not_found">No config for this addon</string>
 </resources>

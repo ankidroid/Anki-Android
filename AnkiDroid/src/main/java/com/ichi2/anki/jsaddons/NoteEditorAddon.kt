@@ -20,6 +20,7 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
+import android.view.View
 import com.evgenii.jsevaluator.JsEvaluator
 import com.evgenii.jsevaluator.interfaces.JsCallback
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -30,10 +31,7 @@ import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.IOException
+import java.io.*
 import java.util.*
 
 class NoteEditorAddon(private val activity: NoteEditor) {
@@ -77,15 +75,19 @@ class NoteEditorAddon(private val activity: NoteEditor) {
                 }
 
                 val bmp: Drawable = toolbar.createDrawableForString(addonModel.icon)
-                toolbar.insertItem(0, bmp, runJsCode(jsEvaluator, addonsIndexJs))
-                // v.setOnLongClickListener { discard: View? -> true }
+                val v: View = toolbar.insertItem(0, bmp, runJsCode(jsEvaluator, addonsIndexJs))
+
+                v.setOnLongClickListener {
+                    AddonConfigEditor().showConfig(addonModel.name, activity, currentAnkiDroidDirectory)
+                    true
+                }
             } catch (e: IOException) {
                 Timber.w(e)
             }
         }
     }
 
-    fun runJsCode(jsEvaluator: JsEvaluator, indexJs: File?): Runnable {
+    private fun runJsCode(jsEvaluator: JsEvaluator, indexJs: File?): Runnable {
         return Runnable {
             val content = StringBuilder()
 
@@ -107,6 +109,7 @@ class NoteEditorAddon(private val activity: NoteEditor) {
                 val fieldsNameList: List<String?> = noteData.fieldsNameList
                 val selectedText = getSelectedText()
                 val fieldsCount = fieldsNameList.size
+                val focusedFieldText = getFocusedFieldText()
 
                 val jsonObject = JSONObject()
                 jsonObject.put("noteType", noteType)
@@ -114,6 +117,9 @@ class NoteEditorAddon(private val activity: NoteEditor) {
                 jsonObject.put("fieldsName", JSONArray(fieldsNameList))
                 jsonObject.put("fieldsCount", fieldsCount)
                 jsonObject.put("selectedText", selectedText)
+                jsonObject.put("focusedFieldText", focusedFieldText)
+
+                Timber.i("Data From AnkiDroid To Addon: %s", jsonObject.toString())
 
                 jsEvaluator.callFunction(
                     content.toString(),
@@ -154,7 +160,7 @@ class NoteEditorAddon(private val activity: NoteEditor) {
         val changedText = jsonObject.optString("changedText", "")
         val changeType = jsonObject.optString("changeType", "")
         val addToFields = jsonObject.optJSONObject("addToFields")
-        Timber.d("js addon: %s", jsonObject.toString())
+        Timber.d("Data From Addon To AnkiDroid: %s", jsonObject.toString())
 
         if (addToFields != null) {
             val size = addToFields.names()?.length()
@@ -163,7 +169,7 @@ class NoteEditorAddon(private val activity: NoteEditor) {
                 val keyIndex = Objects.requireNonNull(addToFields.names()).getString(i)
                 val value = addToFields.optString(Objects.requireNonNull(addToFields.names()).getString(i))
                 Timber.d("js addon key::value : %s :: %s", keyIndex, value)
-                val field: FieldEditText = mEditFields.get(keyIndex.toInt())
+                val field: FieldEditText = mEditFields[keyIndex.toInt()]
                 field.setText(value)
             }
         }
@@ -184,6 +190,18 @@ class NoteEditorAddon(private val activity: NoteEditor) {
             }
         }
         return selectedText
+    }
+
+    private fun getFocusedFieldText(): String {
+        var focusedFieldText = ""
+
+        for (e in mEditFields) {
+            if (e.isFocused) {
+                focusedFieldText = Objects.requireNonNull<Editable?>(e.text).toString()
+                break
+            }
+        }
+        return focusedFieldText
     }
 
     private fun changeEditFieldWithSelectedText(changedText: String, changeType: String) {

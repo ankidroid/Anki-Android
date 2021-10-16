@@ -36,8 +36,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/addon_description"
@@ -57,6 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/addon_config"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addon_config" />
 
                 <Button
                     android:id="@+id/addon_details"

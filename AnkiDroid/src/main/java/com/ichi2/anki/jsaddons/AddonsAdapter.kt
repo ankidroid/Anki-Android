@@ -16,6 +16,7 @@
  ***************************************************************************************/
 package com.ichi2.anki.jsaddons
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
@@ -35,9 +36,11 @@ import java.util.*
 class AddonsAdapter(private var addonList: MutableList<AddonModel>) : RecyclerView.Adapter<AddonsAdapter.AddonsViewHolder>() {
     private var preferences: SharedPreferences? = null
     private var context: Context? = null
+    private var currentAnkiDroidDirectory: String? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddonsViewHolder {
         context = parent.context
         preferences = AnkiDroidApp.getSharedPrefs(context)
+        currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.addon_item, parent, false)
         return AddonsViewHolder(view)
@@ -74,6 +77,10 @@ class AddonsAdapter(private var addonList: MutableList<AddonModel>) : RecyclerVi
         holder.detailsBtn.setOnClickListener {
             val addonModelDialog = AddonDetailsDialog(context!!, addonModel)
             showDialogFragment(context as AnkiActivity?, addonModelDialog)
+        }
+
+        holder.configBtn.setOnClickListener {
+            AddonConfigEditor().showConfig(addonModel.name, context as Activity, currentAnkiDroidDirectory)
         }
 
         // remove addon from directory and update prefs
@@ -121,6 +128,7 @@ class AddonsAdapter(private var addonList: MutableList<AddonModel>) : RecyclerVi
         var addonVersion: TextView = itemView.findViewById(R.id.addon_version)
         var removeBtn: Button = itemView.findViewById(R.id.addon_remove)
         var detailsBtn: Button = itemView.findViewById(R.id.addon_details)
+        var configBtn: Button = itemView.findViewById(R.id.addon_config)
         var addonActivate: SwitchCompat = itemView.findViewById(R.id.activate_addon)
     }
 }
