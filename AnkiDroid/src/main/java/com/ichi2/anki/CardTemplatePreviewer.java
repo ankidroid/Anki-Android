@@ -318,6 +318,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return new PreviewerCard(col, cardListIndex);
     }
 
+    public int getTemplateIndex() {
+        return mTemplateIndex;
+    }
+
     private Note setCurrentCardFromNoteEditorBundle(Collection col) {
         assert(mNoteEditorBundle != null);
         mCurrentCard = getDummyCard(mEditedModel, mTemplateIndex, getBundleEditFields(mNoteEditorBundle));

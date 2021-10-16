@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import android.view.View;
+
 public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
     protected boolean mShowingAnswer = false;
     public boolean getShowingAnswer() { return mShowingAnswer; }
@@ -35,5 +37,23 @@ public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
     public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
+    }
+
+    public Boolean nextButtonVisible() {
+        return mPreviewNextCard.getVisibility() != View.GONE;
+    }
+
+    public Boolean previousButtonVisible() {
+        return mPreviewPrevCard.getVisibility() != View.GONE;
+    }
+
+
+    public Boolean previousButtonEnabled() {
+        return mPreviewPrevCard.isEnabled();
+    }
+
+
+    public Boolean nextButtonEnabled() {
+        return mPreviewNextCard.isEnabled();
     }
 }
