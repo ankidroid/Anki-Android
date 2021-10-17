@@ -26,7 +26,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
     /** Note: elements can be null  */
     private var mMapping: List<String?>?
     private val mTagModified: String?
-    private val mModel: Model?
+    private val mModel: Model? = col.models.current()
 
     /** _tagsMapped in python  */
     private var mTagsMapped: Boolean
@@ -39,10 +39,10 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
     private var mIds: ArrayList<Long>? = null
     private var mEmptyNotes = false
     private var mUpdateCount = 0
-    private val mTemplateParsed: List<ParsedNode>
+    private val mTemplateParsed: List<ParsedNode> = mModel!!.parsedNodes()
     override fun run() {
         Assert.that(mMapping != null)
-        Assert.that(!mMapping!!.isEmpty())
+        Assert.that(mMapping!!.isNotEmpty())
         val c = foreignNotes()
         importNotes(c)
     }
@@ -136,7 +136,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
             val fld0 = n.mFields[fld0index]
             val csum = Utils.fieldChecksum(fld0)
             // first field must exist
-            if (fld0 == null || fld0.length == 0) {
+            if (fld0 == null || fld0.isEmpty()) {
                 log.add(getString(R.string.note_importer_error_empty_first_field, TextUtils.join(" ", n.mFields)))
                 continue
             }
@@ -159,7 +159,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
                         found = true
                         if (mImportMode == ImportMode.UPDATE_MODE) {
                             val data = updateData(n, id, sflds)
-                            if (data != null && data.size > 0) {
+                            if (data != null && data.isNotEmpty()) {
                                 updates.add(data)
                                 updateLog.add(getString(R.string.note_importer_error_first_field_matched, fld0))
                                 dupeCount += 1
@@ -183,7 +183,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
             // newly add
             if (!found) {
                 val data = newData(n)
-                if (data != null && data.size > 0) {
+                if (data != null && data.isNotEmpty()) {
                     _new.add(data)
                     // note that we've seen this note once already
                     firsts.add(fld0)
@@ -195,7 +195,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
         // make sure to update sflds, etc
         mCol.updateFieldCache(mIds)
         // generate cards
-        if (!mCol.genCards(mIds, mModel).isEmpty()) {
+        if (mCol.genCards(mIds, mModel).isNotEmpty()) {
             this.log.add(0, getString(R.string.note_importer_empty_cards_found))
         }
 
@@ -209,13 +209,10 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
         }
         val part1 = getQuantityString(R.plurals.note_importer_notes_added, _new.size)
         val part2 = getQuantityString(R.plurals.note_importer_notes_updated, mUpdateCount)
-        val unchanged: Int
-        unchanged = if (mImportMode == ImportMode.UPDATE_MODE) {
-            dupeCount - mUpdateCount
-        } else if (mImportMode == ImportMode.IGNORE_MODE) {
-            dupeCount
-        } else {
-            0
+        val unchanged: Int = when (mImportMode) {
+            ImportMode.UPDATE_MODE -> dupeCount - mUpdateCount
+            ImportMode.IGNORE_MODE -> dupeCount
+            else -> 0
         }
         val part3 = getQuantityString(R.plurals.note_importer_notes_unchanged, unchanged)
         mLog.add(String.format("%s, %s, %s.", part1, part2, part3))
@@ -251,24 +248,28 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
         mCol.db.executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", rows)
     }
 
-    private fun updateData(n: ForeignNote, id: Long, sflds: Array<String?>): Array<Any>? {
+    private fun updateData(n: ForeignNote, id: Long, sflds: Array<String>): Array<Any>? {
         mIds!!.add(id)
         if (!processFields(n, sflds)) {
             return null
         }
         var tags: String?
-        return if (mTagsMapped) {
-            tags = mCol.tags.join(n.mTags)
-            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
-        } else if (mTagModified != null) {
-            tags = mCol.db.queryString("select tags from notes where id = ?", id)
-            val tagList = mCol.tags.split(tags)
-            tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
-            tags = mCol.tags.join(tagList)
-            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
-        } else {
-            // This looks inconsistent but is fine, see: addUpdates
-            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
+        return when {
+            mTagsMapped -> {
+                tags = mCol.tags.join(n.mTags)
+                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
+            }
+            mTagModified != null -> {
+                tags = mCol.db.queryString("select tags from notes where id = ?", id)
+                val tagList = mCol.tags.split(tags)
+                tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
+                tags = mCol.tags.join(tagList)
+                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
+            }
+            else -> {
+                // This looks inconsistent but is fine, see: addUpdates
+                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
+            }
         }
     }
 
@@ -297,15 +298,8 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
         mUpdateCount = changes2 - changes
     }
 
-    private fun processFields(note: ForeignNote, fields: Array<String?>? = null): Boolean {
-        var fieldList = fields
-        if (fieldList == null) {
-            val length = mModel!!.getJSONArray("flds").length()
-            fieldList = arrayOfNulls(length)
-            for (i in 0 until length) {
-                fieldList[i] = ""
-            }
-        }
+    private fun processFields(note: ForeignNote, fields: Array<String>? = null): Boolean {
+        val fieldList = fields ?: Array(mModel!!.getJSONArray("flds").length()) { "" }
         for ((c, value) in mMapping!!.withIndex()) {
             if (value == null) {
                 continue
@@ -314,7 +308,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
                 note.mTags.addAll(mCol.tags.split(note.mFields[c]!!))
             } else {
                 val sidx = mFMap!![value]!!.first
-                fieldList[sidx] = note.mFields[c]
+                fieldList[sidx] = note.mFields[c]!!
             }
         }
         note.fieldsStr = Utils.joinFields(fieldList)
@@ -386,8 +380,6 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Impo
     }
 
     init {
-        mModel = col.models.current()
-        mTemplateParsed = mModel!!.parsedNodes()
         mMapping = null
         mTagModified = null
         mTagsMapped = false
