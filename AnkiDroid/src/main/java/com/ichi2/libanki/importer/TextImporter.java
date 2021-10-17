@@ -74,7 +74,7 @@ public class TextImporter extends NoteImporter {
             reader = CsvReader.fromDialect(data, mDialect);
         }
         try {
-            for (List<String> row : reader) {
+            for (List<? extends String> row : reader) {
                 if (row == null) {
                     continue;
                 }
