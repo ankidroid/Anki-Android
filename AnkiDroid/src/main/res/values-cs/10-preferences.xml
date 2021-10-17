@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrace</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Odpověď po časovém limitu</string>
     <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory.</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas pro zobrazení odpovědi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Pro návrat/ukončit stisknout zpět dvakrát</string>
     <string name="exit_via_double_tap_back_summ">Vyhnout se nechtěnému opuštění opakování nebo ukončení aplikace</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Povolit všechny soubory při importu médií</string>
+    <string name="media_import_allow_all_files_summ">Pokud Android nerozpozná multimediální soubor</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnout pokročilé statistiky</string>

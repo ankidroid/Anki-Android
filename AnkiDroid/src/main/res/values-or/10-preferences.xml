@@ -95,7 +95,7 @@
     <string name="gestures_allow_links" maxLength="41">ଲିଙ୍କଗୁଡ଼ିକରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅଣଦେଖା କରନ୍ତୁ</string>
     <string name="gestures_allow_links_summary">ଯଦି ଏକ ଲିଙ୍କ୍/ଇଙ୍ଗିତ ଦବାଯାଏ ତେବେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀ ପ୍ରକ୍ରିୟାକରଣ ହେବ ନାହିଁ।</string>
     <string name="gestures_corner_touch" maxLength="41">୯-ଅଙ୍କ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_touch_summary">ଚିତ୍ରପଟ୍ଟ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଭିଗେସନ୍ ଡ୍ରୟର୍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରିନର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଭିଗେସନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
     <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ୱାଇପ୍</string>
@@ -144,9 +144,9 @@
     <string name="language" maxLength="41">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
     <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ</string>
-    <string name="notification_pref_title" maxLength="41">କେତେବେଳେ ସୂଚିତ କରିବି</string>
-    <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ </string>
-    <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ</string>
+    <string name="notification_pref_title" maxLength="41">କେବେ ସୂଚିତ କରାଯିବ</string>
+    <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ</string>
+    <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
     <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଥାଏ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">ଫେରିବା/ପ୍ରସ୍ଥାନ କରିବାକୁ ଦୁଇଥର ବ୍ୟାକ୍ ଦବାଅ</string>
     <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ଲିକେସନ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ତ୍ରୁଟିସଂଖ୍ୟା</string>
     <string name="deck_conf_general" maxLength="41">ସାଧାରଣ </string>
-    <string name="deck_conf_reminders" maxLength="41">ସ୍ମାରକପତ୍ର</string>
+    <string name="deck_conf_reminders" maxLength="41">ସ୍ମାରକଗୁଡ଼ିକ</string>
     <string name="deck_conf_steps" maxLength="41">ପାଦ (ମିନିଟ ରେ)</string>
     <string name="deck_conf_order" maxLength="41">କ୍ରମ</string>
     <string name="deck_conf_new_cards_day" maxLength="41">ନୂତନ ପତ୍ର/ଦିନ</string>
