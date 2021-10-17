@@ -1,480 +1,395 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.libanki.importer;
+package com.ichi2.libanki.importer
 
-import android.database.Cursor;
-import android.text.TextUtils;
-import android.util.Pair;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
-import com.ichi2.libanki.template.ParsedNode;
-import com.ichi2.libanki.utils.StringUtils;
-import com.ichi2.utils.Assert;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.HtmlUtils;
-import com.ichi2.utils.JSONObject;
-
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.PluralsRes;
-import androidx.annotation.StringRes;
-
-import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
-import static com.ichi2.libanki.Utils.fieldChecksum;
-import static com.ichi2.libanki.Utils.guid64;
-import static com.ichi2.libanki.Utils.joinFields;
-import static com.ichi2.libanki.Utils.splitFields;
-import static com.ichi2.libanki.importer.NoteImporter.ImportMode.ADD_MODE;
-import static com.ichi2.libanki.importer.NoteImporter.ImportMode.IGNORE_MODE;
-import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
+import android.text.TextUtils
+import android.util.Pair
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.libanki.*
+import com.ichi2.libanki.template.ParsedNode
+import com.ichi2.libanki.utils.StringUtils
+import com.ichi2.utils.Assert
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HtmlUtils
+import com.ichi2.utils.JSONObject
 
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
-public class NoteImporter extends Importer {
+open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Importer(col, file) {
+    private val mNeedMapper = true
+    private val mNeedDelimiter = false
+    private var mAllowHTML = false
+    private var mImportMode = ImportMode.UPDATE_MODE
 
-    /** A magic string used in {@link this#mMapping} when a csv field should be mapped to the tags of a note */
-    public static final String TAGS_IDENTIFIER = "_tags";
+    /** Note: elements can be null  */
+    private var mMapping: List<String?>?
+    private val mTagModified: String?
+    private val mModel: Model?
 
-    private boolean mNeedMapper = true;
-    private boolean mNeedDelimiter = false;
-    private boolean mAllowHTML = false;
-    private ImportMode mImportMode = UPDATE_MODE;
-    /** Note: elements can be null */
-    @Nullable
-    private List<String> mMapping;
-    @Nullable
-    private final String mTagModified ;
+    /** _tagsMapped in python  */
+    private var mTagsMapped: Boolean
 
+    /** _fmap in Python  */
+    private var mFMap: Map<String?, Pair<Int, JSONObject>>? = null
 
-    private final Model mModel;
-
-    /** _tagsMapped in python */
-    private boolean mTagsMapped;
-
-    /** _fmap in Python */
-    private Map<String, Pair<Integer, JSONObject>> mFMap;
-
-    /** _nextID in python */
-    private long mNextId;
-    private ArrayList<Long> mIds;
-    private boolean mEmptyNotes;
-    private int mUpdateCount;
-    private List<ParsedNode> mTemplateParsed;
-
-
-    public NoteImporter(Collection col, String file) {
-        super(col, file);
-        this.mModel = col.getModels().current();
-        this.mTemplateParsed = mModel.parsedNodes();
-        this.mMapping = null;
-        this.mTagModified = null;
-        this.mTagsMapped = false;
+    /** _nextID in python  */
+    private var mNextId: Long = 0
+    private var mIds: ArrayList<Long>? = null
+    private var mEmptyNotes = false
+    private var mUpdateCount = 0
+    private val mTemplateParsed: List<ParsedNode>
+    override fun run() {
+        Assert.that(mMapping != null)
+        Assert.that(!mMapping!!.isEmpty())
+        val c = foreignNotes()
+        importNotes(c)
     }
 
-
-    @Override
-    public void run() {
-        Assert.that(mMapping != null);
-        Assert.that(!mMapping.isEmpty());
-        List<ForeignNote> c = foreignNotes();
-        importNotes(c);
+    /** The number of fields. */
+    open fun fields(): Int {
+        return 0
     }
 
-
-
-    /** The number of fields.*/
-    public int fields() {
-        return 0;
-    }
-
-
-    public void initMapping() {
-        List<String> flds = mModel.getFieldsNames();
+    fun initMapping() {
+        var flds = mModel!!.fieldsNames
         // truncate to provided count
-        flds = flds.subList(0, Math.min(flds.size(), fields()));
+        flds = flds.subList(0, Math.min(flds.size, fields()))
         // if there's room left, add tags
-        if (fields() > flds.size()) {
-            flds.add(TAGS_IDENTIFIER);
+        if (fields() > flds.size) {
+            flds.add(TAGS_IDENTIFIER)
         }
         // and if there's still room left, pad
-        int iterations = fields() - flds.size();
-        for (int i = 0; i < iterations; i++) {
-            flds.add(null);
+        val iterations = fields() - flds.size
+        for (i in 0 until iterations) {
+            flds.add(null)
         }
-        mMapping = flds;
+        mMapping = flds
     }
 
-
-    boolean mappingOk() {
-        return mMapping.contains(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
+    fun mappingOk(): Boolean {
+        return mMapping!!.contains(mModel!!.getJSONArray("flds").getJSONObject(0).getString("name"))
     }
 
-
-    @NonNull
-    protected List<ForeignNote> foreignNotes() {
-        return new ArrayList<>();
+    protected open fun foreignNotes(): List<ForeignNote> {
+        return ArrayList()
     }
 
-    /** Open file and ensure it's in the right format. */
-    protected void open() {
+    /** Open file and ensure it's in the right format.  */
+    protected open fun open() {
         // intentionally empty
     }
 
-
-    /** Closes the open file. */
-    protected void close() {
+    /** Closes the open file.  */
+    protected fun close() {
         // intentionally empty
     }
 
-
-    /** Convert each card into a note, apply attributes and add to col. */
-    public void importNotes(List<ForeignNote> notes) {
-        Assert.that(mappingOk());
+    /** Convert each card into a note, apply attributes and add to col.  */
+    fun importNotes(notes: List<ForeignNote>) {
+        Assert.that(mappingOk())
         // note whether tags are mapped
-        mTagsMapped = false;
-        for (String f : mMapping) {
-            if (TAGS_IDENTIFIER.equals(f)) {
-                mTagsMapped = true;
-                break;
+        mTagsMapped = false
+        for (f in mMapping!!) {
+            if (TAGS_IDENTIFIER == f) {
+                mTagsMapped = true
+                break
             }
         }
         // gather checks for duplicate comparison
-        HashMap<Long, List<Long>> csums = new HashMap<>();
-        try (Cursor c = mCol.getDb().query("select csum, id from notes where mid = ?", mModel.getLong("id"))) {
+        val csums = HashMap<Long, MutableList<Long>>()
+        mCol.db.query("select csum, id from notes where mid = ?", mModel!!.getLong("id")).use { c ->
             while (c.moveToNext()) {
-                long csum = c.getLong(0);
-                long id = c.getLong(1);
+                val csum = c.getLong(0)
+                val id = c.getLong(1)
                 if (csums.containsKey(csum)) {
-                    csums.get(csum).add(id);
+                    csums[csum]!!.add(id)
                 } else {
-                    csums.put(csum, new ArrayList<>(Collections.singletonList(id)));
+                    csums[csum] = ArrayList(listOf(id))
                 }
             }
         }
-
-        HashSet<String> firsts = HashUtil.HashSetInit(notes.size());
-        int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
-        mFMap = Models.fieldMap(mModel);
-        mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
+        val firsts = HashUtil.HashSetInit<String>(notes.size)
+        val fld0index = mMapping!!.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"))
+        mFMap = Models.fieldMap(mModel)
+        mNextId = mCol.time.timestampID(mCol.db, "notes")
         // loop through the notes
-        List<Object[]> updates = new ArrayList<>(notes.size());
-        List<String> updateLog = new ArrayList<>(notes.size());
+        val updates: MutableList<Array<Any>> = ArrayList(notes.size)
+        val updateLog: MutableList<String> = ArrayList(notes.size)
         // PORT: Translations moved closer to their sources
-        List<Object[]> _new = new ArrayList<>();
-        mIds = new ArrayList<>();
-        mEmptyNotes = false;
-        int dupeCount = 0;
-        List<String> dupes = new ArrayList<>(notes.size());
-        for (ForeignNote n : notes) {
-            for (int c = 0; c < n.mFields.size(); c++) {
-                if (!this.mAllowHTML) {
-                    n.mFields.set(c, HtmlUtils.escape(n.mFields.get(c)));
+        val _new: MutableList<Array<Any>> = ArrayList()
+        mIds = ArrayList()
+        mEmptyNotes = false
+        var dupeCount = 0
+        val dupes: MutableList<String> = ArrayList(notes.size)
+        for (n in notes) {
+            for (c in n.mFields.indices) {
+                if (!mAllowHTML) {
+                    n.mFields[c] = HtmlUtils.escape(n.mFields[c]!!)
                 }
-                n.mFields.set(c, n.mFields.get(c).trim());
-                if (!this.mAllowHTML) {
-                    n.mFields.set(c, n.mFields.get(c).replace("\n", "<br>"));
+                n.mFields[c] = n.mFields[c]!!.trim { it <= ' ' }
+                if (!mAllowHTML) {
+                    n.mFields[c] = n.mFields[c]!!.replace("\n", "<br>")
                 }
             }
-            String fld0 = n.mFields.get(fld0index);
-            long csum = fieldChecksum(fld0);
+            val fld0 = n.mFields[fld0index]
+            val csum = Utils.fieldChecksum(fld0)
             // first field must exist
-            if (fld0 == null || fld0.length() == 0) {
-                getLog().add(getString(R.string.note_importer_error_empty_first_field, TextUtils.join(" ", n.mFields)));
-                continue;
+            if (fld0 == null || fld0.length == 0) {
+                log.add(getString(R.string.note_importer_error_empty_first_field, TextUtils.join(" ", n.mFields)))
+                continue
             }
             // earlier in import?
-            if (firsts.contains(fld0) && mImportMode != ADD_MODE) {
+            if (firsts.contains(fld0) && mImportMode != ImportMode.ADD_MODE) {
                 // duplicates in source file; log and ignore
-                getLog().add(getString(R.string.note_importer_error_appeared_twice, fld0));
-                continue;
+                log.add(getString(R.string.note_importer_error_appeared_twice, fld0))
+                continue
             }
-            firsts.add(fld0);
+            firsts.add(fld0)
             // already exists?
-            boolean found = false;
+            var found = false
             if (csums.containsKey(csum)) {
                 // csum is not a guarantee; have to check
-                for (Long id : csums.get(csum)) {
-                    String flds = mCol.getDb().queryString("select flds from notes where id = ?", id);
-                    String[] sflds = splitFields(flds);
-                    if (fld0.equals(sflds[0])) {
+                for (id in csums[csum]!!) {
+                    val flds = mCol.db.queryString("select flds from notes where id = ?", id)
+                    val sflds = Utils.splitFields(flds)
+                    if (fld0 == sflds[0]) {
                         // duplicate
-                        found = true;
-                        if (mImportMode == UPDATE_MODE) {
-                            Object[] data = updateData(n, id, sflds);
-                            if (data != null && data.length > 0) {
-                                updates.add(data);
-                                updateLog.add(getString(R.string.note_importer_error_first_field_matched, fld0));
-                                dupeCount += 1;
-                                found = true;
+                        found = true
+                        if (mImportMode == ImportMode.UPDATE_MODE) {
+                            val data = updateData(n, id, sflds)
+                            if (data != null && data.size > 0) {
+                                updates.add(data)
+                                updateLog.add(getString(R.string.note_importer_error_first_field_matched, fld0))
+                                dupeCount += 1
+                                found = true
                             }
-                        } else if (mImportMode == IGNORE_MODE) {
-                            dupeCount += 1;
-                        } else if (mImportMode == ADD_MODE) {
+                        } else if (mImportMode == ImportMode.IGNORE_MODE) {
+                            dupeCount += 1
+                        } else if (mImportMode == ImportMode.ADD_MODE) {
                             // allow duplicates in this case
                             if (!dupes.contains(fld0)) {
                                 // only show message once, no matter how many
                                 // duplicates are in the collection already
-                                updateLog.add(getString(R.string.note_importer_error_added_duplicate_first_field, fld0));
-                                dupes.add(fld0);
+                                updateLog.add(getString(R.string.note_importer_error_added_duplicate_first_field, fld0))
+                                dupes.add(fld0)
                             }
-                            found = false;
+                            found = false
                         }
                     }
                 }
             }
             // newly add
             if (!found) {
-                Object[] data = newData(n);
-                if (data != null && data.length > 0) {
-                    _new.add(data);
+                val data = newData(n)
+                if (data != null && data.size > 0) {
+                    _new.add(data)
                     // note that we've seen this note once already
-                    firsts.add(fld0);
+                    firsts.add(fld0)
                 }
             }
         }
-        addNew(_new);
-        addUpdates(updates);
+        addNew(_new)
+        addUpdates(updates)
         // make sure to update sflds, etc
-        mCol.updateFieldCache(mIds);
+        mCol.updateFieldCache(mIds)
         // generate cards
         if (!mCol.genCards(mIds, mModel).isEmpty()) {
-            this.getLog().add(0, getString(R.string.note_importer_empty_cards_found));
+            this.log.add(0, getString(R.string.note_importer_empty_cards_found))
         }
-
 
         // we randomize or order here, to ensure that siblings
         // have the same due#
-        long did = mCol.getDecks().selected();
-        DeckConfig conf = mCol.getDecks().confForDid(did);
+        val did = mCol.decks.selected()
+        val conf = mCol.decks.confForDid(did)
         // in order due?
-        if (conf.getJSONObject("new").getInt("order") == NEW_CARDS_RANDOM) {
-            mCol.getSched().randomizeCards(did);
+        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
+            mCol.sched.randomizeCards(did)
         }
-        String part1 = getQuantityString(R.plurals.note_importer_notes_added, _new.size());
-        String part2 = getQuantityString(R.plurals.note_importer_notes_updated, mUpdateCount);
-        int unchanged;
-        if (mImportMode == UPDATE_MODE) {
-            unchanged = dupeCount - mUpdateCount;
-        } else if (mImportMode == IGNORE_MODE) {
-            unchanged = dupeCount;
+        val part1 = getQuantityString(R.plurals.note_importer_notes_added, _new.size)
+        val part2 = getQuantityString(R.plurals.note_importer_notes_updated, mUpdateCount)
+        val unchanged: Int
+        unchanged = if (mImportMode == ImportMode.UPDATE_MODE) {
+            dupeCount - mUpdateCount
+        } else if (mImportMode == ImportMode.IGNORE_MODE) {
+            dupeCount
         } else {
-            unchanged = 0;
+            0
         }
-        String part3 = getQuantityString(R.plurals.note_importer_notes_unchanged, unchanged);
-        mLog.add(String.format("%s, %s, %s.", part1, part2, part3));
-        mLog.addAll(updateLog);
+        val part3 = getQuantityString(R.plurals.note_importer_notes_unchanged, unchanged)
+        mLog.add(String.format("%s, %s, %s.", part1, part2, part3))
+        mLog.addAll(updateLog)
         if (mEmptyNotes) {
-            mLog.add(getString(R.string.note_importer_error_empty_notes));
+            mLog.add(getString(R.string.note_importer_error_empty_notes))
         }
-        mTotal = mIds.size();
+        mTotal = mIds!!.size
     }
 
-    @Nullable
-    private Object[] newData(ForeignNote n) {
-        long id = mNextId;
-        mNextId++;
-        mIds.add(id);
-        if (!processFields(n)) {
-            return null;
-        }
-        return new Object[] {
-                id,
-                guid64(),
-                mModel.getLong("id"),
-                mCol.getTime().intTime(),
-                mCol.usn(),
-                mCol.getTags().join(n.mTags),
-                n.fieldsStr,
-                "",
-                "",
-                0,
-                ""
-        };
+    private fun newData(n: ForeignNote): Array<Any>? {
+        val id = mNextId
+        mNextId++
+        mIds!!.add(id)
+        return if (!processFields(n)) {
+            null
+        } else arrayOf(
+            id,
+            Utils.guid64(),
+            mModel!!.getLong("id"),
+            mCol.time.intTime(),
+            mCol.usn(),
+            mCol.tags.join(n.mTags),
+            n.fieldsStr,
+            "",
+            "",
+            0,
+            ""
+        )
     }
 
-    private void addNew(List<Object[]> rows) {
-        mCol.getDb().executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", rows);
+    private fun addNew(rows: List<Array<Any>>) {
+        mCol.db.executeMany("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", rows)
     }
 
-
-    private Object[] updateData(ForeignNote n, long id, String[] sflds) {
-        mIds.add(id);
+    private fun updateData(n: ForeignNote, id: Long, sflds: Array<String?>): Array<Any>? {
+        mIds!!.add(id)
         if (!processFields(n, sflds)) {
-            return null;
+            return null
         }
-        String tags;
-        if (mTagsMapped) {
-            tags = mCol.getTags().join(n.mTags);
-            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags };
+        var tags: String?
+        return if (mTagsMapped) {
+            tags = mCol.tags.join(n.mTags)
+            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
         } else if (mTagModified != null) {
-            tags = mCol.getDb().queryString("select tags from notes where id = ?", id);
-            List<String> tagList = mCol.getTags().split(tags);
-            tagList.addAll(StringUtils.splitOnWhitespace(mTagModified));
-            tags = mCol.getTags().join(tagList);
-            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr };
+            tags = mCol.db.queryString("select tags from notes where id = ?", id)
+            val tagList = mCol.tags.split(tags)
+            tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
+            tags = mCol.tags.join(tagList)
+            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
         } else {
             // This looks inconsistent but is fine, see: addUpdates
-            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr };
+            arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
         }
     }
 
-
-    private void addUpdates(List<Object[]> rows) {
-        int changes = mCol.getDb().queryScalar("select total_changes()");
+    private fun addUpdates(rows: List<Array<Any>>) {
+        val changes = mCol.db.queryScalar("select total_changes()")
         if (mTagsMapped) {
-            mCol.getDb().executeMany(
-                    "update notes set mod = ?, usn = ?, flds = ?, tags = ? " +
+            mCol.db.executeMany(
+                "update notes set mod = ?, usn = ?, flds = ?, tags = ? " +
                     "where id = ? and (flds != ? or tags != ?)",
-                    rows
-                    );
+                rows
+            )
         } else if (mTagModified != null) {
-            mCol.getDb().executeMany(
-                    "update notes set mod = ?, usn = ?, flds = ?, tags = ? " +
+            mCol.db.executeMany(
+                "update notes set mod = ?, usn = ?, flds = ?, tags = ? " +
                     "where id = ? and flds != ?",
-                    rows
-            );
-
+                rows
+            )
         } else {
-            mCol.getDb().executeMany(
-                    "update notes set mod = ?, usn = ?, flds = ? " +
+            mCol.db.executeMany(
+                "update notes set mod = ?, usn = ?, flds = ? " +
                     "where id = ? and flds != ?",
-                    rows
-            );
+                rows
+            )
         }
-        int changes2 = mCol.getDb().queryScalar("select total_changes()");
-        mUpdateCount = changes2 - changes;
+        val changes2 = mCol.db.queryScalar("select total_changes()")
+        mUpdateCount = changes2 - changes
     }
 
-
-    private boolean processFields(ForeignNote note) {
-        return processFields(note, null);
-    }
-
-    private boolean processFields(ForeignNote note, @Nullable String[] fields) {
-        if (fields == null) {
-            int length = mModel.getJSONArray("flds").length();
-            fields = new String[length];
-            for (int i = 0; i < length; i++) {
-                fields[i] = "";
+    private fun processFields(note: ForeignNote, fields: Array<String?>? = null): Boolean {
+        var fieldList = fields
+        if (fieldList == null) {
+            val length = mModel!!.getJSONArray("flds").length()
+            fieldList = arrayOfNulls(length)
+            for (i in 0 until length) {
+                fieldList[i] = ""
             }
         }
-        for (Map.Entry<Integer, String> entry : enumerate(mMapping)) {
-            if (entry.getValue() == null) {
-                continue;
+        for ((c, value) in mMapping!!.withIndex()) {
+            if (value == null) {
+                continue
             }
-            int c = entry.getKey();
-            if (entry.getValue().equals(TAGS_IDENTIFIER)) {
-                note.mTags.addAll(mCol.getTags().split(note.mFields.get(c)));
+            if (value == TAGS_IDENTIFIER) {
+                note.mTags.addAll(mCol.tags.split(note.mFields[c]!!))
             } else {
-                Integer sidx = mFMap.get(entry.getValue()).first;
-                fields[sidx] = note.mFields.get(c);
+                val sidx = mFMap!![value]!!.first
+                fieldList[sidx] = note.mFields[c]
             }
         }
-        note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = Models.availOrds(mModel, fields, mTemplateParsed, Models.AllowEmpty.TRUE);
+        note.fieldsStr = Utils.joinFields(fieldList)
+        val ords = Models.availOrds(mModel, fieldList, mTemplateParsed, Models.AllowEmpty.TRUE)
         if (ords.isEmpty()) {
-            mEmptyNotes = true;
-            return false;
+            mEmptyNotes = true
+            return false
         }
-        return true;
+        return true
     }
 
+    val total: Int
+        get() = mTotal
 
-
-    /** Not in libAnki */
-
-    private <T> List<Map.Entry<Integer, T>> enumerate(List<T> list) {
-        List<Map.Entry<Integer, T>> ret = new ArrayList<>(list.size());
-        int index = 0;
-        for (T el : list) {
-            ret.add(new AbstractMap.SimpleEntry<>(index, el));
-            index++;
-        }
-        return ret;
+    fun setImportMode(mode: ImportMode) {
+        mImportMode = mode
     }
 
-
-    public int getTotal() {
-        return mTotal;
+    private fun getQuantityString(@PluralsRes res: Int, quantity: Int): String {
+        return AnkiDroidApp.getAppResources().getQuantityString(res, quantity, quantity)
     }
 
-    public void setImportMode(ImportMode mode) {
-        this.mImportMode = mode;
+    protected fun getString(@StringRes res: Int): String {
+        return AnkiDroidApp.getAppResources().getString(res)
     }
 
-
-    private String getQuantityString(@PluralsRes int res, int quantity) {
-        return AnkiDroidApp.getAppResources().getQuantityString(res, quantity, quantity);
+    protected fun getString(res: Int, vararg formatArgs: Any): String {
+        return AnkiDroidApp.getAppResources().getString(res, *formatArgs)
     }
 
-
-    @NonNull
-    protected String getString(@StringRes int res) {
-        return AnkiDroidApp.getAppResources().getString(res);
+    fun setAllowHtml(allowHtml: Boolean) {
+        mAllowHTML = allowHtml
     }
 
+    enum class ImportMode {
+        /** update if first field matches existing note  */
+        UPDATE_MODE, // 0
 
-    @NonNull
-    protected String getString(int res, @NonNull Object... formatArgs) {
-        return AnkiDroidApp.getAppResources().getString(res, formatArgs);
+        /** ignore if first field matches existing note  */
+        IGNORE_MODE, // 1
+
+        /** ADD_MODE: import even if first field matches existing note  */
+        ADD_MODE
+        // 2
     }
 
-
-    public void setAllowHtml(boolean allowHtml) {
-        this.mAllowHTML = allowHtml;
+    /** A temporary object storing fields and attributes.  */
+    class ForeignNote {
+        @JvmField
+        val mFields: MutableList<String?> = ArrayList()
+        @JvmField
+        val mTags: MutableList<String> = ArrayList()
+        var deck = Any()
+        var fieldsStr = ""
     }
 
-
-    public enum ImportMode {
-        /** update if first field matches existing note */
-        UPDATE_MODE, //0
-        /** ignore if first field matches existing note */
-        IGNORE_MODE, //1
-        /** ADD_MODE: import even if first field matches existing note */
-        ADD_MODE, //2
+    class ForeignCard {
+        val mDue: Long = 0
+        val mIvl = 1
+        val mFactor = Consts.STARTING_FACTOR
+        val mReps = 0
+        val mLapses = 0
     }
 
-    /** A temporary object storing fields and attributes. */
-    public static class ForeignNote {
-        public final List<String> mFields = new ArrayList<>();
-        public final List<String> mTags = new ArrayList<>();
-        public Object deck = new Object();
-        public String fieldsStr = "";
+    private class Triple(val nid: Long, val ord: Int, val card: ForeignCard)
+    companion object {
+        /** A magic string used in [this.mMapping] when a csv field should be mapped to the tags of a note  */
+        const val TAGS_IDENTIFIER = "_tags"
     }
 
-    public static class ForeignCard {
-        public final long mDue = 0;
-        public final int mIvl = 1;
-        public final int mFactor = Consts.STARTING_FACTOR;
-        public final int mReps = 0;
-        public final int mLapses = 0;
-    }
-
-    private static class Triple {
-
-        public final long mNid;
-        public final Integer mOrd;
-        public final ForeignCard mCard;
-
-
-        public Triple(long nid, Integer ord, ForeignCard card) {
-
-            this.mNid = nid;
-            this.mOrd = ord;
-            this.mCard = card;
-        }
+    init {
+        mModel = col.models.current()
+        mTemplateParsed = mModel!!.parsedNodes()
+        mMapping = null
+        mTagModified = null
+        mTagsMapped = false
     }
 }
