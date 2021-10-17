@@ -152,7 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
     <string name="timeout_answer_text" maxLength="41">Аўтаматычна паказваць адказ</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Затрымка з адказам</string>
     <string name="timeout_answer_summ">Аўтаматычна паказваць адказ без уводу даных карыстальнікам. Затрымка складаецца з часу аўтаматычнага прайгравання аўдыяфайлаў.</string>
     <string name="timeout_answer_seconds" maxLength="41">Час на паказ адказу</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек</string>
@@ -216,8 +216,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
     <string name="exit_via_double_tap_back_summ">Для прадухілення нечаканага выхаду з праграмы</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Дазволіць усе файлы пры імпарце медыя</string>
+    <string name="media_import_allow_all_files_summ">Калі Android не распазнае файл з медыя</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Пашыраная статыстыка</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Уключыць пашыраную статыстыку</string>
