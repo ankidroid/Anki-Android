@@ -18,72 +18,54 @@
 
  Ported from https://github.com/python/cpython/blob/c88239f864a27f673c0f0a9e62d2488563f9d081/Modules/_csv.c
  */
+package com.ichi2.libanki.importer.python
 
-package com.ichi2.libanki.importer.python;
-
-import android.annotation.SuppressLint;
-
-import java.util.Iterator;
-import java.util.List;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.annotation.SuppressLint
+import androidx.annotation.CheckResult
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class CsvReader implements Iterable<List<String>> {
+class CsvReader(data: Iterator<String>, delimiter: Char, inputDialect: CsvDialect?) : Iterable<List<String>> {
+    @JvmField
+    val dialect: CsvDialect
+    @JvmField
+    var input_iter: Iterator<String>?
+    var iter: CsvReaderIterator? = null
+    override fun iterator(): MutableIterator<List<String>> {
+        if (iter == null) {
+            iter = CsvReaderIterator(this)
+        }
+        return iter!!
+    }
 
-    public final CsvDialect dialect;
-    public Iterator<String> input_iter;
-    public CsvReaderIterator iter;
+    operator fun next(): List<String> {
+        return iterator().next()
+    }
 
-
-    public CsvReader(@NonNull Iterator<String> data, char delimiter, @Nullable CsvDialect dialect) {
-        if (delimiter == '\0' && dialect == null) {
-            throw new IllegalStateException("either the dialect or the delimiter must be set");
+    companion object {
+        @JvmStatic
+        @CheckResult
+        fun fromDelimiter(data: Iterator<String>, delimiter: Char): CsvReader {
+            return CsvReader(data, delimiter, null)
         }
 
-        this.input_iter = null;
+        @JvmStatic
+        @CheckResult
+        fun fromDialect(data: Iterator<String>, dialect: CsvDialect): CsvReader {
+            return CsvReader(data, '\u0000', dialect)
+        }
+    }
 
+    init {
+        var dialect = inputDialect
+        check(!(delimiter == '\u0000' && dialect == null)) { "either the dialect or the delimiter must be set" }
+        input_iter = null
         if (dialect == null) {
-            dialect = new CsvDialect("unused");
-            dialect.mDelimiter = delimiter;
+            dialect = CsvDialect("unused")
+            dialect.mDelimiter = delimiter
         }
 
-        // PORTING: Python does this in the constructor
-        dialect.mDoublequote = true;
-
-        this.input_iter = data;
-        this.dialect = dialect;
-    }
-
-
-    @NonNull
-    @CheckResult
-    public static CsvReader fromDelimiter(@NonNull Iterator<String> data, char delimiter) {
-        return new CsvReader(data, delimiter, null);
-    }
-
-
-    @NonNull
-    @CheckResult
-    public static CsvReader fromDialect(@NonNull Iterator<String> data, @NonNull CsvDialect dialect) {
-        return new CsvReader(data, '\0', dialect);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<List<String>> iterator() {
-        if (this.iter == null) {
-            this.iter = new CsvReaderIterator(this);
-        }
-        return this.iter;
-    }
-
-
-    @Nullable
-    public List<String> next() {
-        return iterator().next();
+        dialect.mDoublequote = true
+        input_iter = data
+        this.dialect = dialect
     }
 }
