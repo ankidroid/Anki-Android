@@ -17,20 +17,21 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.runtimetools;
+@file:Suppress("DEPRECATION") // #7108: AsyncTask
+package com.ichi2.anki.runtimetools
 
-public class TaskOperations {
+import android.os.AsyncTask
 
+object TaskOperations {
     /**
      * Gently killing AsyncTask
      */
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public static void stopTaskGracefully(android.os.AsyncTask<?, ?, ?> t) {
+    @JvmStatic
+    fun stopTaskGracefully(t: AsyncTask<*, *, *>?) {
         if (t != null) {
-            if (t.getStatus() == android.os.AsyncTask.Status.RUNNING) {
-                t.cancel(true);
+            if (t.status == AsyncTask.Status.RUNNING) {
+                t.cancel(true)
             }
         }
     }
-
 }
