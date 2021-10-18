@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki;
 
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.utils.JSONObject;
 
@@ -63,6 +64,14 @@ public class CollectionTest extends RobolectricTest {
         assertThat("A new card should be generated", n.numberOfCards(), is(3));
 
         assertThat("The new card should have the same did as the previous cards", n.cards().get(2).getDid(), is(did));
+    }
+
+    @Test
+    public void beforeUploadClosesCollection() {
+        Collection col = getCol();
+        assertThat("db should be open", CollectionHelper.getInstance().colIsOpen(), is(true));
+        col.beforeUpload();
+        assertThat("db should be closed", CollectionHelper.getInstance().colIsOpen(), is(false));
     }
 
     /*******************

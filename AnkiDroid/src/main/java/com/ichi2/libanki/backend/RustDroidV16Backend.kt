@@ -43,6 +43,11 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
         return DB(path) { RustV2SQLiteOpenHelperFactory(backendFactory) }
     }
 
+    override fun closeCollection(db: DB?, downgradeToSchema11: Boolean) {
+        backend.closeCollection(downgradeToSchema11)
+        super.closeCollection(db, downgradeToSchema11)
+    }
+
     /**
      * A [SupportSQLiteOpenHelper.Factory] which will upgrade the collection
      * to the schema of the backend on open
