@@ -15,6 +15,11 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.dialogs;
+import android.widget.EditText;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.RobolectricTest;
@@ -25,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
@@ -137,4 +143,19 @@ public class CreateDeckDialogTest extends RobolectricTest {
         });
     }
 
+    @Test
+    public void nameMayNotBeZeroLength() {
+        mActivityScenario.onActivity(activity -> {
+            CreateDeckDialog createDeckDialog = new CreateDeckDialog(activity, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
+            MaterialDialog materialDialog = createDeckDialog.showDialog();
+            MDButton actionButton = materialDialog.getActionButton(DialogAction.POSITIVE);
+
+            assertThat("Ok is disabled if zero length input", actionButton.isEnabled(), is(false));
+
+            EditText editText = Objects.requireNonNull(materialDialog.getInputEditText());
+
+            editText.setText("NotEmpty");
+            assertThat("Ok is enabled if not zero length input", actionButton.isEnabled(), is(true));
+        });
+    }
 } 

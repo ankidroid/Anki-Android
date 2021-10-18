@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.Context;
-import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
@@ -27,7 +26,6 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.ui.FixedEditText;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -38,14 +36,14 @@ import timber.log.Timber;
 
 public class CreateDeckDialog {
 
-    private final EditText mDialogEditText;
-    private final MaterialDialog.Builder mBuilder;
     private final Context mContext;
     private final int mTitle;
     private final Long mParentId;
     private String mPreviousDeckName;
     private final DeckDialogType mDeckDialogType;
     public Consumer<Long> mOnNewDeckCreated;
+    private String mInitialDeckName = "";
+    private MaterialDialog mShownDialog;
 
     public enum DeckDialogType
     {
@@ -60,13 +58,12 @@ public class CreateDeckDialog {
         this.mTitle = title;
         this.mParentId = parentId;
         this.mDeckDialogType = deckDialogType;
-        this.mDialogEditText = new FixedEditText(context);
-        mBuilder = new MaterialEditTextDialog.Builder(context, mDialogEditText);
     }
 
+    /** Used for rename */
     public void setDeckName(@NonNull String deckName) {
         mPreviousDeckName = deckName;
-        mDialogEditText.setText(deckName);
+        mInitialDeckName = deckName;
     }
 
     public void showFilteredDeckDialog() {
@@ -77,28 +74,34 @@ public class CreateDeckDialog {
         while (names.contains(namePrefix + n)) {
             n++;
         }
-        mDialogEditText.setText(namePrefix + n);
+        mInitialDeckName = namePrefix + n;
 
         showDialog();
     }
 
-    public String getDeckName() {
-        return mDialogEditText.getText().toString();
+    private String getDeckName() {
+        return mShownDialog.getInputEditText().getText().toString();
     }
 
     public MaterialDialog showDialog() {
-        mDialogEditText.setSingleLine(true);
-        mDialogEditText.setId(R.id.action_edit);
-
-        return mBuilder.title(mTitle)
+        MaterialDialog show = new MaterialDialog.Builder(mContext).title(mTitle)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_cancel)
+                .input(null, mInitialDeckName,  (dialog, input) -> {})
+                .inputRange(1, -1)
                 .onPositive((dialog, which) -> onPositiveButtonClicked())
                 .show();
+
+        MaterialEditTextDialog.displayKeyboard(show.getInputEditText(), show);
+        this.mShownDialog = show;
+        return show;
     }
 
     public void closeDialog() {
-        mBuilder.build().dismiss();
+        if (mShownDialog == null) {
+            return;
+        }
+        mShownDialog.dismiss();
     }
 
     public void createSubDeck(@NonNull long did, @Nullable String deckName) {
