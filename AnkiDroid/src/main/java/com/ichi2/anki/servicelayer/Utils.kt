@@ -26,20 +26,20 @@ import timber.log.Timber
  * @return whether the task succeeded, and the array of cards affected.
  */
 // This was converted from CollectionTask, we want a better name, but keep it until DismissNotes is removed
-fun <TProgress, TResult> AnkiTask<TProgress, TResult>.dismissNotes(cardIds: List<Long>, task: (Array<Card>) -> Boolean): Computation<Array<Card>> {
+fun <TTaskResult : Any, TProgress, TResult> AnkiTask<TProgress, TResult>.dismissNotes(cardIds: List<Long>, task: (Array<Card>) -> Computation<TTaskResult>): Computation<Pair<TTaskResult, Array<Card>>> {
     // query cards
     val cards = cardIds.map { cid -> col.getCard(cid) }.toTypedArray()
     try {
         col.db.database.beginTransaction()
         try {
-            val succeeded = task(cards)
-            if (!succeeded) {
+            val result = task(cards)
+            if (!result.succeeded()) {
                 return Computation.err()
             }
             col.db.database.setTransactionSuccessful()
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
-            return Computation.ok(cards)
+            return Computation.ok(Pair(result.value, cards))
         } finally {
             DB.safeEndInTransaction(col.db)
         }

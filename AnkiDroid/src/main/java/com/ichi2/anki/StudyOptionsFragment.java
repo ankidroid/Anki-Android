@@ -44,11 +44,11 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
+import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
@@ -59,6 +59,7 @@ import com.ichi2.utils.Computation;
 import com.ichi2.utils.FragmentFactoryUtils;
 import com.ichi2.utils.HtmlUtils;
 
+import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -309,7 +310,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener<Card, Computation<?>> mUndoListener = new TaskListener<Card, Computation<?>>() {
+    private final TaskListener<Unit, Computation<? extends NextCard<?>>> mUndoListener = new TaskListener<Unit, Computation<? extends NextCard<?>>>() {
         @Override
         public void onPreExecute() {
 
@@ -317,7 +318,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
         @Override
-        public void onPostExecute(Computation<?> v) {
+        public void onPostExecute(Computation<? extends NextCard<?>> v) {
             openReviewer();
         }
     };

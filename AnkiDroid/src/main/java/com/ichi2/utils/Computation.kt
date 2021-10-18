@@ -26,6 +26,12 @@ class Computation<out ComputedType : Any> {
 
     private val mValue: ComputedType?
     fun succeeded(): Boolean = mValue != null
+    fun <TNewOut : Any> map(f: (ComputedType) -> TNewOut): Computation<TNewOut> {
+        if (!succeeded()) {
+            return err()
+        }
+        return ok(f(value))
+    }
 
     /**
      * The computed value in case of success. [IllegalStateException] in case of failure

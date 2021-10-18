@@ -19,8 +19,9 @@ package com.ichi2.anki;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.servicelayer.AnkiTask;
+import com.ichi2.anki.servicelayer.AnkiMethod;
 import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.libanki.Card;
 import com.ichi2.utils.Computation;
 
@@ -277,7 +278,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         private int mAnswerButtonCount = 4;
         private boolean mEditedCard;
         private boolean mMarkedCard;
-        private AnkiTask<Card, Computation<?>> mDismissType;
+        private AnkiMethod<Computation<? extends NextCard<?>>> mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
         private ControlBlock mControlsAreBlocked = ControlBlock.UNBLOCKED;
@@ -479,7 +480,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected boolean dismiss(AnkiTask<Card, Computation<?>> dismiss) {
+        protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss) {
             this.mDismissType = dismiss;
             return true;
         }
