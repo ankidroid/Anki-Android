@@ -252,6 +252,10 @@ public class NoteEditor extends AnkiActivity implements
     // Use the same HTML if the same image is pasted multiple times.
     private HashMap<String, String> mPastedImageCache = new HashMap<>();
 
+    // save field index as key and text as value when toggle sticky clicked in Field Edit Text
+    private HashMap<Integer, String> mToggleStickyText = new HashMap<>();
+    private LinkedList<ImageButton> mToggleStickyButtons;
+
     private final Onboarding.NoteEditor mOnboarding = new Onboarding.NoteEditor(this);
 
     private SaveNoteHandler saveNoteHandler() {
@@ -419,6 +423,7 @@ public class NoteEditor extends AnkiActivity implements
             mSelectedTags = savedInstanceState.getStringArrayList("tags");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
             mPastedImageCache = (HashMap<String, String>) savedInstanceState.getSerializable("imageCache");
+            mToggleStickyText = (HashMap<Integer, String>) savedInstanceState.getSerializable("toggleSticky");
             mChanged = savedInstanceState.getBoolean("changed");
         } else {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
@@ -451,6 +456,7 @@ public class NoteEditor extends AnkiActivity implements
         savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);
         savedInstanceState.putSerializable("imageCache", mPastedImageCache);
+        savedInstanceState.putSerializable("toggleSticky", mToggleStickyText);
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>(0);
         }
@@ -913,6 +919,7 @@ public class NoteEditor extends AnkiActivity implements
             getCol().getModels().setChanged();
             mReloadRequired = true;
             TaskManager.launchCollectionTask(new CollectionTask.AddNote(mEditorNote), saveNoteHandler());
+            updateFieldsFromStickyText();
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
@@ -1422,6 +1429,7 @@ public class NoteEditor extends AnkiActivity implements
         mFieldsLayoutContainer.removeAllViews();
         mCustomViewIds.clear();
         mEditFields = new LinkedList<>();
+        mToggleStickyButtons = new LinkedList<>();
 
         // Use custom font if selected from preferences
         Typeface customTypeface = null;
@@ -1472,25 +1480,33 @@ public class NoteEditor extends AnkiActivity implements
             newTextbox.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
+            ImageButton toggleStickyButton = edit_line_view.getToggleSticky();
             // Load icons from attributes
-            int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage});
+            int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage, R.attr.toggleStickyImage});
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
                 mediaButton.setBackgroundResource(icons[1]);
                 setRemapButtonListener(mediaButton, i);
+                toggleStickyButton.setBackgroundResource(0);
             } else if (editModelMode && !allowFieldRemapping()) {
                 mediaButton.setBackgroundResource(0);
+                toggleStickyButton.setBackgroundResource(0);
             } else {
                 // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
+                // toggle sticky button
+                toggleStickyButton.setBackgroundResource(icons[2]);
+                setToggleStickyButtonListener(toggleStickyButton, i);
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && previous != null) {
                 previous.getLastViewInTabOrder().setNextFocusForwardId(R.id.CardEditorTagButton);
             }
 
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.getName()));
+            toggleStickyButton.setContentDescription(getString(R.string.note_editor_toggle_sticky, edit_line_view.getName()));
+            mToggleStickyButtons.add(toggleStickyButton);
             mFieldsLayoutContainer.addView(edit_line_view);
         }
     }
@@ -1554,6 +1570,38 @@ public class NoteEditor extends AnkiActivity implements
         });
     }
 
+    private void setToggleStickyButtonListener(ImageButton toggleStickyButton, final int index) {
+        if (mToggleStickyText.get(index) == null) {
+            toggleStickyButton.getBackground().setAlpha(64);
+        } else {
+            toggleStickyButton.getBackground().setAlpha(255);
+        }
+
+        toggleStickyButton.setOnClickListener(v -> {
+            hasStickyText(toggleStickyButton, index);
+        });
+    }
+
+    private void hasStickyText(ImageButton toggleStickyButton, int index) {
+        String text = mEditFields.get(index).getFieldText();
+        if (mToggleStickyText.get(index) == null) {
+            mToggleStickyText.put(index, text);
+            toggleStickyButton.getBackground().setAlpha(255);
+            Timber.d("Saved Text:: %s", mToggleStickyText.get(index));
+        } else {
+            mToggleStickyText.remove(index);
+            toggleStickyButton.getBackground().setAlpha(64);
+        }
+    }
+
+    private void updateFieldsFromStickyText() {
+        for (Map.Entry<Integer, String> index : mToggleStickyText.entrySet()) {
+            // handle fields for different note type with different size
+            if (index.getKey() < mEditFields.size()) {
+                mEditFields.get(index.getKey()).setText(index.getValue());
+            }
+        }
+    }
 
     @VisibleForTesting
     void clearField(int index) {
@@ -1794,6 +1842,7 @@ public class NoteEditor extends AnkiActivity implements
         updateCards(mEditorNote.model());
         updateToolbar();
         populateEditFields(changeType, false);
+        updateFieldsFromStickyText();
     }
 
 
@@ -2104,6 +2153,7 @@ public class NoteEditor extends AnkiActivity implements
                 mDeckSpinnerSelection.setEnabledActionBarSpinner(false);
                 mDeckSpinnerSelection.setDeckId(mCurrentEditedCard.getDid());
                 mDeckSpinnerSelection.updateDeckPosition();
+                updateFieldsFromStickyText();
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false);
                 updateCards(mCurrentEditedCard.model());
@@ -2291,6 +2341,14 @@ public class NoteEditor extends AnkiActivity implements
         @Override
         public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             // do nothing
+            saveStickyIfEnabled(mIndex);
+        }
+    }
+
+    // save text to hash map to toggled sticky
+    private void saveStickyIfEnabled(int index) {
+        if (mToggleStickyButtons.get(index).getBackground().getAlpha() == 255) {
+            mToggleStickyText.put(index, mEditFields.get(index).getFieldText());
         }
     }
 

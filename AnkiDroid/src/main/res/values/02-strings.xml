@@ -398,4 +398,7 @@
 
     <string name="buried_card">Buried card</string>
 
+    <!--  Note Editor Toggle Sticky  -->
+    <string name="note_editor_toggle_sticky" comment="used for screen readers. Not visible to the user">Make field %s sticky</string>
+
 </resources>
