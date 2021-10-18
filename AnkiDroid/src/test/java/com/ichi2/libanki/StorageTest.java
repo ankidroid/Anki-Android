@@ -119,14 +119,14 @@ public class StorageTest extends RobolectricTest {
         public static final int DCONF = 11;
         public static final int TAGS = 12;
 
-        public static final HashSet<Integer> mV11OnlyColumns = new HashSet<>();
+        public static final HashSet<Integer> M_V_11_ONLY_COLUMNS = new HashSet<>();
 
         static {
-            mV11OnlyColumns.add(CONF);
-            mV11OnlyColumns.add(MODELS);
-            mV11OnlyColumns.add(DECKS);
-            mV11OnlyColumns.add(DCONF);
-            mV11OnlyColumns.add(TAGS);
+            M_V_11_ONLY_COLUMNS.add(CONF);
+            M_V_11_ONLY_COLUMNS.add(MODELS);
+            M_V_11_ONLY_COLUMNS.add(DECKS);
+            M_V_11_ONLY_COLUMNS.add(DCONF);
+            M_V_11_ONLY_COLUMNS.add(TAGS);
         }
 
         String mId;
@@ -158,7 +158,7 @@ public class StorageTest extends RobolectricTest {
             try (Cursor c = col.getDb().query("select * from col")) {
                 c.moveToFirst();
                 for (int i = 0; i < c.getColumnCount(); i++) {
-                    if (mV11OnlyColumns.contains(i)) {
+                    if (M_V_11_ONLY_COLUMNS.contains(i)) {
                         assertThat(c.getString(i), isEmptyOrNullString());
                         continue;
                     }
