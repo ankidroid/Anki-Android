@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import androidx.browser.customtabs.CustomTabsService;
+import timber.log.Timber;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -128,7 +130,7 @@ public class CustomTabsHelper {
                 return true;
             }
         } catch (RuntimeException e) {
-            Log.e(TAG, "Runtime exception while getting specialized handlers");
+            Timber.e("Runtime exception while getting specialized handlers");
         }
         return false;
     }
