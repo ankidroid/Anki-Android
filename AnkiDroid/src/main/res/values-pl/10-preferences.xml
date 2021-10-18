@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gesty</string>
     <string name="pref_cat_gestures_summ">Użyj gestów zamiast przycisków</string>
     <string name="pref_cat_actions" maxLength="41">Czynności</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Sterowanie</string>
+    <string name="pref_cat_controls_summ">Skonfiguruj klawiatury i inne urządzenia</string>
     <string name="pref_cat_advanced" maxLength="41">Zaawansowane</string>
     <string name="pref_cat_advanced_summ">Optymalizacja i funkcje eksperymentalne</string>
     <string name="pref_cat_performance" maxLength="41">Wydajność</string>
@@ -96,8 +96,8 @@
     <string name="gestures_allow_links_summary">Gesty dotykowe nie będą przetwarzane jeśli naciśnięto odnośnik/wskazówkę.</string>
     <string name="gestures_corner_touch" maxLength="41">Dotyk 9-punktowy</string>
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
     <string name="gestures_swipe_up" maxLength="41">Przesuń w górę</string>
     <string name="gestures_swipe_down" maxLength="41">Przesuń w dół</string>
     <string name="gestures_swipe_left" maxLength="41">Przesuń w lewo</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Wibracje</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="timeout_answer_text" maxLength="41">Automatyczne wyświetlanie odpowiedzi</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Przekroczenie czasu na odpowiedź</string>
     <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
     <string name="timeout_answer_seconds" maxLength="41">Czas do pokazania odpowiedzi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Kliknij dwa razy \"wstecz\" by wrócić/wyjść</string>
     <string name="exit_via_double_tap_back_summ">Aby uniknąć przypadkowego opuszczenia aplikacji lub ekranu powtórek</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Zezwalaj na import wszystkich plików</string>
+    <string name="media_import_allow_all_files_summ">Jeśli Android nie rozpoznaje pliku multimedialnego</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Zaawansowane statystyki</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Włącz zaawansowane statystyki</string>
@@ -233,7 +233,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Adres url synchronizacji mediów</string>
     <string name="custom_sync_server_media_url_invalid">Nieprawidłowy adres url synchronizacji mediów</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">Przypisywanie poleceń</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
@@ -322,17 +322,17 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
     <string name="binding_add_gesture">Dodaj gest</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_key">Dodaj klawisz</string>
+    <string name="key_picker_default_press_key">Naciśnij klawisz</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Wybierz stronę karty</string>
     <string name="card_side_question">Pytanie</string>
     <string name="card_side_answer">Odpowiedź</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both">Pytanie &amp; Odpowiedź</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Usuń \'%s\'</string>
+    <string name="bindings_already_bound">Już przypisane do %s</string>
 </resources>

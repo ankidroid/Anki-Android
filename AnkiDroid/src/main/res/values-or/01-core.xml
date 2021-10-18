@@ -94,7 +94,7 @@
     <string name="undo_action_change_deck_multi">ଡେକ୍ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="move_all_to_deck">ସମସ୍ତକୁ ଡେକ୍ କୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
-    <string name="rename_deck">ଡେକ୍ କୁ ପୁନଃ ନାମକରଣ କରନ୍ତୁ</string>
+    <string name="rename_deck">ଡେକ୍ ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
@@ -156,8 +156,8 @@
     <string name="empty_cram_label">ଖାଲି</string>
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
-    <string name="custom_study_deck_name">ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
-    <string name="custom_study_deck_exists">ଆଗ ସାମ୍ପ୍ରତିକ ଇଚ୍ଛାରୂପିତ ଅଧ୍ୟୟନାଧିବେଶନକୁ ପୁନଃନାମିତ କରନ୍ତୁ</string>
+    <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
+    <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଡେକ୍ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_deck">ଡେକ୍ ସନ୍ଧାନ</string>
     <string name="empty_deck_add_note">ପତ୍ର ଯୋଡ଼ନ୍ତୁ</string>

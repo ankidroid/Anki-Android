@@ -193,10 +193,10 @@
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Cześć!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        To jest talia fiszek Anki przesłana przez  <a href="%1$s">AnkiDroid</a>.
+        Spróbuj otworzyć ją, używając jednej z dostępnych <a href="%2$s">wersji Anki</a> i ciesz się przyjemną i skuteczną nauką!
         ]]></string>
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
@@ -386,10 +386,10 @@
     <string name="deck_download_progress_message">Możesz używać innych aplikacji podczas pobierania</string>
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
-    <string name="home">Home</string>
+    <string name="home">Strona główna</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
-    <string name="buried_card">Buried card</string>
+    <string name="import_mapped_to_field">Przypisano do %s</string>
+    <string name="import_mapped_to_tags">Przypisano do Etykiet</string>
+    <string name="import_mapped_to_nothing">Ignorowane</string>
+    <string name="buried_card">Ukryta karta</string>
 </resources>

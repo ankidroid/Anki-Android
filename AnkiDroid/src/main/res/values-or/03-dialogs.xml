@@ -97,7 +97,7 @@
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
-    <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡିବା ପାଇଁ ସମସ୍ତ ନୋଟପ୍ୟାଡ୍ ବର୍ଗଗୁଡିକ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ଯୋଡନ୍ତୁ</string>
+    <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="custom_study_new_total_new">ଡେକ୍ ରେ ନୂତନ ପତ୍ର ସଂଖ୍ୟା: %d</string>
     <string name="custom_study_rev_total_rev">ଡେକ୍ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
