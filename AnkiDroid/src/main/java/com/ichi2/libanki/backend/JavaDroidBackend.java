@@ -49,8 +49,8 @@ public class JavaDroidBackend implements DroidBackend {
 
 
     @Override
-    public void closeCollection() {
-        // Nothing to do
+    public void closeCollection(DB db, boolean downgradeToSchema11) {
+        db.close();
     }
 
 

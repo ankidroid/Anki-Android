@@ -55,8 +55,8 @@ public class RustDroidBackend implements DroidBackend {
 
 
     @Override
-    public void closeCollection() {
-        mBackend.closeCollection();
+    public void closeCollection(DB db, boolean downgradeToSchema11) {
+        db.close();
     }
 
 

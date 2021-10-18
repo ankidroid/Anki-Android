@@ -39,7 +39,7 @@ public interface DroidBackend {
     Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time);
 
     DB openCollectionDatabase(String path);
-    void closeCollection();
+    void closeCollection(DB db, boolean downgradeToSchema11);
 
     /** Whether a call to {@link DroidBackend#openCollectionDatabase(String)} will generate a schema and indices for the database */
     boolean databaseCreationCreatesSchema();

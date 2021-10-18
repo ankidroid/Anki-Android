@@ -426,8 +426,11 @@ public class Collection implements CollectionGetter {
         close(true);
     }
 
-
     public synchronized void close(boolean save) {
+        close(save, false);
+    }
+
+    public synchronized void close(boolean save, boolean downgrade) {
         if (mDb != null) {
             try {
                 SupportSQLiteDatabase db = mDb.getDatabase();
@@ -443,7 +446,7 @@ public class Collection implements CollectionGetter {
             if (!mServer) {
                 mDb.getDatabase().disableWriteAheadLogging();
             }
-            mDb.close();
+            mDroidBackend.closeCollection(mDb, downgrade);
             mDb = null;
             mMedia.close();
             _closeLog();
@@ -524,7 +527,8 @@ public class Collection implements CollectionGetter {
         // ensure db is compacted before upload
         mDb.execute("vacuum");
         mDb.execute("analyze");
-        close();
+        // downgrade the collection
+        close(true, true);
     }
 
 
