@@ -39,7 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.anki.servicelayer.DeckService;
 import com.ichi2.libanki.Collection;
 
 import com.ichi2.libanki.Deck;
@@ -312,7 +312,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
             if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
-                if (mCol.getDb().queryScalar("select 1 from cards where did = 1") == 0) {
+                if (!DeckService.defaultDeckHasCards(mCol)) {
                     continue;
                 }
             }

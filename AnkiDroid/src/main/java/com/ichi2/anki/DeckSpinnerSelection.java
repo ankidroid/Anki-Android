@@ -25,9 +25,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.servicelayer.DeckService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
@@ -60,6 +62,7 @@ public class DeckSpinnerSelection {
     private DeckDropDownAdapter mDeckDropDownAdapter;
     private boolean mShowAllDecks = false;
     private static final long ALL_DECKS_ID = 0L;
+    private boolean mAlwaysShowDefault = true;
 
 
     public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner) {
@@ -84,7 +87,7 @@ public class DeckSpinnerSelection {
         actionBar.setDisplayShowTitleEnabled(false);
 
         // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = mCollection.getDecks().allSorted();
+        mDropDownDecks = getDropDownDecks(mCollection);
 
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -102,7 +105,7 @@ public class DeckSpinnerSelection {
 
     public void initializeNoteEditorDeckSpinner(@Nullable Card currentEditedCard, boolean addNote) {
         Collection col = mCollection;
-        mDropDownDecks = col.getDecks().allSorted();
+        mDropDownDecks = getDropDownDecks(col);
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -143,6 +146,17 @@ public class DeckSpinnerSelection {
         setSpinnerListener();
 
     }
+
+
+    @NonNull
+    protected List<Deck> getDropDownDecks(Collection col) {
+        List<Deck> decks = col.getDecks().allSorted();
+        if (shouldHideDefaultDeck()) {
+            decks.removeIf(x -> x.getLong("id") == Consts.DEFAULT_DECK_ID);
+        }
+        return decks;
+    }
+
 
     public void setSpinnerListener() {
         mSpinner.setOnTouchListener((view, motionEvent) -> {
@@ -243,8 +257,22 @@ public class DeckSpinnerSelection {
         if (mShowAllDecks) {
             decks.add(new DeckSelectionDialog.SelectableDeck(ALL_DECKS_ID, mContext.getResources().getString(R.string.card_browser_all_decks)));
         }
+        if (shouldHideDefaultDeck()) {
+            decks.removeIf(x -> x.getDeckId() == Consts.DEFAULT_DECK_ID);
+        }
 
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, false, decks);
         AnkiActivity.showDialogFragment(mWithFragmentManager.getFragmentManager(), dialog);
+    }
+
+
+    protected boolean shouldHideDefaultDeck() {
+        return !mAlwaysShowDefault && !DeckService.shouldShowDefaultDeck(mCollection);
+    }
+
+
+    /** Whether to show the default deck if it is not visible in the Deck Picker */
+    public void setAlwaysShowDefaultDeck(boolean showDefault) {
+        this.mAlwaysShowDefault = showDefault;
     }
 }
