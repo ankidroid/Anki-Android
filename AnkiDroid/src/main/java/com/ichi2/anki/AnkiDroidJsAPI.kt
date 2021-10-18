@@ -30,69 +30,58 @@ import android.widget.TextView
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
-import com.ichi2.utils.HashUtil
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
 import java.util.*
 
-open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private val currentCard: Card) {
-
-    // JS API ERROR CODE
-    @kotlin.jvm.JvmField
-    var ankiJsErrorCodeDefault: Int = 0
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeMarkCard: Int = 1
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeFlagCard: Int = 2
-
+open class AnkiDroidJsAPI(private var activity: AbstractFlashcardViewer) {
+    private var currentCard: Card = activity.currentCard
     private val context: Context = activity
-
-    // js api developer contact
-    @kotlin.jvm.JvmField
-    var mCardSuppliedDeveloperContact = ""
-    @kotlin.jvm.JvmField
-    var mCardSuppliedApiVersion = ""
-
-    private val sCurrentJsApiVersion = "0.0.1"
-    private val sMinimumJsApiVersion = "0.0.1"
-
-    @kotlin.jvm.JvmField
-    val MARK_CARD = "markCard"
-    @kotlin.jvm.JvmField
-    val TOGGLE_FLAG = "toggleFlag"
 
     /**
      Javascript Interface class for calling Java function from AnkiDroid WebView
      see card.js for available functions
      */
 
-    // list of api that can be accessed
-    private val mApiList = arrayOf(TOGGLE_FLAG, MARK_CARD)
+    var const = AnkiDroidJsAPIConst()
 
     // JS api list enable/disable status
-    private val mJsApiListMap = HashUtil.HashMapInit<String, Boolean>(mApiList.size)
+    private val mJsApiListMap = const.initApiMap()
+
+    // init boolean value to check if api initialize or not
+    protected var mIsJsApiInit: Boolean = false
 
     // Text to speech
     private val mTalker = JavaScriptTTS()
 
     // init or reset api list
     fun init() {
-        mCardSuppliedApiVersion = ""
-        mCardSuppliedDeveloperContact = ""
-        for (api in mApiList) {
-            mJsApiListMap[api] = false
-        }
+        const.mCardSuppliedApiVersion = ""
+        const.mCardSuppliedDeveloperContact = ""
     }
 
     // Check if value null
     protected fun isAnkiApiNull(api: String): Boolean {
         return mJsApiListMap[api] == null
+    }
+
+    // If Api is not initialize or JS API disabled then show snackbar
+    fun retErrorCode(apiName: String, errorCode: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        } else if (!getJsApiListMap()?.get(apiName)!!) {
+            showDeveloperContact(errorCode)
+            return false
+        }
+        return true
     }
 
     /*
@@ -106,7 +95,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
     fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val parentLayout: View = activity.findViewById(android.R.id.content)
-        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg)
+        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, const.mCardSuppliedDeveloperContact, errorMsg)
         val snackbar: Snackbar? = UIUtils.showSnackbar(
             activity,
             snackbarMsg,
@@ -129,7 +118,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
             if (TextUtils.isEmpty(apiDevContact)) {
                 return false
             }
-            val versionCurrent = Version.valueOf(sCurrentJsApiVersion)
+            val versionCurrent = Version.valueOf(const.sCurrentJsApiVersion)
             val versionSupplied = Version.valueOf(apiVer)
 
             /*
@@ -142,11 +131,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
                     true
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
-                    showThemedToast(context, context.getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false)
-                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion))
+                    showThemedToast(context, context.getString(R.string.update_js_api_version, const.mCardSuppliedDeveloperContact), false)
+                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(const.sMinimumJsApiVersion))
                 }
                 else -> {
-                    showThemedToast(context, context.getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false)
+                    showThemedToast(context, context.getString(R.string.valid_js_api_version, const.mCardSuppliedDeveloperContact), false)
                     false
                 }
             }
@@ -158,8 +147,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     // if supplied api version match then enable api
     private fun enableJsApi() {
-        for (api in mApiList) {
-            mJsApiListMap[api] = true
+        for (api in mJsApiListMap) {
+            mJsApiListMap[api.key] = true
         }
     }
 
@@ -173,10 +162,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
         var apiStatusJson = ""
         try {
             data = JSONObject(jsonData)
-            mCardSuppliedApiVersion = data.optString("version", "")
-            mCardSuppliedDeveloperContact = data.optString("developer", "")
-            if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+            const.mCardSuppliedApiVersion = data.optString("version", "")
+            const.mCardSuppliedDeveloperContact = data.optString("developer", "")
+            if (requireApiVersion(const.mCardSuppliedApiVersion, const.mCardSuppliedDeveloperContact)) {
                 enableJsApi()
+                mIsJsApiInit = true
             }
             apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
         } catch (j: JSONException) {
@@ -243,12 +233,12 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     @JavascriptInterface
     fun ankiGetCardReps(): Int {
-        return currentCard.reps
+        return activity.currentCard.reps
     }
 
     @JavascriptInterface
     fun ankiGetCardInterval(): Int {
-        return currentCard.ivl
+        return activity.currentCard.ivl
     }
 
     /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%)  */
@@ -346,21 +336,37 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     @JavascriptInterface
     fun ankiBuryCard(): Boolean {
+        if (!retErrorCode(const.BURY_CARD, const.ankiJsErrorCodeBuryCard)) {
+            return false
+        }
+
         return activity.buryCard()
     }
 
     @JavascriptInterface
     fun ankiBuryNote(): Boolean {
+        if (!retErrorCode(const.BURY_NOTE, const.ankiJsErrorCodeBuryNote)) {
+            return false
+        }
+
         return activity.buryNote()
     }
 
     @JavascriptInterface
     fun ankiSuspendCard(): Boolean {
+        if (!retErrorCode(const.SUSPEND_CARD, const.ankiJsErrorCodeSuspendCard)) {
+            return false
+        }
+
         return activity.suspendCard()
     }
 
     @JavascriptInterface
     fun ankiSuspendNote(): Boolean {
+        if (!retErrorCode(const.SUSPEND_NOTE, const.ankiJsErrorCodeSuspendNote)) {
+            return false
+        }
+
         return activity.suspendNote()
     }
 
@@ -443,5 +449,162 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
     @JavascriptInterface
     fun ankiEnableVerticalScrollbar(scroll: Boolean) {
         activity.webView.isVerticalScrollBarEnabled = scroll
+    }
+
+    /**
+     * The functions below are used to set value to current card
+     *
+     * The function will show snackbar with values that can be set in previewer.
+     * These are overridden in ReviewerJavascriptFunction to set values to current card
+     */
+
+    @JavascriptInterface
+    open fun ankiSetCardNid(nid: Long): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.nid.toString(), nid.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardDid(did: Long): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.did.toString(), did.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardODid(odid: Long): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.oDid.toString(), odid.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardType(type: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.type.toString(), type.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardDue(due: Long): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.due.toString(), due.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardIvl(ivl: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.ivl.toString(), ivl.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardLastIvl(ivl: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.lastIvl.toString(), ivl.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardQueue(queue: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.queue.toString(), queue.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardReps(reps: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.reps.toString(), reps.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardLapses(lapses: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.lapses.toString(), lapses.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardLeft(left: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.left.toString(), left.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardMod(mod: Long): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.mod.toString(), mod.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardOrd(ord: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.ord.toString(), ord.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardFactor(factor: Int): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.factor.toString(), factor.toString()), false)
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardWasNew(wasNew: Boolean): Boolean {
+        if (!mIsJsApiInit) {
+            showDeveloperContact(const.ankiJsErrorCodeDefault)
+            return false
+        }
+        showSimpleSnackbar(activity, context.getString(R.string.anki_set_card_msg, currentCard.wasNew.toString(), wasNew.toString()), false)
+        return true
     }
 }

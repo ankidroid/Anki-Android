@@ -123,9 +123,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     // TODO: Consider extracting to ViewModel
     // Card counts
-    private SpannableString mNewCount;
-    private SpannableString mLrnCount;
-    private SpannableString mRevCount;
+    protected SpannableString mNewCount;
+    protected SpannableString mLrnCount;
+    protected SpannableString mRevCount;
 
     private TextView mTextBarNew;
     private TextView mTextBarLearn;
@@ -145,7 +145,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected String mTempAudioPath;
 
     // ETA
-    private int mEta;
+    protected int mEta;
     private boolean mPrefShowETA;
 
     /** Handle Mark/Flag state of cards */
@@ -1666,61 +1666,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public AnkiDroidJsAPI javaScriptFunction() {
-        return new ReviewerJavaScriptFunction(this, mCurrentCard);
-    }
-
-    public class ReviewerJavaScriptFunction extends AnkiDroidJsAPI {
-        public ReviewerJavaScriptFunction(@NonNull AbstractFlashcardViewer activity, @NonNull Card currentCard) {
-            super(activity, currentCard);
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetNewCardCount() {
-            return mNewCount.toString();
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetLrnCardCount() {
-            return mLrnCount.toString();
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetRevCardCount() {
-            return mRevCount.toString();
-        }
-
-        @JavascriptInterface
-        @Override
-        public int ankiGetETA() {
-            return mEta;
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetNextTime1() {
-            return mEaseButton1.getNextTime();
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetNextTime2() {
-            return mEaseButton2.getNextTime();
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetNextTime3() {
-            return mEaseButton3.getNextTime();
-        }
-
-        @JavascriptInterface
-        @Override
-        public String ankiGetNextTime4() {
-            return mEaseButton4.getNextTime();
-        }
-
+        return new ReviewerJavaScriptFunction(this);
     }
 }

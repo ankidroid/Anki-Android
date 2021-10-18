@@ -47,7 +47,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         data.put("developer", "dev@mail.com")
 
         // this will be changed when new api added
-        val expected = "{\"markCard\":true,\"toggleFlag\":true}"
+        val expected = "{\"setCardDue\":true,\"setCardFactor\":true,\"setCardLeft\":true,\"toggleFlag\":true," +
+            "\"setCardOrd\":true,\"buryNote\":true,\"setCardLastIvl\":true,\"setCardDid\":true,\"setCardIvl\":true," +
+            "\"setCardODid\":true,\"suspendNote\":true,\"setCardLapses\":true,\"setCardMod\":true,\"markCard\":true," +
+            "\"setCardNid\":true,\"suspendCard\":true,\"buryCard\":true,\"setCardType\":true,\"setCardWasNew\":true," +
+            "\"setCardReps\":true,\"setCardQueue\":true}"
 
         waitForAsyncTasksToComplete()
         assertThat(javaScriptFunction.init(data.toString()), equalTo(expected))
