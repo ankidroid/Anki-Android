@@ -16,10 +16,10 @@
 
 package com.ichi2.anki
 
+import com.ichi2.utils.FileOperation.Companion.getFileContentsBytes
+import java.io.File
 import java.lang.Exception
 import java.lang.StringBuilder
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.security.MessageDigest
 
 open class TestUtils {
@@ -27,9 +27,9 @@ open class TestUtils {
     companion object {
         @JvmStatic
         @Throws(Exception::class)
-        fun getMD5(filename: String?): String {
+        fun getMD5(filename: String): String {
             val md = MessageDigest.getInstance("MD5")
-            md.update(Files.readAllBytes(Paths.get(filename)))
+            md.update(getFileContentsBytes(File(filename)))
             val hex = StringBuilder()
             for (b in md.digest()) {
                 hex.append(String.format("%02x", b))
