@@ -109,7 +109,10 @@ import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.servicelayer.AnkiTask;
 import com.ichi2.anki.servicelayer.LanguageHintService;
+import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
@@ -125,7 +128,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.template.MathJax;
-import com.ichi2.libanki.template.TemplateFilters;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
@@ -1266,7 +1268,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new CollectionTask.DeleteNote(mCurrentCard));
+                    dismiss(new SchedulerService.DeleteNote(mCurrentCard));
                 })
                 .build().show();
     }
@@ -2332,19 +2334,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected boolean buryCard() {
         UIUtils.showThemedToast(this, R.string.buried_card, true);
-        return dismiss(new CollectionTask.BuryCard(mCurrentCard));
+        return dismiss(new SchedulerService.BuryCard(mCurrentCard));
     }
 
     protected boolean suspendCard() {
-        return dismiss(new CollectionTask.SuspendCard(mCurrentCard));
+        return dismiss(new SchedulerService.SuspendCard(mCurrentCard));
     }
 
     protected boolean suspendNote() {
-        return dismiss(new CollectionTask.SuspendNote(mCurrentCard));
+        return dismiss(new SchedulerService.SuspendNote(mCurrentCard));
     }
 
     protected boolean buryNote() {
-        return dismiss(new CollectionTask.BuryNote(mCurrentCard));
+        return dismiss(new SchedulerService.BuryNote(mCurrentCard));
     }
 
     public boolean executeCommand(@NonNull ViewerCommand which) {
@@ -3008,14 +3010,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
+    protected <TResult extends Computation<?>> TaskListenerBuilder<Card, TResult> nextCardHandler() {
+        return new TaskListenerBuilder<>(new NextCardHandler<>());
+    }
 
     /**
      * @param dismiss An action to execute, to ignore current card and get another one
      * @return whether the action succeeded.
      */
-    protected boolean dismiss(CollectionTask.DismissNote dismiss) {
+    protected boolean dismiss(AnkiTask<Card, Computation<?>> dismiss) {
         blockControls(false);
-        TaskManager.launchCollectionTask(dismiss, new NextCardHandler());
+        dismiss.runWithHandler(nextCardHandler());
         return true;
     }
 

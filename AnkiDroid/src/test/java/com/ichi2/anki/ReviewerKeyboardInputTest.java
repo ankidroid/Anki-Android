@@ -19,8 +19,10 @@ package com.ichi2.anki;
 import android.view.KeyEvent;
 
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.anki.servicelayer.AnkiTask;
+import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.libanki.Card;
+import com.ichi2.utils.Computation;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -155,6 +157,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingStarWillMarkCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
 
         underTest.handleUnicodeKeyPress('*');
 
@@ -164,6 +167,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingEqualsWillBuryNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
 
         underTest.handleUnicodeKeyPress('=');
 
@@ -173,6 +177,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingAtWillSuspendCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
 
         underTest.handleUnicodeKeyPress('@');
 
@@ -182,6 +187,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingExclamationWillSuspendNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
+        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
 
         underTest.handleUnicodeKeyPress('!');
 
@@ -271,7 +277,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         private int mAnswerButtonCount = 4;
         private boolean mEditedCard;
         private boolean mMarkedCard;
-        private CollectionTask.DismissNote mDismissType;
+        private AnkiTask<Card, Computation<?>> mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
         private ControlBlock mControlsAreBlocked = ControlBlock.UNBLOCKED;
@@ -454,12 +460,12 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         public boolean getSuspendNoteCalled() {
-            return mDismissType instanceof CollectionTask.SuspendNote;
+            return mDismissType instanceof SchedulerService.SuspendNote;
         }
 
 
         public boolean getBuryNoteCalled() {
-            return mDismissType instanceof CollectionTask.BuryNote;
+            return mDismissType instanceof SchedulerService.BuryNote;
         }
 
 
@@ -473,7 +479,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected boolean dismiss(CollectionTask.DismissNote dismiss) {
+        protected boolean dismiss(AnkiTask<Card, Computation<?>> dismiss) {
             this.mDismissType = dismiss;
             return true;
         }
@@ -490,7 +496,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
 
 
         public boolean getSuspendCardCalled() {
-            return mDismissType instanceof CollectionTask.SuspendCard;
+            return mDismissType instanceof SchedulerService.SuspendCard;
         }
 
 
