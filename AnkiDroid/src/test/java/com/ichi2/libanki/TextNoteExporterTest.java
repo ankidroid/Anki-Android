@@ -31,6 +31,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static com.ichi2.utils.FileOperation.getFileContents;
 import static org.junit.Assert.assertEquals;
 
@@ -86,7 +88,7 @@ public class TextNoteExporterTest extends RobolectricTest {
         try {
             n2.model().put("did", mCollection.getDecks().id("new col"));
         } catch (DeckRenameException filteredAncestor) {
-            filteredAncestor.printStackTrace();
+            Timber.e(filteredAncestor);
         }
         mCollection.addNote(n2);
 
