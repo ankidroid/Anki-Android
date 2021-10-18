@@ -11,6 +11,8 @@ fi;
 echo "Running Ktlint over these files:"
 echo "$CHANGED_FILES"
 
+# Clean is required because of https://github.com/ankidroid/Anki-Android/issues/9521
+./gradlew clean
 # -q removes noise from the output if it fails.
 # TODO: -w is better, but https://github.com/JLLeitschuh/ktlint-gradle/issues/457 adds noise
 # -w should display: "CriticalExceptionTest.kt:19:1 Wildcard import (cannot be auto-corrected)"
