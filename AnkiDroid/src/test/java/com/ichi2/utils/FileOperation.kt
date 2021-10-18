@@ -28,11 +28,16 @@ class FileOperation {
         }
 
         @JvmStatic
-        fun getFileContents(exportedFile: File): String {
+        fun getFileContentsBytes(exportedFile: File): ByteArray {
             val f = RandomAccessFile(exportedFile, "r")
             val b = ByteArray(f.length().toInt())
             f.readFully(b)
-            return String(b)
+            return b
+        }
+
+        @JvmStatic
+        fun getFileContents(exportedFile: File): String {
+            return String(getFileContentsBytes(exportedFile))
         }
     }
 }

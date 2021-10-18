@@ -4,6 +4,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.LocaleList;
 import android.webkit.RenderProcessGoneDetail;
 
@@ -25,6 +26,7 @@ import java.util.Locale;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
@@ -47,6 +49,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
+@RequiresApi(api = Build.VERSION_CODES.O) //getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
