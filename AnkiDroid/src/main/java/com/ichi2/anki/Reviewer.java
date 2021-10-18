@@ -74,6 +74,7 @@ import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
@@ -85,8 +86,8 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Computation;
+import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -95,6 +96,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
+import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
@@ -137,12 +139,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     
     private final Onboarding.Reviewer mOnboarding = new Onboarding.Reviewer(this);
 
-    protected TaskListenerBuilder<Card, Computation<? extends Card[]>> scheduleCollectionTaskHandler(@PluralsRes int toastResourceId) {
+    protected <T extends Computation<? extends NextCard<? extends Card[]>>> TaskListenerBuilder<Unit, T>
+    scheduleCollectionTaskHandler(@PluralsRes int toastResourceId) {
         return nextCardHandler().alsoExecuteAfter(result -> {
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu();
-            int cardCount = result.getValue().length;
-            UIUtils.showThemedToast(Reviewer.this,
+            int cardCount = result.getValue().getResult().length;
+            UIUtils.showThemedToast(this,
                     getResources().getQuantityString(toastResourceId, cardCount, cardCount), true);
         });
     }

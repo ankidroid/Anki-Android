@@ -104,6 +104,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.export.ActivityExportingDelegate;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
@@ -116,7 +117,6 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -144,6 +144,7 @@ import java.io.File;
 import java.util.List;
 import java.util.TreeMap;
 
+import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
@@ -1272,7 +1273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, Computation<?>> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Unit, Computation<? extends SchedulerService.NextCard<?>>> {
         private final boolean mIsreview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1294,7 +1295,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<?> voi) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<? extends SchedulerService.NextCard<?>> voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (mIsreview) {

@@ -109,9 +109,10 @@ import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
-import com.ichi2.anki.servicelayer.AnkiTask;
+import com.ichi2.anki.servicelayer.AnkiMethod;
 import com.ichi2.anki.servicelayer.LanguageHintService;
 import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.async.CollectionTask;
@@ -158,12 +159,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -621,36 +624,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    class NextCardHandler<Result extends Computation<?>> extends TaskListener<Card, Result> {
-        private boolean mNoMoreCards;
-
-
+    class NextCardHandler<Result extends Computation<? extends NextCard<?>>> extends TaskListener<Unit, Result> {
         @Override
         public void onPreExecute() {
             dealWithTimeBox();
-        }
-
-
-        @Override
-        public void onProgressUpdate(Card nextCard) {
-            if (mSched == null) {
-                // TODO: proper testing for restored activity
-                finishWithoutAnimation();
-                return;
-            }
-
-            mCurrentCard = nextCard;
-            if (mCurrentCard == null) {
-                // If the card is null means that there are no more cards scheduled for review.
-                mNoMoreCards = true; // other handlers use this, toggle state every time through
-            } else {
-                mNoMoreCards = false; // other handlers use this, toggle state every time through
-                // Start reviewing next card
-                mTypeAnswer.updateInfo(mCurrentCard, getResources());
-                hideProgressBar();
-                AbstractFlashcardViewer.this.unblockControls();
-                AbstractFlashcardViewer.this.displayCardQuestion();
-            }
         }
 
         private void dealWithTimeBox() {
@@ -677,17 +654,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         @Override
         public void onPostExecute(Result result) {
+            if (mSched == null) {
+                // TODO: proper testing for restored activity
+                finishWithoutAnimation();
+                return;
+            }
+
             boolean displaySuccess = result.succeeded();
             if (!displaySuccess) {
                 // RuntimeException occurred on answering cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
             }
-            // Check for no more cards before session complete. If they are both true, no more cards will take
-            // precedence when returning to study options.
-            if (mNoMoreCards) {
+
+            NextCard<?> nextCardAndResult = Objects.requireNonNull(result.getValue());
+
+            Card card = nextCardAndResult.getCard();
+            if (card == null) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
+                return;
             }
+
+            mCurrentCard = card;
+
+            // Start reviewing next card
+            mTypeAnswer.updateInfo(mCurrentCard, getResources());
+            hideProgressBar();
+            AbstractFlashcardViewer.this.unblockControls();
+            AbstractFlashcardViewer.this.displayCardQuestion();
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
             focusDefaultLayout();
@@ -708,7 +702,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected TaskListenerBuilder<Card, Computation<?>> answerCardHandler(boolean quick) {
+    protected TaskListenerBuilder<Unit, Computation<? extends NextCard<?>>> answerCardHandler(boolean quick) {
         return nextCardHandler()
                 .alsoExecuteBefore(() -> blockControls(quick));
     }
@@ -2999,7 +2993,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected <TResult extends Computation<?>> TaskListenerBuilder<Card, TResult> nextCardHandler() {
+    protected <TResult extends Computation<? extends NextCard<?>>> TaskListenerBuilder<Unit, TResult> nextCardHandler() {
         return new TaskListenerBuilder<>(new NextCardHandler<>());
     }
 
@@ -3007,7 +3001,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param dismiss An action to execute, to ignore current card and get another one
      * @return whether the action succeeded.
      */
-    protected boolean dismiss(AnkiTask<Card, Computation<?>> dismiss) {
+    protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss) {
         blockControls(false);
         dismiss.runWithHandler(nextCardHandler());
         return true;

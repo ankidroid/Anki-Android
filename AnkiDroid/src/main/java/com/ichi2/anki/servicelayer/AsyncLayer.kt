@@ -66,7 +66,6 @@ abstract class AnkiTask<TProgress, TResult> : CancelListener {
 }
 
 /** A simple [AnkiTask] which does not call progress notifications */
-@Suppress("unused")
 abstract class AnkiMethod<TResult> : AnkiTask<Unit, TResult>()
 
 /**

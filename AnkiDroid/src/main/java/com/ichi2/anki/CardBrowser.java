@@ -71,6 +71,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.SchedulerService;
+import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
@@ -109,6 +110,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
@@ -355,7 +357,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<? extends Card[]>> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Unit, Computation<? extends NextCard<? extends Card[]>>> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -367,13 +369,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends NextCard<? extends Card[]>> cards) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.getValue().length;
+            int cardCount = cards.getValue().getResult().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.getValue());
+            browser.reloadCards(cards.getValue().getResult());
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -381,7 +383,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Object, Computation<? extends Card[]>>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Unit, Computation<? extends NextCard<? extends Card[]>>> {
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -393,13 +395,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends NextCard<? extends Card[]>> cards) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.getValue().length;
+            int cardCount = cards.getValue().getResult().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.getValue());
+            browser.reloadCards(cards.getValue().getResult());
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -407,7 +409,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, Computation<? extends Card[]>>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Unit, Computation<? extends NextCard<? extends Card[]>>> {
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -419,13 +421,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends Card[]> cards) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Computation<? extends NextCard<? extends Card[]>> cards) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = cards.getValue().length;
+            int cardCount = cards.getValue().getResult().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
-            browser.reloadCards(cards.getValue());
+            browser.reloadCards(cards.getValue().getResult());
             browser.supportInvalidateOptionsMenu();
         }
     }
@@ -1941,13 +1943,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card, Computation<?>> {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Unit, Computation<? extends NextCard<?>>> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        public void actualOnValidPostExecute(CardBrowser browser, Computation<?> result) {
+        public void actualOnValidPostExecute(CardBrowser browser, Computation<? extends NextCard<?>> result) {
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)");
             browser.hideProgressBar();
             // reload whole view
