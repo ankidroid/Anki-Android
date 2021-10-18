@@ -27,7 +27,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -596,7 +596,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     }
 
 
-    @NotNull
+    @NonNull
     private void addCardType(CardTemplateEditor testEditor, ShadowActivity shadowTestEditor) {
         Assert.assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_add));
         advanceRobolectricLooperWithSleep();
