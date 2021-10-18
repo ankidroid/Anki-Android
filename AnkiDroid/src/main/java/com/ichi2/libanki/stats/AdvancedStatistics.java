@@ -490,7 +490,7 @@ public class AdvancedStatistics {
 
         public Deck createDeck(long did, DeckManager decks) {
 
-            Timber.d("Trying to get deck settings for deck with id=" + did);
+            Timber.d("Trying to get deck settings for deck with id=%s", did);
 
             DeckConfig conf = decks.confForDid(did);
 
