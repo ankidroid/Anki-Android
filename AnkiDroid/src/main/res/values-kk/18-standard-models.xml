@@ -23,7 +23,7 @@
     <string name="front_field_name">Алды</string>
     <string name="back_field_name">Арты</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Мәтін</string>
-    <string name="extra_field_name">Қосымша</string>
+    <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">Add Reverse</string>
     <!--Card type-->
     <string name="card_n_name">Карта: %d</string>

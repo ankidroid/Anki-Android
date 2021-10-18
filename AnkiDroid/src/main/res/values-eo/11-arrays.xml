@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">Baskuli skribtabulon</string>
     <string name="record_voice">Registri voĉon</string>
     <string name="replay_voice">Ludi voĉon</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">malfacile (“facile” se nedisponebla)</string>
+    <string name="automatic_answer_option_4">facilege (“facile” se nedisponebla)</string>
 </resources>
