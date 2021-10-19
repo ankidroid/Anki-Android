@@ -54,7 +54,7 @@ public class CardTest extends RobolectricTest {
         col.addNote(note);
         long cid = note.cards().get(0).getId();
         col.reset();
-        col.getSched().answerCard(col.getSched().getCard(), 2);
+        col.getSched().answerCard(col.getSched().getCard(), Consts.BUTTON_TWO);
         col.remCards(Collections.singletonList(cid));
         assertEquals(0, col.cardCount());
         assertEquals(0, col.noteCount());
