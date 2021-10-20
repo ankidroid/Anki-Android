@@ -26,6 +26,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.web.CustomSyncServer
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int
@@ -75,6 +76,7 @@ object PreferenceUpgradeService {
             internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
                 yield(UpgradeVolumeButtonsToBindings())
+                yield(RemoveLegacyMediaSyncUrl())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -215,5 +217,18 @@ object PreferenceUpgradeService {
         }
 
         protected abstract fun upgrade(preferences: SharedPreferences)
+
+        /**
+         * msync is a legacy URL which does not use the hostnum for load balancing
+         * It was the default value in the "custom sync server" preference
+         */
+        internal class RemoveLegacyMediaSyncUrl : PreferenceUpgrade(3) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val mediaSyncUrl = CustomSyncServer.getMediaSyncUrl(preferences) ?: return
+                if (mediaSyncUrl.startsWith("https://msync.ankiweb.net")) {
+                    preferences.edit { remove(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL) }
+                }
+            }
+        }
     }
 }
