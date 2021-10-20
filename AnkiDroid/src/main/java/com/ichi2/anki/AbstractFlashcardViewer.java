@@ -1250,9 +1250,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(new SchedulerService.DeleteNote(mCurrentCard));
+                    deleteNoteWithoutConfirmation();
                 })
                 .build().show();
+    }
+
+    /** Consumers should use {@link #showDeleteNoteDialog()}  */
+    private void deleteNoteWithoutConfirmation() {
+        dismiss(new SchedulerService.DeleteNote(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.deleted_note, true));
     }
 
 
@@ -2315,20 +2320,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean buryCard() {
-        UIUtils.showThemedToast(this, R.string.buried_card, true);
-        return dismiss(new SchedulerService.BuryCard(mCurrentCard));
+        return dismiss(new SchedulerService.BuryCard(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.buried_card, true));
     }
 
     protected boolean suspendCard() {
-        return dismiss(new SchedulerService.SuspendCard(mCurrentCard));
+        return dismiss(new SchedulerService.SuspendCard(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.suspended_card, true));
     }
 
     protected boolean suspendNote() {
-        return dismiss(new SchedulerService.SuspendNote(mCurrentCard));
+        return dismiss(new SchedulerService.SuspendNote(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.suspended_note, true));
     }
 
     protected boolean buryNote() {
-        return dismiss(new SchedulerService.BuryNote(mCurrentCard));
+        return dismiss(new SchedulerService.BuryNote(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.buried_note, true));
     }
 
     public boolean executeCommand(@NonNull ViewerCommand which) {
@@ -3000,9 +3004,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param dismiss An action to execute, to ignore current card and get another one
      * @return whether the action succeeded.
      */
-    protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss) {
+    protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss, Runnable executeAfter) {
         blockControls(false);
-        dismiss.runWithHandler(nextCardHandler());
+        dismiss.runWithHandler(nextCardHandler().alsoExecuteAfter((result) -> executeAfter.run()));
         return true;
     }
 
