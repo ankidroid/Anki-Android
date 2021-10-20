@@ -251,7 +251,7 @@ public class ReadText {
                 mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                     @Override
                     public void onDone(String arg0) {
-                        listener.onDone();
+                        listener.onDone(getmQuestionAnswer());
                     }
                     @Override
                     @Deprecated
@@ -337,7 +337,7 @@ public class ReadText {
 
 
     public interface ReadTextListener{
-        void onDone();
+        void onDone(Sound.SoundSide playedSide);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
