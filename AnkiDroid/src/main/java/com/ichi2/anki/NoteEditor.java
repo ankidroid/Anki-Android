@@ -254,7 +254,6 @@ public class NoteEditor extends AnkiActivity implements
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private HashMap<Integer, String> mToggleStickyText = new HashMap<>();
-    private LinkedList<ImageButton> mToggleStickyButtons;
 
     private final Onboarding.NoteEditor mOnboarding = new Onboarding.NoteEditor(this);
 
@@ -894,6 +893,9 @@ public class NoteEditor extends AnkiActivity implements
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>(0);
         }
+
+        saveToggleStickyMap();
+
         // treat add new note and edit existing note independently
         if (mAddNote) {
             //Different from libAnki, block if there are no cloze deletions.
@@ -1429,7 +1431,6 @@ public class NoteEditor extends AnkiActivity implements
         mFieldsLayoutContainer.removeAllViews();
         mCustomViewIds.clear();
         mEditFields = new LinkedList<>();
-        mToggleStickyButtons = new LinkedList<>();
 
         // Use custom font if selected from preferences
         Typeface customTypeface = null;
@@ -1506,7 +1507,6 @@ public class NoteEditor extends AnkiActivity implements
 
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.getName()));
             toggleStickyButton.setContentDescription(getString(R.string.note_editor_toggle_sticky, edit_line_view.getName()));
-            mToggleStickyButtons.add(toggleStickyButton);
             mFieldsLayoutContainer.addView(edit_line_view);
         }
     }
@@ -1591,6 +1591,12 @@ public class NoteEditor extends AnkiActivity implements
         } else {
             mToggleStickyText.remove(index);
             toggleStickyButton.getBackground().setAlpha(64);
+        }
+    }
+
+    private void saveToggleStickyMap() {
+        for (Map.Entry<Integer, String> index : mToggleStickyText.entrySet()) {
+            mToggleStickyText.put(index.getKey(), mEditFields.get(index.getKey()).getFieldText());
         }
     }
 
@@ -2341,14 +2347,6 @@ public class NoteEditor extends AnkiActivity implements
         @Override
         public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             // do nothing
-            saveStickyIfEnabled(mIndex);
-        }
-    }
-
-    // save text to hash map to toggled sticky
-    private void saveStickyIfEnabled(int index) {
-        if (mToggleStickyButtons.get(index).getBackground().getAlpha() == 255) {
-            mToggleStickyText.put(index, mEditFields.get(index).getFieldText());
         }
     }
 
