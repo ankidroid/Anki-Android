@@ -40,6 +40,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -210,6 +212,26 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
 
         assertTwoCards(testCardTemplatePreviewer);
+    }
+
+    @Test
+    public void cardTemplatePreviewerSecondOrd_issue8001() {
+        long cid = addNoteUsingBasicAndReversedModel("hello", "world").cards().get(1).getId();
+
+        Model model = getCurrentDatabaseModelCopy("Basic (and reversed card)");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), model);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+        intent.putExtra("ordinal", 1);
+        intent.putExtra("cardListIndex", 0);
+        intent.putExtra("cardList", new long[] { cid });
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
+
+        assertThat(testCardTemplatePreviewer.getCardContent(), containsString("world"));
+        assertThat(testCardTemplatePreviewer.getCardContent(), not(containsString("hello")));
+        assertThat(testCardTemplatePreviewer.getCardContent(), not(containsString("Front")));
     }
 
 
