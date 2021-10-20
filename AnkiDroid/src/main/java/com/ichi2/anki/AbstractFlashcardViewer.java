@@ -1794,11 +1794,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     class ReadTextListener implements ReadText.ReadTextListener {
-        public void onDone() {
+        public void onDone(SoundSide playedSide) {
             Timber.d("done reading text");
-            if (ReadText.getmQuestionAnswer() == SoundSide.QUESTION) {
+            if (playedSide == SoundSide.QUESTION) {
                 mAutomaticAnswer.scheduleAutomaticDisplayAnswer();
-            } else if (ReadText.getmQuestionAnswer() == SoundSide.ANSWER) {
+            } else if (playedSide == SoundSide.ANSWER) {
                 mAutomaticAnswer.scheduleAutomaticDisplayQuestion();
             }
         }
