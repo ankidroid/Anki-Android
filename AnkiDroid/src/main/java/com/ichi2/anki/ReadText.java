@@ -49,13 +49,14 @@ public class ReadText {
     private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
     private static final Bundle mTtsParams = new Bundle();
+    private static ReadTextListener mCompletionListener;
 
 
     public static Sound.SoundSide getmQuestionAnswer() {
         return mQuestionAnswer;
     }
 
-    public static void speak(String text, String loc, int queueMode) {
+    private static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             UIUtils.showThemedToast(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
@@ -73,7 +74,7 @@ public class ReadText {
     }
 
 
-    public static String getLanguage(long did, int ord, Sound.SoundSide qa) {
+    private static String getLanguage(long did, int ord, Sound.SoundSide qa) {
         return MetaDB.getLanguage(mReviewer.get(), did, ord, qa);
     }
 
@@ -156,13 +157,21 @@ public class ReadText {
      */
     public static void readCardSide(Sound.SoundSide cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
         boolean isFirstText = true;
+        boolean playedSound = false;
         for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
-            if (!textToRead.getText().isEmpty()) {
-                textToSpeech(textToRead.getText(), did, ord, cardSide,
-                        textToRead.getLocaleCode(),
-                        isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
-                isFirstText = false;
+            if (textToRead.getText().isEmpty()) {
+                continue;
             }
+
+            textToSpeech(textToRead.getText(), did, ord, cardSide,
+                    textToRead.getLocaleCode(),
+                    isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
+            isFirstText = false;
+            playedSound = true;
+        }
+        // if we didn't play a sound, call the completion listener
+        if (!playedSound) {
+            mCompletionListener.onDone(cardSide);
         }
     }
 
@@ -235,6 +244,7 @@ public class ReadText {
     public static void initializeTts(Context context, @NonNull ReadTextListener listener) {
         // Store weak reference to Activity to prevent memory leak
         mReviewer = new WeakReference<>(context);
+        mCompletionListener = listener;
         // Create new TTS object and setup its onInit Listener
         mTts = new TextToSpeech(context, status -> {
             if (status == TextToSpeech.SUCCESS) {
