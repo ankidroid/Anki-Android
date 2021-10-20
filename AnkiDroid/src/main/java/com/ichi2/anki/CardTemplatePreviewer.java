@@ -47,6 +47,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private String mEditedModelFileName = null;
     private Model mEditedModel = null;
     private int mOrdinal;
+    /** The index of the card in cardList to show */
+    private int mCardListIndex;
     /** The list (currently singular) of cards to be previewed
      * A single template was selected, and there was an associated card which exists
      */
@@ -81,6 +83,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
             mCardList = parameters.getLongArray("cardList");
             mOrdinal = parameters.getInt("ordinal");
+            mCardListIndex = parameters.getInt("cardListIndex");
             mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer);
         }
 
@@ -278,6 +281,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         outState.putString(TemporaryModel.INTENT_MODEL_FILENAME, mEditedModelFileName);
         outState.putLongArray("cardList", mCardList);
         outState.putInt("ordinal", mOrdinal);
+        outState.putInt("cardListIndex", mCardListIndex);
         outState.putBundle("noteEditorBundle", mNoteEditorBundle);
         outState.putBoolean("showingAnswer", mShowingAnswer);
         super.onSaveInstanceState(outState);
@@ -292,8 +296,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             closeCardTemplatePreviewer();
             return;
         }
-        if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
-            mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
+        if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
+            mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
         }
 
         if (mNoteEditorBundle != null) {

@@ -712,6 +712,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
             long noteId = getArguments().getLong("noteId");
             i.putExtra("ordinal", ordinal);
+            i.putExtra("cardListIndex", 0);
 
             // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
             if (noteId != -1L) {
