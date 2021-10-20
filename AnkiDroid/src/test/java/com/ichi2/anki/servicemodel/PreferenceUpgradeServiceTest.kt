@@ -17,11 +17,13 @@
 package com.ichi2.anki.servicemodel
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -99,5 +101,14 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
             nestedClassCount,
             equalTo(upgradeCount)
         )
+    }
+
+    @Test
+    fun check_custom_media_sync_url() {
+        var syncURL = "https://msync.ankiweb.net"
+        mPrefs.edit { putString(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, syncURL) }
+        assertThat("Preference of custom media sync url is set to ($syncURL).", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(syncURL))
+        PreferenceUpgrade.RemoveLegacyMediaSyncUrl().performUpgrade(mPrefs)
+        assertThat("Preference of custom media sync url is removed.", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(null))
     }
 }
