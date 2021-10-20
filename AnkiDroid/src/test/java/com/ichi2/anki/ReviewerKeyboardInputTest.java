@@ -480,7 +480,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss) {
+        protected boolean dismiss(AnkiMethod<Computation<? extends NextCard<?>>> dismiss, Runnable executeAfter) {
             this.mDismissType = dismiss;
             return true;
         }
