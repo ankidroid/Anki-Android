@@ -256,7 +256,7 @@ public class ReadText {
                     @Override
                     @Deprecated
                     public void onError(String utteranceId) {
-                        Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
+                        Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
 
                         final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
                         final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
