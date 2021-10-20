@@ -29,6 +29,9 @@ import com.ichi2.libanki.template.TemplateFilters
 import timber.log.Timber
 
 class TTS {
+    @get:JvmName("isEnabled")
+    var enabled: Boolean = false
+
     private val mTTS: ReadText? = null
 
     /**
@@ -85,5 +88,25 @@ class TTS {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
         return Utils.stripHTML(clozeReplaced)
+    }
+
+    fun initialize(ctx: Context, listener: ReadText.ReadTextListener) {
+        if (!enabled) {
+            return
+        }
+        ReadText.initializeTts(ctx, listener)
+    }
+
+    /**
+     * Request that TextToSpeech is stopped and shutdown after it it no longer being used
+     * by the context that initialized it.
+     * No-op if the current instance of TextToSpeech was initialized by another Context
+     * @param context The context used during {@link #initializeTts(Context, ReadTextListener)}
+     */
+    fun releaseTts(context: Context) {
+        if (!enabled) {
+            return
+        }
+        ReadText.releaseTts(context)
     }
 }

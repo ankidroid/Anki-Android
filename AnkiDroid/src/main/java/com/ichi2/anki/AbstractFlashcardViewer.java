@@ -248,7 +248,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mLargeAnswerButtons;
     private int mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL;
     // Android WebView
-    protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
 
     @NonNull protected AutomaticAnswer mAutomaticAnswer = AutomaticAnswer.defaultInstance(this);
@@ -375,7 +374,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     final OnRenderProcessGoneDelegate mOnRenderProcessGoneDelegate = new OnRenderProcessGoneDelegate(this);
-    private final TTS mTTS = new TTS();
+    protected final TTS mTTS = new TTS();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -825,9 +824,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         // Initialize text-to-speech. This is an asynchronous operation.
-        if (mSpeakText) {
-            ReadText.initializeTts(this, new ReadTextListener());
-        }
+        mTTS.initialize(this, new ReadTextListener());
 
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
@@ -877,9 +874,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mSched.discardCurrentCard();
         }
         Timber.d("onDestroy()");
-        if (mSpeakText) {
-            ReadText.releaseTts(this);
-        }
+        mTTS.releaseTts(this);
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -1700,7 +1695,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // mDeckFilename = preferences.getString("deckFilename", "");
         mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
-        mSpeakText = preferences.getBoolean("tts", false);
+        mTTS.setEnabled(preferences.getBoolean("tts", false));
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
@@ -1880,17 +1875,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mAnswerField.setVisibility(View.GONE);
         }
 
-        //if (mSpeakText) {
-        // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-        //}
-
         updateCard(displayString);
         hideEaseButtons();
 
         mAutomaticAnswer.onDisplayQuestion();
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
-        if (!mSpeakText) {
+        if (!mTTS.isEnabled()) {
             mAutomaticAnswer.scheduleAutomaticDisplayAnswer(mUseTimerDynamicMS);
         }
 
@@ -1937,7 +1927,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mAutomaticAnswer.onDisplayAnswer();
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
-        if (!mSpeakText) {
+        if (!mTTS.isEnabled()) {
             mAutomaticAnswer.scheduleAutomaticDisplayQuestion(mUseTimerDynamicMS);
         }
     }
@@ -2076,7 +2066,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         if (getConfigForCurrentCard().optBoolean("autoplay", false) || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
-            boolean useTTS = mSpeakText &&
+            boolean useTTS = mTTS.isEnabled() &&
                     !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion());
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here

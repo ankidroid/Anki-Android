@@ -336,7 +336,7 @@ public class ReadText {
     }
 
 
-    interface ReadTextListener{
+    public interface ReadTextListener{
         void onDone();
     }
 
