@@ -718,7 +718,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
         }
-        if (mSpeakText && !mActionButtons.getStatus().selectTtsIsDisabled()) {
+        if (mTTS.isEnabled() && !mActionButtons.getStatus().selectTtsIsDisabled()) {
             menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         // Setup bury / suspend providers
