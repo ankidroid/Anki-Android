@@ -162,6 +162,16 @@ public class AnkiDroidApp extends Application {
      */
     public static final boolean TESTING_SCOPED_STORAGE = false;
 
+    /**
+     * Toggles opening the collection using schema 16 via the Rust backend
+     * and using the V16 versions of the major 'col' classes: models, decks, dconf, conf, tags
+     *
+     * UNSTABLE: DO NOT USE THIS ON A COLLECTION YOU CARE ABOUT.
+     *
+     * Set this and {@link com.ichi2.libanki.Consts#SCHEMA_VERSION} to 16.
+     */
+    public static final boolean TESTING_USE_V16_BACKEND = false;
+
     private static final String WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME";
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";

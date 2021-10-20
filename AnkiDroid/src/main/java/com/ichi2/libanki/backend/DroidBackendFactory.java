@@ -69,6 +69,10 @@ public class DroidBackendFactory {
     private static DroidBackend getInstance(@Nullable BackendFactory backendFactory) {
         if (backendFactory == null) {
             return new JavaDroidBackend();
+        }
+
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            return new RustDroidV16Backend(backendFactory);
         } else {
             return new RustDroidBackend(backendFactory);
         }

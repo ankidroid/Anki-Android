@@ -25,7 +25,7 @@ import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.database.RustVNextSQLiteOpenHelperFactory
 
 /**
- * Unused.
+ * Requires [com.ichi2.anki.AnkiDroidApp.TESTING_SCOPED_STORAGE]
  *
  * Signifies that the AnkiDroid backend should be used when accessing the JSON columns in `col`
  * as these have moved to separate tables
