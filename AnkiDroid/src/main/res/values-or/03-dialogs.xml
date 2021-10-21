@@ -81,8 +81,8 @@
         <item quantity="other">Reschedule cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">ସାମ୍ପ୍ରତିକ ବ୍ୟବଧାନ: %d ଦିନ</item>
-        <item quantity="other">ସାମ୍ପ୍ରତିକ ବ୍ୟବଧାନ: %d ଦିନ</item>
+        <item quantity="one">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
+        <item quantity="other">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
     </plurals>
     <string name="reschedule_card_dialog_message">x ଦିନରେ ସମୀକ୍ଷା ପାଇଁ reschedule କରନ୍ତୁ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">

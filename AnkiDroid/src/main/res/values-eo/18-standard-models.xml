@@ -23,7 +23,7 @@
     <string name="front_field_name">Fronto</string>
     <string name="back_field_name">Dorso</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teksto</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Dorso (plia)</string>
     <string name="field_to_ask_front_name">Aldoni malan direkton</string>
     <!--Card type-->
     <string name="card_n_name">Karto %d</string>

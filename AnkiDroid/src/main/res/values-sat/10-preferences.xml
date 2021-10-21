@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ᱛᱷᱟᱨᱼᱛᱷᱟᱨᱟᱣ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ᱫᱷᱩᱯᱼᱫᱷᱟᱯ ᱟᱨᱥᱟᱞ</string>
     <string name="timeout_answer_text" maxLength="41">ᱟᱡᱽ ᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">ᱛᱮᱞᱟ ᱮᱢ ᱚᱠᱛᱚ ᱪᱟᱵᱟ ᱮᱱᱟ</string>
     <string name="timeout_answer_summ">ᱵᱮᱜᱚᱨ ᱟᱫᱮᱨ ᱛᱮ ᱟᱡᱛᱮ ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱢᱮ ᱾ ᱟᱡ ᱛᱮ ᱥᱟᱲᱮ ᱨᱮᱫ ᱟᱱᱡᱚᱢ ᱠᱚ ᱮᱢᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱟᱜᱼᱟᱭ ᱾</string>
     <string name="timeout_answer_seconds" maxLength="41">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣ ᱥᱚᱢᱚᱭ ᱦᱩᱡᱮᱱᱟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ᱴᱤᱯᱤᱡ</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">ᱨᱩᱣᱟᱹᱲ/ᱩᱴᱷᱟᱹᱣᱜ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱫᱷᱟᱣ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="exit_via_double_tap_back_summ">ᱦᱩᱯᱠᱟᱹ  ᱧᱮᱧᱮᱞᱤᱭᱟᱹ ᱟᱨ ᱟᱯᱞᱤᱠᱮᱥᱚᱱ ᱥᱟᱦᱟ ᱞᱟᱹᱜᱤᱫ</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">ᱢᱤᱰᱤᱭᱟ ᱤᱢᱯᱚᱨᱴᱮ ᱨᱮ ᱡᱷᱚᱛᱚ ᱨᱮᱫ ᱠᱚ ᱟᱫᱮᱨ ᱪᱷᱚ</string>
+    <string name="media_import_allow_all_files_summ">ᱡᱩᱫᱤ ᱮᱱᱨᱚᱭᱮᱰ ᱢᱤᱰᱤᱟ ᱨᱮᱫ ᱵᱟᱭ ᱪᱤᱱᱦᱟᱹᱣ ᱠᱷᱟᱱ</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>

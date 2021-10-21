@@ -167,7 +167,7 @@
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ବିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାବରେ କେନ୍ଦ୍ରିତ କରନ୍ତୁ</string>
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ବ୍ୟବଧାନ (ମିଲିସେକେଣ୍ଡ୍)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍ ଗୁଡିକରେ ପରବର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦେଖାନ୍ତୁ</string>
@@ -249,12 +249,12 @@
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ତ୍ରୁଟିସଂଖ୍ୟା</string>
     <string name="deck_conf_general" maxLength="41">ସାଧାରଣ </string>
     <string name="deck_conf_reminders" maxLength="41">ସ୍ମାରକଗୁଡ଼ିକ</string>
-    <string name="deck_conf_steps" maxLength="41">ପାଦ (ମିନିଟ ରେ)</string>
+    <string name="deck_conf_steps" maxLength="41">ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_order" maxLength="41">କ୍ରମ</string>
     <string name="deck_conf_new_cards_day" maxLength="41">ନୂତନ ପତ୍ର/ଦିନ</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">ସ୍ନାତକୋତ୍ତର ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">ସ୍ନାତକୋତ୍ତର ଅନ୍ତରାଳ</string>
     <string name="deck_conf_days">XXX ଦିନ</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ଅନ୍ତରାଳ</string>
     <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା</string>
     <string name="deck_conf_max_rev" maxLength="41">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
     <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
@@ -264,16 +264,16 @@
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂସ୍ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
-    <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ବ୍ୟବଧାନ</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">ବ୍ୟବଧାନ ପରିବର୍ତ୍ତନକାରୀ</string>
-    <string name="deck_conf_max_ivl" maxLength="41">ସର୍ବାଧିକ ବ୍ୟବଧାନ</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">ନୂତନ ବ୍ୟବଧାନ</string>
-    <string name="deck_conf_min_ivl" maxLength="41">ସର୍ବନିମ୍ନ ବ୍ୟବଧାନ</string>
+    <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ଅନ୍ତରାଳ</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">ଅନ୍ତରାଳ ସଂଶୋଧକ</string>
+    <string name="deck_conf_max_ivl" maxLength="41">ସର୍ବାଧିକ ଅନ୍ତରାଳ</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">ନୂତନ ଅନ୍ତରାଳ</string>
+    <string name="deck_conf_min_ivl" maxLength="41">ସର୍ବନିମ୍ନ ଅନ୍ତରାଳ</string>
     <string name="deck_conf_leech_thres" maxLength="41">ଜୋକ (leech) ଦୁଆରସୀମା</string>
     <string name="deck_conf_fails">XXX (ଟି) ତ୍ରୁଟି</string>
     <string name="deck_conf_leech_action" maxLength="41">ଜୋକ (leech) କାର୍ଯ୍ୟ</string>
     <string name="deck_conf_max_time" maxLength="41">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
-    <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ୍</string>
+    <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ</string>
     <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>
     <string name="deck_conf_autoplay" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡ଼ିଓ ଚଲାନ୍ତୁ</string>
     <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
@@ -301,8 +301,8 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନର୍ନିର୍ଦ୍ଧାରଣ</string>
     <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନର୍ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାଦ (ମିନିଟ୍ ରେ)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାଦ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ତାସଖଣ୍ଡ ପାଇଁ ସ୍ମାରକ ବିଜ୍ଞପ୍ତିକୁ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_reminders_time" maxLength="41">ରେ ମନେ ପକାନ୍ତୁ</string>
     <!-- analytics options -->

@@ -50,8 +50,8 @@
     <string-array name="cram_deck_conf_order_labels">
         <item>ସର୍ବପୁରାତନ ଆଗ </item>
         <item>ଅନିୟମିତ</item>
-        <item>ବଢ଼ୁଥିବା ବ୍ୟବଧାନ</item>
-        <item>କମୁଥିବା ବ୍ୟବଧାନ</item>
+        <item>ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</item>
+        <item>କମୁଥିବା ଅନ୍ତରାଳ</item>
         <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
         <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମାନୁସାରେ</item>
         <item>ବଳକା କ୍ରମାନୁସାରେ</item>
