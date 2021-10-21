@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
+
 import com.ichi2.async.CollectionTask;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.BackupManagerTestUtilities;
@@ -64,6 +66,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
     }
 
 
+    @SuppressLint("DirectSystemCurrentTimeMillisUsage")
     private String spinUntilBackupExists(int timeoutMs) {
         long time = System.currentTimeMillis();
         while (true) {
