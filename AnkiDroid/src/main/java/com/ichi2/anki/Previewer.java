@@ -95,6 +95,7 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
+        mTypeAnswer.updateInfo(mCurrentCard, getResources());
 
         displayCardQuestion();
         if (mShowingAnswer) {
@@ -243,6 +244,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mIndex = getNextIndex(newCardList);
         mCardList = Utils.collection2Array(newCardList);
         mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        mTypeAnswer.updateInfo(mCurrentCard, getResources());
         displayCardQuestion();
     }
 
@@ -264,6 +266,7 @@ public class Previewer extends AbstractFlashcardViewer {
             }
 
             mCurrentCard = getCol().getCard(mCardList[mIndex]);
+            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             displayCardQuestion();
         }
     };
