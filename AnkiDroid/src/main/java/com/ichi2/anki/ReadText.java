@@ -122,10 +122,12 @@ public class ReadText {
                     .itemsCallback((materialDialog, view, which, charSequence) -> {
                         String locale = dialogIds.get(which);
                         Timber.d("ReadText.selectTts() user chose locale '%s'", locale);
+                        MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                         if (!locale.equals(NO_TTS)) {
                             speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
+                        } else {
+                            mCompletionListener.onDone(qa);
                         }
-                        MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                     });
         }
         // Show the dialog after short delay so that user gets a chance to preview the card
@@ -163,11 +165,10 @@ public class ReadText {
                 continue;
             }
 
-            textToSpeech(textToRead.getText(), did, ord, cardSide,
+            playedSound |= textToSpeech(textToRead.getText(), did, ord, cardSide,
                     textToRead.getLocaleCode(),
                     isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
             isFirstText = false;
-            playedSound = true;
         }
         // if we didn't play a sound, call the completion listener
         if (!playedSound) {
@@ -191,8 +192,9 @@ public class ReadText {
      * available.
      *
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
+     * @return false if a sound was not played
      */
-    private static void textToSpeech(String text, long did, int ord, Sound.SoundSide qa, String localeCode,
+    private static boolean textToSpeech(String text, long did, int ord, Sound.SoundSide qa, String localeCode,
                                      int queueMode) {
         mTextToSpeak = text;
         mQuestionAnswer = qa;
@@ -215,11 +217,11 @@ public class ReadText {
 
         if (localeCode.equals(NO_TTS)) {
             // user has chosen not to read the text
-            return;
+            return false;
         }
         if (!localeCode.isEmpty() && isLanguageAvailable(localeCode)) {
             speak(mTextToSpeak, localeCode, queueMode);
-            return;
+            return true;
         }
 
         // Otherwise ask the user what language they want to use
@@ -230,6 +232,7 @@ public class ReadText {
                     + " (" + originalLocaleCode + ")", false);
         }
         selectTts(mTextToSpeak, mDid, mOrd, mQuestionAnswer);
+        return true;
     }
 
     /**
