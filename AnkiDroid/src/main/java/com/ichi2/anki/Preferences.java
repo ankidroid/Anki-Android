@@ -55,6 +55,7 @@ import com.ichi2.anki.services.NotificationService;
 import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -1252,6 +1253,21 @@ public class Preferences extends AnkiActivity {
                 onboardingPreference.setSummary(R.string.reset_onboarding_desc);
                 onboardingPreference.setOnPreferenceClickListener(preference -> {
                     OnboardingUtils.Companion.reset(requireContext());
+                    return true;
+                });
+                screen.addPreference(onboardingPreference);
+            }
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, add option for using V16 backend");
+                Preference onboardingPreference = new Preference(requireContext());
+                onboardingPreference.setKey("useRustBackend");
+                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND);
+                onboardingPreference.setTitle("Use V16 Backend");
+                onboardingPreference.setSummary("UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE");
+                onboardingPreference.setOnPreferenceClickListener(preference -> {
+                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true;
+                    Consts.SCHEMA_VERSION = 16;
+                    ((Preferences) requireActivity()).restartWithNewDeckPicker();
                     return true;
                 });
                 screen.addPreference(onboardingPreference);

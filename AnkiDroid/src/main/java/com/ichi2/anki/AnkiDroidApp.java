@@ -170,7 +170,7 @@ public class AnkiDroidApp extends Application {
      *
      * Set this and {@link com.ichi2.libanki.Consts#SCHEMA_VERSION} to 16.
      */
-    public static final boolean TESTING_USE_V16_BACKEND = false;
+    public static boolean TESTING_USE_V16_BACKEND = false;
 
     private static final String WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME";
 
