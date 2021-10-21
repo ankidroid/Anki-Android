@@ -310,6 +310,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
 
+        if (mCurrentCard != null) {
+            mTypeAnswer.updateInfo(mCurrentCard, getResources());
+        }
+
         displayCardQuestion();
         if (mShowingAnswer) {
             displayCardAnswer();
