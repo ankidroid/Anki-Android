@@ -16,6 +16,8 @@
 
 package com.ichi2.testutils;
 
+import android.annotation.SuppressLint;
+
 import com.ichi2.libanki.utils.Time;
 
 import java.util.Calendar;
@@ -111,6 +113,7 @@ public class MockTime extends Time {
      * @param miliseconds, from 0 to 999
      * @return the time stamp of this instant in GMT calendar
      */
+    @SuppressLint("DirectGregorianInstantiation")
     public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second, int miliseconds) {
         TimeZone timeZone = TimeZone.getTimeZone("GMT");
         Calendar gregorianCalendar = new GregorianCalendar(year, month, date, hourOfDay, minute, second);
