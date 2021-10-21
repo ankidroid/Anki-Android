@@ -403,4 +403,7 @@
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
 
+    <!--  Note Editor Toggle Sticky  -->
+    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+
 </resources>

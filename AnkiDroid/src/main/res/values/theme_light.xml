@@ -123,6 +123,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <item name="attachFileImage">@drawable/ic_attachment_black</item>
+        <item name="toggleStickyImage">@drawable/ic_baseline_push_pin_24</item>
         <item name="upDownImage">@drawable/ic_import_export_black</item>
         <item name="dialogErrorIcon">@drawable/ic_warning_black</item>
         <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_black</item>
