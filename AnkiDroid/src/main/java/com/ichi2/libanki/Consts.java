@@ -121,7 +121,7 @@ public class Consts {
     public static final int STARTING_FACTOR = 2500;
 
     // deck schema & syncing vars
-    public static final int SCHEMA_VERSION = 11;
+    public static int SCHEMA_VERSION = 11;
     /** The database schema version that we can downgrade from */
     public static final int SCHEMA_DOWNGRADE_SUPPORTED_VERSION = 16;
     public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
