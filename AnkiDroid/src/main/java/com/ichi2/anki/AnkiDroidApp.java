@@ -160,7 +160,7 @@ public class AnkiDroidApp extends Application {
      * Should be set to true for testing Scoped Storage <p>
      * TODO: Should be removed once app is fully functional under Scoped Storage
      */
-    public static final boolean TESTING_SCOPED_STORAGE = false;
+    public static boolean TESTING_SCOPED_STORAGE = false;
 
     /**
      * Toggles opening the collection using schema 16 via the Rust backend
