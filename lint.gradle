@@ -8,5 +8,6 @@ android {
         warningsAsErrors true
         lintConfig file("../lint-release.xml")
         checkReleaseBuilds = true
+        checkTestSources = true
     }
 }
