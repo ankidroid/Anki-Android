@@ -63,10 +63,10 @@
         <item quantity="other">還有%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="other">剩餘 %d 小時 %d</item>
+        <item quantity="other">剩餘 %d 小時 %d 分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="other">剩餘 %d 天 %d</item>
+        <item quantity="other">剩餘 %d 天 %d 小時</item>
     </plurals>
     <string name="no_cards_placeholder_title">牌組是空的</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
@@ -102,7 +102,7 @@
     <string name="menu_suspend_card">長久擱置卡片</string>
     <string name="menu_suspend_note">長久擱置筆記</string>
     <string name="menu_bury">隱藏</string>
-    <string name="menu_suspend">暫停</string>
+    <string name="menu_suspend">長久擱置</string>
     <string name="menu_delete_note">刪除筆記</string>
     <string name="menu_flag">標記</string>
     <string name="menu_flag_card">標記卡片</string>
@@ -181,7 +181,7 @@
     <string name="title_activity_template_editor">卡片種類</string>
     <string name="card_template_editor_front">正面樣本</string>
     <string name="card_template_editor_back">反面樣本</string>
-    <string name="card_template_editor_styling">造型</string>
+    <string name="card_template_editor_styling">樣式</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
     <string name="card_template_editor_deck_override">牌組覆蓋</string>
     <string name="card_template_editor_insert_field">插入欄位</string>

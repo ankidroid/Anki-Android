@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED de notification</string>
     <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Délai pour répondre</string>
     <string name="timeout_answer_summ">Voir la réponse automatiquement sans intervention de l’utilisateur. Ceci comprend le temps utilisé par les fichiers audio joués automatiquements.</string>
     <string name="timeout_answer_seconds" maxLength="41">Temps avant d’afficher la réponse</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Appuis double sur retour pour quitter</string>
     <string name="exit_via_double_tap_back_summ">Pour éviter de quitter involontairement l\'application</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Autoriser l\'importation de tous fichiers</string>
+    <string name="media_import_allow_all_files_summ">Si android ne reconnait pas un fichier comme média</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiques avancées</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Activer les statistiques avancées</string>
