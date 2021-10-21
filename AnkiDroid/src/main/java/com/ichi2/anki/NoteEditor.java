@@ -1578,11 +1578,11 @@ public class NoteEditor extends AnkiActivity implements
         }
 
         toggleStickyButton.setOnClickListener(v -> {
-            hasStickyText(toggleStickyButton, index);
+            onToggleStickyText(toggleStickyButton, index);
         });
     }
 
-    private void hasStickyText(ImageButton toggleStickyButton, int index) {
+    private void onToggleStickyText(ImageButton toggleStickyButton, int index) {
         String text = mEditFields.get(index).getFieldText();
         if (mToggleStickyText.get(index) == null) {
             mToggleStickyText.put(index, text);
