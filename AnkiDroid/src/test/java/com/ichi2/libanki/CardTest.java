@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
+
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
@@ -256,6 +258,7 @@ public class CardTest extends RobolectricTest {
         }
     }
 
+    @SuppressLint("DirectCalendarInstanceUsage")
     @Test
     @Config(qualifiers = "en")
     public void nextDueTest() throws DeckRenameException {
