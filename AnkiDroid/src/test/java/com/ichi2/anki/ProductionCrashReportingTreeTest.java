@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.ichi2.testutils.AnkiAssert;
@@ -33,6 +34,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
+@SuppressLint("LogNotTimber")
 public class ProductionCrashReportingTreeTest {
 
 
