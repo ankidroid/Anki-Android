@@ -1272,6 +1272,20 @@ public class Preferences extends AnkiActivity {
                 });
                 screen.addPreference(onboardingPreference);
             }
+            if (BuildConfig.DEBUG) {
+                Timber.i("Debug mode, add option for scoped storage");
+                Preference onboardingPreference = new Preference(requireContext());
+                onboardingPreference.setKey("useScopedStorage");
+                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE);
+                onboardingPreference.setTitle("Enable Scoped Storage");
+                onboardingPreference.setSummary("UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE");
+                onboardingPreference.setOnPreferenceClickListener(preference -> {
+                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true;
+                    ((Preferences) requireActivity()).restartWithNewDeckPicker();
+                    return true;
+                });
+                screen.addPreference(onboardingPreference);
+            }
             // Adding change logs in both debug and release builds
             Timber.i("Adding open changelog");
             Preference changelogPreference = new Preference(requireContext());
