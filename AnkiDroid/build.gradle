@@ -83,6 +83,10 @@ android {
                 Properties localProperties = new Properties()
                 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
                 testCoverageEnabled localProperties['enable_coverage'] != "false"
+                // not profiled: optimization for build times
+                if (localProperties['enable_languages'] == "false") {
+                    android.defaultConfig.resConfigs "en"
+                }
             } else {
                 testCoverageEnabled true
             }
