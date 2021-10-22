@@ -107,27 +107,5 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             // font-weight to 700
             return content.replace("font-weight:600;", "font-weight:700;")
         }
-
-        /**
-         * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-         *
-         * @param content The content to surround with tags.
-         * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
-         * @return The enriched content
-         */
-        @JvmStatic
-        fun enrichWithQADiv(content: String?, isAnswer: Boolean): String {
-            val sb = StringBuilder()
-            sb.append("<div class=")
-            if (isAnswer) {
-                sb.append(ANSWER_CLASS)
-            } else {
-                sb.append(QUESTION_CLASS)
-            }
-            sb.append(" id=\"qa\">")
-            sb.append(content)
-            sb.append("</div>")
-            return sb.toString()
-        }
     }
 }
