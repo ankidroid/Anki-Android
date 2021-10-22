@@ -1993,11 +1993,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mUseTimerDynamicMS = 0;
 
-        // Add CSS for font color and font size
-        if (mCurrentCard == null) {
-            processCardAction(cardWebView -> cardWebView.getSettings().setDefaultFontSize(calculateDynamicFontSize(newContent)));
-        }
-
         if (sDisplayAnswer) {
             addAnswerSounds(newContent);
         } else {
