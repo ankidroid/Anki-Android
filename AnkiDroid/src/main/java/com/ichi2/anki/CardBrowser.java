@@ -89,6 +89,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.ui.CardBrowserSearchView;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.Computation;
@@ -2789,14 +2790,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * The views expand / contract when switching between multi-select mode so we manually
      * adjust so that the vertical position of the given view is maintained
      */
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     private void recenterListView(@NonNull View view) {
         final int position = mCardsListView.getPositionForView(view);
         // Get the current vertical position of the top of the selected view
         final int top = view.getTop();
-        final Handler handler = new Handler();
         // Post to event queue with some delay to give time for the UI to update the layout
-        handler.postDelayed(() -> {
+        HandlerUtils.postDelayedOnNewHandler(() -> {
             // Scroll to the same vertical position before the layout was changed
             mCardsListView.setSelectionFromTop(position, top);
         }, 10);

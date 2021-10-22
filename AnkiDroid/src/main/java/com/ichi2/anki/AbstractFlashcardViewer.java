@@ -141,6 +141,7 @@ import com.ichi2.utils.Computation;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
 
+import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -380,8 +381,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
-    private final Handler mLongClickHandler = new Handler();
+    private final Handler mLongClickHandler = HandlerUtils.newHandler();
     private final Runnable mLongClickTestRunnable = new Runnable() {
         @Override
         public void run() {
@@ -706,8 +706,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
-    private final Handler mTimerHandler = new Handler();
+    private final Handler mTimerHandler = HandlerUtils.newHandler();
 
     private final Runnable mRemoveChosenAnswerText = new Runnable() {
         @Override
@@ -2678,8 +2677,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return null;
         }
 
-        @SuppressWarnings("deprecation") //  #7111: new Handler()
-        private final Handler mScrollHandler = new Handler();
+        private final Handler mScrollHandler = HandlerUtils.newHandler();
         private final Runnable mScrollXRunnable = () -> mIsXScrolling = false;
         private final Runnable mScrollYRunnable = () -> mIsYScrolling = false;
 

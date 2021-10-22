@@ -49,6 +49,7 @@ import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.HandlerUtils;
 
 import java.util.Arrays;
 
@@ -148,20 +149,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
             @Override
-            @SuppressWarnings("deprecation") //  #7111: new Handler()
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
 
                 // If animations are disabled, this is executed before onNavigationItemSelected is called
                 // PERF: May be able to reduce this delay
-                new Handler().postDelayed(() -> {
+                HandlerUtils.postDelayedOnNewHandler(() -> {
                     if (mPendingRunnable != null) {
-                        new Handler().post(mPendingRunnable);
+                        HandlerUtils.postOnNewHandler(mPendingRunnable); // TODO: See if we can use the same handler here
                         mPendingRunnable = null;
                     }
                 }, 100);
-
             }
 
 

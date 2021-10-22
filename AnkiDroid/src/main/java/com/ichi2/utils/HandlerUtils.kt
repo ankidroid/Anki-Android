@@ -22,6 +22,44 @@ import android.os.Looper
 
 object HandlerUtils {
 
+    @JvmStatic
+    fun getDefaultLooper(): Looper = Looper.getMainLooper()
+
+    @JvmStatic
+    fun newHandler(): Handler = Handler(getDefaultLooper())
+
+    /**
+     * Creates a new [Handler] and adds [r] to the message queue.
+     * The runnable will be run on main thread
+     *
+     * @param r The Runnable that will be executed.
+     */
+    @JvmStatic
+    fun postOnNewHandler(r: Runnable): Handler {
+        val newHandler = newHandler()
+        newHandler.post(r)
+        return newHandler
+    }
+
+    /**
+     * Causes the Runnable r to be added to the message queue, to be run
+     * after the specified amount of time elapses.
+     * The runnable will be run on main thread
+     *
+     * <b>The time-base is [android.os.SystemClock.uptimeMillis]</b>
+     * Time spent in deep sleep will add an additional delay to execution.
+     *
+     * @param r The Runnable that will be executed.
+     * @param delayMillis The delay (in milliseconds) until the Runnable
+     *        will be executed.
+     */
+    @JvmStatic
+    fun postDelayedOnNewHandler(r: Runnable, delayMillis: Long): Handler {
+        val newHandler = newHandler()
+        newHandler.postDelayed(r, delayMillis)
+        return newHandler
+    }
+
     /**
      * Add runnable to message queue and run on the thread to which this handler is attached.
      * This will run on the main thread if called from the main thread.
