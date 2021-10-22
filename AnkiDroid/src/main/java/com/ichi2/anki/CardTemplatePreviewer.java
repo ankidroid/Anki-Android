@@ -301,13 +301,21 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         if (mNoteEditorBundle != null) {
-            Note toPreview = setCurrentCardFromNoteEditorBundle(col);
-            mTemplateCount = getCol().findTemplates(toPreview).size();
+            Card toPreview = setCurrentCardFromNoteEditorBundle(col);
+            if (toPreview != null) {
+                mTemplateCount = getCol().findTemplates(toPreview.note()).size();
 
-            if (mTemplateCount >= 2) {
-                mPreviewPrevCard.setVisibility(View.VISIBLE);
-                mPreviewNextCard.setVisibility(View.VISIBLE);
+                if (mTemplateCount >= 2) {
+                    mPreviewPrevCard.setVisibility(View.VISIBLE);
+                    mPreviewNextCard.setVisibility(View.VISIBLE);
+                }
             }
+        }
+
+        if (mCurrentCard == null) {
+            UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
+            closeCardTemplatePreviewer();
+            return;
         }
 
         displayCardQuestion();
@@ -326,9 +334,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return mTemplateIndex;
     }
 
-    private Note setCurrentCardFromNoteEditorBundle(Collection col) {
+    @Nullable
+    private Card setCurrentCardFromNoteEditorBundle(Collection col) {
         assert(mNoteEditorBundle != null);
         mCurrentCard = getDummyCard(mEditedModel, mTemplateIndex, getBundleEditFields(mNoteEditorBundle));
+        // example: a basic card with no fields provided
+        if (mCurrentCard == null) {
+            return null;
+        }
         long newDid = mNoteEditorBundle.getLong("did");
         if (col.getDecks().isDyn(newDid)) {
             mCurrentCard.setODid(mCurrentCard.getDid());
@@ -338,7 +351,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Note currentNote = mCurrentCard.note();
         ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
         NoteUtils.setTags(currentNote, tagsList);
-        return currentNote;
+        return mCurrentCard;
     }
 
 
