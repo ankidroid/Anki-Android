@@ -120,6 +120,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
@@ -1850,7 +1851,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return getResources().getString(R.string.empty_card_warning);
         } else {
             String question = mCurrentCard.q(reload);
-            question = getCol().getMedia().escapeImages(question);
+            question = Media.escapeImages(question);
             question = mTypeAnswer.filterQuestion(question);
 
             Timber.v("question: '%s'", question);
@@ -1912,7 +1913,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String answer = mCurrentCard.a();
 
         mSoundPlayer.stopSounds();
-        answer = getCol().getMedia().escapeImages(answer);
+        answer = Media.escapeImages(answer);
 
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
