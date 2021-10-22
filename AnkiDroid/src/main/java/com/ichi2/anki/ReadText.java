@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.libanki.Sound;
+import com.ichi2.utils.HandlerUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -134,10 +135,8 @@ public class ReadText {
         showDialogAfterDelay(builder, 500);
     }
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     protected static void showDialogAfterDelay(MaterialDialog.Builder builder, int delayMillis) {
-        final Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        HandlerUtils.postDelayedOnNewHandler(() -> {
             try {
                 builder.build().show();
             } catch (WindowManager.BadTokenException e) {

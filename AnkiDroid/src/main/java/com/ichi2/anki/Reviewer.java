@@ -88,6 +88,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -561,9 +562,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public boolean onMenuOpened(int featureId, Menu menu) {
-        new Handler().post(() -> {
+        HandlerUtils.postOnNewHandler(() -> {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem menuItem = menu.getItem(i);
                 shouldUseDefaultColor(menuItem);
@@ -586,9 +586,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public void onPanelClosed(int featureId, @NonNull Menu menu) {
-        new Handler().postDelayed(this::refreshActionBar, 100);
+        HandlerUtils.postDelayedOnNewHandler(this::refreshActionBar, 100);
     }
 
     @Override
@@ -1129,10 +1128,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
-    protected final Handler mFullScreenHandler = new Handler() {
+    protected final Handler mFullScreenHandler = new Handler(HandlerUtils.getDefaultLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             if (mPrefFullscreenReview) {
                 setFullScreen(Reviewer.this);
             }

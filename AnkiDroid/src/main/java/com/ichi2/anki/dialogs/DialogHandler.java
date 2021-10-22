@@ -31,6 +31,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.utils.HandlerUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -77,8 +78,8 @@ public class DialogHandler extends Handler {
     final WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler() - using default constructor
-    public DialogHandler(AnkiActivity activity) {
+    public DialogHandler(AnkiActivity activity)  {
+        super(HandlerUtils.getDefaultLooper());
         // Use weak reference to main activity to prevent leaking the activity when it's closed
         mActivity = new WeakReference<>(activity);
     }
