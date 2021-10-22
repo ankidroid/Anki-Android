@@ -97,15 +97,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
 
-        if (mEditedModel != null && mOrdinal != -1) {
-            Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
-            mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
-            if (mCurrentCard == null) {
-                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
-                closeCardTemplatePreviewer();
-            }
-        }
-
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
@@ -291,16 +282,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        if ((mCurrentCard == null) && (mCardList == null)) {
-            Timber.d("onCollectionLoaded - incorrect state to load, closing");
-            closeCardTemplatePreviewer();
-            return;
-        }
-        if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
-            mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
-        }
+
+
 
         if (mNoteEditorBundle != null) {
+            // loading from the note editor
             Card toPreview = setCurrentCardFromNoteEditorBundle(col);
             if (toPreview != null) {
                 mTemplateCount = getCol().findTemplates(toPreview.note()).size();
@@ -309,6 +295,23 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                     mPreviewPrevCard.setVisibility(View.VISIBLE);
                     mPreviewNextCard.setVisibility(View.VISIBLE);
                 }
+            }
+        } else {
+            // loading from the card template editor
+
+            // bare note type (not coming from note editor), or new card template
+            if (mEditedModel != null && mOrdinal != -1) {
+                Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
+                mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
+                if (mCurrentCard == null) {
+                    UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
+                    closeCardTemplatePreviewer();
+                }
+            }
+
+            // card template with associated card due to opening from note editor
+            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
+                mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
             }
         }
 
