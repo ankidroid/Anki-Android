@@ -137,7 +137,7 @@ class TypeAnswer(
      * @param buf The question text
      * @return The formatted question text
      */
-    fun filterQuestion(buf: String): String? {
+    fun filterQuestion(buf: String): String {
         val m = PATTERN.matcher(buf)
         if (warning != null) {
             return m.replaceFirst(warning!!)

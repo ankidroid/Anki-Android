@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class HtmlColors {
@@ -39,6 +40,7 @@ public class HtmlColors {
      * #777777 is the grey color</span> This is done with a state machine with 2 states: - 0: within content - 1: within
      * a tag
      */
+    @NonNull
     public static String invertColors(String text) {
         StringBuffer sb = new StringBuffer();
         Matcher m1 = fHtmlColorPattern.matcher(text);
