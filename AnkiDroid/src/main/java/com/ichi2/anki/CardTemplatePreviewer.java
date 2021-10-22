@@ -385,7 +385,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             JSONObject template = getCol().findTemplates(n).get(index);
             return getCol().getNewLinkedCard(new PreviewerCard(getCol(), n), n, template, 1, 0L, false);
         } catch (Exception e) {
-            Timber.e("getDummyCard() unable to create card");
+            Timber.e(e, "getDummyCard() unable to create card");
         }
         return null;
     }
