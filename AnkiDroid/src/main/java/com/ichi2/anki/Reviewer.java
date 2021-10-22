@@ -1664,11 +1664,16 @@ public class Reviewer extends AbstractFlashcardViewer {
         boolean hasSubMenu();
     }
 
-    public ReviewerJavaScriptFunction javaScriptFunction() {
-        return new ReviewerJavaScriptFunction();
+    @Override
+    public AnkiDroidJsAPI javaScriptFunction() {
+        return new ReviewerJavaScriptFunction(this, mCurrentCard);
     }
 
-    public class ReviewerJavaScriptFunction extends JavaScriptFunction {
+    public class ReviewerJavaScriptFunction extends AnkiDroidJsAPI {
+        public ReviewerJavaScriptFunction(@NonNull AbstractFlashcardViewer activity, @NonNull Card currentCard) {
+            super(activity, currentCard);
+        }
+
         @JavascriptInterface
         @Override
         public String ankiGetNewCardCount() {
@@ -1692,5 +1697,30 @@ public class Reviewer extends AbstractFlashcardViewer {
         public int ankiGetETA() {
             return mEta;
         }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetNextTime1() {
+            return mEaseButton1.getNextTime();
+        }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetNextTime2() {
+            return mEaseButton2.getNextTime();
+        }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetNextTime3() {
+            return mEaseButton3.getNextTime();
+        }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetNextTime4() {
+            return mEaseButton4.getNextTime();
+        }
+
     }
 }
