@@ -299,19 +299,16 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         } else {
             // loading from the card template editor
 
-            // bare note type (not coming from note editor), or new card template
-            if (mEditedModel != null && mOrdinal != -1) {
+            // card template with associated card due to opening from note editor
+            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
+                mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
+            } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
                 mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
                 if (mCurrentCard == null) {
                     UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                     closeCardTemplatePreviewer();
                 }
-            }
-
-            // card template with associated card due to opening from note editor
-            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
-                mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
             }
         }
 
