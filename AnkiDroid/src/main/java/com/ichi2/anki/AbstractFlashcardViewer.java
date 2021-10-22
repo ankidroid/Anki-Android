@@ -90,6 +90,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.CardHtml;
+import com.ichi2.anki.cardviewer.HtmlGenerator;
+import com.ichi2.anki.cardviewer.Side;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
@@ -105,9 +108,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.CardMarker;
-import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.FullScreenMode;
-import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.servicelayer.AnkiMethod;
 import com.ichi2.anki.servicelayer.LanguageHintService;
@@ -120,7 +121,6 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
@@ -130,8 +130,6 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.template.MathJax;
-import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
@@ -171,7 +169,6 @@ import java.util.regex.Pattern;
 import kotlin.Unit;
 import timber.log.Timber;
 
-import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Sound.SoundSide;
@@ -238,7 +235,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Variables to hold preferences
      */
-    private CardAppearance mCardAppearance;
     private boolean mPrefShowTopbar;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
@@ -256,6 +252,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected TypeAnswer mTypeAnswer;
 
+    /** Generates HTML content */
+    private HtmlGenerator mHtmlGenerator;
+
     // Default short animation duration, provided by Android framework
     protected int mShortAnimDuration;
     private boolean mBackButtonPressedToReturn = false;
@@ -267,8 +266,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mTouchStarted = false;
     private boolean mInAnswer = false;
     private boolean mAnswerSoundsAdded = false;
-
-    private CardTemplate mCardTemplate;
 
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -729,8 +726,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        SharedPreferences preferences = restorePreferences();
-        mCardAppearance = CardAppearance.create(new ReviewerCustomFonts(this.getBaseContext()), preferences);
+        restorePreferences();
 
         mTagsDialogFactory = new TagsDialogFactory(this).attachToActivity(this);
 
@@ -815,13 +811,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             clearClipboard();
         }
 
-        // Load the template for the card
-        try {
-            String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
-            mCardTemplate = new CardTemplate(data);
-        } catch (IOException e) {
-            Timber.w(e);
-        }
+        mHtmlGenerator = HtmlGenerator.createInstance(this, this.mTypeAnswer, mBaseUrl);
 
         // Initialize text-to-speech. This is an asynchronous operation.
         mTTS.initialize(this, new ReadTextListener());
@@ -1843,22 +1833,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         jsApiInit();
     }
 
-    /** String, as it will be displayed in the web viewer. Sound/video removed, image escaped...
-     Or warning if required*/
-    private String displayString(boolean reload) {
-        if (mCurrentCard.isEmpty()) {
-            return getResources().getString(R.string.empty_card_warning);
-        } else {
-            String question = mCurrentCard.q(reload);
-            question = Media.escapeImages(question);
-            question = mTypeAnswer.filterQuestion(question);
-
-            Timber.v("question: '%s'", question);
-
-            return CardAppearance.enrichWithQADiv(question, false);
-        }
-    }
-
     protected void displayCardQuestion(boolean reload) {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
@@ -1866,7 +1840,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         setInterface();
 
-        String displayString = displayString(reload);
         if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
@@ -1875,7 +1848,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mAnswerField.setVisibility(View.GONE);
         }
 
-        updateCard(displayString);
+        CardHtml content = mHtmlGenerator.generateHtml(mCurrentCard, reload, Side.FRONT);
+        updateCard(content);
         hideEaseButtons();
 
         mAutomaticAnswer.onDisplayQuestion();
@@ -1909,20 +1883,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         sDisplayAnswer = true;
 
-        String answer = mCurrentCard.a();
 
         mSoundPlayer.stopSounds();
-        answer = Media.escapeImages(answer);
-
         mAnswerField.setVisibility(View.GONE);
         // Clean up the user answer and the correct answer
         if (!mTypeAnswer.useInputTag()) {
             mTypeAnswer.setInput(mAnswerField.getText().toString());
         }
-        answer = mTypeAnswer.filterAnswer(answer);
 
         mIsSelecting = false;
-        updateCard(CardAppearance.enrichWithQADiv(answer, true));
+        CardHtml answerContent = mHtmlGenerator.generateHtml(mCurrentCard, false, Side.BACK);
+        updateCard(answerContent);
         displayAnswerBottomBar();
 
         mAutomaticAnswer.onDisplayAnswer();
@@ -1985,54 +1956,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean isInNightMode() {
-        return mCardAppearance.isNightMode();
+        return CardAppearance.isInNightMode(AnkiDroidApp.getSharedPrefs(this));
     }
 
 
-    private void updateCard(final String newContent) {
+    private void updateCard(final CardHtml content) {
         Timber.d("updateCard()");
 
         mUseTimerDynamicMS = 0;
 
+        String beforeExpansion = content.getBeforeSoundTemplateExpansion();
         if (sDisplayAnswer) {
-            addAnswerSounds(newContent);
+            addAnswerSounds(beforeExpansion);
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, newContent, SoundSide.QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, beforeExpansion, SoundSide.QUESTION);
             if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
         }
 
-        String content = Sound.expandSounds(mBaseUrl, newContent);
-
-        content = CardAppearance.fixBoldStyle(content);
-
-        Timber.v("content card = \n %s", content);
-
-        String style = mCardAppearance.getStyle();
-        Timber.v("::style:: / %s", style);
-
-        // CSS class for card-specific styling
-        String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
-
-        String scripts = "";
-        if (MathJax.textContainsMathjax(content)) {
-            cardClass += " mathjax-needs-to-render";
-            scripts += "        <script src=\"file:///android_asset/mathjax/conf.js\"> </script>\n" +
-                    "        <script src=\"file:///android_asset/mathjax/tex-chtml.js\"> </script>";
-        }
-
-        if (isInNightMode()) {
-            if (!mCardAppearance.hasUserDefinedNightMode(mCurrentCard)) {
-                content = HtmlColors.invertColors(content);
-            }
-        }
-
-        mCardContent = mCardTemplate.render(content, style, scripts, cardClass);
+        mCardContent = content.getTemplateHtml();
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
