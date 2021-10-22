@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ichi2.anki.AbstractFlashcardViewer.JavaScriptFunction;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -126,7 +125,7 @@ public class ReviewerTest extends RobolectricTest {
         addNoteUsingBasicModel("Hello", "World2");
 
         Reviewer reviewer = startReviewer();
-        JavaScriptFunction javaScriptFunction = reviewer.javaScriptFunction();
+        AnkiDroidJsAPI javaScriptFunction = reviewer.javaScriptFunction();
 
 
         // The answer needs to be displayed to be able to get the time.
@@ -277,7 +276,7 @@ public class ReviewerTest extends RobolectricTest {
         decks.select(didA);
 
         Reviewer reviewer = startReviewer();
-        JavaScriptFunction javaScriptFunction = reviewer.javaScriptFunction();
+        AnkiDroidJsAPI javaScriptFunction = reviewer.javaScriptFunction();
 
         waitForAsyncTasksToComplete();
         assertThat(javaScriptFunction.ankiGetDeckName(), is("B"));
@@ -321,7 +320,7 @@ public class ReviewerTest extends RobolectricTest {
     private void assertCounts(Reviewer r, int newCount, int stepCount, int revCount) {
 
         List<String> countList = new ArrayList<>();
-        JavaScriptFunction jsApi = r.javaScriptFunction();
+        AnkiDroidJsAPI jsApi = r.javaScriptFunction();
         countList.add(jsApi.ankiGetNewCardCount());
         countList.add(jsApi.ankiGetLrnCardCount());
         countList.add(jsApi.ankiGetRevCardCount());

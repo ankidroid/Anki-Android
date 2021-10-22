@@ -33,7 +33,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,7 +65,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
@@ -206,20 +204,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected static final int MENU_DISABLED = 3;
 
-    // js api developer contact
-    private String mCardSuppliedDeveloperContact  = "";
-    private String mCardSuppliedApiVersion = "";
-
-    private static final String sCurrentJsApiVersion = "0.0.1";
-    private static final String sMinimumJsApiVersion = "0.0.1";
-
-    private static final String MARK_CARD = "markCard";
-    private static final String TOGGLE_FLAG = "toggleFlag";
-
-    // JS API ERROR CODE
-    private static final int ankiJsErrorCodeDefault = 0;
-    private static final int ankiJsErrorCodeMarkCard = 1;
-    private static final int ankiJsErrorCodeFlagCard = 2;
+    private AnkiDroidJsAPI mAnkiDroidJsAPI;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -231,7 +216,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Variables to hold preferences
      */
-    private boolean mPrefShowTopbar;
+    protected boolean mPrefShowTopbar;
     private FullScreenMode mPrefFullscreenReview = FullScreenMode.getDEFAULT();
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -1349,7 +1334,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
-        webView.addJavascriptInterface(javaScriptFunction(), "AnkiDroidJS");
+        mAnkiDroidJsAPI = javaScriptFunction();
+        webView.addJavascriptInterface(mAnkiDroidJsAPI, "AnkiDroidJS");
 
         return webView;
     }
@@ -1655,7 +1641,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         displayCardQuestion(false);
 
         // js api initialisation / reset
-        jsApiInit();
+        mAnkiDroidJsAPI.init();
     }
 
     protected void displayCardQuestion(boolean reload) {
@@ -2813,25 +2799,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (isAnkiApiNull(MARK_CARD)) {
-                    showDeveloperContact(ankiJsErrorCodeDefault);
+                if (mAnkiDroidJsAPI.isAnkiApiNull(mAnkiDroidJsAPI.MARK_CARD)) {
+                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeDefault);
                     return true;
-                } else if (mJsApiListMap.get(MARK_CARD)) {
-                    executeCommand(COMMAND_MARK);
-                } else {
+                } else if (!mAnkiDroidJsAPI.getJsApiListMap().get(mAnkiDroidJsAPI.MARK_CARD)) {
                     // see 02-string.xml
-                    showDeveloperContact(ankiJsErrorCodeMarkCard);
+                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeMarkCard);
+                    return true;
                 }
+
+                executeCommand(COMMAND_MARK);
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (isAnkiApiNull(TOGGLE_FLAG)) {
-                    showDeveloperContact(ankiJsErrorCodeDefault);
+                if (mAnkiDroidJsAPI.isAnkiApiNull(mAnkiDroidJsAPI.TOGGLE_FLAG)) {
+                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeDefault);
                     return true;
-                } else if (!mJsApiListMap.get(TOGGLE_FLAG)) {
+                } else if (!mAnkiDroidJsAPI.getJsApiListMap().get(mAnkiDroidJsAPI.TOGGLE_FLAG)) {
                     // see 02-string.xml
-                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeFlagCard);
                     return true;
                 }
 
@@ -2860,6 +2847,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, msgDecode, true);
                 return true;
             }
+
 
             int signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url);
             switch (signalOrdinal) {
@@ -3040,72 +3028,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    // Check if value null
-    private boolean isAnkiApiNull(String api) {
-        return mJsApiListMap.get(api) == null;
-    }
-
-    /*
-     * see 02-strings.xml
-     * Show Error code when mark card or flag card unsupported
-     * 1 - mark card
-     * 2 - flag card
-     *
-     * show developer contact if js api used in card is deprecated
-     */
-    private void showDeveloperContact(int errorCode) {
-        String errorMsg = getString(R.string.anki_js_error_code, errorCode);
-
-        View parentLayout = findViewById(android.R.id.content);
-        String snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
-
-
-        Snackbar snackbar = UIUtils.showSnackbar(this,
-                snackbarMsg,
-                false,
-                R.string.reviewer_invalid_api_version_visit_documentation,
-                view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")),
-                parentLayout,
-                null);
-        TextView snackbarTextView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_text);
-        snackbarTextView.setMaxLines(3);
-        snackbar.show();
-    }
-
-    /**
-     * Supplied api version must be equal to current api version to call mark card, toggle flag functions etc.
-     */
-    private boolean requireApiVersion(String apiVer, String apiDevContact) {
-        try {
-
-            if (TextUtils.isEmpty(apiDevContact)) {
-                return false;
-            }
-
-            Version versionCurrent = Version.valueOf(sCurrentJsApiVersion);
-            Version versionSupplied = Version.valueOf(apiVer);
-
-            /*
-            * if api major version equals to supplied major version then return true and also check for minor version and patch version
-            * show toast for update and contact developer if need updates
-            * otherwise return false
-            */
-            if (versionSupplied.equals(versionCurrent)) {
-                return true;
-            } else if (versionSupplied.lessThan(versionCurrent)) {
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
-
-                return versionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
-            } else {
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
-                return false;
-            }
-        } catch (Exception e) {
-          Timber.w(e, "requireApiVersion::exception");
-        }
-        return false;
-    }
-
     @VisibleForTesting
     void loadInitialCard() {
         new SchedulerService.GetCard().runWithHandler(answerCardHandler(false));
@@ -3158,309 +3080,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    // init or reset api list
-    private void jsApiInit() {
-        mCardSuppliedApiVersion = "";
-        mCardSuppliedDeveloperContact = "";
-
-        for (String api : mApiList) {
-            mJsApiListMap.put(api, false);
-        }
-    }
-
- /*
- Javascript Interface class for calling Java function from AnkiDroid WebView
-see card.js for available functions
- */
-    // list of api that can be accessed
-    private final String[] mApiList = {TOGGLE_FLAG, MARK_CARD};
-    // JS api list enable/disable status
-    private final HashMap<String, Boolean> mJsApiListMap = HashUtil.HashMapInit(mApiList.length);
-    public JavaScriptFunction javaScriptFunction() {
-        return new JavaScriptFunction();
-    }
-
-    public class JavaScriptFunction {
-        // Text to speech
-        private JavaScriptTTS mTalker = new JavaScriptTTS();
-
-        // if supplied api version match then enable api
-        private void enableJsApi() {
-            for (String api : mApiList) {
-                mJsApiListMap.put(api, true);
-            }
-        }
-
-        @JavascriptInterface
-        public String init(String jsonData) {
-            JSONObject data;
-            String apiStatusJson = "";
-
-            try {
-                data = new JSONObject(jsonData);
-                mCardSuppliedApiVersion = data.optString("version", "");
-                mCardSuppliedDeveloperContact  = data.optString("developer", "");
-
-                if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
-                    enableJsApi();
-                }
-
-                apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
-
-            } catch (JSONException j) {
-                Timber.w(j);
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
-            }
-            return apiStatusJson;
-        }
-
-        // This method and the one belows return "default" values when there is no count nor ETA.
-        // Javascript may expect ETA and Counts to be set, this ensure it does not bug too much by providing a value of correct type
-        // but with a clearly incorrect value.
-        // It's overridden in the Reviewer, where those values are actually defined.
-        @JavascriptInterface
-        public String ankiGetNewCardCount() {
-            return "-1";
-        }
-
-
-        @JavascriptInterface
-        public String ankiGetLrnCardCount() {
-            return "-1";
-        }
-
-
-        @JavascriptInterface
-        public String ankiGetRevCardCount() {
-            return "-1";
-        }
-
-
-        @JavascriptInterface
-        public int ankiGetETA() {
-            return -1;
-        }
-
-        @JavascriptInterface
-        public boolean ankiGetCardMark() {
-            return shouldDisplayMark();
-        }
-
-        
-        @JavascriptInterface
-        public int ankiGetCardFlag() {
-            return mCurrentCard.userFlag();
-        }
-
-        @JavascriptInterface
-        public String ankiGetNextTime1() { return mEaseButton1.getNextTime(); }
-
-        @JavascriptInterface
-        public String ankiGetNextTime2() { return mEaseButton2.getNextTime(); }
-
-        @JavascriptInterface
-        public String ankiGetNextTime3() { return mEaseButton3.getNextTime(); }
-
-        @JavascriptInterface
-        public String ankiGetNextTime4() { return mEaseButton4.getNextTime(); }
-        
-        @JavascriptInterface
-        public int ankiGetCardReps() {
-            return mCurrentCard.getReps();
-        }
-
-        @JavascriptInterface
-        public int ankiGetCardInterval() {
-            return mCurrentCard.getIvl();
-        }
-
-        /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%) */
-        @JavascriptInterface
-        public int ankiGetCardFactor() {
-            return mCurrentCard.getFactor();
-        }
-
-        /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099 */
-        @JavascriptInterface
-        public long ankiGetCardMod() {
-            return mCurrentCard.getMod();
-        }
-
-        /** Returns the ID of the card. Example: 1477380543053 */
-        @JavascriptInterface
-        public long ankiGetCardId() {
-             return mCurrentCard.getId();
-         }
-
-        /** Returns the ID of the note which generated the card. Example: 1590418157630 */
-        @JavascriptInterface
-        public long ankiGetCardNid() {
-            return mCurrentCard.getNid();
-        }
-
-        @JavascriptInterface
-        @Consts.CARD_TYPE
-        public int ankiGetCardType() {
-            return mCurrentCard.getType();
-        }
-
-        /** Returns the ID of the deck which contains the card. Example: 1595967594978 */
-        @JavascriptInterface
-        public long ankiGetCardDid() {
-            return mCurrentCard.getDid();
-        }
-
-        @JavascriptInterface
-        public int ankiGetCardLeft() {
-            return mCurrentCard.getLeft();
-        }
-
-        /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978 */
-        @JavascriptInterface
-        public long ankiGetCardODid() {
-            return mCurrentCard.getODid();
-        }
-
-        @JavascriptInterface
-        public long ankiGetCardODue() {
-            return mCurrentCard.getODue();
-        }
-
-        @JavascriptInterface
-        @Consts.CARD_QUEUE
-        public int ankiGetCardQueue() {
-            return mCurrentCard.getQueue();
-        }
-
-        @JavascriptInterface
-        public int ankiGetCardLapses() {
-             return mCurrentCard.getLapses();
-         }
-
-        @JavascriptInterface
-        public long ankiGetCardDue() {
-            return mCurrentCard.getDue();
-         }
-
-        @JavascriptInterface
-        public boolean ankiIsInFullscreen() {
-            return isFullscreen();
-        }
-
-        @JavascriptInterface
-        public boolean ankiIsTopbarShown() {
-            return mPrefShowTopbar;
-        }
-
-        @JavascriptInterface
-        public boolean ankiIsInNightMode() {
-            return isInNightMode();
-        }
-
-        @JavascriptInterface
-        public boolean ankiIsDisplayingAnswer() { return isDisplayingAnswer(); };
-
-        @JavascriptInterface
-        public String ankiGetDeckName() {
-            return Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
-        }
-
-        @JavascriptInterface
-        public boolean ankiBuryCard() {
-            return buryCard();
-        }
-
-        @JavascriptInterface
-        public boolean ankiBuryNote() {
-            return buryNote();
-        }
-
-        @JavascriptInterface
-        public boolean ankiSuspendCard() {
-            return suspendCard();
-        }
-
-        @JavascriptInterface
-        public boolean ankiSuspendNote() {
-            return suspendNote();
-        }
-
-        @JavascriptInterface
-        public void ankiAddTagToCard() {
-            runOnUiThread(() -> showTagsDialog());
-        }
-
-        @JavascriptInterface
-        public void ankiSearchCard(String query) {
-            Intent intent = new Intent(AbstractFlashcardViewer.this, CardBrowser.class);
-            Long currentCardId = getCurrentCardId();
-            if (currentCardId != null) {
-                intent.putExtra("currentCard", currentCardId);
-            }
-            intent.putExtra("search_query", query);
-            startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
-        }
-
-        @JavascriptInterface
-        public boolean ankiIsActiveNetworkMetered() {
-            try {
-                ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
-                        .getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (cm == null) {
-                    Timber.w("ConnectivityManager not found - assuming metered connection");
-                    return true;
-                }
-                return cm.isActiveNetworkMetered();
-            } catch (Exception e) {
-                Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
-                return true;
-            }
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSpeak(String text, int queueMode) {
-          return mTalker.speak(text, queueMode);
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSpeak(String text) {
-          return mTalker.speak(text);
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSetLanguage(String loc) {
-          return mTalker.setLanguage(loc);
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSetPitch(float pitch) {
-          return mTalker.setPitch(pitch);
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSetPitch(double pitch) {
-          return mTalker.setPitch((float)pitch);
-        }
-
-        @JavascriptInterface
-        public int ankiTtsSetSpeechRate(float speechRate) {
-          return mTalker.setSpeechRate(speechRate);
-        }        
-
-        @JavascriptInterface
-        public int ankiTtsSetSpeechRate(double speechRate) {
-          return mTalker.setSpeechRate((float)speechRate);
-        }
-
-        @JavascriptInterface
-        public boolean ankiTtsIsSpeaking() {
-          return mTalker.isSpeaking();
-        }
-
-        @JavascriptInterface
-        public int ankiTtsStop() {
-          return mTalker.stop();
-        }
-
+    public AnkiDroidJsAPI javaScriptFunction() {
+        return new AnkiDroidJsAPI(this, mCurrentCard);
     }
 }
