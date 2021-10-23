@@ -600,7 +600,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 displayCardQuestion();
                 mCurrentCard.startTimer();
-                mAnswerTimer.setupForCard(mCurrentCard);
             }
             hideProgressBar();
         }
