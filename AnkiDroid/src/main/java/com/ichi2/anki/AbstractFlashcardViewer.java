@@ -103,7 +103,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.anki.reviewer.AnswerTimer;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.CardMarker;
@@ -293,7 +292,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected ImageView mPreviewNextCard;
     protected TextView mPreviewToggleAnswerText;
     protected RelativeLayout mTopBarLayout;
-    protected AnswerTimer mAnswerTimer;
     protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
 
@@ -592,6 +590,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             mTypeAnswer.updateInfo(mCurrentCard, getResources());
+            onCardEdited(mCurrentCard);
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
@@ -599,7 +598,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 displayCardAnswer();
             } else {
                 displayCardQuestion();
-                mCurrentCard.startTimer();
             }
             hideProgressBar();
         }
@@ -617,6 +615,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
     };
+
+
+    /** Operation after a card has been updated due to being edited. Called before display[Question/Answer] */
+    protected void onCardEdited(Card card) {
+        // intentionally blank
+    }
+
 
     class NextCardHandler<Result extends Computation<? extends NextCard<?>>> extends TaskListener<Unit, Result> {
         @Override
@@ -737,8 +742,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mAnswerTimer = new AnswerTimer(findViewById(R.id.card_time));
     }
 
     @NonNull
@@ -832,7 +835,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
-        mAnswerTimer.pause();
         mSoundPlayer.stopSounds();
 
         // Prevent loss of data in Cookies
@@ -843,7 +845,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onResume() {
         super.onResume();
-        mAnswerTimer.resume();
         // Set the context for the Sound manager
         mSoundPlayer.setContext(new WeakReference<>(this));
         mAutomaticAnswer.enable();
@@ -1614,7 +1615,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void switchTopBarVisibility(int visible) {
-        mAnswerTimer.setVisibility(visible);
         mChosenAnswer.setVisibility(visible);
     }
 
@@ -1707,7 +1707,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-
+    /** A new card has been loaded into the Viewer, or the question has been re-shown */
     private void updateForNewCard() {
         updateActionBar();
 
