@@ -290,8 +290,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mInitialFlipCardHeight;
     private boolean mButtonHeightSet = false;
 
-    private static final int sShowChosenAnswerLength = 2000;
-
     public static final String DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval";
     public static final int DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200;
 
@@ -693,12 +691,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return nextCardHandler()
                 .alsoExecuteBefore(() -> blockControls(quick));
     }
-
-
-    private final Handler mTimerHandler = HandlerUtils.newHandler();
-
-    private final Runnable mRemoveChosenAnswerText = mPreviousAnswerIndicator::clear;
-
 
     protected int getAnswerButtonCount() {
         return getCol().getSched().answerButtons(mCurrentCard);
@@ -1235,12 +1227,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (buttonNumber < ease) {
             return;
         }
-        // Set the dots appearing below the toolbar
+        // Temporarily sets the answer indicator dots appearing below the toolbar
         mPreviousAnswerIndicator.displayAnswerIndicator(ease, buttonNumber);
 
-        // remove chosen answer hint after a while
-        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
-        mTimerHandler.postDelayed(mRemoveChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
@@ -2322,7 +2311,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         mAutomaticAnswer.disable();
-        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
+        mPreviousAnswerIndicator.stopAutomaticHide();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
