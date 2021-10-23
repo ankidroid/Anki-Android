@@ -595,7 +595,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mWhiteboard.clear();
             }
 
-            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
@@ -676,7 +675,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCurrentCard = nextCardAndResult.nextScheduledCard();
 
             // Start reviewing next card
-            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             hideProgressBar();
             AbstractFlashcardViewer.this.unblockControls();
             AbstractFlashcardViewer.this.displayCardQuestion();
@@ -1865,6 +1863,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mBackButtonPressedToReturn = false;
 
         setInterface();
+
+        // Update typeAnswer info before showing the question
+        mTypeAnswer.updateInfo(mCurrentCard, getResources());
 
         String displayString = displayString(reload);
         if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {

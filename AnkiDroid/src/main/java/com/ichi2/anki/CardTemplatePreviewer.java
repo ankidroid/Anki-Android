@@ -103,8 +103,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             if (mCurrentCard == null) {
                 UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                 closeCardTemplatePreviewer();
-            } else {
-                mTypeAnswer.updateInfo(mCurrentCard, getResources());
             }
         }
 
@@ -312,10 +310,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
 
-        if (mCurrentCard != null) {
-            mTypeAnswer.updateInfo(mCurrentCard, getResources());
-        }
-
         displayCardQuestion();
         if (mShowingAnswer) {
             displayCardAnswer();
@@ -340,7 +334,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mCurrentCard.setODid(mCurrentCard.getDid());
         }
         mCurrentCard.setDid(newDid);
-        mTypeAnswer.updateInfo(mCurrentCard, getResources());
 
         Note currentNote = mCurrentCard.note();
         ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
