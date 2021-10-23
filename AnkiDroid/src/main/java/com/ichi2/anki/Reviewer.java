@@ -69,6 +69,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.AnswerButtons;
+import com.ichi2.anki.reviewer.AnswerTimer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
@@ -122,6 +123,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     private TextView mTextBarLearn;
     private TextView mTextBarReview;
 
+    protected AnswerTimer mAnswerTimer;
+
     private boolean mPrefHideDueCount;
 
     // ETA
@@ -171,10 +174,23 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         mColorPalette = findViewById(R.id.whiteboard_editor);
+        mAnswerTimer = new AnswerTimer(findViewById(R.id.card_time));
 
         startLoadingCollection();
     }
 
+
+    @Override
+    protected void onPause() {
+        mAnswerTimer.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        mAnswerTimer.resume();
+        super.onResume();
+    }
 
     @Override
     protected int getFlagToDisplay() {
@@ -1076,6 +1092,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void switchTopBarVisibility(int visible) {
         super.switchTopBarVisibility(visible);
+        mAnswerTimer.setVisibility(visible);
         if (mShowRemainingCardCount) {
             mTextBarNew.setVisibility(visible);
             mTextBarLearn.setVisibility(visible);
@@ -1125,6 +1142,17 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void onFling() {
         if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
             delayedHide(INITIAL_HIDE_DELAY);
+        }
+    }
+
+
+    @Override
+    protected void onCardEdited(Card card) {
+        super.onCardEdited(card);
+        if (!sDisplayAnswer) {
+            // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
+            // QUESTIONABLE(legacy code): Only perform this if editing the question
+            card.startTimer();
         }
     }
 
