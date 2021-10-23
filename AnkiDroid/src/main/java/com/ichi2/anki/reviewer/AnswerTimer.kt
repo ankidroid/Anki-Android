@@ -21,11 +21,14 @@ import android.os.SystemClock
 import android.util.TypedValue
 import android.view.View
 import android.widget.Chronometer
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
 
 /**
- * The UI element displaying the amount of time to answer a card
+ * Responsible for pause/resume of the card timer and the UI element displaying the amount of time to answer a card
+ *
+ * This is the time to answer the question, and to view the answer
  *
  * Handled by the "Show answer timer" and "Maximal answer time" in the deck options.
  *
@@ -34,6 +37,10 @@ import com.ichi2.libanki.Card
  * @see [Card.timeTaken] - used by the scheduler
  */
 class AnswerTimer(private val cardTimer: Chronometer) {
+
+    @VisibleForTesting
+    var limit: Int = 0
+        private set
 
     private lateinit var currentCard: Card
 
@@ -77,7 +84,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
 
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true)
-        val limit: Int = newCard.timeLimit()
+        limit = newCard.timeLimit()
         cardTimer.setOnChronometerTickListener { chronometer: Chronometer ->
             val elapsed: Long = elapsedRealTime - chronometer.base
             if (elapsed >= limit) {
@@ -88,13 +95,13 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     }
 
     fun pause() {
-        // We stop the UI timer so it doesn't trigger the tick listener while paused. Letting
-        // it run would trigger the time limit condition (red, stopped timer) in the background.
-        cardTimer.stop()
-
         if (!this::currentCard.isInitialized) {
             return
         }
+
+        // We stop the UI timer so it doesn't trigger the tick listener while paused. Letting
+        // it run would trigger the time limit condition (red, stopped timer) in the background.
+        cardTimer.stop()
         currentCard.stopTimer()
     }
 
