@@ -51,13 +51,23 @@ class AnswerTimer(private val cardTimer: Chronometer) {
      */
     fun setupForCard(newCard: Card) {
         currentCard = newCard
-        val typedValue = TypedValue()
         showTimer = newCard.showTimer()
         if (showTimer && cardTimer.visibility == View.INVISIBLE) {
             cardTimer.visibility = View.VISIBLE
         } else if (!showTimer && cardTimer.visibility != View.INVISIBLE) {
             cardTimer.visibility = View.INVISIBLE
         }
+
+        // Optimisation to remove the number of timers. Speedup at call site is negligible (~500 micros)
+        if (!showTimer) {
+            cardTimer.stop()
+        } else {
+            resetTimerUI(newCard)
+        }
+    }
+
+    private fun resetTimerUI(newCard: Card) {
+        val typedValue = TypedValue()
         // Set normal timer color
         getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true)
         cardTimer.setTextColor(typedValue.data)
@@ -95,6 +105,10 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         // Resume the card timer first. It internally accounts for the time gap between
         // suspend and resume.
         currentCard.resumeTimer()
+
+        if (!showTimer) {
+            return
+        }
         // Then update and resume the UI timer. Set the base time as if the timer had started
         // timeTaken() seconds ago.
         cardTimer.base = elapsedRealTime - currentCard.timeTaken()
