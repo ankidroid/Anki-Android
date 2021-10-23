@@ -97,15 +97,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
 
-        if (mEditedModel != null && mOrdinal != -1) {
-            Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
-            mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
-            if (mCurrentCard == null) {
-                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
-                closeCardTemplatePreviewer();
-            }
-        }
-
         showBackIcon();
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
@@ -291,23 +282,40 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        if ((mCurrentCard == null) && (mCardList == null)) {
-            Timber.d("onCollectionLoaded - incorrect state to load, closing");
-            closeCardTemplatePreviewer();
-            return;
-        }
-        if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
-            mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
-        }
+
+
 
         if (mNoteEditorBundle != null) {
-            Note toPreview = setCurrentCardFromNoteEditorBundle(col);
-            mTemplateCount = getCol().findTemplates(toPreview).size();
+            // loading from the note editor
+            Card toPreview = setCurrentCardFromNoteEditorBundle(col);
+            if (toPreview != null) {
+                mTemplateCount = getCol().findTemplates(toPreview.note()).size();
 
-            if (mTemplateCount >= 2) {
-                mPreviewPrevCard.setVisibility(View.VISIBLE);
-                mPreviewNextCard.setVisibility(View.VISIBLE);
+                if (mTemplateCount >= 2) {
+                    mPreviewPrevCard.setVisibility(View.VISIBLE);
+                    mPreviewNextCard.setVisibility(View.VISIBLE);
+                }
             }
+        } else {
+            // loading from the card template editor
+
+            // card template with associated card due to opening from note editor
+            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
+                mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
+            } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
+                Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
+                mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
+                if (mCurrentCard == null) {
+                    UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
+                    closeCardTemplatePreviewer();
+                }
+            }
+        }
+
+        if (mCurrentCard == null) {
+            UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
+            closeCardTemplatePreviewer();
+            return;
         }
 
         displayCardQuestion();
@@ -326,9 +334,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return mTemplateIndex;
     }
 
-    private Note setCurrentCardFromNoteEditorBundle(Collection col) {
+    @Nullable
+    private Card setCurrentCardFromNoteEditorBundle(Collection col) {
         assert(mNoteEditorBundle != null);
         mCurrentCard = getDummyCard(mEditedModel, mTemplateIndex, getBundleEditFields(mNoteEditorBundle));
+        // example: a basic card with no fields provided
+        if (mCurrentCard == null) {
+            return null;
+        }
         long newDid = mNoteEditorBundle.getLong("did");
         if (col.getDecks().isDyn(newDid)) {
             mCurrentCard.setODid(mCurrentCard.getDid());
@@ -338,7 +351,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Note currentNote = mCurrentCard.note();
         ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
         NoteUtils.setTags(currentNote, tagsList);
-        return currentNote;
+        return mCurrentCard;
     }
 
 
@@ -385,7 +398,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             JSONObject template = getCol().findTemplates(n).get(index);
             return getCol().getNewLinkedCard(new PreviewerCard(getCol(), n), n, template, 1, 0L, false);
         } catch (Exception e) {
-            Timber.e("getDummyCard() unable to create card");
+            Timber.e(e, "getDummyCard() unable to create card");
         }
         return null;
     }

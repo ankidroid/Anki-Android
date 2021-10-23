@@ -69,6 +69,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.reviewer.AnswerButtons;
+import com.ichi2.anki.reviewer.AnswerTimer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
@@ -88,6 +89,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
@@ -120,6 +122,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     private TextView mTextBarNew;
     private TextView mTextBarLearn;
     private TextView mTextBarReview;
+
+    protected AnswerTimer mAnswerTimer;
 
     private boolean mPrefHideDueCount;
 
@@ -170,10 +174,23 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         mColorPalette = findViewById(R.id.whiteboard_editor);
+        mAnswerTimer = new AnswerTimer(findViewById(R.id.card_time));
 
         startLoadingCollection();
     }
 
+
+    @Override
+    protected void onPause() {
+        mAnswerTimer.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        mAnswerTimer.resume();
+        super.onResume();
+    }
 
     @Override
     protected int getFlagToDisplay() {
@@ -561,9 +578,8 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public boolean onMenuOpened(int featureId, Menu menu) {
-        new Handler().post(() -> {
+        HandlerUtils.postOnNewHandler(() -> {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem menuItem = menu.getItem(i);
                 shouldUseDefaultColor(menuItem);
@@ -586,9 +602,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
     public void onPanelClosed(int featureId, @NonNull Menu menu) {
-        new Handler().postDelayed(this::refreshActionBar, 100);
+        HandlerUtils.postDelayedOnNewHandler(this::refreshActionBar, 100);
     }
 
     @Override
@@ -1048,7 +1063,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        initTimer();
+        mAnswerTimer.setupForCard(mCurrentCard);
         delayedHide(100);
         super.displayCardQuestion();
     }
@@ -1077,6 +1092,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void switchTopBarVisibility(int visible) {
         super.switchTopBarVisibility(visible);
+        mAnswerTimer.setVisibility(visible);
         if (mShowRemainingCardCount) {
             mTextBarNew.setVisibility(visible);
             mTextBarLearn.setVisibility(visible);
@@ -1129,10 +1145,20 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    @SuppressWarnings("deprecation") //  #7111: new Handler()
-    protected final Handler mFullScreenHandler = new Handler() {
+
+    @Override
+    protected void onCardEdited(Card card) {
+        super.onCardEdited(card);
+        if (!sDisplayAnswer) {
+            // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
+            // QUESTIONABLE(legacy code): Only perform this if editing the question
+            card.startTimer();
+        }
+    }
+
+    protected final Handler mFullScreenHandler = new Handler(HandlerUtils.getDefaultLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             if (mPrefFullscreenReview) {
                 setFullScreen(Reviewer.this);
             }

@@ -206,6 +206,7 @@ public class Sound {
      * @param content -- card content to be rendered that may contain embedded audio
      * @return -- the same content but in a format that will render working play buttons when audio was embedded
      */
+    @NonNull
     public static String expandSounds(String soundDir, String content) {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;

@@ -386,7 +386,7 @@ public class Media {
     }
 
 
-    public String escapeImages(String string) {
+    public static String escapeImages(String string) {
         return escapeImages(string, false);
     }
 
@@ -396,7 +396,7 @@ public class Media {
      * @param string The string to search for image references and escape the filenames.
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
-    public String escapeImages(String string, boolean unescape) {
+    public static String escapeImages(String string, boolean unescape) {
         for (Pattern p : Arrays.asList(fImgRegExpQ, fImgRegExpU)) {
             Matcher m = p.matcher(string);
             // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine

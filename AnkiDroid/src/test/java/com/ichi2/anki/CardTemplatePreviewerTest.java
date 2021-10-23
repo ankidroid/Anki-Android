@@ -234,6 +234,30 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         assertThat(testCardTemplatePreviewer.getCardContent(), not(containsString("Front")));
     }
 
+    @Test
+    public void cardTemplatePreviewerNoCards_issue9687() {
+        List<NoteService.NoteField> fields = new ArrayList<>();
+        fields.add(new Field(0, ""));
+        fields.add(new Field(1, ""));
+
+        Model basicModel = getCurrentDatabaseModelCopy("Basic");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), basicModel);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+
+
+        Bundle noteEditorBundle = new Bundle();
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields));
+        noteEditorBundle.putInt("ordinal", 0);
+        noteEditorBundle.putLong("did", 1);
+        intent.putExtra("noteEditorBundle", noteEditorBundle);
+
+        TestCardTemplatePreviewer testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer.class, intent);
+
+        assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing(), is(true));
+    }
+
 
     @NonNull
     protected Bundle getFieldsAsBundleForPreview(List<NoteService.NoteField> fields) {

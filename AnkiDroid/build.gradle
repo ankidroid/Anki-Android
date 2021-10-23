@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600124
-        versionName="2.16alpha24"
+        versionCode=21600125
+        versionName="2.16alpha25"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -83,6 +83,10 @@ android {
                 Properties localProperties = new Properties()
                 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
                 testCoverageEnabled localProperties['enable_coverage'] != "false"
+                // not profiled: optimization for build times
+                if (localProperties['enable_languages'] == "false") {
+                    android.defaultConfig.resConfigs "en"
+                }
             } else {
                 testCoverageEnabled true
             }

@@ -159,9 +159,9 @@ public class MediaTest extends InstrumentedTest {
         assertEquals("aoeu", testCol.getMedia().strip("aoeu"));
         assertEquals("aoeuaoeu", testCol.getMedia().strip("aoeu[sound:foo.mp3]aoeu"));
         assertEquals("aoeu", testCol.getMedia().strip("a<img src=yo>oeu"));
-        assertEquals("aoeu", testCol.getMedia().escapeImages("aoeu"));
-        assertEquals("<img src='http://foo.com'>", testCol.getMedia().escapeImages("<img src='http://foo.com'>"));
-        assertEquals("<img src=\"foo%20bar.jpg\">", testCol.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
+        assertEquals("aoeu", Media.escapeImages("aoeu"));
+        assertEquals("<img src='http://foo.com'>", Media.escapeImages("<img src='http://foo.com'>"));
+        assertEquals("<img src=\"foo%20bar.jpg\">", Media.escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
     @Test

@@ -20,7 +20,6 @@ import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.themes.Themes
-import java.lang.StringBuilder
 
 /** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
 class CardAppearance(private val customFonts: ReviewerCustomFonts, private val cardZoom: Int, private val imageZoom: Int, val isNightMode: Boolean, private val centerVertically: Boolean) {
@@ -83,13 +82,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     }
 
     companion object {
-        /** Max size of the font for dynamic calculation of font size  */
-        private const val DYNAMIC_FONT_MAX_SIZE = 14
-
-        /** Min size of the font for dynamic calculation of font size  */
-        private const val DYNAMIC_FONT_MIN_SIZE = 3
-        private const val DYNAMIC_FONT_FACTOR = 5
-
         /** Constant for class attribute signaling answer  */
         const val ANSWER_CLASS = "\"answer\""
 
@@ -114,47 +106,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
             return content.replace("font-weight:600;", "font-weight:700;")
-        }
-
-        /**
-         * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
-         * contains html-tags, which will not be displayed and therefore should not be taken into account.
-         *
-         * @param htmlContent The content to measure font size for
-         * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
-         */
-        @JvmStatic
-        fun calculateDynamicFontSize(htmlContent: String): Int {
-            // NB: Comment seems incorrect
-            // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
-            // remove all html tags and spaces
-            var realContent = htmlContent.replace("<br.*?>".toRegex(), " ")
-            realContent = realContent.replace("<hr.*?>".toRegex(), " ")
-            realContent = realContent.replace("<.*?>".toRegex(), "")
-            realContent = realContent.replace("&nbsp;".toRegex(), " ")
-            return Math.max(DYNAMIC_FONT_MIN_SIZE, DYNAMIC_FONT_MAX_SIZE - realContent.length / DYNAMIC_FONT_FACTOR)
-        }
-
-        /**
-         * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-         *
-         * @param content The content to surround with tags.
-         * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
-         * @return The enriched content
-         */
-        @JvmStatic
-        fun enrichWithQADiv(content: String?, isAnswer: Boolean): String {
-            val sb = StringBuilder()
-            sb.append("<div class=")
-            if (isAnswer) {
-                sb.append(ANSWER_CLASS)
-            } else {
-                sb.append(QUESTION_CLASS)
-            }
-            sb.append(" id=\"qa\">")
-            sb.append(content)
-            sb.append("</div>")
-            return sb.toString()
         }
     }
 }

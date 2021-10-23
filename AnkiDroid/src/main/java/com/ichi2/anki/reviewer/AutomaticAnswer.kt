@@ -17,7 +17,6 @@
 package com.ichi2.anki.reviewer
 
 import android.content.SharedPreferences
-import android.os.Handler
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
@@ -25,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
 
 /**
@@ -88,9 +88,8 @@ class AutomaticAnswer(
      * Handler for the delay in auto showing question and/or answer
      * One toggle for both question and answer, could set longer delay for auto next question
      */
-    @Suppress("Deprecation") //  #7111: new Handler()
     @VisibleForTesting
-    val timeoutHandler = Handler()
+    val timeoutHandler = HandlerUtils.newHandler()
 
     @VisibleForTesting
     fun delayedShowQuestion(delay: Long) {

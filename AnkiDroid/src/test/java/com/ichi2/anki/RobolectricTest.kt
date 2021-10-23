@@ -55,11 +55,7 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
-import java.lang.RuntimeException
-import java.util.ArrayList
+import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
@@ -353,8 +349,10 @@ open class RobolectricTest : CollectionGetter {
         for (field in fields) {
             addField(model, field)
         }
-        model.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt)
-        model.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt)
+        val t = Models.newTemplate("Card 1")
+        t.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt)
+        t.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt)
+        col.models.addTemplateInNewModel(model, t)
         col.models.add(model)
         col.models.flush()
         return name
