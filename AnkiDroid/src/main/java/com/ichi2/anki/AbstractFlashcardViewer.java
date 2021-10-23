@@ -2036,9 +2036,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         final String cardContent = mCardContent;
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
-        if (mAnswerTimer.requiresVisibilityChange()) {
-            switchTopBarVisibility(View.VISIBLE);
-        }
         if (!sDisplayAnswer) {
             updateForNewCard();
         }

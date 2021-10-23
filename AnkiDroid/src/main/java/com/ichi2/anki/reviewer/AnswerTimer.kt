@@ -117,9 +117,4 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         get() = SystemClock.elapsedRealtime()
 
     private fun getTheme() = context.theme
-
-    fun requiresVisibilityChange(): Boolean {
-        // BUG: This logically always return false
-        return showTimer && cardTimer.visibility == View.INVISIBLE
-    }
 }
