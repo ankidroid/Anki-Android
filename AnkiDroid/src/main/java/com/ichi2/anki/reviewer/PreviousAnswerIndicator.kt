@@ -20,7 +20,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
+import com.ichi2.anki.reviewer.PreviousAnswerIndicator.Companion.CHOSEN_ANSWER_DURATION_MS
 import com.ichi2.libanki.Consts
+import com.ichi2.utils.HandlerUtils.newHandler
 import timber.log.Timber
 
 /**
@@ -28,11 +30,18 @@ import timber.log.Timber
  *
  * Informs a user of their previous answer
  *
- * This is hidden after a timer
+ * This is hidden after a timer ([CHOSEN_ANSWER_DURATION_MS])
  */
 class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
+
+    /** After the indicator is displayed, it is hidden after a timeout */
+    private val timerHandler = newHandler()
+
+    /** The action taken after the timer executes */
+    private val removeChosenAnswerText: Runnable = Runnable { clear() }
+
     /**
-     * Displays a number of dots based on the answer
+     * Displays a number of dots based on the answer for [CHOSEN_ANSWER_DURATION_MS]
      *
      * The number of dots is the ordinal of the button
      * The color of the dots is the color of the answer
@@ -63,9 +72,13 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
             }
             else -> Timber.w("Unknown easy type %s", ease)
         }
+
+        // remove chosen answer hint after a while
+        timerHandler.removeCallbacks(removeChosenAnswerText)
+        timerHandler.postDelayed(removeChosenAnswerText, CHOSEN_ANSWER_DURATION_MS)
     }
 
-    fun clear() {
+    private fun clear() {
         chosenAnswerText.text = ""
     }
 
@@ -73,5 +86,15 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
         chosenAnswerText.visibility = visibility
     }
 
+    /** Stop the timer which hides the answer indicator */
+    fun stopAutomaticHide() {
+        timerHandler.removeCallbacks(removeChosenAnswerText)
+    }
+
     private fun getColor(color: Int) = ContextCompat.getColor(chosenAnswerText.context, color)
+
+    companion object {
+        /** The amount of time to display the answer indicator (2 seconds) */
+        private const val CHOSEN_ANSWER_DURATION_MS = 2000L
+    }
 }
