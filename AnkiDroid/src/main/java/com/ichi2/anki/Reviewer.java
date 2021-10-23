@@ -1047,7 +1047,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public void displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        initTimer();
+        mAnswerTimer.setupForCard(mCurrentCard);
         delayedHide(100);
         super.displayCardQuestion();
     }

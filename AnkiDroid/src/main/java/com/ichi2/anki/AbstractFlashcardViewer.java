@@ -53,7 +53,6 @@ import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -79,7 +78,6 @@ import android.webkit.WebView;
 import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +103,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.AnswerTimer;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.CardMarker;
@@ -236,7 +235,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Variables to hold preferences
      */
     private boolean mPrefShowTopbar;
-    private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private FullScreenMode mPrefFullscreenReview = FullScreenMode.getDEFAULT();
     private int mRelativeButtonSize;
@@ -295,7 +293,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected ImageView mPreviewNextCard;
     protected TextView mPreviewToggleAnswerText;
     protected RelativeLayout mTopBarLayout;
-    private Chronometer mCardTimer;
+    protected AnswerTimer mAnswerTimer;
     protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
 
@@ -602,7 +600,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 displayCardQuestion();
                 mCurrentCard.startTimer();
-                initTimer();
+                mAnswerTimer.setupForCard(mCurrentCard);
             }
             hideProgressBar();
         }
@@ -740,6 +738,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         initNavigationDrawer(mainView);
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        mAnswerTimer = new AnswerTimer(findViewById(R.id.card_time));
     }
 
     @NonNull
@@ -833,7 +833,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
-        pauseTimer();
+        mAnswerTimer.pause();
         mSoundPlayer.stopSounds();
 
         // Prevent loss of data in Cookies
@@ -844,7 +844,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onResume() {
         super.onResume();
-        resumeTimer();
+        mAnswerTimer.resume();
         // Set the context for the Sound manager
         mSoundPlayer.setContext(new WeakReference<>(this));
         mAutomaticAnswer.enable();
@@ -1124,34 +1124,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void pauseTimer() {
-        if (mCurrentCard != null) {
-            mCurrentCard.stopTimer();
-        }
-        // We also stop the UI timer so it doesn't trigger the tick listener while paused. Letting
-        // it run would trigger the time limit condition (red, stopped timer) in the background.
-        if (mCardTimer != null) {
-            mCardTimer.stop();
-        }
-    }
-
-
-    private void resumeTimer() {
-        if (mCurrentCard != null) {
-            // Resume the card timer first. It internally accounts for the time gap between
-            // suspend and resume.
-            mCurrentCard.resumeTimer();
-            // Then update and resume the UI timer. Set the base time as if the timer had started
-            // timeTaken() seconds ago.
-            mCardTimer.setBase(getElapsedRealTime() - mCurrentCard.timeTaken());
-            // Don't start the timer if we have already reached the time limit or it will tick over
-            if ((getElapsedRealTime() - mCardTimer.getBase()) < mCurrentCard.timeLimit()) {
-                mCardTimer.start();
-            }
-        }
-    }
-
-
     protected void undo() {
         if (isUndoAvailable()) {
             new UndoService.Undo().runWithHandler(answerCardHandler(false));
@@ -1403,8 +1375,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
         mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
 
-        mCardTimer = findViewById(R.id.card_time);
-
         mChosenAnswer = findViewById(R.id.choosen_answer);
 
         mAnswerField = findViewById(R.id.answer_field);
@@ -1645,9 +1615,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void switchTopBarVisibility(int visible) {
-        if (mShowTimer) {
-            mCardTimer.setVisibility(visible);
-        }
+        mAnswerTimer.setVisibility(visible);
         mChosenAnswer.setVisibility(visible);
     }
 
@@ -1799,32 +1767,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected void initTimer() {
-        final TypedValue typedValue = new TypedValue();
-        mShowTimer = mCurrentCard.showTimer();
-        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
-            mCardTimer.setVisibility(View.VISIBLE);
-        } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
-            mCardTimer.setVisibility(View.INVISIBLE);
-        }
-        // Set normal timer color
-        getTheme().resolveAttribute(android.R.attr.textColor, typedValue, true);
-        mCardTimer.setTextColor(typedValue.data);
-
-        mCardTimer.setBase(getElapsedRealTime());
-        mCardTimer.start();
-
-        // Stop and highlight the timer if it reaches the time limit.
-        getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
-        final int limit = mCurrentCard.timeLimit();
-        mCardTimer.setOnChronometerTickListener(chronometer -> {
-            long elapsed = getElapsedRealTime() - chronometer.getBase();
-            if (elapsed >= limit) {
-                chronometer.setTextColor(typedValue.data);
-                chronometer.stop();
-            }
-        });
-    }
 
     public void displayCardQuestion() {
         displayCardQuestion(false);
@@ -2095,7 +2037,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         final String cardContent = mCardContent;
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
-        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
+        if (mAnswerTimer.requiresVisibilityChange()) {
             switchTopBarVisibility(View.VISIBLE);
         }
         if (!sDisplayAnswer) {
