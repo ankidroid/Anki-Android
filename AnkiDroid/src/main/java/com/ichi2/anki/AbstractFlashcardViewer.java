@@ -47,7 +47,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.webkit.WebViewAssetLoader;
 
@@ -108,6 +107,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction;
 import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.EaseButton;
 import com.ichi2.anki.reviewer.FullScreenMode;
+import com.ichi2.anki.reviewer.PreviousAnswerIndicator;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.servicelayer.AnkiMethod;
 import com.ichi2.anki.servicelayer.LanguageHintService;
@@ -272,7 +272,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private WebView mCardWebView;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
-    private TextView mChosenAnswer;
     protected FixedEditText mAnswerField;
     protected LinearLayout mFlipCardLayout;
     protected LinearLayout mEaseButtonsLayout;
@@ -283,6 +282,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected RelativeLayout mTopBarLayout;
     protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
+    private PreviousAnswerIndicator mPreviousAnswerIndicator;
 
     protected Card mCurrentCard;
     private int mCurrentEase;
@@ -697,12 +697,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private final Handler mTimerHandler = HandlerUtils.newHandler();
 
-    private final Runnable mRemoveChosenAnswerText = new Runnable() {
-        @Override
-        public void run() {
-            mChosenAnswer.setText("");
-        }
-    };
+    private final Runnable mRemoveChosenAnswerText = mPreviousAnswerIndicator::clear;
 
 
     protected int getAnswerButtonCount() {
@@ -729,6 +724,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
+
+        mPreviousAnswerIndicator = new PreviousAnswerIndicator(findViewById(R.id.choosen_answer));
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
@@ -1239,31 +1236,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
         // Set the dots appearing below the toolbar
-        switch (ease) {
-            case EASE_1:
-                mChosenAnswer.setText("\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
-                break;
-            case EASE_2:
-                mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
-                        R.color.material_blue_grey_600:
-                        R.color.material_green_500));
-                break;
-            case EASE_3:
-                mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
-                        R.color.material_green_500 :
-                        R.color.material_light_blue_500));
-                break;
-            case EASE_4:
-                mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
-                break;
-            default:
-                Timber.w("Unknown easy type %s", ease);
-                break;
-        }
+        mPreviousAnswerIndicator.displayAnswerIndicator(ease, buttonNumber);
 
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
@@ -1338,8 +1311,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
             params.height = mInitialFlipCardHeight * 2;
         }
-
-        mChosenAnswer = findViewById(R.id.choosen_answer);
 
         mAnswerField = findViewById(R.id.answer_field);
 
@@ -1566,13 +1537,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void switchTopBarVisibility(int visible) {
-        mChosenAnswer.setVisibility(visible);
+        mPreviousAnswerIndicator.setVisibility(visible);
     }
 
 
     protected void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
-        mChosenAnswer.setVisibility(View.VISIBLE);
+        mPreviousAnswerIndicator.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
         mAnswerField.setVisibility(mTypeAnswer.validForEditText() ? View.VISIBLE : View.GONE);
