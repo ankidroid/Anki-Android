@@ -419,10 +419,10 @@
     <string name="import_mapped_to_nothing">تم تجاهله</string>
     <!-- Reviewer actions -->
     <string name="buried_card">دفن البطاقة</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">ملحوظة مدفونة</string>
+    <string name="deleted_note">ملحوظة محذوفة</string>
+    <string name="suspended_card">بطاقة معلقة</string>
+    <string name="suspended_note">ملحوظة معلقة</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">تفعيل ثبات النص لـ %s</string>
 </resources>

@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">اهتزاز</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">وميض الضوء</string>
     <string name="timeout_answer_text" maxLength="41">عرض الجواب تلقائيًا</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">الإجابة بعد انتهاء المهلة</string>
     <string name="timeout_answer_summ">إظهار الجواب تلقائيًا بدون تدخل المستخدم. تتضمن المهلة وقت تشغيل الملفات الصوتية تلقائيًا.</string>
     <string name="timeout_answer_seconds" maxLength="41">مهلة إظهار الجواب</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانية</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">اضغط رجوع مرتين للعودة أو الخروج</string>
     <string name="exit_via_double_tap_back_summ">لتجنب مغادرة شاشة المراجعة أو التطبيق بدون قصد</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">السماح بجميع الملفات في استيرادات الوسائط</string>
+    <string name="media_import_allow_all_files_summ">إذا لم يتعرف أندرويد على ملف وسائط</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">إحصائيات متقدمة</string>
     <string name="enable_advanced_statistics_title" maxLength="41">تفعيل الإحصائيات المتقدمة</string>

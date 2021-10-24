@@ -367,10 +367,10 @@
     <string name="import_mapped_to_nothing">Ignoré</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Carte enterrée</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">Note enterrée</string>
+    <string name="deleted_note">Note supprimée</string>
+    <string name="suspended_card">Carte suspendus</string>
+    <string name="suspended_note">Note suspendue</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
 </resources>
