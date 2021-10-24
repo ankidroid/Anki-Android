@@ -918,63 +918,43 @@ public class Reviewer extends AbstractFlashcardViewer {
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         final int[] background = AnswerButtons.getBackgroundColors(this);
         final int[] textColor = AnswerButtons.getTextColors(this);
-        mEase1Layout.setVisibility(View.VISIBLE);
-        mEase1Layout.setBackgroundResource(background[0]);
-        mEase4Layout.setBackgroundResource(background[3]);
+        mEaseButton1.setVisibility(View.VISIBLE);
+        mEaseButton1.setColor(background[0]);
+        mEaseButton4.setColor(background[3]);
         switch (buttonCount) {
             case 2:
                 // Ease 2 is "good"
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
-                mEase2.setTextColor(textColor[2]);
-                mNext2.setTextColor(textColor[2]);
-                mEase2Layout.requestFocus();
+                mEaseButton2.setup(background[2], textColor[2], R.string.ease_button_good);
+                mEaseButton2.requestFocus();
                 break;
             case 3:
                 // Ease 2 is good
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[2]);
-                mEase2.setText(R.string.ease_button_good);
-                mEase2.setTextColor(textColor[2]);
-                mNext2.setTextColor(textColor[2]);
+                mEaseButton2.setup(background[2], textColor[2], R.string.ease_button_good);
                 // Ease 3 is easy
-                mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(background[3]);
-                mEase3.setText(R.string.ease_button_easy);
-                mEase3.setTextColor(textColor[3]);
-                mNext3.setTextColor(textColor[3]);
-                mEase2Layout.requestFocus();
+                mEaseButton3.setup(background[3], textColor[3], R.string.ease_button_easy);
+                mEaseButton2.requestFocus();
                 break;
             default:
-                mEase2Layout.setVisibility(View.VISIBLE);
                 // Ease 2 is "hard"
-                mEase2Layout.setVisibility(View.VISIBLE);
-                mEase2Layout.setBackgroundResource(background[1]);
-                mEase2.setText(R.string.ease_button_hard);
-                mEase2.setTextColor(textColor[1]);
-                mNext2.setTextColor(textColor[1]);
-                mEase2Layout.requestFocus();
+                mEaseButton2.setup(background[1], textColor[1], R.string.ease_button_hard);
+                mEaseButton2.requestFocus();
                 // Ease 3 is good
-                mEase3Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.setBackgroundResource(background[2]);
-                mEase3.setText(R.string.ease_button_good);
-                mEase3.setTextColor(textColor[2]);
-                mNext3.setTextColor(textColor[2]);
-                mEase4Layout.setVisibility(View.VISIBLE);
-                mEase3Layout.requestFocus();
+                mEaseButton3.setup(background[2], textColor[2], R.string.ease_button_good);
+
+                mEaseButton4.setVisibility(View.VISIBLE);
+                mEaseButton3.requestFocus();
                 break;
         }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
-            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
+            mEaseButton1.setNextTime(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
+            mEaseButton2.setNextTime(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
             if (buttonCount > 2) {
-                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));
+                mEaseButton3.setNextTime(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));
             }
             if (buttonCount > 3) {
-                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
+                mEaseButton4.setNextTime(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
             }
         }
     }
@@ -987,7 +967,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public void automaticShowQuestion(@NonNull AutomaticAnswerAction action) {
         // explicitly do not call super
-        if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
+        if (mEaseButton1.canPerformClick()) {
             action.execute(this);
         }
     }
