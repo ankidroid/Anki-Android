@@ -99,7 +99,6 @@ import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
-import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
@@ -329,10 +328,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * This is 0 if we have "Read card" enabled, as we can't calculate the duration.
      */
     private long mUseTimerDynamicMS;
-
-    /** File of the temporary mic record **/
-    protected AudioView mMicToolBar;
-    protected String mTempAudioPath;
 
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
     private ViewGroup mCardFrameParent;
@@ -2280,18 +2275,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
-        // Stop the mic recording if still pending
-        if (mMicToolBar != null) {
-            mMicToolBar.notifyStopRecord();
-        }
-        // Remove the temporary audio file
-        if (mTempAudioPath != null) {
-            File tempAudioPathToDelete = new File(mTempAudioPath);
-            if (tempAudioPathToDelete.exists()) {
-                tempAudioPathToDelete.delete();
-            }
-        }
-
         mAutomaticAnswer.disable();
         mPreviousAnswerIndicator.stopAutomaticHide();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
