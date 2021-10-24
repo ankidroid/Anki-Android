@@ -40,20 +40,20 @@ public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
     }
 
     public Boolean nextButtonVisible() {
-        return mPreviewNextCard.getVisibility() != View.GONE;
+        return mPreviewLayout.getNextCard().getVisibility() != View.GONE;
     }
 
     public Boolean previousButtonVisible() {
-        return mPreviewPrevCard.getVisibility() != View.GONE;
+        return mPreviewLayout.getPrevCard().getVisibility() != View.GONE;
     }
 
 
     public Boolean previousButtonEnabled() {
-        return mPreviewPrevCard.isEnabled();
+        return mPreviewLayout.getPrevCard().isEnabled();
     }
 
 
     public Boolean nextButtonEnabled() {
-        return mPreviewNextCard.isEnabled();
+        return mPreviewLayout.getNextCard().isEnabled();
     }
 }

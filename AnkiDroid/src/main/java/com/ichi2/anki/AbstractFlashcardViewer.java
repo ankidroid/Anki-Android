@@ -47,7 +47,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.webkit.WebViewAssetLoader;
 
@@ -79,7 +78,6 @@ import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -100,16 +98,17 @@ import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
-import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
-import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.reviewer.EaseButton;
 import com.ichi2.anki.reviewer.FullScreenMode;
+import com.ichi2.anki.reviewer.PreviousAnswerIndicator;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.servicelayer.AnkiMethod;
 import com.ichi2.anki.servicelayer.LanguageHintService;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
@@ -168,7 +167,6 @@ import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
-import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -234,7 +232,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Variables to hold preferences
      */
     private boolean mPrefShowTopbar;
-    protected boolean mPrefWhiteboard;
     private FullScreenMode mPrefFullscreenReview = FullScreenMode.getDEFAULT();
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -271,37 +268,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private WebView mCardWebView;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
-    private TextView mChosenAnswer;
-    protected TextView mNext1;
-    protected TextView mNext2;
-    protected TextView mNext3;
-    protected TextView mNext4;
     protected FixedEditText mAnswerField;
-    protected TextView mEase1;
-    protected TextView mEase2;
-    protected TextView mEase3;
-    protected TextView mEase4;
     protected LinearLayout mFlipCardLayout;
     protected LinearLayout mEaseButtonsLayout;
-    protected LinearLayout mEase1Layout;
-    protected LinearLayout mEase2Layout;
-    protected LinearLayout mEase3Layout;
-    protected LinearLayout mEase4Layout;
-    protected FrameLayout mPreviewButtonsLayout;
-    protected ImageView mPreviewPrevCard;
-    protected ImageView mPreviewNextCard;
-    protected TextView mPreviewToggleAnswerText;
+    protected EaseButton mEaseButton1;
+    protected EaseButton mEaseButton2;
+    protected EaseButton mEaseButton3;
+    protected EaseButton mEaseButton4;
     protected RelativeLayout mTopBarLayout;
-    protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
+    private PreviousAnswerIndicator mPreviousAnswerIndicator;
 
     protected Card mCurrentCard;
     private int mCurrentEase;
 
     private int mInitialFlipCardHeight;
     private boolean mButtonHeightSet = false;
-
-    private static final int sShowChosenAnswerLength = 2000;
 
     public static final String DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval";
     public static final int DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200;
@@ -345,10 +327,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     private long mUseTimerDynamicMS;
 
-    /** File of the temporary mic record **/
-    protected AudioView mMicToolBar;
-    protected String mTempAudioPath;
-
     /** Reference to the parent of the cardFrame to allow regeneration of the cardFrame in case of crash */
     private ViewGroup mCardFrameParent;
 
@@ -357,9 +335,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** whether controls are currently blocked, and how long we expect them to be */
     private ReviewerUi.ControlBlock mControlBlocked = ControlBlock.SLOW;
-
-    /** Handle Mark/Flag state of cards */
-    private CardMarker mCardMarker;
 
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
@@ -414,7 +389,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Event handler for eases (answer buttons)
-    class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
+    public class SelectEaseHandler implements View.OnClickListener, View.OnTouchListener {
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private static final int CLICK_ACTION_THRESHOLD = 200;
 
@@ -585,9 +560,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 showProgressBar();
                 return;
             }
-            if (mPrefWhiteboard && mWhiteboard != null) {
-                mWhiteboard.clear();
-            }
 
             onCardEdited(mCurrentCard);
             if (sDisplayAnswer) {
@@ -703,17 +675,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .alsoExecuteBefore(() -> blockControls(quick));
     }
 
-
-    private final Handler mTimerHandler = HandlerUtils.newHandler();
-
-    private final Runnable mRemoveChosenAnswerText = new Runnable() {
-        @Override
-        public void run() {
-            mChosenAnswer.setText("");
-        }
-    };
-
-
     protected int getAnswerButtonCount() {
         return getCol().getSched().answerButtons(mCurrentCard);
     }
@@ -738,6 +699,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
+
+        mPreviousAnswerIndicator = new PreviousAnswerIndicator(findViewById(R.id.choosen_answer));
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
@@ -1247,36 +1210,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (buttonNumber < ease) {
             return;
         }
-        // Set the dots appearing below the toolbar
-        switch (ease) {
-            case EASE_1:
-                mChosenAnswer.setText("\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
-                break;
-            case EASE_2:
-                mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
-                        R.color.material_blue_grey_600:
-                        R.color.material_green_500));
-                break;
-            case EASE_3:
-                mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
-                        R.color.material_green_500 :
-                        R.color.material_light_blue_500));
-                break;
-            case EASE_4:
-                mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
-                break;
-            default:
-                Timber.w("Unknown easy type %s", ease);
-                break;
-        }
+        // Temporarily sets the answer indicator dots appearing below the toolbar
+        mPreviousAnswerIndicator.displayAnswerIndicator(ease, buttonNumber);
 
-        // remove chosen answer hint after a while
-        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
-        mTimerHandler.postDelayed(mRemoveChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
@@ -1288,10 +1224,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         FrameLayout cardContainer = findViewById(R.id.flashcard_frame);
 
         mTopBarLayout = findViewById(R.id.top_bar);
-
-        ImageView mark = mTopBarLayout.findViewById(R.id.mark_icon);
-        ImageView flag = mTopBarLayout.findViewById(R.id.flag_icon);
-        mCardMarker = new CardMarker(mark, flag);
 
         mCardFrame = findViewById(R.id.flashcard);
         mCardFrameParent = (ViewGroup) mCardFrame.getParent();
@@ -1308,36 +1240,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mEaseButtonsLayout = findViewById(R.id.ease_buttons);
 
-        mEase1 = findViewById(R.id.ease1);
-        mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
-        mEase1Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
-        mEase1Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
-
-        mEase2 = findViewById(R.id.ease2);
-        mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
-        mEase2Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
-        mEase2Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
-
-        mEase3 = findViewById(R.id.ease3);
-        mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
-        mEase3Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
-        mEase3Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
-
-        mEase4 = findViewById(R.id.ease4);
-        mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
-        mEase4Layout.setOnClickListener((View view) -> mEaseHandler.onClick(view));
-        mEase4Layout.setOnTouchListener((View view, MotionEvent event) -> mEaseHandler.onTouch(view, event));
-
-        mNext1 = findViewById(R.id.nextTime1);
-        mNext2 = findViewById(R.id.nextTime2);
-        mNext3 = findViewById(R.id.nextTime3);
-        mNext4 = findViewById(R.id.nextTime4);
+        mEaseButton1 = new EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1));
+        mEaseButton1.setListeners(mEaseHandler);
+        mEaseButton2 = new EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2));
+        mEaseButton2.setListeners(mEaseHandler);
+        mEaseButton3 = new EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3));
+        mEaseButton3.setListeners(mEaseHandler);
+        mEaseButton4 = new EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4));
+        mEaseButton4.setListeners(mEaseHandler);
 
         if (!mShowNextReviewTime) {
-            mNext1.setVisibility(View.GONE);
-            mNext2.setVisibility(View.GONE);
-            mNext3.setVisibility(View.GONE);
-            mNext4.setVisibility(View.GONE);
+            mEaseButton1.hideNextReviewTime();
+            mEaseButton2.hideNextReviewTime();
+            mEaseButton3.hideNextReviewTime();
+            mEaseButton4.hideNextReviewTime();
         }
 
         Button flipCard = findViewById(R.id.flip_card);
@@ -1351,14 +1267,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
             ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
             params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase1Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase2Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase3Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
-            params = mEase4Layout.getLayoutParams();
-            params.height = params.height * mRelativeButtonSize / 100;
+            mEaseButton1.setButtonScale(mRelativeButtonSize);
+            mEaseButton2.setButtonScale(mRelativeButtonSize);
+            mEaseButton3.setButtonScale(mRelativeButtonSize);
+            mEaseButton4.setButtonScale(mRelativeButtonSize);
             mButtonHeightSet = true;
         }
 
@@ -1367,13 +1279,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
             params.height = mInitialFlipCardHeight * 2;
         }
-
-        mPreviewButtonsLayout = findViewById(R.id.preview_buttons_layout);
-        mPreviewPrevCard = findViewById(R.id.preview_previous_flashcard);
-        mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
-        mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
-
-        mChosenAnswer = findViewById(R.id.choosen_answer);
 
         mAnswerField = findViewById(R.id.answer_field);
 
@@ -1505,18 +1410,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mEaseButtonsLayout.setOrientation(LinearLayout.VERTICAL);
             mEaseButtonsLayout.removeAllViewsInLayout();
 
-            if (mEase1Layout.getParent() != null) {
-                ((ViewGroup)mEase1Layout.getParent()).removeView(mEase1Layout);
-            }
-            if (mEase2Layout.getParent() != null) {
-                ((ViewGroup)mEase2Layout.getParent()).removeView(mEase2Layout);
-            }
-            if (mEase3Layout.getParent() != null) {
-                ((ViewGroup)mEase3Layout.getParent()).removeView(mEase3Layout);
-            }
-            if (mEase4Layout.getParent() != null) {
-                ((ViewGroup)mEase4Layout.getParent()).removeView(mEase4Layout);
-            }
+            mEaseButton1.detachFromParent();
+            mEaseButton2.detachFromParent();
+            mEaseButton3.detachFromParent();
+            mEaseButton4.detachFromParent();
 
             LinearLayout row1 = new LinearLayout(getBaseContext());
             row1.setOrientation(LinearLayout.HORIZONTAL);
@@ -1525,29 +1422,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             switch (getAnswerButtonCount()) {
                 case 2:
-                    ViewGroup.LayoutParams params = mEase1Layout.getLayoutParams();
-                    params.height = mInitialFlipCardHeight * 2;
-                    params = mEase2Layout.getLayoutParams();
-                    params.height = mInitialFlipCardHeight * 2;
-                    row2.addView(mEase1Layout);
-                    row2.addView(mEase2Layout);
+                    mEaseButton1.setHeight(mInitialFlipCardHeight * 2);
+                    mEaseButton2.setHeight(mInitialFlipCardHeight * 2);
+                    mEaseButton1.addTo(row2);
+                    mEaseButton2.addTo(row2);
                     mEaseButtonsLayout.addView(row2);
                     break;
                 case 3:
-                    row1.addView(mEase3Layout);
-                    row2.addView(mEase1Layout);
-                    row2.addView(mEase2Layout);
-                    params = new LinearLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels / 2, mEase4Layout.getLayoutParams().height);
+                    mEaseButton3.addTo(row2);
+                    mEaseButton1.addTo(row2);
+                    mEaseButton2.addTo(row2);
+                    ViewGroup.LayoutParams params;
+                    params = new LinearLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels / 2, mEaseButton4.getHeight());
                     ((LinearLayout.LayoutParams) params).setMarginStart(Resources.getSystem().getDisplayMetrics().widthPixels / 2);
                     row1.setLayoutParams(params);
                     mEaseButtonsLayout.addView(row1);
                     mEaseButtonsLayout.addView(row2);
                     break;
                 default:
-                    row1.addView(mEase2Layout);
-                    row1.addView(mEase4Layout);
-                    row2.addView(mEase1Layout);
-                    row2.addView(mEase3Layout);
+                    mEaseButton2.addTo(row2);
+                    mEaseButton4.addTo(row2);
+                    mEaseButton1.addTo(row2);
+                    mEaseButton3.addTo(row2);
                     mEaseButtonsLayout.addView(row1);
                     mEaseButtonsLayout.addView(row2);
                     break;
@@ -1586,14 +1482,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void actualHideEaseButtons() {
         mEaseButtonsLayout.setVisibility(View.GONE);
-        mEase1Layout.setVisibility(View.GONE);
-        mEase2Layout.setVisibility(View.GONE);
-        mEase3Layout.setVisibility(View.GONE);
-        mEase4Layout.setVisibility(View.GONE);
-        mNext1.setText("");
-        mNext2.setText("");
-        mNext3.setText("");
-        mNext4.setText("");
+        mEaseButton1.hide();
+        mEaseButton2.hide();
+        mEaseButton3.hide();
+        mEaseButton4.hide();
     }
 
 
@@ -1613,13 +1505,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void switchTopBarVisibility(int visible) {
-        mChosenAnswer.setVisibility(visible);
+        mPreviousAnswerIndicator.setVisibility(visible);
     }
 
 
     protected void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
-        mChosenAnswer.setVisibility(View.VISIBLE);
+        mPreviousAnswerIndicator.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
         mAnswerField.setVisibility(mTypeAnswer.validForEditText() ? View.VISIBLE : View.GONE);
@@ -1706,16 +1598,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** A new card has been loaded into the Viewer, or the question has been re-shown */
-    private void updateForNewCard() {
+    protected void updateForNewCard() {
         updateActionBar();
 
         // Clean answer field
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setText("");
-        }
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.clear();
         }
     }
 
@@ -1741,9 +1629,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     public void automaticShowQuestion(@NonNull AutomaticAnswerAction action) {
         // Assume hitting the "Again" button when auto next question
-        if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
-            mEase1Layout.performClick();
-        }
+        mEaseButton1.performSafeClick();
     }
 
     @Override
@@ -2060,51 +1946,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void unblockControls() {
+    protected void unblockControls() {
         mControlBlocked = ControlBlock.UNBLOCKED;
         mCardFrame.setEnabled(true);
         mFlipCardLayout.setEnabled(true);
 
-        switch (mCurrentEase) {
-            case EASE_1:
-                mEase1Layout.setClickable(true);
-                mEase2Layout.setEnabled(true);
-                mEase3Layout.setEnabled(true);
-                mEase4Layout.setEnabled(true);
-                break;
-
-            case EASE_2:
-                mEase1Layout.setEnabled(true);
-                mEase2Layout.setClickable(true);
-                mEase3Layout.setEnabled(true);
-                mEase4Layout.setEnabled(true);
-                break;
-
-            case EASE_3:
-                mEase1Layout.setEnabled(true);
-                mEase2Layout.setEnabled(true);
-                mEase3Layout.setClickable(true);
-                mEase4Layout.setEnabled(true);
-                break;
-
-            case EASE_4:
-                mEase1Layout.setEnabled(true);
-                mEase2Layout.setEnabled(true);
-                mEase3Layout.setEnabled(true);
-                mEase4Layout.setClickable(true);
-                break;
-
-            default:
-                mEase1Layout.setEnabled(true);
-                mEase2Layout.setEnabled(true);
-                mEase3Layout.setEnabled(true);
-                mEase4Layout.setEnabled(true);
-                break;
-        }
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.setEnabled(true);
-        }
+        mEaseButton1.unblockBasedOnEase(mCurrentEase);
+        mEaseButton2.unblockBasedOnEase(mCurrentEase);
+        mEaseButton3.unblockBasedOnEase(mCurrentEase);
+        mEaseButton4.unblockBasedOnEase(mCurrentEase);
 
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(true);
@@ -2130,46 +1980,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTouchLayer.setVisibility(View.INVISIBLE);
         mInAnswer = true;
 
-        switch (mCurrentEase) {
-            case EASE_1:
-                mEase1Layout.setClickable(false);
-                mEase2Layout.setEnabled(false);
-                mEase3Layout.setEnabled(false);
-                mEase4Layout.setEnabled(false);
-                break;
-
-            case EASE_2:
-                mEase1Layout.setEnabled(false);
-                mEase2Layout.setClickable(false);
-                mEase3Layout.setEnabled(false);
-                mEase4Layout.setEnabled(false);
-                break;
-
-            case EASE_3:
-                mEase1Layout.setEnabled(false);
-                mEase2Layout.setEnabled(false);
-                mEase3Layout.setClickable(false);
-                mEase4Layout.setEnabled(false);
-                break;
-
-            case EASE_4:
-                mEase1Layout.setEnabled(false);
-                mEase2Layout.setEnabled(false);
-                mEase3Layout.setEnabled(false);
-                mEase4Layout.setClickable(false);
-                break;
-
-            default:
-                mEase1Layout.setEnabled(false);
-                mEase2Layout.setEnabled(false);
-                mEase3Layout.setEnabled(false);
-                mEase4Layout.setEnabled(false);
-                break;
-        }
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.setEnabled(false);
-        }
+        mEaseButton1.blockBasedOnEase(mCurrentEase);
+        mEaseButton2.blockBasedOnEase(mCurrentEase);
+        mEaseButton3.blockBasedOnEase(mCurrentEase);
+        mEaseButton4.blockBasedOnEase(mCurrentEase);
 
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(false);
@@ -2264,9 +2078,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_TAG:
                 showTagsDialog();
                 return true;
-            case COMMAND_MARK:
-                onMark(mCurrentCard);
-                return true;
             case COMMAND_LOOKUP:
                 lookUpOrSelectText();
                 return true;
@@ -2283,30 +2094,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
-                return true;
-            case COMMAND_TOGGLE_FLAG_RED:
-                toggleFlag(FLAG_RED);
-                return true;
-            case COMMAND_TOGGLE_FLAG_ORANGE:
-                toggleFlag(FLAG_ORANGE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_GREEN:
-                toggleFlag(FLAG_GREEN);
-                return true;
-            case COMMAND_TOGGLE_FLAG_BLUE:
-                toggleFlag(FLAG_BLUE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_PINK:
-                toggleFlag(FLAG_PINK);
-                return true;
-            case COMMAND_TOGGLE_FLAG_TURQUOISE:
-                toggleFlag(FLAG_TURQUOISE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_PURPLE:
-                toggleFlag(FLAG_PURPLE);
-                return true;
-            case COMMAND_UNSET_FLAG:
-                onFlag(mCurrentCard, FLAG_NONE);
                 return true;
             case COMMAND_PAGE_UP:
                 onPageUp();
@@ -2405,39 +2192,22 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         });
     }
 
-
-    private void toggleFlag(@FlagDef int flag) {
-        if (mCurrentCard.userFlag() == flag) {
-            Timber.i("Toggle flag: unsetting flag");
-            onFlag(mCurrentCard, FLAG_NONE);
-        } else {
-            Timber.i("Toggle flag: Setting flag to %d", flag);
-            onFlag(mCurrentCard, flag);
-        }
-    }
-
     protected void performClickWithVisualFeedback(int ease) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
         switch (ease) {
             case EASE_1:
-                performClickWithVisualFeedback(mEase1Layout);
+                mEaseButton1.performClickWithVisualFeedback();
                 break;
             case EASE_2:
-                performClickWithVisualFeedback(mEase2Layout);
+                mEaseButton2.performClickWithVisualFeedback();
                 break;
             case EASE_3:
-                performClickWithVisualFeedback(mEase3Layout);
+                mEaseButton3.performClickWithVisualFeedback();
                 break;
             case EASE_4:
-                performClickWithVisualFeedback(mEase4Layout);
+                mEaseButton4.performClickWithVisualFeedback();
                 break;
         }
-    }
-
-
-    private void performClickWithVisualFeedback(LinearLayout easeLayout) {
-        easeLayout.requestFocus();
-        easeLayout.performClick();
     }
 
 
@@ -2464,20 +2234,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void closeReviewer(int result, boolean saveDeck) {
-        // Stop the mic recording if still pending
-        if (mMicToolBar != null) {
-            mMicToolBar.notifyStopRecord();
-        }
-        // Remove the temporary audio file
-        if (mTempAudioPath != null) {
-            File tempAudioPathToDelete = new File(mTempAudioPath);
-            if (tempAudioPathToDelete.exists()) {
-                tempAudioPathToDelete.delete();
-            }
-        }
-
         mAutomaticAnswer.disable();
-        mTimerHandler.removeCallbacks(mRemoveChosenAnswerText);
+        mPreviousAnswerIndicator.stopAutomaticHide();
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
         mLongClickHandler.removeCallbacks(mStartLongClickAction);
 
@@ -2806,68 +2564,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    private void drawMark() {
-        if (mCurrentCard == null) {
-            return;
-        }
-
-        mCardMarker.displayMark(shouldDisplayMark());
-    }
-
-
     protected boolean shouldDisplayMark() {
-        return mCurrentCard.note().hasTag("marked");
-    }
-
-
-    protected void onMark(Card card) {
-        if (card == null) {
-            return;
-        }
-        Note note = card.note();
-        if (note.hasTag("marked")) {
-            note.delTag("marked");
-        } else {
-            note.addTag("marked");
-        }
-        note.flush();
-        refreshActionBar();
-        drawMark();
-    }
-
-    private void drawFlag() {
-        if (mCurrentCard == null) {
-            return;
-        }
-        mCardMarker.displayFlag(getFlagToDisplay());
-    }
-
-
-    protected @FlagDef int getFlagToDisplay() {
-        return mCurrentCard.userFlag();
-    }
-
-
-    protected void onFlag(Card card, @FlagDef int flag) {
-        if (card == null) {
-            return;
-        }
-        card.setUserFlag(flag);
-        card.flush();
-        refreshActionBar();
-        drawFlag();
-        /* Following code would allow to update value of {{cardFlag}}.
-           Anki does not update this value when a flag is changed, so
-           currently this code would do something that anki itself
-           does not do. I hope in the future Anki will correct that
-           and this code may becomes useful.
-
-        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-        if (sDisplayAnswer) {
-            displayCardAnswer();
-        } else {
-            displayCardQuestion();
-            } */
+        return NoteService.isMarked(mCurrentCard.note());
     }
 
     protected <TResult extends Computation<? extends NextCard<?>>> TaskListenerBuilder<Unit, TResult> nextCardHandler() {
@@ -3294,9 +2992,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             if (url.equals(mViewerUrl)) {
-                Timber.d("New URL, drawing flags, marks, and triggering JS onPageFinished: %s", url);
-                drawFlag();
-                drawMark();
+                Timber.d("New URL, triggering JS onPageFinished: %s", url);
                 view.loadUrl("javascript:onPageFinished();");
             }
         }
@@ -3557,16 +3253,16 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public String ankiGetNextTime1() { return (String) mNext1.getText(); }
+        public String ankiGetNextTime1() { return mEaseButton1.getNextTime(); }
 
         @JavascriptInterface
-        public String ankiGetNextTime2() { return (String) mNext2.getText(); }
+        public String ankiGetNextTime2() { return mEaseButton2.getNextTime(); }
 
         @JavascriptInterface
-        public String ankiGetNextTime3() { return (String) mNext3.getText(); }
+        public String ankiGetNextTime3() { return mEaseButton3.getNextTime(); }
 
         @JavascriptInterface
-        public String ankiGetNextTime4() { return (String) mNext4.getText(); }
+        public String ankiGetNextTime4() { return mEaseButton4.getNextTime(); }
         
         @JavascriptInterface
         public int ankiGetCardReps() {

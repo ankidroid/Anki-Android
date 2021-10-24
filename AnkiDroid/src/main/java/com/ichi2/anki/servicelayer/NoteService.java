@@ -252,6 +252,21 @@ public class NoteService {
         return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
+
+    public static void toggleMark(@NonNull Note note) {
+        if (isMarked(note)) {
+            note.delTag("marked");
+        } else {
+            note.addTag("marked");
+        }
+        note.flush();
+    }
+
+    public static boolean isMarked(@NonNull Note note) {
+        return note.hasTag("marked");
+    }
+
+
     public interface NoteField {
         int getOrd();
         // ideally shouldn't be nullable

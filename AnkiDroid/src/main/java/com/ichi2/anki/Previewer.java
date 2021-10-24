@@ -25,10 +25,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ichi2.anki.cardviewer.PreviewLayout;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.Themes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +51,7 @@ public class Previewer extends AbstractFlashcardViewer {
     private boolean mReloadRequired;
     private boolean mNoteChanged;
 
+    protected PreviewLayout mPreviewLayout;
 
     @CheckResult
     @NonNull
@@ -139,18 +140,9 @@ public class Previewer extends AbstractFlashcardViewer {
 
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
 
-        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
-        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
-
-        mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
-        mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
-
-        if (animationEnabled()) {
-            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
-            mPreviewButtonsLayout.setBackgroundResource(resId);
-            mPreviewPrevCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
-            mPreviewNextCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
-        }
+        mPreviewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler);
+        mPreviewLayout.setOnNextCard((view) -> changePreviewedCard(true));
+        mPreviewLayout.setOnPreviousCard((view) -> changePreviewedCard(false));
     }
 
 
@@ -254,19 +246,12 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
-    private final View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (view.getId() == R.id.preview_previous_flashcard) {
-                mIndex--;
-            } else if (view.getId() == R.id.preview_next_flashcard) {
-                mIndex++;
-            }
+    protected void changePreviewedCard(boolean nextCard) {
+        mIndex = nextCard ? mIndex + 1 : mIndex - 1;
+        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        displayCardQuestion();
+    }
 
-            mCurrentCard = getCol().getCard(mCardList[mIndex]);
-            displayCardQuestion();
-        }
-    };
 
     private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
@@ -280,24 +265,17 @@ public class Previewer extends AbstractFlashcardViewer {
     };
 
     private void updateButtonsState() {
-        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
+        mPreviewLayout.setShowingAnswer(mShowingAnswer);
 
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide navigation buttons.
         if (mCardList.length == 1) {
-            mPreviewPrevCard.setVisibility(View.GONE);
-            mPreviewNextCard.setVisibility(View.GONE);
+            mPreviewLayout.hideNavigationButtons();
             return;
         }
 
-        boolean prevBtnDisabled = mIndex <= 0;
-        boolean nextBtnDisabled = mIndex >= mCardList.length - 1;
-
-        mPreviewPrevCard.setEnabled(!prevBtnDisabled);
-        mPreviewNextCard.setEnabled(!nextBtnDisabled);
-
-        mPreviewPrevCard.setAlpha(prevBtnDisabled ? 0.38F : 1);
-        mPreviewNextCard.setAlpha(nextBtnDisabled ? 0.38F : 1);
+        mPreviewLayout.setPrevButtonEnabled(mIndex > 0);
+        mPreviewLayout.setNextButtonEnabled(mIndex < mCardList.length - 1);
     }
 
     @NonNull
