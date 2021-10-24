@@ -94,6 +94,7 @@ import com.ichi2.utils.Permissions;
 import com.ichi2.utils.ViewGroupUtils;
 import com.ichi2.widget.WidgetStatus;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
@@ -130,6 +131,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Whiteboard
     protected boolean mPrefWhiteboard;
     protected Whiteboard mWhiteboard;
+
+    // Record Audio
+    /** File of the temporary mic record **/
+    protected AudioView mMicToolBar;
+    protected String mTempAudioPath;
 
     // ETA
     private int mEta;
@@ -510,6 +516,24 @@ public class Reviewer extends AbstractFlashcardViewer {
             mWhiteboard.setEnabled(false);
         }
         super.blockControls(quick);
+    }
+
+
+    @Override
+    protected void closeReviewer(int result, boolean saveDeck) {
+        // Stop the mic recording if still pending
+        if (mMicToolBar != null) {
+            mMicToolBar.notifyStopRecord();
+        }
+        // Remove the temporary audio file
+        if (mTempAudioPath != null) {
+            File tempAudioPathToDelete = new File(mTempAudioPath);
+            if (tempAudioPathToDelete.exists()) {
+                tempAudioPathToDelete.delete();
+            }
+        }
+
+        super.closeReviewer(result, saveDeck);
     }
 
 
