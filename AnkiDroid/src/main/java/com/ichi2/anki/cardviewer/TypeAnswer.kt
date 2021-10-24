@@ -83,7 +83,6 @@ class TypeAnswer(
      */
     fun updateInfo(card: Card, res: Resources) {
         correct = null
-        input = ""
         val q = card.q(false)
         val m = PATTERN.matcher(q)
         var clozeIdx = 0

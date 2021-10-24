@@ -560,7 +560,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 showProgressBar();
                 return;
             }
-            mTypeAnswer.updateInfo(mCurrentCard, getResources());
+
             onCardEdited(mCurrentCard);
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
@@ -647,7 +647,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCurrentCard = nextCardAndResult.nextScheduledCard();
 
             // Start reviewing next card
-            mTypeAnswer.updateInfo(mCurrentCard, getResources());
             hideProgressBar();
             AbstractFlashcardViewer.this.unblockControls();
             AbstractFlashcardViewer.this.displayCardQuestion();
@@ -1666,6 +1665,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         setInterface();
 
+        mTypeAnswer.setInput("");
+        mTypeAnswer.updateInfo(mCurrentCard, getResources());
+
         if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
@@ -1699,6 +1701,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCurrentCard == null) {
             return;
         }
+
+        // TODO needs testing: changing a card's model without flipping it back to the front
+        //  (such as editing a card, then editing the card template)
+        mTypeAnswer.updateInfo(mCurrentCard, getResources());
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
