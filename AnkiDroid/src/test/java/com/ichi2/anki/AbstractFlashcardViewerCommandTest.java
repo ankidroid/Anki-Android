@@ -193,7 +193,7 @@ public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
         return c;
     }
 
-    private static class CommandTestCardViewer extends AbstractFlashcardViewer {
+    private static class CommandTestCardViewer extends Reviewer {
 
         private int mFlag;
 

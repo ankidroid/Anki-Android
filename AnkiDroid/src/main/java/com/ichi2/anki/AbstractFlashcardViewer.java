@@ -79,7 +79,6 @@ import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -104,7 +103,6 @@ import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.AutomaticAnswer;
 import com.ichi2.anki.reviewer.AutomaticAnswerAction;
-import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.EaseButton;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.ReviewerUi;
@@ -168,7 +166,6 @@ import kotlin.Unit;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
-import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -339,9 +336,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** whether controls are currently blocked, and how long we expect them to be */
     private ReviewerUi.ControlBlock mControlBlocked = ControlBlock.SLOW;
-
-    /** Handle Mark/Flag state of cards */
-    private CardMarker mCardMarker;
 
     /** Handle providing help for "Image Not Found" */
     private static final MissingImageHandler mMissingImageHandler = new MissingImageHandler();
@@ -1269,10 +1263,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mTopBarLayout = findViewById(R.id.top_bar);
 
-        ImageView mark = mTopBarLayout.findViewById(R.id.mark_icon);
-        ImageView flag = mTopBarLayout.findViewById(R.id.flag_icon);
-        mCardMarker = new CardMarker(mark, flag);
-
         mCardFrame = findViewById(R.id.flashcard);
         mCardFrameParent = (ViewGroup) mCardFrame.getParent();
         mTouchLayer = findViewById(R.id.touch_layer);
@@ -2121,9 +2111,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_TAG:
                 showTagsDialog();
                 return true;
-            case COMMAND_MARK:
-                onMark(mCurrentCard);
-                return true;
             case COMMAND_LOOKUP:
                 lookUpOrSelectText();
                 return true;
@@ -2140,30 +2127,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             case COMMAND_PLAY_MEDIA:
                 playSounds(true);
-                return true;
-            case COMMAND_TOGGLE_FLAG_RED:
-                toggleFlag(FLAG_RED);
-                return true;
-            case COMMAND_TOGGLE_FLAG_ORANGE:
-                toggleFlag(FLAG_ORANGE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_GREEN:
-                toggleFlag(FLAG_GREEN);
-                return true;
-            case COMMAND_TOGGLE_FLAG_BLUE:
-                toggleFlag(FLAG_BLUE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_PINK:
-                toggleFlag(FLAG_PINK);
-                return true;
-            case COMMAND_TOGGLE_FLAG_TURQUOISE:
-                toggleFlag(FLAG_TURQUOISE);
-                return true;
-            case COMMAND_TOGGLE_FLAG_PURPLE:
-                toggleFlag(FLAG_PURPLE);
-                return true;
-            case COMMAND_UNSET_FLAG:
-                onFlag(mCurrentCard, FLAG_NONE);
                 return true;
             case COMMAND_PAGE_UP:
                 onPageUp();
@@ -2260,17 +2223,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             cardWebView.pageDown(false);
             cardWebView.pageDown(false);
         });
-    }
-
-
-    private void toggleFlag(@FlagDef int flag) {
-        if (mCurrentCard.userFlag() == flag) {
-            Timber.i("Toggle flag: unsetting flag");
-            onFlag(mCurrentCard, FLAG_NONE);
-        } else {
-            Timber.i("Toggle flag: Setting flag to %d", flag);
-            onFlag(mCurrentCard, flag);
-        }
     }
 
     protected void performClickWithVisualFeedback(int ease) {
@@ -2645,68 +2597,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    private void drawMark() {
-        if (mCurrentCard == null) {
-            return;
-        }
-
-        mCardMarker.displayMark(shouldDisplayMark());
-    }
-
-
     protected boolean shouldDisplayMark() {
         return mCurrentCard.note().hasTag("marked");
-    }
-
-
-    protected void onMark(Card card) {
-        if (card == null) {
-            return;
-        }
-        Note note = card.note();
-        if (note.hasTag("marked")) {
-            note.delTag("marked");
-        } else {
-            note.addTag("marked");
-        }
-        note.flush();
-        refreshActionBar();
-        drawMark();
-    }
-
-    private void drawFlag() {
-        if (mCurrentCard == null) {
-            return;
-        }
-        mCardMarker.displayFlag(getFlagToDisplay());
-    }
-
-
-    protected @FlagDef int getFlagToDisplay() {
-        return mCurrentCard.userFlag();
-    }
-
-
-    protected void onFlag(Card card, @FlagDef int flag) {
-        if (card == null) {
-            return;
-        }
-        card.setUserFlag(flag);
-        card.flush();
-        refreshActionBar();
-        drawFlag();
-        /* Following code would allow to update value of {{cardFlag}}.
-           Anki does not update this value when a flag is changed, so
-           currently this code would do something that anki itself
-           does not do. I hope in the future Anki will correct that
-           and this code may becomes useful.
-
-        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-        if (sDisplayAnswer) {
-            displayCardAnswer();
-        } else {
-            displayCardQuestion();
-            } */
     }
 
     protected <TResult extends Computation<? extends NextCard<?>>> TaskListenerBuilder<Unit, TResult> nextCardHandler() {
@@ -3133,9 +3025,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             if (url.equals(mViewerUrl)) {
-                Timber.d("New URL, drawing flags, marks, and triggering JS onPageFinished: %s", url);
-                drawFlag();
-                drawMark();
+                Timber.d("New URL, triggering JS onPageFinished: %s", url);
                 view.loadUrl("javascript:onPageFinished();");
             }
         }
