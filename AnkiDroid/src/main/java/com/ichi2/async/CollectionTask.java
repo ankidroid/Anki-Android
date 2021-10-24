@@ -35,6 +35,7 @@ import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -617,7 +618,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             List<Note> originalUnmarked = new ArrayList<>();
 
             for (Note n : notes) {
-                if (n.hasTag("marked"))
+                if (NoteService.isMarked(n))
                     originalMarked.add(n);
                 else
                     originalUnmarked.add(n);
@@ -1702,7 +1703,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 }
                 Card card = c.getCard();
                 hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
-                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note());
                 if (hasUnsuspended && hasUnmarked)
                     break;
             }

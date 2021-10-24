@@ -254,12 +254,16 @@ public class NoteService {
 
 
     public static void toggleMark(@NonNull Note note) {
-        if (note.hasTag("marked")) {
+        if (isMarked(note)) {
             note.delTag("marked");
         } else {
             note.addTag("marked");
         }
         note.flush();
+    }
+
+    public static boolean isMarked(@NonNull Note note) {
+        return note.hasTag("marked");
     }
 
 
