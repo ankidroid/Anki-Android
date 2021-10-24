@@ -280,10 +280,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected EaseButton mEaseButton2;
     protected EaseButton mEaseButton3;
     protected EaseButton mEaseButton4;
-    protected FrameLayout mPreviewButtonsLayout;
-    protected ImageView mPreviewPrevCard;
-    protected ImageView mPreviewNextCard;
-    protected TextView mPreviewToggleAnswerText;
     protected RelativeLayout mTopBarLayout;
     protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
@@ -1342,11 +1338,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
             params.height = mInitialFlipCardHeight * 2;
         }
-
-        mPreviewButtonsLayout = findViewById(R.id.preview_buttons_layout);
-        mPreviewPrevCard = findViewById(R.id.preview_previous_flashcard);
-        mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
-        mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
 
         mChosenAnswer = findViewById(R.id.choosen_answer);
 
