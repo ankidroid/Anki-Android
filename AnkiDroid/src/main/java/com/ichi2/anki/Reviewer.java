@@ -127,6 +127,10 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private boolean mPrefHideDueCount;
 
+    // Whiteboard
+    protected boolean mPrefWhiteboard;
+    protected Whiteboard mWhiteboard;
+
     // ETA
     private int mEta;
     private boolean mPrefShowETA;
@@ -478,6 +482,34 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         mMicToolBar.toggleRecord();
+    }
+
+
+    @Override
+    protected void updateForNewCard() {
+        super.updateForNewCard();
+        if (mPrefWhiteboard && mWhiteboard != null) {
+            mWhiteboard.clear();
+        }
+    }
+
+
+    @Override
+    protected void unblockControls() {
+        if (mPrefWhiteboard && mWhiteboard != null) {
+            mWhiteboard.setEnabled(true);
+        }
+
+        super.unblockControls();
+    }
+
+
+    @Override
+    protected void blockControls(boolean quick) {
+        if (mPrefWhiteboard && mWhiteboard != null) {
+            mWhiteboard.setEnabled(false);
+        }
+        super.blockControls(quick);
     }
 
 
@@ -1129,6 +1161,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCardEdited(Card card) {
         super.onCardEdited(card);
+        if (mPrefWhiteboard && mWhiteboard != null) {
+            mWhiteboard.clear();
+        }
         if (!sDisplayAnswer) {
             // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
             // QUESTIONABLE(legacy code): Only perform this if editing the question

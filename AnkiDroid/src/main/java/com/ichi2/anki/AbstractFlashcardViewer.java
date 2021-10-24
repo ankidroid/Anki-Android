@@ -235,7 +235,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Variables to hold preferences
      */
     private boolean mPrefShowTopbar;
-    protected boolean mPrefWhiteboard;
     private FullScreenMode mPrefFullscreenReview = FullScreenMode.getDEFAULT();
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -281,7 +280,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected EaseButton mEaseButton3;
     protected EaseButton mEaseButton4;
     protected RelativeLayout mTopBarLayout;
-    protected Whiteboard mWhiteboard;
     private android.content.ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
@@ -574,10 +572,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 showProgressBar();
                 return;
             }
-            if (mPrefWhiteboard && mWhiteboard != null) {
-                mWhiteboard.clear();
-            }
-
             mTypeAnswer.updateInfo(mCurrentCard, getResources());
             onCardEdited(mCurrentCard);
             if (sDisplayAnswer) {
@@ -1659,16 +1653,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** A new card has been loaded into the Viewer, or the question has been re-shown */
-    private void updateForNewCard() {
+    protected void updateForNewCard() {
         updateActionBar();
 
         // Clean answer field
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setText("");
-        }
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.clear();
         }
     }
 
@@ -2004,7 +1994,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void unblockControls() {
+    protected void unblockControls() {
         mControlBlocked = ControlBlock.UNBLOCKED;
         mCardFrame.setEnabled(true);
         mFlipCardLayout.setEnabled(true);
@@ -2013,10 +2003,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mEaseButton2.unblockBasedOnEase(mCurrentEase);
         mEaseButton3.unblockBasedOnEase(mCurrentEase);
         mEaseButton4.unblockBasedOnEase(mCurrentEase);
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.setEnabled(true);
-        }
 
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(true);
@@ -2046,10 +2032,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mEaseButton2.blockBasedOnEase(mCurrentEase);
         mEaseButton3.blockBasedOnEase(mCurrentEase);
         mEaseButton4.blockBasedOnEase(mCurrentEase);
-
-        if (mPrefWhiteboard && mWhiteboard != null) {
-            mWhiteboard.setEnabled(false);
-        }
 
         if (mTypeAnswer.validForEditText()) {
             mAnswerField.setEnabled(false);
