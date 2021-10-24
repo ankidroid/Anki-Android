@@ -1782,8 +1782,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Update typeAnswer info before showing the question
         mTypeAnswer.updateInfo(mCurrentCard, getResources());
-
-        String displayString = displayString(reload);
+        
         if (!mCurrentCard.isEmpty() && mTypeAnswer.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             mAnswerField.setVisibility(View.VISIBLE);
