@@ -285,7 +285,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         }
 
         if (bChangeToText) {
-            mField = new TextField();
+            mField = null;
         }
         saveAndExit();
     }
