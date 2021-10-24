@@ -77,6 +77,7 @@ import com.ichi2.anki.reviewer.CardMarker;
 import com.ichi2.anki.reviewer.FullScreenMode;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.TaskListenerBuilder;
@@ -254,13 +255,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (card == null) {
             return;
         }
-        Note note = card.note();
-        if (note.hasTag("marked")) {
-            note.delTag("marked");
-        } else {
-            note.addTag("marked");
-        }
-        note.flush();
+        NoteService.toggleMark(card.note());
         refreshActionBar();
         onMarkChanged();
     }
