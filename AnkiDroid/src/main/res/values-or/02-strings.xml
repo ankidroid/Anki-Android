@@ -367,10 +367,10 @@
     <string name="import_mapped_to_nothing">ଉପେକ୍ଷା କରାଯାଇଛି</string>
     <!-- Reviewer actions -->
     <string name="buried_card">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">ନୋଟ୍ ସ୍ଥଗିତ କରାଗଲା</string>
+    <string name="deleted_note">ନୋଟ୍ ବିଲୋପ କରାଗଲା</string>
+    <string name="suspended_card">ପତ୍ର ନିଲମ୍ବିତ କରାଗଲା</string>
+    <string name="suspended_note">ନୋଟ୍ ନିଲମ୍ବିତ କରାଗଲା</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">%s କ୍ଷେତ୍ରଟିକୁ sticky କରନ୍ତୁ</string>
 </resources>

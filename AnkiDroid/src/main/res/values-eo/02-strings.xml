@@ -366,10 +366,10 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="import_mapped_to_nothing">Ignoritaj</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Kaŝis karton por unu tago</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">Kaŝis noton por tago</string>
+    <string name="deleted_note">Forigis noton</string>
+    <string name="suspended_card">Kaŝis karton por daŭre</string>
+    <string name="suspended_note">Kaŝis noton por daŭre</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Alpingli la kampon %s</string>
 </resources>

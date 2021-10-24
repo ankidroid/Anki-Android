@@ -354,10 +354,10 @@
     <string name="import_mapped_to_nothing">已忽略</string>
     <!-- Reviewer actions -->
     <string name="buried_card">搁置的卡片</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">隐藏的笔记</string>
+    <string name="deleted_note">删除的笔记</string>
+    <string name="suspended_card">搁置的卡牌</string>
+    <string name="suspended_note">搁置的笔记</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">固定字段 %s</string>
 </resources>
