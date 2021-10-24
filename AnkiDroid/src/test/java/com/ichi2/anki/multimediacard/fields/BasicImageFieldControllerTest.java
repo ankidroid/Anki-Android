@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 
+import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBase;
 import com.ichi2.testutils.AnkiAssert;
@@ -29,12 +30,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowToast;
 
 import java.io.File;
 
 import androidx.annotation.CheckResult;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -88,6 +91,17 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
                 is(false));
     }
 
+    @Test
+    public void fileSelectedOnSVG() {
+        BasicImageFieldController controller = getValidControllerNoImage();
+
+        File f =  new File("test.svg");
+
+        controller.setImagePreview(f, 100);
+        assertThat("A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(R.string.multimedia_editor_svg_preview)));
+        assertThat("A SVG image file can't be previewed", controller.isShowingPreview(), is(false));
+    }
 
     @Test
     public void invalidImageResultDoesNotCrashController() {
