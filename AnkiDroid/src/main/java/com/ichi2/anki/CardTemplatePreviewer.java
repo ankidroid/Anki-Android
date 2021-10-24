@@ -19,12 +19,12 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anki.cardviewer.PreviewLayout;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
-import com.ichi2.themes.Themes;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -65,6 +65,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
      */
     private int mTemplateCount;
     private int mTemplateIndex = 0;
+
+    protected PreviewLayout mPreviewLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,23 +157,12 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         mTopBarLayout.setVisibility(View.GONE);
 
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
 
-        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
-
-        mPreviewPrevCard.setVisibility(View.GONE);
-        mPreviewNextCard.setVisibility(View.GONE);
-        mPreviewPrevCard.setOnClickListener((view) -> onPreviousTemplate());
-        mPreviewNextCard.setOnClickListener((view) -> onNextTemplate());
-        mPreviewPrevCard.setEnabled(false);
-        mPreviewPrevCard.setAlpha(0.38F);
-
-        if (animationEnabled()) {
-            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
-            mPreviewButtonsLayout.setBackgroundResource(resId);
-            mPreviewPrevCard.setBackgroundResource(resId);
-            mPreviewNextCard.setBackgroundResource(resId);
-        }
+        mPreviewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler);
+        mPreviewLayout.setOnPreviousCard((view) -> onPreviousTemplate());
+        mPreviewLayout.setOnNextCard((view) -> onNextTemplate());
+        mPreviewLayout.hideNavigationButtons();
+        mPreviewLayout.setPrevButtonEnabled(false);
     }
 
 
@@ -179,7 +170,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     public void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
-        updateButtonsState();
+        mPreviewLayout.setShowingAnswer(false);
     }
 
 
@@ -187,7 +178,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     protected void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
-        updateButtonsState();
+        mPreviewLayout.setShowingAnswer(true);
     }
 
 
@@ -241,11 +232,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         boolean prevBtnEnabled = isPrevBtnEnabled(mTemplateIndex);
         boolean nextBtnEnabled = isNextBtnEnabled(mTemplateIndex);
 
-        mPreviewPrevCard.setEnabled(prevBtnEnabled);
-        mPreviewNextCard.setEnabled(nextBtnEnabled);
-
-        mPreviewPrevCard.setAlpha(prevBtnEnabled ? 1 : 0.38F);
-        mPreviewNextCard.setAlpha(nextBtnEnabled ? 1 : 0.38F);
+        mPreviewLayout.setPrevButtonEnabled(prevBtnEnabled);
+        mPreviewLayout.setNextButtonEnabled(nextBtnEnabled);
 
         setCurrentCardFromNoteEditorBundle(getCol());
         displayCardQuestion();
@@ -259,11 +247,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
     public boolean isNextBtnEnabled(int newTemplateIndex) {
         return newTemplateIndex < mTemplateCount -1;
-    }
-
-
-    private void updateButtonsState() {
-        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
     }
 
 
@@ -292,8 +275,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 mTemplateCount = getCol().findTemplates(toPreview.note()).size();
 
                 if (mTemplateCount >= 2) {
-                    mPreviewPrevCard.setVisibility(View.VISIBLE);
-                    mPreviewNextCard.setVisibility(View.VISIBLE);
+                    mPreviewLayout.showNavigationButtons();
                 }
             }
         } else {
