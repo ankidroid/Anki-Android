@@ -220,6 +220,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
         return currentCard.userFlag()
     }
 
+    // behavior change ankiGetNextTime1...4
     @JavascriptInterface
     open fun ankiGetNextTime1(): String {
         return activity.mEaseButton1.nextTime
