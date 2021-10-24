@@ -731,7 +731,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
-        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
+        if (mCurrentCard != null && NoteService.isMarked(mCurrentCard.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white);
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white);

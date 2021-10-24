@@ -1,6 +1,7 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki;
 
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.HashUtil;
@@ -42,7 +43,7 @@ public class CardUtils {
     public static void markAll(List<Note> notes, boolean mark) {
         for (Note note : notes) {
             if (mark) {
-                if (!note.hasTag("marked")) {
+                if (!NoteService.isMarked(note)) {
                     note.addTag("marked");
                     note.flush();
                 }

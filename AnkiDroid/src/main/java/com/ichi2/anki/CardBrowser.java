@@ -70,6 +70,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog;
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory;
 import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
 import com.ichi2.anki.servicelayer.UndoService;
@@ -2623,7 +2624,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case 7:
                     return R.attr.flagPurple;
                 default:
-                    if (getCard().note().hasTag("marked")) {
+                    if (NoteService.isMarked(getCard().note())) {
                         return R.attr.markedColor;
                     } else {
                         if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
@@ -2642,7 +2643,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case SUSPENDED:
                 return getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False";
             case MARKED:
-                return getCard().note().hasTag("marked") ? "marked" : null;
+                return NoteService.isMarked(getCard().note()) ? "marked" : null;
             case SFLD:
                 return getCard().note().getSFld();
             case DECK:
