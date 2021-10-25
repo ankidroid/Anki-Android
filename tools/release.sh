@@ -104,6 +104,17 @@ then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
   exit 1
+else
+  # Play store is irreversible, so now commit modified AndroidManifest.xml (and changelog.html if it changed)
+  git add $GRADLEFILE $CHANGELOG
+  git commit -m "Bumped version to $VERSION"
+
+  # Tag the release
+  git tag v"$VERSION"
+
+  # Push both commits and tag
+  git push
+  git push --tags
 fi
 
 # Now build the universal release also
@@ -119,19 +130,6 @@ ABIS='universal arm64-v8a x86 x86_64 armeabi-v7a'
 for ABI in $ABIS; do
   cp AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-"$ABI"-release.apk AnkiDroid-"$VERSION"-"$ABI".apk
 done
-
-
-# Commit modified AndroidManifest.xml (and changelog.html if it changed)
-git add $GRADLEFILE $CHANGELOG
-git commit -m "Bumped version to $VERSION
-@branch-specific"
-
-# Tag the release
-git tag v"$VERSION"
-
-# Push both commits and tag
-git push
-git push --tags
 
 # Push to Github Releases.
 GITHUB_TOKEN=$(cat ~/src/my-github-personal-access-token)
