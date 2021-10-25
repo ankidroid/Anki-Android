@@ -165,6 +165,72 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         assertThat(javaScriptFunction.ankiIsInNightMode(), equalTo(reviewer.isInNightMode))
     }
 
+    @Test
+    fun ankiMarkAndFlagCardTest() {
+        // js api test for marking and flagging card
+        val col = col
+        val models = col.models
+        val decks = col.decks
+        val didA = addDeck("Test")
+        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        basic!!.put("did", didA)
+        addNoteUsingBasicModel("foo", "bar")
+        decks.select(didA)
+
+        val reviewer: Reviewer = startReviewer()
+        val javaScriptFunction = reviewer.javaScriptFunction()
+
+        waitForAsyncTasksToComplete()
+
+        // ---------------
+        // Card mark test
+        // ---------------
+        // Before marking card
+        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+
+        // call javascript function defined in card.js to mark card
+        var markCardJs = "javascript:(function () {\n"
+
+        // add js api developer contract
+        markCardJs += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"dev@mail.com\"};\n"
+
+        // init JS API
+        markCardJs += "AnkiDroidJS.init(JSON.stringify(jsApi));\n"
+
+        // call function defined in card.js to mark card
+        markCardJs += "ankiMarkCard();\n"
+
+        // get card mark status for test
+        markCardJs += "AnkiDroidJS.ankiGetCardMark();\n" +
+            "})();"
+
+        reviewer.webView.evaluateJavascript(markCardJs) { s -> assertThat(s, equalTo(true)) }
+
+        // ---------------
+        // Card flag test
+        // ---------------
+        // before toggling flag
+        assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(0))
+
+        // call javascript function defined in card.js to toggle flag
+        var flagCardJs = "javascript:(function () {\n"
+
+        // add js api developer contract
+        flagCardJs += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"dev@mail.com\"};\n"
+
+        // init JS API
+        flagCardJs += "AnkiDroidJS.init(JSON.stringify(jsApi));\n"
+
+        // call function defined in card.js to flag card to red
+        flagCardJs += "ankiToggleFlag(\"red\");\n"
+
+        // get flag status for test
+        flagCardJs += "AnkiDroidJS.ankiGetCardFlag();\n" +
+            "})();"
+
+        reviewer.webView.evaluateJavascript(flagCardJs) { s -> assertThat(s, equalTo(1)) }
+    }
+
     private fun startReviewer(): Reviewer {
         return ReviewerTest.startReviewer(this)
     }
