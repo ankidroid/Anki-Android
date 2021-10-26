@@ -197,7 +197,7 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="card_template_editor_back">Likod na template</string>
     <string name="card_template_editor_styling">Pang-estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Deck override</string>
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Kinakailangan ang hindi bababa sa isang uri ng card</string>

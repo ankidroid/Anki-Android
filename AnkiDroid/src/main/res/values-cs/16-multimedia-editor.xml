@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Počkejte</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
+    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
     <string name="multimedia_editor_png_paste_error">Chyba při převodu obrázku ve schránce na png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Připojit multimediální obsah k poli %1$s</string>
     <string name="multimedia_editor_attach_media">Připojit multimédia</string>

@@ -72,8 +72,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">डिफ़ॉल्ट मानों को बहाल करें?</string>
     <string name="card_template_browser_appearance_saving_note">कार्ड टेम्पलेट सहेजे जाने पर ये परिवर्तन लागू होते हैं</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
+    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
+    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
     <string name="deck_override_explanation">नए ‘%s’ कार्ड रखने के लिए डेक का चयन करें</string>

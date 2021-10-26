@@ -173,7 +173,7 @@
     <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
     <string name="show_large_answer_buttons_summ">Visa svarsknappen i 2 rader</string>
-    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>
     <string name="show_progress_summ">Visa antal återstående kort</string>

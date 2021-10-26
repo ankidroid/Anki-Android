@@ -365,6 +365,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaša domovská obrazovka neumožňuje, aby AnkiDroid pridal zástupcov</string>
     <string name="create_shortcut_error">Chyba pri pridávaní odkazu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Písať vety s veľkým začiatočným písmenom</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

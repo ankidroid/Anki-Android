@@ -327,6 +327,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">홈 화면에 AnkiDroid 바로 가기를 추가할 수 없습니다.</string>
     <string name="create_shortcut_error">바로가기 생성 오류: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">대문자로 시작</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
