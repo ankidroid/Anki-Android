@@ -400,6 +400,11 @@ public class CollectionHelper {
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+        if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
+            // create an "androidTest" folder inside the current collection folder which contains the test data
+            // "/AnkiDroid/androidTest" would be a new collection path
+            return new File(getDefaultAnkiDroidDirectory(context), "androidTest").getAbsolutePath();
+        }
         return PreferenceExtensions.getOrSetString(
                 preferences,
                 "deckPath",

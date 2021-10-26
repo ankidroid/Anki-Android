@@ -66,10 +66,25 @@ public class ACRATest extends InstrumentedTest {
      * @exception NoSuchFieldException if the method isn't found, possibly IllegalAccess or InvocationAccess as well
      */
     private void setAcraConfig(String mode, SharedPreferences prefs) throws Exception {
-        Method method = mApp.getClass().getDeclaredMethod("set" + mode + "ACRAConfig", SharedPreferences.class);
+        Method method = findSetAcraConfigMethod(mode);
         method.setAccessible(true);
         method.invoke(mApp, prefs);
     }
+
+    /** @return the method: "set[Debug/Production]ACRAConfig" on the application instance */
+    private Method findSetAcraConfigMethod(String mode) {
+        Class<?> clazz = mApp.getClass();
+        String methodName = "set" + mode + "ACRAConfig";
+        while (clazz != null) {
+            try {
+                return clazz.getDeclaredMethod(methodName, SharedPreferences.class);
+            } catch (NoSuchMethodException e) {
+                clazz = clazz.getSuperclass();
+            }
+        }
+        throw new IllegalStateException(methodName + " not found");
+    }
+
 
     @Test
     public void testDebugConfiguration() throws Exception {
