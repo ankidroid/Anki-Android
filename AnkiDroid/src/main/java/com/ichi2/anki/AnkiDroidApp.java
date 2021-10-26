@@ -151,6 +151,9 @@ import static timber.log.Timber.DebugTree;
 )
 public class AnkiDroidApp extends Application {
 
+    /** Running under instrumentation. a "/androidTest" folder will be created which contains a test collection */
+    public static boolean INSTRUMENTATION_TESTING = false;
+
     /**
      * Toggles Scoped Storage functionality introduced in later commits <p>
      * Can be set to true or false only by altering the declaration itself.

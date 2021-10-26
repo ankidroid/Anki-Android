@@ -60,7 +60,7 @@ android {
         targetSdkVersion 29 // change .travis.yml platform download at same time
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
     }
     signingConfigs {
         release {
