@@ -104,6 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">వెచిఉన్దు</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>
+    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
     <string name="multimedia_editor_attach_media">మీడియాను జోడించండి</string>

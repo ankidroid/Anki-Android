@@ -365,6 +365,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Twój launcher nie pozwala AnkiDroid dodawać skrótów</string>
     <string name="create_shortcut_error">Błąd dodawania skrótu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Automatycznie wyświetlaj zdania z dużej litery</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

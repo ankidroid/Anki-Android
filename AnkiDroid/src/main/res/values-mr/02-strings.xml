@@ -264,7 +264,7 @@
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="choose_an_image">Select image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
@@ -339,6 +339,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">आपली मुख्य स्क्रीन AnkiDroid ला शॉर्टकट जोडण्याची परवानगी देत ​​नाही</string>
     <string name="create_shortcut_error">शॉर्टकट जोडताना त्रुटी:%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">वाक्य भांडवल करा</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

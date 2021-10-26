@@ -174,7 +174,7 @@
     <string name="show_estimates_summ">సమాధానం బటన్లపై తదుపరి సమీక్ష సమయం చూపించు</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show Top Bar</string>
+    <string name="show_top_bar" maxLength="41">Show top bar</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">మిగిలిన చూపు</string>
     <string name="show_progress_summ">మిగిలిన కార్డ్ సంఖ్యను చూపు</string>
