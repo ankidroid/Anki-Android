@@ -991,8 +991,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 Runnable confirm = () -> {
                     mTemplateEditor.getCol().modSchemaNoCheck();
                     addNewTemplate(model);
+                    mTemplateEditor.dismissAllDialogFragments();
                 };
+                Runnable cancel = () -> mTemplateEditor.dismissAllDialogFragments();
                 d.setConfirm(confirm);
+                d.setCancel(cancel);
                 mTemplateEditor.showDialogFragment(d);
             }
         }
