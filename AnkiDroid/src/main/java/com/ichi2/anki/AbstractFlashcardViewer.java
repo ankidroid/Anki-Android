@@ -1429,7 +1429,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     mEaseButtonsLayout.addView(row2);
                     break;
                 case 3:
-                    mEaseButton3.addTo(row2);
+                    mEaseButton3.addTo(row1);
                     mEaseButton1.addTo(row2);
                     mEaseButton2.addTo(row2);
                     ViewGroup.LayoutParams params;
@@ -1440,8 +1440,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     mEaseButtonsLayout.addView(row2);
                     break;
                 default:
-                    mEaseButton2.addTo(row2);
-                    mEaseButton4.addTo(row2);
+                    mEaseButton2.addTo(row1);
+                    mEaseButton4.addTo(row1);
                     mEaseButton1.addTo(row2);
                     mEaseButton3.addTo(row2);
                     mEaseButtonsLayout.addView(row1);
