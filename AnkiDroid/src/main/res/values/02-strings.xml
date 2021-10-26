@@ -262,7 +262,7 @@
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="choose_an_image">Select image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
 
