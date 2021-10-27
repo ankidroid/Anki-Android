@@ -434,4 +434,10 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
     fun ankiTtsStop(): Int {
         return mTalker.stop()
     }
+
+    @JavascriptInterface
+    fun ankiEnableScrollBar(horizontalScrollbar: Boolean, verticalScrollbar: Boolean) {
+        activity.webView.isHorizontalScrollBarEnabled = horizontalScrollbar
+        activity.webView.isVerticalScrollBarEnabled = verticalScrollbar
+    }
 }
