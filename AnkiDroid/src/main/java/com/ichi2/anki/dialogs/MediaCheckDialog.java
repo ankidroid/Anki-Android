@@ -126,12 +126,13 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                                 dismissAllDialogFragments();
                             });
                 } else {
+                    fileListTextView.setVisibility(TextView.GONE);
                     builder.negativeText(res().getString(R.string.dialog_ok))
                             .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
                 }
                 return builder
                         .customView(dialogBody, false)
-                        .cancelable(true)
+                        .cancelable(false)
                         .show();
             }
             default:
