@@ -333,13 +333,11 @@ To look at the HTML as a file, open the card you want to inspect in the reviewer
 To look at the HTML & JavaScript live you can use [Chrome WebView Remote debugging](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews). This also works on the [chromium-based Edge](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide-chromium/remote-debugging/webviews#open-an-android-webview-in-devtools). 
 
 * Ensure that AnkiDroid's setting: **Advanced - HTML/Javascript debugging** is enabled.
-* Open the reviewer with the card you want to inspect
 * [Enable USB Debugging](https://developer.android.com/studio/debug/dev-options) via the Android System Menu
 * Connect your PC and phone via USB cable
+* Open AnkiDroid and review the card you want to inspect
 * Using Chrome on the same PC, browse to: `chrome://inspect` and you should see the WebView on your phone/emulator [for Edge, open:`edge://inspect/#devices`]
-* Click `Inspect` for that WebView and you'll get a full Chrome remote debugging console.
-
-You can also send Javascript commands from the remote console to the phone. 
+* Click `Inspect` for that WebView and you'll get a full Chrome remote debugging console. From this remote console, you can send Javascript commands to AnkiDroid. 
 
 ### Via Eruda Console for Mobile Browsers
 https://github.com/liriliri/eruda
