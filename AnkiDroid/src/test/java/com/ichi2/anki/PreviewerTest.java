@@ -20,10 +20,13 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
+
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -83,6 +86,69 @@ public class PreviewerTest extends RobolectricTest {
         assertThat("Previewer is not a reviewer", previewer.canAccessScheduler(), is(false));
     }
 
+    @Test
+    @Config(qualifiers = "en")
+    public void seekbarOnStart() {
+        Previewer previewer = seekBarHelper();
+        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
+        TextView t = previewer.findViewById(R.id.preview_progress_text);
+        assertThat("Progress is 0 at the beginning.", s.getProgress(), is(0));
+        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void seekBarMax() {
+        Previewer previewer = seekBarHelper();
+        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
+        TextView t = previewer.findViewById(R.id.preview_progress_text);
+        assertThat("Max value of seekbar", s.getMax(), is(5));
+        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void seekBarOnNavigationForward() {
+        Previewer previewer = seekBarHelper();
+        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
+        TextView t = previewer.findViewById(R.id.preview_progress_text);
+        int y = s.getProgress();
+        previewer.changePreviewedCard(true);
+        previewer.changePreviewedCard(true);
+        assertThat("Seekbar value when you preview two cards", y, is(s.getProgress() - 2));
+        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 3, 6)));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public  void seekBarOnNavigationBackward() {
+        Previewer previewer = seekBarHelper();
+        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
+        TextView t = previewer.findViewById(R.id.preview_progress_text);
+        previewer.changePreviewedCard(true);
+        previewer.changePreviewedCard(true);
+        int y = s.getProgress();
+        previewer.changePreviewedCard(false);
+        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 2, 6)));
+        previewer.changePreviewedCard(false);
+        assertThat("Seekbar value when you go back two cards", s.getProgress(), is(y - 2));
+        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+    }
+
+    public Previewer seekBarHelper() {
+        String[] front = {"1", "2", "3", "4", "5", "6"};
+        String[] back = {"7", "8", "9", "10", "11", "12"};
+        Card[] c = new Card[front.length];
+        long[] arrayList = new long[front.length];
+        for(int i = 0; i < front.length; i++) {
+            Card cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard();
+            setDeck("Deck", cardToPreview);
+            long h = cardToPreview.getId();
+            arrayList[i] = h;
+            c[i] = cardToPreview;
+        }
+        return getPreviewerPreviewingList(arrayList, c);
+    }
 
     @SuppressWarnings("SameParameterValue")
     protected void setDeck(String name, Card card) {
@@ -91,6 +157,14 @@ public class PreviewerTest extends RobolectricTest {
         card.flush();
     }
 
+    protected Previewer getPreviewerPreviewingList(long[] arr, Card[] c) {
+        Intent previewIntent = Previewer.getPreviewIntent(getTargetContext(), 0, arr);
+        Previewer previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer.class, previewIntent);
+        for(int i = 0; i < arr.length; i++) {
+            AbstractFlashcardViewer.setEditorCard(c[i]);
+        }
+        return previewer;
+    }
 
     protected Previewer getPreviewerPreviewing(Card usableCard) {
         Intent previewIntent = Previewer.getPreviewIntent(getTargetContext(), 0, new long[] { usableCard.getId() });
