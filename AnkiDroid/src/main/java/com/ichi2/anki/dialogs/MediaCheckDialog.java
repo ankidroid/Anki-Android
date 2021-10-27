@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -126,7 +127,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
                                 dismissAllDialogFragments();
                             });
                 } else {
-                    fileListTextView.setVisibility(TextView.GONE);
+                    fileListTextView.setVisibility(View.GONE);
                     builder.negativeText(res().getString(R.string.dialog_ok))
                             .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
                 }
