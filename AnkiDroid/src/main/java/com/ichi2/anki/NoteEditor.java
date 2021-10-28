@@ -1813,6 +1813,7 @@ public class NoteEditor extends AnkiActivity implements
         // determine what it should be again. An existing value means we are resuming the activity
         // where the target deck was already decided by the user.
         if (mCurrentDid != 0) {
+            mDeckSpinnerSelection.selectDeckById(mCurrentDid, false);
             return;
         }
         if (note == null || mAddNote || mCurrentEditedCard == null) {
