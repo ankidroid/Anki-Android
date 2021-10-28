@@ -28,6 +28,10 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.backend.DroidBackendFactory;
+import com.ichi2.libanki.backend.RustDroidV16Backend;
+
+import net.ankiweb.rsdroid.BackendFactory;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,8 +52,10 @@ import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 import static com.ichi2.libanki.Decks.CURRENT_DECK;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.robolectric.Shadows.shadowOf;
@@ -350,6 +356,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     @Config(qualifiers = "en")
     public void addToCurrentWithNoDeckSelectsDefault_issue_9616() {
+        assumeThat(DroidBackendFactory.getInstance(true), not(instanceOf(RustDroidV16Backend.class)));
         getCol().getConf().put("addToCur", false);
         Model cloze = Objects.requireNonNull(getCol().getModels().byName("Cloze"));
         cloze.remove("did");
