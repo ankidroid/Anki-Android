@@ -311,11 +311,19 @@ public class StorageTest extends RobolectricTest {
             renameKeys(expectedJson);
 
             for (String k : actualJson) {
-                remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "id");
-                // mod is set in V11, but not in V16
-                remove(actualJson.getJSONObject(k), expectedJson.getJSONObject(k), "mod");
+                JSONObject actualJsonModel = actualJson.getJSONObject(k);
+                JSONObject expectedJsonModel = expectedJson.getJSONObject(k);
 
-                removeSingletonReq(actualJson.getJSONObject(k), expectedJson.getJSONObject(k));
+                remove(actualJsonModel, expectedJsonModel, "id");
+                // mod is set in V11, but not in V16
+                remove(actualJsonModel, expectedJsonModel, "mod");
+
+                String name = actualJsonModel.getString("name");
+                if ("Basic (type in the answer)".equals(name) || "Cloze".equals(name)) {
+                    remove(actualJsonModel, expectedJsonModel, "req");
+                }
+
+                removeSingletonReq(actualJsonModel, expectedJsonModel);
 
 
             }
