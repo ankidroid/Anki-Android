@@ -52,4 +52,7 @@ class CollectionV16(
     override fun initConf(conf: String): ConfigManager {
         return ConfigV16(RustConfigBackend(backend.backend))
     }
+
+    /** col.conf is now unused, handled by [ConfigV16] which has a separate table */
+    override fun flushConf(): Boolean = false
 }

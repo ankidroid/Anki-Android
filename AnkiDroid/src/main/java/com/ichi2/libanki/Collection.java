@@ -381,8 +381,15 @@ public class Collection implements CollectionGetter {
         values.put("dty", mDty ? 1 : 0);
         values.put("usn", mUsn);
         values.put("ls", mLs);
-        values.put("conf", Utils.jsonToString(getConf()));
+        if (flushConf()) {
+            values.put("conf", Utils.jsonToString(getConf()));
+        }
         mDb.update("col", values);
+    }
+
+
+    protected boolean flushConf() {
+        return true;
     }
 
 
