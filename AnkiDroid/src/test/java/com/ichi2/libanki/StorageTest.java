@@ -368,6 +368,11 @@ public class StorageTest extends RobolectricTest {
             JSONObject actualJson = new JSONObject(this.mConf);
             JSONObject expectedJson = new JSONObject(expectedData.mConf);
 
+            Long curModel = actualJson.getLong("curModel");
+            Long curModelEx = expectedJson.getLong("curModel");
+
+            assertModelIdsEqual(curModel, curModelEx, expectedData);
+
             remove(actualJson, expectedJson, "curModel");
             remove(actualJson, expectedJson, "creationOffset");
             remove(actualJson, expectedJson, "localOffset");
@@ -375,6 +380,17 @@ public class StorageTest extends RobolectricTest {
             String actual = JsonUtils.toOrderedString(actualJson);
             String expected = JsonUtils.toOrderedString(expectedJson);
             assertThat(actual, is(expected));
+
+            // regression: curModel
+        }
+
+
+        private void assertModelIdsEqual(Long actualMid, Long expectedMid, CollectionData expectedData) {
+            String actual = new JSONObject(this.mModels).getJSONObject(actualMid.toString()).getString("name");
+
+            String expected = new JSONObject(expectedData.mModels).getJSONObject(expectedMid.toString()).getString("name");
+
+            assertThat("current model", actual, equalTo(expected));
         }
     }
 

@@ -21,6 +21,7 @@ import com.ichi2.libanki.backend.RustDroidDeckBackend
 import com.ichi2.libanki.backend.RustDroidV16Backend
 import com.ichi2.libanki.backend.RustTagsBackend
 import com.ichi2.libanki.utils.Time
+import net.ankiweb.rsdroid.RustCleanup
 
 class CollectionV16(
     context: Context,
@@ -55,4 +56,18 @@ class CollectionV16(
 
     /** col.conf is now unused, handled by [ConfigV16] which has a separate table */
     override fun flushConf(): Boolean = false
+
+    @RustCleanup("Remove this once syncing is in the backend")
+    override fun onCreate() {
+        super.onCreate()
+        // set USN to -1, as was previously done in AnkiDroid.
+        // This shouldn't cause issues at 0, as it will either be the first sync, or a full sync.
+        // but it's useful to match 100% for regression tests
+
+        // we reverse so "Basic" is last and conf."curModel" is correct
+        val all = models.all().reversed()
+        for (m in all) {
+            models.save(m) // equivalent to m.put("usn", -1)
+        }
+    }
 }
