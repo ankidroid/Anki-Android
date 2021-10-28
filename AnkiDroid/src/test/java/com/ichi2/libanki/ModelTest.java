@@ -571,11 +571,12 @@ public class ModelTest extends RobolectricTest {
         Model basic = mm.byName("Basic");
         JSONObject template = basic.getJSONArray("tmpls").getJSONObject(0);
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}");
-        mm.save(basic, true);
         try {
+            // in V16, the "save" throws, in V11, the "add" throws
+            mm.save(basic, true);
             Note note = addNoteUsingBasicModel("foo", "bar");
             fail();
-        } catch (IllegalStateException er) {
+        } catch (Exception er) {
         }
     }
 
