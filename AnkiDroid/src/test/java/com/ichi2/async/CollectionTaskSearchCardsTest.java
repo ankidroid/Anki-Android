@@ -18,6 +18,7 @@ package com.ichi2.async;
 
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.RunInBackground;
+import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult;
 import com.ichi2.libanki.SortOrder;
 
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class CollectionTaskSearchCardsTest extends AbstractCollectionTaskTest {
         int numberOfCards = 2;
 
         CollectionTask.SearchCards task = new CollectionTask.SearchCards("", new SortOrder.NoOrdering(), cardsToRender, 0, 0);
-        TaskListener<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> listener = mock(TaskListener.class);
+        TaskListener<List<CardBrowser.CardCache>, SearchCardsResult> listener = mock(TaskListener.class);
 
         waitForTask(task, listener);
 
@@ -58,7 +59,7 @@ public class CollectionTaskSearchCardsTest extends AbstractCollectionTaskTest {
         verify(listener, times(1)).onProgressUpdate(argumentCaptor.capture());
         assertThat("OnProgress sends the provided number of cards to render", argumentCaptor.getValue().size(), is(cardsToRender));
 
-        ArgumentCaptor<List<CardBrowser.CardCache>> argumentCaptor2 = ArgumentCaptor.forClass(List.class);
+        ArgumentCaptor<SearchCardsResult> argumentCaptor2 = ArgumentCaptor.forClass(SearchCardsResult.class);
         verify(listener, times(1)).onPostExecute(argumentCaptor2.capture());
         assertThat("All cards should be provided on Post Execute", argumentCaptor2.getValue().size(), is(numberOfCards));
 

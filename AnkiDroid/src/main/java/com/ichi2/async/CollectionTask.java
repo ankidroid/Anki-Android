@@ -36,6 +36,7 @@ import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -820,7 +821,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class SearchCards extends TaskDelegate<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
+    public static class SearchCards extends TaskDelegate<List<CardBrowser.CardCache>, SearchCardsResult> {
         private final String mQuery;
         private final SortOrder mOrder;
         private final int mNumCardsToRender;
@@ -837,11 +838,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
 
 
-        protected List<CardBrowser.CardCache> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
+        protected SearchCardsResult task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<List<CardBrowser.CardCache>> collectionTask) {
             Timber.d("doInBackgroundSearchCards");
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
+                return SearchCardsResult.invalidResult();
             }
             List<CardBrowser.CardCache> searchResult = new ArrayList<>();
             List<Long> searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
@@ -855,16 +856,16 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             for (int i = 0; i < Math.min(mNumCardsToRender, searchResult.size()); i++) {
                 if (collectionTask.isCancelled()) {
                     Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                    return null;
+                    return SearchCardsResult.invalidResult();
                 }
                 searchResult.get(i).load(false, mColumn1Index, mColumn2Index);
             }
             // Finish off the task
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
+                return SearchCardsResult.invalidResult();
             } else {
-                return searchResult;
+                return SearchCardsResult.success(searchResult);
             }
         }
     }
