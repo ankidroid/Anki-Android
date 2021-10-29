@@ -101,6 +101,8 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1620,6 +1622,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @Override
+    @RustCleanup("this isn't how Desktop Anki does it")
     public void onSelectedTags(List<String> selectedTags, int option) {
         //TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView.setQuery("", false);
@@ -1646,7 +1649,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 sb.append("("); // Only if we really have selected tags
             }
             // 7070: quote tags so brackets are properly escaped
-            sb.append("tag:").append("'").append(tag).append("'").append(" ");
+            sb.append("\"tag:").append(tag).append("\"").append(" ");
             i++;
         }
         if (i > 0) {
