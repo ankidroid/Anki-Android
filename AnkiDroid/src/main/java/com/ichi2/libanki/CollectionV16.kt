@@ -16,12 +16,16 @@
 package com.ichi2.libanki
 
 import android.content.Context
+import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.RustConfigBackend
 import com.ichi2.libanki.backend.RustDroidDeckBackend
 import com.ichi2.libanki.backend.RustDroidV16Backend
 import com.ichi2.libanki.backend.RustTagsBackend
+import com.ichi2.libanki.backend.model.toProtoBuf
+import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.Time
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 
 class CollectionV16(
     context: Context,
@@ -73,5 +77,18 @@ class CollectionV16(
 
     override fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
+    }
+
+    override fun findCards(search: String?, order: SortOrder, task: CollectionTask.PartialSearch?): MutableList<Long> {
+        val result = try {
+            backend.backend.searchCards(search, order.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+
+        val cardIdsList = result.cardIdsList
+
+        task?.doProgress(cardIdsList)
+        return cardIdsList
     }
 }

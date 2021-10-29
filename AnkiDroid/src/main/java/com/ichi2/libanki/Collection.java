@@ -50,6 +50,7 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.HashUtil;
+import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.VersionUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -1228,16 +1229,22 @@ public class Collection implements CollectionGetter {
      */
 
     /** Return a list of card ids */
+    @KotlinCleanup("set reasonable defaults")
     public List<Long> findCards(String search) {
         return findCards(search, new SortOrder.NoOrdering());
     }
 
-
-    /** Return a list of card ids */
+    /**
+     * @return A list of card ids
+     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
+     */
     public List<Long> findCards(String search, @NonNull SortOrder order) {
         return new Finder(this).findCards(search, order);
     }
-
+    /**
+     * @return A list of card ids
+     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
+     */
     public List<Long> findCards(String search, @NonNull SortOrder order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }

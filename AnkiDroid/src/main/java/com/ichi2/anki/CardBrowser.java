@@ -1995,6 +1995,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 updateList();
                 handleSearchResult();
             }
+            if (result.hasError()) {
+                UIUtils.showThemedToast(CardBrowser.this, result.getError(), true);
+            }
             if (mShouldRestoreScroll) {
                 mShouldRestoreScroll = false;
                 int newPosition = getNewPositionOfSelectedCard();
