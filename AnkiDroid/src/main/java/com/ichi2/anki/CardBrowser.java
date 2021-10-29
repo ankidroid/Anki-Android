@@ -83,6 +83,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.SortOrder;
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
@@ -1556,7 +1557,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
             // Perform database query to get all card ids
             TaskManager.launchCollectionTask(new CollectionTask.SearchCards(searchText,
-                            (mOrder != CARD_ORDER_NONE),
+                            mOrder == CARD_ORDER_NONE ? new SortOrder.NoOrdering() : new SortOrder.UseCollectionOrdering(),
                             numCardsToRender(),
                             mColumn1Index,
                             mColumn2Index),

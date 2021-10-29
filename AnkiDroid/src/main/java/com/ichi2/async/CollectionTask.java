@@ -39,6 +39,7 @@ import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.SortOrder;
 import com.ichi2.libanki.UndoAction;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -821,13 +822,13 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
     public static class SearchCards extends TaskDelegate<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> {
         private final String mQuery;
-        private final boolean mOrder;
+        private final SortOrder mOrder;
         private final int mNumCardsToRender;
         private final int mColumn1Index;
         private final int mColumn2Index;
 
 
-        public SearchCards(String query, boolean order, int numCardsToRender, int column1Index, int column2Index) {
+        public SearchCards(String query, SortOrder order, int numCardsToRender, int column1Index, int column2Index) {
             this.mQuery = query;
             this.mOrder = order;
             this.mNumCardsToRender = numCardsToRender;

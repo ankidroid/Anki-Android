@@ -29,6 +29,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.SortOrder;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
@@ -55,7 +56,6 @@ import timber.log.Timber;
 
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.Consts.DECK_DYN;
 import static com.ichi2.libanki.Consts.DECK_STD;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -922,7 +922,7 @@ public class Sched extends SchedV2 {
         String search = terms.getString(0);
         int limit = terms.getInt(1);
         int order = terms.getInt(2);
-        String orderlimit = _dynOrder(order, limit);
+        SortOrder orderlimit = new SortOrder.AfterSqlOrderBy(_dynOrder(order, limit));
         if (!TextUtils.isEmpty(search.trim())) {
             search = String.format(Locale.US, "(%s)", search);
         }

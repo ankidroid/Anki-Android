@@ -33,10 +33,10 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.SortOrder;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.IntentAssert;
 
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -804,7 +804,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne.class);
 
-        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", new SortOrder.NoOrdering(), cardsToRender, 0, 0);
 
         TaskManager.launchCollectionTask(task, cardBrowser.new SearchCardsHandler(cardBrowser));
         CardBrowser.CardCollection<CardBrowser.CardCache> cards = cardBrowser.getCards();

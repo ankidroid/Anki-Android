@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.utils
 
+import com.ichi2.libanki.SortOrder
+import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,11 +37,14 @@ class EnumMirrorTest(val clazz: TestData) {
 
     companion object {
         @JvmStatic
+        @Suppress("deprecation")
+        @RustCleanup("remove suppress on BuiltinSortKind")
         @Parameterized.Parameters(name = "{0}")
         fun data(): Iterable<Array<Any>> = sequence<Array<Any>> {
             // HACK: We list the classes manually as "Reflections" doesn't work on Android out the box
             // and it would be better to code a gradle plugin to streamline the current hacks
             // (use gradle to serialize the list of possible classes, and load that at runtime).
+            yield(arrayOf(getClass(SortOrder.BuiltinSortKind.BuiltIn::class)))
         }.asIterable()
 
         @Suppress("unchecked_cast")
