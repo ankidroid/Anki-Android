@@ -93,7 +93,7 @@ class TypeAnswer(
         // if it's a cloze, extract data
         if (fldTag.startsWith("cloze:")) {
             // get field and cloze position
-            clozeIdx = card.getOrd() + 1
+            clozeIdx = card.ord + 1
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
