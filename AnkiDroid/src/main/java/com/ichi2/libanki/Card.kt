@@ -1,396 +1,335 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
- *                                                                                      *
+ * Copyright (c) 2009 Daniel Svärd <daniel.svard></daniel.svard>@gmail.com>                             *
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold></norbert.nagold>@gmail.com>                         *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au></houssam.salem.au>@gmail.com>                        *
+ * *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
  * version.                                                                             *
- *                                                                                      *
+ * *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
+ * *
  * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+ * this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.                           *
+ */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.text.TextUtils;
-
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.async.CancelListener;
-import com.ichi2.libanki.template.TemplateError;
-import com.ichi2.utils.Assert;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
-import com.ichi2.utils.JSONObject;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.concurrent.CancellationException;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
-import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import android.content.ContentValues
+import android.text.TextUtils
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
+import com.ichi2.async.CancelListener
+import com.ichi2.libanki.Consts.CARD_QUEUE
+import com.ichi2.libanki.Consts.CARD_TYPE
+import com.ichi2.libanki.stats.Stats
+import com.ichi2.libanki.template.TemplateError
+import com.ichi2.utils.Assert
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.LanguageUtil
+import timber.log.Timber
+import java.util.*
+import java.util.concurrent.CancellationException
 
 /**
- A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
- the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
- currently belongs to), and the retrieval of presentation elements (filled-in templates).
- 
- Card presentation has two components: the question (front) side and the answer (back) side. The presentation of the
- card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see Models)
- that this card is derived from.
- 
- This class is responsible for:
- - Storing and retrieving database entries that map to Cards in the Collection
- - Providing the HTML representation of the Card's question and answer
- - Recording the results of review (answer chosen, time taken, etc)
-
- It does not:
- - Generate new cards (see Collection)
- - Store the templates or the style sheet (see Models)
- 
- Type: 0=new, 1=learning, 2=due
- Queue: same as above, and:
-        -1=suspended, -2=user buried, -3=sched buried
- Due is used differently for different queues.
- - new queue: note id or random int
- - rev queue: integer day
- - lrn queue: integer timestamp
+ * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
+ * the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
+ * currently belongs to), and the retrieval of presentation elements (filled-in templates).
+ *
+ * Card presentation has two components: the question (front) side and the answer (back) side. The presentation of the
+ * card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see Models)
+ * that this card is derived from.
+ *
+ * This class is responsible for:
+ * - Storing and retrieving database entries that map to Cards in the Collection
+ * - Providing the HTML representation of the Card's question and answer
+ * - Recording the results of review (answer chosen, time taken, etc)
+ *
+ * It does not:
+ * - Generate new cards (see Collection)
+ * - Store the templates or the style sheet (see Models)
+ *
+ * Type: 0=new, 1=learning, 2=due
+ * Queue: same as above, and:
+ * -1=suspended, -2=user buried, -3=sched buried
+ * Due is used differently for different queues.
+ * - new queue: note id or random int
+ * - rev queue: integer day
+ * - lrn queue: integer timestamp
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveMethodLength","PMD.FieldDeclarationsShouldBeAtStartOfClass",
-                    "PMD.MethodNamingConventions"})
-public class Card implements Cloneable {
+open class Card : Cloneable {
+    // Needed for tests
+    var col: Collection
 
-    public static final int TYPE_REV = 2;
-
-    private Collection mCol;
-    // When timer was started, in MS
-    private long mTimerStarted;
+    /**
+     * Time in MS when timer was started
+     */
+    var timerStarted: Long
 
     // Not in LibAnki. Record time spent reviewing in MS in order to restore when resuming.
-    private long mElapsedTime;
+    private var elapsedTime: Long = 0
 
     // BEGIN SQL table entries
-    private long mId;
-    private long mNid;
-    private long mDid;
-    private int mOrd;
-    private long mMod;
-    private int mUsn;
-    @Consts.CARD_TYPE
-    private int mType;
-    @Consts.CARD_QUEUE
-    private int mQueue;
-    private long mDue;
-    private int mIvl;
-    private int mFactor;
-    private int mReps;
-    private int mLapses;
-    private int mLeft;
-    private long mODue;
-    private long mODid;
-    private int mFlags;
-    private String mData;
+    @set:VisibleForTesting
+    var id: Long
+    var nid: Long = 0
+    var did: Long = 0
+    var ord = 0
+    var mod: Long = 0
+    var usn = 0
+
+    @get:CARD_TYPE
+    @CARD_TYPE
+    var type = 0
+
+    @get:CARD_QUEUE
+    @CARD_QUEUE
+    var queue = 0
+    var due: Long = 0
+    var ivl = 0
+    var factor = 0
+    var reps = 0
+        private set
+    var lapses = 0
+    var left = 0
+    var oDue: Long = 0
+    var oDid: Long = 0
+    private var flags = 0
+    private var data: String? = null
+
     // END SQL table entries
+    private var qa: HashMap<String, String>?
+    private var note: Note?
 
-    private HashMap<String, String> mQA;
-    private Note mNote;
+    /** Used by Sched to determine which queue to move the card to after answering. */
+    var wasNew = false
 
-    // Used by Sched to determine which queue to move the card to after answering.
-    private boolean mWasNew;
+    /** Used by Sched to record the original interval in the revlog after answering. */
+    var lastIvl = 0
 
-    // Used by Sched to record the original interval in the revlog after answering.
-    private int mLastIvl;
-
-
-    public Card(@NonNull Collection col) {
-        mCol = col;
-        mTimerStarted = 0L;
-        mQA = null;
-        mNote = null;
+    constructor(col: Collection) {
+        this.col = col
+        timerStarted = 0L
+        qa = null
+        note = null
         // to flush, set nid, ord, and due
-        mId = mCol.getTime().timestampID(mCol.getDb(), "cards");
-        mDid = 1;
-        mType = Consts.CARD_TYPE_NEW;
-        mQueue = Consts.QUEUE_TYPE_NEW;
-        mIvl = 0;
-        mFactor = 0;
-        mReps = 0;
-        mLapses = 0;
-        mLeft = 0;
-        mODue = 0;
-        mODid = 0;
-        mFlags = 0;
-        mData = "";
+        this.id = this.col.time.timestampID(this.col.db, "cards")
+        did = 1
+        this.type = Consts.CARD_TYPE_NEW
+        queue = Consts.QUEUE_TYPE_NEW
+        ivl = 0
+        factor = 0
+        reps = 0
+        lapses = 0
+        left = 0
+        oDue = 0
+        oDid = 0
+        flags = 0
+        data = ""
     }
 
-
-    public Card(@NonNull Collection col, @NonNull Long id) {
-        mCol = col;
-        mTimerStarted = 0L;
-        mQA = null;
-        mNote = null;
-        mId = id;
-        load();
+    constructor(col: Collection, id: Long) {
+        this.col = col
+        timerStarted = 0L
+        qa = null
+        note = null
+        this.id = id
+        load()
     }
 
-
-    public void load() {
-        try (Cursor cursor = mCol.getDb().query("SELECT * FROM cards WHERE id = ?", mId)) {
+    fun load() {
+        col.db.query("SELECT * FROM cards WHERE id = ?", this.id).use { cursor ->
             if (!cursor.moveToFirst()) {
-                throw new WrongId(mId, "card");
+                throw WrongId(this.id, "card")
             }
-            mId = cursor.getLong(0);
-            mNid = cursor.getLong(1);
-            mDid = cursor.getLong(2);
-            mOrd = cursor.getInt(3);
-            mMod = cursor.getLong(4);
-            mUsn = cursor.getInt(5);
-            mType = cursor.getInt(6);
-            mQueue = cursor.getInt(7);
-            mDue = cursor.getInt(8);
-            mIvl = cursor.getInt(9);
-            mFactor = cursor.getInt(10);
-            mReps = cursor.getInt(11);
-            mLapses = cursor.getInt(12);
-            mLeft = cursor.getInt(13);
-            mODue = cursor.getLong(14);
-            mODid = cursor.getLong(15);
-            mFlags = cursor.getInt(16);
-            mData = cursor.getString(17);
+            this.id = cursor.getLong(0)
+            nid = cursor.getLong(1)
+            did = cursor.getLong(2)
+            ord = cursor.getInt(3)
+            mod = cursor.getLong(4)
+            usn = cursor.getInt(5)
+            this.type = cursor.getInt(6)
+            queue = cursor.getInt(7)
+            due = cursor.getInt(8).toLong()
+            ivl = cursor.getInt(9)
+            factor = cursor.getInt(10)
+            reps = cursor.getInt(11)
+            lapses = cursor.getInt(12)
+            left = cursor.getInt(13)
+            oDue = cursor.getLong(14)
+            oDid = cursor.getLong(15)
+            flags = cursor.getInt(16)
+            data = cursor.getString(17)
         }
-        mQA = null;
-        mNote = null;
+        qa = null
+        note = null
     }
 
-
-
-    public void flush() {
-        flush(true);
-    }
-
-    public void flush(boolean changeModUsn) {
+    @JvmOverloads
+    fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
-            mMod = getCol().getTime().intTime();
-            mUsn = mCol.usn();
+            mod = col.time.intTime()
+            usn = col.usn()
         }
-        // bug check
-        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
-            // TODO: runHook("odueInvalid");
-        //}
-        assert (mDue < Long.parseLong("4294967296"));
-        mCol.getDb().execute(
-                "insert or replace into cards values " +
+        assert(due < "4294967296".toLong())
+        col.db.execute(
+            "insert or replace into cards values " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                mId,
-                mNid,
-                mDid,
-                mOrd,
-                mMod,
-                mUsn,
-                mType,
-                mQueue,
-                mDue,
-                mIvl,
-                mFactor,
-                mReps,
-                mLapses,
-                mLeft,
-                mODue,
-                mODid,
-                mFlags,
-                mData
-        );
-        mCol.log(this);
+            this.id,
+            nid,
+            did,
+            ord,
+            mod,
+            usn,
+            this.type,
+            queue,
+            due,
+            ivl,
+            factor,
+            reps,
+            lapses,
+            left,
+            oDue,
+            oDid,
+            flags,
+            data
+        )
+        col.log(this)
     }
 
-
-    public void flushSched() {
-        mMod = getCol().getTime().intTime();
-        mUsn = mCol.usn();
-        // bug check
-        //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
-            // TODO: runHook("odueInvalid");
-        //}
-        assert (mDue < Long.parseLong("4294967296"));
-
-        ContentValues values = new ContentValues();
-        values.put("mod", mMod);
-        values.put("usn", mUsn);
-        values.put("type", mType);
-        values.put("queue", mQueue);
-        values.put("due", mDue);
-        values.put("ivl", mIvl);
-        values.put("factor", mFactor);
-        values.put("reps", mReps);
-        values.put("lapses", mLapses);
-        values.put("left", mLeft);
-        values.put("odue", mODue);
-        values.put("odid", mODid);
-        values.put("did", mDid);
+    fun flushSched() {
+        mod = col.time.intTime()
+        usn = col.usn()
+        assert(due < "4294967296".toLong())
+        val values = ContentValues()
+        values.put("mod", mod)
+        values.put("usn", usn)
+        values.put("type", this.type)
+        values.put("queue", queue)
+        values.put("due", due)
+        values.put("ivl", ivl)
+        values.put("factor", factor)
+        values.put("reps", reps)
+        values.put("lapses", lapses)
+        values.put("left", left)
+        values.put("odue", oDue)
+        values.put("odid", oDid)
+        values.put("did", did)
         // TODO: The update DB call sets mod=true. Verify if this is intended.
-        mCol.getDb().update("cards", values, "id = ?", new String[] {Long.toString(mId)});
-        mCol.log(this);
+        col.db.update("cards", values, "id = ?", arrayOf(java.lang.Long.toString(this.id)))
+        col.log(this)
     }
 
-
-    public String q() {
-        return q(false);
+    @JvmOverloads
+    fun q(reload: Boolean = false, browser: Boolean = false): String {
+        return css() + _getQA(reload, browser)!!["q"]
     }
 
-
-    public String q(boolean reload) {
-        return q(reload, false);
+    fun a(): String {
+        return css() + _getQA()!!["a"]
     }
 
-
-    public String q(boolean reload, boolean browser) {
-        return css() + _getQA(reload, browser).get("q");
+    fun css(): String {
+        return String.format(Locale.US, "<style>%s</style>", model().getString("css"))
     }
 
-
-    public String a() {
-        return css() + _getQA().get("a");
-    }
-
-
-    public String css() {
-        return String.format(Locale.US, "<style>%s</style>", model().getString("css"));
-    }
-
-
-    public HashMap<String, String> _getQA() {
-        return _getQA(false);
-    }
-
-
-    public HashMap<String, String> _getQA(boolean reload) {
-        return _getQA(reload, false);
-    }
-
-
-    public HashMap<String, String> _getQA(boolean reload, boolean browser) {
-        if (mQA == null || reload) {
-            Note f = note(reload);
-            Model m = model();
-            JSONObject t = template();
-            long did = isInDynamicDeck() ? mODid : mDid;
-            if (browser) {
-                String bqfmt = t.getString("bqfmt");
-                String bafmt = t.getString("bafmt");
-                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags, browser, bqfmt, bafmt);
+    @JvmOverloads
+    fun _getQA(reload: Boolean = false, browser: Boolean = false): HashMap<String, String>? {
+        if (qa == null || reload) {
+            val f = note(reload)
+            val m = model()
+            val t = template()
+            val did = if (isInDynamicDeck) oDid else did
+            qa = if (browser) {
+                val bqfmt = t.getString("bqfmt")
+                val bafmt = t.getString("bafmt")
+                col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags, browser, bqfmt, bafmt)
             } else {
-                mQA = mCol._renderQA(mId, m, did, mOrd, f.stringTags(), f.getFields(), mFlags);
+                col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags)
             }
         }
-        return mQA;
+        return qa
     }
 
-
-    public Note note() {
-        return note(false);
+    open fun note(): Note {
+        return note(false)
     }
 
-
-    public Note note(boolean reload) {
-        if (mNote == null || reload) {
-            mNote = mCol.getNote(mNid);
+    open fun note(reload: Boolean): Note {
+        if (note == null || reload) {
+            note = col.getNote(nid)
         }
-        return mNote;
+        return note!!
     }
-
 
     // not in upstream
-    public Model model() {
-        return note().model();
+    open fun model(): Model {
+        return note().model()
     }
 
-
-    public JSONObject template() {
-        Model m = model();
-        if (m.isStd()) {
-            return m.getJSONArray("tmpls").getJSONObject(mOrd);
+    fun template(): JSONObject {
+        val m = model()
+        return if (m.isStd) {
+            m.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            return model().getJSONArray("tmpls").getJSONObject(0);
+            model().getJSONArray("tmpls").getJSONObject(0)
         }
     }
 
-
-    public void startTimer() {
-        mTimerStarted = getCol().getTime().intTimeMS();
+    fun startTimer() {
+        timerStarted = col.time.intTimeMS()
     }
-
 
     /**
      * Time limit for answering in milliseconds.
      */
-    public int timeLimit() {
-        DeckConfig conf = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
-        return conf.getInt("maxTaken") * 1000;
+    fun timeLimit(): Int {
+        val conf = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+        return conf.getInt("maxTaken") * 1000
     }
-
 
     /*
      * Time taken to answer card, in integer MS.
      */
-    public int timeTaken() {
+    fun timeTaken(): Int {
         // Indeed an int. Difference between two big numbers is still small.
-        int total = (int) (getCol().getTime().intTimeMS() - mTimerStarted);
-        return Math.min(total, timeLimit());
+        val total = (col.time.intTimeMS() - timerStarted).toInt()
+        return Math.min(total, timeLimit())
     }
 
-
-    public boolean isEmpty() {
-        try {
-            return Models.emptyCard(model(), mOrd, note().getFields());
-        } catch (TemplateError er) {
-            Timber.w("Card is empty because the card's template has an error: %s.", er.message(getCol().getContext()));
-            return true;
+    open val isEmpty: Boolean
+        get() = try {
+            Models.emptyCard(model(), ord, note().fields)
+        } catch (er: TemplateError) {
+            Timber.w("Card is empty because the card's template has an error: %s.", er.message(col.context))
+            true
         }
-    }
-
 
     /*
      * ***********************************************************
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
-
-    public String qSimple() {
-        return _getQA(false).get("q");
+    fun qSimple(): String? {
+        return _getQA(false)!!["q"]
     }
-
 
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
-    public String getPureAnswer() {
-        String s = _getQA(false).get("a");
-        String target = "<hr id=answer>";
-        int pos = s.indexOf(target);
-        if (pos == -1) {
-            return s;
+    val pureAnswer: String
+        get() {
+            val s = _getQA(false)!!["a"]
+            val target = "<hr id=answer>"
+            val pos = s!!.indexOf(target)
+            return if (pos == -1) {
+                s
+            } else s.substring(pos + target.length).trim { it <= ' ' }
         }
-        return s.substring(pos + target.length()).trim();
-    }
 
     /**
      * Save the currently elapsed reviewing time so it can be restored on resume.
@@ -398,10 +337,9 @@ public class Card implements Cloneable {
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()
      * method when the session resumes to start counting review time again.
      */
-    public void stopTimer() {
-        mElapsedTime = getCol().getTime().intTimeMS() - mTimerStarted;
+    fun stopTimer() {
+        elapsedTime = col.time.intTimeMS() - timerStarted
     }
-
 
     /**
      * Resume the timer that counts the time spent reviewing this card.
@@ -411,330 +349,114 @@ public class Card implements Cloneable {
      * the reviewer and *must* be called on resume before any calls to timeTaken() take place
      * or the result of timeTaken() will be wrong.
      */
-    public void resumeTimer() {
-        mTimerStarted = getCol().getTime().intTimeMS() - mElapsedTime;
-    }
-
-
-    /**
-     * @param timeStarted Time in MS when timer was started
-     */
-    public void setTimerStarted(long timeStarted){ mTimerStarted = timeStarted; }
-
-    public long getId() {
-        return mId;
+    fun resumeTimer() {
+        timerStarted = col.time.intTimeMS() - elapsedTime
     }
 
     @VisibleForTesting
-    public void setId(long id) {
-        mId = id;
+    fun setReps(reps: Int): Int {
+        return reps.also { this.reps = it }
     }
 
-
-    public void setMod(long mod) {
-        mMod = mod;
+    fun incrReps(): Int {
+        return ++reps
     }
 
-    public long getMod() {
-        return mMod ;
+    fun showTimer(): Boolean {
+        val options = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+        return DeckConfig.parseTimerOpt(options, true)
     }
 
-
-    public void setUsn(int usn) {
-        mUsn = usn;
-    }
-
-
-    public long getNid() {
-        return mNid;
-    }
-
-
-    @Consts.CARD_TYPE
-    public int getType() {
-        return mType;
-    }
-
-
-    public void setType(@Consts.CARD_TYPE int type) {
-        mType = type;
-    }
-
-
-    public void setLeft(int left) {
-        mLeft = left;
-    }
-
-
-    public int getLeft() {
-        return mLeft;
-    }
-
-    @Consts.CARD_QUEUE
-    public int getQueue() {
-        return mQueue;
-    }
-
-
-    public void setQueue(@Consts.CARD_QUEUE int queue) {
-        mQueue = queue;
-    }
-
-
-    public long getODue() {
-        return mODue;
-    }
-
-
-    public void setODid(long odid) {
-        mODid = odid;
-    }
-
-
-    public long getODid() {
-        return mODid;
-    }
-
-
-    public void setODue(long odue) {
-        mODue = odue;
-    }
-
-
-    public long getDue() {
-        return mDue;
-    }
-
-
-    public void setDue(long due) {
-        mDue = due;
-    }
-
-
-    public int getIvl() {
-        return mIvl;
-    }
-
-
-    public void setIvl(int ivl) {
-        mIvl = ivl;
-    }
-
-
-    public int getFactor() {
-        return mFactor;
-    }
-
-
-    public void setFactor(int factor) {
-        mFactor = factor;
-    }
-
-
-    public int getReps() {
-        return mReps;
-    }
-
-
-    @VisibleForTesting
-    public int setReps(int reps) {
-        return mReps = reps;
-    }
-
-
-    public int incrReps() {
-        return ++mReps;
-    }
-
-
-    public int getLapses() {
-        return mLapses;
-    }
-
-
-    public void setLapses(int lapses) {
-        mLapses = lapses;
-    }
-
-
-    public void setNid(long nid) {
-        mNid = nid;
-    }
-
-
-    public void setOrd(int ord) {
-        mOrd = ord;
-    }
-
-
-    public int getOrd() {
-        return mOrd;
-    }
-
-
-    public void setDid(long did) {
-        mDid = did;
-    }
-
-
-    public long getDid() {
-        return mDid;
-    }
-
-
-    public boolean getWasNew() {
-        return mWasNew;
-    }
-
-
-    public void setWasNew(boolean wasNew) {
-        mWasNew = wasNew;
-    }
-
-
-    public int getLastIvl() {
-        return mLastIvl;
-    }
-
-
-    public void setLastIvl(int ivl) {
-        mLastIvl = ivl;
-    }
-
-
-    // Needed for tests
-    public Collection getCol() {
-        return mCol;
-    }
-
-
-    // Needed for tests
-    public void setCol(Collection col) {
-        mCol = col;
-    }
-
-
-    public boolean showTimer() {
-        DeckConfig options = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
-        return DeckConfig.parseTimerOpt(options, true);
-    }
-
-
-    public Card clone() {
-        try {
-            return (Card)super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+    public override fun clone(): Card {
+        return try {
+            super.clone() as Card
+        } catch (e: CloneNotSupportedException) {
+            throw RuntimeException(e)
         }
     }
 
-
-    // A list of class members to skip in the toString() representation
-    public static final Set<String> SKIP_PRINT = new HashSet<>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
-            "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
-
-    public @NonNull String toString() {
-        Field[] declaredFields = this.getClass().getDeclaredFields();
-        List<String> members = new ArrayList<>(declaredFields.length);
-        for (Field f : declaredFields) {
+    override fun toString(): String {
+        val declaredFields = this.javaClass.declaredFields
+        val members: MutableList<String?> = ArrayList(declaredFields.size)
+        for (f in declaredFields) {
             try {
                 // skip non-useful elements
-                if (SKIP_PRINT.contains(f.getName())) {
-                    continue;
+                if (SKIP_PRINT.contains(f.name)) {
+                    continue
                 }
-                members.add(String.format("'%s': %s", f.getName(), f.get(this)));
-            } catch (IllegalAccessException | IllegalArgumentException e) {
-                members.add(String.format("'%s': %s", f.getName(), "N/A"));
+                members.add(String.format("'%s': %s", f.name, f[this]))
+            } catch (e: IllegalAccessException) {
+                members.add(String.format("'%s': %s", f.name, "N/A"))
+            } catch (e: IllegalArgumentException) {
+                members.add(String.format("'%s': %s", f.name, "N/A"))
             }
         }
-        return TextUtils.join(",  ", members);
+        return TextUtils.join(",  ", members)
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Card) {
-            return this.getId() == ((Card)obj).getId();
-        }
-        return super.equals(obj);
+    override fun equals(other: Any?): Boolean {
+        return if (other is Card) {
+            this.id == other.id
+        } else super.equals(other)
     }
 
-    @Override
-    public int hashCode() {
+    override fun hashCode(): Int {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
-        return (int)(this.getId()^(this.getId()>>>32));
+        return (this.id xor (this.id ushr 32)).toInt()
     }
 
-    public static int intToFlag(int flags) {
-        // setting all bits to 0, except the three first one.
-        // equivalent to `mFlags % 8`. Used this way to copy Anki.
-        return flags & 0b111;
-    }
-
-    public int userFlag() {
-        return Card.intToFlag(mFlags);
-    }
-
-    public static int setFlagInInt(int flags, int flag) {
-        Assert.that(0 <= flag, "flag to set is negative");
-        Assert.that(flag <= 7, "flag to set is greater than 7.");
-        // Setting the 3 firsts bits to 0, keeping the remaining.
-        int extraData = (flags & ~0b111);
-        // flag in 3 fist bits, same data as in mFlags everywhere else
-        return extraData | flag;
+    fun userFlag(): Int {
+        return intToFlag(flags)
     }
 
     @VisibleForTesting
-    public void setFlag(int flag) {
-        mFlags = flag;
+    fun setFlag(flag: Int) {
+        flags = flag
     }
 
-    public void setUserFlag(int flag) {
-        mFlags = setFlagInInt(mFlags, flag);
+    fun setUserFlag(flag: Int) {
+        flags = setFlagInInt(flags, flag)
     }
 
     // not in Anki.
-    public String getDueString() {
-        String t = nextDue();
-        if (getQueue() < 0) {
-            t = "(" + t + ")";
+    val dueString: String
+        get() {
+            var t = nextDue()
+            if (queue < 0) {
+                t = "($t)"
+            }
+            return t
         }
-        return t;
-    }
 
     // as in Anki aqt/browser.py
     @VisibleForTesting
-    public String nextDue() {
-        long date;
-        long due = getDue();
-        if (isInDynamicDeck()) {
-            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
-        } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
-            date = due;
-        } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
-            return (Long.valueOf(due)).toString();
-        } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
-            long time = mCol.getTime().intTime();
-            long nbDaySinceCreation = (due - getCol().getSched().getToday());
-            date = time + (nbDaySinceCreation * SECONDS_PER_DAY);
+    fun nextDue(): String {
+        val date: Long
+        val due = due
+        date = if (isInDynamicDeck) {
+            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card)
+        } else if (queue == Consts.QUEUE_TYPE_LRN) {
+            due
+        } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
+            return java.lang.Long.valueOf(due).toString()
+        } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
+            val time = col.time.intTime()
+            val nbDaySinceCreation = due - col.sched.today
+            time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
         } else {
-            return "";
+            return ""
         }
-        return LanguageUtil.getShortDateFormatFromS(date);
-    }
+        return LanguageUtil.getShortDateFormatFromS(date)
+    } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
-    /** Non libAnki */
-    public boolean isInDynamicDeck() {
-        // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
-        return this.getODid() != 0;
-    }
-
-    public boolean isReview() {
-        return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
-    }
-
-    public boolean isNew() {
-        return this.getType() == Consts.CARD_TYPE_NEW;
-    }
+    /** Non libAnki  */
+    val isInDynamicDeck: Boolean
+        get() = // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
+            oDid != 0L
+    val isReview: Boolean
+        get() = this.type == Consts.CARD_TYPE_REV && queue == Consts.QUEUE_TYPE_REV
+    val isNew: Boolean
+        get() = this.type == Consts.CARD_TYPE_NEW
 
     /** A cache represents an intermediary step between a card id and a card object. Creating a Card has some fixed cost
      * in term of database access. Using an id has an unknown cost: none if the card is never accessed, heavy if the
@@ -763,94 +485,110 @@ public class Card implements Cloneable {
      * cache.reload();
      * Card card2 = cache.getCard();
      */
-    public static class Cache implements Cloneable {
-        @NonNull
-        private final Collection mCol;
-        private final long mId;
-        @Nullable
-        private Card mCard;
+    open class Cache : Cloneable {
+        val col: Collection
+        val id: Long
+        private var mCard: Card? = null
 
-        public Cache(@NonNull Collection col, long id) {
-            mCol = col;
-            mId = id;
+        constructor(col: Collection, id: Long) {
+            this.col = col
+            this.id = id
         }
 
-        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded. */
-        protected Cache(Cache cache) {
-            mCol = cache.mCol;
-            mId = cache.mId;
-            mCard = cache.mCard;
+        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
+        protected constructor(cache: Cache) {
+            col = cache.col
+            this.id = cache.id
+            mCard = cache.mCard
         }
 
-        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded. */
-        public Cache(Card card) {
-            mCol = card.mCol;
-            mId = card.getId();
-            mCard = card;
+        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
+        constructor(card: Card) {
+            col = card.col
+            this.id = card.id
+            mCard = card
         }
 
         /**
          * The card with id given at creation. Note that it has content of the time at which the card was loaded, which
          * may have changed in database. So it is not equivalent to getCol().getCard(getId()). If you need fresh data, reload
-         * first.*/
-        @NonNull
-        public synchronized Card getCard() {
-            if (mCard == null) {
-                mCard = mCol.getCard(mId);
+         * first. */
+        @get:Synchronized
+        val card: Card
+            get() {
+                if (mCard == null) {
+                    mCard = col.getCard(this.id)
+                }
+                return mCard!!
             }
-            return mCard;
+
+        /** Next access to card will reload the card from the database.  */
+        @Synchronized
+        open fun reload() {
+            mCard = null
         }
 
-        /** Next access to card will reload the card from the database. */
-        public synchronized void reload() {
-            mCard = null;
+        override fun hashCode(): Int {
+            return java.lang.Long.valueOf(this.id).hashCode()
         }
 
-        public long getId() {
-            return mId;
+        /** The cloned version represents the same card but data are not loaded.  */
+        public override fun clone(): Cache {
+            return Cache(col, this.id)
         }
 
-        @NonNull
-        public Collection getCol() {
-            return mCol;
+        override fun equals(other: Any?): Boolean {
+            return if (other !is Cache) {
+                false
+            } else this.id == other.id
         }
 
-        @Override
-        public int hashCode() {
-            return Long.valueOf(mId).hashCode();
-        }
-
-        /** The cloned version represents the same card but data are not loaded. */
-        @NonNull
-        public Cache clone() {
-            return new Cache(mCol, mId);
-        }
-
-        public boolean equals(Object cache) {
-            if (!(cache instanceof Cache)) {
-                return false;
-            }
-            return mId == ((Cache) cache).mId;
-        }
-
-        public void loadQA(boolean reload, boolean browser) {
-            getCard()._getQA(reload, browser);
+        fun loadQA(reload: Boolean, browser: Boolean) {
+            card._getQA(reload, browser)
         }
     }
 
-    public static @NonNull Card[] deepCopyCardArray(@NonNull Card[] originals, @NonNull CancelListener cancelListener) throws CancellationException {
-        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
-        Card[] copies = new Card[originals.length];
-        for (int i = 0; i < originals.length; i++) {
-            if (cancelListener.isCancelled()) {
-                Timber.i("Cancelled during deep copy, probably memory pressure?");
-                throw new CancellationException("Cancelled during deep copy");
-            }
+    companion object {
+        const val TYPE_REV = 2
 
-            // TODO: the performance-naive implementation loads from database instead of working in memory
-            // the high performance version would implement .clone() on Card and test it well
-            copies[i] = new Card(col, originals[i].getId());
+        // A list of class members to skip in the toString() representation
+        val SKIP_PRINT: Set<String> = HashSet(
+            Arrays.asList(
+                "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
+                "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
+            )
+        )
+
+        fun intToFlag(flags: Int): Int {
+            // setting all bits to 0, except the three first one.
+            // equivalent to `mFlags % 8`. Used this way to copy Anki.
+            return flags and 7
         }
-        return copies;
+
+        fun setFlagInInt(flags: Int, flag: Int): Int {
+            Assert.that(0 <= flag, "flag to set is negative")
+            Assert.that(flag <= 7, "flag to set is greater than 7.")
+            // Setting the 3 firsts bits to 0, keeping the remaining.
+            val extraData = flags and 7.inv()
+            // flag in 3 fist bits, same data as in mFlags everywhere else
+            return extraData or flag
+        }
+
+        @Throws(CancellationException::class)
+        fun deepCopyCardArray(originals: Array<Card>, cancelListener: CancelListener): Array<Card> {
+            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance())
+            val copies = mutableListOf<Card>()
+            for (i in originals.indices) {
+                if (cancelListener.isCancelled) {
+                    Timber.i("Cancelled during deep copy, probably memory pressure?")
+                    throw CancellationException("Cancelled during deep copy")
+                }
+
+                // TODO: the performance-naive implementation loads from database instead of working in memory
+                // the high performance version would implement .clone() on Card and test it well
+                copies.add(Card(col, originals[i].id))
+            }
+            return copies.toTypedArray()
+        }
     }
 }
