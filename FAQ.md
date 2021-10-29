@@ -15,7 +15,7 @@ No, AnkiDroid is not restricted in any way, see the [[installation guide|Install
 
 All versions are available as APK files, see the [[installation guide|Installation]]. Don't forget to [let us know](http://ankidroid.org/help.html) what bothers you, and we will try to fix it.
 
-Our current release series is 2.15.x, but you may install a "parallel" version of the previous stable release 2.14.6 if you are experiencing a problem and we are working on a fix for you. Wwe suggest parallel "A") side by side which you will find here: https://github.com/ankidroid/Anki-Android/releases/tag/v2.14.6
+Our current release series is 2.15.x, but you may install a "parallel" version of the previous stable release 2.14.6 if you are experiencing a problem and we are working on a fix for you. We suggest parallel "A") side by side which you will find here: https://github.com/ankidroid/Anki-Android/releases/tag/v2.14.6
 
 ### Is there a version for Android Wear?
 Yes, there is an open source 3rd party app called [AnkiWear for AnkiDroid](https://github.com/wlky/AnkiDroid-Wear) that offers support for Android Wear.
@@ -115,9 +115,12 @@ This is an Android problem and AnkiDroid needs to be reset. Go to system prefere
 ### How to use different Anki profiles
 On Anki desktop, if several people want to use the same computer (or if one person wants to separate their collection into several groups), they can use different profiles. AnkiDroid doesn't currently officially support using Anki profiles (though it's a [commonly requested feature](https://github.com/ankidroid/Anki-Android/issues/2545)), however you can achieve a similar effect by installing several parallel versions of AnkiDroid besides the normal AnkiDroid and setting a unique collection path in each one. 
 
-Official parallel versions of AnkiDroid are made available from time to time, with most stable release versions having a set of parallel releases attached. You may find the releases here: https://github.com/ankidroid/Anki-Android/releases
+Official parallel versions of AnkiDroid are made available from time to time, with most stable release versions having a set of parallel releases attached. You may find them below:
 
-Note that we will not provide any support for these pre-built parallel versions, but they should work well and are in daily use by many.
+* Unstable parallel releases: https://github.com/ankidroid/Anki-Android/releases)
+* Latest Stable parallel release: https://github.com/ankidroid/Anki-Android/releases/latest
+
+Note that you need to update these manually and we will not provide any support for these pre-built parallel versions, but they should work well and are in daily use by many.
 
 ### Lost my cards
 Does it appear like your cards have disappeared? Don't burn your phone yet: AnkiDroid saves regular backups to your device, so you should be able to recover everything in the unlikely event that this occurs. If you know the reason why your cards are gone, please see the [manual](http://ankidroid.org/docs/manual.html#backups) for info on how to restore from a backup. Otherwise you should check below to understand some common reasons why users may mistakenly think that their cards have been 'deleted' by the app:
