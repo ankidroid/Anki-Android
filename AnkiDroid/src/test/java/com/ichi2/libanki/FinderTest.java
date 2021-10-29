@@ -71,7 +71,7 @@ public class FinderTest extends RobolectricTest {
         Card manuallyBuriedCard = buryManually(sched, toAnswer.getId());
 
         //perform the search
-        List<Long> buriedCards = new Finder(getCol()).findCards(searchQuery, false);
+        List<Long> buriedCards = new Finder(getCol()).findCards(searchQuery, new SortOrder.NoOrdering());
 
         //assert
         assertThat("A manually buried card should be returned", buriedCards, hasItem(manuallyBuriedCard.getId()));
@@ -216,20 +216,20 @@ public class FinderTest extends RobolectricTest {
         // ordering
         col.set_config("sortType", "noteCrt");
         col.flush();
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", true))));
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("front:*", new SortOrder.UseCollectionOrdering()))));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", new SortOrder.UseCollectionOrdering()))));
 
         col.set_config("sortType", "noteFld");
         col.flush();
-        assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
+        assertEquals(catCard.getId(), (long) col.findCards("", new SortOrder.UseCollectionOrdering()).get(0));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", new SortOrder.UseCollectionOrdering()))));
         col.set_config("sortType", "cardMod");
         col.flush();
-        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        assertEquals(firstCardId, (long) col.findCards("", true).get(0));
+        assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", new SortOrder.UseCollectionOrdering()))));
+        assertEquals(firstCardId, (long) col.findCards("", new SortOrder.UseCollectionOrdering()).get(0));
         col.set_config("sortBackwards", true);
         col.flush();
-        assertTrue(latestCardIds.contains(col.findCards("", true).get(0)));
+        assertTrue(latestCardIds.contains(col.findCards("", new SortOrder.UseCollectionOrdering()).get(0)));
         /* TODO: Port BuiltinSortKind
            assertEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=false).get(0)

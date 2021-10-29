@@ -18,6 +18,7 @@ package com.ichi2.async;
 
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.RunInBackground;
+import com.ichi2.libanki.SortOrder;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,7 @@ public class CollectionTaskSearchCardsTest extends AbstractCollectionTaskTest {
         int cardsToRender = 1;
         int numberOfCards = 2;
 
-        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", false, cardsToRender, 0, 0);
+        CollectionTask.SearchCards task = new CollectionTask.SearchCards("", new SortOrder.NoOrdering(), cardsToRender, 0, 0);
         TaskListener<List<CardBrowser.CardCache>, List<CardBrowser.CardCache>> listener = mock(TaskListener.class);
 
         waitForTask(task, listener);

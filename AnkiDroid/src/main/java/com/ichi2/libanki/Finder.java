@@ -27,7 +27,6 @@ import android.util.Pair;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -45,6 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
@@ -66,36 +66,19 @@ public class Finder {
     }
 
 
-    /*
-     * NOTE: The python version of findCards can accept a boolean, a string, or no value for the _order parameter. The
-     * type of _order also determines which _order() method is used. To maintain type safety, we expose the three valid
-     * options here and safely type-cast accordingly at run-time.
-     */
-
     /** Return a list of card ids for QUERY */
     @CheckResult
-    public List<Long> findCards(String query, String _order) {
-        return _findCards(query, _order);
-    }
-
-    @CheckResult
-    public List<Long> findCards(String query, boolean _order) {
+    public List<Long> findCards(String query, SortOrder _order) {
         return findCards(query, _order, null);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
+    public List<Long> findCards(String query, SortOrder _order, CollectionTask.PartialSearch task) {
         return _findCards(query, _order, task, task == null ? null : task.getProgressSender());
     }
 
-
     @CheckResult
-    private List<Long> _findCards(String query, Object _order) {
-        return _findCards(query, _order, null, null);
-    }
-
-    @CheckResult
-    private List<Long> _findCards(String query, Object _order, CancelListener cancellation, ProgressSender<Long> progress) {
+    private List<Long> _findCards(String query, SortOrder _order, CancelListener cancellation, ProgressSender<Long> progress) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -104,7 +87,7 @@ public class Finder {
         if (preds == null) {
             return res;
         }
-        Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
+        Pair<String, Boolean> res2 = _order(_order);
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _query(preds, order);
@@ -402,52 +385,57 @@ public class Finder {
      * The python code combines all code paths in one function. In Java, we must overload the method
      * in order to consume either a String (no order, custom order) or a Boolean (no order, built-in order).
      */
-    
-    private Pair<String, Boolean> _order(String order) {
-        if (TextUtils.isEmpty(order)) {
-            return _order(false);
-        } else {
-            // custom order string provided
-            return new Pair<>(" order by " + order, false);
-        }
-    }
-    
-    private Pair<String, Boolean> _order(Boolean order) {
-        if (!order) {
+
+    @NonNull
+    private Pair<String, Boolean> _order(SortOrder order) {
+
+        if (order instanceof SortOrder.NoOrdering) {
             return new Pair<>("", false);
         }
-        // use deck default
-        String type = mCol.get_config_string("sortType");
-        String sort = null;
-        if (type.startsWith("note")) {
-            if (type.startsWith("noteCrt")) {
+        if (order instanceof SortOrder.AfterSqlOrderBy) {
+            String query = ((SortOrder.AfterSqlOrderBy) order).getCustomOrdering();
+            if (TextUtils.isEmpty(query)) {
+                return _order(new SortOrder.NoOrdering());
+            } else {
+                // custom order string provided
+                return new Pair<>(" order by " + query, false);
+            }
+        }
+        if (order instanceof SortOrder.UseCollectionOrdering) {
+            // use deck default
+            String type = mCol.get_config_string("sortType");
+            String sort = null;
+            if (type.startsWith("note")) {
+                if (type.startsWith("noteCrt")) {
+                    sort = "n.id, c.ord";
+                } else if (type.startsWith("noteMod")) {
+                    sort = "n.mod, c.ord";
+                } else if (type.startsWith("noteFld")) {
+                    sort = "n.sfld COLLATE NOCASE, c.ord";
+                }
+            } else if (type.startsWith("card")) {
+                if (type.startsWith("cardMod")) {
+                    sort = "c.mod";
+                } else if (type.startsWith("cardReps")) {
+                    sort = "c.reps";
+                } else if (type.startsWith("cardDue")) {
+                    sort = "c.type, c.due";
+                } else if (type.startsWith("cardEase")) {
+                    sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
+                } else if (type.startsWith("cardLapses")) {
+                    sort = "c.lapses";
+                } else if (type.startsWith("cardIvl")) {
+                    sort = "c.ivl";
+                }
+            }
+            if (sort == null) {
+                // deck has invalid sort order; revert to noteCrt
                 sort = "n.id, c.ord";
-            } else if (type.startsWith("noteMod")) {
-                sort = "n.mod, c.ord";
-            } else if (type.startsWith("noteFld")) {
-                sort = "n.sfld COLLATE NOCASE, c.ord";
             }
-        } else if (type.startsWith("card")) {
-            if (type.startsWith("cardMod")) {
-                sort = "c.mod";
-            } else if (type.startsWith("cardReps")) {
-                sort = "c.reps";
-            } else if (type.startsWith("cardDue")) {
-                sort = "c.type, c.due";
-            } else if (type.startsWith("cardEase")) {
-                sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
-            } else if (type.startsWith("cardLapses")) {
-                sort = "c.lapses";
-            } else if (type.startsWith("cardIvl")) {
-                sort = "c.ivl";
-            }
+            boolean sortBackwards = mCol.get_config_boolean("sortBackwards");
+            return new Pair<>(" ORDER BY " + sort, sortBackwards);
         }
-        if (sort == null) {
-            // deck has invalid sort order; revert to noteCrt
-            sort = "n.id, c.ord";
-        }
-        boolean sortBackwards = mCol.get_config_boolean("sortBackwards");
-        return new Pair<>(" ORDER BY " + sort, sortBackwards);
+        throw new IllegalStateException("unhandled order type: " + order);
     }
 
 
