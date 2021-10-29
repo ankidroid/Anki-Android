@@ -1,74 +1,82 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anim;
 
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
+package com.ichi2.anim
 
-public class ViewAnimation {
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.TranslateAnimation
 
-    public static final int SLIDE_IN_FROM_RIGHT = 0;
-    public static final int SLIDE_OUT_TO_RIGHT = 1;
-    public static final int SLIDE_IN_FROM_LEFT = 2;
-    public static final int SLIDE_OUT_TO_LEFT = 3;
-    public static final int SLIDE_IN_FROM_BOTTOM = 4;
-    public static final int SLIDE_IN_FROM_TOP = 5;
-
-    public static final int FADE_IN = 0;
-    public static final int FADE_OUT = 1;
-
-
-    public static Animation slide(int type, int duration, int offset) {
-        Animation animation;
-        switch (type) {
-            case SLIDE_IN_FROM_RIGHT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_OUT_TO_RIGHT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new AccelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_LEFT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_OUT_TO_LEFT:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new AccelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_BOTTOM:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            case SLIDE_IN_FROM_TOP:
-                animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                animation.setInterpolator(new DecelerateInterpolator());
-                break;
-            default:
-                animation = null;
+object ViewAnimation {
+    const val SLIDE_IN_FROM_RIGHT = 0
+    const val SLIDE_OUT_TO_RIGHT = 1
+    const val SLIDE_IN_FROM_LEFT = 2
+    const val SLIDE_OUT_TO_LEFT = 3
+    const val SLIDE_IN_FROM_BOTTOM = 4
+    const val SLIDE_IN_FROM_TOP = 5
+    const val FADE_IN = 0
+    const val FADE_OUT = 1
+    fun slide(type: Int, duration: Int, offset: Int): Animation? {
+        val animation: Animation?
+        when (type) {
+            SLIDE_IN_FROM_RIGHT -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(DecelerateInterpolator())
+            }
+            SLIDE_OUT_TO_RIGHT -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(AccelerateInterpolator())
+            }
+            SLIDE_IN_FROM_LEFT -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(DecelerateInterpolator())
+            }
+            SLIDE_OUT_TO_LEFT -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(AccelerateInterpolator())
+            }
+            SLIDE_IN_FROM_BOTTOM -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(DecelerateInterpolator())
+            }
+            SLIDE_IN_FROM_TOP -> {
+                animation = TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                )
+                animation.setInterpolator(DecelerateInterpolator())
+            }
+            else -> animation = null
         }
-        animation.setDuration(duration);
-        animation.setStartOffset(offset);
-        return animation;
+        animation!!.duration = duration.toLong()
+        animation.startOffset = offset.toLong()
+        return animation
     }
 
-
-    public static Animation fade(int type, int duration, int offset) {
-        Animation animation = new AlphaAnimation((float) type, 1.0f - (float) type);
-        animation.setDuration(duration);
+    @JvmStatic
+    fun fade(type: Int, duration: Int, offset: Int): Animation {
+        val animation: Animation = AlphaAnimation(type.toFloat(), 1.0f - type.toFloat())
+        animation.duration = duration.toLong()
         if (type == FADE_IN) {
-            animation.setZAdjustment(Animation.ZORDER_TOP);
+            animation.zAdjustment = Animation.ZORDER_TOP
         }
-        animation.setStartOffset(offset);
-        return animation;
+        animation.startOffset = offset.toLong()
+        return animation
     }
 }
