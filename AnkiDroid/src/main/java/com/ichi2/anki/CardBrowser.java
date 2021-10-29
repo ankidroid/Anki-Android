@@ -72,6 +72,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard;
+import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
@@ -1972,7 +1973,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
     @VisibleForTesting
-    class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, List<CardCache>> {
+    class SearchCardsHandler extends ListenerWithProgressBar<List<CardCache>, SearchCardsResult> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1988,9 +1989,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, List<CardCache> result) {
-            if (result != null) {
-                mCards.replaceWith(result);
+        public void actualOnPostExecute(@NonNull CardBrowser browser, SearchCardsResult result) {
+            if (result.hasResult()) {
+                mCards.replaceWith(result.getResult());
                 updateList();
                 handleSearchResult();
             }
