@@ -31,6 +31,8 @@ import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +54,7 @@ import static com.ichi2.async.ProgressSender.publishProgress;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
+@RustCleanup("remove this once Java backend is gone")
 public class Finder {
 
     private static final Pattern fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)");

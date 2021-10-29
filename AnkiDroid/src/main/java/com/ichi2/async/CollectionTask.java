@@ -845,7 +845,15 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 return SearchCardsResult.invalidResult();
             }
             List<CardBrowser.CardCache> searchResult = new ArrayList<>();
-            List<Long> searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
+            List<Long> searchResult_;
+            try {
+                searchResult_ = col.findCards(mQuery, mOrder, new PartialSearch(searchResult, mColumn1Index, mColumn2Index, mNumCardsToRender, collectionTask, col));
+            } catch (Exception e) {
+                // exception can occur via normal operation
+                Timber.w(e);
+                return SearchCardsResult.error(e);
+            }
+
             Timber.d("The search found %d cards", searchResult_.size());
             int position = 0;
             for (Long cid : searchResult_) {
