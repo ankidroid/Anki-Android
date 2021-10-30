@@ -15,11 +15,16 @@
  */
 package com.ichi2.libanki.backend
 
+import BackendProto.Backend
 import android.content.Context
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.DB
+import com.ichi2.libanki.TemplateManager
+import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
+import com.ichi2.libanki.backend.model.to_backend_note
 import com.ichi2.libanki.utils.Time
+import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.database.RustVNextSQLiteOpenHelperFactory
@@ -47,5 +52,24 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
     override fun closeCollection(db: DB?, downgradeToSchema11: Boolean) {
         backend.closeCollection(downgradeToSchema11)
         super.closeCollection(db, downgradeToSchema11)
+    }
+
+    override fun extract_av_tags(text: String, question_side: Boolean): Backend.ExtractAVTagsOut {
+        return backend.extractAVTags(text, question_side)
+    }
+
+    override fun renderCardForTemplateManager(context: TemplateManager.TemplateRenderContext): Backend.RenderCardOut {
+        return if (context._template != null) {
+            // card layout screen
+            backend.renderUncommittedCard(
+                context._note.to_backend_note(),
+                context._card.ord,
+                to_json_bytes(JSONObject(context._template!!)),
+                context._fill_empty,
+            )
+        } else {
+            // existing card (eg study mode)
+            backend.renderExistingCard(context._card.id, context._browser)
+        }
     }
 }

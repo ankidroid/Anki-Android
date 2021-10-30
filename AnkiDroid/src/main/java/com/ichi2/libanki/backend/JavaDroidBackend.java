@@ -20,12 +20,14 @@ import android.content.Context;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.TemplateManager;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
+import BackendProto.Backend;
 import androidx.annotation.NonNull;
 
 /**
@@ -93,5 +95,17 @@ public class JavaDroidBackend implements DroidBackend {
     @Override
     public void useNewTimezoneCode(Collection col) {
         // intentionally blank - unavailable on Java backend
+    }
+
+
+    @Override
+    public @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
+    }
+
+
+    @Override
+    public @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
     }
 }
