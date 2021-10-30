@@ -22,18 +22,22 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.TemplateManager;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.KotlinCleanup;
 
 import net.ankiweb.rsdroid.RustV1Cleanup;
 
+import BackendProto.Backend;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 /**
  * Interface to the rust backend listing all currently supported functionality.
  */
+@KotlinCleanup("priority to convert to kotlin for named arguments")
 public interface DroidBackend {
     /** Should only be called from "Storage.java" */
     Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time);
@@ -79,4 +83,8 @@ public interface DroidBackend {
     }
 
     void useNewTimezoneCode(Collection col);
+
+    @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException;
+
+    @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException;
 }

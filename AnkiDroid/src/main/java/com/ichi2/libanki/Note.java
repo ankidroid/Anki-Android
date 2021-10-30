@@ -378,6 +378,9 @@ public class Note implements Cloneable {
         return mMod;
     }
 
+    public int getUsn() {
+        return mUsn;
+    }
 
     public Note clone() {
         try {

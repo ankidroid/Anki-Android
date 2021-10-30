@@ -20,6 +20,7 @@ import android.content.Context;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.TemplateManager;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
 import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
@@ -29,6 +30,7 @@ import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.database.RustV11SQLiteOpenHelperFactory;
 
 import BackendProto.AdBackend;
+import BackendProto.Backend;
 import androidx.annotation.NonNull;
 
 /** The V11 Backend in Rust */
@@ -107,5 +109,17 @@ public class RustDroidBackend implements DroidBackend {
         } catch (BackendNotSupportedException e) {
             throw e.alreadyUsingRustBackend();
         }
+    }
+
+
+    @Override
+    public @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
+    }
+
+
+    @Override
+    public @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
     }
 }
