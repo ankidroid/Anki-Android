@@ -26,7 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -2725,10 +2724,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return;
             }
             // render question and answer
-            Map<String, String> qa = getCard()._getQA(true, true);
+            Map<String, String> qa = getCard().render_output(true, true);
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
             if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
-                HashMap<String, String> qaFull = getCard()._getQA(true, false);
+                HashMap<String, String> qaFull = getCard().render_output(true, false);
                 if ("".equals(qa.get("q"))) {
                     qa.put("q", qaFull.get("q"));
                 }

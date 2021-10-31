@@ -78,7 +78,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.drakeet.drawer.FullDraggableContainer;
@@ -137,7 +136,6 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
@@ -167,7 +165,6 @@ import timber.log.Timber;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.libanki.Sound.SoundSide;
 
-import com.github.zafarkhaja.semver.Version;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -2522,7 +2519,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String answerFormat = getAnswerFormat();
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-            String frontSideFormat = mCurrentCard._getQA(false).get("q");
+            String frontSideFormat = mCurrentCard.render_output(false).get("q");
             Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {

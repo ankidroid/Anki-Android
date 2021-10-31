@@ -64,7 +64,7 @@ class SchedulerService {
                 val sched = getCard.col.sched
                 Timber.i("Obtaining card")
                 val newCard = sched.getCard()
-                newCard?._getQA(true)
+                newCard?.render_output(true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
         }
