@@ -38,6 +38,8 @@ permission notice:
     DEALINGS IN THE SOFTWARE.
 */
 
+// This file is documented: docs/kotlin-migration.md
+
 // Example of class name: "/com/ichi2/anki/UIUtils.kt"
 // Ensure that it starts with '/' (slash)
 def source = Source.MAIN
