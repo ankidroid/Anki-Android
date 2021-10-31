@@ -116,6 +116,7 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.SoundOrVideoTag;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -1093,7 +1094,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void generateQuestionSoundList() {
-        mSoundPlayer.addSounds(mBaseUrl, mCurrentCard.qSimple(), SoundSide.QUESTION);
+        List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(mCurrentCard.qSimple());
+        mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.QUESTION);
     }
 
 
@@ -1765,7 +1767,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
             String answerSoundSource = removeFrontSideAudio(answer);
-            mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, SoundSide.ANSWER);
+            List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(answerSoundSource);
+            mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.ANSWER);
             mAnswerSoundsAdded = true;
         }
     }
@@ -1788,7 +1791,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, beforeExpansion, SoundSide.QUESTION);
+            List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(beforeExpansion);
+            mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.QUESTION);
             if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }

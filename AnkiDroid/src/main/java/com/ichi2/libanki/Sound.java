@@ -142,20 +142,6 @@ public class Sound {
 
 
     /**
-     * The function addSounds() parses content for sound files, and stores entries to the filepaths for them,
-     * categorized as belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in
-     * the content will be given the same base categorization of question or answer. Additionally, the result is to be
-     * sorted by the order of appearance on the card.
-     * @param soundDir -- base path to the media files
-     * @param content -- parsed for sound entries, the entries expected in display order
-     * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
-     */
-    public void addSounds(String soundDir, String content, SoundSide qa) {
-        List<SoundOrVideoTag> tags = extractTagsFromLegacyContent(content);
-        addSounds(soundDir, tags, qa);
-    }
-
-    /**
      * Stores entries to the filepaths for sounds, categorized as belonging to the front (question) or back (answer) of cards.
      * Note that all sounds embedded in the content will be given the same base categorization of question or answer.
      * Additionally, the result is to be sorted by the order of appearance on the card.
