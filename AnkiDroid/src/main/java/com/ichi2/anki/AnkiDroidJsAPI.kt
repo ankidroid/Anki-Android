@@ -31,7 +31,6 @@ import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
@@ -41,7 +40,7 @@ import com.ichi2.utils.JSONObject
 import timber.log.Timber
 import java.util.*
 
-open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private val currentCard: Card) {
+open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     // JS API ERROR CODE
     @kotlin.jvm.JvmField
@@ -212,12 +211,12 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     @JavascriptInterface
     fun ankiGetCardMark(): Boolean {
-        return currentCard.note().hasTag("marked")
+        return activity.currentCard.note().hasTag("marked")
     }
 
     @JavascriptInterface
     fun ankiGetCardFlag(): Int {
-        return currentCard.userFlag()
+        return activity.currentCard.userFlag()
     }
 
     // behavior change ankiGetNextTime1...4
@@ -243,80 +242,80 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     @JavascriptInterface
     fun ankiGetCardReps(): Int {
-        return currentCard.reps
+        return activity.currentCard.reps
     }
 
     @JavascriptInterface
     fun ankiGetCardInterval(): Int {
-        return currentCard.ivl
+        return activity.currentCard.ivl
     }
 
     /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%)  */
     @JavascriptInterface
     fun ankiGetCardFactor(): Int {
-        return currentCard.factor
+        return activity.currentCard.factor
     }
 
     /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099  */
     @JavascriptInterface
     fun ankiGetCardMod(): Long {
-        return currentCard.mod
+        return activity.currentCard.mod
     }
 
     /** Returns the ID of the card. Example: 1477380543053  */
     @JavascriptInterface
     fun ankiGetCardId(): Long {
-        return currentCard.id
+        return activity.currentCard.id
     }
 
     /** Returns the ID of the note which generated the card. Example: 1590418157630  */
     @JavascriptInterface
     fun ankiGetCardNid(): Long {
-        return currentCard.nid
+        return activity.currentCard.nid
     }
 
     @JavascriptInterface
     @CARD_TYPE
     fun ankiGetCardType(): Int {
-        return currentCard.type
+        return activity.currentCard.type
     }
 
     /** Returns the ID of the deck which contains the card. Example: 1595967594978  */
     @JavascriptInterface
     fun ankiGetCardDid(): Long {
-        return currentCard.did
+        return activity.currentCard.did
     }
 
     @JavascriptInterface
     fun ankiGetCardLeft(): Int {
-        return currentCard.left
+        return activity.currentCard.left
     }
 
     /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978  */
     @JavascriptInterface
     fun ankiGetCardODid(): Long {
-        return currentCard.oDid
+        return activity.currentCard.oDid
     }
 
     @JavascriptInterface
     fun ankiGetCardODue(): Long {
-        return currentCard.oDue
+        return activity.currentCard.oDue
     }
 
     @JavascriptInterface
     @CARD_QUEUE
     fun ankiGetCardQueue(): Int {
-        return currentCard.queue
+        return activity.currentCard.queue
     }
 
     @JavascriptInterface
     fun ankiGetCardLapses(): Int {
-        return currentCard.lapses
+        return activity.currentCard.lapses
     }
 
     @JavascriptInterface
     fun ankiGetCardDue(): Long {
-        return currentCard.due
+        return activity.currentCard.due
     }
 
     @JavascriptInterface
@@ -341,7 +340,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
 
     @JavascriptInterface
     fun ankiGetDeckName(): String {
-        return Decks.basename(activity.col.decks.get(currentCard.did).getString("name"))
+        return Decks.basename(activity.col.decks.get(activity.currentCard.did).getString("name"))
     }
 
     @JavascriptInterface
@@ -372,7 +371,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer, private
     @JavascriptInterface
     fun ankiSearchCard(query: String?) {
         val intent = Intent(context, CardBrowser::class.java)
-        val currentCardId: Long = currentCard.id
+        val currentCardId: Long = activity.currentCard.id
         intent.putExtra("currentCard", currentCardId)
         intent.putExtra("search_query", query)
         activity.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
