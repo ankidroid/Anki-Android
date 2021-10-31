@@ -13,7 +13,7 @@ We have developed a nonstandard process to convert existing files to Kotlin. Rat
 * Git rebase the first commit (`rename .java to .kt`)
     * Android Studio: `Open the Git tab in the bottom toolbar (Alt + 9) > Select 'log' > Right click on the bottom commit (rename .java to .kt) > Click on Interactively Rebase from here > Right click on the top commit > Stop To Edit (Alt + E) > Start Rebasing`
 * Add the source-root relative path of the file to `kotlinMigration.gradle`
-* `File - Sync Project with Gradle Files`, then `Build - Rebuild` to ensure the commit builds
+* `File > Sync Project with Gradle Files`, then `Build > Rebuild` to ensure the commit builds
 * Amend the first commit with the change to `kotlinMigration.gradle`
 * Finish the rebase: `git rebase --continue`
 * Amend the conversion commit, reverting `kotlinMigration.gradle` (set the path to an empty string, and the source to `MAIN`)
@@ -42,7 +42,7 @@ A valid path is:
 
 `def className = "/com/ichi2/anki/AbstractFlashcardViewer.kt"`
 
-In Android Studio right-click the converted Kotlin file, select "Copy Path - From Source Root" and prefix the path with `/`
+In Android Studio right-click the converted Kotlin file, select `Copy Path > From Source Root` and prefix the path with `/`
 
 
 #### Tests/Android Tests
