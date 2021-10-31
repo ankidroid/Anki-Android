@@ -1385,6 +1385,13 @@ public class Collection implements CollectionGetter {
 
     @Nullable
     public TemplateRenderOutput render_output(@NonNull Card c, boolean reload, boolean browser) {
+        return render_output_legacy(c, reload, browser);
+    }
+
+
+    @NonNull
+    @RustCleanup("Hack for Card Template Previewer, needs review")
+    public TemplateRenderOutput render_output_legacy(@NonNull Card c, boolean reload, boolean browser) {
         Note f = c.note(reload);
         Model m = c.model();
         JSONObject t = c.template();

@@ -104,7 +104,9 @@ open class Card : Cloneable {
     private var data: String? = null
 
     // END SQL table entries
-    private var render_output: TemplateRenderOutput?
+    @set:JvmName("setRenderOutput")
+    @get:JvmName("getRenderOutput")
+    protected var render_output: TemplateRenderOutput?
     private var note: Note?
 
     /** Used by Sched to determine which queue to move the card to after answering. */
@@ -240,9 +242,12 @@ open class Card : Cloneable {
         return "<style>${render_output().css}</style>"
     }
 
+    /**
+     * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
+     */
     @JvmOverloads
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
-    fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
+    open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (render_output == null || reload) {
             render_output = col.render_output(this, reload, browser)
         }
