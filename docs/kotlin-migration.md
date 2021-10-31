@@ -54,4 +54,5 @@ Reset the path in `kotlinMigration.gradle` to the empty string. The path is no l
 
 ## References
 
-[Further history of kotlinMigration.gradle](https://github.com/ankidroid/Anki-Android/pull/9480)
+* [Example Pull Request](https://github.com/ankidroid/Anki-Android/pull/9738/commits)
+* [Further history of kotlinMigration.gradle](https://github.com/ankidroid/Anki-Android/pull/9480)
