@@ -47,7 +47,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         data.put("developer", "dev@mail.com")
 
         // this will be changed when new api added
-        val expected = "{\"markCard\":true,\"toggleFlag\":true}"
+        val expected = "{\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
 
         waitForAsyncTasksToComplete()
         assertThat(javaScriptFunction.init(data.toString()), equalTo(expected))
@@ -229,6 +229,85 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             "})();"
 
         reviewer.webView.evaluateJavascript(flagCardJs) { s -> assertThat(s, equalTo(1)) }
+    }
+
+    fun ankiBurySuspendTest() {
+        // js api test for bury and suspend notes and cards
+        // add five notes, four will be buried and suspended
+        // count number of notes, if buried or suspended then
+        // in scheduling the count will be less than previous scheduling
+        val col = col
+        val models = col.models
+        val decks = col.decks
+        val didA = addDeck("Test")
+        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        basic!!.put("did", didA)
+        addNoteUsingBasicModel("foo", "bar")
+        addNoteUsingBasicModel("baz", "bak")
+        addNoteUsingBasicModel("Anki", "Droid")
+        addNoteUsingBasicModel("Test Card", "Bury and Suspend Card")
+        addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
+        decks.select(didA)
+
+        val reviewer: Reviewer = startReviewer()
+
+        waitForAsyncTasksToComplete()
+
+        // ----------
+        // Bury Card
+        // ----------
+        var jsScript = createTestScript("AnkiDroidJS.ankiBuryCard();")
+        // call script to bury current card
+        reviewer.webView.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+
+        // count number of notes
+        assertThat(reviewer.mSched.cardCount(), equalTo(4))
+
+        // ----------
+        // Bury Note
+        // ----------
+        jsScript = createTestScript("AnkiDroidJS.ankiBuryNote();")
+        // call script to bury current note
+        reviewer.webView.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+
+        // count number of notes
+        assertThat(reviewer.mSched.cardCount(), equalTo(3))
+
+        // -------------
+        // Suspend Card
+        // -------------
+        jsScript = createTestScript("AnkiDroidJS.ankiSuspendCard();")
+        // call script to suspend current card
+        reviewer.webView.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+
+        // count number of notes
+        assertThat(reviewer.mSched.cardCount(), equalTo(2))
+
+        // -------------
+        // Suspend Note
+        // -------------
+        jsScript = createTestScript("AnkiDroidJS.ankiSuspendNote();")
+        // call script to suspend current note
+        reviewer.webView.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
+
+        // count number of notes
+        assertThat(reviewer.mSched.cardCount(), equalTo(1))
+    }
+
+    private fun createTestScript(apiName: String): String {
+        // create js script for evaluating in webview
+        var script = "javascript:(function () {\n"
+
+        // add js api developer contract
+        script += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"dev@mail.com\"};\n"
+
+        // init JS API
+        script += "AnkiDroidJS.init(JSON.stringify(jsApi));\n"
+
+        // call js api
+        script += "$apiName\n})();"
+
+        return script
     }
 
     private fun startReviewer(): Reviewer {
