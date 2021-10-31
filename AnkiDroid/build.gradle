@@ -297,10 +297,10 @@ dependencies {
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
 
     // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.7.0'
-    implementation'ch.acra:acra-dialog:5.7.0'
-    implementation'ch.acra:acra-toast:5.7.0'
-    implementation'ch.acra:acra-limiter:5.7.0'
+    implementation "ch.acra:acra-http:$acra_version"
+    implementation "ch.acra:acra-dialog:$acra_version"
+    implementation "ch.acra:acra-toast:$acra_version"
+    implementation "ch.acra:acra-limiter:$acra_version"
 
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
