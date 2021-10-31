@@ -337,21 +337,37 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiBuryCard(): Boolean {
+        if (!isInit(jsAPIConstants.BURY_CARD, jsAPIConstants.ankiJsErrorCodeBuryCard)) {
+            return false
+        }
+
         return activity.buryCard()
     }
 
     @JavascriptInterface
     fun ankiBuryNote(): Boolean {
+        if (!isInit(jsAPIConstants.BURY_NOTE, jsAPIConstants.ankiJsErrorCodeBuryNote)) {
+            return false
+        }
+
         return activity.buryNote()
     }
 
     @JavascriptInterface
     fun ankiSuspendCard(): Boolean {
+        if (!isInit(jsAPIConstants.SUSPEND_CARD, jsAPIConstants.ankiJsErrorCodeSuspendCard)) {
+            return false
+        }
+
         return activity.suspendCard()
     }
 
     @JavascriptInterface
     fun ankiSuspendNote(): Boolean {
+        if (!isInit(jsAPIConstants.SUSPEND_NOTE, jsAPIConstants.ankiJsErrorCodeSuspendNote)) {
+            return false
+        }
+
         return activity.suspendNote()
     }
 

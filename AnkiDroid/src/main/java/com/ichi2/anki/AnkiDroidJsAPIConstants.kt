@@ -27,6 +27,16 @@ class AnkiDroidJsAPIConstants {
     @kotlin.jvm.JvmField
     val ankiJsErrorCodeFlagCard: Int = 2
 
+    @kotlin.jvm.JvmField
+    val ankiJsErrorCodeBuryCard: Int = 3
+    @kotlin.jvm.JvmField
+    val ankiJsErrorCodeSuspendCard: Int = 4
+
+    @kotlin.jvm.JvmField
+    val ankiJsErrorCodeBuryNote: Int = 5
+    @kotlin.jvm.JvmField
+    val ankiJsErrorCodeSuspendNote: Int = 6
+
     // js api developer contact
     @kotlin.jvm.JvmField
     var mCardSuppliedDeveloperContact = ""
@@ -41,10 +51,25 @@ class AnkiDroidJsAPIConstants {
     @kotlin.jvm.JvmField
     val TOGGLE_FLAG = "toggleFlag"
 
+    @kotlin.jvm.JvmField
+    val BURY_CARD = "buryCard"
+    @kotlin.jvm.JvmField
+    val BURY_NOTE = "buryNote"
+    @kotlin.jvm.JvmField
+    val SUSPEND_CARD = "suspendCard"
+    @kotlin.jvm.JvmField
+    val SUSPEND_NOTE = "suspendNote"
+
     fun initApiMap(): HashMap<String, Boolean> {
         val jsApiListMap = HashMap<String, Boolean>()
         jsApiListMap[MARK_CARD] = false
         jsApiListMap[TOGGLE_FLAG] = false
+
+        jsApiListMap[BURY_CARD] = false
+        jsApiListMap[BURY_NOTE] = false
+        jsApiListMap[SUSPEND_CARD] = false
+        jsApiListMap[SUSPEND_NOTE] = false
+
         return jsApiListMap
     }
 }
