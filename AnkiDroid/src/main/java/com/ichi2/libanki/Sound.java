@@ -43,10 +43,12 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -149,21 +151,45 @@ public class Sound {
      * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
      */
     public void addSounds(String soundDir, String content, SoundSide qa) {
-        Matcher matcher = SOUND_PATTERN.matcher(content);
-        // While there is matches of the pattern for sound markers
-        while (matcher.find()) {
+        List<SoundOrVideoTag> tags = extractTagsFromLegacyContent(content);
+        addSounds(soundDir, tags, qa);
+    }
+
+    /**
+     * Stores entries to the filepaths for sounds, categorized as belonging to the front (question) or back (answer) of cards.
+     * Note that all sounds embedded in the content will be given the same base categorization of question or answer.
+     * Additionally, the result is to be sorted by the order of appearance on the card.
+     * @param soundDir -- base path to the media files
+     * @param tags -- the entries expected in display order
+     * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
+     */
+    public void addSounds(String soundDir, List<SoundOrVideoTag> tags, SoundSide qa) {
+        for (SoundOrVideoTag tag: tags) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
             if (!mSoundPaths.containsKey(qa)) {
                 mSoundPaths.put(qa, new ArrayList<>(0));
             }
 
-            // Get the sound file name
-            String sound = matcher.group(1);
-
+            String soundPath = getSoundPath(soundDir, tag.getFilename());
             // Construct the sound path and store it
             Timber.d("Adding Sound to side: %s", qa);
-            mSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
+            mSoundPaths.get(qa).add(soundPath);
         }
+    }
+
+
+    /** Extract SoundOrVideoTag instances from content where sound tags are in the form: [sound:filename.mp3] */
+    @CheckResult
+    public static List<SoundOrVideoTag> extractTagsFromLegacyContent(String content) {
+        Matcher matcher = SOUND_PATTERN.matcher(content);
+        // While there is matches of the pattern for sound markers
+        List<SoundOrVideoTag> ret = new ArrayList<>();
+        while (matcher.find()) {
+            // Get the sound file name
+            String sound = matcher.group(1);
+            ret.add(new SoundOrVideoTag(sound));
+        }
+        return ret;
     }
 
     /**
