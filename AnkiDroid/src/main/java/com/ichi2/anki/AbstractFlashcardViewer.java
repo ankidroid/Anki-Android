@@ -202,6 +202,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected static final int MENU_DISABLED = 3;
 
     private AnkiDroidJsAPI mAnkiDroidJsAPI;
+    private AnkiDroidJsAPIConstants mJsAPIConstants;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -1332,6 +1333,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction();
+        mJsAPIConstants = mAnkiDroidJsAPI.getJsAPIConstants();
         webView.addJavascriptInterface(mAnkiDroidJsAPI, "AnkiDroidJS");
 
         return webView;
@@ -2796,12 +2798,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (mAnkiDroidJsAPI.isAnkiApiNull(mAnkiDroidJsAPI.MARK_CARD)) {
-                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeDefault);
-                    return true;
-                } else if (!mAnkiDroidJsAPI.getJsApiListMap().get(mAnkiDroidJsAPI.MARK_CARD)) {
-                    // see 02-string.xml
-                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeMarkCard);
+                if (!mAnkiDroidJsAPI.isInit(mJsAPIConstants.MARK_CARD, mJsAPIConstants.ankiJsErrorCodeMarkCard)) {
                     return true;
                 }
 
@@ -2810,12 +2807,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (mAnkiDroidJsAPI.isAnkiApiNull(mAnkiDroidJsAPI.TOGGLE_FLAG)) {
-                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeDefault);
-                    return true;
-                } else if (!mAnkiDroidJsAPI.getJsApiListMap().get(mAnkiDroidJsAPI.TOGGLE_FLAG)) {
-                    // see 02-string.xml
-                    mAnkiDroidJsAPI.showDeveloperContact(mAnkiDroidJsAPI.ankiJsErrorCodeFlagCard);
+                if (!mAnkiDroidJsAPI.isInit(mJsAPIConstants.TOGGLE_FLAG, mJsAPIConstants.ankiJsErrorCodeFlagCard)) {
                     return true;
                 }
 
