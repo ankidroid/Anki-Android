@@ -24,8 +24,11 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.TemplateManager;
 import com.ichi2.libanki.utils.NoteUtils;
 import com.ichi2.utils.JSONObject;
+
+import net.ankiweb.rsdroid.RustCleanup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -441,6 +444,17 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 return mEditedModel;
             }
             return super.model();
+        }
+
+
+        @NonNull
+        @Override
+        @RustCleanup("determine how Anki Desktop does this")
+        public TemplateManager.TemplateRenderContext.TemplateRenderOutput render_output(boolean reload, boolean browser) {
+            if (getRenderOutput() == null || reload) {
+                setRenderOutput(getCol().render_output_legacy(this, reload, browser));
+            }
+            return getRenderOutput();
         }
     }
 }

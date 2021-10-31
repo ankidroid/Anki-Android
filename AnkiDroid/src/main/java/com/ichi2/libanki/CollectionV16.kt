@@ -70,4 +70,8 @@ class CollectionV16(
             models.save(m) // equivalent to m.put("usn", -1)
         }
     }
+
+    override fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
+        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
+    }
 }
