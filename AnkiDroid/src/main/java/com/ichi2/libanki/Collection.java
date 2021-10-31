@@ -1380,6 +1380,27 @@ public class Collection implements CollectionGetter {
     }
 
 
+    @Nullable
+    public HashMap<String, String> render_output(@NonNull Card c, boolean reload, boolean browser) {
+        Note f = c.note(reload);
+        Model m = c.model();
+        JSONObject t = c.template();
+        long did;
+        if (c.isInDynamicDeck()) {
+            did = c.getODid();
+        } else {
+            did = c.getDid();
+        }
+        if (browser) {
+            String bqfmt = t.getString("bqfmt");
+            String bafmt = t.getString("bafmt");
+            return _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags(), browser, bqfmt, bafmt);
+        } else {
+            return _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags());
+        }
+    }
+
+
     @VisibleForTesting
     public static class UndoReview extends UndoAction {
         private final boolean mWasLeech;
