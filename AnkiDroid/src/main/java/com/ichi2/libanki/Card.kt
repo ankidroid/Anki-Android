@@ -26,6 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.utils.Assert
@@ -103,7 +104,7 @@ open class Card : Cloneable {
     private var data: String? = null
 
     // END SQL table entries
-    private var render_output: HashMap<String, String>?
+    private var render_output: TemplateRenderOutput?
     private var note: Note?
 
     /** Used by Sched to determine which queue to move the card to after answering. */
@@ -227,24 +228,25 @@ open class Card : Cloneable {
 
     @JvmOverloads
     fun q(reload: Boolean = false, browser: Boolean = false): String {
-        return css() + render_output(reload, browser)!!["q"]
+        return render_output(reload, browser).question_and_style()
     }
 
     fun a(): String {
-        return css() + render_output()!!["a"]
+        return render_output().answer_and_style()
     }
 
+    @RustCleanup("legacy")
     fun css(): String {
-        return String.format(Locale.US, "<style>%s</style>", model().getString("css"))
+        return "<style>${render_output().css}</style>"
     }
 
     @JvmOverloads
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
-    fun render_output(reload: Boolean = false, browser: Boolean = false): HashMap<String, String>? {
+    fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (render_output == null || reload) {
             render_output = col.render_output(this, reload, browser)
         }
-        return render_output
+        return render_output!!
     }
 
     open fun note(): Note {
@@ -306,8 +308,8 @@ open class Card : Cloneable {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    fun qSimple(): String? {
-        return render_output(false)!!["q"]
+    fun qSimple(): String {
+        return render_output(false).question_text
     }
 
     /*
@@ -315,9 +317,9 @@ open class Card : Cloneable {
      */
     val pureAnswer: String
         get() {
-            val s = render_output(false)!!["a"]
+            val s = render_output(false).answer_text
             val target = "<hr id=answer>"
-            val pos = s!!.indexOf(target)
+            val pos = s.indexOf(target)
             return if (pos == -1) {
                 s
             } else s.substring(pos + target.length).trim { it <= ' ' }
