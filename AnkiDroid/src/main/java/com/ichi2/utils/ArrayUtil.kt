@@ -13,14 +13,13 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import java.util.ArrayList
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class ArrayUtil {
-    public static <T> ArrayList<T> toArrayList(T[] items) {
-        return new ArrayList<>(Arrays.asList(items));
+object ArrayUtil {
+    @JvmStatic
+    fun <T> toArrayList(items: Array<T>): ArrayList<T> {
+        return ArrayList(listOf(*items))
     }
 }
