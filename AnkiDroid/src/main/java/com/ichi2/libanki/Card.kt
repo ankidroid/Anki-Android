@@ -102,7 +102,7 @@ open class Card : Cloneable {
     private var data: String? = null
 
     // END SQL table entries
-    private var qa: HashMap<String, String>?
+    private var render_output: HashMap<String, String>?
     private var note: Note?
 
     /** Used by Sched to determine which queue to move the card to after answering. */
@@ -114,7 +114,7 @@ open class Card : Cloneable {
     constructor(col: Collection) {
         this.col = col
         timerStarted = 0L
-        qa = null
+        render_output = null
         note = null
         // to flush, set nid, ord, and due
         this.id = this.col.time.timestampID(this.col.db, "cards")
@@ -135,7 +135,7 @@ open class Card : Cloneable {
     constructor(col: Collection, id: Long) {
         this.col = col
         timerStarted = 0L
-        qa = null
+        render_output = null
         note = null
         this.id = id
         load()
@@ -165,7 +165,7 @@ open class Card : Cloneable {
             flags = cursor.getInt(16)
             data = cursor.getString(17)
         }
-        qa = null
+        render_output = null
         note = null
     }
 
@@ -226,11 +226,11 @@ open class Card : Cloneable {
 
     @JvmOverloads
     fun q(reload: Boolean = false, browser: Boolean = false): String {
-        return css() + _getQA(reload, browser)!!["q"]
+        return css() + render_output(reload, browser)!!["q"]
     }
 
     fun a(): String {
-        return css() + _getQA()!!["a"]
+        return css() + render_output()!!["a"]
     }
 
     fun css(): String {
@@ -238,13 +238,13 @@ open class Card : Cloneable {
     }
 
     @JvmOverloads
-    fun _getQA(reload: Boolean = false, browser: Boolean = false): HashMap<String, String>? {
-        if (qa == null || reload) {
+    fun render_output(reload: Boolean = false, browser: Boolean = false): HashMap<String, String>? {
+        if (render_output == null || reload) {
             val f = note(reload)
             val m = model()
             val t = template()
             val did = if (isInDynamicDeck) oDid else did
-            qa = if (browser) {
+            render_output = if (browser) {
                 val bqfmt = t.getString("bqfmt")
                 val bafmt = t.getString("bafmt")
                 col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags, browser, bqfmt, bafmt)
@@ -252,7 +252,7 @@ open class Card : Cloneable {
                 col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags)
             }
         }
-        return qa
+        return render_output
     }
 
     open fun note(): Note {
@@ -315,7 +315,7 @@ open class Card : Cloneable {
      * ***********************************************************
      */
     fun qSimple(): String? {
-        return _getQA(false)!!["q"]
+        return render_output(false)!!["q"]
     }
 
     /*
@@ -323,7 +323,7 @@ open class Card : Cloneable {
      */
     val pureAnswer: String
         get() {
-            val s = _getQA(false)!!["a"]
+            val s = render_output(false)!!["a"]
             val target = "<hr id=answer>"
             val pos = s!!.indexOf(target)
             return if (pos == -1) {
@@ -544,7 +544,7 @@ open class Card : Cloneable {
         }
 
         fun loadQA(reload: Boolean, browser: Boolean) {
-            card._getQA(reload, browser)
+            card.render_output(reload, browser)
         }
     }
 
