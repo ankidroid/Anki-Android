@@ -31,6 +31,7 @@ import com.ichi2.libanki.template.TemplateError
 import com.ichi2.utils.Assert
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
@@ -238,19 +239,10 @@ open class Card : Cloneable {
     }
 
     @JvmOverloads
+    @RustCleanup("move col.render_output back to Card once the java collection is removed")
     fun render_output(reload: Boolean = false, browser: Boolean = false): HashMap<String, String>? {
         if (render_output == null || reload) {
-            val f = note(reload)
-            val m = model()
-            val t = template()
-            val did = if (isInDynamicDeck) oDid else did
-            render_output = if (browser) {
-                val bqfmt = t.getString("bqfmt")
-                val bafmt = t.getString("bafmt")
-                col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags, browser, bqfmt, bafmt)
-            } else {
-                col._renderQA(this.id, m, did, ord, f.stringTags(), f.fields, flags)
-            }
+            render_output = col.render_output(this, reload, browser)
         }
         return render_output
     }
@@ -413,6 +405,9 @@ open class Card : Cloneable {
     fun setFlag(flag: Int) {
         flags = flag
     }
+
+    /** Should use [userFlag] */
+    fun internalGetFlags() = flags
 
     fun setUserFlag(flag: Int) {
         flags = setFlagInInt(flags, flag)
