@@ -34,64 +34,56 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
-import com.ichi2.utils.HashUtil
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
 import java.util.*
 
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
-
-    // JS API ERROR CODE
-    @kotlin.jvm.JvmField
-    var ankiJsErrorCodeDefault: Int = 0
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeMarkCard: Int = 1
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeFlagCard: Int = 2
-
-    private val context: Context = activity
-
-    // js api developer contact
-    @kotlin.jvm.JvmField
-    var mCardSuppliedDeveloperContact = ""
-    @kotlin.jvm.JvmField
-    var mCardSuppliedApiVersion = ""
-
-    private val sCurrentJsApiVersion = "0.0.1"
-    private val sMinimumJsApiVersion = "0.0.1"
-
-    @kotlin.jvm.JvmField
-    val MARK_CARD = "markCard"
-    @kotlin.jvm.JvmField
-    val TOGGLE_FLAG = "toggleFlag"
-
     /**
      Javascript Interface class for calling Java function from AnkiDroid WebView
      see card.js for available functions
      */
 
-    // list of api that can be accessed
-    private val mApiList = arrayOf(TOGGLE_FLAG, MARK_CARD)
+    private val context: Context = activity
+    val jsAPIConstants = AnkiDroidJsAPIConstants()
 
     // JS api list enable/disable status
-    private val mJsApiListMap = HashUtil.HashMapInit<String, Boolean>(mApiList.size)
+    private var mJsApiListMap = jsAPIConstants.initApiMap()
 
     // Text to speech
     private val mTalker = JavaScriptTTS()
 
     // init or reset api list
     fun init() {
-        mCardSuppliedApiVersion = ""
-        mCardSuppliedDeveloperContact = ""
-        for (api in mApiList) {
-            mJsApiListMap[api] = false
-        }
+        jsAPIConstants.mCardSuppliedApiVersion = ""
+        jsAPIConstants.mCardSuppliedDeveloperContact = ""
+        mJsApiListMap = jsAPIConstants.initApiMap()
     }
 
     // Check if value null
-    protected fun isAnkiApiNull(api: String): Boolean {
+    private fun isAnkiApiNull(api: String): Boolean {
         return mJsApiListMap[api] == null
+    }
+
+    /**
+     * Before calling js api check it init or not. It requires api name its error code.
+     * If developer contract provided with correct js api version then it returns true
+     *
+     *
+     * @param apiName
+     * @param apiErrorCode
+     */
+    protected fun isInit(apiName: String, apiErrorCode: Int): Boolean {
+        if (isAnkiApiNull(apiName)) {
+            showDeveloperContact(jsAPIConstants.ankiJsErrorCodeDefault)
+            return false
+        } else if (!getJsApiListMap()?.get(apiName)!!) {
+            // see 02-string.xml
+            showDeveloperContact(apiErrorCode)
+            return false
+        }
+        return true
     }
 
     /*
@@ -105,7 +97,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val parentLayout: View = activity.findViewById(android.R.id.content)
-        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg)
+        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, jsAPIConstants.mCardSuppliedDeveloperContact, errorMsg)
         val snackbar: Snackbar? = UIUtils.showSnackbar(
             activity,
             snackbarMsg,
@@ -128,7 +120,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             if (TextUtils.isEmpty(apiDevContact)) {
                 return false
             }
-            val versionCurrent = Version.valueOf(sCurrentJsApiVersion)
+            val versionCurrent = Version.valueOf(jsAPIConstants.sCurrentJsApiVersion)
             val versionSupplied = Version.valueOf(apiVer)
 
             /*
@@ -141,11 +133,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     true
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
-                    showThemedToast(context, context.getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false)
-                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion))
+                    showThemedToast(context, context.getString(R.string.update_js_api_version, jsAPIConstants.mCardSuppliedDeveloperContact), false)
+                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(jsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
-                    showThemedToast(context, context.getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false)
+                    showThemedToast(context, context.getString(R.string.valid_js_api_version, jsAPIConstants.mCardSuppliedDeveloperContact), false)
                     false
                 }
             }
@@ -157,8 +149,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     // if supplied api version match then enable api
     private fun enableJsApi() {
-        for (api in mApiList) {
-            mJsApiListMap[api] = true
+        for (api in mJsApiListMap) {
+            mJsApiListMap[api.key] = true
         }
     }
 
@@ -172,9 +164,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var apiStatusJson = ""
         try {
             data = JSONObject(jsonData)
-            mCardSuppliedApiVersion = data.optString("version", "")
-            mCardSuppliedDeveloperContact = data.optString("developer", "")
-            if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+            jsAPIConstants.mCardSuppliedApiVersion = data.optString("version", "")
+            jsAPIConstants.mCardSuppliedDeveloperContact = data.optString("developer", "")
+            if (requireApiVersion(jsAPIConstants.mCardSuppliedApiVersion, jsAPIConstants.mCardSuppliedDeveloperContact)) {
                 enableJsApi()
             }
             apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
