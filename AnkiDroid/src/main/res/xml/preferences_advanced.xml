@@ -92,7 +92,7 @@
                 if useInputTag is true
              -->
             <CheckBoxPreference
-                android:defaultValue="false"
+                android:defaultValue="true"
                 android:key="autoFocusTypeInAnswer"
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="useInputTag"
