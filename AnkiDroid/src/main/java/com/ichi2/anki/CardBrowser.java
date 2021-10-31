@@ -83,6 +83,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
@@ -2724,20 +2725,20 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return;
             }
             // render question and answer
-            Map<String, String> qa = getCard().render_output(true, true);
+            TemplateRenderOutput qa = getCard().render_output(true, true);
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if ("".equals(qa.get("q")) || "".equals(qa.get("a"))) {
-                HashMap<String, String> qaFull = getCard().render_output(true, false);
-                if ("".equals(qa.get("q"))) {
-                    qa.put("q", qaFull.get("q"));
+            if ("".equals(qa.getQuestionText()) || "".equals(qa.getAnswerText())) {
+                TemplateRenderOutput qaFull = getCard().render_output(true, false);
+                if ("".equals(qa.getQuestionText())) {
+                    qa.setQuestionText(qaFull.getQuestionText());
                 }
-                if ("".equals(qa.get("a"))) {
-                    qa.put("a", qaFull.get("a"));
+                if ("".equals(qa.getAnswerText())) {
+                    qa.setAnswerText(qaFull.getAnswerText());
                 }
             }
             // update the original hash map to include rendered question & answer
-            String q = qa.get("q");
-            String a = qa.get("a");
+            String q = qa.getQuestionText();
+            String a = qa.getAnswerText();
             // remove the question from the start of the answer if it exists
             if (a.startsWith(q)) {
                 a = a.substring(q.length());

@@ -248,10 +248,16 @@ class TemplateManager {
 
         /** Stores the rendered templates and extracted AV tags. */
         data class TemplateRenderOutput(
-            val question_text: str,
-            val answer_text: str,
-            val question_av_tags: List<AvTag>,
-            val answer_av_tags: List<AvTag>,
+            @get:JvmName("getQuestionText")
+            @set:JvmName("setQuestionText")
+            var question_text: str,
+            @get:JvmName("getAnswerText")
+            @set:JvmName("setAnswerText")
+            var answer_text: str,
+            @RustCleanup("make non-null")
+            val question_av_tags: List<AvTag>?,
+            @RustCleanup("make non-null")
+            val answer_av_tags: List<AvTag>?,
             val css: str = ""
         ) {
 

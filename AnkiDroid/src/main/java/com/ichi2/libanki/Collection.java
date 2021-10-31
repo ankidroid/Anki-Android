@@ -33,6 +33,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.async.ProgressSender;
 import com.ichi2.async.TaskManager;
@@ -1116,12 +1117,14 @@ public class Collection implements CollectionGetter {
     /**
      * Returns hash of id, question, answer.
      */
+    @NonNull
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null);
     }
 
 
     @RustCleanup("#8951 - Remove FrontSide added to the front")
+    @NonNull
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
@@ -1381,7 +1384,7 @@ public class Collection implements CollectionGetter {
 
 
     @Nullable
-    public HashMap<String, String> render_output(@NonNull Card c, boolean reload, boolean browser) {
+    public TemplateRenderOutput render_output(@NonNull Card c, boolean reload, boolean browser) {
         Note f = c.note(reload);
         Model m = c.model();
         JSONObject t = c.template();
@@ -1391,13 +1394,21 @@ public class Collection implements CollectionGetter {
         } else {
             did = c.getDid();
         }
+        HashMap<String, String> qa;
         if (browser) {
             String bqfmt = t.getString("bqfmt");
             String bafmt = t.getString("bafmt");
-            return _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags(), browser, bqfmt, bafmt);
+            qa = _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags(), browser, bqfmt, bafmt);
         } else {
-            return _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags());
+            qa = _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags());
         }
+
+        return new TemplateRenderOutput(
+                qa.get("q"),
+                qa.get("a"),
+                null,
+                null,
+                c.model().getString("css"));
     }
 
 
