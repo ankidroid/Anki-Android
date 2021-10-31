@@ -1666,12 +1666,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public AnkiDroidJsAPI javaScriptFunction() {
-        return new ReviewerJavaScriptFunction(this, mCurrentCard);
+        return new ReviewerJavaScriptFunction(this);
     }
 
     public class ReviewerJavaScriptFunction extends AnkiDroidJsAPI {
-        public ReviewerJavaScriptFunction(@NonNull AbstractFlashcardViewer activity, @NonNull Card currentCard) {
-            super(activity, currentCard);
+        public ReviewerJavaScriptFunction(@NonNull AbstractFlashcardViewer activity) {
+            super(activity);
         }
 
         @JavascriptInterface

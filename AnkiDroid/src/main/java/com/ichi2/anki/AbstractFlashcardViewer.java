@@ -3078,6 +3078,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     public AnkiDroidJsAPI javaScriptFunction() {
-        return new AnkiDroidJsAPI(this, mCurrentCard);
+        return new AnkiDroidJsAPI(this);
     }
 }
