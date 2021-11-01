@@ -84,13 +84,6 @@ public class DeckSpinnerSelection {
         this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(context);
     }
 
-    public DeckSpinnerSelection(@NonNull Fragment fragment, @NonNull Collection collection, @NonNull Spinner spinner) {
-        this.mContext = fragment.getContext();
-        this.mCollection = collection;
-        this.mSpinner = spinner;
-        this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(fragment);
-    }
-
     public void setShowAllDecks(boolean showAllDecks) {
         mShowAllDecks = showAllDecks;
     }
