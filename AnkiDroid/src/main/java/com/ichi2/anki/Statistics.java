@@ -128,7 +128,7 @@ public class Statistics extends NavigationDrawerActivity implements
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
         long deckId = getCol().getDecks().selected();
-        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true);
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true, true);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.selectDeckById(deckId, false);
         mTaskHandler.setDeckId(deckId);
