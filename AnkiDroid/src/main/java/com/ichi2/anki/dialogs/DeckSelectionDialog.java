@@ -59,6 +59,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
+/**
+ * The dialog which allow to select a deck. It is opened when the user click on a deck name in stats, browser or note editor.
+ * It allows to filter decks by typing part of its name.
+ */
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
@@ -218,6 +222,11 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         return requireCollectionGetter().getCol().getDecks();
     }
 
+
+    /**
+     * Create the deck if it does not exists.
+     * If name is valid, send the deck with this name to listener and close the dialog.
+     */
     private void selectDeckWithDeckName(@NonNull String deckName) {
         try {
             long id = getDecks().id(deckName);
@@ -229,6 +238,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
 
+    /**
+     * @param deck deck sent to the listener.
+     */
     protected void onDeckSelected(@Nullable SelectableDeck deck) {
         getDeckSelectionListener().onDeckSelected(deck);
     }
@@ -250,6 +262,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     }
 
 
+    /**
+     * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
+     */
     protected void selectDeckAndClose(@NonNull SelectableDeck deck) {
         onDeckSelected(deck);
         mDialog.dismiss();
@@ -372,9 +387,20 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
 
     public static class SelectableDeck implements Comparable<SelectableDeck>, Parcelable {
+        /**
+         * Either a deck id or ALL_DECKS_ID
+         */
         private final long mDeckId;
+        /**
+         * Name of the deck, or localization of "all decks"
+         */
         private final String mName;
 
+
+        /**
+         * @param filter A method deciding which deck to add
+         * @return the list of all SelectableDecks from the collection satisfying filter
+         */
         @NonNull
         public static List<SelectableDeck> fromCollection(@NonNull Collection c, @NonNull FunctionalInterfaces.Filter<Deck> filter) {
             List<Deck> all = c.getDecks().all();
@@ -423,7 +449,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         }
 
 
-        /** All decks comes first. Then alphabetical order. */
+        /** "All decks" comes first. Then usual deck name order. */
         @Override
         public int compareTo(@NonNull SelectableDeck o) {
             if (this.mDeckId == Stats.ALL_DECKS_ID){
