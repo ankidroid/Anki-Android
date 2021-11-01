@@ -124,7 +124,7 @@ public class DeckSpinnerSelection {
             deckNames.add(lineContent);
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, deckNames) {
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(mContext, R.layout.multiline_spinner_item, deckNames) {
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
 
