@@ -42,6 +42,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
@@ -223,8 +224,8 @@ public class DeckSpinnerSelection {
         return mDeckId;
     }
 
-    public Spinner getSpinner() {
-        return mSpinner;
+    public boolean hasSpinner() {
+        return mSpinner != null;
     }
 
     /**
