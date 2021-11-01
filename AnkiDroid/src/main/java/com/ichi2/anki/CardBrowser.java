@@ -771,8 +771,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         long deckId = getCol().getDecks().selected();
-        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true);
-        mDeckSpinnerSelection.setAlwaysShowDefaultDeck(false);
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true, false);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         selectDeckAndSave(deckId);
 

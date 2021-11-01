@@ -71,18 +71,20 @@ public class DeckSpinnerSelection {
     private DeckDropDownAdapter mDeckDropDownAdapter;
     private final boolean mShowAllDecks;
     private static final long ALL_DECKS_ID = 0L;
-    private boolean mAlwaysShowDefault = true;
+    /** Whether to show the default deck if it is not visible in the Deck Picker */
+    private final boolean mAlwaysShowDefault;
 
 
     /**
      * @param spinner Currently empty Spinner. Used to access the Android view.
      */
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner, boolean showAllDecks) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner, boolean showAllDecks, boolean alwaysShowDefault) {
         this.mContext = context;
         this.mCollection = collection;
         this.mSpinner = spinner;
         this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(context);
         this.mShowAllDecks = showAllDecks;
+        this.mAlwaysShowDefault = alwaysShowDefault;
     }
 
     public void initializeActionBarDeckSpinner(@NonNull ActionBar actionBar) {
@@ -297,11 +299,5 @@ public class DeckSpinnerSelection {
      */
     protected boolean shouldHideDefaultDeck() {
         return !mAlwaysShowDefault && !DeckService.shouldShowDefaultDeck(mCollection);
-    }
-
-
-    /** Whether to show the default deck if it is not visible in the Deck Picker */
-    public void setAlwaysShowDefaultDeck(boolean showDefault) {
-        this.mAlwaysShowDefault = showDefault;
     }
 }
