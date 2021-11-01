@@ -69,7 +69,7 @@ public class DeckSpinnerSelection {
     private final Collection mCollection;
     private List<Deck> mDropDownDecks;
     private DeckDropDownAdapter mDeckDropDownAdapter;
-    private boolean mShowAllDecks = false;
+    private final boolean mShowAllDecks;
     private static final long ALL_DECKS_ID = 0L;
     private boolean mAlwaysShowDefault = true;
 
@@ -77,15 +77,12 @@ public class DeckSpinnerSelection {
     /**
      * @param spinner Currently empty Spinner. Used to access the Android view.
      */
-    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner) {
+    public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner, boolean showAllDecks) {
         this.mContext = context;
         this.mCollection = collection;
         this.mSpinner = spinner;
         this.mWithFragmentManager = FragmentManagerUtilsKt.toFragmentManager(context);
-    }
-
-    public void setShowAllDecks(boolean showAllDecks) {
-        mShowAllDecks = showAllDecks;
+        this.mShowAllDecks = showAllDecks;
     }
 
     public void initializeActionBarDeckSpinner(@NonNull ActionBar actionBar) {
