@@ -352,8 +352,7 @@ public class FinderTest extends RobolectricTest {
         long did = note.firstCard().getDid();
         assertEquals(currentDid, did);
         CardBrowser cb = super.startActivityNormallyOpenCollectionWithIntent(CardBrowser.class, new Intent());
-        int pos = cb.getChangeDeckPositionFromId(currentDid);
-        cb.mDeckSpinnerSelection.selectDropDownItem(pos + 1);    //Adjusting for All Decks option at position 0
+        cb.mDeckSpinnerSelection.updateDeckPosition(currentDid);
         advanceRobolectricLooperWithSleep();
         assertEquals(1L, cb.getCardCount());
     }
