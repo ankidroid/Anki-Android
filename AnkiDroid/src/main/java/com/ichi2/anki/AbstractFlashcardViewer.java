@@ -1748,13 +1748,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     /**
-     * getAnswerFormat returns the answer part of this card's template as entered by user, without any parsing
+     * @return the answer part of this card's template as entered by user, without any parsing
      */
-    public String getAnswerFormat() {
-        Model model = mCurrentCard.model();
+    public static String getAnswerFormat(Card card) {
+        Model model = card.model();
         JSONObject template;
         if (model.isStd()) {
-            template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
+            template = model.getJSONArray("tmpls").getJSONObject(card.getOrd());
         } else {
             template = model.getJSONArray("tmpls").getJSONObject(0);
         }
@@ -1766,7 +1766,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            String answerSoundSource = removeFrontSideAudio(answer);
+            String answerSoundSource = removeFrontSideAudio(mCurrentCard, answer);
             List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(answerSoundSource);
             mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.ANSWER);
             mAnswerSoundsAdded = true;
@@ -2516,14 +2516,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Removes first occurrence in answerContent of any audio that is present due to use of
      * {{FrontSide}} on the answer.
+     * @param card              The card to strip content from
      * @param answerContent     The content from which to remove front side audio.
      * @return                  The content stripped of audio due to {{FrontSide}} inclusion.
      */
-    private String removeFrontSideAudio(String answerContent) {
-        String answerFormat = getAnswerFormat();
+    private static String removeFrontSideAudio(Card card, String answerContent) {
+        String answerFormat = getAnswerFormat(card);
         String newAnswerContent = answerContent;
         if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-            String frontSideFormat = mCurrentCard.render_output(false).getQuestionText();
+            String frontSideFormat = card.render_output(false).getQuestionText();
             Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
             while (audioReferences.find()) {
