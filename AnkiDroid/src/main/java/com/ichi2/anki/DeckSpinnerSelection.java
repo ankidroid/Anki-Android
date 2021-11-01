@@ -190,7 +190,7 @@ public class DeckSpinnerSelection {
     public void updateDeckPosition(long deckId) {
         int position = mAllDeckIds.indexOf(deckId);
         if (position != -1) {
-            selectDropDownItem(position);
+            mSpinner.setSelection(position);
         } else {
             Timber.e("updateDeckPosition() error :: mCurrentDid=%d, position=%d", mDeckId, position);
         }
@@ -243,7 +243,7 @@ public class DeckSpinnerSelection {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
                 int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
-                selectDropDownItem(position);
+                mSpinner.setSelection(position);
                 if (setAsCurrentDeck) {
                     mCollection.getDecks().select(deckId);
                 }
@@ -263,19 +263,10 @@ public class DeckSpinnerSelection {
             AnkiDroidApp.sendExceptionReport("selectAllDecks was called while `mShowAllDecks is false`", "DeckSpinnerSelection:selectAllDecks");
             return false;
         }
-        selectDropDownItem(0);
+        mSpinner.setSelection(0);
         return true;
     }
 
-
-    /**
-     * update mDeckId with the selected deck.
-     * Only use in browser/stats. It's an error to use it in note editor
-     * @param position Position in the spinner of the argument to select
-     */
-    public void selectDropDownItem(int position) {
-        mSpinner.setSelection(position);
-    }
 
     public void displayDeckOverrideDialog(Collection col) {
         FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
