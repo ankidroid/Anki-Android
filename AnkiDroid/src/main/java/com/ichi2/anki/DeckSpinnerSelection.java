@@ -118,10 +118,16 @@ public class DeckSpinnerSelection {
             String lineContent;
             if (d.isStd()) {
                 lineContent = currentName;
-            } else if (!addNote && currentEditedCard != null && currentEditedCard.getDid() == thisDid) {
-                lineContent = mContext.getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(currentEditedCard.getODid()));
             } else {
-                continue;
+                // We do not allow cards to be moved to dynamic deck.
+                // That mean we do not list dynamic decks in the spinner, with one exception
+                if (!addNote && currentEditedCard != null && currentEditedCard.getDid() == thisDid) {
+                    // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
+                    // to the spinner, even if it is dynamic.
+                    lineContent = mContext.getApplicationContext().getString(R.string.current_and_default_deck, currentName, col.getDecks().name(currentEditedCard.getODid()));
+                } else {
+                    continue;
+                }
             }
             mAllDeckIds.add(thisDid);
             deckNames.add(lineContent);
