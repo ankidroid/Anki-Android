@@ -25,6 +25,8 @@ import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
 public class AnkiDroidAppTest {
@@ -40,5 +42,10 @@ public class AnkiDroidAppTest {
         //It's meant to be non-null, but it's developer-defined, and we don't want a crash in the reporting dialog
         //noinspection ConstantConditions
         AnkiAssert.assertDoesNotThrow(() -> sendExceptionReport(message, "AnkiDroidAppTest"));
+    }
+
+    @Test
+    public void htmlDebugIsFalse() {
+        assertThat(BuildConfig.HTML_DEBUG, equalTo(false));
     }
 }

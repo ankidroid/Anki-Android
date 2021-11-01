@@ -87,8 +87,10 @@ android {
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
                 }
+                buildConfigField "boolean", "HTML_DEBUG", 'false'
             } else {
                 testCoverageEnabled true
+                buildConfigField "boolean", "HTML_DEBUG", 'true'
             }
 
             // make the icon red if in debug mode

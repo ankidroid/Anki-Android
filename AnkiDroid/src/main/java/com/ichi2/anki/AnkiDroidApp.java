@@ -330,7 +330,7 @@ public class AnkiDroidApp extends Application {
         }
 
         // make default HTML / JS debugging true for debug build
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.HTML_DEBUG) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
         
