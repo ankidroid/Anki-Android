@@ -44,7 +44,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 public class DeckSpinnerSelection {
@@ -91,7 +90,7 @@ public class DeckSpinnerSelection {
         actionBar.setDisplayShowTitleEnabled(false);
 
         // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = getDropDownDecks(mCollection);
+        mDropDownDecks = computeDropDownDecks();
 
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -109,7 +108,7 @@ public class DeckSpinnerSelection {
 
     public void initializeNoteEditorDeckSpinner(@Nullable Card currentEditedCard, boolean addNote) {
         Collection col = mCollection;
-        mDropDownDecks = getDropDownDecks(col);
+        mDropDownDecks = computeDropDownDecks();
         final ArrayList<String> deckNames = new ArrayList<>(mDropDownDecks.size());
         mAllDeckIds = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
@@ -156,8 +155,8 @@ public class DeckSpinnerSelection {
      * @return All decks, except maybe default if it should be hidden.
      */
     @NonNull
-    protected List<Deck> getDropDownDecks(Collection col) {
-        List<Deck> decks = col.getDecks().allSorted();
+    protected List<Deck> computeDropDownDecks() {
+        List<Deck> decks = mCollection.getDecks().allSorted();
         if (shouldHideDefaultDeck()) {
             decks.removeIf(x -> x.getLong("id") == Consts.DEFAULT_DECK_ID);
         }
