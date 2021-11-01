@@ -115,7 +115,6 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Model;
 import com.ichi2.libanki.SoundOrVideoTag;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
@@ -137,7 +136,6 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
 
@@ -157,8 +155,6 @@ import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -1747,26 +1743,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    /**
-     * @return the answer part of this card's template as entered by user, without any parsing
-     */
-    public static String getAnswerFormat(Card card) {
-        Model model = card.model();
-        JSONObject template;
-        if (model.isStd()) {
-            template = model.getJSONArray("tmpls").getJSONObject(card.getOrd());
-        } else {
-            template = model.getJSONArray("tmpls").getJSONObject(0);
-        }
-
-        return template.getString("afmt");
-    }
-
     private void addAnswerSounds(String answer) {
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            String answerSoundSource = removeFrontSideAudio(mCurrentCard, answer);
+            String answerSoundSource = CardHtml.removeFrontSideAudio(mCurrentCard, answer);
             List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(answerSoundSource);
             mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.ANSWER);
             mAnswerSoundsAdded = true;
@@ -2511,27 +2492,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return type == HitTestResult.SRC_ANCHOR_TYPE
                     || type == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
         }
-    }
-
-    /**
-     * Removes first occurrence in answerContent of any audio that is present due to use of
-     * {{FrontSide}} on the answer.
-     * @param card              The card to strip content from
-     * @param answerContent     The content from which to remove front side audio.
-     * @return                  The content stripped of audio due to {{FrontSide}} inclusion.
-     */
-    private static String removeFrontSideAudio(Card card, String answerContent) {
-        String answerFormat = getAnswerFormat(card);
-        String newAnswerContent = answerContent;
-        if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-            String frontSideFormat = card.render_output(false).getQuestionText();
-            Matcher audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat);
-            // remove the first instance of audio contained in "{{FrontSide}}"
-            while (audioReferences.find()) {
-                newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()), "");
-            }
-        }
-        return newAnswerContent;
     }
 
     /**
