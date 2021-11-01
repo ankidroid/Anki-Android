@@ -871,7 +871,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting
     void selectAllDecks() {
-        mDeckSpinnerSelection.selectDropDownItem(0);
+        mDeckSpinnerSelection.selectAllDecks();
         mRestrictOnDeck = "";
         saveLastDeckId(ALL_DECKS_ID);
         searchCards();
