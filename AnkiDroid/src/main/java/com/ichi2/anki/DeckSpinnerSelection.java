@@ -241,17 +241,17 @@ public class DeckSpinnerSelection {
             selectAllDecks();
             return true;
         }
-        return searchInList(deckId, setAsCurrentDeck);
+        return selectDeck(deckId, setAsCurrentDeck);
     }
 
 
     /**
      * select in the spinner deck with id
-     * @param deckId The deck id to search
+     * @param deckId The deck id to search (not ALL_DECKS_ID)
      * @param setAsCurrentDeck whether this deck should be selected in the collection (if it exists)
      * @return whether it was found
      */
-    private boolean searchInList(long deckId, boolean setAsCurrentDeck) {
+    private boolean selectDeck(long deckId, boolean setAsCurrentDeck) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
                 int position = mShowAllDecks ? dropDownDeckIdx + 1 : dropDownDeckIdx;
