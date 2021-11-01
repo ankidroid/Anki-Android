@@ -50,7 +50,16 @@ import timber.log.Timber;
 public class DeckSpinnerSelection {
 
     private long mDeckId;
+    /**
+     * All of the decks shown to the user.
+     */
     private ArrayList<Long> mAllDeckIds;
+    /**
+     * The spinner displayed in the activity.
+     * Empty at construction. After initialization, it contains in this order:
+     * * "All decks" if mShowAllDecks is true
+     * * then it contains all decks from mAllDeckIds.
+     */
     @NonNull
     private final Spinner mSpinner;
     @NonNull
@@ -65,6 +74,9 @@ public class DeckSpinnerSelection {
     private boolean mAlwaysShowDefault = true;
 
 
+    /**
+     * @param spinner Currently empty Spinner. Used to access the Android view.
+     */
     public DeckSpinnerSelection(@NonNull AnkiActivity context, @NonNull Collection collection, @NonNull Spinner spinner) {
         this.mContext = context;
         this.mCollection = collection;
@@ -148,6 +160,9 @@ public class DeckSpinnerSelection {
     }
 
 
+    /**
+     * @return All decks, except maybe default if it should be hidden.
+     */
     @NonNull
     protected List<Deck> getDropDownDecks(Collection col) {
         List<Deck> decks = col.getDecks().allSorted();
@@ -169,6 +184,11 @@ public class DeckSpinnerSelection {
         setSpinnerVisibility(View.VISIBLE);
     }
 
+
+    /**
+     * Move the selected deck in the spinner to mDeckId.
+     * Timber if mDeckId is not an id of a known deck.
+     */
     public void updateDeckPosition() {
         int position = mAllDeckIds.indexOf(mDeckId);
         if (position != -1) {
@@ -194,6 +214,10 @@ public class DeckSpinnerSelection {
         return mDropDownDecks;
     }
 
+
+    /**
+     * @param deckId An id of an actual deck (not ALL_DECKS_ID)
+     */
     public void setDeckId(Long deckId) {
         this.mDeckId = deckId;
     }
@@ -224,6 +248,12 @@ public class DeckSpinnerSelection {
     }
 
 
+    /**
+     * select in the spinner deck with id
+     * @param deckId The deck id to search
+     * @param setAsCurrentDeck whether this deck should be selected in the collection (if it exists)
+     * @return whether it was found
+     */
     private boolean searchInList(long deckId, boolean setAsCurrentDeck) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mAllDeckIds.size(); dropDownDeckIdx++) {
             if (mAllDeckIds.get(dropDownDeckIdx) == deckId) {
@@ -242,6 +272,12 @@ public class DeckSpinnerSelection {
         selectDropDownItem(0);
     }
 
+
+    /**
+     * update mDeckId with the selected deck.
+     * Only use in browser/stats. It's an error to use it in note editor
+     * @param position Position in the spinner of the argument to select
+     */
     public void selectDropDownItem(int position) {
         mSpinner.setSelection(position);
         if (position == 0) {
@@ -266,6 +302,9 @@ public class DeckSpinnerSelection {
     }
 
 
+    /**
+     * @return Whether default deck should appear in the list of deck
+     */
     protected boolean shouldHideDefaultDeck() {
         return !mAlwaysShowDefault && !DeckService.shouldShowDefaultDeck(mCollection);
     }
