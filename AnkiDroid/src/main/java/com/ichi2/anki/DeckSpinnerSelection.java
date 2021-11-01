@@ -234,12 +234,11 @@ public class DeckSpinnerSelection {
      * (this means the deck selected here will continue to appear in any future Activity whose
      * display data is loaded from Collection's current deck). If false, deckId will not be set as
      * the current deck id of Collection.
-     * @return True if a deck with deckId exists, false otherwise.
+     * @return True if selection succeeded.
      */
     public boolean selectDeckById(long deckId, boolean setAsCurrentDeck) {
         if (deckId == ALL_DECKS_ID) {
-            selectAllDecks();
-            return true;
+            return selectAllDecks();
         }
         return selectDeck(deckId, setAsCurrentDeck);
     }
@@ -265,8 +264,18 @@ public class DeckSpinnerSelection {
         return false;
     }
 
-    void selectAllDecks() {
+
+    /**
+     * Select all decks. Must be called only if mShowAllDecks.
+     * @return whether selection was a success.
+     */
+    boolean selectAllDecks() {
+        if (!mShowAllDecks) {
+            AnkiDroidApp.sendExceptionReport("selectAllDecks was called while `mShowAllDecks is false`", "DeckSpinnerSelection:selectAllDecks");
+            return false;
+        }
         selectDropDownItem(0);
+        return true;
     }
 
 
