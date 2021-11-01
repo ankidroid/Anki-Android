@@ -310,6 +310,14 @@ open class RobolectricTest : CollectionGetter {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
     }
 
+    protected inline fun <reified T : AnkiActivity?> startRegularActivity(): T {
+        return startRegularActivity(null)
+    }
+
+    protected inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
+        return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
+    }
+
     protected fun addNoteUsingBasicModel(front: String?, back: String?): Note {
         return addNoteUsingModelName("Basic", front, back)
     }

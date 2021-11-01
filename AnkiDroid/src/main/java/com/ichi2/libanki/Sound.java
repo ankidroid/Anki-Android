@@ -51,6 +51,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 
@@ -95,6 +96,15 @@ public class Sound {
      * Weak reference to the activity which is attempting to play the sound
      */
     private WeakReference<Activity> mCallingActivity;
+
+    @VisibleForTesting
+    public ArrayList<String> getSounds(@NonNull Sound.SoundSide side) {
+        if (side == SoundSide.QUESTION_AND_ANSWER) {
+            makeQuestionAnswerList();
+        }
+        return mSoundPaths.get(side);
+    }
+
 
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
