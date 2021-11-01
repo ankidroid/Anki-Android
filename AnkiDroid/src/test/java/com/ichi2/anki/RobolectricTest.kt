@@ -350,8 +350,8 @@ open class RobolectricTest : CollectionGetter {
             addField(model, field)
         }
         val t = Models.newTemplate("Card 1")
-        t.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt)
-        t.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt)
+        t.put("qfmt", qfmt)
+        t.put("afmt", afmt)
         col.models.addTemplateInNewModel(model, t)
         col.models.add(model)
         col.models.flush()
