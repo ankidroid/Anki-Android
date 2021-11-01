@@ -19,9 +19,12 @@ package com.ichi2.anki.cardviewer
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Media
+import com.ichi2.libanki.Sound
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
+import com.ichi2.utils.JSONObject
 import timber.log.Timber
+import java.util.regex.Pattern
 
 class CardHtml(
     val beforeSoundTemplateExpansion: String,
@@ -122,6 +125,41 @@ class CardHtml(
             sb.append(content)
             sb.append("</div>")
             return sb.toString()
+        }
+
+        /**
+         * @return the answer part of this card's template as entered by user, without any parsing
+         */
+        private fun getAnswerFormat(card: Card): String {
+            val model = card.model()
+            val template: JSONObject = if (model.isStd) {
+                model.getJSONArray("tmpls").getJSONObject(card.ord)
+            } else {
+                model.getJSONArray("tmpls").getJSONObject(0)
+            }
+            return template.getString("afmt")
+        }
+
+        /**
+         * Removes first occurrence in answerContent of any audio that is present due to use of
+         * {{FrontSide}} on the answer.
+         * @param card              The card to strip content from
+         * @param answerContent     The content from which to remove front side audio.
+         * @return The content stripped of audio due to {{FrontSide}} inclusion.
+         */
+        @JvmStatic
+        fun removeFrontSideAudio(card: Card, answerContent: String): String {
+            val answerFormat = getAnswerFormat(card)
+            var newAnswerContent = answerContent
+            if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
+                val frontSideFormat = card.render_output(false).question_text
+                val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
+                // remove the first instance of audio contained in "{{FrontSide}}"
+                while (audioReferences.find()) {
+                    newAnswerContent = newAnswerContent.replaceFirst(Pattern.quote(audioReferences.group()).toRegex(), "")
+                }
+            }
+            return newAnswerContent
         }
     }
 }
