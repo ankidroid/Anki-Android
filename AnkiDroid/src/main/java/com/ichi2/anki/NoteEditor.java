@@ -570,7 +570,7 @@ public class NoteEditor extends AnkiActivity implements
         if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
-        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.note_deck_spinner));
+        mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.note_deck_spinner), false);
         mDeckSpinnerSelection.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote);
 
         mCurrentDid = intent.getLongExtra(EXTRA_DID, mCurrentDid);
