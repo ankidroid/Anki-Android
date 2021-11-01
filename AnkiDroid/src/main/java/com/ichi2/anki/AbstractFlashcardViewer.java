@@ -298,7 +298,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected AbstractSched mSched;
 
-    private final Sound mSoundPlayer = new Sound();
+    protected final Sound mSoundPlayer = new Sound();
 
     /**
      * Time taken to play all medias in mSoundPlayer
