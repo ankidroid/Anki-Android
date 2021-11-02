@@ -71,7 +71,7 @@
                     <Spinner
                         android:id="@+id/note_deck_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/touch_target"
+                        android:layout_height="wrap_content"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
