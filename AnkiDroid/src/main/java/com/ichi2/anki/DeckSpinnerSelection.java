@@ -187,8 +187,8 @@ public class DeckSpinnerSelection {
      * Move the selected deck in the spinner to mDeckId.
      * Timber if mDeckId is not an id of a known deck.
      */
-    public void updateDeckPosition() {
-        int position = mAllDeckIds.indexOf(mDeckId);
+    public void updateDeckPosition(long deckId) {
+        int position = mAllDeckIds.indexOf(deckId);
         if (position != -1) {
             selectDropDownItem(position);
         } else {
