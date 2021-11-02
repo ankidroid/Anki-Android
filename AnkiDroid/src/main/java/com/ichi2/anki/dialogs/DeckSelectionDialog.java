@@ -66,6 +66,10 @@ import timber.log.Timber;
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
+    private static final String SUMMARY_MESSAGE = "summaryMessage";
+    private static final String TITLE = "title";
+    private static final String KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton";
+    private static final String DECK_NAMES = "deckNames";
 
 
     /**
@@ -75,10 +79,10 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
     public static DeckSelectionDialog newInstance(@NonNull String title, @Nullable String summaryMessage, @NonNull boolean keepRestoreDefaultButton, @NonNull List<SelectableDeck> decks) {
         DeckSelectionDialog f = new DeckSelectionDialog();
         Bundle args = new Bundle();
-        args.putString("summaryMessage", summaryMessage);
-        args.putString("title", title);
-        args.putBoolean("keepRestoreDefaultButton", keepRestoreDefaultButton);
-        args.putParcelableArrayList("deckNames", new ArrayList<>(decks));
+        args.putString(SUMMARY_MESSAGE, summaryMessage);
+        args.putString(TITLE, title);
+        args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton);
+        args.putParcelableArrayList(DECK_NAMES, new ArrayList<>(decks));
         f.setArguments(args);
         return f;
     }
@@ -128,7 +132,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 .neutralText(R.string.dialog_cancel)
                 .customView(dialogView, false);
 
-        if (arguments.getBoolean("keepRestoreDefaultButton")) {
+        if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
             builder = builder.negativeText(R.string.restore_default).onNegative((dialog, which) -> onDeckSelected(null));
         }
 
@@ -139,19 +143,19 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     @Nullable
     private String getSummaryMessage(Bundle arguments) {
-        return arguments.getString("summaryMessage");
+        return arguments.getString(SUMMARY_MESSAGE);
     }
 
 
     @NonNull
     private ArrayList<SelectableDeck> getDeckNames(Bundle arguments) {
-        return Objects.requireNonNull(arguments.getParcelableArrayList("deckNames"));
+        return Objects.requireNonNull(arguments.getParcelableArrayList(DECK_NAMES));
     }
 
 
     @NonNull
     private String getTitle() {
-        return Objects.requireNonNull(requireArguments().getString("title"));
+        return Objects.requireNonNull(requireArguments().getString(TITLE));
     }
 
 
