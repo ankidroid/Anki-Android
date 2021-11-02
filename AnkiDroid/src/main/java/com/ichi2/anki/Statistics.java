@@ -76,6 +76,7 @@ public class Statistics extends NavigationDrawerActivity implements
     private AnkiStatsTaskHandler mTaskHandler = null;
     private DeckSpinnerSelection mDeckSpinnerSelection;
     private static boolean sIsSubtitle;
+    private long mStatsDeckId;
 
 
     @Override
@@ -127,11 +128,11 @@ public class Statistics extends NavigationDrawerActivity implements
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
-        long deckId = getCol().getDecks().selected();
+        mStatsDeckId = getCol().getDecks().selected();
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true, true);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
-        mDeckSpinnerSelection.selectDeckById(deckId, false);
-        mTaskHandler.setDeckId(deckId);
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false);
+        mTaskHandler.setDeckId(mStatsDeckId);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
 
@@ -224,7 +225,6 @@ public class Statistics extends NavigationDrawerActivity implements
         return mSlidingTabLayout;
     }
 
-    private long getDeckId() { return mDeckSpinnerSelection.getDeckId(); }
 
 
     @Override
@@ -233,8 +233,9 @@ public class Statistics extends NavigationDrawerActivity implements
             return;
         }
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
-        mDeckSpinnerSelection.selectDeckById(deck.getDeckId(), true);
-        mTaskHandler.setDeckId(deck.getDeckId());
+        mStatsDeckId = deck.getDeckId();
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, true);
+        mTaskHandler.setDeckId(mStatsDeckId);
         mViewPager.getAdapter().notifyDataSetChanged();
     }
 
@@ -447,7 +448,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
             mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
-            mDeckId = ((Statistics) requireActivity()).getDeckId();
+            mDeckId = ((Statistics) requireActivity()).mStatsDeckId;
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                 String baseName = Decks.basename(col.getDecks().current().getString("name"));
@@ -522,13 +523,13 @@ public class Statistics extends NavigationDrawerActivity implements
                 Collection col = CollectionHelper.getInstance().getCol(requireActivity());
                 if (mHeight != height || mWidth != width ||
                         mType != (((Statistics) requireActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != ((Statistics) requireActivity()).getDeckId()) {
+                        mDeckId != ((Statistics) requireActivity()).mStatsDeckId) {
                     mHeight = height;
                     mWidth = width;
                     mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
-                    mDeckId = ((Statistics) requireActivity()).getDeckId();
+                    mDeckId = ((Statistics) requireActivity()).mStatsDeckId;
                     cancelTasks();
                     createChart();
                 }
@@ -586,7 +587,7 @@ public class Statistics extends NavigationDrawerActivity implements
             mType = handler.getStatType();
             mIsCreated = true;
             Collection col = CollectionHelper.getInstance().getCol(requireActivity());
-            mDeckId = ((Statistics) requireActivity()).getDeckId();
+            mDeckId = ((Statistics) requireActivity()).mStatsDeckId;
             if (mDeckId != Stats.ALL_DECKS_ID) {
                 String basename = Decks.basename(col.getDecks().current().getString("name"));
                 if (sIsSubtitle) {
@@ -616,11 +617,11 @@ public class Statistics extends NavigationDrawerActivity implements
                 return;
             }
             if (mType != (((Statistics) requireActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != ((Statistics) requireActivity()).getDeckId()) {
+                    mDeckId != ((Statistics) requireActivity()).mStatsDeckId) {
                 mType = (((Statistics) requireActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
-                mDeckId = ((Statistics) requireActivity()).getDeckId();
+                mDeckId = ((Statistics) requireActivity()).mStatsDeckId;
                 cancelTasks();
                 createStatisticOverview();
             }
