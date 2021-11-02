@@ -17,21 +17,64 @@
 package com.ichi2.anki.cardviewer
 
 import com.ichi2.anki.R
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Media
-import com.ichi2.libanki.Sound
+import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.regex.Pattern
 
+@RustCleanup("transition to an instance of TemplateRenderOutput")
 class CardHtml(
-    val beforeSoundTemplateExpansion: String,
+    @RustCleanup("legacy")
+    private val beforeSoundTemplateExpansion: String,
     private val ord: Int,
     private val nightModeInversion: Boolean,
-    private val context: HtmlGenerator
+    private val context: HtmlGenerator,
+    /** The side that [beforeSoundTemplateExpansion] was generated from */
+    private val side: Side,
+    @RustCleanup("Slow function, only used with legacy code")
+    private val getAnswerContentWithoutFrontSide_slow: (() -> String),
+    private var questionAv: List<AvTag>? = null,
+    private var answerAv: List<AvTag>? = null,
+    private val usingBackend: Boolean = answerAv != null
 ) {
+    fun getSoundTags(sideFor: Side): List<SoundOrVideoTag> {
+        if (sideFor == this.side) {
+            return getSoundsForCurrentSide()
+        }
+
+        if (sideFor == Side.BACK && side == Side.FRONT) {
+            if (answerAv == null) {
+                answerAv = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+            }
+            return answerAv!!.filterIsInstance(SoundOrVideoTag::class.java)
+        }
+
+        // Back wanting front, only possible if questionAv != null
+        if (questionAv != null) {
+            return questionAv!!.filterIsInstance(SoundOrVideoTag::class.java)
+        }
+
+        throw IllegalStateException("Attempted to get the front of the card when viewing back using legacy system")
+    }
+
+    @RustCleanup("unnecessarily complex")
+    private fun getSoundsForCurrentSide(): List<SoundOrVideoTag> {
+        // beforeSoundTemplateExpansion refers to the current side
+        return if (this.side == Side.FRONT) {
+            if (questionAv == null) {
+                questionAv = Sound.extractTagsFromLegacyContent(beforeSoundTemplateExpansion)
+            }
+            questionAv!!.filterIsInstance(SoundOrVideoTag::class.java)
+        } else {
+            if (answerAv == null) {
+                answerAv = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+            }
+            return answerAv!!.filterIsInstance(SoundOrVideoTag::class.java)
+        }
+    }
 
     fun getTemplateHtml(): String {
         val content = getContent()
@@ -85,7 +128,13 @@ class CardHtml(
 
             val nightModeInversion = context.cardAppearance.isNightMode && !context.cardAppearance.hasUserDefinedNightMode(card)
 
-            return CardHtml(content, card.ord, nightModeInversion, context)
+            val questionAv = card.render_output().question_av_tags
+            val answerAv = card.render_output().answer_av_tags
+
+            // legacy (slow) function to return the answer without the front side
+            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
+
+            return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionAv, answerAv)
         }
 
         /**

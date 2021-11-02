@@ -139,6 +139,8 @@ import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.MaxExecFunction;
 import com.ichi2.utils.WebViewDebugging;
 
+import net.ankiweb.rsdroid.RustCleanup;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -155,6 +157,7 @@ import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Supplier;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -1739,17 +1742,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
                 1, 1, 0, 1, 1, 0, 0);
         processCardAction(cardWebView -> cardWebView.dispatchTouchEvent(eUp));
-
     }
 
-
-    private void addAnswerSounds(String answer) {
+    @RustCleanup("mAnswerSoundsAdded is no longer necessary once we transition as it's a fast operation")
+    private void addAnswerSounds(Supplier<List<SoundOrVideoTag>> answerSounds) {
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            String answerSoundSource = CardHtml.removeFrontSideAudio(mCurrentCard, answer);
-            List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(answerSoundSource);
-            mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.ANSWER);
+            mSoundPlayer.addSounds(mBaseUrl, answerSounds.get(), SoundSide.ANSWER);
             mAnswerSoundsAdded = true;
         }
     }
@@ -1764,18 +1764,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mUseTimerDynamicMS = 0;
 
-        String beforeExpansion = content.getBeforeSoundTemplateExpansion();
+
         if (sDisplayAnswer) {
-            addAnswerSounds(beforeExpansion);
+            addAnswerSounds(() -> content.getSoundTags(Side.BACK));
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            List<SoundOrVideoTag> tags = Sound.extractTagsFromLegacyContent(beforeExpansion);
-            mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, content.getSoundTags(Side.FRONT), SoundSide.QUESTION);
             if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
-                addAnswerSounds(mCurrentCard.a());
+                addAnswerSounds(() -> content.getSoundTags(Side.BACK));
             }
         }
 
