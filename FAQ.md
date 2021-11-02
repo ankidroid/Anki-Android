@@ -117,8 +117,8 @@ On Anki desktop, if several people want to use the same computer (or if one pers
 
 Official parallel versions of AnkiDroid are made available from time to time, with most stable release versions having a set of parallel releases attached. You may find them below:
 
-* Unstable parallel releases: https://github.com/ankidroid/Anki-Android/releases
 * Latest Stable parallel release: https://github.com/ankidroid/Anki-Android/releases/latest
+* Unstable parallel releases: https://github.com/ankidroid/Anki-Android/releases
 
 Note that you need to update these manually and we will not provide any support for these pre-built parallel versions, but they should work well and are in daily use by many.
 
