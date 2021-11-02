@@ -216,7 +216,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         var flagCardJs = "javascript:(function () {\n"
 
         // add js api developer contract
-        flagCardJs += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"dev@mail.com\"};\n"
+        flagCardJs += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"test@example.com\"};\n"
 
         // init JS API
         flagCardJs += "AnkiDroidJS.init(JSON.stringify(jsApi));\n"
@@ -299,7 +299,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         var script = "javascript:(function () {\n"
 
         // add js api developer contract
-        script += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"dev@mail.com\"};\n"
+        script += "var jsApi = {\"version\" : \"0.0.1\", \"developer\" : \"test@example.com\"};\n"
 
         // init JS API
         script += "AnkiDroidJS.init(JSON.stringify(jsApi));\n"
