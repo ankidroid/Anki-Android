@@ -212,18 +212,6 @@ public class DeckSpinnerSelection {
         return mDropDownDecks;
     }
 
-
-    /**
-     * @param deckId An id of an actual deck (not ALL_DECKS_ID)
-     */
-    public void setDeckId(Long deckId) {
-        this.mDeckId = deckId;
-    }
-
-    public Long getDeckId() {
-        return mDeckId;
-    }
-
     public boolean hasSpinner() {
         return mSpinner != null;
     }
@@ -287,11 +275,6 @@ public class DeckSpinnerSelection {
      */
     public void selectDropDownItem(int position) {
         mSpinner.setSelection(position);
-        if (position == 0) {
-            mDeckId = Stats.ALL_DECKS_ID;
-        } else {
-            mDeckId = mAllDeckIds.get(position - 1);
-        }
     }
 
     public void displayDeckOverrideDialog(Collection col) {

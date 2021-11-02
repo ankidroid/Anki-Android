@@ -2120,7 +2120,6 @@ public class NoteEditor extends AnkiActivity implements
 
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
                 setDuplicateFieldStyles();
-                mDeckSpinnerSelection.setDeckId(mCurrentDid);
                 mDeckSpinnerSelection.updateDeckPosition(mCurrentDid);
             }
         }
@@ -2170,7 +2169,6 @@ public class NoteEditor extends AnkiActivity implements
                 findViewById(R.id.CardEditorTagButton).setEnabled(false);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 mDeckSpinnerSelection.setEnabledActionBarSpinner(false);
-                mDeckSpinnerSelection.setDeckId(mCurrentEditedCard.getDid());
                 mDeckSpinnerSelection.updateDeckPosition(mCurrentEditedCard.getDid());
                 updateFieldsFromStickyText();
             } else {
