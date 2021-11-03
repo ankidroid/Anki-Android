@@ -13,108 +13,101 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.utils
 
-package com.ichi2.libanki.utils;
+import com.ichi2.libanki.DB
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.*
 
-import com.ichi2.libanki.DB;
+/** Allows injection of time dependencies  */
+abstract class Time {
+    /** Date of this time  */
+    val currentDate: java.util.Date
+        get() = java.util.Date(intTimeMS())
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
-/** Allows injection of time dependencies */
-public abstract class Time {
-
-    /** Date of this time */
-    public Date getCurrentDate() {
-        return new Date(intTimeMS());
+    /**The time in integer seconds.  */
+    fun intTime(): Long {
+        return intTimeMS() / 1000L
     }
 
-    /**The time in integer seconds. */
-    public long intTime() {
-        return intTimeMS() / 1000L;
+    abstract fun intTimeMS(): Long
+
+    /** Calendar for this date  */
+    fun calendar(): Calendar {
+        val cal = Calendar.getInstance()
+        cal.time = currentDate
+        return cal
     }
 
-
-    public abstract long intTimeMS();
-
-    /** Calendar for this date */
-    public Calendar calendar() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(getCurrentDate());
-        return cal;
+    /** Gregorian calendar for this date  */
+    fun gregorianCalendar(): GregorianCalendar {
+        val cal = GregorianCalendar()
+        cal.time = currentDate
+        return cal
     }
 
-    /** Gregorian calendar for this date */
-    public GregorianCalendar gregorianCalendar() {
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(getCurrentDate());
-        return cal;
-    }
-
-    /** Return a non-conflicting timestamp for table. */
-    public long timestampID(DB db, String table) {
+    /** Return a non-conflicting timestamp for table.  */
+    fun timestampID(db: DB, table: String): Long {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
-        long t = intTimeMS();
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", t) != 0) {
-            t += 1;
+        var t = intTimeMS()
+        while (db.queryScalar("SELECT id FROM $table WHERE id = ?", t) != 0) {
+            t += 1
         }
-        return t;
+        return t
     }
 
-    /** Return the first safe ID to use. */
-    public long maxID(DB db) {
-        long now = intTimeMS();
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
-        return now + 1;
+    /** Return the first safe ID to use.  */
+    fun maxID(db: DB): Long {
+        var now = intTimeMS()
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
+        return now + 1
     }
-
-    public static Calendar calendar(long timeInMS) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(timeInMS);
-        return calendar;
-    }
-
-    public static GregorianCalendar gregorianCalendar(long timeInMS) {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(timeInMS);
-        return calendar;
-    }
-
 
     /**
-     * Calculate the UTC offset
-     */
-    public static double utcOffset() {
-        // Okay to use real time, as the result does not depends on time at all here
-        Calendar cal = Calendar.getInstance();
-        // 4am
-        return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
-    }
-
-
-
-
-    /**
-     *  Returns the effective date of the present moment.
-     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
-     *  otherwise today
-     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     * Returns the effective date of the present moment.
+     * If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     * otherwise today
+     * Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
      *
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
-    public java.sql.Date genToday(double utcOffset) {
+    fun genToday(utcOffset: Double): Date {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = Time.gregorianCalendar( intTimeMS()- (long) utcOffset * 1000L);
-        return java.sql.Date.valueOf(df.format(cal.getTime()));
+        val df = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        df.timeZone = TimeZone.getTimeZone("GMT")
+        val cal: Calendar = gregorianCalendar(intTimeMS() - utcOffset.toLong() * 1000L)
+        return Date.valueOf(df.format(cal.time))
+    }
+
+    companion object {
+        @JvmStatic
+        fun calendar(timeInMS: Long): Calendar {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = timeInMS
+            return calendar
+        }
+
+        @JvmStatic
+        fun gregorianCalendar(timeInMS: Long): GregorianCalendar {
+            val calendar = GregorianCalendar()
+            calendar.timeInMillis = timeInMS
+            return calendar
+        }
+
+        /**
+         * Calculate the UTC offset
+         */
+        @JvmStatic
+        fun utcOffset(): Double {
+            // Okay to use real time, as the result does not depends on time at all here
+            val cal = Calendar.getInstance()
+            // 4am
+            return (4 * 60 * 60 - (cal[Calendar.ZONE_OFFSET] + cal[Calendar.DST_OFFSET]) / 1000).toDouble()
+        }
     }
 }
