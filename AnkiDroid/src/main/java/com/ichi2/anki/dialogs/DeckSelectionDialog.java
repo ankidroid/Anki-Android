@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -39,6 +40,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckManager;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.stats.Stats;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
@@ -53,6 +55,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -337,6 +340,21 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             SelectableDeck deck = mCurrentlyDisplayedDecks.get(position);
+            Spinner spinner =  getActivity().findViewById(R.id.note_deck_spinner);
+            String spinnerSelectedDeckName = spinner.getSelectedItem().toString();
+
+            final int unselectedTextColor = Themes.getColorFromAttr(getContext(), android.R.attr.textColorPrimary);
+            final int selectedTextColor = ContextCompat.getColor(getContext(), R.color.note_editor_selected_item_text);
+            final int unselectedBackgroundColor = Themes.getColorFromAttr(getContext(), android.R.attr.colorBackground);
+            final int selectedBackgroundColor = ContextCompat.getColor(getContext(), R.color.note_editor_selected_item_background);
+
+            if (spinnerSelectedDeckName.equals(deck.getName())) {
+                holder.mDeckTextView.setBackgroundColor(selectedBackgroundColor);
+                holder.mDeckTextView.setTextColor(selectedTextColor);
+            } else {
+                holder.mDeckTextView.setBackgroundColor(unselectedBackgroundColor);
+                holder.mDeckTextView.setTextColor(unselectedTextColor);
+            }
             holder.setDeck(deck);
         }
 
