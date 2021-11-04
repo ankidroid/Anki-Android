@@ -71,7 +71,7 @@ public class AudioRecorderTest extends RobolectricTest {
         Runnable recordingHandler = mock(Runnable.class);
 
         mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler);
-        mAudioRecorder.startRecording("testpath");
+        mAudioRecorder.startRecording(getTargetContext(), "testpath");
 
         verify(recordingHandler, times(1)).run();
     }
@@ -98,7 +98,7 @@ public class AudioRecorderTest extends RobolectricTest {
         }
         initHandlerWithError recordingHandler = new initHandlerWithError();
         mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler);
-        mAudioRecorder.startRecording("testpath");
+        mAudioRecorder.startRecording(getTargetContext(), "testpath");
 
         assertEquals("Initialization handler should run twice", 2, recordingHandler.getTimesRun());
     }

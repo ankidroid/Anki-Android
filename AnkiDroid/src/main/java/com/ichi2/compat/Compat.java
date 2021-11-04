@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.widget.TimePicker;
 
@@ -79,6 +80,7 @@ public interface Compat {
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);
     void vibrate(Context context, long durationMillis);
+    MediaRecorder getMediaRecorder(Context context);
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
