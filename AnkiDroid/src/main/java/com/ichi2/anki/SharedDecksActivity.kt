@@ -146,10 +146,10 @@ class SharedDecksActivity : AnkiActivity() {
         return sharedDecksDownloadFragment != null && sharedDecksDownloadFragment.isAdded
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.download_shared_decks_menu, menu)
 
-        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
+        val searchView = menu.findItem(R.id.search)?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_using_deck_name)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
