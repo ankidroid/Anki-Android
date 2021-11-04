@@ -20,7 +20,10 @@
 
 package com.ichi2.anki.multimediacard;
 
+import android.content.Context;
 import android.media.MediaRecorder;
+
+import com.ichi2.compat.CompatHelper;
 
 import java.io.IOException;
 
@@ -36,8 +39,8 @@ public class AudioRecorder {
     private Runnable mOnRecordingInitialized;
 
 
-    private MediaRecorder initMediaRecorder(String audioPath) {
-        MediaRecorder mr = new MediaRecorder();
+    private MediaRecorder initMediaRecorder(Context context, String audioPath) {
+        MediaRecorder mr = CompatHelper.getCompat().getMediaRecorder(context);
         mr.setAudioSource(MediaRecorder.AudioSource.MIC);
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         onRecordingInitialized();
@@ -52,12 +55,12 @@ public class AudioRecorder {
         }
     }
 
-    public void startRecording(String audioPath) throws IOException {
+    public void startRecording(Context context, String audioPath) throws IOException {
         boolean highSampling = false;
         try {
             // try high quality AAC @ 44.1kHz / 192kbps first
             // can throw IllegalArgumentException if codec isn't supported
-            mRecorder = initMediaRecorder(audioPath);
+            mRecorder = initMediaRecorder(context, audioPath);
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             mRecorder.setAudioChannels(2);
             mRecorder.setAudioSamplingRate(44100);
@@ -74,7 +77,7 @@ public class AudioRecorder {
         if (!highSampling) {
             // if we are here, either the codec didn't work or output file was invalid
             // fall back on default
-            mRecorder = initMediaRecorder(audioPath);
+            mRecorder = initMediaRecorder(context, audioPath);
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
             mRecorder.prepare();

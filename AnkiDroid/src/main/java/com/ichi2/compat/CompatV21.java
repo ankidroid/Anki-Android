@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.media.MediaRecorder;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
@@ -74,6 +75,13 @@ public class CompatV21 implements Compat {
         if (vibratorManager != null) {
             vibratorManager.vibrate(durationMillis);
         }
+    }
+
+    // Until API31 the MediaRecorder constructor was default, ignoring the Context
+    @Override
+    @SuppressWarnings("deprecation")
+    public MediaRecorder getMediaRecorder(Context context) {
+        return new MediaRecorder();
     }
 
     // Until API 26 do the copy using streams

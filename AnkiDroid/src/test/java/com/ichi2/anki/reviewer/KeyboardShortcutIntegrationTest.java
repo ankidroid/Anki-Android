@@ -40,6 +40,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -78,7 +79,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
 
         pressShiftAndVThenRelease();
 
-        verify(recorder, times(1)).startRecording(anyString());
+        verify(recorder, times(1)).startRecording(any(), anyString());
         verifyNoMoreInteractions(recorder);
     }
 
@@ -94,7 +95,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
 
         pressAndHoldShiftV();
 
-        verify(recorder, times(1)).startRecording(anyString());
+        verify(recorder, times(1)).startRecording(any(), anyString());
         verifyNoMoreInteractions(recorder);
     }
 
@@ -113,7 +114,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
 
         pressShiftAndVThenRelease();
 
-        verify(recorder, times(1)).startRecording(anyString());
+        verify(recorder, times(1)).startRecording(any(), anyString());
         verifyNoMoreInteractions(recorder, player);
         assertStatus(AudioView.Status.RECORDING);
 
@@ -153,7 +154,7 @@ public class KeyboardShortcutIntegrationTest extends RobolectricTest {
         pressShiftAndVThenRelease();
 
         verify(player, times(1)).stop();
-        verify(recorder, times(1)).startRecording(anyString());
+        verify(recorder, times(1)).startRecording(any(), anyString());
         verifyNoMoreInteractions(recorder, player);
         assertStatus(AudioView.Status.RECORDING);
 

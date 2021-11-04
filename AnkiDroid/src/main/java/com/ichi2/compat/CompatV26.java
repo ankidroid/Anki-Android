@@ -73,6 +73,7 @@ public class CompatV26 extends CompatV23 implements Compat {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void vibrate(Context context, long durationMillis) {
         Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibratorManager != null) {

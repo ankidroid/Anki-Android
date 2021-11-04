@@ -393,7 +393,7 @@ public class AudioView extends LinearLayout {
                     case STOPPED: // if already recorded or played
 
                         try {
-                            mAudioRecorder.startRecording(mAudioPath);
+                            mAudioRecorder.startRecording(mContext, mAudioPath);
                         } catch (Exception e) {
                             // either output file failed or codec didn't work, in any case fail out
                             Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
