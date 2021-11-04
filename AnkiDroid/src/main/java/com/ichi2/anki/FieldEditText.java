@@ -137,6 +137,7 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
     }
 
     @Override
+    @SuppressWarnings("deprecation") // Tracked in #9775
     public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
         InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
         if (inputConnection == null) {
