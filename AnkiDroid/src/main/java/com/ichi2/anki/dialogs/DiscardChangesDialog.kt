@@ -13,20 +13,20 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import android.content.Context
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
 
-import android.content.Context;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-
-public class DiscardChangesDialog {
-
-    public static MaterialDialog.Builder getDefault(Context context) {
-        return new MaterialDialog.Builder(context)
+class DiscardChangesDialog {
+    companion object {
+        @JvmStatic
+        fun getDefault(context: Context?): MaterialDialog.Builder {
+            return MaterialDialog.Builder(context!!)
                 .content(R.string.discard_unsaved_changes)
                 .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel);
+                .negativeText(R.string.dialog_cancel)
+        }
     }
 }
