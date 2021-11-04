@@ -13,132 +13,99 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.RunInBackground
+import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.dialogs.HelpDialog.LinkItem
+import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
+import com.ichi2.anki.dialogs.utils.FragmentTestActivity
+import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil
+import com.ichi2.testutils.AnkiAssert
+import com.ichi2.utils.ArrayUtil.toArrayList
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Ignore
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.*
 
-import android.view.View;
-
-import com.ichi2.anki.R;
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.RunInBackground;
-import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.anki.dialogs.HelpDialog.LinkItem;
-import com.ichi2.anki.dialogs.RecursivePictureMenu.Item;
-import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader;
-import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
-import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil;
-import com.ichi2.utils.ArrayUtil;
-
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class RecursivePictureMenuTest extends RobolectricTest {
-
-    private FragmentTestActivity mActivity;
+@RunWith(AndroidJUnit4::class)
+class RecursivePictureMenuTest : RobolectricTest() {
+    private var mActivity: FragmentTestActivity? = null
+    @Test
+    @RunInBackground
+    fun testNormalStartupSelectingItem() {
+        val linkedItem = getItemLinkingTo(R.string.link_anki)
+        val v = getRecyclerViewFor(linkedItem)
+        clickChildAtIndex(v, 0)
+        MatcherAssert.assertThat(mActivity!!.lastUrlOpened, Matchers.`is`(getResourceString(R.string.link_anki)))
+    }
 
     @Test
     @RunInBackground
-    public void testNormalStartupSelectingItem() {
-        Item linkedItem = getItemLinkingTo(R.string.link_anki);
-
-        RecyclerView v = getRecyclerViewFor(linkedItem);
-        clickChildAtIndex(v, 0);
-
-        assertThat(mActivity.getLastUrlOpened(), is(getResourceString(R.string.link_anki)));
+    fun testSelectingHeader() {
+        val numberOfChildItems = 2
+        val header: RecursivePictureMenu.Item = getHeaderWithSubItems(numberOfChildItems)
+        val v = getRecyclerViewFor(header)
+        clickChildAtIndex(v, 0)
+        val currentMenu = mActivity!!.lastShownDialogFragment as RecursivePictureMenu
+        val rv = RecursivePictureMenuUtil.getRecyclerViewFor(currentMenu)
+        MatcherAssert.assertThat("Unexpected number of items - check the adapter", rv.childCount, Matchers.`is`(numberOfChildItems))
     }
-
-
-    @Test
-    @RunInBackground
-    public void testSelectingHeader() {
-        int numberOfChildItems = 2;
-        Item header = getHeaderWithSubItems(numberOfChildItems);
-        RecyclerView v = getRecyclerViewFor(header);
-        clickChildAtIndex(v, 0);
-
-        RecursivePictureMenu currentMenu = (RecursivePictureMenu) mActivity.getLastShownDialogFragment();
-
-        RecyclerView rv =  RecursivePictureMenuUtil.getRecyclerViewFor(currentMenu);
-
-        assertThat("Unexpected number of items - check the adapter", rv.getChildCount(), is(numberOfChildItems));
-    }
-
 
     @Test
     @Ignore("Not implemented")
-    public void removeFromRoot() {
-        Item header = getHeaderWithSubItems(1);
-
-
-        ArrayList<Item> allItems = ArrayUtil.toArrayList(new Item[] { header });
-        RecursivePictureMenu.removeFrom(allItems, header);
+    fun removeFromRoot() {
+        val header: RecursivePictureMenu.Item = getHeaderWithSubItems(1)
+        val allItems = toArrayList(arrayOf(header))
+        RecursivePictureMenu.removeFrom(allItems, header)
 
         // Do we return, or check to see if the list is mutated?
     }
 
     @Test
-    public void removeChild() {
-        ItemHeader header = getHeaderWithSubItems(1);
-
-        Item child = header.getChildren().get(0);
-
-        ArrayList<Item> allItems = ArrayUtil.toArrayList(new Item[] { header });
-        RecursivePictureMenu.removeFrom(allItems, child);
-
-        assertThat("child should be removed", header.getChildren(), hasSize(0));
+    fun removeChild() {
+        val header = getHeaderWithSubItems(1)
+        val child = header.children[0]
+        val allItems = toArrayList(arrayOf<RecursivePictureMenu.Item>(header))
+        RecursivePictureMenu.removeFrom(allItems, child)
+        MatcherAssert.assertThat("child should be removed", header.children, Matchers.hasSize(0))
     }
 
     @Test
-    public void removeNotExisting() {
-        ItemHeader header = getHeaderWithSubItems(1);
-
-        ArrayList<Item> allItems = ArrayUtil.toArrayList(new Item[] { header });
-        assertDoesNotThrow(() -> RecursivePictureMenu.removeFrom(allItems, getItemLinkingTo(R.string.link_anki_manual)));
+    fun removeNotExisting() {
+        val header = getHeaderWithSubItems(1)
+        val allItems = toArrayList(arrayOf<RecursivePictureMenu.Item>(header))
+        AnkiAssert.assertDoesNotThrow { RecursivePictureMenu.removeFrom(allItems, getItemLinkingTo(R.string.link_anki_manual)) }
     }
 
-    private RecyclerView getRecyclerViewFor(Item... items) {
-        ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));
-        RecursivePictureMenu menu = RecursivePictureMenu.createInstance(itemList, R.string.help);
-
-        mActivity = openDialogFragmentUsingActivity(menu);
-
-
-        return RecursivePictureMenuUtil.getRecyclerViewFor(menu);
+    private fun getRecyclerViewFor(vararg items: RecursivePictureMenu.Item): RecyclerView {
+        val itemList = ArrayList(listOf(*items))
+        val menu = RecursivePictureMenu.createInstance(itemList, R.string.help)
+        mActivity = openDialogFragmentUsingActivity(menu)
+        return RecursivePictureMenuUtil.getRecyclerViewFor(menu)
     }
 
-
-
-    protected void clickChildAtIndex(RecyclerView v, @SuppressWarnings("SameParameterValue") int index) {
-        advanceRobolectricLooperWithSleep();
-        View childAt = v.getChildAt(index); // This is null without appropriate looper calls
-        childAt.performClick();
+    private fun clickChildAtIndex(v: RecyclerView, index: Int) {
+        advanceRobolectricLooperWithSleep()
+        val childAt = v.getChildAt(index) // This is null without appropriate looper calls
+        childAt.performClick()
     }
 
-    private Item getItemLinkingTo(int linkLocation) {
-        return new LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, linkLocation);
+    private fun getItemLinkingTo(linkLocation: Int): RecursivePictureMenu.Item {
+        return LinkItem(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, linkLocation)
     }
 
-
-    private ItemHeader getHeaderWithSubItems(int count) {
-
-        Item[] items = new Item[count];
-        for(int i = 0; i < count; i++) {
-            items[i] = getItemLinkingTo(R.string.link_anki);
+    private fun getHeaderWithSubItems(count: Int): ItemHeader {
+        val items = arrayOfNulls<RecursivePictureMenu.Item>(count)
+        for (i in 0 until count) {
+            items[i] = getItemLinkingTo(R.string.link_anki)
         }
-
-        return new ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, items);
+        return ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, *items)
     }
 }
