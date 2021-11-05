@@ -14,41 +14,38 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.content.res.Resources;
-import android.os.Bundle;
+import android.os.Bundle
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.analytics.UsageAnalytics
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.anki.analytics.UsageAnalytics;
-
-import androidx.annotation.NonNull;
-
-public class DeckPickerAnalyticsOptInDialog extends AnalyticsDialogFragment {
-    public static DeckPickerAnalyticsOptInDialog newInstance() {
-        return new DeckPickerAnalyticsOptInDialog();
+class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+        super.onCreate(savedInstanceState)
+        val res = resources
+        return MaterialDialog.Builder(requireActivity())
+            .title(res.getString(R.string.analytics_dialog_title))
+            .content(res.getString(R.string.analytics_summ))
+            .checkBoxPrompt(res.getString(R.string.analytics_title), true, null)
+            .positiveText(R.string.dialog_continue)
+            .onPositive { dialog: MaterialDialog, _: DialogAction? ->
+                UsageAnalytics.setEnabled(dialog.isPromptCheckBoxChecked)
+                (activity as DeckPicker?)!!.dismissAllDialogFragments()
+            }
+            .cancelable(true)
+            .cancelListener { (activity as DeckPicker?)!!.dismissAllDialogFragments() }
+            .show()
     }
 
-    @NonNull
-    @Override
-    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Resources res = getResources();
-        return new MaterialDialog.Builder(getActivity())
-                .title(res.getString(R.string.analytics_dialog_title))
-                .content(res.getString(R.string.analytics_summ))
-                .checkBoxPrompt(res.getString(R.string.analytics_title), true, null)
-                .positiveText(R.string.dialog_continue)
-                .onPositive((dialog, which) -> {
-                    UsageAnalytics.setEnabled(dialog.isPromptCheckBoxChecked());
-                    ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                })
-                .cancelable(true)
-                .cancelListener(dialog -> ((DeckPicker) getActivity()).dismissAllDialogFragments())
-                .show();
+    companion object {
+        @JvmStatic
+        fun newInstance(): DeckPickerAnalyticsOptInDialog {
+            return DeckPickerAnalyticsOptInDialog()
+        }
     }
 }
