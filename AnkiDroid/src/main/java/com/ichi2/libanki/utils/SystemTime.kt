@@ -13,17 +13,10 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.utils
 
-package com.ichi2.libanki.utils;
-
-public class SystemTime extends Time {
-
-    public SystemTime() {
-    }
-
-
-    @Override
-    public long intTimeMS() {
-        return System.currentTimeMillis();
+class SystemTime : Time() {
+    override fun intTimeMS(): Long {
+        return System.currentTimeMillis()
     }
 }
