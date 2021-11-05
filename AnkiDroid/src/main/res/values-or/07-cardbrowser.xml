@@ -69,8 +69,8 @@
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ବାକି </string>
     <string name="card_details_tags">ଟ୍ୟାଗ୍ </string>
     <string-array name="card_browser_order_labels">
-        <item>କୌଣସି ଶ୍ରେଣୀକରଣ ନାହିଁ(ତୀବ୍ରତର)</item>
-        <item>ଶ୍ରେଣୀକରଣ କ୍ଷେତ୍ର ଅନୁସାରେ</item>
+        <item>କୌଣସି ସଜାଣି ନାହିଁ (ଦ୍ରୁତ)</item>
+        <item>ସଜାଇବା କ୍ଷେତ୍ର ଅନୁସାରେ</item>
         <item>ସୃଷ୍ଟି ସମୟ ଅନୁସାରେ</item>
         <item>ନୋଟ୍ ସଂଶୋଧନ ସମୟ ଅନୁସାରେ</item>
         <item>ପତ୍ର ସଂଶୋଧନ ସମୟ ଅନୁସାରେ</item>
@@ -80,7 +80,7 @@
         <item>ସମୀକ୍ଷା ଅନୁସାରେ</item>
         <item>ତ୍ରୁଟି ଅନୁସାରେ </item>
     </string-array>
-    <string name="card_browser_select_all">ସବୁ ବାଛ</string>
+    <string name="card_browser_select_all">ସବୁ ଚୟନ କରନ୍ତୁ</string>
     <string name="card_browser_select_none">କିଛି ବାଛନ୍ତୁ ନାହିଁ</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ନୂଆ)</string>
     <string name="card_browser_due_filtered_card">(ଶୋଧିତ)</string>

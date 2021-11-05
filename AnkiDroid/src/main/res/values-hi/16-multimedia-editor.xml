@@ -68,7 +68,7 @@
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">पाठ</string>
     <string name="multimedia_editor_field_editing_image">चित्र</string>
     <string name="multimedia_editor_field_editing_audio">ऑडियो रिकॉर्डिंग</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ऑडियो क्लिप</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">समाप्त</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">प्रतीक्षा करें</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">कुछ गलत हो गया</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVGs पूर्वावलोकन के लिए उपलब्ध नहीं हैंI</string>
     <string name="multimedia_editor_png_paste_error">क्लिपबोर्ड छवि को png में बदलने में त्रुटि: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s फ़ील्ड में मल्टीमीडिया सामग्री अनुलग्न करें</string>
     <string name="multimedia_editor_attach_media">मीडिया अनुलग्न करें</string>
@@ -112,16 +112,16 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">रिकॉर्डिंग विफल</string>
     <string name="multimedia_editor_audio_view_playing_failed">बजाना विफल रहा</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">रिकॉर्डर टूलबार बनने में असमर्थता |</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">संपादन फ़ील्ड</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">अनुवाद</string>
     <!-- Network failure -->
     <string name="network_no_connection">कोई कनेक्शन नहीं है</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_image">क्या आप इस प्रतिकृति को क्रॉप करना चाहते हैं?</string>
+    <string name="crop_button">इमेज क्रॉप करें</string>
     <string name="save_dialog_content">वर्तमान छवि का आकार %sMB है। डिफ़ॉल्ट छवि आकार सीमा 1 MB है। क्या आप इसे क्रॉप करना चाहते हैं?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="select_image_failed">"छवि का चयन विफल रहा, कृपया पुनः प्रयास करें"</string>
+    <string name="activity_result_unexpected">ऐप ने एक अनपेक्षित मान लौटाया . आपको एक अलग ऐप का उपयोग करने की आवश्यकता हो सकती है।</string>
 </resources>

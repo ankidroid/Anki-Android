@@ -137,6 +137,7 @@
     <string name="card_editor_reset_card">ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ಮುನ್ನೋಟ</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಸಾಕಷ್ಟು ಮೆಮೊರಿ ಇಲ್ಲದಿರುವುದರಿಂದ ಕಾರ್ಯಾಚರಣೆ ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ಮರುಹೆಸರಿಸಿ</string>
     <string name="default_conf_delete_error">ಡೀಫಾಲ್ಟ್ ಆಯ್ಕೆಗಳ ಗುಂಪನ್ನು ತೆಗೆದುಹಾಕಲಾಗುವುದಿಲ್ಲ</string>

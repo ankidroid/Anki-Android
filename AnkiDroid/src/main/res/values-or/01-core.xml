@@ -48,8 +48,8 @@
     <string name="drawing">ଚିତ୍ରାଙ୍କନ</string>
     <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
     <string name="studyoptions_due_today">ଆଜି ବାକି:</string>
-    <string name="studyoptions_new_total">ମୋଟ ନୂତନ କାର୍ଡ:</string>
-    <string name="studyoptions_total_cards">ମୋଟ କାର୍ଡ:</string>
+    <string name="studyoptions_new_total">ସମୁଦାୟ ନୂତନ ପତ୍ର:</string>
+    <string name="studyoptions_total_cards">ସମୁଦାୟ ପତ୍ର:</string>
     <string name="studyoptions_eta">ଆନୁମାନିକ ସମୟ (ମିନିଟ୍):</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
     <!-- DeckPicker.java -->

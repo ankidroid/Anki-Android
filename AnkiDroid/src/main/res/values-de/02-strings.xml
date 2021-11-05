@@ -137,6 +137,7 @@
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
     <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
@@ -369,8 +370,8 @@
     <!-- Reviewer actions -->
     <string name="buried_card">Karte aufgeschoben</string>
     <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
+    <string name="deleted_note">Notiz gelöscht</string>
+    <string name="suspended_card">Gesperrte Karte</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>

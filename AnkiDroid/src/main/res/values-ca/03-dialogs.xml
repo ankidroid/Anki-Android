@@ -107,9 +107,9 @@
     <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
     <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
-    <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
+    <string name="importing_collection">S\'està important la col·lecció. \nUn moment si us plau ...</string>
     <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
-    <string name="import_progress">• Important notes: %1$d%%\n• important targetes: %2$d%%\n• post-processant: %3$d%%</string>
+    <string name="import_progress">• Important notes: %1$d%%\n• Important targetes: %2$d%%\n• Post-processant: %3$d%%</string>
     <string name="import_update_details">S\'ha actualitzat %1$d de %2$d notes existents.</string>
     <string name="import_update_ignored">Algunes actualitzacions han estat ignorades perquè el tipus de nota ha canviat</string>
     <string name="import_complete_count">Targetes importades: %d</string>

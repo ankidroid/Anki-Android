@@ -138,6 +138,7 @@
     <string name="card_editor_reset_card">Ресетирај го прогресот</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Прегледај</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">Операцијата не е можно поради недоволна меморија на вашиот уред</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Преименувај</string>
     <string name="default_conf_delete_error">Стандардната група со опции не може да се отстрани</string>

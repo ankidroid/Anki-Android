@@ -56,7 +56,7 @@
     <string name="stats_cumulative">ସମ୍ମିଳିତ</string>
     <string name="stats_cumulative_percentage">ସମ୍ମିଳିତ ଶତକଡା</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">ସମ୍ମିଳିତ ସଠିକ୍ %</string>
-    <string name="stats_answers">ଉତ୍ତରଗୁଡ଼ିକ</string>
+    <string name="stats_answers">ଉତ୍ତର</string>
     <string name="stats_minutes">ମିନିଟ୍</string>
     <string name="stats_hours">ଘଣ୍ଟା</string>
     <string name="stats_percentage">ଶତକଡ଼ା</string>
@@ -74,18 +74,18 @@
     <string name="stats_today_type_breakdown">ଶିଖୁଛନ୍ତି: &lt;b&gt;%1$d&lt;/b&gt;, ସମୀକ୍ଷା: &lt;b&gt;%2$d&lt;/b&gt;, ପୁନଃ ଶିକ୍ଷାଧିନ: &lt;b&gt;%3$d&lt;/b&gt;, ଶୋଧିତ: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">ପରିପକ୍ୱ ପତ୍ରଗୁଡ଼ିକରେ ସଠିକ୍ ଉତ୍ତର: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">ଆଜି କୌଣସି ପରିପକ୍ୱ ପତ୍ର ଅଧ୍ୟୟନ କରାଯାଇ ନାହିଁ</string>
-    <string name="stats_overview_forecast_total">ମୋଟ: &lt;b&gt;%1$d&lt;/b&gt; ସମୀକ୍ଷା</string>
+    <string name="stats_overview_forecast_total">ସମୁଦାୟ: &lt;b&gt;%1$d&lt;/b&gt; ସମୀକ୍ଷା</string>
     <string name="stats_overview_forecast_average">ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ସମୀକ୍ଷା/ଦିନ </string>
     <string name="stats_overview_forecast_due_tomorrow">ଆସନ୍ତାକାଲି ପାଇଁ ବାକି: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">ଅଧ୍ୟୟନ ଦିନସଂଖ୍ୟା: &lt;b&gt;%1$d&lt;/b&gt; (%3$d ରୁ %2$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">ଅଧ୍ୟୟନ କରାଯାଇଥିବା ଦିନଗୁଡ଼ିକ ପାଇଁ ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt;; ସମୀକ୍ଷା/ଦିନ</string>
     <string name="stats_overview_reviews_per_day_all">ଯଦି ଆପଣ ପ୍ରତିଦିନ ଅଧ୍ୟୟନ କରନ୍ତି: &lt;b&gt;%1$.1f&lt;/b&gt; ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="stats_overview_total_time_in_period">ମୋଟ: &lt;b&gt;%d&lt;/b&gt; ମିନିଟ୍</string>
+    <string name="stats_overview_total_time_in_period">ସମୁଦାୟ: &lt;b&gt;%d&lt;/b&gt; ମିନିଟ୍</string>
     <string name="stats_overview_time_per_day_studydays">ଅଧ୍ୟୟନ କରାଯାଇଥିବା ଦିନଗୁଡ଼ିକ ପାଇଁ ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ମିନିଟ୍/ଦିନ</string>
     <string name="stats_overview_time_per_day_all">ଯଦି ଆପଣ ପ୍ରତିଦିନ ଅଧ୍ୟୟନ କରନ୍ତି: &lt;b&gt;%1$.1f&lt;/b&gt;ମିନିଟ୍/ଦିନ</string>
     <string name="stats_overview_average_answer_time">ହାରାହାରି ଉତ୍ତର ସମୟ : &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; ପତ୍ର/ମିନିଟ୍)</string>
     <string name="stats_overview_new_cards_per_day">ହାରାହାରି: &lt;b&gt;%1$.1f&lt;/b&gt; ପତ୍ର/ଦିନ</string>
-    <string name="stats_overview_total_new_cards">ମୋଟ: &lt;b&gt;%1$d&lt;/b&gt;ଟି ପତ୍ର </string>
+    <string name="stats_overview_total_new_cards">ସମୁଦାୟ: &lt;b&gt;%1$d&lt;/b&gt;ଟି ପତ୍ର</string>
     <string name="stats_overview_average_interval">"ହାରାହାରି ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_longest_interval">"ଦୀର୍ଘତମ ଅନ୍ତରାଳ: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; ବର୍ଷ</string>

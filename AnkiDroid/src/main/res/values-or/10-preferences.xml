@@ -279,11 +279,11 @@
     <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
     <string name="deck_conf_replayq_summ">ଉତ୍ତର ଦେଖାଯିବା ବେଳେ, ଉଭୟ ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ଅଡ଼ିଓ ପୁନଃଚାଳନ କରନ୍ତୁ</string>
     <string name="deck_conf_manage" maxLength="41">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
-    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡନ୍ତୁ ଏବଂ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ିବା ଏବଂ ପରିବର୍ତ୍ତନ କରିବା</string>
     <string name="deck_conf_current_group" maxLength="41">ସାମ୍ପ୍ରତିକ ଗୋଷ୍ଠୀ</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="deck_conf_reset" maxLength="41">ଡିଫଲ୍ଟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
-    <string name="deck_conf_reset_message">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିଗୁଡ଼ିଙ୍କକୁ ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ପୁନରୁଦ୍ଧାର କରନ୍ତୁ?</string>
+    <string name="deck_conf_reset_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ କୁ ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିବେ କି?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="deck_conf_add_summ">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ଏକ କପି ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="deck_conf_remove_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ କରିବେ କି?</string>
