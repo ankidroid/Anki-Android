@@ -13,22 +13,21 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs.utils
 
-package com.ichi2.anki.dialogs.utils;
+import androidx.annotation.CheckResult
+import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.dialogs.RecursivePictureMenu
+import java.util.*
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.dialogs.RecursivePictureMenu;
-
-import java.util.Objects;
-
-import androidx.annotation.CheckResult;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class RecursivePictureMenuUtil {
-
-    @CheckResult
-    public static RecyclerView getRecyclerViewFor(RecursivePictureMenu menu) {
-        MaterialDialog dialog = (MaterialDialog) Objects.requireNonNull(menu.getDialog());
-        return dialog.getRecyclerView();
+class RecursivePictureMenuUtil {
+    companion object {
+        @JvmStatic
+        @CheckResult
+        fun getRecyclerViewFor(menu: RecursivePictureMenu): RecyclerView {
+            val dialog = Objects.requireNonNull(menu.dialog) as MaterialDialog
+            return dialog.recyclerView
+        }
     }
 }
