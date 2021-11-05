@@ -13,30 +13,24 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.utils
 
-package com.ichi2.libanki.utils;
+import java.util.ArrayList
+import java.util.regex.Pattern
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
+object StringUtils {
+    private val WHITESPACE_PATTERN = Pattern.compile("\\s+", Pattern.MULTILINE or Pattern.DOTALL)
 
-import androidx.annotation.NonNull;
-
-public class StringUtils {
-
-    private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+", Pattern.MULTILINE | Pattern.DOTALL);
-
-    /** Equivalent to the python string.split() */
-    @NonNull
-    public static List<String> splitOnWhitespace(@NonNull String value) {
-        String[] split = WHITESPACE_PATTERN.split(value);
-        List<String> ret = new ArrayList<>(split.length);
-        for (String s : split) {
-            if(s.length() > 0) {
-                ret.add(s);
+    /** Equivalent to the python string.split()  */
+    @JvmStatic
+    fun splitOnWhitespace(value: String): List<String> {
+        val split = WHITESPACE_PATTERN.split(value)
+        val ret: MutableList<String> = ArrayList(split.size)
+        for (s in split) {
+            if (s.length > 0) {
+                ret.add(s)
             }
         }
-
-        return ret;
+        return ret
     }
 }
