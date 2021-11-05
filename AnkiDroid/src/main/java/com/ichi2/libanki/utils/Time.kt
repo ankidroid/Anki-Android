@@ -21,6 +21,7 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.max
 import java.sql.Date as SqlDate
 import java.util.Date as UtilDate
 
@@ -65,8 +66,8 @@ abstract class Time {
     /** Return the first safe ID to use.  */
     fun maxID(db: DB): Long {
         var now = intTimeMS()
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
+        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
+        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
         return now + 1
     }
 
