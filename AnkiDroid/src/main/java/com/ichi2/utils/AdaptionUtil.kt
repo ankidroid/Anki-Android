@@ -13,170 +13,152 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.app.ActivityManager
+import android.content.ComponentName
+import android.content.ContentResolver
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import com.ichi2.anki.AnkiDroidApp
+import timber.log.Timber
+import java.lang.Exception
+import java.util.*
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
-
-import com.ichi2.anki.AnkiDroidApp;
-
-import java.util.List;
-import java.util.Locale;
-
-import timber.log.Timber;
-
-public class AdaptionUtil {
-    private static boolean sHasRunRestrictedLearningDeviceCheck = false;
-    private static boolean sIsRestrictedLearningDevice = false;
-    private static boolean sHasRunWebBrowserCheck = false;
-    private static boolean sHasWebBrowser = true;
-    private static Boolean sIsRunningMiUI = null;
-
-    public static boolean hasWebBrowser(Context context) {
+object AdaptionUtil {
+    private var sHasRunRestrictedLearningDeviceCheck = false
+    private var sIsRestrictedLearningDevice = false
+    private var sHasRunWebBrowserCheck = false
+    private var sHasWebBrowser = true
+    private var sIsRunningMiUI: Boolean? = null
+    @JvmStatic
+    fun hasWebBrowser(context: Context): Boolean {
         if (sHasRunWebBrowserCheck) {
-            return sHasWebBrowser;
+            return sHasWebBrowser
         }
-
-        sHasWebBrowser = checkHasWebBrowser(context);
-        sHasRunWebBrowserCheck = true;
-        return sHasWebBrowser;
+        sHasWebBrowser = checkHasWebBrowser(context)
+        sHasRunWebBrowserCheck = true
+        return sHasWebBrowser
     }
 
-    public static boolean isUserATestClient() {
-        try {
-            return
-                    ActivityManager.isUserAMonkey() ||
-                            isRunningUnderFirebaseTestLab();
-        } catch (Exception e) {
-            Timber.w(e);
-            return false;
+    @JvmStatic
+    val isUserATestClient: Boolean
+        get() = try {
+            ActivityManager.isUserAMonkey() ||
+                isRunningUnderFirebaseTestLab
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
         }
-    }
-
-
-    public static boolean isRunningUnderFirebaseTestLab() {
-        try {
-            return isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().getContentResolver());
-        } catch (Exception e) {
-            Timber.w(e);
-            return false;
+    val isRunningUnderFirebaseTestLab: Boolean
+        get() = try {
+            isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().contentResolver)
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
         }
-    }
 
-
-    private static boolean isRunningUnderFirebaseTestLab(ContentResolver contentResolver) {
+    private fun isRunningUnderFirebaseTestLab(contentResolver: ContentResolver): Boolean {
         // https://firebase.google.com/docs/test-lab/android/android-studio#modify_instrumented_test_behavior_for
-        String testLabSetting = Settings.System.getString(contentResolver, "firebase.test.lab");
-        return "true".equals(testLabSetting);
+        val testLabSetting = Settings.System.getString(contentResolver, "firebase.test.lab")
+        return "true" == testLabSetting
     }
 
-
-    private static boolean checkHasWebBrowser(Context context) {
+    private fun checkHasWebBrowser(context: Context): Boolean {
         // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
-        if (isUserATestClient()) {
-            return false;
+        if (isUserATestClient) {
+            return false
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
-        PackageManager pm = context.getPackageManager();
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        for (ResolveInfo ri : list) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+        val pm = context.packageManager
+        val list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        for (ri in list) {
             if (!isValidBrowser(ri)) {
-                continue;
+                continue
             }
 
             // If we aren't a restricted device, any browser will do
-            if (!isRestrictedLearningDevice()) {
-                return true;
+            if (!isRestrictedLearningDevice) {
+                return true
             }
             // If we are a restricted device, only a system browser will do
             if (isSystemApp(ri.activityInfo.packageName, pm)) {
-                return true;
+                return true
             }
         }
         // Either there are no web browsers, or we're a restricted learning device and there's no system browsers.
-        return false;
+        return false
     }
 
-
-    private static boolean isValidBrowser(ResolveInfo ri) {
+    private fun isValidBrowser(ri: ResolveInfo?): Boolean {
         // https://stackoverflow.com/a/57223246/
-        return ri != null && ri.activityInfo != null && ri.activityInfo.exported;
+        return ri != null && ri.activityInfo != null && ri.activityInfo.exported
     }
 
-
-    private static boolean isSystemApp(String packageName, PackageManager pm) {
-        if (packageName != null) {
+    private fun isSystemApp(packageName: String?, pm: PackageManager): Boolean {
+        return if (packageName != null) {
             try {
-                PackageInfo info = pm.getPackageInfo(packageName, 0);
-                return (info != null) && (info.applicationInfo != null) &&
-                        ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-            } catch (PackageManager.NameNotFoundException e) {
-                Timber.w(e);
-                return false;
+                val info = pm.getPackageInfo(packageName, 0)
+                info != null && info.applicationInfo != null &&
+                    info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+            } catch (e: PackageManager.NameNotFoundException) {
+                Timber.w(e)
+                false
             }
         } else {
-            return false;
+            false
         }
     }
 
-    public static boolean isRestrictedLearningDevice() {
-        if (!sHasRunRestrictedLearningDeviceCheck) {
-            sIsRestrictedLearningDevice =
-                    "Xiaomi".equalsIgnoreCase(Build.MANUFACTURER) &&
-                            ("Archytas".equalsIgnoreCase(Build.PRODUCT) || "Archimedes".equalsIgnoreCase(Build.PRODUCT));
-            sHasRunRestrictedLearningDeviceCheck = true;
+    @JvmStatic
+    val isRestrictedLearningDevice: Boolean
+        get() {
+            if (!sHasRunRestrictedLearningDeviceCheck) {
+                sIsRestrictedLearningDevice = "Xiaomi".equals(Build.MANUFACTURER, ignoreCase = true) &&
+                    ("Archytas".equals(Build.PRODUCT, ignoreCase = true) || "Archimedes".equals(Build.PRODUCT, ignoreCase = true))
+                sHasRunRestrictedLearningDeviceCheck = true
+            }
+            return sIsRestrictedLearningDevice
         }
-        return sIsRestrictedLearningDevice;
+
+    fun canUseContextMenu(): Boolean {
+        return !isRunningMiui
     }
 
-    public static boolean canUseContextMenu() {
-        return !isRunningMiui();
-    }
-
-    private static boolean isRunningMiui() {
-        if (sIsRunningMiUI == null) {
-            sIsRunningMiUI = queryIsMiui();
+    private val isRunningMiui: Boolean
+        get() {
+            if (sIsRunningMiUI == null) {
+                sIsRunningMiUI = queryIsMiui()
+            }
+            return sIsRunningMiUI!!
         }
-        return sIsRunningMiUI;
-    }
 
     // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
-    private static boolean isIntentResolved(Context ctx, Intent intent) {
-        return (intent != null && ctx.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null);
+    private fun isIntentResolved(ctx: Context, intent: Intent?): Boolean {
+        return intent != null && ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
     }
 
-    private static boolean queryIsMiui() {
-        Context ctx = AnkiDroidApp.getInstance();
-        return isIntentResolved(ctx, new Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT))
-                || isIntentResolved(ctx, new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity")))
-                || isIntentResolved(ctx, new Intent("miui.intent.action.POWER_HIDE_MODE_APP_LIST").addCategory(Intent.CATEGORY_DEFAULT))
-                || isIntentResolved(ctx, new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.powercenter.PowerSettings")));
+    private fun queryIsMiui(): Boolean {
+        val ctx: Context = AnkiDroidApp.getInstance()
+        return (
+            isIntentResolved(ctx, Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT)) ||
+                isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"))) ||
+                isIntentResolved(ctx, Intent("miui.intent.action.POWER_HIDE_MODE_APP_LIST").addCategory(Intent.CATEGORY_DEFAULT)) ||
+                isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.powercenter.PowerSettings")))
+            )
     }
 
-
-    @SuppressWarnings( {"unused", "RedundantSuppression"})
-    public static boolean shouldCurrentUserBuyDifferentPhone() {
-        return isRunningMiui();
-    }
-
-
-    /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company) */
-    public static boolean isVivo() {
-        String manufacturer = Build.MANUFACTURER;
-        if (manufacturer == null) {
-            return false;
+    /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
+    @JvmStatic
+    val isVivo: Boolean
+        get() {
+            val manufacturer = Build.MANUFACTURER ?: return false
+            return manufacturer.lowercase(Locale.ROOT) == "vivo"
         }
-        return manufacturer.toLowerCase(Locale.ROOT).equals("vivo");
-    }
 }
