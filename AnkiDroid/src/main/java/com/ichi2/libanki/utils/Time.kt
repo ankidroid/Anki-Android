@@ -16,15 +16,19 @@
 package com.ichi2.libanki.utils
 
 import com.ichi2.libanki.DB
-import java.sql.Date
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.Locale
+import java.util.TimeZone
+import java.sql.Date as SqlDate
+import java.util.Date as UtilDate
 
 /** Allows injection of time dependencies  */
 abstract class Time {
     /** Date of this time  */
-    val currentDate: java.util.Date
-        get() = java.util.Date(intTimeMS())
+    val currentDate: UtilDate
+        get() = UtilDate(intTimeMS())
 
     /**The time in integer seconds.  */
     fun intTime(): Long {
@@ -75,13 +79,13 @@ abstract class Time {
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
-    fun genToday(utcOffset: Double): Date {
+    fun genToday(utcOffset: Double): SqlDate {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         df.timeZone = TimeZone.getTimeZone("GMT")
         val cal: Calendar = gregorianCalendar(intTimeMS() - utcOffset.toLong() * 1000L)
-        return Date.valueOf(df.format(cal.time))
+        return SqlDate.valueOf(df.format(cal.time))
     }
 
     companion object {
