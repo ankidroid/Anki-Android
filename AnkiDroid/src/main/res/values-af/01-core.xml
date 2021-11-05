@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Ja</string>
     <!-- Navigation drawer items-->
     <string name="decks">Pakke</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaart Inspeksie</string>
     <string name="statistics">Statistieke</string>
     <string name="settings">Instellings</string>
     <string name="help">Hulp</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Skets</string>
     <string name="send_feedback">Stuur terugvoering</string>
     <string name="studyoptions_due_today">Vandag uitstaande:</string>
     <string name="studyoptions_new_total">Totaal nuwe kaarte:</string>
@@ -53,12 +53,12 @@
     <string name="studyoptions_eta">Beraamde tyd (min):</string>
     <string name="studyoptions_start">Studeer</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Vergroot</string>
+    <string name="collapse">Verklein</string>
+    <string name="study_more">Leer meer/Meer inligting </string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">Kaarte Oor</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuut oor</item>
@@ -66,14 +66,14 @@
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">Ure Oor</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="other">Dae oor</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Druk die \"+\" om flitskaarte te maak</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>

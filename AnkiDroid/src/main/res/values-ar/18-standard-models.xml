@@ -20,7 +20,7 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">أمام</string>
+    <string name="front_field_name">الأمامي</string>
     <string name="back_field_name">خلف</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">نص</string>
     <string name="extra_field_name_new">إضافي خلفي</string>

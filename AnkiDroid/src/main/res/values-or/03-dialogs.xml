@@ -119,7 +119,7 @@
     <string name="no_space_to_downgrade_content">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
-    <string name="dialog_cancel">ବାତିଲ</string>
+    <string name="dialog_cancel">ବାତିଲ୍ କର</string>
     <string name="dialog_ok">ଠିକ୍‌ ଅଛି</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>

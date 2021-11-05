@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">等待</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">出错了</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG 不可预览</string>
     <string name="multimedia_editor_png_paste_error">将剪贴板图像转换为 png 时出错：%s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">将多媒体内容添加到 %1$s 字段</string>
     <string name="multimedia_editor_attach_media">附加媒体</string>

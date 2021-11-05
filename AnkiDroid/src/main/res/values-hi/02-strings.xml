@@ -137,6 +137,7 @@
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">आपकी डिवाइस पर अपर्याप्त स्मृति के कारण संभव नहीं ऑपरेशन</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
     <string name="default_conf_delete_error">डिफ़ॉल्ट विकल्प समूह निकाला नहीं जा सकता</string>

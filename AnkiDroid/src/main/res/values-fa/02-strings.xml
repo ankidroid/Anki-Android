@@ -137,6 +137,7 @@
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنا مه ریزی مجدد</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
     <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
@@ -351,7 +352,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
+    <string name="try_again">دوباره تلاش کنید</string>
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_question_title">Cancel download?</string>
     <string name="downloading_file">Downloading %s</string>

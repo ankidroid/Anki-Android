@@ -141,6 +141,7 @@
     <string name="card_editor_reset_card">Obnovit proces učení</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhled</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
     <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
@@ -365,7 +366,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Velká počáteční písmena</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posunout nástrojovou lištu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -386,18 +387,18 @@
     <string name="download_failed">Stahování se nezdařilo</string>
     <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
+    <string name="home">Domů</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Přiřazeno k %s</string>
     <string name="import_mapped_to_tags">Přiřazeno ke štítkům</string>
     <string name="import_mapped_to_nothing">Ignorováno</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Karta přeskočena</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">Přeskočit kartu</string>
+    <string name="deleted_note">Odstranit kartu</string>
+    <string name="suspended_card">Vyřadit kartu</string>
+    <string name="suspended_note">Vyřadit tuto stranu karty</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 </resources>

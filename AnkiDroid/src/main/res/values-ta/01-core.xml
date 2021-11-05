@@ -48,12 +48,12 @@
     <string name="drawing">Drawing</string>
     <string name="send_feedback">கருத்தினை அனுப்பவும்</string>
     <string name="studyoptions_due_today">இன்று காரணமாக</string>
-    <string name="studyoptions_new_total">மொத்த புதிய அட்டைகள்</string>
+    <string name="studyoptions_new_total">புதிய அட்டைகளின் எண்ணிக்கை</string>
     <string name="studyoptions_total_cards">மொத்த அட்டைகள்</string>
     <string name="studyoptions_eta">கணிக்கப்பட்ட நேரம் (நிமிடங்கள்)</string>
     <string name="studyoptions_start">படி</string>
     <!-- DeckPicker.java -->
-    <string name="expand">விரிவாக்க</string>
+    <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
     <string name="study_more">இன்னும் படி</string>
     <plurals name="deckpicker_title">
@@ -110,22 +110,22 @@
     <string name="menu_delete_note">குறிப்பு நீக்கவும்</string>
     <string name="menu_flag">கொடிகள்</string>
     <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag_card_zero">கொடி இல்லை</string>
+    <string name="menu_flag_card_one">சிவப்பு கொடி</string>
+    <string name="menu_flag_card_two">ஆரஞ்சு கொடி</string>
+    <string name="menu_flag_card_three">பச்சை கொடி</string>
+    <string name="menu_flag_card_four">நீல கொடி</string>
+    <string name="menu_flag_card_five">இளஞ்சிவப்பு கொடி</string>
+    <string name="menu_flag_card_six">நீல பச்சை கொடி</string>
+    <string name="menu_flag_card_seven">ஊதா கொடி</string>
+    <string name="menu_edit_tags">Tags-ஐ திருத்து</string>
     <string name="delete_note_message">உண்மையில் இந்த குறிப்பையும் அதன் அனைத்து அட்டைகளையும் நீக்கவா?\n%s</string>
     <string name="menu_select">உரை தேர்ந்தெடு</string>
     <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">இங்கே பாருங்கள் %1$s</string>
     <string name="menu_mark_note">குறிப்பு குறிக்கவும்</string>
     <string name="menu_unmark_note">குறிப்பு குறிக்கப்படாது</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">உச்சரிப்பை சரிபார்</string>
     <string name="new_deck">டெக் உருவாக்கவும்</string>
     <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>
     <string name="night_mode">இரவு நிலை</string>
@@ -144,10 +144,10 @@
     -->
     <string name="time_quantity_seconds">%d ஸ் </string>
     <string name="time_quantity_minutes">%d நிமிடம்</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d ம %2$d நி</string>
     <string name="time_quantity_hours">%d ஹ </string>
     <string name="time_quantity_days">%d டி</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d நாள் %2$d மணி</string>
     <string name="time_quantity_months">%.1f மோ</string>
     <string name="time_quantity_years">%.1f ஆண்டு</string>
     <!-- or "%.1f a" -->
