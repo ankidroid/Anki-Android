@@ -15,51 +15,41 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.content.Context;
-import android.widget.EditText;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.utils.AndroidUiUtils;
-
-import java.util.Objects;
-
-import androidx.annotation.NonNull;
+import android.content.Context
+import android.widget.EditText
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.utils.AndroidUiUtils
 
 /**
  * A Dialog containing an EditText which displays a keyboard when opened
  */
-public class MaterialEditTextDialog extends MaterialDialog {
-    protected MaterialEditTextDialog(Builder builder) {
-        super(builder);
-    }
-
-    /**
-     * Method to display keyboard when dialog shows.
-     * @param editText EditText present in the dialog.
-     * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
-     */
-    public static void displayKeyboard(EditText editText, MaterialDialog materialDialog) {
-        AndroidUiUtils.setFocusAndOpenKeyboard(editText, Objects.requireNonNull(materialDialog.getWindow()));
-    }
-
-    public static class Builder extends MaterialDialog.Builder {
-
-        public Builder(@NonNull Context context, EditText editText) {
-            super(context);
-            customView(editText, true);
+open class MaterialEditTextDialog protected constructor(builder: Builder?) : MaterialDialog(builder) {
+    class Builder(context: Context, editText: EditText?) : MaterialDialog.Builder(context) {
+        override fun build(): MaterialDialog {
+            return MaterialEditTextDialog(this)
         }
 
-        @Override
-        public MaterialDialog build() {
-            return new MaterialEditTextDialog(this);
+        init {
+            customView(editText!!, true)
         }
     }
 
-    @Override
-    public void show() {
-        super.show();
-        displayKeyboard((EditText) this.getCustomView(), this);
+    override fun show() {
+        super.show()
+        displayKeyboard(this.customView as EditText?, this)
+    }
+
+    companion object {
+        /**
+         * Method to display keyboard when dialog shows.
+         * @param editText EditText present in the dialog.
+         * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
+         */
+        @JvmStatic
+        fun displayKeyboard(editText: EditText?, materialDialog: MaterialDialog) {
+            AndroidUiUtils.setFocusAndOpenKeyboard(editText, materialDialog.window!!)
+        }
     }
 }
