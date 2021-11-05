@@ -65,8 +65,8 @@ abstract class Time {
     /** Return the first safe ID to use.  */
     fun maxID(db: DB): Long {
         var now = intTimeMS()
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
+        now = now.coerceAtLeast(db.queryLongScalar("SELECT MAX(id) FROM cards"))
+        now = now.coerceAtLeast(db.queryLongScalar("SELECT MAX(id) FROM notes"))
         return now + 1
     }
 
