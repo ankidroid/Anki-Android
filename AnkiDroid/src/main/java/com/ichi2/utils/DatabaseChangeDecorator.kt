@@ -13,272 +13,223 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.ContentValues
+import android.database.Cursor
+import android.database.SQLException
+import android.database.sqlite.SQLiteTransactionListener
+import android.os.CancellationSignal
+import android.util.Pair
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.sqlite.db.SupportSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteStatement
+import java.io.IOException
+import java.util.*
+import kotlin.Throws
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteTransactionListener;
-import android.os.CancellationSignal;
-import android.util.Pair;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.sqlite.db.SupportSQLiteQuery;
-import androidx.sqlite.db.SupportSQLiteStatement;
-
-/** Detects any database modifications and notifies the sync status of the application */
-public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
-
-    private static final String[] MOD_SQLS = new String[] { "insert", "update", "delete" };
-
-    private final SupportSQLiteDatabase mWrapped;
-
-
-    public DatabaseChangeDecorator(SupportSQLiteDatabase wrapped) {
-        this.mWrapped = wrapped;
+/** Detects any database modifications and notifies the sync status of the application  */
+@KotlinCleanup("Convert to Kotlin Delegation as a medium priority extension")
+class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLiteDatabase {
+    private fun markDataAsChanged() {
+        SyncStatus.markDataAsChanged()
     }
 
-    private void markDataAsChanged() {
-        SyncStatus.markDataAsChanged();
-    }
-
-    private boolean needsComplexCheck() {
+    private fun needsComplexCheck(): Boolean {
         // if we're marked in memory, we can assume no changes - this class only sets the mark.
-        return !SyncStatus.hasBeenMarkedAsChangedInMemory();
+        return !SyncStatus.hasBeenMarkedAsChangedInMemory()
     }
 
-    private void checkForChanges(String sql) {
+    private fun checkForChanges(sql: String) {
         if (!needsComplexCheck()) {
-            return;
+            return
         }
-        String lower = sql.toLowerCase(Locale.ROOT);
-        String upper = sql.toUpperCase(Locale.ROOT);
-        for (String modString : MOD_SQLS) {
+        val lower = sql.lowercase(Locale.ROOT)
+        val upper = sql.uppercase(Locale.ROOT)
+        for (modString in MOD_SQLS) {
             if (startsWithIgnoreCase(lower, upper, modString)) {
-                markDataAsChanged();
-                break;
+                markDataAsChanged()
+                break
             }
         }
     }
 
-
-    private boolean startsWithIgnoreCase(String lowerHaystack, String upperHaystack, String needle) {
+    private fun startsWithIgnoreCase(lowerHaystack: String, upperHaystack: String, needle: String): Boolean {
         // Needs to do both according to https://stackoverflow.com/a/38947571
-        return lowerHaystack.startsWith(needle) || upperHaystack.startsWith(needle.toUpperCase(Locale.ROOT));
+        return lowerHaystack.startsWith(needle) || upperHaystack.startsWith(needle.uppercase(Locale.ROOT))
     }
 
-
-    public SupportSQLiteStatement compileStatement(String sql) {
-        SupportSQLiteStatement supportSQLiteStatement = mWrapped.compileStatement(sql);
-        checkForChanges(sql); //technically a little hasty - as the statement hasn't been executed.
-        return supportSQLiteStatement;
+    override fun compileStatement(sql: String): SupportSQLiteStatement {
+        val supportSQLiteStatement = wrapped.compileStatement(sql)
+        checkForChanges(sql) // technically a little hasty - as the statement hasn't been executed.
+        return supportSQLiteStatement
     }
 
-
-    public void beginTransaction() {
-        mWrapped.beginTransaction();
+    override fun beginTransaction() {
+        wrapped.beginTransaction()
     }
 
-
-    public void beginTransactionNonExclusive() {
-        mWrapped.beginTransactionNonExclusive();
+    override fun beginTransactionNonExclusive() {
+        wrapped.beginTransactionNonExclusive()
     }
 
-
-    public void beginTransactionWithListener(SQLiteTransactionListener transactionListener) {
-        mWrapped.beginTransactionWithListener(transactionListener);
+    override fun beginTransactionWithListener(transactionListener: SQLiteTransactionListener) {
+        wrapped.beginTransactionWithListener(transactionListener)
     }
 
-
-    public void beginTransactionWithListenerNonExclusive(SQLiteTransactionListener transactionListener) {
-        mWrapped.beginTransactionWithListenerNonExclusive(transactionListener);
+    override fun beginTransactionWithListenerNonExclusive(transactionListener: SQLiteTransactionListener) {
+        wrapped.beginTransactionWithListenerNonExclusive(transactionListener)
     }
 
-
-    public void endTransaction() {
-        mWrapped.endTransaction();
+    override fun endTransaction() {
+        wrapped.endTransaction()
     }
 
-
-    public void setTransactionSuccessful() {
-        mWrapped.setTransactionSuccessful();
+    override fun setTransactionSuccessful() {
+        wrapped.setTransactionSuccessful()
     }
 
-
-    public boolean inTransaction() {
-        return mWrapped.inTransaction();
+    override fun inTransaction(): Boolean {
+        return wrapped.inTransaction()
     }
 
-
-    public boolean isDbLockedByCurrentThread() {
-        return mWrapped.isDbLockedByCurrentThread();
+    override fun isDbLockedByCurrentThread(): Boolean {
+        return wrapped.isDbLockedByCurrentThread
     }
 
-
-    public boolean yieldIfContendedSafely() {
-        return mWrapped.yieldIfContendedSafely();
+    override fun yieldIfContendedSafely(): Boolean {
+        return wrapped.yieldIfContendedSafely()
     }
 
-
-    public boolean yieldIfContendedSafely(long sleepAfterYieldDelay) {
-        return mWrapped.yieldIfContendedSafely(sleepAfterYieldDelay);
+    override fun yieldIfContendedSafely(sleepAfterYieldDelay: Long): Boolean {
+        return wrapped.yieldIfContendedSafely(sleepAfterYieldDelay)
     }
 
-
-    public int getVersion() {
-        return mWrapped.getVersion();
+    override fun getVersion(): Int {
+        return wrapped.version
     }
 
-
-    public void setVersion(int version) {
-        mWrapped.setVersion(version);
+    override fun setVersion(version: Int) {
+        wrapped.version = version
     }
 
-
-    public long getMaximumSize() {
-        return mWrapped.getMaximumSize();
+    override fun getMaximumSize(): Long {
+        return wrapped.maximumSize
     }
 
-
-    public long setMaximumSize(long numBytes) {
-        return mWrapped.setMaximumSize(numBytes);
+    override fun setMaximumSize(numBytes: Long): Long {
+        return wrapped.setMaximumSize(numBytes)
     }
 
-
-    public long getPageSize() {
-        return mWrapped.getPageSize();
+    override fun getPageSize(): Long {
+        return wrapped.pageSize
     }
 
-
-    public void setPageSize(long numBytes) {
-        mWrapped.setPageSize(numBytes);
+    override fun setPageSize(numBytes: Long) {
+        wrapped.pageSize = numBytes
     }
 
-
-    public Cursor query(String query) {
-        return mWrapped.query(query);
+    override fun query(query: String): Cursor {
+        return wrapped.query(query)
     }
 
-
-    public Cursor query(String query, Object[] bindArgs) {
-        return mWrapped.query(query, bindArgs);
+    override fun query(query: String, bindArgs: Array<Any>?): Cursor {
+        return wrapped.query(query, bindArgs)
     }
 
-
-    public Cursor query(SupportSQLiteQuery query) {
-        return mWrapped.query(query);
+    override fun query(query: SupportSQLiteQuery): Cursor {
+        return wrapped.query(query)
     }
 
-
-    public Cursor query(SupportSQLiteQuery query, CancellationSignal cancellationSignal) {
-        return mWrapped.query(query, cancellationSignal);
+    override fun query(query: SupportSQLiteQuery, cancellationSignal: CancellationSignal): Cursor {
+        return wrapped.query(query, cancellationSignal)
     }
 
-
-    public long insert(String table, int conflictAlgorithm, ContentValues values) throws SQLException {
-        long insert = mWrapped.insert(table, conflictAlgorithm, values);
-        markDataAsChanged();
-        return insert;
+    @Throws(SQLException::class)
+    override fun insert(table: String, conflictAlgorithm: Int, values: ContentValues): Long {
+        val insert = wrapped.insert(table, conflictAlgorithm, values)
+        markDataAsChanged()
+        return insert
     }
 
-
-    public int delete(String table, String whereClause, Object[] whereArgs) {
-        int delete = mWrapped.delete(table, whereClause, whereArgs);
-        markDataAsChanged();
-        return delete;
+    override fun delete(table: String, whereClause: String, whereArgs: Array<Any>): Int {
+        val delete = wrapped.delete(table, whereClause, whereArgs)
+        markDataAsChanged()
+        return delete
     }
 
-
-    public int update(String table, int conflictAlgorithm, ContentValues values, String whereClause, Object[] whereArgs) {
-        int update = mWrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs);
-        markDataAsChanged();
-        return update;
+    override fun update(table: String, conflictAlgorithm: Int, values: ContentValues, whereClause: String?, whereArgs: Array<Any>?): Int {
+        val update = wrapped.update(table, conflictAlgorithm, values, whereClause, whereArgs)
+        markDataAsChanged()
+        return update
     }
 
-
-    public void execSQL(String sql) throws SQLException {
-        mWrapped.execSQL(sql);
-        checkForChanges(sql);
+    @Throws(SQLException::class)
+    override fun execSQL(sql: String) {
+        wrapped.execSQL(sql)
+        checkForChanges(sql)
     }
 
-
-    public void execSQL(String sql, Object[] bindArgs) throws SQLException {
-        mWrapped.execSQL(sql, bindArgs);
-        checkForChanges(sql);
+    @Throws(SQLException::class)
+    override fun execSQL(sql: String, bindArgs: Array<Any>) {
+        wrapped.execSQL(sql, bindArgs)
+        checkForChanges(sql)
     }
 
-
-    public boolean isReadOnly() {
-        return mWrapped.isReadOnly();
+    override fun isReadOnly(): Boolean {
+        return wrapped.isReadOnly
     }
 
-
-    public boolean isOpen() {
-        return mWrapped.isOpen();
+    override fun isOpen(): Boolean {
+        return wrapped.isOpen
     }
 
-
-    public boolean needUpgrade(int newVersion) {
-        return mWrapped.needUpgrade(newVersion);
+    override fun needUpgrade(newVersion: Int): Boolean {
+        return wrapped.needUpgrade(newVersion)
     }
 
-
-    public String getPath() {
-        return mWrapped.getPath();
+    override fun getPath(): String {
+        return wrapped.path
     }
 
-
-    public void setLocale(Locale locale) {
-        mWrapped.setLocale(locale);
+    override fun setLocale(locale: Locale) {
+        wrapped.setLocale(locale)
     }
 
-
-    public void setMaxSqlCacheSize(int cacheSize) {
-        mWrapped.setMaxSqlCacheSize(cacheSize);
+    override fun setMaxSqlCacheSize(cacheSize: Int) {
+        wrapped.setMaxSqlCacheSize(cacheSize)
     }
 
-
-    public void setForeignKeyConstraintsEnabled(boolean enable) {
-        mWrapped.setForeignKeyConstraintsEnabled(enable);
+    override fun setForeignKeyConstraintsEnabled(enable: Boolean) {
+        wrapped.setForeignKeyConstraintsEnabled(enable)
     }
 
-
-    public boolean enableWriteAheadLogging() {
-        return mWrapped.enableWriteAheadLogging();
+    override fun enableWriteAheadLogging(): Boolean {
+        return wrapped.enableWriteAheadLogging()
     }
 
-
-    public void disableWriteAheadLogging() {
-        mWrapped.disableWriteAheadLogging();
+    override fun disableWriteAheadLogging() {
+        wrapped.disableWriteAheadLogging()
     }
 
-
-    public boolean isWriteAheadLoggingEnabled() {
-        return mWrapped.isWriteAheadLoggingEnabled();
+    override fun isWriteAheadLoggingEnabled(): Boolean {
+        return wrapped.isWriteAheadLoggingEnabled
     }
 
-
-    public List<Pair<String, String>> getAttachedDbs() {
-        return mWrapped.getAttachedDbs();
+    override fun getAttachedDbs(): List<Pair<String, String>> {
+        return wrapped.attachedDbs
     }
 
-
-    public boolean isDatabaseIntegrityOk() {
-        return mWrapped.isDatabaseIntegrityOk();
+    override fun isDatabaseIntegrityOk(): Boolean {
+        return wrapped.isDatabaseIntegrityOk
     }
 
-
-    public void close() throws IOException {
-        mWrapped.close();
+    @Throws(IOException::class)
+    override fun close() {
+        wrapped.close()
     }
 
-    public SupportSQLiteDatabase getWrapped() {
-        return mWrapped;
+    companion object {
+        private val MOD_SQLS = arrayOf("insert", "update", "delete")
     }
 }
-
