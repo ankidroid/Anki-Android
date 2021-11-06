@@ -14,29 +14,26 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.Context
+import android.content.pm.PackageManager
+import timber.log.Timber
+import java.lang.Exception
+import java.util.*
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-
-import java.util.Arrays;
-
-import timber.log.Timber;
-
-public class CheckCameraPermission {
-
-    public static boolean manifestContainsPermission(Context context) {
+object CheckCameraPermission {
+    @JvmStatic
+    fun manifestContainsPermission(context: Context): Boolean {
         try {
-            String[] requestedPermissions = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS)
-                    .requestedPermissions;
+            val requestedPermissions = context.packageManager
+                .getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions
             if (Arrays.toString(requestedPermissions).contains("android.permission.CAMERA")) {
-                return true;
+                return true
             }
-        } catch (Exception e) {
-            Timber.w(e);
+        } catch (e: Exception) {
+            Timber.w(e)
         }
-        return false;
+        return false
     }
 }
