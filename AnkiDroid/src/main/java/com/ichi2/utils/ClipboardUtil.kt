@@ -13,102 +13,83 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.ClipboardManager
+import android.net.Uri
+import androidx.annotation.CheckResult
 
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.ClipboardManager;
-import android.net.Uri;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.Nullable;
-
-public class ClipboardUtil {
-
+object ClipboardUtil {
     // JPEG is sent via pasted content
-    public static final String[] IMAGE_MIME_TYPES = new String[] {"image/gif", "image/png", "image/jpg", "image/jpeg"};
+    @JvmField
+    val IMAGE_MIME_TYPES = arrayOf("image/gif", "image/png", "image/jpg", "image/jpeg")
 
-    public static boolean hasImage(@Nullable ClipboardManager clipboard) {
+    @JvmStatic
+    fun hasImage(clipboard: ClipboardManager?): Boolean {
         if (clipboard == null) {
-            return false;
+            return false
         }
-
         if (!clipboard.hasPrimaryClip()) {
-            return false;
+            return false
         }
-
-        ClipData primaryClip = clipboard.getPrimaryClip();
-
-        return hasImage(primaryClip.getDescription());
+        val primaryClip = clipboard.primaryClip
+        return hasImage(primaryClip!!.description)
     }
 
-    public static boolean hasImage(ClipDescription description) {
+    @JvmStatic
+    fun hasImage(description: ClipDescription?): Boolean {
         if (description == null) {
-            return false;
+            return false
         }
-
-        for (String mimeType : IMAGE_MIME_TYPES) {
+        for (mimeType in IMAGE_MIME_TYPES) {
             if (description.hasMimeType(mimeType)) {
-                return true;
+                return true
             }
         }
-
-        return false;
+        return false
     }
 
-
-    public static Uri getImageUri(ClipboardManager clipboard) {
+    @JvmStatic
+    fun getImageUri(clipboard: ClipboardManager?): Uri? {
         if (clipboard == null) {
-            return null;
+            return null
         }
-
         if (!clipboard.hasPrimaryClip()) {
-            return null;
+            return null
         }
-
-        ClipData primaryClip = clipboard.getPrimaryClip();
-
-        if (primaryClip.getItemCount() == 0) {
-            return null;
-        }
-
-        return primaryClip.getItemAt(0).getUri();
+        val primaryClip = clipboard.primaryClip
+        return if (primaryClip!!.itemCount == 0) {
+            null
+        } else primaryClip.getItemAt(0).uri
     }
 
-    @Nullable
+    @JvmStatic
     @CheckResult
-    public static CharSequence getText(@Nullable ClipboardManager clipboard) {
+    fun getText(clipboard: ClipboardManager?): CharSequence? {
         if (clipboard == null) {
-            return null;
+            return null
         }
-
         if (!clipboard.hasPrimaryClip()) {
-            return null;
+            return null
         }
-
-        ClipData data = clipboard.getPrimaryClip();
-
-        if (data.getItemCount() == 0) {
-            return null;
+        val data = clipboard.primaryClip
+        if (data!!.itemCount == 0) {
+            return null
         }
-
-        ClipData.Item i = data.getItemAt(0);
-
-        return i.getText();
+        val i = data.getItemAt(0)
+        return i.text
     }
 
-    @Nullable
+    @JvmStatic
     @CheckResult
-    public static CharSequence getDescriptionLabel(@Nullable ClipData clip) {
+    fun getDescriptionLabel(clip: ClipData?): CharSequence? {
         if (clip == null) {
-            return null;
+            return null
         }
-
-        if (clip.getDescription() == null) {
-            return null;
-        }
-
-        return clip.getDescription().getLabel();
+        return if (clip.description == null) {
+            null
+        } else clip.description.label
     }
 }
