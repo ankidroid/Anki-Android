@@ -14,25 +14,26 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Decks
+import java.util.Comparator
 
-import java.util.Comparator;
-
-public class DeckNameComparator implements Comparator<String> {
-    public static final DeckNameComparator INSTANCE = new DeckNameComparator();
-
-    @Override
-    public int compare(String lhs, String rhs) {
-        String[] o1 = Decks.path(lhs);
-        String[] o2 = Decks.path(rhs);
-        for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
-            int result = o1[i].compareToIgnoreCase(o2[i]);
+class DeckNameComparator : Comparator<String?> {
+    override fun compare(lhs: String?, rhs: String?): Int {
+        val o1 = Decks.path(lhs)
+        val o2 = Decks.path(rhs)
+        for (i in 0 until Math.min(o1.size, o2.size)) {
+            val result = o1[i].compareTo(o2[i], ignoreCase = true)
             if (result != 0) {
-                return result;
+                return result
             }
         }
-        return Integer.compare(o1.length, o2.length);
+        return Integer.compare(o1.size, o2.size)
+    }
+
+    companion object {
+        @JvmField
+        val INSTANCE = DeckNameComparator()
     }
 }
