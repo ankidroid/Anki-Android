@@ -1,6 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2009 Bitonator                                                         *
- * https://stackoverflow.com/questions/6176441/how-to-use-assert-in-android/47267127#47267127 * 
+ * https://stackoverflow.com/questions/6176441/how-to-use-assert-in-android/47267127#47267127 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -15,21 +15,24 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Contract
+import java.lang.AssertionError
 
-public class Assert {
-    public static void that(boolean condition) {
+object Assert {
+    fun that(condition: Boolean) {
         if (!condition) {
-            throw new AssertionError();
+            throw AssertionError()
         }
     }
+
+    @JvmStatic
     @Contract("false, _, _ -> fail")
-    public static void that(boolean condition, String message, Object... args) {
+    fun that(condition: Boolean, message: String?, vararg args: Any?) {
         if (!condition) {
-            String msg = String.format(message, args);
-            throw new AssertionError(msg);
+            val msg = String.format(message!!, *args)
+            throw AssertionError(msg)
         }
     }
 }
