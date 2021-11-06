@@ -13,59 +13,47 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.export;
+package com.ichi2.anki.export
 
-import android.util.Pair;
+import android.util.Pair
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.themes.StyledProgressDialog
+import timber.log.Timber
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.dialogs.ExportCompleteDialog;
-import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.themes.StyledProgressDialog;
-
-import androidx.annotation.NonNull;
-import timber.log.Timber;
-
-class ExportListener extends TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String>> {
-    private final ExportDialogsFactory mDialogsFactory;
-
-    private MaterialDialog mProgressDialog;
-
-
-    public ExportListener(AnkiActivity activity, ExportDialogsFactory dialogsFactory) {
-        super(activity);
-        this.mDialogsFactory = dialogsFactory;
+internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity?, Void?, Pair<Boolean?, String?>?>(activity) {
+    private var mProgressDialog: MaterialDialog? = null
+    override fun actualOnPreExecute(activity: AnkiActivity) {
+        mProgressDialog = StyledProgressDialog.show(
+            activity, "",
+            activity.resources.getString(R.string.export_in_progress), false
+        )
     }
 
-
-    @Override
-    public void actualOnPreExecute(@NonNull AnkiActivity activity) {
-        mProgressDialog = StyledProgressDialog.show(activity, "",
-                activity.getResources().getString(R.string.export_in_progress), false);
-    }
-
-
-    @Override
-    public void actualOnPostExecute(@NonNull AnkiActivity activity, Pair<Boolean, String> result) {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+    override fun actualOnPostExecute(activity: AnkiActivity, result: Pair<Boolean?, String?>?) {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
         }
 
+        if (result == null) {
+            return
+        }
         // If boolean and string are both set, we are signalling an error message
         // instead of a successful result.
-        if (result.first && result.second != null) {
-            Timber.w("Export Failed: %s", result.second);
-            activity.showSimpleMessageDialog(result.second);
+        if (result.first == true && result.second != null) {
+            Timber.w("Export Failed: %s", result.second)
+            activity.showSimpleMessageDialog(result.second)
         } else {
-            Timber.i("Export successful");
-            String exportPath = result.second;
+            Timber.i("Export successful")
+            val exportPath = result.second
             if (exportPath != null) {
-                final ExportCompleteDialog dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath);
-                activity.showAsyncDialogFragment(dialog);
+                val dialog = dialogsFactory.newExportCompleteDialog().withArguments(exportPath)
+                activity.showAsyncDialogFragment(dialog)
             } else {
-                UIUtils.showThemedToast(activity, activity.getResources().getString(R.string.export_unsuccessful), true);
+                showThemedToast(activity, activity.resources.getString(R.string.export_unsuccessful), true)
             }
         }
     }
