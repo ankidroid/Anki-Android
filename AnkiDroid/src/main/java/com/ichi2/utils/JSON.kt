@@ -15,25 +15,30 @@
  * limitations under the License.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-public class JSON {
+import kotlin.Throws
+
+object JSON {
     /**
      * Returns the input if it is a JSON-permissable value; throws otherwise.
      */
-    static double checkDouble(double d) throws JSONException {
-        if (Double.isInfinite(d) || Double.isNaN(d)) {
-            throw new JSONException("Forbidden numeric value: " + d);
+    @JvmStatic
+    @Throws(JSONException::class)
+    fun checkDouble(d: Double): Double {
+        if (java.lang.Double.isInfinite(d) || java.lang.Double.isNaN(d)) {
+            throw JSONException("Forbidden numeric value: $d")
         }
-        return d;
+        return d
     }
 
-    static String toString(Object value) {
-        if (value instanceof String) {
-            return (String) value;
+    @JvmStatic
+    fun toString(value: Any?): String? {
+        if (value is String) {
+            return value
         } else if (value != null) {
-            return String.valueOf(value);
+            return value.toString()
         }
-        return null;
+        return null
     }
 }
