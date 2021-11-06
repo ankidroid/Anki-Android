@@ -38,7 +38,7 @@ open class MaterialEditTextDialog protected constructor(builder: Builder?) : Mat
 
     override fun show() {
         super.show()
-        displayKeyboard(this.customView as EditText?, this)
+        displayKeyboard(this.customView as EditText, this)
     }
 
     companion object {
@@ -48,7 +48,7 @@ open class MaterialEditTextDialog protected constructor(builder: Builder?) : Mat
          * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
          */
         @JvmStatic
-        fun displayKeyboard(editText: EditText?, materialDialog: MaterialDialog) {
+        fun displayKeyboard(editText: EditText, materialDialog: MaterialDialog) {
             AndroidUiUtils.setFocusAndOpenKeyboard(editText, materialDialog.window!!)
         }
     }
