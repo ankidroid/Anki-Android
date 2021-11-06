@@ -33,28 +33,24 @@
  *     https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-main/webkit/webkit/src/main/java/androidx/webkit/internal/AssetHelper.java#195
  *     at commit 1931e06ac0424ff5c7bbc2df34c658b9e95e11f6
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import java.net.URLConnection
 
-import java.net.URLConnection;
-
-import androidx.annotation.NonNull;
-
-/** Clone of RestrictedApi functionality */
-public class AssetHelper {
-
+/** Clone of RestrictedApi functionality  */
+object AssetHelper {
     /**
-     * Use {@link URLConnection#guessContentTypeFromName} to guess MIME type or return the
+     * Use [URLConnection.guessContentTypeFromName] to guess MIME type or return the
      * "text/plain" if it can't guess.
      *
-     * Copy of {@link androidx.webkit.internal.AssetHelper#guessMimeType(String)}
+     * Copy of [androidx.webkit.internal.AssetHelper.guessMimeType]
      *
      * @param path path of the file to guess its MIME type.
      * @return MIME type guessed from file extension or "text/plain".
      */
-    @NonNull
-    public static String guessMimeType(String path) {
-        String mimeType = URLConnection.guessContentTypeFromName(path);
-        return mimeType == null ? "text/plain" : mimeType;
+    @JvmStatic
+    fun guessMimeType(path: String?): String {
+        val mimeType = URLConnection.guessContentTypeFromName(path)
+        return mimeType ?: "text/plain"
     }
 }
