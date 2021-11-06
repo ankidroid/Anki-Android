@@ -13,43 +13,41 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.Context
+import android.content.Intent
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import timber.log.Timber
+import java.lang.Exception
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-
-import timber.log.Timber;
-
-public class IntentUtil {
-    public static boolean canOpenIntent(Context context, Intent intent) {
-        try {
-            final PackageManager packageManager = context.getPackageManager();
-            return intent.resolveActivity(packageManager) != null;
-        } catch (Exception e) {
-            Timber.w(e);
-            return false;
+object IntentUtil {
+    @JvmStatic
+    fun canOpenIntent(context: Context, intent: Intent): Boolean {
+        return try {
+            val packageManager = context.packageManager
+            intent.resolveActivity(packageManager) != null
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
         }
     }
 
-    public static void tryOpenIntent(AnkiActivity activity, Intent intent) {
+    @JvmStatic
+    fun tryOpenIntent(activity: AnkiActivity, intent: Intent) {
         try {
             if (canOpenIntent(activity, intent)) {
-                activity.startActivityWithoutAnimation(intent);
+                activity.startActivityWithoutAnimation(intent)
             } else {
-                final String errorMsg = activity.getString(R.string.feedback_no_suitable_app_found);
-                UIUtils.showThemedToast(activity, errorMsg, true);
+                val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
+                showThemedToast(activity, errorMsg, true)
             }
-        } catch (Exception e) {
-            Timber.w(e);
-            final String errorMsg = activity.getString(R.string.feedback_no_suitable_app_found);
-            UIUtils.showThemedToast(activity, errorMsg, true);
+        } catch (e: Exception) {
+            Timber.w(e)
+            val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
+            showThemedToast(activity, errorMsg, true)
         }
     }
-
 }
