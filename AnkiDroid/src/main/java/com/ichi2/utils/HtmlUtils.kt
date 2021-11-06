@@ -13,29 +13,24 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.text.TextUtils
 
-import android.text.TextUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class HtmlUtils {
-    //#5188 - compat.fromHtml converts newlines into spaces.
-    @Nullable
-    public static String convertNewlinesToHtml(@Nullable String html) {
+object HtmlUtils {
+    // #5188 - compat.fromHtml converts newlines into spaces.
+    @JvmStatic
+    fun convertNewlinesToHtml(html: String?): String? {
         if (html == null) {
-            return null;
+            return null
         }
-        String withoutWindowsLineEndings = html.replace("\r\n", "<br/>");
-        //replace unix line endings
-        return withoutWindowsLineEndings.replace("\n", "<br/>");
+        val withoutWindowsLineEndings = html.replace("\r\n", "<br/>")
+        // replace unix line endings
+        return withoutWindowsLineEndings.replace("\n", "<br/>")
     }
 
-
-    @NonNull
-    public static String escape(@NonNull String html) {
-        return TextUtils.htmlEncode(html);
+    @JvmStatic
+    fun escape(html: String): String {
+        return TextUtils.htmlEncode(html)
     }
 }
