@@ -13,84 +13,77 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.ContentResolver
+import android.database.sqlite.SQLiteException
+import android.net.Uri
+import android.provider.MediaStore
+import android.webkit.MimeTypeMap
+import androidx.annotation.CheckResult
+import timber.log.Timber
+import java.io.File
+import java.lang.Exception
+import java.lang.IllegalStateException
+import java.util.*
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.webkit.MimeTypeMap;
-
-import java.io.File;
-import java.util.Locale;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class ContentResolverUtil {
-
-    /** Obtains the filename from the url. Throws if all methods return exception */
+object ContentResolverUtil {
+    /** Obtains the filename from the url. Throws if all methods return exception  */
+    @JvmStatic
     @CheckResult
-    public static String getFileName(ContentResolver contentResolver, Uri uri) {
+    fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
         try {
-             String filename = getFilenameViaDisplayName(contentResolver, uri);
-             if (filename != null) {
-                 return filename;
-             }
-        } catch (Exception e) {
-            Timber.w(e, "getFilenameViaDisplayName");
+            val filename = getFilenameViaDisplayName(contentResolver, uri)
+            if (filename != null) {
+                return filename
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "getFilenameViaDisplayName")
         }
 
         // let this one throw
-        String filename = getFilenameViaMimeType(contentResolver, uri);
+        val filename = getFilenameViaMimeType(contentResolver, uri)
         if (filename != null) {
-            return filename;
+            return filename
         }
-        throw new IllegalStateException(String.format("Unable to obtain valid filename from uri: %s", uri));
+        throw IllegalStateException(String.format("Unable to obtain valid filename from uri: %s", uri))
     }
 
     @CheckResult
-    @Nullable
-    private static String getFilenameViaMimeType(ContentResolver contentResolver, @NonNull Uri uri) {
+    private fun getFilenameViaMimeType(contentResolver: ContentResolver, uri: Uri): String? {
         // value: "png" when testing
-        String extension = null;
+        var extension: String? = null
 
-        //Check uri format to avoid null
-        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-            //If scheme is a content
-            final MimeTypeMap mime = MimeTypeMap.getSingleton();
-            extension = mime.getExtensionFromMimeType(contentResolver.getType(uri));
+        // Check uri format to avoid null
+        if (uri.scheme != null && uri.scheme == ContentResolver.SCHEME_CONTENT) {
+            // If scheme is a content
+            val mime = MimeTypeMap.getSingleton()
+            extension = mime.getExtensionFromMimeType(contentResolver.getType(uri))
         } else {
             // If scheme is a File
             // This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
-            if (uri.getPath() != null) {
-                extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+            if (uri.path != null) {
+                extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(uri.path as String)).toString().lowercase(Locale.ROOT))
             }
         }
-        if (extension == null) {
-            return null;
-        }
-
-        return "image" + "." + extension;
+        return if (extension == null) {
+            null
+        } else "image.$extension"
     }
 
-
     @CheckResult
-    @Nullable
-    private static String getFilenameViaDisplayName(ContentResolver contentResolver, Uri uri) {
+    private fun getFilenameViaDisplayName(contentResolver: ContentResolver, uri: Uri): String? {
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
-        try (Cursor c = contentResolver.query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
-            if (c != null) {
-                c.moveToNext();
-                return c.getString(0);
+        try {
+            contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null).use { c ->
+                if (c != null) {
+                    c.moveToNext()
+                    return c.getString(0)
+                }
             }
-        } catch (SQLiteException e) {
-            Timber.w(e, "getFilenameViaDisplayName ContentResolver query failed.");
+        } catch (e: SQLiteException) {
+            Timber.w(e, "getFilenameViaDisplayName ContentResolver query failed.")
         }
-        return null;
+        return null
     }
 }
