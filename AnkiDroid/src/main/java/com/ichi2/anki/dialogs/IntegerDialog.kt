@@ -14,57 +14,51 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.os.Bundle;
-import android.text.InputType;
+import android.os.Bundle
+import android.text.InputType
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.FunctionalInterfaces
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class IntegerDialog extends AnalyticsDialogFragment {
-
-    private Consumer<Integer> mConsumer;
-
-    public void setCallbackRunnable(Consumer<Integer> consumer) {
-        this.mConsumer = consumer;
+open class IntegerDialog : AnalyticsDialogFragment() {
+    private var mConsumer: FunctionalInterfaces.Consumer<Int>? = null
+    fun setCallbackRunnable(consumer: FunctionalInterfaces.Consumer<Int>?) {
+        mConsumer = consumer
     }
 
-    public void setArgs(String title, String prompt, int digits) {
-        setArgs(title, prompt, digits, null);
+    fun setArgs(title: String?, prompt: String?, digits: Int) {
+        setArgs(title, prompt, digits, null)
     }
 
-    public void setArgs(String title, String prompt, int digits, @Nullable String content) {
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putString("prompt", prompt);
-        args.putInt("digits", digits);
-        args.putString("content", content);
-        setArguments(args);
+    fun setArgs(title: String?, prompt: String?, digits: Int, content: String?) {
+        val args = Bundle()
+        args.putString("title", title)
+        args.putString("prompt", prompt)
+        args.putInt("digits", digits)
+        args.putString("content", content)
+        arguments = args
     }
 
-    @Override
-    public @NonNull MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-                .title(getArguments().getString("title"))
-                .positiveText(getResources().getString(R.string.dialog_ok))
-                .negativeText(R.string.dialog_cancel)
-                .inputType(InputType.TYPE_CLASS_NUMBER)
-                .inputRange(1, getArguments().getInt("digits"))
-                .input(getArguments().getString("prompt"), "",
-                        (dialog, text) -> mConsumer.consume(Integer.parseInt(text.toString())));
-        //builder.content's argument is marked as @NonNull
-        //We can't use "" as that creates padding, and want to respect the contract, so only set if not null
-        String content = getArguments().getString("content");
+    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+        super.onCreate(savedInstanceState)
+        var builder = MaterialDialog.Builder(requireActivity())
+            .title(requireArguments().getString("title")!!)
+            .positiveText(resources.getString(R.string.dialog_ok))
+            .negativeText(R.string.dialog_cancel)
+            .inputType(InputType.TYPE_CLASS_NUMBER)
+            .inputRange(1, requireArguments().getInt("digits"))
+            .input(
+                requireArguments().getString("prompt"), ""
+            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.consume(text.toString().toInt()) }
+        // builder.content's argument is marked as @NonNull
+        // We can't use "" as that creates padding, and want to respect the contract, so only set if not null
+        val content = requireArguments().getString("content")
         if (content != null) {
-            builder = builder.content(content);
+            builder = builder.content(content)
         }
-        return builder.show();
+        return builder.show()
     }
-    }
+}
