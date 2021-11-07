@@ -93,6 +93,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Set the theme
         Themes.setTheme(this);
+        Themes.disableXiaomiForceDarkMode(this);
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient()) {

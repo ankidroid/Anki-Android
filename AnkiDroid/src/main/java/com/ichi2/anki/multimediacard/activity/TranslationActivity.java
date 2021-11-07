@@ -52,6 +52,7 @@ import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.AdaptionUtil;
 
@@ -99,6 +100,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Themes.disableXiaomiForceDarkMode(this);
 
         if (AdaptionUtil.isUserATestClient()) {
             finishCancel();
