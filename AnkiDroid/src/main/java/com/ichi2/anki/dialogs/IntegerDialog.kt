@@ -30,11 +30,8 @@ open class IntegerDialog : AnalyticsDialogFragment() {
         mConsumer = consumer
     }
 
-    fun setArgs(title: String?, prompt: String?, digits: Int) {
-        setArgs(title, prompt, digits, null)
-    }
-
-    fun setArgs(title: String?, prompt: String?, digits: Int, content: String?) {
+    @JvmOverloads
+    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)
