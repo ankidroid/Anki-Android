@@ -84,6 +84,7 @@ public class Themes {
                     break;
             }
         }
+        disableXiaomiForceDarkMode(context);
     }
 
     public static void setThemeLegacy(Context context) {
@@ -109,8 +110,17 @@ public class Themes {
                     break;
             }
         }
+        disableXiaomiForceDarkMode(context);
     }
 
+
+    /**
+     * #8150: Fix icons not appearing in Note Editor due to MIUI 12's "force dark" mode
+     */
+    public static void disableXiaomiForceDarkMode(Context context) {
+        // Setting a theme is an additive operation, so this adds a single property.
+        context.setTheme(R.style.ThemeOverlay_Xiaomi);
+    }
 
     public static int getResFromAttr(Context context, int resAttr) {
         int[] attrs = new int[] {resAttr};

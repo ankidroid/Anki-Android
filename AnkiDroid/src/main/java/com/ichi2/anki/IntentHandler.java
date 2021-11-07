@@ -24,6 +24,7 @@ import android.os.Message;
 
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.ImportUtils.ImportResult;
@@ -48,6 +49,7 @@ public class IntentHandler extends Activity {
         //Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
+        Themes.disableXiaomiForceDarkMode(this);
         setContentView(R.layout.progress_bar);
         Intent intent = getIntent();
         Timber.v(intent.toString());
