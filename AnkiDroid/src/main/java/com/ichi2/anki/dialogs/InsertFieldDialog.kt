@@ -30,8 +30,8 @@ import java.util.*
  * Create a new instance with required fields list, then show it via the fragment manager as usual.
  */
 class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : DialogFragment() {
-    private var mDialog: MaterialDialog? = null
-    private var mFieldList: List<String>? = null
+    private lateinit var mDialog: MaterialDialog
+    private lateinit var mFieldList: List<String>
     fun withArguments(fieldItems: List<String>): InsertFieldDialog {
         val args = Bundle()
         args.putStringArrayList("fieldItems", ArrayList(fieldItems))
@@ -44,7 +44,7 @@ class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : 
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        mFieldList = requireArguments().getStringArrayList("fieldItems")
+        mFieldList = requireArguments().getStringArrayList("fieldItems")!!
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
@@ -53,12 +53,12 @@ class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : 
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 val textView = holder.itemView as TextView
-                textView.text = mFieldList!![position]
+                textView.text = mFieldList[position]
                 textView.setOnClickListener { selectFieldAndClose(textView) }
             }
 
             override fun getItemCount(): Int {
-                return mFieldList!!.size
+                return mFieldList.size
             }
         }
         mDialog = MaterialDialog.Builder(requireContext())
@@ -66,12 +66,12 @@ class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : 
             .negativeText(R.string.dialog_cancel)
             .adapter(adapter, null)
             .build()
-        return mDialog!!
+        return mDialog
     }
 
     private fun selectFieldAndClose(textView: TextView) {
         insertFieldListener.insertField(textView.text.toString())
-        mDialog!!.dismiss()
+        mDialog.dismiss()
     }
 
     interface InsertFieldListener {
