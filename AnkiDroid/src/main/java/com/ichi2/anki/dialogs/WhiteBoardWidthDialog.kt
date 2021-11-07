@@ -14,94 +14,71 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import android.content.Context
+import android.view.Gravity
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.ui.FixedTextView
+import java.util.function.Consumer
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.ui.FixedTextView;
-
-import java.util.function.Consumer;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class WhiteBoardWidthDialog {
-
-    private final Context mContext;
-    private Integer mWbStrokeWidth;
-    private FixedTextView mWbStrokeWidthText;
-    public @Nullable
-    Consumer<Integer> mOnStrokeWidthChanged;
-
-
-    public WhiteBoardWidthDialog(@NonNull Context context, @NonNull int wbStrokeWidth) {
-       this.mContext = context;
-       this.mWbStrokeWidth = wbStrokeWidth;
-    }
-
-
-    public final SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
-            mWbStrokeWidth = value;
-            mWbStrokeWidthText.setText("" + value);
+class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
+    private var mWbStrokeWidthText: FixedTextView? = null
+    var onStrokeWidthChanged: Consumer<Int>? = null
+    private val seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
+            wbStrokeWidth = value
+            mWbStrokeWidthText!!.text = "" + value
         }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
+        override fun onStartTrackingTouch(seekBar: SeekBar) {
             // intentionally blank
         }
 
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
+        override fun onStopTrackingTouch(seekBar: SeekBar) {
             // intentionally blank
         }
-    };
-
-    public void showStrokeWidthDialog() {
-        LinearLayout layout = new LinearLayout(mContext);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(6, 6, 6, 6);
-
-        mWbStrokeWidthText = new FixedTextView(mContext);
-        mWbStrokeWidthText.setGravity(Gravity.CENTER_HORIZONTAL);
-        mWbStrokeWidthText.setTextSize(30);
-        mWbStrokeWidthText.setText("" + mWbStrokeWidth);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        layout.addView(mWbStrokeWidthText, params);
-
-        SeekBar seekBar = new SeekBar(mContext);
-        seekBar.setProgress(mWbStrokeWidth);
-        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
-
-        layout.addView(seekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        new MaterialDialog.Builder(mContext)
-                .title(R.string.whiteboard_stroke_width)
-                .positiveText(R.string.save)
-                .negativeText(R.string.dialog_cancel)
-                .customView(layout, true)
-                .onPositive((dialog, which) -> {
-                    if (mOnStrokeWidthChanged != null) {
-                        mOnStrokeWidthChanged.accept(mWbStrokeWidth);
-                    }
-                })
-                .show();
     }
 
-    public void onStrokeWidthChanged(Consumer<Integer> c) {
-        this.mOnStrokeWidthChanged = c;
+    fun showStrokeWidthDialog() {
+        val layout = LinearLayout(context)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.setPadding(6, 6, 6, 6)
+        mWbStrokeWidthText = FixedTextView(context)
+        mWbStrokeWidthText!!.gravity = Gravity.CENTER_HORIZONTAL
+        mWbStrokeWidthText!!.textSize = 30f
+        mWbStrokeWidthText!!.text = "" + wbStrokeWidth
+        val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layout.addView(mWbStrokeWidthText, params)
+        val seekBar = SeekBar(context)
+        seekBar.progress = wbStrokeWidth
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener)
+        layout.addView(
+            seekBar,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
+        MaterialDialog.Builder(context)
+            .title(R.string.whiteboard_stroke_width)
+            .positiveText(R.string.save)
+            .negativeText(R.string.dialog_cancel)
+            .customView(layout, true)
+            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                if (onStrokeWidthChanged != null) {
+                    onStrokeWidthChanged!!.accept(wbStrokeWidth)
+                }
+            }
+            .show()
+    }
+
+    fun onStrokeWidthChanged(c: Consumer<Int>?) {
+        onStrokeWidthChanged = c
     }
 }
