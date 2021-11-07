@@ -101,10 +101,14 @@ fi
 # Configuration for pushing to Play specified in build.gradle 'play' task
 if ! ./gradlew publishPlayReleaseApk
 then
-  # APK contains problems, abort release
-  git checkout -- $GRADLEFILE # Revert version change
-  exit 1
-else
+  # APK contains problems
+  # Normally we want to abort the release but right now we know google will reject us until
+  # we have targetSdkVersion 30, so ignore.
+#  git checkout -- $GRADLEFILE # Revert version change  #API30
+#  exit 1  #API30
+#else  #API30
+  echo "Google has rejected the APK upload. Likely because targetSdkVersion < 30. Continuing..."  #API30
+fi  #API30
   # Play store is irreversible, so now commit modified AndroidManifest.xml (and changelog.html if it changed)
   git add $GRADLEFILE $CHANGELOG
   git commit -m "Bumped version to $VERSION"
@@ -115,7 +119,7 @@ else
   # Push both commits and tag
   git push
   git push --tags
-fi
+#fi  #API30
 
 # Now build the universal release also
 if ! ./gradlew assemblePlayRelease -Duniversal-apk=true
