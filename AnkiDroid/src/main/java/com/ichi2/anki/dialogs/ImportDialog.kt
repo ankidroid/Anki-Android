@@ -36,27 +36,28 @@ class ImportDialog : AsyncDialogFragment() {
         val res = resources
         val builder = MaterialDialog.Builder(requireActivity())
         builder.cancelable(true)
+        val dialogMessage = requireArguments().getString("dialogMessage")!!
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
-                val displayFileName = convertToDisplayName(requireArguments().getString("dialogMessage"))
+                val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
                     .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
                     .positiveText(R.string.import_message_add)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                        (activity as ImportDialogListener?)!!.importAdd(requireArguments().getString("dialogMessage"))
+                        (activity as ImportDialogListener?)!!.importAdd(dialogMessage)
                         dismissAllDialogFragments()
                     }
                     .show()
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
-                val displayFileName = convertToDisplayName(requireArguments().getString("dialogMessage"))
+                val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
                     .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
                     .positiveText(R.string.dialog_positive_replace)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                        (activity as ImportDialogListener?)!!.importReplace(requireArguments().getString("dialogMessage"))
+                        (activity as ImportDialogListener?)!!.importReplace(dialogMessage)
                         dismissAllDialogFragments()
                     }
                     .show()
@@ -65,7 +66,7 @@ class ImportDialog : AsyncDialogFragment() {
         }
     }
 
-    private fun convertToDisplayName(name: String?): String? {
+    private fun convertToDisplayName(name: String): String {
         // ImportUtils URLEncodes names, which isn't great for display.
         // NICE_TO_HAVE: Pass in the DisplayFileName closer to the source of the bad data, rather than fixing it here.
         return try {
@@ -100,7 +101,7 @@ class ImportDialog : AsyncDialogFragment() {
          * or specify import path
          */
         @JvmStatic
-        fun newInstance(dialogType: Int, dialogMessage: String?): ImportDialog {
+        fun newInstance(dialogType: Int, dialogMessage: String): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
@@ -109,8 +110,8 @@ class ImportDialog : AsyncDialogFragment() {
             return f
         }
 
-        private fun filenameFromPath(path: String?): String {
-            return path!!.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
+        private fun filenameFromPath(path: String): String {
+            return path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
         }
     }
 }

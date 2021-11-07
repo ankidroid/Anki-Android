@@ -1390,6 +1390,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void showImportDialog(int id, String message) {
         Timber.d("showImportDialog() delegating to ImportDialog");
+        if (message == null) {
+            message = "";
+        }
         AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
         showAsyncDialogFragment(newFragment);
     }
