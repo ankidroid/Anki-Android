@@ -14,77 +14,59 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.os.Bundle;
-import android.os.Message;
+import android.os.Bundle
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import java.io.File
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-
-import java.io.File;
-
-import androidx.annotation.NonNull;
-
-public class ExportCompleteDialog extends AsyncDialogFragment {
-
-    public interface ExportCompleteDialogListener {
-        void dismissAllDialogFragments();
-
-        void emailFile(String path);
-
-        void saveExportFile(String exportPath);
+class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
+    interface ExportCompleteDialogListener {
+        fun dismissAllDialogFragments()
+        fun emailFile(path: String?)
+        fun saveExportFile(exportPath: String?)
     }
 
-    @NonNull
-    private final ExportCompleteDialogListener mListener;
-
-    public ExportCompleteDialog(@NonNull ExportCompleteDialogListener listener) {
-        mListener = listener;
-    }
-
-    public ExportCompleteDialog withArguments(String exportPath) {
-        Bundle args = this.getArguments();
+    fun withArguments(exportPath: String?): ExportCompleteDialog {
+        var args = this.arguments
         if (args == null) {
-            args = new Bundle();
+            args = Bundle()
         }
-        args.putString("exportPath", exportPath);
-        this.setArguments(args);
-        return this;
+        args.putString("exportPath", exportPath)
+        this.arguments = args
+        return this
     }
 
-
-    @NonNull
-    @Override
-    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final String exportPath = requireArguments().getString("exportPath");
-        MaterialDialog.Builder dialogBuilder = new MaterialDialog.Builder(requireActivity())
-                .title(getNotificationTitle())
-                .content(getNotificationMessage())
-                .iconAttr(R.attr.dialogSendIcon)
-                .positiveText(R.string.export_send_button)
-                .negativeText(R.string.export_save_button)
-                .onPositive((dialog, which) -> {
-                    mListener.dismissAllDialogFragments();
-                    mListener.emailFile(exportPath);
-                })
-                .onNegative((dialog, which) -> {
-                    mListener.dismissAllDialogFragments();
-                    mListener.saveExportFile(exportPath);
-                })
-                .neutralText(R.string.dialog_cancel)
-                .onNeutral((dialog, which) -> mListener.dismissAllDialogFragments());
-        return dialogBuilder.show();
-    }
-    
-    public String getNotificationTitle() {
-        return res().getString(R.string.export_successful_title);
+    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+        super.onCreate(savedInstanceState)
+        val exportPath = requireArguments().getString("exportPath")
+        val dialogBuilder = MaterialDialog.Builder(requireActivity())
+            .title(notificationTitle)
+            .content(notificationMessage)
+            .iconAttr(R.attr.dialogSendIcon)
+            .positiveText(R.string.export_send_button)
+            .negativeText(R.string.export_save_button)
+            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                listener.dismissAllDialogFragments()
+                listener.emailFile(exportPath)
+            }
+            .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                listener.dismissAllDialogFragments()
+                listener.saveExportFile(exportPath)
+            }
+            .neutralText(R.string.dialog_cancel)
+            .onNeutral { _: MaterialDialog?, _: DialogAction? -> listener.dismissAllDialogFragments() }
+        return dialogBuilder.show()
     }
 
+    override fun getNotificationTitle(): String {
+        return res().getString(R.string.export_successful_title)
+    }
 
-    public String getNotificationMessage() {
-        File exportPath = new File(requireArguments().getString("exportPath"));
-        return res().getString(R.string.export_successful, exportPath.getName());
+    override fun getNotificationMessage(): String {
+        val exportPath = File(requireArguments().getString("exportPath")!!)
+        return res().getString(R.string.export_successful, exportPath.name)
     }
 }
