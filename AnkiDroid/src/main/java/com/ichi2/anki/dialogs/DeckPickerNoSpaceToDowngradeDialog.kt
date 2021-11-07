@@ -13,69 +13,47 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import android.content.Context
+import android.os.Bundle
+import android.text.format.Formatter
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.BackupManager
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import java.io.File
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.os.Bundle;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-
-import java.io.File;
-
-import androidx.annotation.NonNull;
-
-public class DeckPickerNoSpaceToDowngradeDialog extends AnalyticsDialogFragment {
-    private final FileSizeFormatter mFormatter;
-    private final File mCollection;
-
-
-    public DeckPickerNoSpaceToDowngradeDialog(FileSizeFormatter formatter, File collectionFile) {
-        mFormatter = formatter;
-        mCollection = collectionFile;
+class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatter, private val collection: File?) : AnalyticsDialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+        super.onCreate(savedInstanceState)
+        val res = resources
+        return MaterialDialog.Builder(requireActivity())
+            .title(res.getString(R.string.no_space_to_downgrade_title))
+            .content(res.getString(R.string.no_space_to_downgrade_content, requiredSpaceString))
+            .cancelable(false)
+            .positiveText(R.string.close)
+            .onPositive { _: MaterialDialog?, _: DialogAction? -> (activity as DeckPicker?)!!.exit() }
+            .show()
     }
 
+    private val requiredSpaceString: String
+        get() = formatter.formatFileSize(freeSpaceRequired)
+    private val freeSpaceRequired: Long
+        get() = BackupManager.getRequiredFreeSpace(collection)
 
-    public static DeckPickerNoSpaceToDowngradeDialog newInstance(FileSizeFormatter formatter, File collectionFile) {
-        return new DeckPickerNoSpaceToDowngradeDialog(formatter, collectionFile);
-    }
-
-    @NonNull
-    @Override
-    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Resources res = getResources();
-        return new MaterialDialog.Builder(getActivity())
-                .title(res.getString(R.string.no_space_to_downgrade_title))
-                .content(res.getString(R.string.no_space_to_downgrade_content, getRequiredSpaceString()))
-                .cancelable(false)
-                .positiveText(R.string.close)
-                .onPositive((dialog, which) -> ((DeckPicker) getActivity()).exit())
-                .show();
-    }
-
-    private String getRequiredSpaceString() {
-        return mFormatter.formatFileSize(getFreeSpaceRequired());
-    }
-
-    private long getFreeSpaceRequired() {
-        return BackupManager.getRequiredFreeSpace(mCollection);
-    }
-
-    public static class FileSizeFormatter {
-        private final Context mContext;
-
-        public FileSizeFormatter(Context context) {
-            mContext = context;
+    class FileSizeFormatter(private val context: Context) {
+        fun formatFileSize(sizeInBytes: Long): String {
+            return Formatter.formatShortFileSize(context, sizeInBytes)
         }
+    }
 
-        public String formatFileSize(long sizeInBytes) {
-            return android.text.format.Formatter.formatShortFileSize(mContext, sizeInBytes);
+    companion object {
+        @JvmStatic
+        fun newInstance(formatter: FileSizeFormatter, collectionFile: File?): DeckPickerNoSpaceToDowngradeDialog {
+            return DeckPickerNoSpaceToDowngradeDialog(formatter, collectionFile)
         }
     }
 }
