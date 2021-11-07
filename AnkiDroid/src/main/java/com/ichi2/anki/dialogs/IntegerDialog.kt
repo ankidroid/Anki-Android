@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.contentNullable
 
 open class IntegerDialog : AnalyticsDialogFragment() {
     private var mConsumer: FunctionalInterfaces.Consumer<Int>? = null
@@ -44,7 +45,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        var builder = MaterialDialog.Builder(requireActivity())
+        return MaterialDialog.Builder(requireActivity())
             .title(requireArguments().getString("title")!!)
             .positiveText(resources.getString(R.string.dialog_ok))
             .negativeText(R.string.dialog_cancel)
@@ -53,12 +54,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
             .input(
                 requireArguments().getString("prompt"), ""
             ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.consume(text.toString().toInt()) }
-        // builder.content's argument is marked as @NonNull
-        // We can't use "" as that creates padding, and want to respect the contract, so only set if not null
-        val content = requireArguments().getString("content")
-        if (content != null) {
-            builder = builder.content(content)
-        }
-        return builder.show()
+            .contentNullable(requireArguments().getString("content"))
+            .show()
     }
 }
