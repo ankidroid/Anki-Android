@@ -1,184 +1,167 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.dialogs;
 
-import android.os.Bundle;
-import android.os.Message;
-import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+package com.ichi2.anki.dialogs
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
+import android.app.Dialog
+import android.os.Bundle
+import android.os.Message
+import android.text.TextUtils
+import android.text.method.ScrollingMovementMethod
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import java.util.*
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import androidx.annotation.NonNull;
-
-public class MediaCheckDialog extends AsyncDialogFragment {
-    public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
-    public static final int DIALOG_MEDIA_CHECK_RESULTS = 1;
-
-    public interface MediaCheckDialogListener {
-        void showMediaCheckDialog(int dialogType);
-        void showMediaCheckDialog(int dialogType, List<List<String>> checkList);
-        void mediaCheck();
-        void deleteUnused(List<String> unused);
-        void dismissAllDialogFragments();
+class MediaCheckDialog : AsyncDialogFragment() {
+    interface MediaCheckDialogListener {
+        fun showMediaCheckDialog(dialogType: Int)
+        fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>)
+        fun mediaCheck()
+        fun deleteUnused(unused: List<String?>?)
+        fun dismissAllDialogFragments()
     }
 
-
-    public static MediaCheckDialog newInstance(int dialogType) {
-        MediaCheckDialog f = new MediaCheckDialog();
-        Bundle args = new Bundle();
-        args.putInt("dialogType", dialogType);
-        f.setArguments(args);
-        return f;
-    }
-
-
-    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
-        MediaCheckDialog f = new MediaCheckDialog();
-        Bundle args = new Bundle();
-        args.putStringArrayList("nohave", new ArrayList<>(checkList.get(0)));
-        args.putStringArrayList("unused", new ArrayList<>(checkList.get(1)));
-        args.putStringArrayList("invalid", new ArrayList<>(checkList.get(2)));
-        args.putInt("dialogType", dialogType);
-        f.setArguments(args);
-        return f;
-    }
-
-
-    @NonNull
-    @Override
-    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
-        builder.title(getNotificationTitle());
-
-        switch (getArguments().getInt("dialogType")) {
-            case DIALOG_CONFIRM_MEDIA_CHECK: {
-                return builder.content(getNotificationMessage())
-                        .positiveText(res().getString(R.string.dialog_ok))
-                        .negativeText(res().getString(R.string.dialog_cancel))
-                        .cancelable(true)
-                        .onPositive((dialog, which) -> {
-                            ((MediaCheckDialogListener) getActivity()).mediaCheck();
-                            ((MediaCheckDialogListener) getActivity())
-                                    .dismissAllDialogFragments();
-                        })
-                        .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity())
-                                .dismissAllDialogFragments())
-                        .show();
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        super.onCreate(savedInstanceState)
+        val builder = MaterialDialog.Builder(requireActivity())
+        builder.title(notificationTitle)
+        return when (requireArguments().getInt("dialogType")) {
+            DIALOG_CONFIRM_MEDIA_CHECK -> {
+                builder.content(notificationMessage)
+                    .positiveText(res().getString(R.string.dialog_ok))
+                    .negativeText(res().getString(R.string.dialog_cancel))
+                    .cancelable(true)
+                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                        (activity as MediaCheckDialogListener?)!!.mediaCheck()
+                        (activity as MediaCheckDialogListener?)
+                            ?.dismissAllDialogFragments()
+                    }
+                    .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                        (activity as MediaCheckDialogListener?)
+                            ?.dismissAllDialogFragments()
+                    }
+                    .show()
             }
-            case DIALOG_MEDIA_CHECK_RESULTS: {
-                final ArrayList<String> nohave = getArguments().getStringArrayList("nohave");
-                final ArrayList<String> unused = getArguments().getStringArrayList("unused");
-                final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
+            DIALOG_MEDIA_CHECK_RESULTS -> {
+                val nohave = requireArguments().getStringArrayList("nohave")
+                val unused = requireArguments().getStringArrayList("unused")
+                val invalid = requireArguments().getStringArrayList("invalid")
                 // Generate report
-                final StringBuilder report = new StringBuilder();
-                if (!invalid.isEmpty()) {
-                    report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size()));
+                val report = StringBuilder()
+                if (invalid!!.isNotEmpty()) {
+                    report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size))
                 }
-                if (!unused.isEmpty()) {
-                    if (report.length() > 0) {
-                        report.append("\n");
+                if (unused!!.isNotEmpty()) {
+                    if (report.isNotEmpty()) {
+                        report.append("\n")
                     }
-                    report.append(String.format(res().getString(R.string.check_media_unused), unused.size()));
+                    report.append(String.format(res().getString(R.string.check_media_unused), unused.size))
                 }
-                if (!nohave.isEmpty()) {
-                    if (report.length() > 0) {
-                        report.append("\n");
+                if (nohave!!.isNotEmpty()) {
+                    if (report.isNotEmpty()) {
+                        report.append("\n")
                     }
-                    report.append(String.format(res().getString(R.string.check_media_nohave), nohave.size()));
+                    report.append(String.format(res().getString(R.string.check_media_nohave), nohave.size))
                 }
-
-                if (report.length() == 0) {
-                    report.append(res().getString(R.string.check_media_no_unused_missing));
+                if (report.isEmpty()) {
+                    report.append(res().getString(R.string.check_media_no_unused_missing))
                 }
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
-                final String reportStr = res().getString(R.string.check_media_db_updated) + "\n\n" + report.toString();
-
-                LinearLayout dialogBody = (LinearLayout) getLayoutInflater().inflate(R.layout.media_check_dialog_body, null);
-                TextView reportTextView = dialogBody.findViewById(R.id.reportTextView);
-                TextView fileListTextView = dialogBody.findViewById(R.id.fileListTextView);
-
-                reportTextView.setText(reportStr);
-
-                if (!unused.isEmpty()) {
-                    reportTextView.append(getString(R.string.unused_strings));
-
-                    fileListTextView.append(TextUtils.join("\n", unused));
-
-                    fileListTextView.setScrollbarFadingEnabled(unused.size() <= fileListTextView.getMaxLines());
-                    fileListTextView.setMovementMethod(ScrollingMovementMethod.getInstance());
-
+                val reportStr = """
+                    ${res().getString(R.string.check_media_db_updated)}
+                    
+                    $report
+                """.trimIndent()
+                val dialogBody = layoutInflater.inflate(R.layout.media_check_dialog_body, null) as LinearLayout
+                val reportTextView = dialogBody.findViewById<TextView>(R.id.reportTextView)
+                val fileListTextView = dialogBody.findViewById<TextView>(R.id.fileListTextView)
+                reportTextView.text = reportStr
+                if (unused.isNotEmpty()) {
+                    reportTextView.append(getString(R.string.unused_strings))
+                    fileListTextView.append(TextUtils.join("\n", unused))
+                    fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
+                    fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
                     builder.negativeText(res().getString(R.string.dialog_cancel))
-                            .positiveText(res().getString(R.string.check_media_delete_unused))
-                            .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity())
-                                    .dismissAllDialogFragments())
-                            .onPositive((dialog, which) -> {
-                                ((MediaCheckDialogListener) getActivity()).deleteUnused(unused);
-                                dismissAllDialogFragments();
-                            });
+                        .positiveText(res().getString(R.string.check_media_delete_unused))
+                        .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                            (activity as MediaCheckDialogListener?)
+                                ?.dismissAllDialogFragments()
+                        }
+                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                            (activity as MediaCheckDialogListener?)!!.deleteUnused(unused)
+                            dismissAllDialogFragments()
+                        }
                 } else {
-                    fileListTextView.setVisibility(View.GONE);
+                    fileListTextView.visibility = View.GONE
                     builder.negativeText(res().getString(R.string.dialog_ok))
-                            .onNegative((dialog, which) -> ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments());
+                        .onNegative { _: MaterialDialog?, _: DialogAction? -> (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments() }
                 }
-                return builder
-                        .customView(dialogBody, false)
-                        .cancelable(false)
-                        .show();
+                builder
+                    .customView(dialogBody, false)
+                    .cancelable(false)
+                    .show()
             }
-            default:
-                return null;
+            else -> null!!
         }
     }
 
-
-    public void dismissAllDialogFragments() {
-        ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
+    fun dismissAllDialogFragments() {
+        (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments()
     }
 
-
-    @Override
-    public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType") ) {
-            case DIALOG_CONFIRM_MEDIA_CHECK:
-                return res().getString(R.string.check_media_warning);
-            case DIALOG_MEDIA_CHECK_RESULTS:
-                return res().getString(R.string.check_media_acknowledge);
-            default:
-                return res().getString(R.string.app_name);
+    override fun getNotificationMessage(): String {
+        return when (requireArguments().getInt("dialogType")) {
+            DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
+            DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
+            else -> res().getString(R.string.app_name)
         }
     }
 
-
-    @Override
-    public String getNotificationTitle() {
-        if (getArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
-            return res().getString(R.string.check_media_title);
-        }
-        return res().getString(R.string.app_name);
+    override fun getNotificationTitle(): String {
+        return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
+            res().getString(R.string.check_media_title)
+        } else res().getString(R.string.app_name)
     }
 
+    override fun getDialogHandlerMessage(): Message {
+        val msg = Message.obtain()
+        msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG
+        val b = Bundle()
+        b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
+        b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
+        b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
+        b.putInt("dialogType", requireArguments().getInt("dialogType"))
+        msg.data = b
+        return msg
+    }
 
-    @Override
-    public Message getDialogHandlerMessage() {
-        Message msg = Message.obtain();
-        msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG;
-        Bundle b = new Bundle();
-        b.putStringArrayList("nohave", getArguments().getStringArrayList("nohave"));
-        b.putStringArrayList("unused", getArguments().getStringArrayList("unused"));
-        b.putStringArrayList("invalid", getArguments().getStringArrayList("invalid"));
-        b.putInt("dialogType", getArguments().getInt("dialogType"));
-        msg.setData(b);
-        return msg;
+    companion object {
+        const val DIALOG_CONFIRM_MEDIA_CHECK = 0
+        const val DIALOG_MEDIA_CHECK_RESULTS = 1
+        @JvmStatic
+        fun newInstance(dialogType: Int): MediaCheckDialog {
+            val f = MediaCheckDialog()
+            val args = Bundle()
+            args.putInt("dialogType", dialogType)
+            f.arguments = args
+            return f
+        }
+
+        @JvmStatic
+        fun newInstance(dialogType: Int, checkList: List<List<String?>?>): MediaCheckDialog {
+            val f = MediaCheckDialog()
+            val args = Bundle()
+            args.putStringArrayList("nohave", ArrayList(checkList[0]!!.toMutableList()))
+            args.putStringArrayList("unused", ArrayList(checkList[1]!!.toMutableList()))
+            args.putStringArrayList("invalid", ArrayList(checkList[2]!!.toMutableList()))
+            args.putInt("dialogType", dialogType)
+            f.arguments = args
+            return f
+        }
     }
 }
