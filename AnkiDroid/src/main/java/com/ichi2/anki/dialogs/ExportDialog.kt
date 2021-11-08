@@ -14,40 +14,24 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.content.res.Resources;
-import android.os.Bundle;
+import android.os.Bundle
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.BundleUtils.getNullableLong
+import com.ichi2.utils.contentNullable
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.utils.BundleUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class ExportDialog extends AnalyticsDialogFragment {
-
-    public interface ExportDialogListener {
-
-        void exportApkg(String path, Long did, boolean includeSched, boolean includeMedia);
-        void dismissAllDialogFragments();
+class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
+    interface ExportDialogListener {
+        fun exportApkg(path: String?, did: Long?, includeSched: Boolean, includeMedia: Boolean)
+        fun dismissAllDialogFragments()
     }
 
-    @NonNull
-    private final ExportDialogListener mListener;
-
-
-    public ExportDialog(@NonNull ExportDialogListener listener) {
-        mListener = listener;
-    }
-
-    private final static int INCLUDE_SCHED = 0;
-    private final static int INCLUDE_MEDIA = 1;
-    private boolean mIncludeSched = false;
-    private boolean mIncludeMedia = false;
-
+    private var mIncludeSched = false
+    private var mIncludeMedia = false
 
     /**
      * Creates a new instance of ExportDialog to export a deck of cards
@@ -56,81 +40,71 @@ public class ExportDialog extends AnalyticsDialogFragment {
      *            if did is null then the whole collection of decks will be exported
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
-    public ExportDialog withArguments(@NonNull String dialogMessage, @Nullable Long did) {
-        Bundle args = this.getArguments();
+    @JvmOverloads
+    fun withArguments(dialogMessage: String, did: Long? = null): ExportDialog {
+        var args = this.arguments
         if (args == null) {
-            args = new Bundle();
+            args = Bundle()
         }
         if (did != null) {
-            args.putLong("did", did);
+            args.putLong("did", did)
         }
-        args.putString("dialogMessage", dialogMessage);
-        this.setArguments(args);
-        return this;
+        args.putString("dialogMessage", dialogMessage)
+        this.arguments = args
+        return this
     }
 
-    /**
-     * Creates a new instance of ExportDialog to export the user collection of decks
-     *
-     * @param dialogMessage A string which can be used to show a custom message or specify import path
-     */
-    public ExportDialog withArguments(@NonNull String dialogMessage) {
-        return withArguments(dialogMessage, null);
-    }
-
-
-    @NonNull
-    @Override
-    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Resources res = getResources();
-        final Long did = BundleUtils.getNullableLong(getArguments(), "did");
-        Integer[] checked;
+    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+        super.onCreate(savedInstanceState)
+        val res = resources
+        val did = getNullableLong(arguments, "did")
+        val checked: Array<Int>
         if (did != null) {
-            mIncludeSched = false;
-            checked = new Integer[]{};
+            mIncludeSched = false
+            checked = arrayOf()
         } else {
-            mIncludeSched = true;
-            checked = new Integer[]{INCLUDE_SCHED};
+            mIncludeSched = true
+            checked = arrayOf(INCLUDE_SCHED)
         }
-        final String[] items = { res.getString(R.string.export_include_schedule),
-                res.getString(R.string.export_include_media) };
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
-                .title(R.string.export)
-                .content(getArguments().getString("dialogMessage"))
-                .positiveText(android.R.string.ok)
-                .negativeText(android.R.string.cancel)
-                .cancelable(true)
-                .items(items)
-                .alwaysCallMultiChoiceCallback()
-                .itemsCallbackMultiChoice(checked,
-                        (materialDialog, integers, charSequences) -> {
-                            mIncludeMedia = false;
-                            mIncludeSched = false;
-                            for (Integer integer : integers) {
-                                switch (integer) {
-                                    case INCLUDE_SCHED:
-                                        mIncludeSched = true;
-                                        break;
-                                    case INCLUDE_MEDIA:
-                                        mIncludeMedia = true;
-                                        break;
-                                }
-                            }
-                            return true;
-                        })
-                .onPositive((dialog, which) -> {
-                    mListener.exportApkg(null, did, mIncludeSched, mIncludeMedia);
-                    dismissAllDialogFragments();
-                })
-                .onNegative((dialog, which) -> dismissAllDialogFragments());
-        return builder.show();
+        val items = arrayOf(
+            res.getString(R.string.export_include_schedule),
+            res.getString(R.string.export_include_media)
+        )
+        val builder = MaterialDialog.Builder(requireActivity())
+            .title(R.string.export)
+            .contentNullable(requireArguments().getString("dialogMessage"))
+            .positiveText(android.R.string.ok)
+            .negativeText(android.R.string.cancel)
+            .cancelable(true)
+            .items(*items)
+            .alwaysCallMultiChoiceCallback()
+            .itemsCallbackMultiChoice(
+                checked
+            ) { _: MaterialDialog?, integers: Array<Int?>, _: Array<CharSequence?>? ->
+                mIncludeMedia = false
+                mIncludeSched = false
+                for (integer in integers) {
+                    when (integer) {
+                        INCLUDE_SCHED -> mIncludeSched = true
+                        INCLUDE_MEDIA -> mIncludeMedia = true
+                    }
+                }
+                true
+            }
+            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                listener.exportApkg(null, did, mIncludeSched, mIncludeMedia)
+                dismissAllDialogFragments()
+            }
+            .onNegative { _: MaterialDialog?, _: DialogAction? -> dismissAllDialogFragments() }
+        return builder.show()
     }
 
-
-    public void dismissAllDialogFragments() {
-        mListener.dismissAllDialogFragments();
+    fun dismissAllDialogFragments() {
+        listener.dismissAllDialogFragments()
     }
 
+    companion object {
+        private const val INCLUDE_SCHED = 0
+        private const val INCLUDE_MEDIA = 1
+    }
 }
