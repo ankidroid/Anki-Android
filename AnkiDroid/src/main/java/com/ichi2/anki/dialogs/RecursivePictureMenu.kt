@@ -13,253 +13,202 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import android.app.Dialog
+import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.CheckResult
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.UsageAnalytics
+import timber.log.Timber
+import java.util.*
 
-import android.app.Dialog;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+/** A Dialog displaying The various options for "Help" in a nested structure  */
+class RecursivePictureMenu : DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val items: List<Item> = requireArguments().getParcelableArrayList("bundle")!!
+        val title = requireContext().getString(requireArguments().getInt("titleRes"))
+        val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+                val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                return object : RecyclerView.ViewHolder(root) {}
+            }
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.UsageAnalytics;
+            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+                val textView = holder.itemView as TextView
+                val item = items[position]
+                textView.setText(item.title)
+                textView.setOnClickListener { item.execute(requireActivity() as AnkiActivity) }
+                val icon = item.mIcon
+                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0)
+            }
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
-import timber.log.Timber;
-
-/** A Dialog displaying The various options for "Help" in a nested structure */
-public class RecursivePictureMenu extends DialogFragment {
-
-    public RecursivePictureMenu() {
-        // required for a fragment - must be no args
-    }
-
-    @CheckResult
-    public static RecursivePictureMenu createInstance(ArrayList<Item> itemList, @StringRes int title) {
-        RecursivePictureMenu helpDialog = new RecursivePictureMenu();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("bundle", itemList);
-        args.putInt("titleRes", title);
-        helpDialog.setArguments(args);
-        return helpDialog;
-    }
-
-
-    public static void removeFrom(List<Item> allItems, Item toRemove) {
-        // Note: currently doesn't remove the top-level elements.
-        for (Item i : allItems) {
-            i.remove(toRemove);
+            override fun getItemCount(): Int {
+                return items.size
+            }
         }
-    }
-
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
-        @NonNull
-        final List<Item> items = requireArguments().getParcelableArrayList("bundle");
-        @NonNull
-        final String title = requireContext().getString(requireArguments().getInt("titleRes"));
-
-        RecyclerView.Adapter<?> adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-
-            @NonNull
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View root = getLayoutInflater().inflate(R.layout.material_dialog_list_item, parent, false);
-                return new RecyclerView.ViewHolder(root) { };
-            }
-
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                TextView textView = (TextView) holder.itemView;
-                Item val = items.get(position);
-                textView.setText(val.mText);
-                textView.setOnClickListener((l) -> val.execute((AnkiActivity) requireActivity()));
-                int icon = val.mIcon;
-                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0);
-            }
-
-
-            @Override
-            public int getItemCount() {
-                return items.size();
-            }
-        };
-
-        MaterialDialog dialog = new MaterialDialog.Builder(requireContext())
-                .adapter(adapter, null)
-                .title(title)
-                .show();
-
-        setMenuBreadcrumbHeader(dialog);
-
-        View v = dialog.findViewById(R.id.md_contentRecyclerView);
-        v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), 0);
+        val dialog = MaterialDialog.Builder(requireContext())
+            .adapter(adapter, null)
+            .title(title)
+            .show()
+        setMenuBreadcrumbHeader(dialog)
+        val v = dialog.findViewById(R.id.md_contentRecyclerView)
+        v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, 0)
         // DEFECT: There is 9dp of bottom margin which I can't seem to get rid of.
-
-        return dialog;
+        return dialog
     }
 
-
-    protected void setMenuBreadcrumbHeader(MaterialDialog dialog) {
+    protected fun setMenuBreadcrumbHeader(dialog: MaterialDialog) {
         try {
-            View titleFrame = dialog.findViewById(R.id.md_titleFrame);
-            titleFrame.setPadding(10, 22, 10, 10);
-            titleFrame.setOnClickListener((l) -> dismiss());
-
-            ImageView icon = (ImageView) dialog.findViewById(R.id.md_icon);
-            icon.setVisibility(View.VISIBLE);
-            Drawable iconValue = AppCompatResources.getDrawable(getContext(), R.drawable.ic_menu_back_black_24dp);
-            iconValue.setAutoMirrored(true);
-            icon.setImageDrawable(iconValue);
-        } catch (Exception e) {
-            Timber.w(e, "Failed to set Menu title/icon");
+            val titleFrame = dialog.findViewById(R.id.md_titleFrame)
+            titleFrame.setPadding(10, 22, 10, 10)
+            titleFrame.setOnClickListener { dismiss() }
+            val icon = dialog.findViewById(R.id.md_icon) as ImageView
+            icon.visibility = View.VISIBLE
+            val iconValue = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_menu_back_black_24dp)
+            iconValue!!.isAutoMirrored = true
+            icon.setImageDrawable(iconValue)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to set Menu title/icon")
         }
     }
 
-
-    public abstract static class Item implements Parcelable {
-
+    abstract class Item : Parcelable {
+        @get:StringRes
         @StringRes
-        private final int mText;
+        val title: Int
+
         @DrawableRes
-        private final int mIcon;
-        private final String mAnalyticsId;
+        val mIcon: Int
+        private val mAnalyticsId: String?
 
-        public Item(@StringRes int titleString, @DrawableRes int iconDrawable, String analyticsId) {
-            this.mText = titleString;
-            this.mIcon = iconDrawable;
-            this.mAnalyticsId = analyticsId;
+        constructor(@StringRes titleString: Int, @DrawableRes iconDrawable: Int, analyticsId: String?) {
+            title = titleString
+            mIcon = iconDrawable
+            mAnalyticsId = analyticsId
         }
 
-        public List<Item> getChildren() {
-            return new ArrayList<>(0);
+        open val children: List<Item?>
+            get() = ArrayList(0)
+
+        protected constructor(parcel: Parcel) {
+            title = parcel.readInt()
+            mIcon = parcel.readInt()
+            mAnalyticsId = parcel.readString()
         }
 
-        protected Item(Parcel in) {
-            mText = in.readInt();
-            mIcon = in.readInt();
-            mAnalyticsId = in.readString();
+        override fun describeContents(): Int {
+            return 0
         }
 
-        @StringRes
-        protected int getTitle() {
-            return mText;
+        override fun writeToParcel(dest: Parcel, flags: Int) {
+            dest.writeInt(title)
+            dest.writeInt(mIcon)
+            dest.writeString(mAnalyticsId)
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(mText);
-            dest.writeInt(mIcon);
-            dest.writeString(mAnalyticsId);
-        }
-
-        protected abstract void onClicked(AnkiActivity activity);
-
-        public final void sendAnalytics() {
-            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, mAnalyticsId);
+        protected abstract fun onClicked(activity: AnkiActivity)
+        fun sendAnalytics() {
+            UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, mAnalyticsId!!)
         }
 
         /* This method calls onClicked method to handle click event in a suitable manner and
          * the analytics of the item clicked are send.
          */
-        public void execute(AnkiActivity activity){
-            sendAnalytics();
-            onClicked(activity);
+        fun execute(activity: AnkiActivity) {
+            sendAnalytics()
+            onClicked(activity)
         }
 
-        public abstract void remove(Item toRemove);
+        abstract fun remove(toRemove: Item?)
     }
 
-    public static class ItemHeader extends Item implements Parcelable {
+    class ItemHeader : Item, Parcelable {
+        private val mChildren: MutableList<Item?>?
 
-        private final List<Item> mChildren;
-
-        public ItemHeader(@StringRes int titleString, int i, String analyticsStringId, Item... children) {
-            super(titleString, i, analyticsStringId);
-            mChildren = new ArrayList<>(Arrays.asList(children));
+        constructor(@StringRes titleString: Int, i: Int, analyticsStringId: String?, vararg children: Item?) : super(titleString, i, analyticsStringId) {
+            mChildren = ArrayList(listOf(*children))
         }
 
-        @Override
-        public List<Item> getChildren() {
-            return new ArrayList<>(mChildren);
+        override val children: List<Item?>
+            get() = ArrayList(mChildren!!.toMutableList())
+
+        public override fun onClicked(activity: AnkiActivity) {
+            val children = ArrayList(children)
+            val nextFragment: DialogFragment = createInstance(children, title)
+            activity.showDialogFragment(nextFragment)
         }
 
-        @Override
-        public void onClicked(AnkiActivity activity) {
-            ArrayList<Item> children = new ArrayList<>(this.getChildren());
-            DialogFragment nextFragment = RecursivePictureMenu.createInstance(children, getTitle());
-            activity.showDialogFragment(nextFragment);
-        }
-
-        @Override
-        public void remove(Item toRemove) {
-            mChildren.remove(toRemove);
-            for (Item i : mChildren) {
-                i.remove(toRemove);
+        override fun remove(toRemove: Item?) {
+            mChildren!!.remove(toRemove)
+            for (i in mChildren) {
+                i!!.remove(toRemove)
             }
         }
 
-        protected ItemHeader(Parcel in) {
-            super(in);
-            if (in.readByte() == 0x01) {
-                mChildren = new ArrayList<>();
-                in.readList(mChildren, Item.class.getClassLoader());
+        protected constructor(parcel: Parcel) : super(parcel) {
+            if (parcel.readByte().toInt() == 0x01) {
+                mChildren = ArrayList()
+                parcel.readList(mChildren, Item::class.java.classLoader)
             } else {
-                mChildren = new ArrayList<>(0);
+                mChildren = ArrayList(0)
             }
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
+        override fun writeToParcel(dest: Parcel, flags: Int) {
+            super.writeToParcel(dest, flags)
             if (mChildren == null) {
-                dest.writeByte((byte) (0x00));
+                dest.writeByte(0x00.toByte())
             } else {
-                dest.writeByte((byte) (0x01));
-                dest.writeList(mChildren);
+                dest.writeByte(0x01.toByte())
+                dest.writeList(mChildren)
             }
         }
 
-        @SuppressWarnings("unused")
-        public static final Parcelable.Creator<ItemHeader> CREATOR = new Parcelable.Creator<ItemHeader>() {
-            @Override
-            public ItemHeader createFromParcel(Parcel in) {
-                return new ItemHeader(in);
-            }
+        companion object {
+            val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
+                override fun createFromParcel(parcel: Parcel): ItemHeader {
+                    return ItemHeader(parcel)
+                }
 
-            @Override
-            public ItemHeader[] newArray(int size) {
-                return new ItemHeader[size];
+                override fun newArray(size: Int): Array<ItemHeader?> {
+                    return arrayOfNulls(size)
+                }
             }
-        };
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        @CheckResult
+        fun createInstance(itemList: ArrayList<Item?>?, @StringRes title: Int): RecursivePictureMenu {
+            val helpDialog = RecursivePictureMenu()
+            val args = Bundle()
+            args.putParcelableArrayList("bundle", itemList)
+            args.putInt("titleRes", title)
+            helpDialog.arguments = args
+            return helpDialog
+        }
+
+        @JvmStatic
+        fun removeFrom(allItems: List<Item>, toRemove: Item?) {
+            // Note: currently doesn't remove the top-level elements.
+            for (i in allItems) {
+                i.remove(toRemove)
+            }
+        }
     }
 }
-
