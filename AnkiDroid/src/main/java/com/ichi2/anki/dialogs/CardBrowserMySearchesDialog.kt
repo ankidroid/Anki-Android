@@ -1,126 +1,115 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.res.Resources;
-import android.os.Bundle;
+import android.app.Activity
+import android.app.Dialog
+import android.os.Bundle
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.ui.ButtonItemAdapter
+import timber.log.Timber
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
+class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
+    private var mButtonItemAdapter: ButtonItemAdapter? = null
+    private var mSavedFilters: HashMap<String, String>? = null
+    private var mSavedFilterKeys: ArrayList<String>? = null
+    private var mCurrentSearchTerms: String? = null
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.ui.ButtonItemAdapter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import timber.log.Timber;
-
-public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
-
-    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
-    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
-
-    private static MySearchesDialogListener mMySearchesDialogListener;
-
-    private ButtonItemAdapter mButtonItemAdapter;
-    private HashMap<String, String> mSavedFilters;
-    private ArrayList<String> mSavedFilterKeys;
-    private String mCurrentSearchTerms;
-
-    public interface MySearchesDialogListener {
-        void onSelection(String searchName);
-        void onRemoveSearch(String searchName);
-        void onSaveSearch(String searchName, String searchTerms);
+    interface MySearchesDialogListener {
+        fun onSelection(searchName: String?)
+        fun onRemoveSearch(searchName: String?)
+        fun onSaveSearch(searchName: String?, searchTerms: String?)
     }
 
-    public static CardBrowserMySearchesDialog newInstance(HashMap<String, String> savedFilters,
-                                                          MySearchesDialogListener mySearchesDialogListener,
-                                                          String currentSearchTerms, int type) {
-        mMySearchesDialogListener = mySearchesDialogListener;
-        CardBrowserMySearchesDialog m = new CardBrowserMySearchesDialog();
-        Bundle args = new Bundle();
-        args.putSerializable("savedFilters", savedFilters);
-        args.putInt("type", type);
-        args.putString("currentSearchTerms", currentSearchTerms);
-        m.setArguments(args);
-        return m;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final Resources res = getResources();
-
-        Activity activity = getActivity();
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(activity);
-
-        int type = getArguments().getInt("type");
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        super.onCreate(savedInstanceState)
+        val res = resources
+        val activity: Activity? = activity
+        val builder = MaterialDialog.Builder(activity!!)
+        val type = requireArguments().getInt("type")
         if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
-            mSavedFilters = (HashMap<String, String>) getArguments().getSerializable("savedFilters");
-            mSavedFilterKeys = new ArrayList<>(mSavedFilters.keySet());
-
-            mButtonItemAdapter = new ButtonItemAdapter(mSavedFilterKeys);
-            mButtonItemAdapter.notifyAdapterDataSetChanged(); //so the values are sorted.
-            mButtonItemAdapter.setCallbacks(
-                    searchName -> {
-                        Timber.d("item clicked: %s", searchName);
-                        mMySearchesDialogListener.onSelection(searchName);
-                        getDialog().dismiss();
-                    },
-                    searchName -> {
-                        Timber.d("button clicked: %s", searchName);
-                        removeSearch(searchName);
-                    });
-
+            mSavedFilters = requireArguments().getSerializable("savedFilters") as HashMap<String, String>?
+            mSavedFilterKeys = ArrayList(mSavedFilters!!.keys)
+            mButtonItemAdapter = ButtonItemAdapter(mSavedFilterKeys)
+            mButtonItemAdapter!!.notifyAdapterDataSetChanged() // so the values are sorted.
+            mButtonItemAdapter!!.setCallbacks(
+                { searchName: String? ->
+                    Timber.d("item clicked: %s", searchName)
+                    mMySearchesDialogListener!!.onSelection(searchName)
+                    dialog!!.dismiss()
+                }
+            ) { searchName: String ->
+                Timber.d("button clicked: %s", searchName)
+                removeSearch(searchName)
+            }
             builder.title(res.getString(R.string.card_browser_list_my_searches_title))
-                    .adapter(mButtonItemAdapter, null);
+                .adapter(mButtonItemAdapter!!, null)
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            mCurrentSearchTerms = getArguments().getString("currentSearchTerms");
+            mCurrentSearchTerms = requireArguments().getString("currentSearchTerms")
             builder.title(getString(R.string.card_browser_list_my_searches_save))
-                   .positiveText(getString(android.R.string.ok))
-                   .negativeText(getString(R.string.dialog_cancel))
-                   .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
-                       Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
-                       mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
-                   });
+                .positiveText(getString(android.R.string.ok))
+                .negativeText(getString(R.string.dialog_cancel))
+                .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string) { _: MaterialDialog?, text: CharSequence ->
+                    Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms)
+                    mMySearchesDialogListener!!.onSaveSearch(text.toString(), mCurrentSearchTerms)
+                }
         }
-        MaterialDialog dialog = builder.build();
-        if (dialog.getRecyclerView() != null) {
-            LinearLayoutManager layoutManager = (LinearLayoutManager)dialog.getRecyclerView().getLayoutManager();
-            DividerItemDecoration dividerItemDecoration =
-                    new DividerItemDecoration(dialog.getRecyclerView().getContext(), layoutManager.getOrientation());
-            float scale = res.getDisplayMetrics().density;
-            int dpAsPixels = (int) (5*scale + 0.5f);
-            dialog.getView().setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels);
-            dialog.getRecyclerView().addItemDecoration(dividerItemDecoration);
+        val dialog = builder.build()
+        if (dialog.recyclerView != null) {
+            val layoutManager = dialog.recyclerView.layoutManager as LinearLayoutManager?
+            val dividerItemDecoration = DividerItemDecoration(dialog.recyclerView.context, layoutManager!!.orientation)
+            val scale = res.displayMetrics.density
+            val dpAsPixels = (5 * scale + 0.5f).toInt()
+            dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
+            dialog.recyclerView.addItemDecoration(dividerItemDecoration)
         }
-
-        return dialog;
+        return dialog
     }
 
-    private void removeSearch(String searchName) {
+    private fun removeSearch(searchName: String) {
+        val res = resources
+        MaterialDialog.Builder(requireActivity())
+            .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
+            .positiveText(android.R.string.ok)
+            .negativeText(R.string.dialog_cancel)
+            .onPositive { dialog: MaterialDialog, _: DialogAction? ->
+                mMySearchesDialogListener!!.onRemoveSearch(searchName)
+                mSavedFilters!!.remove(searchName)
+                mSavedFilterKeys!!.remove(searchName)
+                mButtonItemAdapter!!.remove(searchName)
+                mButtonItemAdapter!!.notifyAdapterDataSetChanged()
+                dialog.dismiss()
+                if (mSavedFilters!!.isEmpty()) {
+                    getDialog()!!.dismiss()
+                }
+            }.show()
+    }
 
-        Resources res = getResources();
-        new MaterialDialog.Builder(getActivity())
-                .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
-                .positiveText(android.R.string.ok)
-                .negativeText(R.string.dialog_cancel)
-                .onPositive((dialog, which) -> {
-                    mMySearchesDialogListener.onRemoveSearch(searchName);
-                    mSavedFilters.remove(searchName);
-                    mSavedFilterKeys.remove(searchName);
-                    mButtonItemAdapter.remove(searchName);
-                    mButtonItemAdapter.notifyAdapterDataSetChanged();
-                    dialog.dismiss();
-                    if (mSavedFilters.isEmpty()) {
-                        getDialog().dismiss();
-                    }
-                }).show();
+    companion object {
+        const val CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0 // list searches dialog
+        const val CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1 // save searches dialog
+        private var mMySearchesDialogListener: MySearchesDialogListener? = null
+        @JvmStatic
+        fun newInstance(
+            savedFilters: HashMap<String?, String?>?,
+            mySearchesDialogListener: MySearchesDialogListener?,
+            currentSearchTerms: String?,
+            type: Int
+        ): CardBrowserMySearchesDialog {
+            mMySearchesDialogListener = mySearchesDialogListener
+            val m = CardBrowserMySearchesDialog()
+            val args = Bundle()
+            args.putSerializable("savedFilters", savedFilters)
+            args.putInt("type", type)
+            args.putString("currentSearchTerms", currentSearchTerms)
+            m.arguments = args
+            return m
+        }
     }
 }
