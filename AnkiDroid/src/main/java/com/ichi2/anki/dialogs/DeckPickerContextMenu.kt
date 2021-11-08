@@ -158,7 +158,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             }
             CONTEXT_MENU_BROWSE_CARDS -> {
                 val did = requireArguments().getLong("did")
-                (activity as DeckPicker?)!!.col.decks.select(did)
+                (activity as DeckPicker?)!!.col?.decks?.select(did)
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
