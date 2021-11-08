@@ -1326,7 +1326,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @Override
-    public void showMediaCheckDialog(int id, List<List<String>> checkList) {
+    public void showMediaCheckDialog(int id, List<? extends List<String>> checkList) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(id, checkList));
     }
 
