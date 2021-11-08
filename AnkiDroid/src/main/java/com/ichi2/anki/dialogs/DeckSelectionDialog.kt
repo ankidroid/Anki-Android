@@ -13,511 +13,398 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.CollectionGetter;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.DeckManager;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
-import com.ichi2.libanki.stats.Stats;
-import com.ichi2.themes.Themes;
-import com.ichi2.utils.DeckNameComparator;
-import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.FilterResultsUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import timber.log.Timber;
+import android.app.Activity
+import android.app.Dialog
+import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionGetter
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckManager
+import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.stats.Stats
+import com.ichi2.themes.Themes
+import com.ichi2.utils.DeckNameComparator
+import com.ichi2.utils.FilterResultsUtils
+import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.util.*
+import java.util.Objects.requireNonNull
 
 /**
  * The dialog which allow to select a deck. It is opened when the user click on a deck name in stats, browser or note editor.
  * It allows to filter decks by typing part of its name.
  */
-public class DeckSelectionDialog extends AnalyticsDialogFragment {
-
-    private MaterialDialog mDialog;
-    private static final String SUMMARY_MESSAGE = "summaryMessage";
-    private static final String TITLE = "title";
-    private static final String KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton";
-    private static final String DECK_NAMES = "deckNames";
-
-
-    /**
-     * A dialog which handles selecting a deck
-     */
-    @NonNull
-    public static DeckSelectionDialog newInstance(@NonNull String title, @Nullable String summaryMessage, @NonNull boolean keepRestoreDefaultButton, @NonNull List<SelectableDeck> decks) {
-        DeckSelectionDialog f = new DeckSelectionDialog();
-        Bundle args = new Bundle();
-        args.putString(SUMMARY_MESSAGE, summaryMessage);
-        args.putString(TITLE, title);
-        args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton);
-        args.putParcelableArrayList(DECK_NAMES, new ArrayList<>(decks));
-        f.setArguments(args);
-        return f;
+open class DeckSelectionDialog : AnalyticsDialogFragment() {
+    private var mDialog: MaterialDialog? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = true
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setCancelable(true);
-    }
-
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View dialogView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.deck_picker_dialog, null, false);
-
-
-        TextView summary = dialogView.findViewById(R.id.deck_picker_dialog_summary);
-
-        Bundle arguments = requireArguments();
-
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialogView = LayoutInflater.from(activity)
+            .inflate(R.layout.deck_picker_dialog, null, false)
+        val summary = dialogView.findViewById<TextView>(R.id.deck_picker_dialog_summary)
+        val arguments = requireArguments()
         if (getSummaryMessage(arguments) == null) {
-            summary.setVisibility(View.GONE);
+            summary.visibility = View.GONE
         } else {
-            summary.setVisibility(View.VISIBLE);
-            summary.setText(getSummaryMessage(arguments));
+            summary.visibility = View.VISIBLE
+            summary.text = getSummaryMessage(arguments)
         }
-
-        RecyclerView recyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list);
-        recyclerView.requestFocus();
-
-        RecyclerView.LayoutManager deckLayoutManager = new LinearLayoutManager(requireActivity());
-        recyclerView.setLayoutManager(deckLayoutManager);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-
-        List<SelectableDeck> decks = getDeckNames(arguments);
-        DecksArrayAdapter adapter = new DecksArrayAdapter(decks);
-        recyclerView.setAdapter(adapter);
-
-        adjustToolbar(dialogView, adapter);
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
-                .neutralText(R.string.dialog_cancel)
-                .customView(dialogView, false);
-
+        val recyclerView: RecyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list)
+        recyclerView.requestFocus()
+        val deckLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireActivity())
+        recyclerView.layoutManager = deckLayoutManager
+        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(dividerItemDecoration)
+        val decks: List<SelectableDeck> = getDeckNames(arguments)
+        val adapter = DecksArrayAdapter(decks)
+        recyclerView.adapter = adapter
+        adjustToolbar(dialogView, adapter)
+        var builder = MaterialDialog.Builder(requireActivity())
+            .neutralText(R.string.dialog_cancel)
+            .customView(dialogView, false)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            builder = builder.negativeText(R.string.restore_default).onNegative((dialog, which) -> onDeckSelected(null));
+            builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
         }
-
-        mDialog = builder.build();
-        return mDialog;
+        mDialog = builder.build()
+        return mDialog!!
     }
 
-
-    @Nullable
-    private String getSummaryMessage(Bundle arguments) {
-        return arguments.getString(SUMMARY_MESSAGE);
+    private fun getSummaryMessage(arguments: Bundle): String? {
+        return arguments.getString(SUMMARY_MESSAGE)
     }
 
-
-    @NonNull
-    private ArrayList<SelectableDeck> getDeckNames(Bundle arguments) {
-        return Objects.requireNonNull(arguments.getParcelableArrayList(DECK_NAMES));
+    private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> {
+        return requireNonNull(arguments.getParcelableArrayList<SelectableDeck>(DECK_NAMES)) as ArrayList<SelectableDeck>
     }
 
+    private val title: String?
+        get() = requireNonNull(requireArguments().getString(TITLE))
 
-    @NonNull
-    private String getTitle() {
-        return Objects.requireNonNull(requireArguments().getString(TITLE));
-    }
-
-
-    private void adjustToolbar(View dialogView, DecksArrayAdapter adapter) {
-        Toolbar toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar);
-
-        toolbar.setTitle(getTitle());
-
-        toolbar.inflateMenu(R.menu.deck_picker_dialog_menu);
-
-        MenuItem searchItem = toolbar.getMenu().findItem(R.id.deck_picker_dialog_action_filter);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setQueryHint(getString(R.string.deck_picker_dialog_filter_decks));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                return true;
+    private fun adjustToolbar(dialogView: View, adapter: DecksArrayAdapter) {
+        val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
+        toolbar.title = title
+        toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
+        val searchItem = toolbar.menu.findItem(R.id.deck_picker_dialog_action_filter)
+        val searchView = searchItem.actionView as SearchView
+        searchView.queryHint = getString(R.string.deck_picker_dialog_filter_decks)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchView.clearFocus()
+                return true
             }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
+            override fun onQueryTextChange(newText: String): Boolean {
+                adapter.filter.filter(newText)
+                return true
             }
-        });
-
-        MenuItem addDecks = toolbar.getMenu().findItem(R.id.deck_picker_dialog_action_add_deck);
-        addDecks.setOnMenuItemClickListener(menuItem -> {
+        })
+        val addDecks = toolbar.menu.findItem(R.id.deck_picker_dialog_action_add_deck)
+        addDecks.setOnMenuItemClickListener {
             // creating new deck without any parent deck
-            showDeckDialog();
-            return true;
-        });
+            showDeckDialog()
+            true
+        }
     }
 
-    private void showSubDeckDialog(String parentDeckPath) {
+    private fun showSubDeckDialog(parentDeckPath: String) {
         try {
             // create subdeck
-            Long parentId = getDecks().id(parentDeckPath);
-            CreateDeckDialog createDeckDialog = new CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId);
-            createDeckDialog.setOnNewDeckCreated((id) -> {
+            val parentId = decks.id(parentDeckPath)
+            val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
+            createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
-                selectDeckWithDeckName(getDecks().name(id));
-            });
-            createDeckDialog.showDialog();
-        } catch (DeckRenameException ex) {
-            Timber.w(ex);
+                selectDeckWithDeckName(decks.name(id!!))
+            }
+            createDeckDialog.showDialog()
+        } catch (ex: DeckRenameException) {
+            Timber.w(ex)
         }
     }
 
-    private void showDeckDialog() {
-        CreateDeckDialog createDeckDialog =  new CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null);
-        createDeckDialog.setOnNewDeckCreated((id) -> {
+    private fun showDeckDialog() {
+        val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+        // todo
+        // setOnNewDeckCreated parameter to be made non null
+        createDeckDialog.setOnNewDeckCreated { id: Long? ->
             // a deck was created
-            selectDeckWithDeckName(getDecks().name(id));
-        });
-        createDeckDialog.showDialog();
+            selectDeckWithDeckName(decks.name(id!!))
+        }
+        createDeckDialog.showDialog()
     }
 
-    @NonNull
-    protected CollectionGetter requireCollectionGetter() {
-        return (CollectionGetter) requireContext();
+    protected fun requireCollectionGetter(): CollectionGetter {
+        return requireContext() as CollectionGetter
     }
 
-    @NonNull
-    protected DeckManager getDecks() {
-        return requireCollectionGetter().getCol().getDecks();
-    }
-
+    protected val decks: DeckManager
+        get() = requireCollectionGetter().col.decks
 
     /**
      * Create the deck if it does not exists.
      * If name is valid, send the deck with this name to listener and close the dialog.
      */
-    private void selectDeckWithDeckName(@NonNull String deckName) {
+    private fun selectDeckWithDeckName(deckName: String) {
         try {
-            long id = getDecks().id(deckName);
-            SelectableDeck dec = new SelectableDeck(id, deckName);
-            selectDeckAndClose(dec);
-        } catch (DeckRenameException ex) {
-            UIUtils.showThemedToast(requireActivity(), ex.getLocalizedMessage(getResources()), false);
+            val id = decks.id(deckName)
+            val dec = SelectableDeck(id, deckName)
+            selectDeckAndClose(dec)
+        } catch (ex: DeckRenameException) {
+            showThemedToast(requireActivity(), ex.getLocalizedMessage(resources), false)
         }
     }
-
 
     /**
      * @param deck deck sent to the listener.
      */
-    protected void onDeckSelected(@Nullable SelectableDeck deck) {
-        getDeckSelectionListener().onDeckSelected(deck);
+    protected fun onDeckSelected(deck: SelectableDeck?) {
+        deckSelectionListener.onDeckSelected(deck)
     }
 
-
-    @NonNull
-    private DeckSelectionListener getDeckSelectionListener() {
-        Activity activity = requireActivity();
-        if (activity instanceof DeckSelectionListener) {
-            return (DeckSelectionListener) activity;
+    private val deckSelectionListener: DeckSelectionListener
+        get() {
+            val activity: Activity = requireActivity()
+            if (activity is DeckSelectionListener) {
+                return activity
+            }
+            val parentFragment = parentFragment
+            if (parentFragment is DeckSelectionListener) {
+                return parentFragment
+            }
+            throw IllegalStateException("Neither activity or parent fragment were a selection listener")
         }
-
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof DeckSelectionListener) {
-            return (DeckSelectionListener) parentFragment;
-        }
-
-        throw new IllegalStateException("Neither activity or parent fragment were a selection listener");
-    }
-
 
     /**
      * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
      */
-    protected void selectDeckAndClose(@NonNull SelectableDeck deck) {
-        onDeckSelected(deck);
-        mDialog.dismiss();
+    protected fun selectDeckAndClose(deck: SelectableDeck) {
+        onDeckSelected(deck)
+        mDialog!!.dismiss()
     }
 
-    protected void displayErrorAndCancel() {
-        mDialog.dismiss();
+    protected fun displayErrorAndCancel() {
+        mDialog!!.dismiss()
     }
 
-
-    public class DecksArrayAdapter extends RecyclerView.Adapter<DecksArrayAdapter.ViewHolder> implements Filterable {
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView mDeckTextView;
-            public ViewHolder(@NonNull TextView ctv) {
-                super(ctv);
-                mDeckTextView = ctv;
-                mDeckTextView.setOnClickListener(view -> {
-                    String deckName = ctv.getText().toString();
-                    selectDeckByNameAndClose(deckName);
-                });
-
-                mDeckTextView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        // creating sub deck with parent deck path
-                        showSubDeckDialog(ctv.getText().toString());
-                        return true;
-                    }
-                });
+    open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
+        inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
+            fun setDeck(deck: SelectableDeck) {
+                deckTextView.text = deck.name
             }
 
-
-            public void setDeck(@NonNull SelectableDeck deck) {
-                mDeckTextView.setText(deck.getName());
-            }
-        }
-
-        private final ArrayList<SelectableDeck> mAllDecksList = new ArrayList<>();
-        private final ArrayList<SelectableDeck> mCurrentlyDisplayedDecks = new ArrayList<>();
-
-        public DecksArrayAdapter(@NonNull List<SelectableDeck> deckNames) {
-            mAllDecksList.addAll(deckNames);
-            mCurrentlyDisplayedDecks.addAll(deckNames);
-            Collections.sort(mCurrentlyDisplayedDecks);
-        }
-
-        protected void selectDeckByNameAndClose(@NonNull String deckName) {
-            for (SelectableDeck d : mAllDecksList) {
-                if (d.getName().equals(deckName)) {
-                    selectDeckAndClose(d);
-                    return;
+            init {
+                deckTextView.setOnClickListener {
+                    val deckName = deckTextView.text.toString()
+                    selectDeckByNameAndClose(deckName)
+                }
+                deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
+                    showSubDeckDialog(deckTextView.text.toString())
+                    true
                 }
             }
-            displayErrorAndCancel();
         }
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.deck_picker_dialog_list_item, parent, false);
-
-            return new ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            SelectableDeck deck = mCurrentlyDisplayedDecks.get(position);
-            Spinner spinner =  getActivity().findViewById(R.id.note_deck_spinner);
-            String spinnerSelectedDeckName = spinner.getSelectedItem().toString();
-
-            final int unselectedTextColor = Themes.getColorFromAttr(getContext(), android.R.attr.textColorPrimary);
-            final int selectedTextColor = ContextCompat.getColor(getContext(), R.color.note_editor_selected_item_text);
-            final int unselectedBackgroundColor = Themes.getColorFromAttr(getContext(), android.R.attr.colorBackground);
-            final int selectedBackgroundColor = ContextCompat.getColor(getContext(), R.color.note_editor_selected_item_background);
-
-            if (spinnerSelectedDeckName.equals(deck.getName())) {
-                holder.mDeckTextView.setBackgroundColor(selectedBackgroundColor);
-                holder.mDeckTextView.setTextColor(selectedTextColor);
-            } else {
-                holder.mDeckTextView.setBackgroundColor(unselectedBackgroundColor);
-                holder.mDeckTextView.setTextColor(unselectedTextColor);
+        private val mAllDecksList = ArrayList<SelectableDeck>()
+        private val mCurrentlyDisplayedDecks = ArrayList<SelectableDeck>()
+        protected fun selectDeckByNameAndClose(deckName: String) {
+            for (d in mAllDecksList) {
+                if (d.name == deckName) {
+                    selectDeckAndClose(d)
+                    return
+                }
             }
-            holder.setDeck(deck);
+            displayErrorAndCancel()
         }
 
-        @Override
-        public int getItemCount() {
-            return mCurrentlyDisplayedDecks.size();
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val v = LayoutInflater.from(parent.context)
+                .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
+            return ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value))
         }
 
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val deck = mCurrentlyDisplayedDecks[position]
+            val spinner = activity!!.findViewById<Spinner>(R.id.note_deck_spinner)
+            val spinnerSelectedDeckName = spinner.selectedItem.toString()
+            val unselectedTextColor = Themes.getColorFromAttr(context, android.R.attr.textColorPrimary)
+            val selectedTextColor = ContextCompat.getColor(context!!, R.color.note_editor_selected_item_text)
+            val unselectedBackgroundColor = Themes.getColorFromAttr(context, android.R.attr.colorBackground)
+            val selectedBackgroundColor = ContextCompat.getColor(context!!, R.color.note_editor_selected_item_background)
+            if (spinnerSelectedDeckName == deck.name) {
+                holder.deckTextView.setBackgroundColor(selectedBackgroundColor)
+                holder.deckTextView.setTextColor(selectedTextColor)
+            } else {
+                holder.deckTextView.setBackgroundColor(unselectedBackgroundColor)
+                holder.deckTextView.setTextColor(unselectedTextColor)
+            }
+            holder.setDeck(deck)
+        }
 
-        @NonNull
-        @Override
-        public Filter getFilter() {
-            return new DecksFilter();
+        override fun getItemCount(): Int {
+            return mCurrentlyDisplayedDecks.size
+        }
+
+        override fun getFilter(): Filter {
+            return DecksFilter()
         }
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
-        private class DecksFilter extends Filter {
-            private final ArrayList<SelectableDeck> mFilteredDecks;
-            protected DecksFilter() {
-                super();
-                mFilteredDecks = new ArrayList<>();
-            }
-
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                mFilteredDecks.clear();
-                ArrayList<SelectableDeck> allDecks = DecksArrayAdapter.this.mAllDecksList;
-                if (constraint.length() == 0) {
-                    mFilteredDecks.addAll(allDecks);
+        private inner class DecksFilter : Filter() {
+            private val mFilteredDecks: ArrayList<SelectableDeck> = ArrayList()
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                mFilteredDecks.clear()
+                val allDecks = mAllDecksList
+                if (constraint.isEmpty()) {
+                    mFilteredDecks.addAll(allDecks)
                 } else {
-                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (SelectableDeck deck : allDecks) {
-                        if (deck.getName().toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredDecks.add(deck);
+                    val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                    for (deck in allDecks) {
+                        if (deck.name.lowercase(Locale.getDefault()).contains(filterPattern)) {
+                            mFilteredDecks.add(deck)
                         }
                     }
                 }
-
-                return FilterResultsUtils.fromCollection(mFilteredDecks);
+                return FilterResultsUtils.fromCollection(mFilteredDecks)
             }
 
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                ArrayList<SelectableDeck> currentlyDisplayedDecks = DecksArrayAdapter.this.mCurrentlyDisplayedDecks;
-                currentlyDisplayedDecks.clear();
-                currentlyDisplayedDecks.addAll(mFilteredDecks);
-                Collections.sort(currentlyDisplayedDecks);
-                notifyDataSetChanged();
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                val currentlyDisplayedDecks = mCurrentlyDisplayedDecks
+                currentlyDisplayedDecks.clear()
+                currentlyDisplayedDecks.addAll(mFilteredDecks)
+                currentlyDisplayedDecks.sort()
+                notifyDataSetChanged()
             }
         }
+
+        init {
+            mAllDecksList.addAll(deckNames)
+            mCurrentlyDisplayedDecks.addAll(deckNames)
+            mCurrentlyDisplayedDecks.sort()
+        }
     }
-
-
-    public static class SelectableDeck implements Comparable<SelectableDeck>, Parcelable {
+    @KotlinCleanup("auto parcel is needed")
+    open class SelectableDeck : Comparable<SelectableDeck>, Parcelable {
         /**
          * Either a deck id or ALL_DECKS_ID
          */
-        private final long mDeckId;
+        val deckId: Long
+
         /**
          * Name of the deck, or localization of "all decks"
          */
-        private final String mName;
+        val name: String
 
+        constructor(deckId: Long, name: String) {
+            this.deckId = deckId
+            this.name = name
+        }
 
-        /**
-         * @param filter A method deciding which deck to add
-         * @return the list of all SelectableDecks from the collection satisfying filter
-         */
-        @NonNull
-        public static List<SelectableDeck> fromCollection(@NonNull Collection c, @NonNull FunctionalInterfaces.Filter<Deck> filter) {
-            List<Deck> all = c.getDecks().all();
-            List<SelectableDeck> ret = new ArrayList<>(all.size());
-            for (Deck d : all) {
-                if (!filter.shouldInclude(d)) {
-                    continue;
+        protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
+        protected constructor(`in`: Parcel) {
+            deckId = `in`.readLong()
+            name = `in`.readString()!!
+        }
+
+        /** "All decks" comes first. Then usual deck name order.  */
+        override fun compareTo(other: SelectableDeck): Int {
+            if (deckId == Stats.ALL_DECKS_ID) {
+                return if (other.deckId == Stats.ALL_DECKS_ID) {
+                    0
+                } else -1
+            }
+            return if (other.deckId == Stats.ALL_DECKS_ID) {
+                1
+            } else DeckNameComparator.INSTANCE.compare(name, other.name)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        override fun writeToParcel(dest: Parcel, flags: Int) {
+            dest.writeLong(deckId)
+            dest.writeString(name)
+        }
+
+        companion object {
+            /**
+             * @param filter A method deciding which deck to add
+             * @return the list of all SelectableDecks from the collection satisfying filter
+             */
+            @JvmStatic
+            @JvmOverloads
+            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck?> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
+                val all = c.decks.all()
+                val ret: MutableList<SelectableDeck> = ArrayList(all.size)
+                for (d in all) {
+                    if (!filter.shouldInclude(d)) {
+                        continue
+                    }
+                    ret.add(SelectableDeck(d))
                 }
-                ret.add( new SelectableDeck(d));
+                return ret
             }
-            return ret;
-        }
 
-        @SuppressWarnings("unused")
-        @NonNull
-        public static List<SelectableDeck> fromCollection(@NonNull Collection c) {
-            return fromCollection(c, FunctionalInterfaces.Filters.allowAll());
-        }
-
-
-        public SelectableDeck(long deckId, @NonNull String name) {
-            this.mDeckId = deckId;
-            this.mName = name;
-        }
-
-
-        protected SelectableDeck(@NonNull Deck d) {
-            this(d.getLong("id"), d.getString("name"));
-        }
-
-
-        protected SelectableDeck(@NonNull Parcel in) {
-            mDeckId = in.readLong();
-            mName = in.readString();
-        }
-
-
-        public long getDeckId() {
-            return mDeckId;
-        }
-
-
-        @NonNull
-        public String getName() {
-            return mName;
-        }
-
-
-        /** "All decks" comes first. Then usual deck name order. */
-        @Override
-        public int compareTo(@NonNull SelectableDeck o) {
-            if (this.mDeckId == Stats.ALL_DECKS_ID){
-                if (o.mDeckId == Stats.ALL_DECKS_ID) {
-                    return 0;
+            val CREATOR: Parcelable.Creator<SelectableDeck?> = object : Parcelable.Creator<SelectableDeck?> {
+                override fun createFromParcel(`in`: Parcel): SelectableDeck {
+                    return SelectableDeck(`in`)
                 }
-                return -1;
+
+                override fun newArray(size: Int): Array<SelectableDeck?> {
+                    return arrayOfNulls(size)
+                }
             }
-            if (o.mDeckId == Stats.ALL_DECKS_ID) {
-                return 1;
-            }
-            return DeckNameComparator.INSTANCE.compare(this.mName, o.mName);
         }
-
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
-            dest.writeLong(mDeckId);
-            dest.writeString(mName);
-        }
-
-
-
-        @SuppressWarnings("unused")
-        public static final Parcelable.Creator<SelectableDeck> CREATOR = new Parcelable.Creator<SelectableDeck>() {
-            @Override
-            public SelectableDeck createFromParcel(Parcel in) {
-                return new SelectableDeck(in);
-            }
-
-
-            @Override
-            public SelectableDeck[] newArray(int size) {
-                return new SelectableDeck[size];
-            }
-        };
     }
 
+    interface DeckSelectionListener {
+        fun onDeckSelected(deck: SelectableDeck?)
+    }
 
-    public interface DeckSelectionListener {
-        void onDeckSelected(@Nullable SelectableDeck deck);
+    companion object {
+        private const val SUMMARY_MESSAGE = "summaryMessage"
+        private const val TITLE = "title"
+        private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
+        private const val DECK_NAMES = "deckNames"
+
+        /**
+         * A dialog which handles selecting a deck
+         */
+        @JvmStatic
+        fun newInstance(title: String, summaryMessage: String?, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
+            val f = DeckSelectionDialog()
+            val args = Bundle()
+            args.putString(SUMMARY_MESSAGE, summaryMessage)
+            args.putString(TITLE, title)
+            args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton)
+            args.putParcelableArrayList(DECK_NAMES, ArrayList(decks))
+            f.arguments = args
+            return f
+        }
     }
 }
