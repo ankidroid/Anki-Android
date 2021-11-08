@@ -13,20 +13,20 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.view.KeyEvent
 
-import android.view.KeyEvent;
-
-public class KeyUtils {
-    public static boolean isDigit(KeyEvent event) {
-        int unicodeChar = event.getUnicodeChar(0);
-        return unicodeChar >= '0' && unicodeChar <= '9';
+object KeyUtils {
+    @JvmStatic
+    fun isDigit(event: KeyEvent): Boolean {
+        val unicodeChar = event.getUnicodeChar(0)
+        return unicodeChar >= '0'.code && unicodeChar <= '9'.code
     }
 
-
-    public static int getDigit(KeyEvent event) {
-        int unicodeChar = event.getUnicodeChar(0);
-        return unicodeChar - '0';
+    @JvmStatic
+    fun getDigit(event: KeyEvent): Int {
+        val unicodeChar = event.getUnicodeChar(0)
+        return unicodeChar - '0'.code
     }
 }
