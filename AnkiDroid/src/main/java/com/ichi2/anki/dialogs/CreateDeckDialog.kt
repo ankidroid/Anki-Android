@@ -14,182 +14,156 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import android.content.Context;
+import android.content.Context
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.MaterialEditTextDialog.Companion.displayKeyboard
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.backend.exception.DeckRenameException
+import timber.log.Timber
+import java.util.function.Consumer
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.MaterialEditTextDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
+class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) {
+    private var mPreviousDeckName: String? = null
+    private var mOnNewDeckCreated: Consumer<Long>? = null
+    private var mInitialDeckName = ""
+    private var mShownDialog: MaterialDialog? = null
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class CreateDeckDialog {
-
-    private final Context mContext;
-    private final int mTitle;
-    private final Long mParentId;
-    private String mPreviousDeckName;
-    private final DeckDialogType mDeckDialogType;
-    public Consumer<Long> mOnNewDeckCreated;
-    private String mInitialDeckName = "";
-    private MaterialDialog mShownDialog;
-
-    public enum DeckDialogType
-    {
-        FILTERED_DECK,
-        DECK,
-        SUB_DECK,
-        RENAME_DECK
+    enum class DeckDialogType {
+        FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
     }
 
-    public CreateDeckDialog(@NonNull Context context, @NonNull int title, @NonNull DeckDialogType deckDialogType, @Nullable Long parentId) {
-        this.mContext = context;
-        this.mTitle = title;
-        this.mParentId = parentId;
-        this.mDeckDialogType = deckDialogType;
-    }
-
-    /** Used for rename */
-    public void setDeckName(@NonNull String deckName) {
-        mPreviousDeckName = deckName;
-        mInitialDeckName = deckName;
-    }
-
-    public void showFilteredDeckDialog() {
-        Timber.i("CreateDeckDialog::showFilteredDeckDialog");
-        List<String> names = CollectionHelper.getInstance().getCol(mContext).getDecks().allNames();
-        int n = 1;
-        String namePrefix = mContext.getResources().getString(R.string.filtered_deck_name) + " ";
+    fun showFilteredDeckDialog() {
+        Timber.i("CreateDeckDialog::showFilteredDeckDialog")
+        val names = CollectionHelper.getInstance().getCol(context).decks.allNames()
+        var n = 1
+        val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
         while (names.contains(namePrefix + n)) {
-            n++;
+            n++
         }
-        mInitialDeckName = namePrefix + n;
-
-        showDialog();
+        mInitialDeckName = namePrefix + n
+        showDialog()
     }
 
-    private String getDeckName() {
-        return mShownDialog.getInputEditText().getText().toString();
+    /** Used for rename  */
+    var deckName: String
+        get() = mShownDialog!!.inputEditText!!.text.toString()
+        set(deckName) {
+            mPreviousDeckName = deckName
+            mInitialDeckName = deckName
+        }
+
+    fun showDialog(): MaterialDialog {
+        val show = MaterialDialog.Builder(context).title(title)
+            .positiveText(R.string.dialog_ok)
+            .negativeText(R.string.dialog_cancel)
+            .input(null, mInitialDeckName) { _: MaterialDialog?, _: CharSequence? -> }
+            .inputRange(1, -1)
+            .onPositive { _: MaterialDialog?, _: DialogAction? -> onPositiveButtonClicked() }
+            .show()
+        displayKeyboard(show.inputEditText!!, show)
+        mShownDialog = show
+        return show
     }
 
-    public MaterialDialog showDialog() {
-        MaterialDialog show = new MaterialDialog.Builder(mContext).title(mTitle)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
-                .input(null, mInitialDeckName,  (dialog, input) -> {})
-                .inputRange(1, -1)
-                .onPositive((dialog, which) -> onPositiveButtonClicked())
-                .show();
-
-        MaterialEditTextDialog.displayKeyboard(show.getInputEditText(), show);
-        this.mShownDialog = show;
-        return show;
-    }
-
-    public void closeDialog() {
+    fun closeDialog() {
         if (mShownDialog == null) {
-            return;
+            return
         }
-        mShownDialog.dismiss();
+        mShownDialog!!.dismiss()
     }
 
-    public void createSubDeck(@NonNull long did, @Nullable String deckName) {
-        String deckNameWithParentName = CollectionHelper.getInstance().getCol(mContext).getDecks().getSubdeckName(did, deckName);
-        createDeck(deckNameWithParentName);
+    fun createSubDeck(did: Long, deckName: String?) {
+        val deckNameWithParentName = CollectionHelper.getInstance().getCol(context).decks.getSubdeckName(did, deckName)
+        createDeck(deckNameWithParentName!!)
     }
 
-    public void createDeck(@NonNull String deckName) {
+    fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
-            createNewDeck(deckName);
+            createNewDeck(deckName)
         } else {
-            Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName);
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
+            Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
+            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
         }
-        closeDialog();
+        closeDialog()
     }
 
-    public boolean createFilteredDeck(@NonNull String deckName) {
+    fun createFilteredDeck(deckName: String): Boolean {
         try {
             // create filtered deck
-            Timber.i("CreateDeckDialog::createFilteredDeck...");
-            long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().newDyn(deckName);
-            mOnNewDeckCreated.accept(newDeckId);
-        } catch (DeckRenameException ex) {
-            UIUtils.showThemedToast(mContext, ex.getLocalizedMessage(mContext.getResources()), false);
-            return false;
+            Timber.i("CreateDeckDialog::createFilteredDeck...")
+            val newDeckId = CollectionHelper.getInstance().getCol(context).decks.newDyn(deckName)
+            mOnNewDeckCreated!!.accept(newDeckId)
+        } catch (ex: DeckRenameException) {
+            showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
+            return false
         }
-        return true;
+        return true
     }
 
-    private boolean createNewDeck(@NonNull String deckName) {
+    private fun createNewDeck(deckName: String): Boolean {
         try {
             // create normal deck or sub deck
-            Timber.i("CreateDeckDialog::createNewDeck");
-            long newDeckId = CollectionHelper.getInstance().getCol(mContext).getDecks().id(deckName);
-            mOnNewDeckCreated.accept(newDeckId);
-        } catch (DeckRenameException filteredAncestor) {
-            Timber.w(filteredAncestor);
-            return false;
+            Timber.i("CreateDeckDialog::createNewDeck")
+            val newDeckId = CollectionHelper.getInstance().getCol(context).decks.id(deckName)
+            mOnNewDeckCreated!!.accept(newDeckId)
+        } catch (filteredAncestor: DeckRenameException) {
+            Timber.w(filteredAncestor)
+            return false
         }
-        return true;
+        return true
     }
 
-    private void onPositiveButtonClicked() {
-        if (!getDeckName().isEmpty()) {
-            switch (mDeckDialogType) {
-                case DECK: {
+    private fun onPositiveButtonClicked() {
+        if (deckName.isNotEmpty()) {
+            when (deckDialogType) {
+                DeckDialogType.DECK -> {
+
                     // create deck
-                    createDeck(getDeckName());
-                    break;
+                    createDeck(deckName)
                 }
-                case RENAME_DECK: {
-                    renameDeck(getDeckName());
-                    break;
+                DeckDialogType.RENAME_DECK -> {
+                    renameDeck(deckName)
                 }
-                case SUB_DECK: {
+                DeckDialogType.SUB_DECK -> {
+
                     // create sub deck
-                    createSubDeck(mParentId, getDeckName());
-                    break;
+                    createSubDeck(parentId!!, deckName)
                 }
-                case FILTERED_DECK: {
+                DeckDialogType.FILTERED_DECK -> {
+
                     // create filtered deck
-                    createFilteredDeck(getDeckName());
+                    createFilteredDeck(deckName)
                 }
             }
         }
     }
 
-    public void renameDeck(String newDeckName) {
-        String newName = newDeckName.replaceAll("\"", "");
+    fun renameDeck(newDeckName: String) {
+        val newName = newDeckName.replace("\"".toRegex(), "")
         if (!Decks.isValidDeckName(newName)) {
-            Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName);
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.invalid_deck_name), false);
-        } else if (!newName.equals(mPreviousDeckName)) {
+            Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName)
+            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
+        } else if (newName != mPreviousDeckName) {
             try {
-                Collection col = CollectionHelper.getInstance().getCol(mContext);
-                long deckId = col.getDecks().id(mPreviousDeckName);
-                col.getDecks().rename(col.getDecks().get(deckId), newName);
-                mOnNewDeckCreated.accept(deckId);
-            } catch (DeckRenameException e) {
-                Timber.w(e);
+                val col = CollectionHelper.getInstance().getCol(context)
+                val deckId = col.decks.id(mPreviousDeckName!!)
+                col.decks.rename(col.decks.get(deckId), newName)
+                mOnNewDeckCreated!!.accept(deckId)
+            } catch (e: DeckRenameException) {
+                Timber.w(e)
                 // We get a localized string from libanki to explain the error
-                UIUtils.showThemedToast(mContext, e.getLocalizedMessage(mContext.getResources()), false);
+                showThemedToast(context, e.getLocalizedMessage(context.resources), false)
             }
         }
     }
 
-    public void setOnNewDeckCreated(Consumer<Long> c) {
-        this.mOnNewDeckCreated = c;
+    fun setOnNewDeckCreated(c: Consumer<Long>?) {
+        mOnNewDeckCreated = c
     }
 }
