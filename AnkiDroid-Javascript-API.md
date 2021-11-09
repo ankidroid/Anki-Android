@@ -1018,4 +1018,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#8500 Get deck name using JS API](https://github.com/ankidroid/Anki-Android/pull/8500)
 <br>[#9247 JS API to open card browser and search with query](https://github.com/ankidroid/Anki-Android/pull/9247)
 <br>[#9245 New JS API for bury & suspend card and bury & suspend note and tag card](https://github.com/ankidroid/Anki-Android/pull/9245)
-<br>[# New JavaScript api for TTS](https://github.com/ankidroid/Anki-Android/pull/8812)
+<br>[#8812 New JavaScript api for TTS](https://github.com/ankidroid/Anki-Android/pull/8812)
