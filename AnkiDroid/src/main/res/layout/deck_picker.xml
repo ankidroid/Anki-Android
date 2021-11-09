@@ -10,7 +10,7 @@
         android:id="@+id/deckpicker_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <include layout="@layout/toolbar" />
 
@@ -33,12 +33,12 @@
                         android:id="@+id/files"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_above="@id/today_stats_text_view"
                         android:clipToPadding="false"
                         android:drawSelectorOnTop="true"
                         android:fastScrollEnabled="true"
                         android:focusable="true"
                         android:paddingBottom="72dp"
-                        android:layout_above="@id/today_stats_text_view"
                         android:scrollbars="vertical" />
 
                     <com.ichi2.ui.FixedTextView
@@ -84,6 +84,7 @@
 
             </FrameLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
     <include layout="@layout/anki_progress"/>

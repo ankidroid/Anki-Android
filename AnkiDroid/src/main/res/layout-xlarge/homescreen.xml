@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="match_parent"
-                                           android:fitsSystemWindows="true">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
         <LinearLayout
-            android:id="@+id/deckpicker_view"
+            android:id="@+id/deckpicker_xl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:attr/colorBackground"
             android:orientation="horizontal">
+
             <include layout="@layout/deck_picker"
                 android:layout_width="1dip"
                 android:layout_weight="3"
                 android:layout_height="match_parent"/>
+
             <FrameLayout
                 android:id="@+id/studyoptions_fragment"
                 android:layout_weight="2"
                 android:layout_width="1dip"
                 android:layout_height="match_parent"/>
+
         </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
