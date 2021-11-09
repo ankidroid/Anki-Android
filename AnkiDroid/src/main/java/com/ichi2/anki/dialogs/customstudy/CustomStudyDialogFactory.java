@@ -18,7 +18,8 @@ package com.ichi2.anki.dialogs.customstudy;
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.ExtendedFragmentFactory;
-import com.ichi2.utils.FunctionalInterfaces.Supplier;
+
+import java.util.function.Supplier;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

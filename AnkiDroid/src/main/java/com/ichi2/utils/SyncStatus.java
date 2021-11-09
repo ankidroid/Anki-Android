@@ -20,7 +20,8 @@ import android.content.SharedPreferences;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
-import com.ichi2.utils.FunctionalInterfaces.Supplier;
+
+import java.util.function.Supplier;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;

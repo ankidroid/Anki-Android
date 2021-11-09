@@ -22,17 +22,18 @@ import android.webkit.WebView;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
-import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
+
+import java.util.function.Supplier;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DebugInfoService {
     @NonNull
-    public static String getDebugInfo(Context info, FunctionalInterfaces.Supplier<Collection> col) {
+    public static String getDebugInfo(Context info, Supplier<Collection> col) {
         String schedName = "Not found";
         try {
             schedName = col.get().getSched().getName();
