@@ -14,89 +14,90 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-
-import com.ichi2.anki.AnkiDroidApp;
-
-import androidx.core.content.pm.PackageInfoCompat;
-import timber.log.Timber;
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.content.pm.PackageInfoCompat
+import com.ichi2.anki.AnkiDroidApp
+import timber.log.Timber
+import java.lang.NullPointerException
 
 /**
  * Created by Tim on 11/04/2015.
  */
-public class VersionUtils {
-
+object VersionUtils {
     /**
      * Get package name as defined in the manifest.
      */
-    public static String getAppName() {
-        String pkgName = AnkiDroidApp.TAG;
-        Context context = AnkiDroidApp.getInstance();
-
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            pkgName = context.getString(pInfo.applicationInfo.labelRes);
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
+    @JvmStatic
+    val appName: String
+        get() {
+            var pkgName = AnkiDroidApp.TAG
+            val context: Context = AnkiDroidApp.getInstance()
+            try {
+                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                pkgName = context.getString(pInfo.applicationInfo.labelRes)
+            } catch (e: PackageManager.NameNotFoundException) {
+                Timber.e(e, "Couldn't find package named %s", context.packageName)
+            }
+            return pkgName
         }
-
-        return pkgName;
-    }
-
 
     /**
      * Get the package versionName as defined in the manifest.
      */
-    public static String getPkgVersionName() {
-        String pkgVersion = "?";
-        Context context = AnkiDroidApp.getInstance();
-        if (context != null) {
-            try {
-                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                pkgVersion = pInfo.versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                Timber.e(e, "Couldn't find package named %s", context.getPackageName());
+    @JvmStatic
+    val pkgVersionName: String
+        get() {
+            var pkgVersion = "?"
+            val context: Context? = AnkiDroidApp.getInstance()
+            if (context != null) {
+                try {
+                    val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                    pkgVersion = pInfo.versionName
+                } catch (e: PackageManager.NameNotFoundException) {
+                    Timber.e(e, "Couldn't find package named %s", context.packageName)
+                }
             }
+            return pkgVersion
         }
-        return pkgVersion;
-    }
-
 
     /**
      * Get the package versionCode as defined in the manifest.
      */
-    public static long getPkgVersionCode() {
-        Context context = AnkiDroidApp.getInstance();
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            long versionCode = PackageInfoCompat.getLongVersionCode(pInfo);
-            Timber.d("getPkgVersionCode() is %s", versionCode);
-            return versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-        } catch (NullPointerException npe) {
-            if (context.getPackageManager() == null) {
-                Timber.e("getPkgVersionCode() null package manager?");
-            } else if (context.getPackageName() == null) {
-                Timber.e("getPkgVersionCode() null package name?");
+    @JvmStatic
+    val pkgVersionCode: Long
+        get() {
+            val context: Context = AnkiDroidApp.getInstance()
+            try {
+                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val versionCode = PackageInfoCompat.getLongVersionCode(pInfo)
+                Timber.d("getPkgVersionCode() is %s", versionCode)
+                return versionCode
+            } catch (e: PackageManager.NameNotFoundException) {
+                Timber.e(e, "Couldn't find package named %s", context.packageName)
+            } catch (npe: NullPointerException) {
+                if (context.packageManager == null) {
+                    Timber.e("getPkgVersionCode() null package manager?")
+                } else if (context.packageName == null) {
+                    Timber.e("getPkgVersionCode() null package name?")
+                }
+                AnkiDroidApp.sendExceptionReport(npe, "Unexpected exception getting version code?")
+                Timber.e(npe, "Unexpected exception getting version code?")
             }
-            AnkiDroidApp.sendExceptionReport(npe, "Unexpected exception getting version code?");
-            Timber.e(npe, "Unexpected exception getting version code?");
+            return 0
         }
-        return 0;
-    }
 
     /**
      * Return whether the package version code is set to that for release version
      * @return whether build number in manifest version code is '3'
      */
-    public static boolean isReleaseVersion() {
-        String versionCode = Long.toString(getPkgVersionCode());
-        Timber.d("isReleaseVersion() versionCode: %s", versionCode);
-        return versionCode.charAt(versionCode.length()-3)=='3';
-    }
+    @JvmStatic
+    val isReleaseVersion: Boolean
+        get() {
+            val versionCode = java.lang.Long.toString(pkgVersionCode)
+            Timber.d("isReleaseVersion() versionCode: %s", versionCode)
+            return versionCode[versionCode.length - 3] == '3'
+        }
 }
