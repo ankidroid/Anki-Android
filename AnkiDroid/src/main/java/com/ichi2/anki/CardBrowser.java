@@ -115,6 +115,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -1407,7 +1408,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         List<Long> selectedCardIds = getSelectedCardIds();
-        FunctionalInterfaces.Consumer<Integer> consumer = newDays -> rescheduleWithoutValidation(selectedCardIds, newDays);
+        Consumer<Integer> consumer = newDays -> rescheduleWithoutValidation(selectedCardIds, newDays);
         RescheduleDialog rescheduleDialog;
         if (selectedCardIds.size() == 1) {
             long cardId = selectedCardIds.get(0);

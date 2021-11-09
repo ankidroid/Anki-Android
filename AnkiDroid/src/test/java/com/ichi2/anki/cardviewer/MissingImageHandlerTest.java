@@ -20,14 +20,13 @@ package com.ichi2.anki.cardviewer;
 import android.net.Uri;
 import android.webkit.WebResourceRequest;
 
-import com.ichi2.utils.FunctionalInterfaces;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public class MissingImageHandlerTest {
 
 
     @NonNull
-    private FunctionalInterfaces.Consumer<String> defaultHandler() {
+    private Consumer<String> defaultHandler() {
         return (f) -> {
             mTimesCalled++;
             mFileNames.add(f);
@@ -112,11 +111,11 @@ public class MissingImageHandlerTest {
         processFailure(invalidRequest, defaultHandler());
     }
 
-    private void processFailure(WebResourceRequest invalidRequest, FunctionalInterfaces.Consumer<String> consumer) {
+    private void processFailure(WebResourceRequest invalidRequest, Consumer<String> consumer) {
         mSut.processFailure(invalidRequest, consumer);
     }
 
-    private void processMissingSound(File file, @NonNull FunctionalInterfaces.Consumer<String> onFailure) {
+    private void processMissingSound(File file, @NonNull Consumer<String> onFailure) {
         mSut.processMissingSound(file, onFailure);
     }
 
@@ -141,7 +140,7 @@ public class MissingImageHandlerTest {
     @Test
     public void testThirdSoundIsIgnored() {
         //Tests that the third call to processMissingSound is ignored
-        FunctionalInterfaces.Consumer<String> handler = defaultHandler();
+        Consumer<String> handler = defaultHandler();
         processMissingSound(new File("example.wav"), handler);
         mSut.onCardSideChange();
         processMissingSound(new File("example2.wav"), handler);

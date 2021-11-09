@@ -21,12 +21,12 @@ import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.contentNullable
+import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
-    private var mConsumer: FunctionalInterfaces.Consumer<Int>? = null
-    fun setCallbackRunnable(consumer: FunctionalInterfaces.Consumer<Int>?) {
+    private var mConsumer: Consumer<Int>? = null
+    fun setCallbackRunnable(consumer: Consumer<Int>?) {
         mConsumer = consumer
     }
 

@@ -25,10 +25,11 @@ import android.os.Message;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.ImportUtils.ImportResult;
 import com.ichi2.utils.Permissions;
+
+import java.util.function.Consumer;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
