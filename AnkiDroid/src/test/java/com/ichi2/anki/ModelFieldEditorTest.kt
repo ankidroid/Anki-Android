@@ -14,83 +14,50 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.content.Intent;
-import android.widget.EditText;
+import android.content.Intent
+import android.widget.EditText
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.Model
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.Models;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import static com.afollestad.materialdialogs.DialogAction.POSITIVE;
-import static com.ichi2.anki.FieldOperationType.ADD_FIELD;
-import static com.ichi2.anki.FieldOperationType.RENAME_FIELD;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
-
-@RunWith(ParameterizedRobolectricTestRunner.class)
-public class ModelFieldEditorTest extends RobolectricTest {
-    private static final String[] sForbiddenCharacters = new String[] {"#", "^", "/", " ", "\t"};
-    private String mForbiddenCharacter;
-
-
-    public ModelFieldEditorTest(String forbiddenCharacter) {
-        mForbiddenCharacter = forbiddenCharacter;
-    }
-
-
-    @Parameters(name = "\"{0}\"")
-    public static Collection forbiddenCharacters() {
-        return Arrays.asList(sForbiddenCharacters);
-    }
-
-
+@RunWith(ParameterizedRobolectricTestRunner::class)
+class ModelFieldEditorTest(private val forbiddenCharacter: String) : RobolectricTest() {
     /**
      * Tests if field names with illegal characters get removed from beginning of field names when adding field
      */
     @Test
-    public void testIllegalCharactersInFieldName_addField() {
-        String fieldName = setupInvalidFieldName(mForbiddenCharacter, ADD_FIELD);
-
-        testForIllegalCharacters(fieldName);
+    fun testIllegalCharactersInFieldName_addField() {
+        val fieldName = setupInvalidFieldName(forbiddenCharacter, FieldOperationType.ADD_FIELD)
+        testForIllegalCharacters(fieldName)
     }
-
 
     /**
      * Tests if field names with illegal characters get removed from beginning of field names when renaming field
      */
     @Test
-    public void testIllegalCharactersInFieldName_renameField() {
-        String fieldName = setupInvalidFieldName(mForbiddenCharacter, RENAME_FIELD);
-
-        testForIllegalCharacters(fieldName);
+    fun testIllegalCharactersInFieldName_renameField() {
+        val fieldName = setupInvalidFieldName(forbiddenCharacter, FieldOperationType.RENAME_FIELD)
+        testForIllegalCharacters(fieldName)
     }
-
 
     /**
      * Assert that model's fields doesn't contain the forbidden field name
      *
      * @param forbiddenFieldName The forbidden field name to identify
      */
-    private void testForIllegalCharacters(String forbiddenFieldName) {
-        List<String> modelFields = getCurrentDatabaseModelCopy("Basic").getFieldsNames();
-        String fieldName = modelFields.get(modelFields.size() - 1);
-
-        assertThat("forbidden character detected!", fieldName, not(equalTo(forbiddenFieldName)));
+    private fun testForIllegalCharacters(forbiddenFieldName: String) {
+        val modelFields = getCurrentDatabaseModelCopy("Basic").fieldsNames
+        val fieldName = modelFields[modelFields.size - 1]
+        MatcherAssert.assertThat("forbidden character detected!", fieldName, Matchers.not(Matchers.equalTo(forbiddenFieldName)))
     }
-
 
     /**
      * Builds a Dialog and an EditText for field name.
@@ -98,91 +65,78 @@ public class ModelFieldEditorTest extends RobolectricTest {
      *
      * @param forbidden             Forbidden character to set
      * @param fieldOperationType    Field Operation Type to do (ADD_FIELD or EDIT_FIELD)
-     * @return                      The forbidden field name created
+     * @return The forbidden field name created
      */
-    private String setupInvalidFieldName(String forbidden, FieldOperationType fieldOperationType) {
-
-        EditText fieldNameInput = new EditText(getTargetContext());
-
-        String fieldName = forbidden + "field";
+    private fun setupInvalidFieldName(forbidden: String, fieldOperationType: FieldOperationType): String {
+        val fieldNameInput = EditText(targetContext)
+        val fieldName = forbidden + "field"
 
         // build dialog for field name input
-        advanceRobolectricLooperWithSleep();
-        MaterialDialog dialog = buildAddEditFieldDialog(fieldNameInput, fieldOperationType);
+        advanceRobolectricLooperWithSleep()
+        val dialog = buildAddEditFieldDialog(fieldNameInput, fieldOperationType)
 
         // set field name to forbidden string and click confirm
-        fieldNameInput.setText(fieldName);
-        dialog.getActionButton(POSITIVE)
-                .performClick();
-        advanceRobolectricLooperWithSleep();
-
-        return fieldName;
+        fieldNameInput.setText(fieldName)
+        dialog.getActionButton(DialogAction.POSITIVE)
+            .performClick()
+        advanceRobolectricLooperWithSleep()
+        return fieldName
     }
-
 
     /**
      * Creates a dialog that adds a field with given field name to "Basic" model when its positive button is clicked
      *
      * @param fieldNameInput        EditText with field name inside
      * @param fieldOperationType    Field Operation Type to do (ADD_FIELD or EDIT_FIELD)
-     * @return                      The dialog
+     * @return The dialog
      */
-    private MaterialDialog buildAddEditFieldDialog(EditText fieldNameInput, FieldOperationType fieldOperationType)
-            throws RuntimeException {
+    @Throws(RuntimeException::class)
+    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): MaterialDialog {
+        return MaterialDialog.Builder(targetContext)
+            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                try {
+                    val modelName = "Basic"
 
-        return new MaterialDialog.Builder(getTargetContext())
-                .onPositive((dialog, which) -> {
-                    try {
-                        String modelName = "Basic";
-
-                        // start ModelFieldEditor activity
-                        Intent intent = new Intent();
-                        intent.putExtra("title", modelName);
-                        intent.putExtra("noteTypeID", findModelIdByName(modelName));
-                        ModelFieldEditor modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
-                                this, ModelFieldEditor.class, intent
-                        );
-
-                        // add or rename field
-                        switch (fieldOperationType) {
-                            case ADD_FIELD:
-                                modelFieldEditor.addField(fieldNameInput);
-                                break;
-
-                            case RENAME_FIELD:
-                                modelFieldEditor.renameField(fieldNameInput);
-                                break;
-
-                            default:
-                                throw new IllegalStateException("Unexpected value: " + fieldOperationType);
-                        }
-                    } catch (ConfirmModSchemaException exception) {
-                        throw new RuntimeException(exception);
+                    // start ModelFieldEditor activity
+                    val intent = Intent()
+                    intent.putExtra("title", modelName)
+                    intent.putExtra("noteTypeID", findModelIdByName(modelName))
+                    val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
+                        this, ModelFieldEditor::class.java, intent
+                    )
+                    when (fieldOperationType) {
+                        FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
+                        FieldOperationType.RENAME_FIELD -> modelFieldEditor.renameField(fieldNameInput)
                     }
-                })
-                .build();
+                } catch (exception: ConfirmModSchemaException) {
+                    throw RuntimeException(exception)
+                }
+            }
+            .build()
     }
-
 
     /**
      * Finds the model with specified name in {@link Models#getModels()} and returns its key
      *
      * @param modelName Name of the model
-     * @return          Key in {@link Models#getModels()} HashMap for the model
+     * @return Key in {@link Models#getModels()} HashMap for the model
      */
-    private long findModelIdByName(String modelName) {
-        return getCol().getModels().getModels().entrySet()
-                .stream()
-                .filter(idModels -> idModels.getValue().getString("name").equals(modelName))
-                .map(Map.Entry::getKey) // get the ID
-                .findFirst()
-                .orElse(0L);
+    @Suppress("SameParameterValue")
+    private fun findModelIdByName(modelName: String): Long {
+        return col.models.getModels().filter { idModels: Map.Entry<Long?, Model> -> idModels.value.getString("name") == modelName }.keys.first()
+    }
+
+    companion object {
+        private val sForbiddenCharacters = arrayOf("#", "^", "/", " ", "\t")
+        @ParameterizedRobolectricTestRunner.Parameters(name = "\"{0}\"")
+        @Suppress("unused")
+        @JvmStatic
+        fun forbiddenCharacters(): Collection<*> {
+            return listOf(*sForbiddenCharacters)
+        }
     }
 }
 
-
-
-enum FieldOperationType {
-    ADD_FIELD,
-    RENAME_FIELD
+internal enum class FieldOperationType {
+    ADD_FIELD, RENAME_FIELD
 }
