@@ -14,16 +14,17 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import timber.log.Timber;
+import timber.log.Timber
 
-public class ThreadUtil {
-    public static void sleep(int timeout) {
+object ThreadUtil {
+    @JvmStatic
+    fun sleep(timeout: Int) {
         try {
-            Thread.sleep(timeout);
-        } catch (InterruptedException e) {
-            Timber.w(e);
+            Thread.sleep(timeout.toLong())
+        } catch (e: InterruptedException) {
+            Timber.w(e)
         }
     }
 }
