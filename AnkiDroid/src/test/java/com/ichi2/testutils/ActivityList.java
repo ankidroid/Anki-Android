@@ -47,13 +47,13 @@ import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.anki.services.ReminderService;
-import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import androidx.annotation.CheckResult;
 
