@@ -14,54 +14,40 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import java.lang.ref.WeakReference;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import java.lang.ref.WeakReference
 
 /**
  * A utility class that can put a limit on how much a function gets called.
  * It can also be used to only fire a function only once for a given reference, respecting the max execution number
  */
-public class MaxExecFunction {
-
-    private final Runnable mFunc;
-    private final int mMaxNumberOfExecutions;
-    private int mCurrentNumberOfExecutions = 0;
-    @Nullable
-    private WeakReference<Object> mLastExecutionReference;
-
-
-    public MaxExecFunction(int maxNumberOfExecutions, @NonNull Runnable func) {
-        this.mFunc = func;
-        this.mMaxNumberOfExecutions = maxNumberOfExecutions;
-    }
-
+class MaxExecFunction(private val maxNumberOfExecutions: Int, private val func: Runnable) {
+    private var mCurrentNumberOfExecutions = 0
+    private var mLastExecutionReference: WeakReference<Any>? = null
 
     /**
      * Execute the function, if the max number of max execution hasn't been reached
      */
-    public void exec() {
-        if (mCurrentNumberOfExecutions >= mMaxNumberOfExecutions) {
-            return;
+    fun exec() {
+        if (mCurrentNumberOfExecutions >= maxNumberOfExecutions) {
+            return
         }
-        mCurrentNumberOfExecutions++;
-        mFunc.run();
+        mCurrentNumberOfExecutions++
+        func.run()
     }
-
 
     /**
      * Execute the faction, if it didn't get called for the same reference before and the number execution hasn't been reached
      *
      * @param ref the reference
      */
-    public void execOnceForReference(Object ref) {
-        if (mLastExecutionReference != null && mLastExecutionReference.get() == ref) {
-            return;
+    @KotlinCleanup("Thread Safety")
+    fun execOnceForReference(ref: Any) {
+        if (mLastExecutionReference != null && mLastExecutionReference!!.get() === ref) {
+            return
         }
-        mLastExecutionReference = new WeakReference<>(ref);
-        exec();
+        mLastExecutionReference = WeakReference(ref)
+        exec()
     }
 }
