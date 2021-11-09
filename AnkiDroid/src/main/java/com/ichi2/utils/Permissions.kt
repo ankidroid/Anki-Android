@@ -14,44 +14,40 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
-public class Permissions {
-    private Permissions() { }
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean canUseCamera(@NonNull Context context) {
-        return hasPermission(context, Manifest.permission.CAMERA);
+object Permissions {
+    @JvmStatic
+    fun canUseCamera(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.CAMERA)
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean canRecordAudio(@NonNull Context context) {
-        return hasPermission(context, Manifest.permission.RECORD_AUDIO);
+    @JvmStatic
+    fun canRecordAudio(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.RECORD_AUDIO)
     }
 
-    private static boolean hasPermission(@NonNull Context context, @NonNull String permission) {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+    private fun hasPermission(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
-
 
     /**
      * Check if we have permission to access the external storage
      * @param context
      * @return
      */
-    public static boolean hasStorageAccessPermission(Context context) {
-        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    @JvmStatic
+    fun hasStorageAccessPermission(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
-
-    public static boolean canUseWakeLock(Context context) {
-        return hasPermission(context, Manifest.permission.WAKE_LOCK);
+    @JvmStatic
+    fun canUseWakeLock(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.WAKE_LOCK)
     }
 }
