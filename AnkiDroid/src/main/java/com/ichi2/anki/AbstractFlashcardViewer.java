@@ -131,7 +131,6 @@ import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.AssetHelper;
 import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.Computation;
-import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.HashUtil;
@@ -157,6 +156,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import kotlin.Unit;

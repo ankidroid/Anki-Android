@@ -23,11 +23,6 @@ import androidx.annotation.NonNull;
 public final class FunctionalInterfaces {
 
     @FunctionalInterface
-    public interface Function<TIn, TOut> {
-        TOut apply(TIn item);
-    }
-
-    @FunctionalInterface
     public interface FunctionThrowable<TIn, TOut, TEx extends Throwable> {
         TOut apply(TIn item) throws TEx;
     }

@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
@@ -166,7 +167,7 @@ public class CardInfo extends AnkiActivity {
     }
 
 
-    private <T> void setIfNotNull(T nullableData, @IdRes int dataRes, @IdRes int labelRes, FunctionalInterfaces.Function<T, String> asString) {
+    private <T> void setIfNotNull(T nullableData, @IdRes int dataRes, @IdRes int labelRes, Function<T, String> asString) {
         if (nullableData == null) {
             findViewById(dataRes).setVisibility(View.GONE);
             findViewById(labelRes).setVisibility(View.GONE);
