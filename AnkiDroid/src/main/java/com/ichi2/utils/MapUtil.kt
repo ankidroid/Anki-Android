@@ -14,24 +14,22 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import java.util.Map;
-
-public class MapUtil {
-
+object MapUtil {
     /**
      * Convenience method for getting the corresponding key given the value in a 1-to-1 map
      * @param map map containing 1-to-1 key/value pairs
      * @param value value to get key for
      * @return key corresponding to the given value
      */
-    public static <T, E> T getKeyByValue(Map<T,E> map, E value) {
-        for (Map.Entry<T, E> entry : map.entrySet()) {
-            if (value.equals(entry.getValue())) {
-                return entry.getKey();
+    @JvmStatic
+    fun <T, E> getKeyByValue(map: Map<T, E>, value: E): T? {
+        for ((key, value1) in map) {
+            if (value == value1) {
+                return key
             }
         }
-        return null;
+        return null
     }
 }
