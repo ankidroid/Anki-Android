@@ -62,13 +62,13 @@ public class IntentHandler extends Activity {
         LaunchType launchType = getLaunchType(intent);
         switch (launchType) {
             case FILE_IMPORT:
-                runIfStoragePermissions.consume(() -> handleFileImport(intent, reloadIntent, action));
+                runIfStoragePermissions.accept(() -> handleFileImport(intent, reloadIntent, action));
                 break;
             case SYNC:
-                runIfStoragePermissions.consume(() -> handleSyncIntent(reloadIntent, action));
+                runIfStoragePermissions.accept(() -> handleSyncIntent(reloadIntent, action));
                 break;
             case REVIEW:
-                runIfStoragePermissions.consume(() -> handleReviewIntent(intent));
+                runIfStoragePermissions.accept(() -> handleReviewIntent(intent));
                 break;
             case DEFAULT_START_APP_IF_NEW:
                 Timber.d("onCreate() performing default action");

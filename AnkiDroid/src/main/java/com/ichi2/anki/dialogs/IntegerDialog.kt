@@ -50,7 +50,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
             .inputRange(1, requireArguments().getInt("digits"))
             .input(
                 requireArguments().getString("prompt"), ""
-            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.consume(text.toString().toInt()) }
+            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
             .contentNullable(requireArguments().getString("content"))
             .show()
     }

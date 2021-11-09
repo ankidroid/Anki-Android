@@ -496,7 +496,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     //This is intentionally package-private as it removes the need for synthetic accessors
     void processCardAction(Consumer<WebView> cardConsumer) {
         processCardFunction(cardWebView -> {
-            cardConsumer.consume(cardWebView);
+            cardConsumer.accept(cardWebView);
             return true;
         });
     }

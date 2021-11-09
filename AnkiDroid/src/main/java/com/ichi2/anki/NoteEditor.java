@@ -1173,7 +1173,7 @@ public class NoteEditor extends AnkiActivity implements
         intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
         intent.putExtra(EXTRA_DID, mCurrentDid);
         //mutate event with additional properties
-        intentEnricher.consume(intent);
+        intentEnricher.accept(intent);
         startActivityForResultWithAnimation(intent, REQUEST_ADD, START);
     }
 

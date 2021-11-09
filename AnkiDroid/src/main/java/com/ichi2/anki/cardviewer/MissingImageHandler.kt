@@ -48,7 +48,7 @@ class MissingImageHandler {
 
         try {
             val filename = URLUtil.guessFileName(url, null, null)
-            onFailure.consume(filename)
+            onFailure.accept(filename)
             mMissingMediaCount++
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
@@ -67,7 +67,7 @@ class MissingImageHandler {
 
         try {
             val fileName = file.name
-            onFailure.consume(fileName)
+            onFailure.accept(fileName)
             if (!mHasExecuted) {
                 mMissingMediaCount++
             }
