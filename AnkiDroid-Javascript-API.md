@@ -807,7 +807,7 @@ Read more [TextToSpeech#stop()](https://developer.android.com/reference/android/
 AnkiDroidJS.ankiTtsStop()
 ```
 
-
+View more in [PR #8812](https://github.com/ankidroid/Anki-Android/pull/8812)
 
 
 
