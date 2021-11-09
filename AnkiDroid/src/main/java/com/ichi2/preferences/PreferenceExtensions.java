@@ -18,7 +18,7 @@ package com.ichi2.preferences;
 
 import android.content.SharedPreferences;
 
-import com.ichi2.utils.FunctionalInterfaces.Supplier;
+import java.util.function.Supplier;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;

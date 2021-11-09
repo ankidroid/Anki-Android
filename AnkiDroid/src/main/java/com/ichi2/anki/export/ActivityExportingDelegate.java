@@ -20,9 +20,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.os.PersistableBundle;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener;
@@ -32,12 +32,10 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.utils.TimeUtils;
-import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.FunctionalInterfaces.Supplier;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.function.Supplier;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
@@ -45,7 +43,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.StringRes;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 

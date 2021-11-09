@@ -23,11 +23,6 @@ import androidx.annotation.NonNull;
 public final class FunctionalInterfaces {
 
     @FunctionalInterface
-    public interface Supplier<T> {
-        T get();
-    }
-
-    @FunctionalInterface
     public interface Consumer<T> {
         void consume(T item);
     }

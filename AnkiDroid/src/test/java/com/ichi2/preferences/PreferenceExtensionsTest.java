@@ -24,8 +24,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.function.Supplier;
+
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
-import static com.ichi2.utils.FunctionalInterfaces.Supplier;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
