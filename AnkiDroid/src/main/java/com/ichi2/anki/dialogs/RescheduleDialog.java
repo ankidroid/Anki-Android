@@ -21,7 +21,8 @@ import android.content.res.Resources;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
+
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

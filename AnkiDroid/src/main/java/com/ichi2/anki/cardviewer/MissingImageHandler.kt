@@ -17,10 +17,9 @@ package com.ichi2.anki.cardviewer
 
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
-import com.ichi2.utils.FunctionalInterfaces
 import timber.log.Timber
 import java.io.File
-import java.lang.Exception
+import java.util.function.Consumer
 
 /** Handles logic for displaying help for missing media files  */
 class MissingImageHandler {
@@ -33,7 +32,7 @@ class MissingImageHandler {
     private var mMissingMediaCount = 0
     private var mHasShownInefficientImage = false
     private var mHasExecuted = false
-    fun processFailure(request: WebResourceRequest?, onFailure: FunctionalInterfaces.Consumer<String?>) {
+    fun processFailure(request: WebResourceRequest?, onFailure: Consumer<String?>) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
         if (request == null || mHasExecuted) return
 
@@ -57,7 +56,7 @@ class MissingImageHandler {
         }
     }
 
-    fun processMissingSound(file: File?, onFailure: FunctionalInterfaces.Consumer<String?>) {
+    fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
         if (file == null) return

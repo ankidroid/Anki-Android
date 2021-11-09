@@ -23,11 +23,6 @@ import androidx.annotation.NonNull;
 public final class FunctionalInterfaces {
 
     @FunctionalInterface
-    public interface Consumer<T> {
-        void accept(T item);
-    }
-
-    @FunctionalInterface
     public interface Function<TIn, TOut> {
         TOut apply(TIn item);
     }
