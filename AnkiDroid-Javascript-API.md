@@ -645,6 +645,172 @@ View more examples in the PR [#9247](https://github.com/ankidroid/Anki-Android/p
 
 
 
+
+# Text to Speech 
+Synthesizes speech from text for immediate playback. The JS API is implemented on top of [Android Text to Speech](https://developer.android.com/reference/android/speech/tts/TextToSpeech).
+
+## Select TTS language
+* #### Name
+```AnkiDroidJS.ankiTtsSetLanguage(Locale)```
+
+* #### Parameters
+`loc`
+
+Locale: The locale describing the language to be used
+
+* #### Type of return value
+`int`
+
+Code indicating the support status for the locale
+
+``` 
+0 Denotes the language is available for the language by the locale, but not the country and variant.
+1 Denotes the language is available for the language and country specified by the locale, but not the variant.
+2 Denotes the language is available exactly as specified by the locale.
+-1 Denotes the language data is missing.
+-2 Denotes the language is not supported.
+```
+
+* #### Info
+Read more [TextToSpeech#setLanguage](https://developer.android.com/reference/android/speech/tts/TextToSpeech#setLanguage(java.util.Locale))
+
+* #### Usage
+```javascript
+AnkiDroidJS.ankiTtsSetLanguage('en-US');
+```
+Change `en-US` to desired language.
+
+## Speak
+* #### Name
+`AnkiDroidJS.ankiTtsSpeak(text)`
+
+* #### Parameters
+`text`
+
+CharSequence: The string of text to be spoken. No longer than `getMaxSpeechInputLength()` characters 
+
+
+`queueMode`
+
+int: The queuing strategy to use, `QUEUE_ADD` or `QUEUE_FLUSH`
+
+* #### Type of return value
+`int`
+
+```
+-1 ERROR
+0 SUCCESS
+```
+
+* #### Info
+Speaks the text using the specified queuing strategy and speech parameters.
+
+Read More [TextToSpeech#speak(str)](https://developer.android.com/reference/android/speech/tts/TextToSpeech#speak(java.lang.CharSequence,%20int,%20android.os.Bundle,%20java.lang.String))
+
+* #### Usage
+```js
+AnkiDroidJS.ankiTtsSpeak(text)
+```
+
+If you add `1` to the second argument, it will wait until the previous Speak ends before speaking
+```js
+AnkiDroidJS.ankiTtsSpeak(text, 1)
+```
+
+
+## Set TTS speed
+* #### Name
+`AnkiDroidJS.ankiTtsSetSpeechRate(float)`
+
+* #### Parameters
+`speechRate`	
+
+float: Speech rate. 1.0 is the normal speech rate, lower values slow down the speech (0.5 is half the normal speech rate), greater values accelerate it (2.0 is twice the normal speech rate).
+
+* #### Type of return value
+`int`
+
+```
+-1 ERROR
+0 SUCCESS
+```
+
+* #### Info
+Read More [TextToSpeech#setSpeechRate(float)](https://developer.android.com/reference/android/speech/tts/TextToSpeech#setSpeechRate(float))
+
+* #### Usage
+```js
+AnkiDroidJS.ankiTtsSetSpeechRate(0.8)
+```
+
+## Set TTS pitch
+* #### Name 
+`AnkiDroidJS.ankiTtsSetPitch(float)`
+
+* #### Parameters
+`pitch`	
+
+float: Speech pitch. 1.0 is the normal pitch, lower values lower the tone of the synthesized voice, greater values increase it.
+
+* #### Type of return value
+`int`
+
+```
+-1 ERROR
+0 SUCCESS
+```
+
+* #### Info
+Read more [TextToSpeech#setPitch(float)](https://developer.android.com/reference/android/speech/tts/TextToSpeech#setPitch(float))
+
+* #### Usage
+```js
+AnkiDroidJS.ankiTtsSetPitch(1.1)
+```
+
+## Checks whether the TTS engine is busy speaking
+* #### Name 
+`AnkiDroidJS.ankiTtsIsSpeaking()`
+
+* #### Type of return value
+`boolean`
+
+* #### Info
+`true` if the TTS engine is speaking
+
+Read more[TextToSpeech#isSpeaking()](https://developer.android.com/reference/android/speech/tts/TextToSpeech#isSpeaking())
+
+* #### Usage
+```js
+let isSpeaking = AnkiDroidJS.ankiTtsIsSpeaking();
+```
+
+## Stop speech
+* #### Name 
+`AnkiDroidJS.ankiTtsStop()`
+
+* #### Type of return value
+`int`
+
+```
+-1 ERROR
+0 SUCCESS
+```
+
+* #### Info
+Interrupts the current utterance (whether played or rendered to file) and discards other utterances in the queue
+
+Read more [TextToSpeech#stop()](https://developer.android.com/reference/android/speech/tts/TextToSpeech#stop())
+
+* #### Usage
+```js
+AnkiDroidJS.ankiTtsStop()
+```
+
+
+
+
+
 ## Some tips to improve card / deck development
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
 <br>**Note: Using this may give some problem when using AnkiWeb in Android Chrome, so to make available some functionality only to AnkiDroid app then ```wv``` in ```navigator.userAgent``` can be used.**
@@ -852,3 +1018,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#8500 Get deck name using JS API](https://github.com/ankidroid/Anki-Android/pull/8500)
 <br>[#9247 JS API to open card browser and search with query](https://github.com/ankidroid/Anki-Android/pull/9247)
 <br>[#9245 New JS API for bury & suspend card and bury & suspend note and tag card](https://github.com/ankidroid/Anki-Android/pull/9245)
+<br>[# New JavaScript api for TTS](https://github.com/ankidroid/Anki-Android/pull/8812)
