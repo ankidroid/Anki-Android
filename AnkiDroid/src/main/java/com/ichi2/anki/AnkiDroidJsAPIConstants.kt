@@ -18,47 +18,28 @@
 
 package com.ichi2.anki
 
-class AnkiDroidJsAPIConstants {
+object AnkiDroidJsAPIConstants {
     // JS API ERROR CODE
-    @kotlin.jvm.JvmField
-    var ankiJsErrorCodeDefault: Int = 0
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeMarkCard: Int = 1
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeFlagCard: Int = 2
+    const val ankiJsErrorCodeDefault: Int = 0
+    const val ankiJsErrorCodeMarkCard: Int = 1
+    const val ankiJsErrorCodeFlagCard: Int = 2
 
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeBuryCard: Int = 3
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeSuspendCard: Int = 4
-
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeBuryNote: Int = 5
-    @kotlin.jvm.JvmField
-    val ankiJsErrorCodeSuspendNote: Int = 6
+    const val ankiJsErrorCodeBuryCard: Int = 3
+    const val ankiJsErrorCodeSuspendCard: Int = 4
+    const val ankiJsErrorCodeBuryNote: Int = 5
+    const val ankiJsErrorCodeSuspendNote: Int = 6
 
     // js api developer contact
-    @kotlin.jvm.JvmField
-    var mCardSuppliedDeveloperContact = ""
-    @kotlin.jvm.JvmField
-    var mCardSuppliedApiVersion = ""
+    const val sCurrentJsApiVersion = "0.0.1"
+    const val sMinimumJsApiVersion = "0.0.1"
 
-    val sCurrentJsApiVersion = "0.0.1"
-    val sMinimumJsApiVersion = "0.0.1"
+    const val MARK_CARD = "markCard"
+    const val TOGGLE_FLAG = "toggleFlag"
 
-    @kotlin.jvm.JvmField
-    val MARK_CARD = "markCard"
-    @kotlin.jvm.JvmField
-    val TOGGLE_FLAG = "toggleFlag"
-
-    @kotlin.jvm.JvmField
-    val BURY_CARD = "buryCard"
-    @kotlin.jvm.JvmField
-    val BURY_NOTE = "buryNote"
-    @kotlin.jvm.JvmField
-    val SUSPEND_CARD = "suspendCard"
-    @kotlin.jvm.JvmField
-    val SUSPEND_NOTE = "suspendNote"
+    const val BURY_CARD = "buryCard"
+    const val BURY_NOTE = "buryNote"
+    const val SUSPEND_CARD = "suspendCard"
+    const val SUSPEND_NOTE = "suspendNote"
 
     fun initApiMap(): HashMap<String, Boolean> {
         val jsApiListMap = HashMap<String, Boolean>()

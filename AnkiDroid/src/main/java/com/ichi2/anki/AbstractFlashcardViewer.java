@@ -202,7 +202,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected static final int MENU_DISABLED = 3;
 
     private AnkiDroidJsAPI mAnkiDroidJsAPI;
-    private AnkiDroidJsAPIConstants mJsAPIConstants;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -1333,7 +1332,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction();
-        mJsAPIConstants = mAnkiDroidJsAPI.getJsAPIConstants();
         webView.addJavascriptInterface(mAnkiDroidJsAPI, "AnkiDroidJS");
 
         return webView;
@@ -2798,7 +2796,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                if (!mAnkiDroidJsAPI.isInit(mJsAPIConstants.MARK_CARD, mJsAPIConstants.ankiJsErrorCodeMarkCard)) {
+                if (!mAnkiDroidJsAPI.isInit(AnkiDroidJsAPIConstants.MARK_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard)) {
                     return true;
                 }
 
@@ -2807,7 +2805,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
-                if (!mAnkiDroidJsAPI.isInit(mJsAPIConstants.TOGGLE_FLAG, mJsAPIConstants.ankiJsErrorCodeFlagCard)) {
+                if (!mAnkiDroidJsAPI.isInit(AnkiDroidJsAPIConstants.TOGGLE_FLAG, AnkiDroidJsAPIConstants.ankiJsErrorCodeFlagCard)) {
                     return true;
                 }
 
