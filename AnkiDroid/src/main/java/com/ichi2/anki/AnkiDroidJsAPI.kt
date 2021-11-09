@@ -46,19 +46,20 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
 
     private val context: Context = activity
-    val jsAPIConstants = AnkiDroidJsAPIConstants()
+    private var cardSuppliedDeveloperContact = ""
+    private var cardSuppliedApiVersion = ""
 
     // JS api list enable/disable status
-    private var mJsApiListMap = jsAPIConstants.initApiMap()
+    private var mJsApiListMap = AnkiDroidJsAPIConstants.initApiMap()
 
     // Text to speech
     private val mTalker = JavaScriptTTS()
 
     // init or reset api list
     fun init() {
-        jsAPIConstants.mCardSuppliedApiVersion = ""
-        jsAPIConstants.mCardSuppliedDeveloperContact = ""
-        mJsApiListMap = jsAPIConstants.initApiMap()
+        cardSuppliedApiVersion = ""
+        cardSuppliedDeveloperContact = ""
+        mJsApiListMap = AnkiDroidJsAPIConstants.initApiMap()
     }
 
     // Check if value null
@@ -76,7 +77,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     protected fun isInit(apiName: String, apiErrorCode: Int): Boolean {
         if (isAnkiApiNull(apiName)) {
-            showDeveloperContact(jsAPIConstants.ankiJsErrorCodeDefault)
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return false
         } else if (!getJsApiListMap()?.get(apiName)!!) {
             // see 02-string.xml
@@ -97,7 +98,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val parentLayout: View = activity.findViewById(android.R.id.content)
-        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, jsAPIConstants.mCardSuppliedDeveloperContact, errorMsg)
+        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, cardSuppliedDeveloperContact, errorMsg)
         val snackbar: Snackbar? = UIUtils.showSnackbar(
             activity,
             snackbarMsg,
@@ -120,7 +121,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             if (TextUtils.isEmpty(apiDevContact)) {
                 return false
             }
-            val versionCurrent = Version.valueOf(jsAPIConstants.sCurrentJsApiVersion)
+            val versionCurrent = Version.valueOf(AnkiDroidJsAPIConstants.sCurrentJsApiVersion)
             val versionSupplied = Version.valueOf(apiVer)
 
             /*
@@ -133,11 +134,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     true
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
-                    showThemedToast(context, context.getString(R.string.update_js_api_version, jsAPIConstants.mCardSuppliedDeveloperContact), false)
-                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(jsAPIConstants.sMinimumJsApiVersion))
+                    showThemedToast(context, context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), false)
+                    versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
-                    showThemedToast(context, context.getString(R.string.valid_js_api_version, jsAPIConstants.mCardSuppliedDeveloperContact), false)
+                    showThemedToast(context, context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), false)
                     false
                 }
             }
@@ -154,7 +155,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    fun getJsApiListMap(): HashMap<String, Boolean>? {
+    private fun getJsApiListMap(): HashMap<String, Boolean>? {
         return mJsApiListMap
     }
 
@@ -164,9 +165,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var apiStatusJson = ""
         try {
             data = JSONObject(jsonData)
-            jsAPIConstants.mCardSuppliedApiVersion = data.optString("version", "")
-            jsAPIConstants.mCardSuppliedDeveloperContact = data.optString("developer", "")
-            if (requireApiVersion(jsAPIConstants.mCardSuppliedApiVersion, jsAPIConstants.mCardSuppliedDeveloperContact)) {
+            cardSuppliedApiVersion = data.optString("version", "")
+            cardSuppliedDeveloperContact = data.optString("developer", "")
+            if (requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)) {
                 enableJsApi()
             }
             apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
@@ -337,7 +338,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiBuryCard(): Boolean {
-        if (!isInit(jsAPIConstants.BURY_CARD, jsAPIConstants.ankiJsErrorCodeBuryCard)) {
+        if (!isInit(AnkiDroidJsAPIConstants.BURY_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard)) {
             return false
         }
 
@@ -346,7 +347,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiBuryNote(): Boolean {
-        if (!isInit(jsAPIConstants.BURY_NOTE, jsAPIConstants.ankiJsErrorCodeBuryNote)) {
+        if (!isInit(AnkiDroidJsAPIConstants.BURY_NOTE, AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryNote)) {
             return false
         }
 
@@ -355,7 +356,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiSuspendCard(): Boolean {
-        if (!isInit(jsAPIConstants.SUSPEND_CARD, jsAPIConstants.ankiJsErrorCodeSuspendCard)) {
+        if (!isInit(AnkiDroidJsAPIConstants.SUSPEND_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard)) {
             return false
         }
 
@@ -364,7 +365,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiSuspendNote(): Boolean {
-        if (!isInit(jsAPIConstants.SUSPEND_NOTE, jsAPIConstants.ankiJsErrorCodeSuspendNote)) {
+        if (!isInit(AnkiDroidJsAPIConstants.SUSPEND_NOTE, AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote)) {
             return false
         }
 
