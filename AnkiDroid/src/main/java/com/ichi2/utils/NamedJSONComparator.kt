@@ -14,19 +14,19 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import com.ichi2.utils.JSONObject;
+import java.util.Comparator
 
-import java.util.Comparator;
+class NamedJSONComparator : Comparator<JSONObject> {
+    override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
+        val o1 = lhs.getString("name")
+        val o2 = rhs.getString("name")
+        return o1.compareTo(o2, ignoreCase = true)
+    }
 
-public class NamedJSONComparator implements Comparator<JSONObject> {
-    public static final NamedJSONComparator INSTANCE = new NamedJSONComparator();
-
-    @Override
-    public int compare(JSONObject lhs, JSONObject rhs) {
-        String o1 = lhs.getString("name");
-        String o2 = rhs.getString("name");
-        return o1.compareToIgnoreCase(o2);
+    companion object {
+        @JvmField
+        val INSTANCE = NamedJSONComparator()
     }
 }
