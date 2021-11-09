@@ -14,36 +14,22 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.dialogs;
-import com.ichi2.utils.ExtendedFragmentFactory;
-import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener;
-import java.io.Serializable;
+package com.ichi2.anki.dialogs
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.Fragment
+import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener
+import com.ichi2.utils.ExtendedFragmentFactory
+import java.io.Serializable
 
-public class InsertFieldDialogFactory extends ExtendedFragmentFactory implements Serializable {
-
-    final InsertFieldListener mInsertFieldListener;
-
-
-    public InsertFieldDialogFactory(InsertFieldListener insertFieldListener) {
-        this.mInsertFieldListener = insertFieldListener;
+class InsertFieldDialogFactory(private val insertFieldListener: InsertFieldListener) : ExtendedFragmentFactory(), Serializable {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+        val cls = loadFragmentClass(classLoader, className)
+        return if (cls == InsertFieldDialog::class.java) {
+            newInsertFieldDialog()
+        } else super.instantiate(classLoader, className)
     }
 
-
-    @NonNull
-    @Override
-    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
-        Class<? extends Fragment> cls = loadFragmentClass(classLoader, className);
-        if (cls == InsertFieldDialog.class) {
-            return newInsertFieldDialog();
-        }
-        return super.instantiate(classLoader, className);
-    }
-
-    @NonNull
-    public InsertFieldDialog newInsertFieldDialog() {
-        return new InsertFieldDialog(mInsertFieldListener);
+    fun newInsertFieldDialog(): InsertFieldDialog {
+        return InsertFieldDialog(insertFieldListener)
     }
 }
