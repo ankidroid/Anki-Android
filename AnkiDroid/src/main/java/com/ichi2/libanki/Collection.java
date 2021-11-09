@@ -1536,29 +1536,29 @@ public class Collection implements CollectionGetter {
             }
         }
 
-        executeIntegrityTask.consume(this::deleteNotesWithMissingModel);
+        executeIntegrityTask.accept(this::deleteNotesWithMissingModel);
         // for each model
         for (Model m : getModels().all()) {
-            executeIntegrityTask.consume((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
-            executeIntegrityTask.consume((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
+            executeIntegrityTask.accept((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
+            executeIntegrityTask.accept((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
         }
-        executeIntegrityTask.consume(this::deleteNotesWithMissingCards);
-        executeIntegrityTask.consume(this::deleteCardsWithMissingNotes);
-        executeIntegrityTask.consume(this::removeOriginalDuePropertyWhereInvalid);
-        executeIntegrityTask.consume(this::removeDynamicPropertyFromNonDynamicDecks);
-        executeIntegrityTask.consume(this::removeDeckOptionsFromDynamicDecks);
-        executeIntegrityTask.consume(this::resetInvalidDeckOptions);
-        executeIntegrityTask.consume(this::rebuildTags);
-        executeIntegrityTask.consume(this::updateFieldCache);
-        executeIntegrityTask.consume(this::fixNewCardDuePositionOverflow);
-        executeIntegrityTask.consume(this::resetNewCardInsertionPosition);
-        executeIntegrityTask.consume(this::fixExcessiveReviewDueDates);
+        executeIntegrityTask.accept(this::deleteNotesWithMissingCards);
+        executeIntegrityTask.accept(this::deleteCardsWithMissingNotes);
+        executeIntegrityTask.accept(this::removeOriginalDuePropertyWhereInvalid);
+        executeIntegrityTask.accept(this::removeDynamicPropertyFromNonDynamicDecks);
+        executeIntegrityTask.accept(this::removeDeckOptionsFromDynamicDecks);
+        executeIntegrityTask.accept(this::resetInvalidDeckOptions);
+        executeIntegrityTask.accept(this::rebuildTags);
+        executeIntegrityTask.accept(this::updateFieldCache);
+        executeIntegrityTask.accept(this::fixNewCardDuePositionOverflow);
+        executeIntegrityTask.accept(this::resetNewCardInsertionPosition);
+        executeIntegrityTask.accept(this::fixExcessiveReviewDueDates);
         // v2 sched had a bug that could create decimal intervals
-        executeIntegrityTask.consume(this::fixDecimalCardsData);
-        executeIntegrityTask.consume(this::fixDecimalRevLogData);
-        executeIntegrityTask.consume(this::restoreMissingDatabaseIndices);
-        executeIntegrityTask.consume(this::ensureModelsAreNotEmpty);
-        executeIntegrityTask.consume((progressNotifier) -> this.ensureCardsHaveHomeDeck(progressNotifier, result));
+        executeIntegrityTask.accept(this::fixDecimalCardsData);
+        executeIntegrityTask.accept(this::fixDecimalRevLogData);
+        executeIntegrityTask.accept(this::restoreMissingDatabaseIndices);
+        executeIntegrityTask.accept(this::ensureModelsAreNotEmpty);
+        executeIntegrityTask.accept((progressNotifier) -> this.ensureCardsHaveHomeDeck(progressNotifier, result));
         // and finally, optimize (unable to be done inside transaction).
         try {
             optimize(notifyProgress);

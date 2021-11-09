@@ -24,7 +24,7 @@ public final class FunctionalInterfaces {
 
     @FunctionalInterface
     public interface Consumer<T> {
-        void consume(T item);
+        void accept(T item);
     }
 
     @FunctionalInterface
