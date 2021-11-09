@@ -14,12 +14,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.text.TextUtils;
-
-
-import timber.log.Timber;
+import android.text.TextUtils
+import timber.log.Timber
 
 /**
  * Helper class to log method invocation.
@@ -27,10 +25,10 @@ import timber.log.Timber;
  * Use with moderation as it spans the logcat and reduces performances.
  * <p>
  * Consider guarding calls to this method with an if statement on a static final constant, as in:
- * 
+ *
  * <pre>
  *   public static final boolean DEBUG = false;  // Enable for debugging this class.
- * 
+ *
  *   public void methodName(int value, String name) {
  *     if (DEBUG) {
  *       MethodLogger.log(value, name);
@@ -39,43 +37,38 @@ import timber.log.Timber;
  *   }
  * </pre>
  */
-public class MethodLogger {
 
-    private MethodLogger() {
-    }
-
-
+object MethodLogger {
     /**
      * Logs the method being called.
-     * 
+     *
      * @param message to add to the logged statement
      */
-    public static void log(String message) {
-        logInternal(message);
+    fun log(message: String) {
+        logInternal(message)
     }
-
 
     /**
      * Logs the method being called.
      */
-    public static void log() {
-        logInternal("");
+    @JvmStatic
+    fun log() {
+        logInternal("")
     }
-
 
     /**
      * Logs the method that made the call.
      * <p>
      * A helper method is needed to make sure the number of stack frames is the same on every path.
-     * 
+     *
      * @param message to be added to the logged message
      */
-    private static void logInternal(String message) {
+    private fun logInternal(message: String) {
         // Get the name of the class and method.
-        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        val stack = Thread.currentThread().stackTrace
         // Look for the index of this method call in the stack trace.
         //
-        // The task should something like:
+        // The task should be something like:
         // 0: dalvik.system.VMStack.getThreadStackTrace()
         // 1: java.lang.Thread.getStackTrace()
         // 2: com.ichi2.utils.MethodLogger.logInternal()
@@ -85,25 +78,24 @@ public class MethodLogger {
         // But we cannot guarantee what the stack trace below this method will be, and it might be different on
         // different versions of Android. Instead, we look for the call to our own method and we assume there is a
         // single public method on this class above it before the call to logInternal.
-        int size = stack.length;
-        int logInternalIndex = 0;
-        for (; logInternalIndex < size; ++logInternalIndex) {
-            if (TextUtils.equals(stack[logInternalIndex].getClassName(), MethodLogger.class.getName())
-                    && TextUtils.equals(stack[logInternalIndex].getMethodName(), "logInternal")) {
-                break;
+        val size = stack.size
+        var logInternalIndex = 0
+        while (logInternalIndex < size) {
+            if (TextUtils.equals(stack[logInternalIndex].className, MethodLogger::class.java.name) &&
+                TextUtils.equals(stack[logInternalIndex].methodName, "logInternal")
+            ) {
+                break
             }
+            ++logInternalIndex
         }
-        if (logInternalIndex + 2 >= size) {
-            throw new IllegalStateException("there should always be a caller for this method");
-        }
-        StackTraceElement caller = stack[logInternalIndex + 2];
-        String callerClass = caller.getClassName();
-        String callerMethod = caller.getMethodName();
+        check(logInternalIndex + 2 < size) { "there should always be a caller for this method" }
+        val caller = stack[logInternalIndex + 2]
+        val callerClass = caller.className
+        val callerMethod = caller.methodName
         if (TextUtils.isEmpty(message)) {
-            Timber.d("called: %s.%s()", callerClass, callerMethod);
+            Timber.d("called: %s.%s()", callerClass, callerMethod)
         } else {
-            Timber.d("called: %s.%s(): %s", callerClass, callerMethod, message);
+            Timber.d("called: %s.%s(): %s", callerClass, callerMethod, message)
         }
     }
-
 }
