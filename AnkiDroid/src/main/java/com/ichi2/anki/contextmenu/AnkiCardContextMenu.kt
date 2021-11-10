@@ -13,42 +13,29 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.contextmenu
 
-package com.ichi2.anki.contextmenu;
+import android.content.Context
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
-public class AnkiCardContextMenu extends SystemContextMenu {
-
-
-    public static final String ANKI_CARD_CONTEXT_MENU_PREF_KEY = "anki_card_enable_external_context_menu";
-
-
-    @SuppressWarnings("WeakerAccess")
-    public AnkiCardContextMenu(@NonNull Context context) {
-        super(context);
+class AnkiCardContextMenu(context: Context) : SystemContextMenu(context) {
+    override fun getActivityName(): String {
+        return "com.ichi2.anki.AnkiCardContextMenuAction"
     }
 
-    public static void ensureConsistentStateWithSharedPreferences(@NonNull Context context) {
-        new AnkiCardContextMenu(context).ensureConsistentStateWithSharedPreferences();
+    override fun getDefaultEnabledStatus(): Boolean {
+        return true
     }
 
-    @NonNull
-    @Override
-    protected String getActivityName() {
-        return "com.ichi2.anki.AnkiCardContextMenuAction";
+    override fun getPreferenceKey(): String {
+        return ANKI_CARD_CONTEXT_MENU_PREF_KEY
     }
 
-    @Override
-    protected boolean getDefaultEnabledStatus() {
-        return true;
-    }
+    companion object {
+        const val ANKI_CARD_CONTEXT_MENU_PREF_KEY = "anki_card_enable_external_context_menu"
 
-    @NonNull
-    @Override
-    protected String getPreferenceKey() {
-        return ANKI_CARD_CONTEXT_MENU_PREF_KEY;
+        @JvmStatic
+        fun ensureConsistentStateWithSharedPreferences(context: Context) {
+            AnkiCardContextMenu(context).ensureConsistentStateWithSharedPreferences()
+        }
     }
 }
