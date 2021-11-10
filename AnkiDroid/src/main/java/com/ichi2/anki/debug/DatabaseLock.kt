@@ -14,21 +14,18 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.debug;
+package com.ichi2.anki.debug
 
-import android.content.Context;
+import android.content.Context
+import com.ichi2.anki.CollectionHelper
+import timber.log.Timber
 
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.libanki.Collection;
-
-import timber.log.Timber;
-
-/** Debug only class which will lock the database */
-public class DatabaseLock {
-
-    public static void engage(Context ctx) {
-        Collection c = CollectionHelper.getInstance().getCol(ctx);
-        Timber.w("Toggling database lock");
-        c.getDb().getDatabase().beginTransaction();
+/** Debug only class which will lock the database  */
+object DatabaseLock {
+    @JvmStatic
+    fun engage(ctx: Context?) {
+        val c = CollectionHelper.getInstance().getCol(ctx)
+        Timber.w("Toggling database lock")
+        c.db.database.beginTransaction()
     }
 }
