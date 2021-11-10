@@ -113,10 +113,10 @@
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
     <string name="menu_bury_card">Адкласці картку</string>
     <string name="menu_bury_note">Адкласці запіс</string>
-    <string name="menu_suspend_card">Выключыць картку</string>
+    <string name="menu_suspend_card">Прыпыніць картку</string>
     <string name="menu_suspend_note">Прыпыніць запіс</string>
     <string name="menu_bury">Адкласці</string>
-    <string name="menu_suspend">Выключыць</string>
+    <string name="menu_suspend">Прыпыніць</string>
     <string name="menu_delete_note">Выдаліць запіс</string>
     <string name="menu_flag">Сцяжок</string>
     <string name="menu_flag_card">Пазначыць картку</string>

@@ -50,7 +50,7 @@
     <string-array name="cram_deck_conf_order_labels">
         <item>ସର୍ବପୁରାତନ ଆଗ </item>
         <item>ଅନିୟମିତ</item>
-        <item>ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</item>
+        <item>ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</item>
         <item>କମୁଥିବା ଅନ୍ତରାଳ</item>
         <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
         <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମାନୁସାରେ</item>
@@ -77,7 +77,7 @@
     </string-array>
     <string-array name="night_theme_labels">
         <item>କଳା</item>
-        <item>ଗାଢ଼</item>
+        <item>ଗାଢ଼</item>
     </string-array>
     <string-array name="html_size_code_labels">
         <item>xx-ଛୋଟ</item>

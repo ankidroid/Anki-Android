@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Пачакайце</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Нешта пайшло не так</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG фармат недаступны для перадпрагляду</string>
     <string name="multimedia_editor_png_paste_error">Памылка канвертацыі выявы ў PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Дадаць змесціва з мультымедыя да поля %1$s</string>
     <string name="multimedia_editor_attach_media">Дадаць Media-файл</string>

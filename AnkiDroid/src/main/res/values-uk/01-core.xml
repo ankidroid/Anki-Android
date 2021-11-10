@@ -45,7 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Налаштування</string>
     <string name="help">Допомога</string>
-    <string name="drawing">креслення</string>
+    <string name="drawing">Креслення</string>
     <string name="send_feedback">Надіслати відгук</string>
     <string name="studyoptions_due_today">На сьогодні:</string>
     <string name="studyoptions_new_total">Всього нових карток:</string>
@@ -125,9 +125,9 @@
     <string name="menu_flag_card_two">Помаранчевий прапорець</string>
     <string name="menu_flag_card_three">Зелений прапорець</string>
     <string name="menu_flag_card_four">Синій прапорець</string>
-    <string name="menu_flag_card_five">Рожевий прапор</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Рожевий прапорець</string>
+    <string name="menu_flag_card_six">Бірюзовий прапорець</string>
+    <string name="menu_flag_card_seven">Фіолетовий прапорець</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_select">Виділити текст</string>
@@ -202,10 +202,10 @@
     <string name="card_template_editor_select_field">Виберіть поле</string>
     <string name="card_template_editor_cant_delete">Необхідно хоча б один тип карток</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">Це створить %1$d картку. Продовжити?</item>
-        <item quantity="few">Це створить %1$d картки. Продовжити?</item>
-        <item quantity="many">Це створить %1$d карток. Продовжити?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Буде створено %1$d картку. Продовжити?</item>
+        <item quantity="few">Буде створено %1$d картки. Продовжити?</item>
+        <item quantity="many">Буде створено %1$d карток. Продовжити?</item>
+        <item quantity="other">Буде створено %1$d карток. Продовжити?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Видалити тип картки «%2$s» та його %1$d картку?</item>
@@ -250,5 +250,5 @@
         <item quantity="many">%1$d карток (0 для перегляду)</item>
         <item quantity="other">%1$d карток (0 для перегляду)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">Копія %s</string>
 </resources>

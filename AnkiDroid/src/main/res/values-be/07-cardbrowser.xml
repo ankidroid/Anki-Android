@@ -47,7 +47,7 @@
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
     <string name="card_browser_delete_card">Выдаліць запісы</string>
-    <string name="card_browser_suspend_card">Прыпыненых картак</string>
+    <string name="card_browser_suspend_card">Прыпыніць карткі</string>
     <string name="card_browser_change_deck">Змяніць калоду</string>
     <string name="card_browser_unsuspend_card">Аднавіць прыпыненыя карткі</string>
     <string name="card_browser_mark_card">Пазначыць запісы</string>
