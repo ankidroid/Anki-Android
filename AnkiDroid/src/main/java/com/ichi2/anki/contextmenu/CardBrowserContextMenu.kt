@@ -13,41 +13,29 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.contextmenu
 
-package com.ichi2.anki.contextmenu;
+import android.content.Context
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
-public class CardBrowserContextMenu extends SystemContextMenu {
-
-    public static final String CARD_BROWSER_CONTEXT_MENU_PREF_KEY = "card_browser_enable_external_context_menu";
-
-
-    @SuppressWarnings("WeakerAccess")
-    public CardBrowserContextMenu(@NonNull Context context) {
-        super(context);
+class CardBrowserContextMenu(context: Context) : SystemContextMenu(context) {
+    override fun getActivityName(): String {
+        return "com.ichi2.anki.CardBrowserContextMenuAction"
     }
 
-    public static void ensureConsistentStateWithSharedPreferences(@NonNull Context context) {
-        new CardBrowserContextMenu(context).ensureConsistentStateWithSharedPreferences();
+    override fun getDefaultEnabledStatus(): Boolean {
+        return false
     }
 
-    @NonNull
-    @Override
-    protected String getActivityName() {
-        return "com.ichi2.anki.CardBrowserContextMenuAction";
+    override fun getPreferenceKey(): String {
+        return CARD_BROWSER_CONTEXT_MENU_PREF_KEY
     }
 
-    @Override
-    protected boolean getDefaultEnabledStatus() {
-        return false;
-    }
+    companion object {
+        const val CARD_BROWSER_CONTEXT_MENU_PREF_KEY = "card_browser_enable_external_context_menu"
 
-    @NonNull
-    @Override
-    protected String getPreferenceKey() {
-        return CARD_BROWSER_CONTEXT_MENU_PREF_KEY;
+        @JvmStatic
+        fun ensureConsistentStateWithSharedPreferences(context: Context) {
+            CardBrowserContextMenu(context).ensureConsistentStateWithSharedPreferences()
+        }
     }
 }
