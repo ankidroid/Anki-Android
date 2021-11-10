@@ -108,8 +108,8 @@
     <string name="gesture_flag_green">Переключити зелений прапорець</string>
     <string name="gesture_flag_blue">Переключити синій прапорець</string>
     <string name="gesture_flag_pink">Перемкнути рожевий прапор</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_turquoise">Перемкнути бірюзовий прапорець</string>
+    <string name="gesture_flag_purple">Перемкнути фіолетовий прапорець</string>
     <string name="gesture_flag_remove">Прибрати прапорець</string>
     <string name="gesture_page_up">Попередня сторінка</string>
     <string name="gesture_page_down">Наступна сторінка</string>
@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">Дошка</string>
     <string name="record_voice">Записати голос</string>
     <string name="replay_voice">Відтворити запис голосу</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Важко (Добре, якщо недоступно)</string>
+    <string name="automatic_answer_option_4">Легко (Добре, якщо недоступно)</string>
 </resources>

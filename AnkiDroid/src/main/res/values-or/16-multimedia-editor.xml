@@ -35,8 +35,8 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">ପ୍ରତିଛବି ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
+    <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
@@ -67,8 +67,8 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ଲେଖା</string>
     <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
-    <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
+    <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
+    <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ସମାପ୍ତ</string>
     <!-- Text field editing -->
     <!-- buttons -->

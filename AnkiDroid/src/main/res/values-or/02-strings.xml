@@ -63,7 +63,7 @@
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
     <string name="hide_whiteboard">ଧଳାପଟା ଲୁଚାଅ</string>
     <string name="clear_whiteboard">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
-    <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
+    <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
     <string name="leech_suspend_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="corrupt_font">ଖରାପ ଫଣ୍ଟ ଫାଇଲ୍ %s</string>
@@ -146,7 +146,7 @@
         <item quantity="other">%dଟି ପତ୍ର ଯୋଗ କରାଯାଇଛି</item>
     </plurals>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
-    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
+    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି ପତ୍ରଗୁଡ଼ିକ</string>
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ଡେକ୍ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
@@ -176,7 +176,7 @@
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_include_schedule">ଅନୁସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
-    <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
+    <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
@@ -247,8 +247,8 @@
     <string name="filtered_deck_name">ଶୋଧିତ ତାସଖଣ୍ଡ</string>
     <string name="reminder_title">ଆଜି ଅଧ୍ୟୟନ କରିବାକୁ ଭୁଲନ୍ତୁ ନାହିଁ!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%1$sରେ%2$d ପତ୍ରର ସମୀକ୍ଷା ବାକି</item>
-        <item quantity="other">%1$sରେ %1$s ପତ୍ରଙ୍କର ସମୀକ୍ଷା ବାକି</item>
+        <item quantity="one">%1$sରେ ସମୀକ୍ଷା ପାଇଁ %2$dଟିଏ ପତ୍ର</item>
+        <item quantity="other">%1$sରେ ସମୀକ୍ଷା ପାଇଁ %2$dଟି ପତ୍ର</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
@@ -257,7 +257,7 @@
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ଧାରଣ କରିବା ବିଫଳ ହୋଇଛି।</string>
     <string name="activity_start_failed">ଏହି ସିଷ୍ଟମରେ ଏହି କାମ କରିବାଯୋଗ୍ୟ ଆପ୍ ସଂସ୍ଥାପିତ ହେଇନାହିଁ।</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ଛବି ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ନିର୍ଦେଶିକାରେ ଆପଣ ଛବୀଙ୍କୁ ଚାପି ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ଛବି ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ନିର୍ଦେଶିକାରେ ଆପଣ ଛବୀଙ୍କୁ ଚାପି ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
     <string name="no_browser_notification">କୌଣସି ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ, ଦୟାକରି PC କିମ୍ୱା ମୋବାଇଲ୍ ଦ୍ୱାରା ୱେବ୍ ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ: </string>
     <string name="web_page_error">ପୃଷ୍ଠା ଲୋଡ୍ ହେବାରେ ତ୍ରୁଟି: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">ବାହ୍ୟ ପୃଷ୍ଠା ଲିଙ୍କ ପତ୍ରରେ ରହିପାରିବନାହିଁ    </string>
@@ -311,7 +311,7 @@
     <string name="about_ankidroid_error_copy_debug_info">କ୍ଲିପବୋର୍ଡରେ ଡିବଗ୍ ସୂଚନା କପି କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
-    <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକୀୟ</string>
+    <string name="card_viewer_media_relative_protocol">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ମିଡ଼ିଆ ଅଦ୍ୟତନ ଆବଶ୍ୟକୀୟ</string>
     <string name="cannot_load_http_resource">http ସମ୍ପଦ ଧାରଣ କରିବା ଆଉ ସମର୍ଥିତ ନୁହେଁ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
@@ -346,7 +346,7 @@
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆବଶ୍ୟକ ଅଟେ</string>
-    <string name="password_empty">ପାସ୍‍ୱାର୍ଡ଼ ଆବଶ୍ୟକ ଅଟେ</string>
+    <string name="password_empty">ପାସ୍‍ୱାର୍ଡ଼ ଆବଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->

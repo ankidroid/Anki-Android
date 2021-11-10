@@ -136,11 +136,11 @@
     <string name="lookup_button_content">ଦୃଷ୍ଟିପାତ</string>
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
     <!-- Media checking -->
-    <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
+    <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
-    <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
-    <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ବିଫଳ ହେଲା</string>
+    <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
+    <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
+    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ବିଫଳ ହେଲା</string>
     <string name="check_media_invalid">ଅବୈଧ ଏନକୋଡିଂ ସହିତ ଫାଇଲଗୁଡିକ: %d</string>
     <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ ଫାଇଲଗୁଡ଼ିକ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହୃତ ହୋଇନାହିଁ: %d</string>
     <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ ଫାଇଲଗୁଡ଼ିକ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନୁହେଁ: %d</string>
@@ -168,7 +168,7 @@
     <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲା ନାହିଁ। କାର୍ଯ୍ୟକାରିତା ଅକ୍ଷମ ହୋଇଛି।</string>
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
+    <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">AnkiDroid କୁ ସ୍ୱାଗତ </string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>

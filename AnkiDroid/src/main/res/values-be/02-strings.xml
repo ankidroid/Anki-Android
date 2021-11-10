@@ -64,7 +64,7 @@
     <string name="hide_whiteboard">Схаваць дошку</string>
     <string name="clear_whiteboard">Ачысціць дошку</string>
     <string name="replay_audio">Паўтарыць аўдыя</string>
-    <string name="leech_suspend_notification">Картка пазначана як надакучлівая і яна была прыпыненая</string>
+    <string name="leech_suspend_notification">Картка пазначаная як надакучлівая і яна была прыпынена</string>
     <string name="leech_notification">Картка пазначаная як надакучлівая</string>
     <string name="corrupt_font">Файл шрыфту %s пашкоджаны</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
@@ -141,7 +141,7 @@
     <string name="card_editor_reset_card">Скінуць дасягненні</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перапланаваць</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Папярэдні прагляд</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
     <string name="error_insufficient_memory">Дзеянне немагчыма з-за недахопу памяці на прыладзе</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перайменаваць</string>
     <string name="default_conf_delete_error">Немагчыма выдаліць стандартныя групавыя параметры</string>
@@ -210,7 +210,7 @@
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
     <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>
     <string name="sched_end">(канец)</string>
-    <string name="sched_unbury_action">Для таго, каб убачыць іх зараз, неабходна выбраць \"Паказаць\" у меню</string>
+    <string name="sched_unbury_action">Для таго, каб убачыць іх зараз, неабходна выбраць \"Вярнуць\" у меню</string>
     <string name="sched_has_buried">Некаторыя звязаныя або адкладзеныя карткі былі перанесеныя на заўтра</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
@@ -395,10 +395,10 @@
     <string name="import_mapped_to_nothing">Праігнаравана</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Адкладзеная картка</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">Адкладзеныя карткі</string>
+    <string name="deleted_note">Выдалены запіс</string>
+    <string name="suspended_card">Прыпыненыя карткі</string>
+    <string name="suspended_note">Прыпыненыя запісы</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Зрабіць поле %s ліпучым</string>
 </resources>
