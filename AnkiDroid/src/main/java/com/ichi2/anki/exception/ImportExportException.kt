@@ -1,9 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-public class ImportExportException extends Exception {
+import java.lang.Exception
 
-    public ImportExportException(String msg) {
-        super(msg);
-    }
-}
+class ImportExportException(msg: String?) : Exception(msg)
