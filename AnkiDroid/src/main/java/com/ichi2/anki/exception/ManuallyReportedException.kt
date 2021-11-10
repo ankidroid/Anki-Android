@@ -14,11 +14,9 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-/** An exception for manual reporting to ACRA */
-public class ManuallyReportedException extends RuntimeException {
-    public ManuallyReportedException(String message) {
-        super(message);
-    }
-}
+import java.lang.RuntimeException
+
+/** An exception for manual reporting to ACRA  */
+class ManuallyReportedException(message: String?) : RuntimeException(message)
