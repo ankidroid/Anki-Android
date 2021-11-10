@@ -14,26 +14,23 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-import timber.log.Timber;
+import timber.log.Timber
+import java.lang.Exception
 
-public class ConfirmModSchemaException extends Exception {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -9215098969154590797L;
-
-
-    public ConfirmModSchemaException() {
-    }
-
-
+class ConfirmModSchemaException : Exception() {
     /**
      * Add the current exception to log.
      */
-    public void log() {
-        Timber.v(this);
+    fun log() {
+        Timber.v(this)
+    }
+
+    companion object {
+        /**
+         *
+         */
+        private const val serialVersionUID = -9215098969154590797L
     }
 }
