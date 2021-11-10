@@ -13,42 +13,25 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 // ಠ_ಠ This is required to override a package-private method to block animations
-package androidx.drawerlayout.widget;
+package androidx.drawerlayout.widget
 
-import android.content.Context;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
+class ClosableDrawerLayout : DrawerLayout {
+    private var mAnimationEnabled = true
 
-public class ClosableDrawerLayout extends DrawerLayout {
-    @SuppressWarnings( {"FieldCanBeLocal", "unused", "RedundantSuppression"})
-    private boolean mAnimationEnabled = true;
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {}
 
-    public ClosableDrawerLayout(@NonNull Context context) {
-        super(context);
-    }
-
-
-    public ClosableDrawerLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    public ClosableDrawerLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
-    public void setAnimationEnabled(boolean useAnimation) {
-        mAnimationEnabled = useAnimation;
+    fun setAnimationEnabled(useAnimation: Boolean) {
+        mAnimationEnabled = useAnimation
     }
 
     // This is called internally (onTouchEvent outside the control will close it), so we need it here
-    @Override
-    void closeDrawers(boolean peekingOnly) {
+    public override fun closeDrawers(peekingOnly: Boolean) {
         // TODO: This fails due to #7344 - tapping on the left side partially opens the menu and blocks the UI
         // permanently. I didn't work too hard on resolving this, but it didn't seem like a simple fix.
         /*
@@ -56,6 +39,6 @@ public class ClosableDrawerLayout extends DrawerLayout {
             closeDrawer(GravityCompat.START, false);
         }
         */
-        super.closeDrawers(peekingOnly);
+        super.closeDrawers(peekingOnly)
     }
 }
