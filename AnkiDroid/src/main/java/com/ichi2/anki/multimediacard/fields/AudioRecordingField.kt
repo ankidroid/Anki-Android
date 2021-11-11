@@ -1,47 +1,36 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
 /**
  * Implementation of Audio Recording field type
  */
-public class AudioRecordingField extends AudioField {
-    private static final long serialVersionUID = 5033819217738174719L;
 
-
-    @Override
-    public EFieldType getType() {
-        return EFieldType.AUDIO_RECORDING;
+class AudioRecordingField : AudioField() {
+    override fun getType(): EFieldType {
+        return EFieldType.AUDIO_RECORDING
     }
 
-
-    @Override
-    public boolean isModified() {
-        return getThisModified();
+    override fun isModified(): Boolean {
+        return thisModified
     }
 
-
-    @Override
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-        mHasTemporaryMedia = hasTemporaryMedia;
+    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
+        mHasTemporaryMedia = hasTemporaryMedia
     }
 
-
-    @Override
-    public boolean hasTemporaryMedia() {
-        return mHasTemporaryMedia;
+    override fun hasTemporaryMedia(): Boolean {
+        return mHasTemporaryMedia
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun getName(): String {
+        return mName
     }
 
-
-    @Override
-    public void setName(String name) {
-        mName = name;
+    override fun setName(name: String) {
+        mName = name
     }
 
+    companion object {
+        private const val serialVersionUID = 5033819217738174719L
+    }
 }
-
