@@ -250,7 +250,7 @@ dependencies {
     // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:22.0.0'
+            force 'org.jetbrains:annotations:23.0.0'
             force 'androidx.test:core:1.4.0' // Pending fix here: https://issuetracker.google.com/issues/189353863
         }
     }
@@ -258,7 +258,7 @@ dependencies {
     lintChecks project(":lint-rules")
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-    compileOnly 'org.jetbrains:annotations:21.0.1'
+    compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
