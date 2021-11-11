@@ -14,10 +14,9 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-import java.io.IOException;
+import java.io.IOException
 
-/** Represents a lack of space (for example, being unable to perform a backup */
-public class OutOfSpaceException extends IOException {
-}
+/** Represents a lack of space (for example, being unable to perform a backup  */
+class OutOfSpaceException : IOException()
