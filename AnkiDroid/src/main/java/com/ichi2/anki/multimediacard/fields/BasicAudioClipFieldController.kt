@@ -13,182 +13,184 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.multimediacard.fields;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+package com.ichi2.anki.multimediacard.fields
 
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Button;
-import android.widget.TextView;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.provider.MediaStore
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.compat.CompatHelper
+import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.io.File
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Collection;
-import com.ichi2.ui.FixedTextView;
+class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
+    private var storingDirectory: File? = null
 
-import java.io.File;
-import java.io.InputStream;
-
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
-public class BasicAudioClipFieldController extends FieldControllerBase implements IFieldController {
-
-    private static final int ACTIVITY_SELECT_AUDIO_CLIP = 1;
-
-    private File mStoringDirectory;
-
-    private TextView mTvAudioClip;
-
-
-    @Override
-    public void createUI(Context context, LinearLayout layout) {
-
-        Collection col = CollectionHelper.getInstance().getCol(context);
-        mStoringDirectory = new File(col.getMedia().dir());
+    @KotlinCleanup("Convert to FixedTextView and make lateinit")
+    private var tvAudioClip: TextView? = null
+    override fun createUI(context: Context, layout: LinearLayout) {
+        val col = CollectionHelper.getInstance().getCol(context)
+        storingDirectory = File(col.media.dir())
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
-        boolean allowAllFiles = AnkiDroidApp.getSharedPrefs(context).getBoolean("mediaImportAllowAllFiles", false);
-
-        Button btnLibrary = new Button(mActivity);
-        btnLibrary.setText(mActivity.getText(R.string.multimedia_editor_image_field_editing_library));
-        btnLibrary.setOnClickListener(v -> {
-            Intent i = new Intent();
-            i.setType(allowAllFiles ? "*/*" : "audio/*");
+        val allowAllFiles = AnkiDroidApp.getSharedPrefs(context).getBoolean("mediaImportAllowAllFiles", false)
+        val btnLibrary = Button(mActivity)
+        btnLibrary.text = mActivity.getText(R.string.multimedia_editor_image_field_editing_library)
+        btnLibrary.setOnClickListener {
+            val i = Intent()
+            i.type = if (allowAllFiles) "*/*" else "audio/*"
             if (!allowAllFiles) {
                 // application/ogg takes precedence over "*/*" for application/octet-stream
                 // so don't add it if we're want */*
-                String[] extraMimeTypes = { "audio/*", "application/ogg" }; // #9226 allows ogg on Android 8
-                i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes);
+                val extraMimeTypes = arrayOf("audio/*", "application/ogg") // #9226 allows ogg on Android 8
+                i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes)
             }
-            i.setAction(Intent.ACTION_GET_CONTENT);
+            i.action = Intent.ACTION_GET_CONTENT
             // Only get openable files, to avoid virtual files issues with Android 7+
-            i.addCategory(Intent.CATEGORY_OPENABLE);
-            String chooserPrompt = mActivity.getResources().getString(R.string.multimedia_editor_popup_audio_clip);
-            mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), ACTIVITY_SELECT_AUDIO_CLIP);
-        });
-
-        layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        mTvAudioClip = new FixedTextView(mActivity);
-        if (mField.getAudioPath() == null) {
-            mTvAudioClip.setVisibility(View.GONE);
-        } else {
-            mTvAudioClip.setText(mField.getAudioPath());
-            mTvAudioClip.setVisibility(View.VISIBLE);
+            i.addCategory(Intent.CATEGORY_OPENABLE)
+            val chooserPrompt = mActivity.resources.getString(R.string.multimedia_editor_popup_audio_clip)
+            mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), ACTIVITY_SELECT_AUDIO_CLIP)
         }
-
-        layout.addView(mTvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
+        tvAudioClip = FixedTextView(mActivity)
+        if (mField.audioPath == null) {
+            (tvAudioClip as FixedTextView).setVisibility(View.GONE)
+        } else {
+            (tvAudioClip as FixedTextView).setText(mField.audioPath)
+            (tvAudioClip as FixedTextView).setVisibility(View.VISIBLE)
+        }
+        layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((resultCode != Activity.RESULT_CANCELED) && (requestCode == ACTIVITY_SELECT_AUDIO_CLIP)) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
             try {
-                handleAudioSelection(data);
-            } catch (Exception e) {
-                AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled");
-                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                handleAudioSelection(data)
+            } catch (e: Exception) {
+                AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled")
+                showThemedToast(
+                    AnkiDroidApp.getInstance().applicationContext,
+                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                )
             }
         }
     }
 
-
-    private void handleAudioSelection(Intent data) {
-        Uri selectedClip = data.getData();
+    private fun handleAudioSelection(data: Intent) {
+        val selectedClip = data.data
 
         // Get information about the selected document
-        String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE };
-        String[] audioClipFullNameParts;
-        try (Cursor cursor = mActivity.getContentResolver().query(selectedClip, queryColumns, null, null, null)) {
+        val queryColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE)
+        var audioClipFullNameParts: Array<String>
+        mActivity.contentResolver.query(selectedClip!!, queryColumns, null, null, null).use { cursor ->
             if (cursor == null) {
-                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-                return;
+                showThemedToast(
+                    AnkiDroidApp.getInstance().applicationContext,
+                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                )
+                return
             }
-
-            cursor.moveToFirst();
-            String audioClipFullName = cursor.getString(0);
-            audioClipFullName = checkFileName(audioClipFullName);
-            audioClipFullNameParts = audioClipFullName.split("\\.");
-            if (audioClipFullNameParts.length < 2) {
-                try {
-                    Timber.i("Audio clip name does not have extension, using second half of mime type");
-                    audioClipFullNameParts = new String[] {audioClipFullName, cursor.getString(2).split("/")[1]};
-                } catch (Exception e) {
-                    Timber.w(e);
+            cursor.moveToFirst()
+            var audioClipFullName = cursor.getString(0)
+            audioClipFullName = checkFileName(audioClipFullName)
+            audioClipFullNameParts = audioClipFullName.split("\\.").toTypedArray()
+            if (audioClipFullNameParts.size < 2) {
+                audioClipFullNameParts = try {
+                    Timber.i("Audio clip name does not have extension, using second half of mime type")
+                    arrayOf(audioClipFullName, cursor.getString(2).split("/").toTypedArray()[1])
+                } catch (e: Exception) {
+                    Timber.w(e)
                     // This code is difficult to stabilize - it is not clear how to handle files with no extension
                     // and apparently we may fail to get MIME_TYPE information - in that case we will gather information
                     // about what people are experiencing in the real world and decide later, but without crashing at least
-                    AnkiDroidApp.sendExceptionReport(e, "Audio Clip addition failed. Name " + audioClipFullName + " / cursor mime type column type " + cursor.getType(2));
-                    UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                            AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-                    return;
+                    AnkiDroidApp.sendExceptionReport(e, "Audio Clip addition failed. Name " + audioClipFullName + " / cursor mime type column type " + cursor.getType(2))
+                    showThemedToast(
+                        AnkiDroidApp.getInstance().applicationContext,
+                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                    )
+                    return
                 }
             }
         }
 
         // We may receive documents we can't access directly, we have to copy to a temp file
-        File clipCopy;
+        val clipCopy: File
         try {
-            clipCopy = File.createTempFile("ankidroid_audioclip_" + audioClipFullNameParts[0],
-                    "." + audioClipFullNameParts[1],
-                    mStoringDirectory);
-            Timber.d("audio clip picker file path is: %s", clipCopy.getAbsolutePath());
-        } catch (Exception e) {
-            Timber.e(e, "Could not create temporary audio file. ");
-            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:tempFile");
-            UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-            return;
+            clipCopy = File.createTempFile(
+                "ankidroid_audioclip_" + audioClipFullNameParts[0],
+                "." + audioClipFullNameParts[1],
+                storingDirectory
+            )
+            Timber.d("audio clip picker file path is: %s", clipCopy.absolutePath)
+        } catch (e: Exception) {
+            Timber.e(e, "Could not create temporary audio file. ")
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:tempFile")
+            showThemedToast(
+                AnkiDroidApp.getInstance().applicationContext,
+                AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+            )
+            return
         }
 
         // Copy file contents into new temp file. Possibly check file size first and warn if large?
-        try (InputStream inputStream = mActivity.getContentResolver().openInputStream(selectedClip)) {
-            CompatHelper.getCompat().copyFile(inputStream, clipCopy.getAbsolutePath());
+        try {
+            mActivity.contentResolver.openInputStream(selectedClip).use { inputStream ->
+                CompatHelper.getCompat().copyFile(inputStream, clipCopy.absolutePath)
 
-            // If everything worked, hand off the information
-            mField.setHasTemporaryMedia(true);
-            mField.setAudioPath(clipCopy.getAbsolutePath());
-            mTvAudioClip.setText(mField.getFormattedValue());
-            mTvAudioClip.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            Timber.e(e, "Unable to copy audio file from ContentProvider");
-            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:copyFromProvider");
-            UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                // If everything worked, hand off the information
+                mField.setHasTemporaryMedia(true)
+                mField.audioPath = clipCopy.absolutePath
+                tvAudioClip!!.text = mField.formattedValue
+                tvAudioClip!!.visibility = View.VISIBLE
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Unable to copy audio file from ContentProvider")
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:copyFromProvider")
+            showThemedToast(
+                AnkiDroidApp.getInstance().applicationContext,
+                AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+            )
         }
     }
 
-    /**
-     * This method replaces any character that isn't a number, letter or underscore with underscore in file name.
-     * This method doesn't check that file name is valid or not it simply operates on all file name.
-     * @param audioClipFullName name of the file.
-     * @return file name which is valid.
-     */
-    @VisibleForTesting
-    static String checkFileName(String audioClipFullName) {
-        return audioClipFullName.replaceAll("[^\\w.]+", "_");
+    override fun onDone() {
+        /* nothing */
     }
 
-    @Override
-    public void onDone() { /* nothing */ }
+    override fun onFocusLost() {
+        /* nothing */
+    }
 
-    @Override
-    public void onFocusLost() { /* nothing */ }
+    override fun onDestroy() {
+        /* nothing */
+    }
 
-    @Override
-    public void onDestroy() { /* nothing */ }
+    companion object {
+        private const val ACTIVITY_SELECT_AUDIO_CLIP = 1
+
+        /**
+         * This method replaces any character that isn't a number, letter or underscore with underscore in file name.
+         * This method doesn't check that file name is valid or not it simply operates on all file name.
+         * @param audioClipFullName name of the file.
+         * @return file name which is valid.
+         */
+        @JvmStatic
+        @VisibleForTesting
+        fun checkFileName(audioClipFullName: String): String {
+            return audioClipFullName.replace("[^\\w.]+".toRegex(), "_")
+        }
+    }
 }
