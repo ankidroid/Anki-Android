@@ -14,16 +14,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-public class StorageAccessException extends Exception {
+import com.ichi2.utils.KotlinCleanup
+import java.lang.Exception
 
-    public StorageAccessException(String msg, Throwable e) {
-        super(msg, e);
-    }
-
-
-    public StorageAccessException(String msg) {
-        super(msg);
-    }
+@KotlinCleanup("Combine constructors")
+class StorageAccessException : Exception {
+    constructor(msg: String?, e: Throwable?) : super(msg, e) {}
+    constructor(msg: String?) : super(msg) {}
 }
