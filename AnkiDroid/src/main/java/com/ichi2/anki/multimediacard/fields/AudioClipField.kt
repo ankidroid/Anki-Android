@@ -1,40 +1,36 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.multimediacard.fields;
+
+package com.ichi2.anki.multimediacard.fields
 
 /**
  * Implementation of Audio Clip field type
  */
-public class AudioClipField extends AudioField {
-    private static final long serialVersionUID = 2937641017832762987L;
-
-
-    @Override
-    public EFieldType getType() {
-        return EFieldType.AUDIO_CLIP;
+class AudioClipField : AudioField() {
+    override fun getType(): EFieldType {
+        return EFieldType.AUDIO_CLIP
     }
 
-    @Override
-    public boolean isModified() {
-        return false;
+    override fun isModified(): Boolean {
+        return false
     }
 
-    @Override
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-        mHasTemporaryMedia = hasTemporaryMedia;
+    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
+        mHasTemporaryMedia = hasTemporaryMedia
     }
 
-    @Override
-    public boolean hasTemporaryMedia() {
-        return false;
+    override fun hasTemporaryMedia(): Boolean {
+        return false
     }
 
-    @Override
-    public String getName() {
-        return null;
+    override fun getName(): String? {
+        return null
     }
 
-    @Override
-    public void setName(String name) {
+    override fun setName(name: String) {
         // does nothing? FIXME investigate this
+    }
+
+    companion object {
+        private const val serialVersionUID = 2937641017832762987L
     }
 }
