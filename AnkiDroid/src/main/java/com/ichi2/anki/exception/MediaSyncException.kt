@@ -1,9 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.exception;
+package com.ichi2.anki.exception
 
-public class MediaSyncException extends Exception {
+import java.lang.Exception
 
-    public MediaSyncException(String msg) {
-        super(msg);
-    }
-}
+class MediaSyncException(msg: String?) : Exception(msg)
