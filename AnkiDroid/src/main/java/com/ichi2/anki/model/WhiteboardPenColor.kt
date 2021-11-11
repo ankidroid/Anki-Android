@@ -14,47 +14,28 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.model;
+package com.ichi2.anki.model
 
-import android.content.SharedPreferences;
+import android.content.SharedPreferences
+import androidx.annotation.CheckResult
+import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
+import com.ichi2.utils.KotlinCleanup
 
-import com.ichi2.anki.cardviewer.CardAppearance;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.Nullable;
-
-public class WhiteboardPenColor {
-    private final Integer mLightPenColor;
-    private final Integer mDarkPenColor;
-
-
-    public WhiteboardPenColor(Integer lightPenColor, Integer darkPenColor) {
-        this.mLightPenColor = lightPenColor;
-        this.mDarkPenColor = darkPenColor;
-    }
-
-    @CheckResult
-    public static WhiteboardPenColor getDefault() {
-        return new WhiteboardPenColor(null, null);
-    }
-
-    @Nullable
-    public Integer getLightPenColor() {
-        return mLightPenColor;
-    }
-
-    @Nullable
-    public Integer getDarkPenColor() {
-        return mDarkPenColor;
-    }
-
-    @Nullable
-    public Integer fromPreferences(SharedPreferences sharedPrefs) {
-        boolean isInNightMode = CardAppearance.isInNightMode(sharedPrefs);
-        if (isInNightMode) {
-            return getDarkPenColor();
+class WhiteboardPenColor(val lightPenColor: Int?, val darkPenColor: Int?) {
+    @KotlinCleanup("Make sharedPrefs non-null")
+    fun fromPreferences(sharedPrefs: SharedPreferences?): Int? {
+        val isInNightMode = isInNightMode(sharedPrefs!!)
+        return if (isInNightMode) {
+            darkPenColor
         } else {
-            return getLightPenColor();
+            lightPenColor
         }
+    }
+
+    companion object {
+        @JvmStatic
+        @get:CheckResult
+        val default: WhiteboardPenColor
+            get() = WhiteboardPenColor(null, null)
     }
 }
