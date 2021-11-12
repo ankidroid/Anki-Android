@@ -17,23 +17,21 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
+
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * Base for all field types.
  * <p>
  * Controls modifications. This is done to not to save anything, if the field has not been modified.
  */
-public class FieldBase {
-    private boolean mIsModified = false;
+open class FieldBase {
+    var thisModified = false
+        private set
 
-
-    void setThisModified() {
-        mIsModified = true;
-    }
-
-
-    boolean getThisModified() {
-        return mIsModified;
+    @KotlinCleanup("Can be a var")
+    fun setThisModified() {
+        thisModified = true
     }
 }
