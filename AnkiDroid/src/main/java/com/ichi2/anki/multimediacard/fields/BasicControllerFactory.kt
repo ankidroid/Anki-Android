@@ -17,42 +17,25 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-public class BasicControllerFactory implements IControllerFactory {
-
-    private BasicControllerFactory() {
-    }
-
-
-    public static IControllerFactory getInstance() {
-        return new BasicControllerFactory();
-    }
-
-
-    @Override
-    public IFieldController createControllerForField(IField field) {
-        EFieldType type = field.getType();
-
-        switch (type) {
-            case TEXT:
-                return new BasicTextFieldController();
-
-            case IMAGE:
-                return new BasicImageFieldController();
-
-            case AUDIO_RECORDING:
-                return new BasicAudioRecordingFieldController();
-
-            case AUDIO_CLIP:
-                return new BasicAudioClipFieldController();
-
-            default:
-
-                break;
+class BasicControllerFactory private constructor() : IControllerFactory {
+    override fun createControllerForField(field: IField): IFieldController? {
+        val type = field.type
+        when (type) {
+            EFieldType.TEXT -> return BasicTextFieldController()
+            EFieldType.IMAGE -> return BasicImageFieldController()
+            EFieldType.AUDIO_RECORDING -> return BasicAudioRecordingFieldController()
+            EFieldType.AUDIO_CLIP -> return BasicAudioClipFieldController()
+            else -> {
+            }
         }
-
-        return null;
+        return null
     }
 
+    companion object {
+        @JvmStatic
+        val instance: IControllerFactory
+            get() = BasicControllerFactory()
+    }
 }
