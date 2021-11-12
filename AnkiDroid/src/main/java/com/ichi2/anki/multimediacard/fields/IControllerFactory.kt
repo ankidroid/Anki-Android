@@ -1,9 +1,9 @@
-/***********************************************import com.ichi2.anki.IFieldController;
-import com.ichi2.anki.multimediacard.IField;
-shrestha@gmail.com>                          *
+/****************************************************************************************
+ *                                                                                      *
  * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
  * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+ * shrestha@gmail.com>                                                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -18,10 +18,11 @@ shrestha@gmail.com>                          *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-public interface IControllerFactory {
+import com.ichi2.utils.KotlinCleanup
 
-    IFieldController createControllerForField(IField field);
-
+@KotlinCleanup("Fix Comment")
+interface IControllerFactory {
+    fun createControllerForField(field: IField?): IFieldController?
 }
