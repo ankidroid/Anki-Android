@@ -17,14 +17,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
 /**
  * Type of the note field.
  */
-public enum EFieldType {
+enum class EFieldType {
     TEXT, // Just text
     IMAGE, // Just image
     AUDIO_RECORDING, // Just audio
-    AUDIO_CLIP, // Just audio clip
+    AUDIO_CLIP // Just audio clip
 }
