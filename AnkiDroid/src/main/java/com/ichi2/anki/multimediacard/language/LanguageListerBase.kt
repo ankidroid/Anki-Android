@@ -17,11 +17,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.language;
+package com.ichi2.anki.multimediacard.language
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*
 
 /**
  * This is some sort of tool, which translates from languages in a user readable form to a code, used to invoke some
@@ -29,38 +27,31 @@ import java.util.HashMap;
  * <p>
  * Specific language listers derive from this one.
  */
-public class LanguageListerBase {
-
-    private final HashMap<String, String> mLanguageMap;
-
-
-    public LanguageListerBase() {
-        mLanguageMap = new HashMap<>();
-    }
-
+open class LanguageListerBase {
+    private val mLanguageMap: HashMap<String, String>
 
     /**
      * @param name
      * @param code This one has to be used in constructor to fill the hash map.
      */
-    protected void addLanguage(String name, String code) {
-        mLanguageMap.put(name, code);
+    protected fun addLanguage(name: String, code: String) {
+        mLanguageMap[name] = code
     }
 
+    fun getCodeFor(Language: String): String? {
+        return if (mLanguageMap.containsKey(Language)) {
+            mLanguageMap[Language]
+        } else null
+    }
 
-    public String getCodeFor(String Language) {
-        if (mLanguageMap.containsKey(Language)) {
-            return mLanguageMap.get(Language);
+    val languages: ArrayList<String>
+        get() {
+            val res = ArrayList(mLanguageMap.keys)
+            Collections.sort(res) { obj: String, str: String? -> obj.compareTo(str!!, ignoreCase = true) }
+            return res
         }
 
-        return null;
+    init {
+        mLanguageMap = HashMap()
     }
-
-
-    public ArrayList<String> getLanguages() {
-        ArrayList<String> res = new ArrayList<>(mLanguageMap.keySet());
-        Collections.sort(res, String::compareToIgnoreCase);
-        return res;
-    }
-
 }
