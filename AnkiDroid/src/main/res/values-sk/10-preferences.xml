@@ -152,7 +152,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrovať</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikajúce svetlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazenie odpovede</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Odpoveď po uplynutí času</string>
     <string name="timeout_answer_summ">Ukázať odpoveď automaticky bez podnetu používateľa. Oneskorenie zahŕňa čas na automatické prehranie audio súborov.</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas do zobrazenia odpovede</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -213,7 +213,7 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Prilepiť obrázky zo schránky ako PNG</string>
     <string name="paste_as_png_summary">Východiskové nastavenie Anki ukladá obrázky do schránky ako JPG súbory aby sa ušetril ukladací priestor. Môžete použiť túto možnosť a ukladať obrázky ako PNG.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Pre návrat/ukončenie stlačte dvakrát späť</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Pre ukončenie stlačte späť ešte raz</string>
     <string name="exit_via_double_tap_back_summ">Vyhnúť sa nechcenému opusteniu opakovania alebo ukončeniu aplikácie</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>

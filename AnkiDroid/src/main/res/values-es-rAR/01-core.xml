@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">sí</string>
+    <string name="yes">Sí</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Explorador de tarjetas</string>
     <string name="statistics">Estadísticas</string>
     <string name="settings">Configuración</string>
     <string name="help">Ayuda</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Dibujar</string>
     <string name="send_feedback">Enviar comentarios</string>
     <string name="studyoptions_due_today">Programadas para hoy:</string>
     <string name="studyoptions_new_total">Total de tarjetas nuevas:</string>
@@ -72,8 +72,8 @@
         <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas\nusando el ícono +</string>
+    <string name="no_cards_placeholder_title">Colección vacía</string>
+    <string name="no_cards_placeholder_description">Comienza añadiendo tarjetas usando el icono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d tarjeta estudiada en %2$s hoy</item>
@@ -96,7 +96,7 @@
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renombrar mazo</string>
     <string name="create_shortcut">Crear acceso directo</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Buscar tarjetas</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Añadir</string>
     <string name="menu_add_note">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
@@ -115,9 +115,9 @@
     <string name="menu_flag_card_two">Marca naranja</string>
     <string name="menu_flag_card_three">Marca verde</string>
     <string name="menu_flag_card_four">Marca azul</string>
-    <string name="menu_flag_card_five">Uaujskz</string>
-    <string name="menu_flag_card_six">I like your home </string>
-    <string name="menu_flag_card_seven">Bandera violeta</string>
+    <string name="menu_flag_card_five">Bandera rosa</string>
+    <string name="menu_flag_card_six">Bandera turquesa</string>
+    <string name="menu_flag_card_seven">Bandera púrpura</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccione el texto</string>
@@ -134,7 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Por favor, concede a AnkiDroid el permiso de \'Almacenamiento\' para continuar</string>
+    <string name="startup_no_storage_permission">Por favor, concede a AnkiDroid permisos de Almacenamiento para continuar</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -159,9 +159,9 @@
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombre primero el mazo de estudio personalizado existente</string>
     <string name="empty_deck">Este mazo está vacío</string>
-    <string name="search_deck">Búsqueda de Mazos</string>
+    <string name="search_deck">Buscar mazo</string>
     <string name="empty_deck_add_note">Añadir tarjeta</string>
-    <string name="invalid_deck_name">Nombre de mazo no válido</string>
+    <string name="invalid_deck_name">Nombre de mazo inválido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulse el botón + para añadir contenido nuevo.</string>
     <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>
     <string name="studyoptions_empty_schedule">No hay tarjetas programadas para estudiar</string>
@@ -192,15 +192,15 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">Esto creará %1$d tarjeta. ¿Continuar?</item>
-        <item quantity="other">Esto creará %1$d tarjetas. ¿Continuar?</item>
+        <item quantity="one">Esto creará %1$d tarjetas. ¿Continuar?</item>
+        <item quantity="other">Esto creará %1$d tarjeta. ¿Continuar?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
     <string name="invalid_template">Una tarjeta no pudo ser generada</string>
-    <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, crea un nuevo tipo de tarjeta primero.</string>
+    <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta causaría que se eliminaran una o más notas. Por favor, cree y guarde primero un nuevo tipo de tarjeta.</string>
     <string name="card_template_editor_save_error">No se pueden guardar los cambios de plantilla de tarjeta: %s</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Card Browser Appearance -->

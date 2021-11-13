@@ -41,14 +41,14 @@
     <string name="model_browser_delete">ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରନ୍ତୁ</string>
     <string name="model_browser_rename" comment="Rename a note type">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="model_browser_template">ପତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
-    <string name="model_browser_add">ନୋଟ୍ ପ୍ରକାର ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="model_browser_add">ନୋଟ୍ ପ୍ରକାର ଯୋଡ଼ନ୍ତୁ</string>
     <!--Rename-->
     <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ନାମ ବଦଳାନ୍ତୁ</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ଭାଷା ସୂଚକ କୁ %s ସେଟ୍ କରନ୍ତୁ</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">କ୍ଷେତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
-    <string name="model_field_editor_add">କ୍ଷେତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="model_field_editor_add">କ୍ଷେତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="model_field_editor_delete">କ୍ଷେତ୍ର ବିଲୋପ କରନ୍ତୁ</string>
     <string name="model_field_editor_rename">କ୍ଷେତ୍ରଟିର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="model_field_editor_language_hint">କୀବୋର୍ଡର ସୂଚକ ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
@@ -62,7 +62,7 @@
     <string name="model_delete_warning">ଆପଣ ନିଶ୍ଚିତ କି ଆପଣ ଏହି ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="field_delete_warning">ଆପଣ ନିଶ୍ଚିତ କି ଆପଣ ଏହି କ୍ଷେତ୍ର ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">ଯୋଡ଼ନ୍ତୁ: %1$s </string>
+    <string name="model_browser_add_add">ଯୋଡ଼ନ୍ତୁ: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ: %1$s </string>
     <!--Browser Appearance-->

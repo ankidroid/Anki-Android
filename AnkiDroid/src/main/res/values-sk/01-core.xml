@@ -128,7 +128,7 @@
     <string name="menu_flag_card_five">Ružová vlajočka</string>
     <string name="menu_flag_card_six">Tyrkysová vlajočka</string>
     <string name="menu_flag_card_seven">Purpurová vlajočka</string>
-    <string name="menu_edit_tags">Editovať štítky</string>
+    <string name="menu_edit_tags">Upraviť štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
     <string name="menu_select">Zvoliť text</string>
     <string name="menu_lookup">Vyhľadať text</string>
@@ -161,11 +161,11 @@
     <string name="time_quantity_months">%.1f mes</string>
     <string name="time_quantity_years">%.1f r</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Filtrovaný balíček sa znovu vytvára&#8230;</string>
+    <string name="rebuild_filtered_deck">Obnovujem filtrovaný balíček...</string>
     <string name="rebuild_cram_label">Znovu zostaviť</string>
     <string name="empty_cram_label">Vyprázdniť</string>
     <string name="create_subdeck">Vytvoriť podbalíček</string>
-    <string name="empty_filtered_deck">Vyprázdňuje sa filtrovaný balíček&#8230;</string>
+    <string name="empty_filtered_deck">Vyprázdňujem filtrovaný balíček&#8230;</string>
     <string name="custom_study_deck_name">Vlastné štúdium</string>
     <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
     <string name="empty_deck">Tento balíček je prázdny</string>

@@ -394,11 +394,11 @@
     <string name="import_mapped_to_tags">Namapované na Štítky</string>
     <string name="import_mapped_to_nothing">Odignorované</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Kartička zahrabaná.</string>
+    <string name="buried_note">Poznámka zahrabaná.</string>
+    <string name="deleted_note">Poznámka vymazaná.</string>
+    <string name="suspended_card">Kartička pozastavená.</string>
+    <string name="suspended_note">Poznámka pozastavená.</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 </resources>

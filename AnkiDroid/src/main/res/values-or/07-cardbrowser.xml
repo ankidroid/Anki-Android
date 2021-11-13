@@ -93,7 +93,7 @@
         <item quantity="other">%dଟି ପତ୍ର ବିଲୋପ ହେଲା</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">ଯୋଡ଼ା ଯାଇଛି</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">ଯୋଡ଼ା ଯାଇଛି</string>
     <string name="card_info_first_review">ପ୍ରଥମ ସମୀକ୍ଷା</string>
     <string name="card_info_latest_review">ସର୍ବଶେଷ ସମୀକ୍ଷା</string>
     <string name="card_info_interval">ଅନ୍ତରାଳ</string>

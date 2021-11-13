@@ -284,7 +284,7 @@
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="deck_conf_reset" maxLength="41">ଡିଫଲ୍ଟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
     <string name="deck_conf_reset_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ କୁ ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିବେ କି?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="deck_conf_add_summ">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ଏକ କପି ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="deck_conf_remove_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ କରିବେ କି?</string>
     <string name="deck_conf_set_subdecks" maxLength="41">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ସେଟ କରନ୍ତୁ </string>
@@ -317,8 +317,8 @@
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <!-- Open Changelog-->
     <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
-    <string name="binding_add_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="binding_add_key">Key ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="binding_add_gesture">ଅଙ୍ଗଭଙ୍ଗୀ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="binding_add_key">Key ଯୋଡ଼ନ୍ତୁ</string>
     <string name="key_picker_default_press_key">ଏକ key ଦବାନ୍ତୁ</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">କାର୍ଡ୍ ପାର୍ଶ୍ୱ ଚୟନ କରନ୍ତୁ</string>
