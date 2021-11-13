@@ -17,56 +17,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.glosbe.json;
-
-import java.util.List;
+package com.ichi2.anki.multimediacard.glosbe.json
 
 /**
  * This is one of the classes, automatically generated to transform json replies from glosbe.com
  */
-public class Tuc {
-    private List<Number> mAuthors;
-    private Number mMeaningId;
-    private List<Meaning> mMeanings;
-    private Phrase mPhrase;
-
-
-    public List<Number> getAuthors() {
-        return this.mAuthors;
-    }
-
-
-    public void setAuthors(List<Number> authors) {
-        this.mAuthors = authors;
-    }
-
-
-    public Number getMeaningId() {
-        return this.mMeaningId;
-    }
-
-
-    public void setMeaningId(Number meaningId) {
-        this.mMeaningId = meaningId;
-    }
-
-
-    public List<Meaning> getMeanings() {
-        return this.mMeanings;
-    }
-
-
-    public void setMeanings(List<Meaning> meanings) {
-        this.mMeanings = meanings;
-    }
-
-
-    public Phrase getPhrase() {
-        return this.mPhrase;
-    }
-
-
-    public void setPhrase(Phrase phrase) {
-        this.mPhrase = phrase;
-    }
+class Tuc {
+    var authors: List<Number>? = null
+    var meaningId: Number? = null
+    var meanings: List<Meaning>? = null
+    var phrase: Phrase? = null
 }
