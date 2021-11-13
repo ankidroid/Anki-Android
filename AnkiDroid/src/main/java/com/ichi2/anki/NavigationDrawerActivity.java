@@ -77,7 +77,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
-    private static final String FOLLOW_SYSTEM_PREFERENCE = "followSystem";
     private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
     public static final String FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer";
 
@@ -139,24 +138,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
-        // Configure night-mode switch
-        View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
-        mFollowSystemThemeSwitch = actionLayout.findViewById(R.id.switch_compat);
-
-        mFollowSystemThemeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mNavigationView.getMenu().setGroupVisible(R.id.nav_night_mode_choose_group, !isChecked);
-            getPreferences().edit().putBoolean(FOLLOW_SYSTEM_PREFERENCE, isChecked).apply();
-            Themes.setTheme(getApplicationContext());
-
-            /*
-            * FIXME: Theme not getting updated
-            * Tried restartActivity() and restartActivityInvalidateBackstack() -> creating an infinite loop at start-up
-            */
-
-            if (isChecked) {
-                closeDrawer();
-            }
-        });
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -264,25 +245,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             } else {
                 Timber.e("Could not find item %d", itemId);
             }
-
-            boolean isUserNightMode = getPreferences().getBoolean(NIGHT_MODE_PREFERENCE, true);
-            boolean followSystemTheme = getPreferences().getBoolean(FOLLOW_SYSTEM_PREFERENCE, true);
-
-            mFollowSystemThemeSwitch.setChecked(followSystemTheme);
-
-            mNavigationView.getMenu().setGroupVisible(R.id.nav_night_mode_choose_group, !followSystemTheme);
-
-            if (!followSystemTheme) {
-
-                if(isUserNightMode) {
-                    mNavigationView.getMenu().findItem(R.id.nav_night_mode_dark).setChecked(true);
-                }
-                else {
-                    mNavigationView.getMenu().findItem(R.id.nav_night_mode_light).setChecked(true);
-                }
-
-            }
-
         }
     }
 
@@ -312,14 +274,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
     private SharedPreferences getPreferences() {
         return AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
-    }
-
-    private void applyCustomNightMode(boolean setToNightMode) {
-        final SharedPreferences preferences = getPreferences();
-        Timber.i("Night mode was %s", setToNightMode ? "enabled" : "disabled");
-        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, setToNightMode).apply();
-        preferences.edit().putBoolean(FOLLOW_SYSTEM_PREFERENCE, false).apply();
-        restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
     }
 
     @Override
@@ -431,13 +385,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 Timber.i("Navigating to stats");
                 Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START);
-            } else if (itemId == R.id.nav_night_mode) {
-                mFollowSystemThemeSwitch.toggle(); // This toggling does not work
-            } else if (itemId == R.id.nav_night_mode_dark) {
-                applyCustomNightMode(true);
-            } else if (itemId == R.id.nav_night_mode_light) {
-                applyCustomNightMode(false);
-            }  else if (itemId == R.id.nav_settings) {
+            } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings");
                 // Remember the theme we started with so we can restart the Activity if it changes
                 mOldTheme = Themes.getCurrentTheme(getApplicationContext());
@@ -455,11 +403,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             }
         };
 
-        if (item.getItemId() != R.id.nav_night_mode) {
-            closeDrawer();
-        }
-
-        return item.getItemId() != R.id.nav_night_mode;
+        closeDrawer();
+        return true;
     }
 
     protected void openCardBrowser() {
