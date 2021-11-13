@@ -50,8 +50,8 @@
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
-    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
-    <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
+    <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="check_all_tags">ସମସ୍ତ ଟ୍ୟାଗ୍ ଚୟନ/ଅଚୟନ କରନ୍ତୁ</string>
     <string name="filter_tags">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
@@ -155,7 +155,7 @@
     <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
     <string name="import_message_add_confirm">%s କୁ ସଂଗ୍ରହରେ ଯୋଡ଼ନ୍ତୁ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>

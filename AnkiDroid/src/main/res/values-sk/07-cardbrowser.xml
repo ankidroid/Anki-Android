@@ -101,7 +101,7 @@
     <string name="card_info_first_review">Prvýkrát opakovaná</string>
     <string name="card_info_latest_review">Posledné opakovanie</string>
     <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ľahkosť</string>
+    <string name="card_info_ease">Jednoduchosť</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Opakovania</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Zabudnutia</string>
     <string name="card_info_average_time">Priemerný čas</string>

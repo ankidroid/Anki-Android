@@ -111,7 +111,7 @@
     <string name="stats_forecast">ପୂର୍ବାନୁମାନ</string>
     <string name="stats_review_count">ସମୀକ୍ଷା ଗଣନା</string>
     <string name="stats_review_time">ସମୀକ୍ଷା ସମୟ</string>
-    <string name="stats_added" comment="Label of the number of added card">ଯୋଡ଼ାଯାଇଛି</string>
+    <string name="stats_added" comment="Label of the number of added card">ଯୋଡ଼ାଯାଇଛି</string>
     <string name="stats_review_intervals">ଅନ୍ତରାଳ</string>
     <string name="stats_breakdown">ଘଣ୍ଟାକ୍ରମେ ଦେଖିବା</string>
     <string name="stats_weekly_breakdown">ସପ୍ତାହକ୍ରମେ ଦେଖିବା </string>
