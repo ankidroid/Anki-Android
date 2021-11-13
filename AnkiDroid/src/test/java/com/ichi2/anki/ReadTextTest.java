@@ -22,8 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Sound.SoundSide.QUESTION;
@@ -65,45 +63,6 @@ public class ReadTextTest extends RobolectricTest{
         ReadText.initializeTts(getTargetContext(), mock(AbstractFlashcardViewer.ReadTextListener.class));
     }
 
-    @Test
-    public void clozeIsReplacedWithBlank() {
-
-        String content = "<style>.card {\n" +
-                " font-family: arial;\n" +
-                " font-size: 20px;\n" +
-                " text-align: center;\n" +
-                " color: black;\n" +
-                " background-color: white;\n" +
-                "}.cloze {font-weight: bold;color: blue;}</style>This is a <span class=cloze>[...]</span>";
-
-        getValueFromReadSide(content);
-
-        assertThat(ReadText.getTextToSpeak(), is("This is a blank"));
-    }
-
-
-    @Test
-    public void providedExampleClozeReplaces() {
-        String content = "<style>.card {\n" +
-                " font-family: arial;\n" +
-                " font-size: 20px;\n" +
-                " text-align: center;\n" +
-                " color: black;\n" +
-                " background-color: white;\n" +
-                "}.cloze {font-weight: bold;color: blue;}</style>A few lizards are venomous, eg <span class=cloze>[...]</span>. They have grooved teeth and sublingual venom glands.";
-
-        String actual = getValueFromReadSide(content);
-
-        assertThat(actual, is("A few lizards are venomous, eg blank. They have grooved teeth and sublingual venom glands."));
-    }
-
-
-
-    @CheckResult
-    private String getValueFromReadSide(@NonNull String content) {
-        ReadText.readCardSide(QUESTION, content, 1, 1, "blank");
-        return ReadText.getTextToSpeak();
-    }
 
     @Test
     public void SaveValue() {
