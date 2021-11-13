@@ -29,6 +29,9 @@ package com.ichi2.libanki
  */
 data class TTSTag(
     val fieldText: str,
+    /**
+     * Language may be empty if coming from AnkiDroid reading the whole card
+     */
     val lang: str,
     val voices: List<str>,
     val speed: Float,

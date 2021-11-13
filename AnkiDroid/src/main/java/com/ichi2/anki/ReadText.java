@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
@@ -29,6 +28,7 @@ import android.view.WindowManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.libanki.Sound;
+import com.ichi2.libanki.TTSTag;
 import com.ichi2.utils.HandlerUtils;
 
 import java.lang.ref.WeakReference;
@@ -159,13 +159,12 @@ public class ReadText {
     public static void readCardSide(Sound.SoundSide cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
         boolean isFirstText = true;
         boolean playedSound = false;
-        for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
-            if (textToRead.getText().isEmpty()) {
+        for (TTSTag textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
+            if (textToRead.getFieldText().isEmpty()) {
                 continue;
             }
 
-            playedSound |= textToSpeech(textToRead.getText(), did, ord, cardSide,
-                    textToRead.getLocaleCode(),
+            playedSound |= textToSpeech(textToRead, did, ord, cardSide,
                     isFirstText ? TextToSpeech.QUEUE_FLUSH : TextToSpeech.QUEUE_ADD);
             isFirstText = false;
         }
@@ -193,13 +192,13 @@ public class ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private static boolean textToSpeech(String text, long did, int ord, Sound.SoundSide qa, String localeCode,
-                                     int queueMode) {
-        mTextToSpeak = text;
+    private static boolean textToSpeech(TTSTag tag, long did, int ord, Sound.SoundSide qa, int queueMode) {
+        mTextToSpeak = tag.getFieldText();
         mQuestionAnswer = qa;
         mDid = did;
         mOrd = ord;
-        Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", text, localeCode);
+        Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", tag.getFieldText(), tag.getLang());
+        String localeCode = tag.getLang();
 
         final String originalLocaleCode = localeCode;
 
