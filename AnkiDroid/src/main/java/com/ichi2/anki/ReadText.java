@@ -33,6 +33,7 @@ import com.ichi2.utils.HandlerUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -149,17 +150,15 @@ public class ReadText {
     /**
      * Read a card side using a TTS service.
      *
+     * @param textsToRead      Data for the TTS to read
      * @param cardSide         Card side to be read; SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER.
-     * @param cardSideContents Contents of the card side to be read, in HTML format. If it contains
-     *                         any &lt;tts service="android"&gt; elements, only their contents is
-     *                         read; otherwise, all text is read. See TtsParser for more details.
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    public static void readCardSide(Sound.SoundSide cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
+    public static void readCardSide(List<TTSTag> textsToRead, Sound.SoundSide cardSide, long did, int ord) {
         boolean isFirstText = true;
         boolean playedSound = false;
-        for (TTSTag textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
+        for (TTSTag textToRead : textsToRead) {
             if (textToRead.getFieldText().isEmpty()) {
                 continue;
             }

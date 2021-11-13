@@ -22,6 +22,7 @@ import android.content.Context
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
+import com.ichi2.anki.TtsParser
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.Utils
@@ -59,17 +60,16 @@ class TTS {
      * @param cardSide The side of the current card to play TTS for
      */
     fun readCardText(context: Context, card: Card, cardSide: SoundSide) {
-        val cardSideContent: String
-        cardSideContent = if (SoundSide.QUESTION == cardSide) {
-            card.q(true)
-        } else if (SoundSide.ANSWER == cardSide) {
-            card.pureAnswer
-        } else {
-            Timber.w("Unrecognised cardSide")
-            return
+        val cardSideContent: String = when {
+            SoundSide.QUESTION == cardSide -> card.q(true)
+            SoundSide.ANSWER == cardSide -> card.pureAnswer
+            else -> {
+                Timber.w("Unrecognised cardSide")
+                return
+            }
         }
-        val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
-        ReadText.readCardSide(cardSide, cardSideContent, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), clozeReplacement)
+        val ttsTags = TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
+        ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card))
     }
 
     /**
