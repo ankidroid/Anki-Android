@@ -1,10 +1,11 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
+import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.template.TemplateFilters
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Parse card sides, extracting text snippets that should be read using a text-to-speech engine.
@@ -22,55 +23,33 @@ object TtsParser {
      * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
      */
     @JvmStatic
-    fun getTextsToRead(html: String, clozeReplacement: String?): List<LocalisedText> {
-        val textsToRead: MutableList<LocalisedText> = ArrayList()
+    fun getTextsToRead(html: String, clozeReplacement: String?): List<TTSTag> {
+        val textsToRead: MutableList<TTSTag> = ArrayList()
         val elem = Jsoup.parseBodyFragment(html).body()
         parseTtsElements(elem, textsToRead)
         if (textsToRead.isEmpty()) {
             // No <tts service="android"> elements found: return the text of the whole HTML fragment
-            textsToRead.add(LocalisedText(elem.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement!!)))
+            textsToRead.add(readWholeCard(elem.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement!!)))
         }
         return textsToRead
     }
 
-    private fun parseTtsElements(element: Element, textsToRead: MutableList<LocalisedText>) {
+    private fun parseTtsElements(element: Element, textsToRead: MutableList<TTSTag>) {
         if ("tts".equals(element.tagName(), ignoreCase = true) &&
             "android".equals(element.attr("service"), ignoreCase = true)
         ) {
-            textsToRead.add(LocalisedText(element.text(), element.attr("voice")))
+            textsToRead.add(localisedText(element.text(), element.attr("voice")))
             return // ignore any children
         }
         for (child in element.children()) {
             parseTtsElements(child, textsToRead)
         }
     }
-    // ----------------------------------------------------------------------------
-    // INNER CLASSES
-    // ----------------------------------------------------------------------------
-    /**
-     * Snippet of text accompanied by its locale code (if known).
-     */
-    class LocalisedText {
-        val text: String
-        val localeCode: String
 
-        /**
-         * Construct an object representing a snippet of text in an unknown locale.
-         */
-        constructor(text: String) {
-            this.text = text
-            localeCode = ""
-        }
+    /** If reading the whole card, a language cannot be determined */
+    private fun readWholeCard(cardText: String) =
+        localisedText(cardText, "")
 
-        /**
-         * Construct an object representing a snippet of text in a particular locale.
-         *
-         * @param localeCode A string representation of a locale in the format returned by
-         * Locale.toString().
-         */
-        constructor(text: String, localeCode: String) {
-            this.text = text
-            this.localeCode = localeCode
-        }
-    }
+    private fun localisedText(text: String, locale: String): TTSTag =
+        TTSTag(text, locale, emptyList(), 1.0f, emptyList())
 }
