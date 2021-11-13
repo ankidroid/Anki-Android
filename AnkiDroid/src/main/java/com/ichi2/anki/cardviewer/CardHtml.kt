@@ -16,11 +16,10 @@
 
 package com.ichi2.anki.cardviewer
 
+import android.content.Context
 import com.ichi2.anki.R
-import com.ichi2.libanki.Card
-import com.ichi2.libanki.Media
-import com.ichi2.libanki.Sound
-import com.ichi2.libanki.SoundOrVideoTag
+import com.ichi2.anki.TtsParser
+import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.utils.JSONObject
@@ -217,6 +216,19 @@ class CardHtml(
                 }
             }
             return newAnswerContent
+        }
+
+        @JvmStatic
+        fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
+            val cardSideContent: String = when {
+                Sound.SoundSide.QUESTION == cardSide -> card.q(true)
+                Sound.SoundSide.ANSWER == cardSide -> card.pureAnswer
+                else -> {
+                    Timber.w("Unrecognised cardSide")
+                    return null
+                }
+            }
+            return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }
     }
 }
