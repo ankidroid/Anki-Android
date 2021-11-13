@@ -17,68 +17,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.glosbe.json;
-
-import java.util.List;
+package com.ichi2.anki.multimediacard.glosbe.json
 
 /**
  * @author zaur This is one of the classes, automatically generated to transform json replies from glosbe.com This is
- *         the root class, from which response starts.
+ * the root class, from which response starts.
  */
-public class Response {
-    private String mDest;
-    private String mFrom;
-    private String mPhrase;
-    private String mResult;
-    private List<Tuc> mTuc;
-
-
-    public String getDest() {
-        return this.mDest;
-    }
-
-
-    public void setDest(String dest) {
-        this.mDest = dest;
-    }
-
-
-    public String getFrom() {
-        return this.mFrom;
-    }
-
-
-    public void setFrom(String from) {
-        this.mFrom = from;
-    }
-
-
-    public String getPhrase() {
-        return this.mPhrase;
-    }
-
-
-    public void setPhrase(String phrase) {
-        this.mPhrase = phrase;
-    }
-
-
-    public String getResult() {
-        return this.mResult;
-    }
-
-
-    public void setResult(String result) {
-        this.mResult = result;
-    }
-
-
-    public List<Tuc> getTuc() {
-        return this.mTuc;
-    }
-
-
-    public void setTuc(List<Tuc> tuc) {
-        this.mTuc = tuc;
-    }
+class Response {
+    var dest: String? = null
+    var from: String? = null
+    var phrase: String? = null
+    var result: String? = null
+    var tuc: List<Tuc>? = null
 }
