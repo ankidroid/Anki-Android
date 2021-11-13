@@ -17,32 +17,12 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.glosbe.json;
+package com.ichi2.anki.multimediacard.glosbe.json
 
 /**
  * This is one of the classes, automatically generated to transform json replies from glosbe.com
  */
-public class Meaning {
-    private String mLanguage;
-    private String mText;
-
-
-    public String getLanguage() {
-        return this.mLanguage;
-    }
-
-
-    public void setLanguage(String language) {
-        this.mLanguage = language;
-    }
-
-
-    public String getText() {
-        return this.mText;
-    }
-
-
-    public void setText(String text) {
-        this.mText = text;
-    }
+class Meaning {
+    var language: String? = null
+    var text: String? = null
 }
