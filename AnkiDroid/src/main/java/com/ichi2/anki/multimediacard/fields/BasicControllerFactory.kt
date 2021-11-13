@@ -21,16 +21,13 @@ package com.ichi2.anki.multimediacard.fields
 
 class BasicControllerFactory private constructor() : IControllerFactory {
     override fun createControllerForField(field: IField): IFieldController? {
-        val type = field.type
-        when (type) {
-            EFieldType.TEXT -> return BasicTextFieldController()
-            EFieldType.IMAGE -> return BasicImageFieldController()
-            EFieldType.AUDIO_RECORDING -> return BasicAudioRecordingFieldController()
-            EFieldType.AUDIO_CLIP -> return BasicAudioClipFieldController()
-            else -> {
-            }
+        return when (field.type) {
+            EFieldType.TEXT -> BasicTextFieldController()
+            EFieldType.IMAGE -> BasicImageFieldController()
+            EFieldType.AUDIO_RECORDING -> BasicAudioRecordingFieldController()
+            EFieldType.AUDIO_CLIP -> BasicAudioClipFieldController()
+            else -> null
         }
-        return null
     }
 
     companion object {
