@@ -24,5 +24,5 @@ import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("Fix Comment")
 interface IControllerFactory {
-    fun createControllerForField(field: IField?): IFieldController?
+    fun createControllerForField(field: IField): IFieldController?
 }
