@@ -124,4 +124,5 @@
     <string name="save_dialog_content">La nuna limigo de grando de bildo estas %s MB. Implicita limigo de grando de bildo estas 1 MB. Ĉu vi volas pritondi ĝin?</string>
     <string name="select_image_failed">"Fiaskis konservi bildon, reprovu"</string>
     <string name="activity_result_unexpected">Aplikaĵo liveris neatenditan valoron. Eble vi uzu alian aplikaĵon</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

@@ -124,4 +124,5 @@
     <string name="save_dialog_content">La mida actual de la imatge és de %s MB. El límit de mida per defecte de la imatge és 1 MB. La voleu retallar?</string>
     <string name="select_image_failed">"No s\'ha pogut seleccionar la imatge. Torneu-ho a provar si us plau"</string>
     <string name="activity_result_unexpected">L\'aplicació ha tornat un valor inesperat. Potser heu d\'usar una aplicació diferent.</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

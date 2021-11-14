@@ -43,7 +43,7 @@
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Technológia od glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Od</string>
+    <string name="multimedia_editor_trans_from">z</string>
     <string name="multimedia_editor_trans_to">Do</string>
     <!-- imperative for the button title -->
     <string name="multimedia_editor_trans_translate">Preložiť</string>
@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Aktuálna veľkosť obrázku je %sMB. Limit predvolenej veľkosti obrázku je 1MB. Chcete ho orezať?</string>
     <string name="select_image_failed">"Chyba pri zvolenom obrázku, prosím skúste znovu"</string>
     <string name="activity_result_unexpected">Aplikácia vrátila neočakávanú hodnotu. Možno musíte použiť inú aplikáciu</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

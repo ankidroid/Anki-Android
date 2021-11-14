@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Размер изображения — %s МБ. По умолчанию размер изображения ограничен 1 МБ. Обрезать его?</string>
     <string name="select_image_failed">"Не удалось выбрать изображение. Попробуйте снова"</string>
     <string name="activity_result_unexpected">Приложение вернуло неожиданный результат. Попробуйте использовать другое приложение</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

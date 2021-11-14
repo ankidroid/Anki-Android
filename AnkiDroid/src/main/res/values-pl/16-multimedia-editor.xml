@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Aktualny rozmiar obrazu: %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz przyciąć obraz?</string>
     <string name="select_image_failed">"Wybieranie obrazu nie powiodło się, spróbuj ponownie"</string>
     <string name="activity_result_unexpected">Aplikacja zwróciła nieoczekiwaną wartość. Może być konieczne użycie innej aplikacji</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

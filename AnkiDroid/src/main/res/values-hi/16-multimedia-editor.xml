@@ -124,4 +124,5 @@
     <string name="save_dialog_content">वर्तमान छवि का आकार %sMB है। डिफ़ॉल्ट छवि आकार सीमा 1 MB है। क्या आप इसे क्रॉप करना चाहते हैं?</string>
     <string name="select_image_failed">"छवि का चयन विफल रहा, कृपया पुनः प्रयास करें"</string>
     <string name="activity_result_unexpected">ऐप ने एक अनपेक्षित मान लौटाया . आपको एक अलग ऐप का उपयोग करने की आवश्यकता हो सकती है।</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

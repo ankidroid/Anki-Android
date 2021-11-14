@@ -124,4 +124,5 @@
     <string name="save_dialog_content">A kép mérete %s MB. Az alap kép méretének limitje 1MB. Meg akarod vágni?</string>
     <string name="select_image_failed">"Képválasztás sikertelen, Próbáld újra"</string>
     <string name="activity_result_unexpected">Az alkalmazás egy váratlan értéket dobott vissza. Lehet, hogy egy másik alkalmazást kell használni</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

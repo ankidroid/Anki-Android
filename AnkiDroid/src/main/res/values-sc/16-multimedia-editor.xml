@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres segare?</string>
     <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
     <string name="activity_result_unexpected">S\'aplicatzione at frunidu unu valore no isetadu. Dias pòdere dèpere impreare un\'aplicatzione diferente</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

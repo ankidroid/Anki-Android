@@ -124,4 +124,5 @@
     <string name="save_dialog_content">वर्तमान प्रतिमेचा आकार %s MB आहे. डीफॉल्ट प्रतिमेची आकार मर्यादा 1MB आहे. आपण ते क्रॉप करू इच्छिता?</string>
     <string name="select_image_failed">"प्रतिमा निवडा अयशस्वी, कृपया पुन्हा प्रयत्न करा"</string>
     <string name="activity_result_unexpected">अॅपने एक अनपेक्षित मूल्य परत केले. आपल्याला भिन्न अ‍ॅप वापरण्याची आवश्यकता असू शकते</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

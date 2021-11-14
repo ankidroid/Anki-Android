@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Die aktuelle Bildgröße beträgt %s MB. Die Standardgröße des Bildes beträgt 1 MB. Wollen Sie es zuschneiden?</string>
     <string name="select_image_failed">"Bildauswahl fehlgeschlagen, bitte erneut versuchen"</string>
     <string name="activity_result_unexpected">Die Anwendung hat einen unerwarteten Wert zurückgegeben. Möglicherweise müssen Sie eine andere Anwendung verwenden</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

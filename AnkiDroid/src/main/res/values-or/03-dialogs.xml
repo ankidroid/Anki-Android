@@ -108,7 +108,7 @@
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ି ହୋଇଥିବା ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରନ୍ତୁ:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
-    <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
+    <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
     <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରବର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
     <string name="import_update_details">ବିଦ୍ୟମାନ %2$d ନୋଟଗୁଡିକର %1$dକୁ ଅଦ୍ୟତନ କରାଯାଇଛି </string>
     <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
@@ -137,17 +137,17 @@
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
     <!-- Media checking -->
     <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
-    <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
+    <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
     <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ବିଫଳ ହେଲା</string>
     <string name="check_media_invalid">ଅବୈଧ ଏନକୋଡିଂ ସହିତ ଫାଇଲଗୁଡିକ: %d</string>
-    <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ ଫାଇଲଗୁଡ଼ିକ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହୃତ ହୋଇନାହିଁ: %d</string>
-    <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ ଫାଇଲଗୁଡ଼ିକ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନୁହେଁ: %d</string>
+    <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହାର ହେଉନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
+    <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
     <string name="check_media_no_unused_missing">କୌଣସି ଅବ୍ୟବହୃତ କିମ୍ବା ନିଖୋଜ ଫାଇଲ ମିଳିଲା ନାହିଁ</string>
-    <string name="check_media_db_updated">ମିଡ଼ିଆ ଡାଟାବେସ୍ ପୁନଃନିର୍ମିତ</string>
+    <string name="check_media_db_updated">ମିଡ଼ିଆ ଡାଟାବେସ୍ ପୁନଃନିର୍ମିତ</string>
     <string name="check_media_delete_unused">ଅବ୍ୟବହୃତ ବିଲୋପ କରନ୍ତୁ</string>
-    <string name="delete_media_message">ମିଡ଼ିଆ ବିଲୋପ କରୁଛି&#8230;</string>
+    <string name="delete_media_message">ମିଡ଼ିଆ ବିଲୋପ କରୁଛି&#8230;</string>
     <string name="delete_media_result_title">ବିଲୋପ ଫଳାଫଳ</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%dଟିଏ ଫାଇଲ୍ ବିଲୋପ ହୋଇଛି</item>
@@ -166,12 +166,12 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ମାଇକ୍ରୋଫୋନ୍ ଅନୁମତି ପାଇପାରିଲା ନାହିଁ।</string>
     <string name="multimedia_editor_camera_permission_refused">କ୍ୟାମେରା ଅନୁମତି ପାଇପାରିଲା ନାହିଁ। କାର୍ଯ୍ୟକାରିତା ଅକ୍ଷମ ହୋଇଛି।</string>
-    <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
+    <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">AnkiDroid କୁ ସ୍ୱାଗତ </string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ଷ୍ଟୋରେଜ୍ ଅନୁମତି ଆବଶ୍ୟକ କରେ, ଯାହାକୁ ଆମେ ଆପଣଙ୍କର AnkiDroid ସଂଗ୍ରହ, ଫ୍ଲାସକାର୍ଡ ମିଡ଼ିଆ ଏବଂ ବ୍ୟାକଅପ୍ ଗଚ୍ଛିତ କରିବା ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ବ୍ୟବହାର କରୁ। ଆମର କୋଡ୍ ଖୋଲା-ଉତ୍ସ ଅଟେ, ସ୍ୱେଚ୍ଛାସେବୀମାନଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏବଂ ଲକ୍ଷ ଲକ୍ଷ ଲୋକଙ୍କ ଦ୍ୱାରା ବିଶ୍ୱାସ କରାଯାଏ।\n\n ଯଦି ଆପଣଙ୍କର କିଛି ପ୍ରଶ୍ନ ଅଛି, ଦୟାକରି ଆମର ଇନ୍-ଆପ୍ ମାନୁଆଲକୁ ପ୍ରବେଶ କରନ୍ତୁ କିମ୍ବା ଆମର ସମର୍ଥନ ଫୋରମ୍ ପରିଦର୍ଶନ କରନ୍ତୁ।\n\n AnkiDroid ଚେଷ୍ଟା କରିଥିବାରୁ ଧନ୍ୟବାଦ!\n—AnkiDroid ବିକାଶ ଦଳ</string>
     <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid  ଅପଗ୍ରେଡ୍ ହୋଇଛି</string>
