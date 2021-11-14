@@ -1,316 +1,283 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki.dialogs.tags;
+package com.ichi2.anki.dialogs.tags
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
+import android.text.Spanned
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
+import android.widget.RadioGroup
+import android.widget.TextView
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showSnackbar
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import java.util.*
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.utils.DisplayUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class TagsDialog extends AnalyticsDialogFragment {
-
+class TagsDialog : AnalyticsDialogFragment {
     /**
      * Enum that define all possible types of TagsDialog
      */
-    public enum DialogType {
+    enum class DialogType {
         /**
          * Edit tags of note(s)
          */
         EDIT_TAGS,
+
         /**
          * Filter notes by tags
          */
         FILTER_BY_TAG,
+
         /**
          * A custom study session filtered by tags
          */
         CUSTOM_STUDY_TAGS
     }
 
-    private static final String DIALOG_TYPE_KEY = "dialog_type";
-    private static final String CHECKED_TAGS_KEY = "checked_tags";
-    private static final String UNCHECKED_TAGS_KEY = "unchecked_tags";
-    private static final String ALL_TAGS_KEY = "all_tags";
-
-    private DialogType mType;
-    private TagsList mTags;
-
-    private String mPositiveText;
-    private String mDialogTitle;
-    private TagsArrayAdapter mTagsArrayAdapter;
-    private int mSelectedOption = -1;
-
-    private SearchView mToolbarSearchView;
-    private MenuItem mToolbarSearchItem;
-
-    private TextView mNoTagsTextView;
-    private RecyclerView mTagsListRecyclerView;
-
-    private MaterialDialog mDialog;
-
-    @Nullable
-    private final TagsDialogListener mListener;
-
+    private var mType: DialogType? = null
+    private var mTags: TagsList? = null
+    private var mPositiveText: String? = null
+    private var mDialogTitle: String? = null
+    private var mTagsArrayAdapter: TagsArrayAdapter? = null
+    private var mSelectedOption = -1
+    private var mToolbarSearchView: SearchView? = null
+    private var mToolbarSearchItem: MenuItem? = null
+    private var mNoTagsTextView: TextView? = null
+    private var mTagsListRecyclerView: RecyclerView? = null
+    private var mDialog: MaterialDialog? = null
+    private val mListener: TagsDialogListener?
 
     /**
-     * Constructs a new {@link TagsDialog} that will communicate the results using the provided listener.
+     * Constructs a new [TagsDialog] that will communicate the results using the provided listener.
      */
-    public TagsDialog(@NonNull TagsDialogListener listener) {
-        mListener = listener;
+    constructor(listener: TagsDialogListener?) {
+        mListener = listener
     }
 
-
     /**
-     * Constructs a new {@link TagsDialog} that will communicate the results using Fragment Result API.
+     * Constructs a new [TagsDialog] that will communicate the results using Fragment Result API.
      *
-     * @see <a href="https://developer.android.com/guide/fragments/communicate#fragment-result">Fragment Result API</a>
+     * @see [Fragment Result API](https://developer.android.com/guide/fragments/communicate.fragment-result)
      */
-    public TagsDialog() {
-        mListener = null;
+    constructor() {
+        mListener = null
     }
 
     /**
-     * @param type the type of dialog @see {@link DialogType}
+     * @param type the type of dialog @see [DialogType]
      * @param checkedTags tags of the note
      * @param allTags all possible tags in the collection
-     * @return Initialized instance of {@link TagsDialog}
+     * @return Initialized instance of [TagsDialog]
      */
-    @NonNull
-    public TagsDialog withArguments(@NonNull DialogType type, @NonNull List<String> checkedTags, @NonNull List<String> allTags) {
-        return withArguments(type, checkedTags, null, allTags);
+    fun withArguments(type: DialogType, checkedTags: List<String?>, allTags: List<String?>): TagsDialog {
+        return withArguments(type, checkedTags, null, allTags)
     }
 
     /**
      * Construct a tags dialog for a collection of notes
      *
-     * @param type the type of dialog @see {@link DialogType}
+     * @param type the type of dialog @see [DialogType]
      * @param checkedTags sum of all checked tags
      * @param uncheckedTags sum of all unchecked tags
      * @param allTags all possible tags in the collection
-     * @return Initialized instance of {@link TagsDialog}
+     * @return Initialized instance of [TagsDialog]
      */
-    @NonNull
-    public TagsDialog withArguments(@NonNull DialogType type,@NonNull List<String> checkedTags,
-                                    @Nullable List<String> uncheckedTags, @NonNull List<String> allTags) {
-        Bundle args = this.getArguments();
+    fun withArguments(
+        type: DialogType,
+        checkedTags: List<String?>,
+        uncheckedTags: List<String>?,
+        allTags: List<String?>
+    ): TagsDialog {
+        var args = this.arguments
         if (args == null) {
-            args = new Bundle();
+            args = Bundle()
         }
-
-        args.putInt(DIALOG_TYPE_KEY, type.ordinal());
-        args.putStringArrayList(CHECKED_TAGS_KEY, new ArrayList<>(checkedTags));
+        args.putInt(DIALOG_TYPE_KEY, type.ordinal)
+        args.putStringArrayList(CHECKED_TAGS_KEY, ArrayList(checkedTags))
         if (uncheckedTags != null) {
-            args.putStringArrayList(UNCHECKED_TAGS_KEY, new ArrayList<>(uncheckedTags));
+            args.putStringArrayList(UNCHECKED_TAGS_KEY, ArrayList(uncheckedTags))
         }
-        args.putStringArrayList(ALL_TAGS_KEY, new ArrayList<>(allTags));
-        setArguments(args);
-
-        return this;
+        args.putStringArrayList(ALL_TAGS_KEY, ArrayList(allTags))
+        arguments = args
+        return this
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        DisplayUtils.resizeWhenSoftInputShown(requireActivity().getWindow());
-
-        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)];
-
-
-        mTags = new TagsList(
-                requireArguments().getStringArrayList(ALL_TAGS_KEY),
-                requireArguments().getStringArrayList(CHECKED_TAGS_KEY),
-                requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
-        );
-
-        setCancelable(true);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        resizeWhenSoftInputShown(requireActivity().window)
+        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)]
+        mTags = TagsList(
+            requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
+            requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,
+            requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
+        )
+        isCancelable = true
     }
 
-    @NonNull
-    private TagsDialogListener getTagsDialogListener() {
-        return mListener != null ? mListener : TagsDialogListener.createFragmentResultSender(getParentFragmentManager());
-    }
+    private val tagsDialogListener: TagsDialogListener
+        get() = mListener
+            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        @SuppressLint("InflateParams")
-        View tagsDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.tags_dialog, null, false);
-        mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list);
-        mTagsListRecyclerView.requestFocus();
-
-        RecyclerView.LayoutManager tagsListLayout = new LinearLayoutManager(getActivity());
-        mTagsListRecyclerView.setLayoutManager(tagsListLayout);
-
-        mTagsArrayAdapter = new TagsArrayAdapter(mTags);
-        mTagsListRecyclerView.setAdapter(mTagsArrayAdapter);
-
-        mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview);
-        if (mTags.isEmpty()) {
-            mNoTagsTextView.setVisibility(View.VISIBLE);
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        @SuppressLint("InflateParams") val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)
+        mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
+        val tagsListRecyclerView: RecyclerView? = mTagsListRecyclerView
+        tagsListRecyclerView?.requestFocus()
+        val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
+        tagsListRecyclerView?.layoutManager = tagsListLayout
+        mTagsArrayAdapter = TagsArrayAdapter(mTags!!)
+        tagsListRecyclerView?.adapter = mTagsArrayAdapter
+        mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
+        val noTagsTextView: TextView? = mNoTagsTextView
+        if (mTags!!.isEmpty) {
+            noTagsTextView?.visibility = View.VISIBLE
         }
-        RadioGroup optionsGroup = tagsDialogView.findViewById(R.id.tags_dialog_options_radiogroup);
-        for (int i = 0; i < optionsGroup.getChildCount(); i++) {
-            optionsGroup.getChildAt(i).setId(i);
+        val optionsGroup = tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
+        for (i in 0 until optionsGroup.childCount) {
+            optionsGroup.getChildAt(i).id = i
         }
-        optionsGroup.check(0);
-
-        mSelectedOption = optionsGroup.getCheckedRadioButtonId();
-        optionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
-
+        optionsGroup.check(0)
+        mSelectedOption = optionsGroup.checkedRadioButtonId
+        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> mSelectedOption = checkedId }
         if (mType == DialogType.EDIT_TAGS) {
-            mDialogTitle = getResources().getString(R.string.card_details_tags);
-            optionsGroup.setVisibility(View.GONE);
-            mPositiveText = getString(R.string.dialog_ok);
+            mDialogTitle = resources.getString(R.string.card_details_tags)
+            optionsGroup.visibility = View.GONE
+            mPositiveText = getString(R.string.dialog_ok)
         } else {
-            mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
-            mPositiveText = getString(R.string.select);
+            mDialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
+            mPositiveText = getString(R.string.select)
         }
-
-        adjustToolbar(tagsDialogView);
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(requireActivity())
-                .positiveText(mPositiveText)
-                .negativeText(R.string.dialog_cancel)
-                .customView(tagsDialogView, false)
-                .onPositive((dialog, which) -> getTagsDialogListener().onSelectedTags(mTags.copyOfCheckedTagList(), mTags.copyOfIndeterminateTagList(), mSelectedOption));
-        mDialog = builder.build();
-
-        DisplayUtils.resizeWhenSoftInputShown(mDialog.getWindow());
-        return mDialog;
+        adjustToolbar(tagsDialogView)
+        val builder = MaterialDialog.Builder(requireActivity())
+            .positiveText(mPositiveText!!)
+            .negativeText(R.string.dialog_cancel)
+            .customView(tagsDialogView, false)
+            .onPositive { _: MaterialDialog?, _: DialogAction? -> tagsDialogListener.onSelectedTags(mTags!!.copyOfCheckedTagList(), mTags!!.copyOfIndeterminateTagList(), mSelectedOption) }
+        mDialog = builder.build()
+        val dialog: MaterialDialog? = mDialog
+        resizeWhenSoftInputShown(dialog?.window!!)
+        return dialog
     }
 
-    private void adjustToolbar(View tagsDialogView) {
-        Toolbar toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
-        toolbar.setTitle(mDialogTitle);
-
-        toolbar.inflateMenu(R.menu.tags_dialog_menu);
+    private fun adjustToolbar(tagsDialogView: View) {
+        val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
+        toolbar.title = mDialogTitle
+        toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
         // disallow inputting the 'space' character
-        final InputFilter addTagFilter = (source, start, end, dest, dstart, dend) -> {
-            for (int i = start; i < end; i++) {
-                if (source.charAt(i) == ' ') {
-                    return "";
+        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, _: Spanned?, _: Int, _: Int ->
+            var i = start
+            while (i < end) {
+                if (source[i] == ' ') {
+                    return@InputFilter ""
                 }
+                i++
             }
-            return null;
-        };
-        MenuItem toolbarAddItem = toolbar.getMenu().findItem(R.id.tags_dialog_action_add);
-        toolbarAddItem.setOnMenuItemClickListener(menuItem -> {
-            String query = mToolbarSearchView.getQuery().toString();
-            if (mToolbarSearchItem.isActionViewExpanded() && !TextUtils.isEmpty(query)) {
-                addTag(query);
-                mToolbarSearchView.setQuery("", true);
+            null
+        }
+        val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
+        toolbarAddItem.setOnMenuItemClickListener {
+            val query = mToolbarSearchView!!.query.toString()
+            if (mToolbarSearchItem!!.isActionViewExpanded && !TextUtils.isEmpty(query)) {
+                addTag(query)
+                mToolbarSearchView!!.setQuery("", true)
             } else {
-                MaterialDialog.Builder addTagBuilder = new MaterialDialog.Builder(requireActivity())
-                        .title(getString(R.string.add_tag))
-                        .negativeText(R.string.dialog_cancel)
-                        .positiveText(R.string.dialog_ok)
-                        .inputType(InputType.TYPE_CLASS_TEXT)
-                        .input(R.string.tag_name, R.string.empty_string, (dialog, input) -> addTag(input.toString()));
-                final MaterialDialog addTagDialog = addTagBuilder.build();
-                EditText inputET = requireDialogInputEditText(addTagDialog);
-                inputET.setFilters(new InputFilter[]{addTagFilter});
-                addTagDialog.show();
+                val addTagBuilder = MaterialDialog.Builder(requireActivity())
+                    .title(getString(R.string.add_tag))
+                    .negativeText(R.string.dialog_cancel)
+                    .positiveText(R.string.dialog_ok)
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .input(R.string.tag_name, R.string.empty_string) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
+                val addTagDialog = addTagBuilder.build()
+                val inputET = requireDialogInputEditText(addTagDialog)
+                inputET.filters = arrayOf(addTagFilter)
+                addTagDialog.show()
             }
-            return true;
-        });
-
-        mToolbarSearchItem = toolbar.getMenu().findItem(R.id.tags_dialog_action_filter);
-        mToolbarSearchView = (SearchView) mToolbarSearchItem.getActionView();
-
-        EditText queryET = mToolbarSearchView.findViewById(R.id.search_src_text);
-        queryET.setFilters(new InputFilter[]{addTagFilter});
-
-        mToolbarSearchView.setQueryHint(getString(R.string.filter_tags));
-        mToolbarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                mToolbarSearchView.clearFocus();
-                return true;
+            true
+        }
+        mToolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
+        val toolbarSearchItem: MenuItem? = mToolbarSearchItem
+        mToolbarSearchView = toolbarSearchItem?.actionView as SearchView
+        val queryET = mToolbarSearchView!!.findViewById<EditText>(R.id.search_src_text)
+        queryET.filters = arrayOf(addTagFilter)
+        mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)
+        mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                mToolbarSearchView!!.clearFocus()
+                return true
             }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                TagsArrayAdapter adapter = (TagsArrayAdapter) mTagsListRecyclerView.getAdapter();
-                adapter.getFilter().filter(newText);
-                return true;
+            override fun onQueryTextChange(newText: String): Boolean {
+                val adapter = mTagsListRecyclerView!!.adapter as TagsArrayAdapter?
+                adapter!!.filter.filter(newText)
+                return true
             }
-        });
-
-        MenuItem checkAllItem = toolbar.getMenu().findItem(R.id.tags_dialog_action_select_all);
-        checkAllItem.setOnMenuItemClickListener(menuItem -> {
-            final boolean didChange = mTags.toggleAllCheckedStatuses();
+        })
+        val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
+        checkAllItem.setOnMenuItemClickListener {
+            val didChange = mTags!!.toggleAllCheckedStatuses()
             if (didChange) {
-                mTagsArrayAdapter.notifyDataSetChanged();
+                mTagsArrayAdapter!!.notifyDataSetChanged()
             }
-            return true;
-        });
-
+            true
+        }
         if (mType == DialogType.EDIT_TAGS) {
-            mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
+            mToolbarSearchView!!.queryHint = getString(R.string.add_new_filter_tags)
         } else {
-            toolbarAddItem.setVisible(false);
+            toolbarAddItem.isVisible = false
         }
     }
 
-
     /**
-     * A wrapper function around dialog.getInputEditText() to get non null {@link EditText}
+     * A wrapper function around dialog.getInputEditText() to get non null [EditText]
      */
-    @NonNull
-    private EditText requireDialogInputEditText(@NonNull MaterialDialog dialog) {
-        EditText editText = dialog.getInputEditText();
-        if (editText == null) {
-            throw new IllegalStateException("MaterialDialog " + dialog + " does not have an input edit text.");
-        }
-        return editText;
+    private fun requireDialogInputEditText(dialog: MaterialDialog): EditText {
+        return dialog.inputEditText
+            ?: throw IllegalStateException("MaterialDialog $dialog does not have an input edit text.")
     }
 
     @VisibleForTesting
-    protected void addTag(String tag) {
+    fun addTag(tag: String?) {
         if (!TextUtils.isEmpty(tag)) {
-            String feedbackText;
-            if (mTags.add(tag)) {
-                if (mNoTagsTextView.getVisibility() == View.VISIBLE) {
-                    mNoTagsTextView.setVisibility(View.GONE);
+            val feedbackText: String
+            if (mTags!!.add(tag)) {
+                if (mNoTagsTextView!!.visibility == View.VISIBLE) {
+                    mNoTagsTextView!!.visibility = View.GONE
                 }
-                mTags.add(tag);
-                feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText);
+                mTags!!.add(tag)
+                feedbackText = getString(R.string.tag_editor_add_feedback, tag, mPositiveText)
             } else {
-                feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
+                feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag)
             }
-            mTags.check(tag);
-            mTagsArrayAdapter.sortData();
-            mTagsArrayAdapter.notifyDataSetChanged();
+            mTags!!.check(tag)
+            mTagsArrayAdapter!!.sortData()
+            mTagsArrayAdapter!!.notifyDataSetChanged()
             // Show a snackbar to let the user know the tag was added successfully
-            UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
-                    mDialog.getView().findViewById(R.id.tags_dialog_snackbar), null);
+            showSnackbar(
+                requireActivity(), feedbackText, false, -1, null,
+                mDialog!!.view.findViewById(R.id.tags_dialog_snackbar), null
+            )
         }
     }
 
+    companion object {
+        private const val DIALOG_TYPE_KEY = "dialog_type"
+        private const val CHECKED_TAGS_KEY = "checked_tags"
+        private const val UNCHECKED_TAGS_KEY = "unchecked_tags"
+        private const val ALL_TAGS_KEY = "all_tags"
+    }
 }
