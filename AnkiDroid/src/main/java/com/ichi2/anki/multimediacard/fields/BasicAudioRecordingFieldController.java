@@ -21,11 +21,14 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.content.Context;
 import android.content.Intent;
-
+import android.view.Gravity;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.AudioView;
+import com.ichi2.ui.FixedTextView;
+import com.ichi2.utils.UiUtil;
 
 import java.io.File;
 
@@ -57,6 +60,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             mTempAudioPath = AudioView.generateTempAudioFile(mActivity);
         }
 
+        // FIXME: We should move this outside the scrollview as it should always be on the screen.
         mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
                 R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
         mAudioView.setOnRecordingFinishEventListener(v -> {
@@ -66,6 +70,33 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
             mField.setHasTemporaryMedia(true);
         });
         layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        addFieldPreview(context, layout);
+    }
+
+
+    private void addFieldPreview(Context context, LinearLayout layout) {
+        // add preview of the field data to provide context to the user
+        // use a separate scrollview to ensure that the content does not push the buttons off-screen when scrolled
+        ScrollView sv = new ScrollView(context);
+        layout.addView(sv);
+        LinearLayout previewLayout = new LinearLayout(context); // scrollView can only have one child
+        previewLayout.setOrientation(LinearLayout.VERTICAL);
+        sv.addView(previewLayout);
+
+        FixedTextView label = new FixedTextView(context);
+        label.setTextSize(20);
+        label.setText(UiUtil.makeBold(context.getString(R.string.audio_recording_field_list)));
+        label.setGravity(Gravity.CENTER_HORIZONTAL);
+        previewLayout.addView(label);
+        for (int i = 0; i < this.mNote.getInitialFieldCount(); i++) {
+            IField field = mNote.getInitialField(i);
+            FixedTextView textView = new FixedTextView(context);
+            textView.setText(field.getText());
+            textView.setTextSize(16);
+            textView.setPadding(16, 0, 16, 24);
+            previewLayout.addView(textView);
+        }
     }
 
 

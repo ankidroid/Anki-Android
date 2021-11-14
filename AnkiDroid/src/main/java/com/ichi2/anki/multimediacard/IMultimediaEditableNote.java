@@ -38,4 +38,7 @@ public interface IMultimediaEditableNote extends Serializable {
 
 
     boolean isModified();
+
+    int getInitialFieldCount();
+    IField getInitialField(int index);
 }

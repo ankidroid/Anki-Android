@@ -97,6 +97,7 @@ public class NoteService {
             mmNote.setField(i, field);
         }
         mmNote.setModelId(modelId);
+        mmNote.freezeInitialFieldValues();
         // TODO: set current id of the note as well
     }
 

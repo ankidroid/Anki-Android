@@ -24,6 +24,11 @@ import com.ichi2.anki.multimediacard.fields.IField;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
+
+import static org.acra.util.IOUtils.deserialize;
+import static org.acra.util.IOUtils.serialize;
+
 /**
  * Implementation of the editable note.
  * <p>
@@ -35,6 +40,11 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
     private boolean mIsModified = false;
     private ArrayList<IField> mFields;
     private long mModelId;
+    /**
+     * Field values in the note editor, before any editing has taken place
+     * These values should not be modified
+     */
+    public ArrayList<IField> mInitialFields;
 
 
     private void setThisModified() {
@@ -110,4 +120,23 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
         return mModelId;
     }
 
+    public void freezeInitialFieldValues() {
+        mInitialFields = new ArrayList<>();
+        for (IField f : mFields) {
+            mInitialFields.add(cloneField(f));
+        }
+    }
+
+    public int getInitialFieldCount() {
+        return mInitialFields.size();
+    }
+
+    public IField getInitialField(int index) {
+        return cloneField(mInitialFields.get(index));
+    }
+
+    @Nullable
+    private IField cloneField(IField f) {
+        return deserialize(IField.class, serialize(f));
+    }
 }
