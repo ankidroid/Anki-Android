@@ -51,11 +51,21 @@
         <item>When no font specified on flashcards</item>
         <item>Always</item>
     </string-array>
+    <string-array name="app_theme_mode_labels">
+        <item>Follow System Theme</item>
+        <item>Single Theme</item>
+    </string-array>
     <string-array name="day_theme_labels">
         <item>Light</item>
         <item>Plain</item>
     </string-array>
     <string-array name="night_theme_labels">
+        <item>Black</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="single_theme_labels">
+        <item>Light</item>
+        <item>Plain</item>
         <item>Black</item>
         <item>Dark</item>
     </string-array>
