@@ -926,6 +926,13 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance);
             android.preference.PreferenceScreen screen = getPreferenceScreen();
+
+            boolean followSystem = "0".equals(screen.getSharedPreferences().getString("appThemeMode", "0"));
+
+            screen.findPreference("nightTheme").setEnabled(followSystem);
+            screen.findPreference("dayTheme").setEnabled(followSystem);
+            screen.findPreference("singleThemeOption").setEnabled(!followSystem);
+
             mBackgroundImage = (android.preference.CheckBoxPreference) screen.findPreference("deckPickerBackground");
             mBackgroundImage.setOnPreferenceClickListener(preference -> {
                 if (mBackgroundImage.isChecked()) {
@@ -953,7 +960,54 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 return true;
             });
             initializeCustomFontsDialog(screen);
+
+            ((android.preference.ListPreference) screen.findPreference("appThemeMode"))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                screen.findPreference("nightTheme").setEnabled("0".equals(newValue));
+                screen.findPreference("dayTheme").setEnabled("0".equals(newValue));
+                screen.findPreference("singleThemeOption").setEnabled(!"0".equals(newValue));
+
+                return true;
+            });
+
+            ((android.preference.ListPreference) screen.findPreference("dayTheme"))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                        restartActivity();
+                        return true;
+                    });
+
+            ((android.preference.ListPreference) screen.findPreference("nightTheme"))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                        restartActivity();
+                        return true;
+                    });
+
+            ((android.preference.ListPreference) screen.findPreference("singleThemeOption"))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                        restartActivity();
+                        return true;
+                    });
+
         }
+
+
+        private void restartActivity() {
+            Timber.i("PreferenceActivity -- restartActivity()");
+
+            Intent intent = new Intent();
+            intent.setClass(requireContext(), this.getActivity().getClass());
+            intent.putExtras(new Bundle());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+            requireContext().startActivity(intent);
+
+            this.getActivity().finish();
+        }
+
 
         /** Initializes the list of custom fonts shown in the preferences. */
         private void initializeCustomFontsDialog(android.preference.PreferenceScreen screen) {

@@ -29,16 +29,31 @@
     <PreferenceCategory android:title="@string/pref_cat_themes" >
         <ListPreference
             android:defaultValue="0"
+            android:entries="@array/app_theme_mode_labels"
+            android:entryValues="@array/app_theme_mode_values"
+            android:key="appThemeMode"
+            android:title="@string/app_theme_mode" />
+        <ListPreference
+            android:defaultValue="0"
             android:entries="@array/day_theme_labels"
             android:entryValues="@array/day_theme_values"
             android:key="dayTheme"
-            android:title="@string/day_theme" />
+            android:shouldDisableView="true"
+            android:title="@string/default_day_theme" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="2"
             android:entries="@array/night_theme_labels"
             android:entryValues="@array/night_theme_values"
             android:key="nightTheme"
-            android:title="@string/night_theme" />
+            android:shouldDisableView="true"
+            android:title="@string/default_night_theme" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/single_theme_labels"
+            android:entryValues="@array/single_theme_values"
+            android:key="singleThemeOption"
+            android:shouldDisableView="true"
+            android:title="@string/pick_single_theme" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
         <CheckBoxPreference
