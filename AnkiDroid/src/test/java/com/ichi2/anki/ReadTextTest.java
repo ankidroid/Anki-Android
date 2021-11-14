@@ -86,7 +86,7 @@ public class ReadTextTest extends RobolectricTest{
     @Test
     public void testIsTextToSpeechReleased_differentContext() {
         initializeTextToSpeech(getTargetContext());
-        ReadText.releaseTts(null);
+        ReadText.releaseTts(mock(Context.class));
         assertThat(isTextToSpeechShutdown(), is(false));
     }
 
