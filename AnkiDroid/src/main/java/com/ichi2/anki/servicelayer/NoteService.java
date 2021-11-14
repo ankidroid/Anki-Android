@@ -80,13 +80,6 @@ public class NoteService {
     }
 
 
-    public static void updateMultimediaNoteFromJsonNote(Collection col, final Note editorNoteSrc, final IMultimediaEditableNote noteDst) {
-        if (noteDst instanceof MultimediaEditableNote) {
-            updateMultimediaNoteFromFields(col, editorNoteSrc.getFields(), editorNoteSrc.getMid(), (MultimediaEditableNote) noteDst);
-        }
-    }
-
-
     public static void updateMultimediaNoteFromFields(Collection col, String[] fields, long modelId, MultimediaEditableNote mmNote) {
         for (int i = 0; i < fields.length; i++) {
             String value = fields[i];
