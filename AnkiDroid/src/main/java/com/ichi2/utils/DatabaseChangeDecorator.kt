@@ -16,21 +16,13 @@
 package com.ichi2.utils
 
 import android.content.ContentValues
-import android.database.Cursor
 import android.database.SQLException
-import android.database.sqlite.SQLiteTransactionListener
-import android.os.CancellationSignal
-import android.util.Pair
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.SupportSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteStatement
-import java.io.IOException
 import java.util.*
-import kotlin.Throws
 
 /** Detects any database modifications and notifies the sync status of the application  */
-@KotlinCleanup("Convert to Kotlin Delegation as a medium priority extension")
-class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLiteDatabase {
+class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLiteDatabase by wrapped {
     private fun markDataAsChanged() {
         SyncStatus.markDataAsChanged()
     }
@@ -65,86 +57,6 @@ class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLit
         return supportSQLiteStatement
     }
 
-    override fun beginTransaction() {
-        wrapped.beginTransaction()
-    }
-
-    override fun beginTransactionNonExclusive() {
-        wrapped.beginTransactionNonExclusive()
-    }
-
-    override fun beginTransactionWithListener(transactionListener: SQLiteTransactionListener) {
-        wrapped.beginTransactionWithListener(transactionListener)
-    }
-
-    override fun beginTransactionWithListenerNonExclusive(transactionListener: SQLiteTransactionListener) {
-        wrapped.beginTransactionWithListenerNonExclusive(transactionListener)
-    }
-
-    override fun endTransaction() {
-        wrapped.endTransaction()
-    }
-
-    override fun setTransactionSuccessful() {
-        wrapped.setTransactionSuccessful()
-    }
-
-    override fun inTransaction(): Boolean {
-        return wrapped.inTransaction()
-    }
-
-    override fun isDbLockedByCurrentThread(): Boolean {
-        return wrapped.isDbLockedByCurrentThread
-    }
-
-    override fun yieldIfContendedSafely(): Boolean {
-        return wrapped.yieldIfContendedSafely()
-    }
-
-    override fun yieldIfContendedSafely(sleepAfterYieldDelay: Long): Boolean {
-        return wrapped.yieldIfContendedSafely(sleepAfterYieldDelay)
-    }
-
-    override fun getVersion(): Int {
-        return wrapped.version
-    }
-
-    override fun setVersion(version: Int) {
-        wrapped.version = version
-    }
-
-    override fun getMaximumSize(): Long {
-        return wrapped.maximumSize
-    }
-
-    override fun setMaximumSize(numBytes: Long): Long {
-        return wrapped.setMaximumSize(numBytes)
-    }
-
-    override fun getPageSize(): Long {
-        return wrapped.pageSize
-    }
-
-    override fun setPageSize(numBytes: Long) {
-        wrapped.pageSize = numBytes
-    }
-
-    override fun query(query: String): Cursor {
-        return wrapped.query(query)
-    }
-
-    override fun query(query: String, bindArgs: Array<Any>?): Cursor {
-        return wrapped.query(query, bindArgs)
-    }
-
-    override fun query(query: SupportSQLiteQuery): Cursor {
-        return wrapped.query(query)
-    }
-
-    override fun query(query: SupportSQLiteQuery, cancellationSignal: CancellationSignal): Cursor {
-        return wrapped.query(query, cancellationSignal)
-    }
-
     @Throws(SQLException::class)
     override fun insert(table: String, conflictAlgorithm: Int, values: ContentValues): Long {
         val insert = wrapped.insert(table, conflictAlgorithm, values)
@@ -174,59 +86,6 @@ class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLit
     override fun execSQL(sql: String, bindArgs: Array<Any>) {
         wrapped.execSQL(sql, bindArgs)
         checkForChanges(sql)
-    }
-
-    override fun isReadOnly(): Boolean {
-        return wrapped.isReadOnly
-    }
-
-    override fun isOpen(): Boolean {
-        return wrapped.isOpen
-    }
-
-    override fun needUpgrade(newVersion: Int): Boolean {
-        return wrapped.needUpgrade(newVersion)
-    }
-
-    override fun getPath(): String {
-        return wrapped.path
-    }
-
-    override fun setLocale(locale: Locale) {
-        wrapped.setLocale(locale)
-    }
-
-    override fun setMaxSqlCacheSize(cacheSize: Int) {
-        wrapped.setMaxSqlCacheSize(cacheSize)
-    }
-
-    override fun setForeignKeyConstraintsEnabled(enable: Boolean) {
-        wrapped.setForeignKeyConstraintsEnabled(enable)
-    }
-
-    override fun enableWriteAheadLogging(): Boolean {
-        return wrapped.enableWriteAheadLogging()
-    }
-
-    override fun disableWriteAheadLogging() {
-        wrapped.disableWriteAheadLogging()
-    }
-
-    override fun isWriteAheadLoggingEnabled(): Boolean {
-        return wrapped.isWriteAheadLoggingEnabled
-    }
-
-    override fun getAttachedDbs(): List<Pair<String, String>> {
-        return wrapped.attachedDbs
-    }
-
-    override fun isDatabaseIntegrityOk(): Boolean {
-        return wrapped.isDatabaseIntegrityOk
-    }
-
-    @Throws(IOException::class)
-    override fun close() {
-        wrapped.close()
     }
 
     companion object {
