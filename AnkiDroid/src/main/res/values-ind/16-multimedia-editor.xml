@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Saat ini gambar berukuran %sMB. Batas ukuran gambar adalah 1MB. Apa kamu ingin memangkasnya?</string>
     <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
     <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

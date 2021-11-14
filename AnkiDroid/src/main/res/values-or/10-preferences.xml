@@ -78,7 +78,7 @@
     <string name="button_size" maxLength="41">ଉତ୍ତର ବଟନ ଆକାର</string>
     <string name="card_browser_font_size" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
     <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜରରେ ଫାଇଲନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
-    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜରର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜରର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରିନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
@@ -128,8 +128,8 @@
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
-    <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣ</string>
-    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
+    <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
+    <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">ଫେରିବା/ପ୍ରସ୍ଥାନ କରିବାକୁ ଦୁଇଥର ବ୍ୟାକ୍ ଦବାଅ</string>
     <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ଲିକେସନ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
-    <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
+    <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -230,8 +230,8 @@
     <string name="custom_sync_server_enable_summary">ଯଦି ଆପଣ ମାଲିକାନା AnkiWeb ସେବା ବ୍ୟବହାର କରିବାକୁ ଚାହୁଁନାହାଁନ୍ତି ତେବେ ଆପଣ ଏଠାରେ ଏକ ବିକଳ୍ପ ସର୍ଭର ନିର୍ଦ୍ଦିଷ୍ଟ କରିପାରିବେ</string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ସିଙ୍କ୍ url</string>
     <string name="custom_sync_server_base_url_invalid">ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
-    <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
-    <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
+    <string name="custom_sync_server_media_url_title" maxLength="41">ମିଡ଼ିଆ ସିଙ୍କ୍ url</string>
+    <string name="custom_sync_server_media_url_invalid">ମିଡ଼ିଆ ସିଙ୍କ୍ url ଅବୈଧ ଅଟେ</string>
     <!-- Key Bindings -->
     <string name="controls_main_category" maxLength="41">କମାଣ୍ଡ୍ ମ୍ୟାପିଂ</string>
     <!-- studyoptions -->
@@ -297,7 +297,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">ଶୋଧକ</string>
     <string name="deck_conf_cram_search" maxLength="41">ସନ୍ଧାନ</string>
     <string name="deck_conf_cram_limit" maxLength="41">ଏତିକିରେ ସୀମିତ କର</string>
-    <string name="deck_conf_cram_order" maxLength="41">ପାତ୍ରଙ୍କୁ ଏହି ଭାବରେ ଚୟନ କରାଯାଏ </string>
+    <string name="deck_conf_cram_order" maxLength="41">ଏହି ଆଧାରରେ ପତ୍ରଗୁଡ଼ିକ ଚୟନ କରାଯାଏ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନର୍ନିର୍ଦ୍ଧାରଣ</string>
     <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନର୍ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>

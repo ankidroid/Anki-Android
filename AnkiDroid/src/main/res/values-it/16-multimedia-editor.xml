@@ -124,4 +124,5 @@
     <string name="save_dialog_content">La dimensione attuale dell\'immagine è %s MB. Il limite di dimensione predefinita dell\'immagine è 1 MB. Vuoi ritagliarla?</string>
     <string name="select_image_failed">"Impossible selezionare l\'immagine, si prega di riprovare"</string>
     <string name="activity_result_unexpected">L\'applicazione ha restituito un valore inatteso. Potrebbe essere necessario utilizzare un\'altra applicazione</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

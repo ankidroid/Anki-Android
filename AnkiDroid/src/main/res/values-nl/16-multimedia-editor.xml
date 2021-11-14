@@ -124,4 +124,5 @@
     <string name="save_dialog_content">Huidige afbeeldingsgrootte is %sMB. Standaard afbeeldingsgrootte is 1 MB. Wilt u dit bijsnijden?</string>
     <string name="select_image_failed">"Selectie van afbeelding is mislukt, probeer opnieuw"</string>
     <string name="activity_result_unexpected">App leverde een onverwachte waarde op. U moet mogelijk een andere app gebruiken</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

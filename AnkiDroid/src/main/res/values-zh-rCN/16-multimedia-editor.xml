@@ -124,4 +124,5 @@
     <string name="save_dialog_content">当前图像大小是 %sMB。默认图像大小限制是 1MB。您想裁剪它吗？</string>
     <string name="select_image_failed">"选择图像失败，请重试"</string>
     <string name="activity_result_unexpected">应用返回了意外的值。您可能需要使用另一个应用程序</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

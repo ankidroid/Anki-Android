@@ -124,4 +124,5 @@
     <string name="save_dialog_content">El tamaño actual de la imagen es %sMB. El límite predeterminado de la imagen es de 1MB. ¿Deseas recortarla?</string>
     <string name="select_image_failed">"Error al seleccionar la imagen. Vuelve a intentarlo"</string>
     <string name="activity_result_unexpected">La aplicación devolvió un valor inesperado. Es posible que necesites usar una aplicación diferente</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>

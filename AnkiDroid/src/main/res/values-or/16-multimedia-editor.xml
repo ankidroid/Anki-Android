@@ -107,7 +107,7 @@
     <string name="multimedia_editor_svg_preview">ପୂର୍ବାବଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="multimedia_editor_png_paste_error">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିକୁ png ରେ ରୂପାନ୍ତର କରିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
-    <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
+    <string name="multimedia_editor_attach_media">ମିଡ଼ିଆ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ରେକର୍ଡିଂ ବିଫଳ ହେଲା</string>
@@ -124,4 +124,5 @@
     <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB। Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
     <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
 </resources>
