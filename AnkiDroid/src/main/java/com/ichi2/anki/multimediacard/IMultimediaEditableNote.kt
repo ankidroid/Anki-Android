@@ -17,28 +17,19 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard;
+package com.ichi2.anki.multimediacard
 
-import com.ichi2.anki.multimediacard.fields.IField;
-
-import java.io.Serializable;
+import com.ichi2.anki.multimediacard.fields.IField
+import java.io.Serializable
 
 /**
  * Interface for a note, which multimedia card editor can process.
  */
-public interface IMultimediaEditableNote extends Serializable {
-
-    int getNumberOfFields();
-
-
-    IField getField(int index);
-
-
-    boolean setField(int index, IField field);
-
-
-    boolean isModified();
-
-    int getInitialFieldCount();
-    IField getInitialField(int index);
+interface IMultimediaEditableNote : Serializable {
+    val numberOfFields: Int
+    fun getField(index: Int): IField?
+    fun setField(index: Int, field: IField?): Boolean
+    val isModified: Boolean
+    val initialFieldCount: Int
+    fun getInitialField(index: Int): IField?
 }
