@@ -18,89 +18,78 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.multimediacard;
+package com.ichi2.anki.multimediacard
 
-import android.content.Context;
-import android.media.MediaRecorder;
+import android.content.Context
+import android.media.MediaRecorder
+import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.io.IOException
+import java.lang.Exception
+import kotlin.Throws
 
-import com.ichi2.compat.CompatHelper;
-
-import java.io.IOException;
-
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class AudioRecorder {
-
-    @Nullable
-    private MediaRecorder mRecorder = null;
-
-    @Nullable
-    private Runnable mOnRecordingInitialized;
-
-
-    private MediaRecorder initMediaRecorder(Context context, String audioPath) {
-        MediaRecorder mr = CompatHelper.getCompat().getMediaRecorder(context);
-        mr.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        onRecordingInitialized();
-        mr.setOutputFile(audioPath); // audioPath could change
-        return mr;
+class AudioRecorder {
+    @KotlinCleanup("lateinit mRecorder")
+    private var mRecorder: MediaRecorder? = null
+    private var mOnRecordingInitialized: Runnable? = null
+    private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
+        val mr = CompatHelper.getCompat().getMediaRecorder(context)
+        mr.setAudioSource(MediaRecorder.AudioSource.MIC)
+        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        onRecordingInitialized()
+        mr.setOutputFile(audioPath) // audioPath could change
+        return mr
     }
 
-
-    private void onRecordingInitialized() {
+    private fun onRecordingInitialized() {
         if (mOnRecordingInitialized != null) {
-            mOnRecordingInitialized.run();
+            mOnRecordingInitialized!!.run()
         }
     }
 
-    public void startRecording(Context context, String audioPath) throws IOException {
-        boolean highSampling = false;
+    @Throws(IOException::class)
+    fun startRecording(context: Context, audioPath: String) {
+        var highSampling = false
         try {
             // try high quality AAC @ 44.1kHz / 192kbps first
             // can throw IllegalArgumentException if codec isn't supported
-            mRecorder = initMediaRecorder(context, audioPath);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-            mRecorder.setAudioChannels(2);
-            mRecorder.setAudioSamplingRate(44100);
-            mRecorder.setAudioEncodingBitRate(192000);
+            mRecorder = initMediaRecorder(context, audioPath)
+            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            mRecorder!!.setAudioChannels(2)
+            mRecorder!!.setAudioSamplingRate(44100)
+            mRecorder!!.setAudioEncodingBitRate(192000)
             // this can also throw IOException if output path is invalid
-            mRecorder.prepare();
-            mRecorder.start();
-            highSampling = true;
-        } catch (Exception e) {
-            Timber.w(e);
+            mRecorder!!.prepare()
+            mRecorder!!.start()
+            highSampling = true
+        } catch (e: Exception) {
+            Timber.w(e)
             // in all cases, fall back to low sampling
         }
-
         if (!highSampling) {
             // if we are here, either the codec didn't work or output file was invalid
             // fall back on default
-            mRecorder = initMediaRecorder(context, audioPath);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-            mRecorder.prepare();
-            mRecorder.start();
+            mRecorder = initMediaRecorder(context, audioPath)
+            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            mRecorder!!.prepare()
+            mRecorder!!.start()
         }
     }
 
-
-    public void stopRecording() {
+    fun stopRecording() {
         if (mRecorder != null) {
-            mRecorder.stop();
+            mRecorder!!.stop()
         }
     }
 
-
-    public void setOnRecordingInitializedHandler(Runnable onRecordingInitialized) {
-        this.mOnRecordingInitialized = onRecordingInitialized;
+    fun setOnRecordingInitializedHandler(onRecordingInitialized: Runnable?) {
+        mOnRecordingInitialized = onRecordingInitialized
     }
 
-
-    public void release() {
+    fun release() {
         if (mRecorder != null) {
-            mRecorder.release();
+            mRecorder!!.release()
         }
     }
 }
