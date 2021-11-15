@@ -17,78 +17,68 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard
 
-package com.ichi2.anki.multimediacard;
+import android.media.MediaPlayer
+import timber.log.Timber
+import java.io.IOException
+import java.lang.Exception
+import kotlin.Throws
 
-import android.media.MediaPlayer;
+class AudioPlayer {
+    private var mPlayer: MediaPlayer? = null
+    private var mOnStoppingListener: Runnable? = null
+    private var mOnStoppedListener: Runnable? = null
 
-import java.io.IOException;
-
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class AudioPlayer {
-
-    private MediaPlayer mPlayer;
-    @Nullable private Runnable mOnStoppingListener;
-    @Nullable private Runnable mOnStoppedListener;
-
-
-    public void play(String audioPath) throws IOException {
-        mPlayer = new MediaPlayer();
-        mPlayer.setDataSource(audioPath);
-        mPlayer.setOnCompletionListener(mp -> {
-            onStopping();
-            mPlayer.stop();
-            onStopped();
-        });
-        mPlayer.prepare();
-        mPlayer.start();
+    @Throws(IOException::class)
+    fun play(audioPath: String?) {
+        mPlayer = MediaPlayer()
+        mPlayer!!.setDataSource(audioPath)
+        mPlayer!!.setOnCompletionListener {
+            onStopping()
+            mPlayer!!.stop()
+            onStopped()
+        }
+        mPlayer!!.prepare()
+        mPlayer!!.start()
     }
 
-
-    private void onStopped() {
+    private fun onStopped() {
         if (mOnStoppedListener == null) {
-            return;
+            return
         }
-        mOnStoppedListener.run();
+        mOnStoppedListener!!.run()
     }
 
-
-    private void onStopping() {
+    private fun onStopping() {
         if (mOnStoppingListener == null) {
-            return;
+            return
         }
-        mOnStoppingListener.run();
+        mOnStoppingListener!!.run()
     }
 
-
-    public void start() {
-        mPlayer.start();
+    fun start() {
+        mPlayer!!.start()
     }
 
-
-    public void stop() {
+    fun stop() {
         try {
-            mPlayer.prepare();
-            mPlayer.seekTo(0);
-        } catch (Exception e) {
-            Timber.e(e);
+            mPlayer!!.prepare()
+            mPlayer!!.seekTo(0)
+        } catch (e: Exception) {
+            Timber.e(e)
         }
     }
 
-
-    public void pause() {
-        mPlayer.pause();
+    fun pause() {
+        mPlayer!!.pause()
     }
 
-
-    public void setOnStoppingListener(Runnable listener) {
-        this.mOnStoppingListener = listener;
+    fun setOnStoppingListener(listener: Runnable?) {
+        mOnStoppingListener = listener
     }
 
-
-    public void setOnStoppedListener(Runnable listener) {
-        this.mOnStoppedListener = listener;
+    fun setOnStoppedListener(listener: Runnable?) {
+        mOnStoppedListener = listener
     }
 }
