@@ -16,451 +16,376 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard
 
-package com.ichi2.anki.multimediacard;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.AppCompatImageButton;
-
-import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import java.io.File;
-import java.io.IOException;
-import com.ichi2.utils.Permissions;
-
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.Gravity
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.AppCompatImageButton
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.utils.Permissions.canRecordAudio
+import timber.log.Timber
+import java.io.File
+import java.io.IOException
 
 // Not designed for visual editing
 @SuppressLint("ViewConstructor")
-public class AudioView extends LinearLayout {
-    protected final String mAudioPath;
+class AudioView private constructor(context: Context, resPlay: Int, resPause: Int, resStop: Int, audioPath: String) : LinearLayout(context) {
+    val audioPath: String?
+    protected var playPause: PlayPauseButton?
+    protected var stop: StopButton?
+    protected var record: RecordButton? = null
+    private var mAudioRecorder = AudioRecorder()
+    private var mPlayer = AudioPlayer()
+    private var mOnRecordingFinishEventListener: OnRecordingFinishEventListener? = null
 
-    protected PlayPauseButton mPlayPause;
-    protected StopButton mStop;
-    protected RecordButton mRecord = null;
-
-    private AudioRecorder mAudioRecorder = new AudioRecorder();
-    private AudioPlayer mPlayer = new AudioPlayer();
-
-    private OnRecordingFinishEventListener mOnRecordingFinishEventListener = null;
-
-    private Status mStatus = Status.IDLE;
-
-    private final int mResPlayImage;
-    private final int mResPauseImage;
-    private final int mResStopImage;
-    private int mResRecordImage;
-    private int mResRecordStopImage;
-
-    private final Context mContext;
+    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var status = Status.IDLE
+        private set
+    private val mResPlayImage: Int
+    private val mResPauseImage: Int
+    private val mResStopImage: Int
+    private var mResRecordImage = 0
+    private var mResRecordStopImage = 0
+    private val mContext: Context
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public enum Status {
+    enum class Status {
         IDLE, // Default initial state
         INITIALIZED, // When datasource has been set
         PLAYING, PAUSED, STOPPED, // The different possible states once playing
-                                  // has started
+
+        // has started
         RECORDING // The recorder being played status
     }
 
+    private fun gtxt(id: Int): String {
+        return mContext.getText(id).toString()
+    }
 
-    public static AudioView createRecorderInstance(Context context, int resPlay, int resPause, int resStop,
-            int resRecord, int resRecordStop, String audioPath) {
-        try {
-        return new AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath);
-        } catch(Exception e) {
-            Timber.e(e);
-            AnkiDroidApp.sendExceptionReport(e, "Unable to create recorder tool bar");
-            UIUtils.showThemedToast(context,
-                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true);
-            return null;
+    private constructor(
+        context: Context,
+        resPlay: Int,
+        resPause: Int,
+        resStop: Int,
+        resRecord: Int,
+        resRecordStop: Int,
+        audioPath: String
+    ) : this(context, resPlay, resPause, resStop, audioPath) {
+        mResRecordImage = resRecord
+        mResRecordStopImage = resRecordStop
+        this.orientation = HORIZONTAL
+        this.gravity = Gravity.CENTER
+        record = RecordButton(context)
+        addView(record, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT))
+    }
+
+    fun setOnRecordingFinishEventListener(listener: OnRecordingFinishEventListener?) {
+        mOnRecordingFinishEventListener = listener
+    }
+
+    fun notifyPlay() {
+        playPause!!.update()
+        stop!!.update()
+        if (record != null) {
+            record!!.update()
         }
     }
 
-    public static @Nullable
-    String generateTempAudioFile(@NonNull Context context) {
-        String tempAudioPath;
-        try {
-            File storingDirectory = context.getCacheDir();
-            tempAudioPath = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).getAbsolutePath();
-        } catch (IOException e) {
-            Timber.e(e, "Could not create temporary audio file.");
-            tempAudioPath = null;
-        }
-        return tempAudioPath;
-    }
-
-
-    private AudioView(Context context, int resPlay, int resPause, int resStop, String audioPath) {
-        super(context);
-
-        mPlayer.setOnStoppingListener(() -> mStatus = Status.STOPPED);
-        mPlayer.setOnStoppedListener(this::notifyStop);
-
-        mAudioRecorder.setOnRecordingInitializedHandler(() -> mStatus = Status.INITIALIZED);
-
-        mContext = context;
-
-        mResPlayImage = resPlay;
-        mResPauseImage = resPause;
-        mResStopImage = resStop;
-        mAudioPath = audioPath;
-
-        this.setOrientation(HORIZONTAL);
-
-        mPlayPause = new PlayPauseButton(context);
-        addView(mPlayPause, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
-        mStop = new StopButton(context);
-        addView(mStop, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    }
-
-
-    private String gtxt(int id) {
-        return mContext.getText(id).toString();
-    }
-
-
-    private AudioView(Context context, int resPlay, int resPause, int resStop, int resRecord, int resRecordStop,
-            String audioPath) {
-        this(context, resPlay, resPause, resStop, audioPath);
-        mResRecordImage = resRecord;
-        mResRecordStopImage = resRecordStop;
-
-        this.setOrientation(HORIZONTAL);
-        this.setGravity(Gravity.CENTER);
-
-        mRecord = new RecordButton(context);
-        addView(mRecord, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-    }
-
-
-    public String getAudioPath() {
-        return mAudioPath;
-    }
-
-
-    public void setOnRecordingFinishEventListener(OnRecordingFinishEventListener listener) {
-        mOnRecordingFinishEventListener = listener;
-    }
-
-
-    public void notifyPlay() {
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
-        }
-    }
-
-
-    public void notifyStop() {
+    fun notifyStop() {
         // Send state change signal to all buttons
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
+        playPause!!.update()
+        stop!!.update()
+        if (record != null) {
+            record!!.update()
         }
     }
 
-
-    public void notifyPause() {
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
+    fun notifyPause() {
+        playPause!!.update()
+        stop!!.update()
+        if (record != null) {
+            record!!.update()
         }
     }
 
-
-    public void notifyRecord() {
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
+    fun notifyRecord() {
+        playPause!!.update()
+        stop!!.update()
+        if (record != null) {
+            record!!.update()
         }
     }
 
-
-    public void notifyStopRecord() {
-        if (mStatus == Status.RECORDING) {
+    fun notifyStopRecord() {
+        if (status == Status.RECORDING) {
             try {
-                mAudioRecorder.stopRecording();
-            } catch (RuntimeException e) {
-                Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start");
-                UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
+                mAudioRecorder.stopRecording()
+            } catch (e: RuntimeException) {
+                Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
+                showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
             }
-            mStatus = Status.IDLE;
+            status = Status.IDLE
             if (mOnRecordingFinishEventListener != null) {
-                mOnRecordingFinishEventListener.onRecordingFinish(AudioView.this);
+                mOnRecordingFinishEventListener!!.onRecordingFinish(this@AudioView)
             }
         }
-        mPlayPause.update();
-        mStop.update();
-        if (mRecord != null) {
-            mRecord.update();
+        playPause!!.update()
+        stop!!.update()
+        if (record != null) {
+            record!!.update()
         }
     }
 
-    public void notifyReleaseRecorder() {
-        mAudioRecorder.release();
+    fun notifyReleaseRecorder() {
+        mAudioRecorder.release()
     }
 
-    /** Stops playing and records */
-    public void toggleRecord() {
-        stopPlaying();
-
-        if (mRecord != null) {
-            mRecord.callOnClick();
+    /** Stops playing and records  */
+    fun toggleRecord() {
+        stopPlaying()
+        if (record != null) {
+            record!!.callOnClick()
         }
     }
 
-
-    /** Stops recording and presses the play button */
-    public void togglePlay() {
+    /** Stops recording and presses the play button  */
+    fun togglePlay() {
         // cancelling recording is done via pressing the record button again
-        stopRecording();
-
-        if (mPlayPause != null) {
-            mPlayPause.callOnClick();
+        stopRecording()
+        if (playPause != null) {
+            playPause!!.callOnClick()
         }
     }
 
-    /** If recording is occurring, stop it */
-    private void stopRecording() {
-        if (mStatus == Status.RECORDING && mRecord != null) {
-            mRecord.callOnClick();
+    /** If recording is occurring, stop it  */
+    private fun stopRecording() {
+        if (status == Status.RECORDING && record != null) {
+            record!!.callOnClick()
         }
     }
 
-    /** If playing, stop it */
-    protected void stopPlaying() {
+    /** If playing, stop it  */
+    protected fun stopPlaying() {
         // The stop button only applies to the player, and does nothing if no action is needed
-        if (mStop != null) {
-            mStop.callOnClick();
+        if (stop != null) {
+            stop!!.callOnClick()
         }
     }
 
-    protected class PlayPauseButton extends AppCompatImageButton {
-        private final OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAudioPath == null) {
-                    return;
+    protected inner class PlayPauseButton(context: Context?) : AppCompatImageButton(context!!) {
+        private val mOnClickListener: OnClickListener = object : OnClickListener {
+            override fun onClick(v: View) {
+                if (audioPath == null) {
+                    return
                 }
-
-                switch (mStatus) {
-                    case IDLE:
-                        try {
-                            mPlayer.play(getAudioPath());
-
-                            setImageResource(mResPauseImage);
-                            mStatus = Status.PLAYING;
-                            notifyPlay();
-                        } catch (Exception e) {
-                            Timber.e(e);
-                            UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true);
-                            mStatus = Status.IDLE;
-                        }
-                        break;
-
-                    case PAUSED:
+                when (status) {
+                    Status.IDLE -> try {
+                        mPlayer.play(audioPath)
+                        setImageResource(mResPauseImage)
+                        status = Status.PLAYING
+                        notifyPlay()
+                    } catch (e: Exception) {
+                        Timber.e(e)
+                        showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true)
+                        status = Status.IDLE
+                    }
+                    Status.PAUSED -> {
                         // -> Play, continue playing
-                        mStatus = Status.PLAYING;
-                        setImageResource(mResPauseImage);
-                        mPlayer.start();
-                        notifyPlay();
-                        break;
-
-                    case STOPPED:
+                        status = Status.PLAYING
+                        setImageResource(mResPauseImage)
+                        mPlayer.start()
+                        notifyPlay()
+                    }
+                    Status.STOPPED -> {
                         // -> Play, start from beginning
-                        mStatus = Status.PLAYING;
-                        setImageResource(mResPauseImage);
-                        mPlayer.stop();
-                        mPlayer.start();
-                        notifyPlay();
-                        break;
-
-                    case PLAYING:
-                        setImageResource(mResPlayImage);
-                        mPlayer.pause();
-                        mStatus = Status.PAUSED;
-                        notifyPause();
-                        break;
-
-                    case RECORDING:
-                        // this button should be disabled
-                        break;
-                    default:
-                        break;
+                        status = Status.PLAYING
+                        setImageResource(mResPauseImage)
+                        mPlayer.stop()
+                        mPlayer.start()
+                        notifyPlay()
+                    }
+                    Status.PLAYING -> {
+                        setImageResource(mResPlayImage)
+                        mPlayer.pause()
+                        status = Status.PAUSED
+                        notifyPause()
+                    }
+                    Status.RECORDING -> {
+                    }
+                    else -> {
+                    }
                 }
             }
-        };
-
-
-        public PlayPauseButton(Context context) {
-            super(context);
-            setImageResource(mResPlayImage);
-
-            setOnClickListener(mOnClickListener);
         }
 
-
-        public void update() {
-            switch (mStatus) {
-                case IDLE:
-                case STOPPED:
-                    setImageResource(mResPlayImage);
-                    setEnabled(true);
-                    break;
-
-                case RECORDING:
-                    setEnabled(false);
-                    break;
-
-                default:
-                    setEnabled(true);
-                    break;
+        fun update() {
+            isEnabled = when (status) {
+                Status.IDLE, Status.STOPPED -> {
+                    setImageResource(mResPlayImage)
+                    true
+                }
+                Status.RECORDING -> false
+                else -> true
             }
+        }
+
+        init {
+            setImageResource(mResPlayImage)
+            setOnClickListener(mOnClickListener)
         }
     }
 
-    protected class StopButton extends AppCompatImageButton {
-        private final OnClickListener mOnClickListener = v -> {
-            switch (mStatus) {
-                case PAUSED:
-                case PLAYING:
-                    mPlayer.stop();
-                    mStatus = Status.STOPPED;
-                    notifyStop();
-                    break;
-
-                case IDLE:
-                case STOPPED:
-                case RECORDING:
-                case INITIALIZED:
-                default:
-                    break;
+    protected inner class StopButton(context: Context?) : AppCompatImageButton(context!!) {
+        private val mOnClickListener = OnClickListener {
+            when (status) {
+                Status.PAUSED, Status.PLAYING -> {
+                    mPlayer.stop()
+                    status = Status.STOPPED
+                    notifyStop()
+                }
+                Status.IDLE, Status.STOPPED, Status.RECORDING, Status.INITIALIZED -> {
+                }
             }
-        };
-
-
-        public StopButton(Context context) {
-            super(context);
-            setImageResource(mResStopImage);
-
-            setOnClickListener(mOnClickListener);
         }
 
-
-        public void update() {
-            setEnabled(mStatus != Status.RECORDING);
+        fun update() {
+            isEnabled = status != Status.RECORDING
             // It doesn't need to update itself on any other state changes
         }
 
+        init {
+            setImageResource(mResStopImage)
+            setOnClickListener(mOnClickListener)
+        }
     }
 
-    protected class RecordButton extends AppCompatImageButton {
-        private final OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    protected inner class RecordButton(context: Context?) : AppCompatImageButton(context!!) {
+        private val mOnClickListener: OnClickListener = object : OnClickListener {
+            override fun onClick(v: View) {
                 // Since mAudioPath is not compulsory, we check if it exists
-                if (mAudioPath == null) {
-                    return;
+                if (audioPath == null) {
+                    return
                 }
 
                 // We can get to this screen without permissions through the "Pronunciation" feature.
-                if (!Permissions.canRecordAudio(mContext)) {
-                    Timber.w("Audio recording permission denied.");
-                    UIUtils.showThemedToast(mContext,
-                            getResources().getString(R.string.multimedia_editor_audio_permission_denied),
-                            true);
-                    return;
+                if (!canRecordAudio(mContext)) {
+                    Timber.w("Audio recording permission denied.")
+                    showThemedToast(
+                        mContext,
+                        resources.getString(R.string.multimedia_editor_audio_permission_denied),
+                        true
+                    )
+                    return
                 }
-
-                switch (mStatus) {
-                    case IDLE: // If not already recorded or not already played
-                    case STOPPED: // if already recorded or played
-
+                when (status) {
+                    Status.IDLE, Status.STOPPED -> {
                         try {
-                            mAudioRecorder.startRecording(mContext, mAudioPath);
-                        } catch (Exception e) {
+                            mAudioRecorder.startRecording(mContext, audioPath)
+                        } catch (e: Exception) {
                             // either output file failed or codec didn't work, in any case fail out
-                            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
-                            UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
-                            mStatus = Status.STOPPED;
-                            break;
+                            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
+                            showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
+                            status = Status.STOPPED
                         }
-
-                        mStatus = Status.RECORDING;
-                        setImageResource(mResRecordImage);
-                        notifyRecord();
-
-                        break;
-
-                    case RECORDING:
-                        setImageResource(mResRecordStopImage);
-                        notifyStopRecord();
-                        break;
-
-                    default:
-                        break;
+                        status = Status.RECORDING
+                        setImageResource(mResRecordImage)
+                        notifyRecord()
+                    }
+                    Status.RECORDING -> {
+                        setImageResource(mResRecordStopImage)
+                        notifyStopRecord()
+                    }
+                    else -> {
+                    }
                 }
             }
-        };
-
-
-        public RecordButton(Context context) {
-            super(context);
-            setImageResource(mResRecordStopImage);
-
-            setOnClickListener(mOnClickListener);
         }
 
-
-        public void update() {
-            switch (mStatus) {
-                case PLAYING:
-                case PAUSED:
-                    setEnabled(false);
-                    break;
-
-                default:
-                    setEnabled(true);
-                    break;
+        fun update() {
+            isEnabled = when (status) {
+                Status.PLAYING, Status.PAUSED -> false
+                else -> true
             }
         }
+
+        init {
+            setImageResource(mResRecordStopImage)
+            setOnClickListener(mOnClickListener)
+        }
     }
 
-    public interface OnRecordingFinishEventListener {
-        void onRecordingFinish(View v);
+    interface OnRecordingFinishEventListener {
+        fun onRecordingFinish(v: View?)
     }
-
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void setRecorder(@NonNull AudioRecorder recorder) {
-        this.mAudioRecorder = recorder;
+    fun setRecorder(recorder: AudioRecorder) {
+        mAudioRecorder = recorder
     }
 
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void setPlayer(@NonNull AudioPlayer player) {
-        this.mPlayer = player;
+    fun setPlayer(player: AudioPlayer) {
+        mPlayer = player
     }
 
+    companion object {
+        @JvmStatic
+        fun createRecorderInstance(
+            context: Context,
+            resPlay: Int,
+            resPause: Int,
+            resStop: Int,
+            resRecord: Int,
+            resRecordStop: Int,
+            audioPath: String
+        ): AudioView? {
+            return try {
+                AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath)
+            } catch (e: Exception) {
+                Timber.e(e)
+                AnkiDroidApp.sendExceptionReport(e, "Unable to create recorder tool bar")
+                showThemedToast(
+                    context,
+                    context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true
+                )
+                null
+            }
+        }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public Status getStatus() {
-        return mStatus;
+        @JvmStatic
+        fun generateTempAudioFile(context: Context): String? {
+            val tempAudioPath: String?
+            tempAudioPath = try {
+                val storingDirectory = context.cacheDir
+                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
+            } catch (e: IOException) {
+                Timber.e(e, "Could not create temporary audio file.")
+                null
+            }
+            return tempAudioPath
+        }
+    }
+
+    init {
+        mPlayer.setOnStoppingListener { status = Status.STOPPED }
+        mPlayer.setOnStoppedListener { notifyStop() }
+        mAudioRecorder.setOnRecordingInitializedHandler { status = Status.INITIALIZED }
+        mContext = context
+        mResPlayImage = resPlay
+        mResPauseImage = resPause
+        mResStopImage = resStop
+        this.audioPath = audioPath
+        this.orientation = HORIZONTAL
+        playPause = PlayPauseButton(context)
+        addView(playPause, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT))
+        stop = StopButton(context)
+        addView(stop, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT))
     }
 }
