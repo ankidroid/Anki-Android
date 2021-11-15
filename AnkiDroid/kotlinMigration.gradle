@@ -43,7 +43,7 @@ permission notice:
 // Example of class name: "/com/ichi2/anki/UIUtils.kt"
 // Ensure that it starts with '/' (slash)
 def source = Source.MAIN
-def className = ""
+def className = "/com/ichi2/anki/multimediacard/AudioView.kt"
 
 enum Source {
     MAIN("/src/main/java"),
