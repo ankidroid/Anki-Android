@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Telaffuzu kontrol et</string>
     <string name="new_deck">Deste oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>
-    <string name="night_mode">Gece modu</string>
     <string name="directory_inaccessible">AnkiDroid dizinine ulaşılamıyor</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

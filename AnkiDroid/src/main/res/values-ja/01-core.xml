@@ -123,7 +123,6 @@
     <string name="menu_toggle_mic_tool_bar">録音用マイクアイコン</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
-    <string name="night_mode">ナイトモード</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

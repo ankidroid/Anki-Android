@@ -133,7 +133,6 @@
     <string name="menu_toggle_mic_tool_bar">Провери изговор</string>
     <string name="new_deck">Направи шпил</string>
     <string name="new_dynamic_deck">Направи филтриран шпил</string>
-    <string name="night_mode">Ноћни режим</string>
     <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

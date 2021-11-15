@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">உச்சரிப்பை சரிபார்</string>
     <string name="new_deck">டெக் உருவாக்கவும்</string>
     <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>
-    <string name="night_mode">இரவு நிலை</string>
     <string name="directory_inaccessible">AnkiDroid அடைவு அணுகக்கூடியதாக</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

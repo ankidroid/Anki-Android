@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Comprobar pronunciación</string>
     <string name="new_deck">Crear mazo</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
-    <string name="night_mode">Modo nocturno</string>
     <string name="directory_inaccessible">No se puede acceder a la carpeta de AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

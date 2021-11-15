@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="new_deck">ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

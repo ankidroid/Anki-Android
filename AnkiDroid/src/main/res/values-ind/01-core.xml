@@ -123,7 +123,6 @@
     <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
     <string name="new_deck">Buat dek</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
-    <string name="night_mode">Mode malam</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

@@ -123,7 +123,6 @@
     <string name="menu_toggle_mic_tool_bar">Kiểm tra phát âm</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
-    <string name="night_mode">Chế độ ban đêm</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

@@ -123,7 +123,6 @@
     <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
     <string name="new_deck">Колода ясау</string>
     <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
-    <string name="night_mode">Төнге режим</string>
     <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

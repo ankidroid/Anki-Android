@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Vérifier la prononciation</string>
     <string name="new_deck">Créer un jeu de cartes</string>
     <string name="new_dynamic_deck">Créer un paquet filtré</string>
-    <string name="night_mode">Mode nuit</string>
     <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

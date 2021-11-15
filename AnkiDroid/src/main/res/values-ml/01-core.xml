@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">ഉച്ചാരണം പരിശോധിക്കുക</string>
     <string name="new_deck">ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="new_dynamic_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് സൃഷ്ടിക്കുക</string>
-    <string name="night_mode">നൈറ്റ് മോഡ്</string>
     <string name="directory_inaccessible">AnkiDroid ഡയറക്‌ടറി ആക്‌സസ്സുചെയ്യാനാകില്ല</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

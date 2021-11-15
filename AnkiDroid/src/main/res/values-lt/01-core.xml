@@ -138,7 +138,6 @@
     <string name="menu_toggle_mic_tool_bar">Patikrinti tarimą</string>
     <string name="new_deck">Kurti rinkinį</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>
-    <string name="night_mode">Naktinis režimas</string>
     <string name="directory_inaccessible">„AnkiDroid“ katalogas yra nepasiekiamas</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

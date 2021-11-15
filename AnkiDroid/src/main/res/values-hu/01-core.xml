@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
-    <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

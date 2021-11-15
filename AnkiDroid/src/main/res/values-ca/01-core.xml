@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Comprova pronunciació</string>
     <string name="new_deck">Crea un paquet</string>
     <string name="new_dynamic_deck">Crear un paquet filtrat</string>
-    <string name="night_mode">Mode nocturn</string>
     <string name="directory_inaccessible">El directori d\'AnkiDroid és inaccessible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

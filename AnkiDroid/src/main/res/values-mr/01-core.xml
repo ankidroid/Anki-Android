@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">उच्चारण तपासा</string>
     <string name="new_deck">डेक तयार करा</string>
     <string name="new_dynamic_deck">फिल्टर केलेले डेक तयार करा</string>
-    <string name="night_mode">रात्री मोड</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका प्रवेश करण्यायोग्य आहे</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

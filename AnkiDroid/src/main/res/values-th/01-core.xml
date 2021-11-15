@@ -124,7 +124,6 @@
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

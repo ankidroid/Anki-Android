@@ -122,9 +122,6 @@
     <string name="app_theme_mode" maxLength="41">App theme mode</string>
     <string name="default_day_theme" maxLength="41">Default day theme</string>
     <string name="default_night_theme" maxLength="41">Default night theme</string>
-    <string name="follow_system" maxLength="41">Follow System Theme</string>
-    <string name="light_theme" maxLength="41">Light Theme</string>
-    <string name="dark_theme" maxLength="41">Dark Theme</string>
     <string name="pick_single_theme" maxLength="41">Pick a single theme</string>
     <string name="default_font" maxLength="41">Default font</string>
     <string name="override_font" maxLength="41">Default font applicability</string>

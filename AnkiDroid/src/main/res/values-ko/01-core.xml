@@ -123,7 +123,6 @@
     <string name="menu_toggle_mic_tool_bar">발음 확인</string>
     <string name="new_deck">카드 묶음 만들기</string>
     <string name="new_dynamic_deck">거르기된 카드뭉치 만들기</string>
-    <string name="night_mode">야간 모드</string>
     <string name="directory_inaccessible">암기드로이드서류철에 접근할수 없습니다</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and

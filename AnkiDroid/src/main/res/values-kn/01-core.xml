@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">ಉಚ್ಚಾರಣೆಯನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="new_deck">ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_dynamic_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹ ರಚಿಸಿ</string>
-    <string name="night_mode">ರಾತ್ರಿ ಮೋಡ್</string>
     <string name="directory_inaccessible">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
