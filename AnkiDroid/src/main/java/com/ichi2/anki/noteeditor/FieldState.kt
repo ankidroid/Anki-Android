@@ -14,248 +14,194 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.noteeditor;
+package com.ichi2.anki.noteeditor
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Pair;
-import android.util.SparseArray;
-import android.view.AbsSavedState;
-import android.view.View;
-
-import com.ichi2.anki.FieldEditLine;
-import com.ichi2.anki.NoteEditor;
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-
-import static com.ichi2.utils.MapUtil.getKeyByValue;
+import android.content.Context
+import android.os.Bundle
+import android.util.Pair
+import android.util.SparseArray
+import android.view.View
+import com.ichi2.anki.FieldEditLine
+import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.R
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Models
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.MapUtil.getKeyByValue
+import java.util.*
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
  */
-public class FieldState {
-
-    private final NoteEditor mEditor;
-    private List<View.BaseSavedState> mSavedFieldData;
-
-
-    private FieldState(NoteEditor editor) {
-        mEditor = editor;
-    }
-
-    private static boolean allowFieldRemapping(String[][] oldFields) {
-        return oldFields.length > 2;
-    }
-
-
-    public static FieldState fromEditor(NoteEditor editor) {
-        return new FieldState(editor);
-    }
-
-
-    @NonNull
-    public List<FieldEditLine> loadFieldEditLines(FieldChangeType type) {
-        List<FieldEditLine> fieldEditLines;
-        if (type.mType == Type.INIT && mSavedFieldData != null) {
-            fieldEditLines = recreateFieldsFromState();
-            mSavedFieldData = null;
+class FieldState private constructor(private val editor: NoteEditor) {
+    private var mSavedFieldData: List<View.BaseSavedState>? = null
+    fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
+        val fieldEditLines: List<FieldEditLine>
+        if (type.type == Type.INIT && mSavedFieldData != null) {
+            fieldEditLines = recreateFieldsFromState()
+            mSavedFieldData = null
         } else {
-            fieldEditLines = createFields(type);
+            fieldEditLines = createFields(type)
         }
-        for (FieldEditLine l : fieldEditLines) {
-            l.setId(View.generateViewId());
+        for (l in fieldEditLines) {
+            l.id = View.generateViewId()
         }
-
-        if (type.mType == Type.CLEAR_KEEP_STICKY) {
+        if (type.type == Type.CLEAR_KEEP_STICKY) {
             // we use the UI values here as the model will post-processing steps (newline -> br).
-            String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
-
-            JSONArray flds = mEditor.getCurrentFields();
-            for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
+            val currentFieldStrings = editor.currentFieldStrings
+            val flds = editor.currentFields
+            for (fldIdx in 0 until flds.length()) {
                 if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx], type.mReplaceNewlines);
+                    fieldEditLines[fldIdx].setContent(currentFieldStrings[fldIdx], type.replaceNewlines)
                 }
             }
         }
-
-        if (type.mType == Type.CHANGE_FIELD_COUNT) {
-            String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
-
-            for (int i = 0; i < Math.min(currentFieldStrings.length, fieldEditLines.size()); i++) {
-                fieldEditLines.get(i).setContent(currentFieldStrings[i], type.mReplaceNewlines);
+        if (type.type == Type.CHANGE_FIELD_COUNT) {
+            val currentFieldStrings = editor.currentFieldStrings
+            for (i in 0 until Math.min(currentFieldStrings.size, fieldEditLines.size)) {
+                fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
             }
         }
-
-
-        return fieldEditLines;
+        return fieldEditLines
     }
 
-
-    private List<FieldEditLine> recreateFieldsFromState() {
-        List<FieldEditLine> editLines = new ArrayList<>(mSavedFieldData.size());
-        for (AbsSavedState state : mSavedFieldData) {
-            FieldEditLine edit_line_view = new FieldEditLine(mEditor);
-            if (edit_line_view.getId() == 0) {
-                edit_line_view.setId(View.generateViewId());
+    private fun recreateFieldsFromState(): List<FieldEditLine> {
+        val editLines: MutableList<FieldEditLine> = ArrayList(mSavedFieldData!!.size)
+        for (state in mSavedFieldData!!) {
+            val edit_line_view = FieldEditLine(editor)
+            if (edit_line_view.id == 0) {
+                edit_line_view.id = View.generateViewId()
             }
-            edit_line_view.loadState(state);
-            editLines.add(edit_line_view);
+            edit_line_view.loadState(state)
+            editLines.add(edit_line_view)
         }
-        return editLines;
+        return editLines
     }
 
-
-    @NonNull
-    protected List<FieldEditLine> createFields(FieldChangeType type) {
-        String[][] fields = getFields(type);
-
-        List<FieldEditLine> editLines = new ArrayList<>(fields.length);
-        for (int i = 0; i < fields.length; i++) {
-            FieldEditLine edit_line_view = new FieldEditLine(mEditor);
-            editLines.add(edit_line_view);
-            edit_line_view.setName(fields[i][0]);
-            edit_line_view.setContent(fields[i][1], type.mReplaceNewlines);
-            edit_line_view.setOrd(i);
+    protected fun createFields(type: FieldChangeType): List<FieldEditLine> {
+        val fields = getFields(type)
+        val editLines: MutableList<FieldEditLine> = ArrayList(fields.size)
+        for (i in fields.indices) {
+            val edit_line_view = FieldEditLine(editor)
+            editLines.add(edit_line_view)
+            edit_line_view.name = fields[i][0]
+            edit_line_view.setContent(fields[i][1], type.replaceNewlines)
+            edit_line_view.setOrd(i)
         }
-        return editLines;
+        return editLines
     }
 
-
-    private String[][] getFields(FieldChangeType type) {
-        if (type.mType == Type.REFRESH_WITH_MAP) {
-            String[][] items = mEditor.getFieldsFromSelectedNote();
-            Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(type.mNewModel);
-            return FieldState.fromFieldMap(mEditor, items, fMapNew, type.mModelChangeFieldMap);
+    private fun getFields(type: FieldChangeType): Array<Array<String?>> {
+        if (type.type == Type.REFRESH_WITH_MAP) {
+            val items = editor.fieldsFromSelectedNote
+            val fMapNew = Models.fieldMap(type.newModel!!)
+            return fromFieldMap(editor, items, fMapNew, type.modelChangeFieldMap)
         }
-        return mEditor.getFieldsFromSelectedNote();
+        return editor.fieldsFromSelectedNote
     }
 
-
-    private static String[][] fromFieldMap(Context context, String[][] oldFields, Map<String, Pair<Integer, JSONObject>> fMapNew, Map<Integer, Integer> modelChangeFieldMap) {
-        // Build array of label/values to provide to field EditText views
-        String[][] fields = new String[fMapNew.size()][2];
-        for (String fname : fMapNew.keySet()) {
-            Pair<Integer, JSONObject> fieldPair = fMapNew.get(fname);
-            if (fieldPair == null) {
-                continue;
-            }
-            // Field index of new note type
-            Integer i = fieldPair.first;
-            // Add values from old note type if they exist in map, otherwise make the new field empty
-            if (modelChangeFieldMap.containsValue(i)) {
-                // Get index of field from old note type given the field index of new note type
-                Integer j = getKeyByValue(modelChangeFieldMap, i);
-                if (j == null) {
-                    continue;
-                }
-                // Set the new field label text
-                if (allowFieldRemapping(oldFields)) {
-                    // Show the content of old field if remapping is enabled
-                    fields[i][0] = String.format(context.getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
-                } else {
-                    fields[i][0] = fname;
-                }
-
-                // Set the new field label value
-                fields[i][1] = oldFields[j][1];
-            } else {
-                // No values from old note type exist in the mapping
-                fields[i][0] = fname;
-                fields[i][1] = "";
-            }
-        }
-        return fields;
-    }
-
-
-    public void setInstanceState(Bundle savedInstanceState) {
+    fun setInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            return;
+            return
         }
-
         if (!savedInstanceState.containsKey("customViewIds") || !savedInstanceState.containsKey("android:viewHierarchyState")) {
-            return;
+            return
         }
-
-        ArrayList<Integer> customViewIds = savedInstanceState.getIntegerArrayList("customViewIds");
-        Bundle viewHierarchyState = savedInstanceState.getBundle("android:viewHierarchyState");
-
+        val customViewIds = savedInstanceState.getIntegerArrayList("customViewIds")
+        val viewHierarchyState = savedInstanceState.getBundle("android:viewHierarchyState")
         if (customViewIds == null || viewHierarchyState == null) {
-            return;
+            return
         }
-
-        SparseArray<?> views = (SparseArray<?>) viewHierarchyState.get("android:views");
-
-        if (views == null) {
-            return;
+        val views = viewHierarchyState["android:views"] as SparseArray<*>? ?: return
+        val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
+        for (i in customViewIds) {
+            important.add(views[i!!] as View.BaseSavedState)
         }
-
-        List<View.BaseSavedState> important = new ArrayList<>(customViewIds.size());
-        for (Integer i : customViewIds) {
-            important.add((View.BaseSavedState) views.get(i));
-        }
-
-        mSavedFieldData = important;
+        mSavedFieldData = important
     }
 
+    /** How fields should be changed when the UI is rebuilt  */
+    class FieldChangeType(val type: Type, val replaceNewlines: Boolean) {
+        var modelChangeFieldMap: Map<Int, Int>? = null
+        var newModel: Model? = null
 
-    /** How fields should be changed when the UI is rebuilt */
-    public static class FieldChangeType {
-        private final Type mType;
+        companion object {
+            @JvmStatic
+            fun refreshWithMap(newModel: Model?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
+                val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
+                typeClass.newModel = newModel
+                typeClass.modelChangeFieldMap = modelChangeFieldMap
+                return typeClass
+            }
 
-        private Map<Integer, Integer> mModelChangeFieldMap;
-        private Model mNewModel;
-        private final boolean mReplaceNewlines;
+            @JvmStatic
+            fun refresh(replaceNewlines: Boolean): FieldChangeType {
+                return frotype(Type.REFRESH, replaceNewlines)
+            }
 
-        public FieldChangeType(Type type, boolean replaceNewlines) {
-            this.mType = type;
-            this.mReplaceNewlines = replaceNewlines;
-        }
+            @JvmStatic
+            fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType {
+                return frotype(Type.CLEAR_KEEP_STICKY, replaceNewlines)
+            }
 
-        public static FieldChangeType refreshWithMap(Model newModel, Map<Integer, Integer> modelChangeFieldMap, boolean replaceNewlines) {
-            FieldChangeType typeClass = new FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines);
-            typeClass.mNewModel = newModel;
-            typeClass.mModelChangeFieldMap = modelChangeFieldMap;
-            return typeClass;
-        }
+            @JvmStatic
+            fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType {
+                return frotype(Type.CHANGE_FIELD_COUNT, replaceNewlines)
+            }
 
-        public static FieldChangeType refresh(boolean replaceNewlines) {
-            return fromType(FieldState.Type.REFRESH, replaceNewlines);
-        }
+            @JvmStatic
+            fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType {
+                return frotype(Type.INIT, replaceNewlines)
+            }
 
-
-        public static FieldChangeType refreshWithStickyFields(boolean replaceNewlines) {
-            return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines);
-        }
-
-
-        public static FieldChangeType changeFieldCount(boolean replaceNewlines) {
-            return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines);
-        }
-
-        public static FieldChangeType onActivityCreation(boolean replaceNewlines) {
-            return fromType(Type.INIT, replaceNewlines);
-        }
-
-        private static FieldChangeType fromType(Type type, boolean replaceNewlines) {
-            return new FieldChangeType(type, replaceNewlines);
+            private fun frotype(type: Type, replaceNewlines: Boolean): FieldChangeType {
+                return FieldChangeType(type, replaceNewlines)
+            }
         }
     }
 
-    public enum Type {
-        INIT,
-        CLEAR_KEEP_STICKY,
-        CHANGE_FIELD_COUNT,
-        REFRESH,
-        REFRESH_WITH_MAP,
+    enum class Type {
+        INIT, CLEAR_KEEP_STICKY, CHANGE_FIELD_COUNT, REFRESH, REFRESH_WITH_MAP
+    }
+
+    companion object {
+        private fun allowFieldRemapping(oldFields: Array<Array<String>>): Boolean {
+            return oldFields.size > 2
+        }
+
+        @JvmStatic
+        fun fromEditor(editor: NoteEditor): FieldState {
+            return FieldState(editor)
+        }
+
+        private fun fromFieldMap(context: Context, oldFields: Array<Array<String>>, fMapNew: Map<String, Pair<Int, JSONObject>>, modelChangeFieldMap: Map<Int, Int>?): Array<Array<String?>> {
+            // Build array of label/values to provide to field EditText views
+            val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
+            for (fname in fMapNew.keys) {
+                val fieldPair = fMapNew[fname] ?: continue
+                // Field index of new note type
+                val i = fieldPair.first
+                // Add values from old note type if they exist in map, otherwise make the new field empty
+                if (modelChangeFieldMap!!.containsValue(i)) {
+                    // Get index of field from old note type given the field index of new note type
+                    val j = getKeyByValue(modelChangeFieldMap, i) ?: continue
+                    // Set the new field label text
+                    if (allowFieldRemapping(oldFields)) {
+                        // Show the content of old field if remapping is enabled
+                        fields[i][0] = String.format(context.resources.getString(R.string.field_remapping), fname, oldFields[j][0])
+                    } else {
+                        fields[i][0] = fname
+                    }
+
+                    // Set the new field label value
+                    fields[i][1] = oldFields[j][1]
+                } else {
+                    // No values from old note type exist in the mapping
+                    fields[i][0] = fname
+                    fields[i][1] = ""
+                }
+            }
+            return fields
+        }
     }
 }
