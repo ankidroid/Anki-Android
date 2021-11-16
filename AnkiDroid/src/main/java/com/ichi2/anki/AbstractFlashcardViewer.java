@@ -89,6 +89,7 @@ import com.ichi2.anki.cardviewer.Side;
 import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate;
+import com.ichi2.anki.cardviewer.SoundPlayer;
 import com.ichi2.anki.cardviewer.TTS;
 import com.ichi2.anki.cardviewer.TypeAnswer;
 import com.ichi2.anki.cardviewer.ViewerCommand;
@@ -121,7 +122,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -264,6 +264,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** set via {@link #setCurrentCard(Card)} */
     protected Card mCurrentCard;
+    private SoundPlayer.CardSoundConfig mCardSoundConfig; // set when mCurrentCard is
     private int mCurrentEase;
 
     private int mInitialFlipCardHeight;
@@ -574,6 +575,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void setCurrentCard(Card card) {
         mCurrentCard = card;
+        if (card == null) {
+            mCardSoundConfig = null;
+        } else {
+            mCardSoundConfig = SoundPlayer.CardSoundConfig.create(getCol(), card);
+        }
     }
 
 
@@ -1780,7 +1786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
             mSoundPlayer.addSounds(mBaseUrl, content.getSoundTags(Side.FRONT), SoundSide.QUESTION);
-            if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
+            if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig.getAutoplay()) {
                 addAnswerSounds(() -> content.getSoundTags(Side.BACK));
             }
         }
@@ -1810,9 +1816,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *            pressing the keyboard shortcut R on the desktop
      */
     protected void playSounds(boolean doAudioReplay) {
-        boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
+        boolean replayQuestion = mCardSoundConfig.getReplayQuestion();
 
-        if (getConfigForCurrentCard().optBoolean("autoplay", false) || doAudioReplay) {
+        if (mCardSoundConfig.getAutoplay() || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
             boolean useTTS = mTTS.isEnabled() &&
                     !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion());
@@ -1889,17 +1895,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-
-    /**
-     * Returns the configuration for the current {@link Card}.
-     *
-     * @return The configuration for the current {@link Card}
-     */
-    private DeckConfig getConfigForCurrentCard() {
-        return getCol().getDecks().confForDid(CardUtils.getDeckIdForCard(mCurrentCard));
-    }
-
-
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
@@ -1918,7 +1913,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void loadContentIntoCard(WebView card, String content) {
         if (card != null) {
-            card.getSettings().setMediaPlaybackRequiresUserGesture(!getConfigForCurrentCard().optBoolean("autoplay"));
+            card.getSettings().setMediaPlaybackRequiresUserGesture(!mCardSoundConfig.getAutoplay());
             card.loadDataWithBaseURL(mViewerUrl, content, "text/html", "utf-8", null);
         }
     }
