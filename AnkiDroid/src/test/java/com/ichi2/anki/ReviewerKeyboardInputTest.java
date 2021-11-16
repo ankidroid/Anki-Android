@@ -158,7 +158,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingStarWillMarkCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
-        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
+        underTest.setCurrentCard(addNoteUsingBasicModel("a", "").firstCard());
 
         underTest.handleUnicodeKeyPress('*');
 
@@ -168,7 +168,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingEqualsWillBuryNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
-        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
+        underTest.setCurrentCard(addNoteUsingBasicModel("a", "").firstCard());
 
         underTest.handleUnicodeKeyPress('=');
 
@@ -178,7 +178,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingAtWillSuspendCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
-        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
+        underTest.setCurrentCard(addNoteUsingBasicModel("a", "").firstCard());
 
         underTest.handleUnicodeKeyPress('@');
 
@@ -188,7 +188,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
     @Test
     public void pressingExclamationWillSuspendNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
-        underTest.mCurrentCard = addNoteUsingBasicModel("a", "").firstCard();
+        underTest.setCurrentCard(addNoteUsingBasicModel("a", "").firstCard());
 
         underTest.handleUnicodeKeyPress('!');
 

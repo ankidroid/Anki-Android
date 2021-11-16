@@ -199,7 +199,7 @@ public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
 
 
         public CommandTestCardViewer(Card currentCard) {
-            mCurrentCard = currentCard;
+            setCurrentCard(currentCard);
         }
         @Override
         protected void setTitle() {

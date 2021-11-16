@@ -286,10 +286,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
             // card template with associated card due to opening from note editor
             if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
-                mCurrentCard = new PreviewerCard(col, mCardList[mCardListIndex]);
+                setCurrentCard(new PreviewerCard(col, mCardList[mCardListIndex]));
             } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
-                mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
+                setCurrentCard(getDummyCard(mEditedModel, mOrdinal));
                 if (mCurrentCard == null) {
                     UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                     closeCardTemplatePreviewer();
@@ -322,7 +322,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Nullable
     private Card setCurrentCardFromNoteEditorBundle(Collection col) {
         assert(mNoteEditorBundle != null);
-        mCurrentCard = getDummyCard(mEditedModel, mTemplateIndex, getBundleEditFields(mNoteEditorBundle));
+        setCurrentCard(getDummyCard(mEditedModel, mTemplateIndex, getBundleEditFields(mNoteEditorBundle)));
         // example: a basic card with no fields provided
         if (mCurrentCard == null) {
             return null;

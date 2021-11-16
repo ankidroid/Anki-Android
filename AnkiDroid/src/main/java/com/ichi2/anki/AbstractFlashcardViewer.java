@@ -262,6 +262,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private android.content.ClipboardManager mClipboard;
     private PreviousAnswerIndicator mPreviousAnswerIndicator;
 
+    /** set via {@link #setCurrentCard(Card)} */
     protected Card mCurrentCard;
     private int mCurrentEase;
 
@@ -534,7 +535,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sDisplayAnswer = false;
             }
 
-            mCurrentCard = card;
+            setCurrentCard(card);
             TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard()); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
@@ -569,6 +570,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
     };
+
+
+    protected void setCurrentCard(Card card) {
+        mCurrentCard = card;
+    }
 
 
     /** Operation after a card has been updated due to being edited. Called before display[Question/Answer] */
@@ -627,7 +633,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return;
             }
 
-            mCurrentCard = nextCardAndResult.nextScheduledCard();
+            setCurrentCard(nextCardAndResult.nextScheduledCard());
 
             // Start reviewing next card
             hideProgressBar();
