@@ -119,7 +119,7 @@ public class Previewer extends AbstractFlashcardViewer {
                 if (fromUser) {
                     mIndex = progress;
                     updateProgress();
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    setCurrentCard(getCol().getCard(mCardList[mIndex]));
                     displayCardQuestion();
 
                 }
@@ -133,7 +133,7 @@ public class Previewer extends AbstractFlashcardViewer {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (mIndex >= 0 && mIndex < mCardList.length) {
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                    setCurrentCard(getCol().getCard(mCardList[mIndex]));
                     displayCardQuestion();
                 }
             }
@@ -143,7 +143,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        mCurrentCard = col.getCard(mCardList[mIndex]);
+        setCurrentCard(col.getCard(mCardList[mIndex]));
 
         displayCardQuestion();
         if (mShowingAnswer) {
@@ -282,7 +282,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
         mIndex = getNextIndex(newCardList);
         mCardList = Utils.collection2Array(newCardList);
-        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        setCurrentCard(getCol().getCard(mCardList[mIndex]));
         displayCardQuestion();
     }
 
@@ -296,7 +296,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     protected void changePreviewedCard(boolean nextCard) {
         mIndex = nextCard ? mIndex + 1 : mIndex - 1;
-        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        setCurrentCard(getCol().getCard(mCardList[mIndex]));
         displayCardQuestion();
         updateProgress();
     }
