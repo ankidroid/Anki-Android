@@ -14,51 +14,42 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.receiver;
+package com.ichi2.anki.receiver
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.libanki.Collection;
-
-import timber.log.Timber;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.ichi2.anki.CollectionHelper
+import timber.log.Timber
 
 /**
  * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast
  * intent to all activities which might be open in order to show an appropriate screen After media has been remounted,
  * another broadcast intent will be sent to let the activites know about it
  */
-
-public class SdCardReceiver extends BroadcastReceiver {
-
-    public static final String MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT";
-    public static final String MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT";
-
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
-            Timber.i("media eject detected - closing collection and sending broadcast");
-            Intent i = new Intent();
-            i.setAction(MEDIA_EJECT);
-            context.sendBroadcast(i);
+class SdCardReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_MEDIA_EJECT) {
+            Timber.i("media eject detected - closing collection and sending broadcast")
+            val i = Intent()
+            i.action = MEDIA_EJECT
+            context.sendBroadcast(i)
             try {
-                Collection col = CollectionHelper.getInstance().getCol(context);
-                if (col != null) {
-                    col.close();
-                }
-            } catch (Exception e) {
-                Timber.w(e, "Exception while trying to close collection likely because it was already unmounted");
+                val col = CollectionHelper.getInstance().getCol(context)
+                col?.close()
+            } catch (e: Exception) {
+                Timber.w(e, "Exception while trying to close collection likely because it was already unmounted")
             }
-        } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
-            Timber.i("media mount detected - sending broadcast");
-            Intent i = new Intent();
-            i.setAction(MEDIA_MOUNT);
-            context.sendBroadcast(i);
+        } else if (intent.action == Intent.ACTION_MEDIA_MOUNTED) {
+            Timber.i("media mount detected - sending broadcast")
+            val i = Intent()
+            i.action = MEDIA_MOUNT
+            context.sendBroadcast(i)
         }
     }
 
+    companion object {
+        const val MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT"
+        const val MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT"
+    }
 }
