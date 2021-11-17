@@ -462,7 +462,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mRecyclerView.addItemDecoration(dividerDecorator);
 
         // Add background to Deckpicker activity
-        //View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
         View view = mFragmented ? findViewById(R.id.deckpicker_xl_view) : findViewById(R.id.root_layout);
 
         boolean hasDeckPickerBackground = false;
@@ -1073,6 +1072,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         startActivityForResultWithAnimation(intent, ADD_NOTE, START);
     }
 
+
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
 
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
@@ -1234,10 +1234,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         showDialogFragment(DeckPickerNoSpaceToDowngradeDialog.newInstance(formatter, collectionFile));
     }
 
+
     @VisibleForTesting
     protected void displayAnalyticsOptInDialog() {
         showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
     }
+
 
     protected long getPreviousVersion(SharedPreferences preferences, long current) {
         long previous;
