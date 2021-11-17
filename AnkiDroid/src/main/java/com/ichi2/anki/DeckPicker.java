@@ -461,8 +461,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         dividerDecorator.setDrawable(divider);
         mRecyclerView.addItemDecoration(dividerDecorator);
 
-        //Add background to Deckpicker activity
-        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
+        // Add background to Deckpicker activity
+        View view = mFragmented ? findViewById(R.id.deckpicker_xl_view) : findViewById(R.id.root_layout);
+
         boolean hasDeckPickerBackground = false;
         try {
             hasDeckPickerBackground = applyDeckPickerBackground(view);

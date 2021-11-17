@@ -4,7 +4,7 @@
                                            android:layout_height="match_parent"
                                            android:fitsSystemWindows="true">
         <LinearLayout
-            android:id="@+id/deckpicker_view"
+            android:id="@+id/deckpicker_xl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:attr/colorBackground"

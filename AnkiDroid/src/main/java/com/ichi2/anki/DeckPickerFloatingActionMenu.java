@@ -34,7 +34,9 @@ public class DeckPickerFloatingActionMenu {
     private final LinearLayout mAddDeckLayout;
     private final LinearLayout mAddNoteLayout;
     private final View mFabBGLayout;
+    private final View mStudyoptionsFrame;
     private boolean mIsFABOpen = false;
+    private boolean mFragmented = false;
 
     private final DeckPicker mDeckPicker;
     private final LinearLayout mLinearLayout;
@@ -49,7 +51,11 @@ public class DeckPickerFloatingActionMenu {
         FloatingActionButton addSharedButton = (FloatingActionButton) view.findViewById(R.id.add_shared_action);
         FloatingActionButton addDeckButton = (FloatingActionButton) view.findViewById(R.id.add_deck_action);
         mFabBGLayout = view.findViewById(R.id.fabBGLayout);
-        mLinearLayout = view.findViewById(R.id.deckpicker_view);
+        mLinearLayout = view.findViewById(R.id.deckpicker_view);  // Layout deck_picker.xml is attached here
+
+        // Check to see if the view was correctly located
+        mStudyoptionsFrame = view.findViewById(R.id.studyoptions_fragment);
+        mFragmented = mStudyoptionsFrame != null ? true : false;
 
         TextView addNoteLabel = view.findViewById(R.id.add_note_label);
         TextView addSharedLabel = view.findViewById(R.id.add_shared_label);
@@ -111,6 +117,9 @@ public class DeckPickerFloatingActionMenu {
 
     private void showFloatingActionMenu() {
         mLinearLayout.setAlpha(0.5f);
+        if (mFragmented) {
+            mStudyoptionsFrame.setAlpha(0.5f);
+        }
         mIsFABOpen = true;
         if (animationEnabled()) {
             // Show with animation
@@ -142,6 +151,9 @@ public class DeckPickerFloatingActionMenu {
 
     protected void closeFloatingActionMenu() {
         mLinearLayout.setAlpha(1f);
+        if (mFragmented) {
+            mStudyoptionsFrame.setAlpha(1f);
+        }
         mIsFABOpen = false;
         mFabBGLayout.setVisibility(View.GONE);
         if (animationEnabled()) {
