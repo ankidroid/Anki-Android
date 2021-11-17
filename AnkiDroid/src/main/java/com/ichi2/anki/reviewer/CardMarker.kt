@@ -14,91 +14,59 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.reviewer;
+package com.ichi2.anki.reviewer
 
-import android.view.View;
-import android.widget.ImageView;
+import android.view.View
+import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.IntDef
+import com.ichi2.anki.R
 
-import com.ichi2.anki.R;
+/** Handles the star and flag marker for the card viewer  */
+class CardMarker(private val markView: ImageView, private val flagView: ImageView) {
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+    @IntDef(FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE, FLAG_PINK, FLAG_TURQUOISE, FLAG_PURPLE)
+    annotation class FlagDef
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-
-/** Handles the star and flag marker for the card viewer */
-public class CardMarker {
-
-    public static final int FLAG_NONE = 0;
-    public static final int FLAG_RED = 1;
-    public static final int FLAG_ORANGE = 2;
-    public static final int FLAG_GREEN = 3;
-    public static final int FLAG_BLUE = 4;
-    public static final int FLAG_PINK = 5;
-    public static final int FLAG_TURQUOISE = 6;
-    public static final int FLAG_PURPLE = 7;
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE, FLAG_PINK, FLAG_TURQUOISE, FLAG_PURPLE})
-    public @interface FlagDef {}
-
-    @NonNull
-    private final ImageView mMarkView;
-    @NonNull
-    private final ImageView mFlagView;
-
-    public CardMarker(@NonNull ImageView markView, @NonNull ImageView flagView) {
-        this.mMarkView = markView;
-        this.mFlagView = flagView;
-    }
-
-    /** Sets the mark icon on a card (the star) */
-    public void displayMark(boolean markStatus) {
+    /** Sets the mark icon on a card (the star)  */
+    fun displayMark(markStatus: Boolean) {
         if (markStatus) {
-            mMarkView.setVisibility(View.VISIBLE);
-            mMarkView.setImageResource(R.drawable.ic_star_white_bordered_24dp);
+            markView.visibility = View.VISIBLE
+            markView.setImageResource(R.drawable.ic_star_white_bordered_24dp)
         } else {
-            mMarkView.setVisibility(View.INVISIBLE);
+            markView.visibility = View.INVISIBLE
         }
     }
 
-    /** Sets the flag icon on the card */
-    public void displayFlag(@FlagDef int flagStatus) {
-        switch (flagStatus) {
-            case FLAG_RED:
-                setFlagView(R.drawable.ic_flag_red);
-                break;
-            case FLAG_ORANGE:
-                setFlagView(R.drawable.ic_flag_orange);
-                break;
-            case FLAG_GREEN:
-                setFlagView(R.drawable.ic_flag_green);
-                break;
-            case FLAG_BLUE:
-                setFlagView(R.drawable.ic_flag_blue);
-                break;
-            case FLAG_PINK:
-                setFlagView(R.drawable.ic_flag_pink);
-                break;
-            case FLAG_TURQUOISE:
-                setFlagView(R.drawable.ic_flag_turquoise);
-                break;
-            case FLAG_PURPLE:
-                setFlagView(R.drawable.ic_flag_purple);
-                break;
-            case FLAG_NONE:
-            default:
-                mFlagView.setVisibility(View.INVISIBLE);
-                break;
+    /** Sets the flag icon on the card  */
+    fun displayFlag(@FlagDef flagStatus: Int) {
+        when (flagStatus) {
+            FLAG_RED -> setFlagView(R.drawable.ic_flag_red)
+            FLAG_ORANGE -> setFlagView(R.drawable.ic_flag_orange)
+            FLAG_GREEN -> setFlagView(R.drawable.ic_flag_green)
+            FLAG_BLUE -> setFlagView(R.drawable.ic_flag_blue)
+            FLAG_PINK -> setFlagView(R.drawable.ic_flag_pink)
+            FLAG_TURQUOISE -> setFlagView(R.drawable.ic_flag_turquoise)
+            FLAG_PURPLE -> setFlagView(R.drawable.ic_flag_purple)
+            FLAG_NONE -> flagView.visibility = View.INVISIBLE
+            else -> flagView.visibility = View.INVISIBLE
         }
     }
 
+    private fun setFlagView(@DrawableRes drawableId: Int) {
+        // set the resource before to ensure we display the correct icon.
+        flagView.setImageResource(drawableId)
+        flagView.visibility = View.VISIBLE
+    }
 
-    private void setFlagView(@DrawableRes int drawableId) {
-        //set the resource before to ensure we display the correct icon.
-        mFlagView.setImageResource(drawableId);
-        mFlagView.setVisibility(View.VISIBLE);
+    companion object {
+        const val FLAG_NONE = 0
+        const val FLAG_RED = 1
+        const val FLAG_ORANGE = 2
+        const val FLAG_GREEN = 3
+        const val FLAG_BLUE = 4
+        const val FLAG_PINK = 5
+        const val FLAG_TURQUOISE = 6
+        const val FLAG_PURPLE = 7
     }
 }
