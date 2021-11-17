@@ -14,102 +14,77 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.reviewer;
+package com.ichi2.anki.reviewer
 
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.content.SharedPreferences
+import android.view.Menu
+import android.view.MenuItem
+import androidx.annotation.IdRes
+import com.ichi2.anki.Lookup
+import com.ichi2.anki.R
+import com.ichi2.themes.Themes
+import com.ichi2.utils.HashUtil.HashMapInit
+import timber.log.Timber
 
-import com.ichi2.anki.Lookup;
-import com.ichi2.anki.R;
-import com.ichi2.themes.Themes;
-import com.ichi2.utils.HashUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-@SuppressWarnings("ConstantConditions") //loads of unboxing issues, which are safe
-public class ActionButtonStatus {
+// loads of unboxing issues, which are safe
+class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
     /**
      * Custom button allocation
      */
-    @NonNull
-    protected final Map<Integer, Integer> mCustomButtons = HashUtil.HashMapInit(25); // setup's size
-    private final ReviewerUi mReviewerUi;
-
-    public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;
-    public static final int SHOW_AS_ACTION_IF_ROOM = MenuItem.SHOW_AS_ACTION_IF_ROOM;
-    public static final int SHOW_AS_ACTION_ALWAYS = MenuItem.SHOW_AS_ACTION_ALWAYS;
-    public static final int MENU_DISABLED = 3;
-
-    public @Nullable Integer getByMenuResourceId(int resourceId) {
+    protected val mCustomButtons: MutableMap<Int, Int> = HashMapInit(25) // setup's size
+    fun getByMenuResourceId(resourceId: Int): Int? {
         if (!mCustomButtons.containsKey(resourceId)) {
-            Timber.w("Invalid resource lookup: %d", resourceId);
-            return SHOW_AS_ACTION_NEVER;
+            Timber.w("Invalid resource lookup: %d", resourceId)
+            return SHOW_AS_ACTION_NEVER
         }
-        return mCustomButtons.get(resourceId);
+        return mCustomButtons[resourceId]
     }
 
-
-    public ActionButtonStatus(ReviewerUi reviewerUi) {
-        this.mReviewerUi = reviewerUi;
-    }
-
-    public void setup(SharedPreferences preferences) {
+    fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
-        setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_tag, "customButtonTags", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
-        setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_card_info, "customButtonCardInfo", MENU_DISABLED);
-        setupButton(preferences, R.id.action_clear_whiteboard, "customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_hide_whiteboard, "customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_open_deck_options, "customButtonDeckOptions", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_bury, "customButtonBury", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_suspend, "customButtonSuspend", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
-        setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
-        setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
+        setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS)
+        setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS)
+        setupButton(preferences, R.id.action_tag, "customButtonTags", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED)
+        setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.action_card_info, "customButtonCardInfo", MENU_DISABLED)
+        setupButton(preferences, R.id.action_clear_whiteboard, "customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.action_hide_whiteboard, "customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS)
+        setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_open_deck_options, "customButtonDeckOptions", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_bury, "customButtonBury", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_suspend, "customButtonSuspend", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM)
+        setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
+        setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
         if (!Lookup.isAvailable()) {
-            mCustomButtons.put(R.id.action_search_dictionary, MENU_DISABLED);
+            mCustomButtons[R.id.action_search_dictionary] = MENU_DISABLED
         } else {
-            setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER);
+            setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER)
         }
     }
 
-
-    private void setupButton(SharedPreferences preferences, @IdRes int resourceId, String preferenceName, int showAsActionType) {
-        mCustomButtons.put(resourceId, Integer.parseInt(preferences.getString(preferenceName, Integer.toString(showAsActionType))));
+    private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {
+        mCustomButtons[resourceId] = preferences.getString(preferenceName, Integer.toString(showAsActionType))!!.toInt()
     }
 
-
-    public void setCustomButtons(Menu menu) {
-        for(Map.Entry<Integer, Integer> entry : mCustomButtons.entrySet()) {
-            int itemId = entry.getKey();
-            if (entry.getValue() != MENU_DISABLED) {
-                MenuItem item = menu.findItem(itemId);
+    fun setCustomButtons(menu: Menu) {
+        for ((itemId, value) in mCustomButtons) {
+            if (value != MENU_DISABLED) {
+                val item = menu.findItem(itemId)
                 if (item == null) {
                     // Happens with TV - removing flag icon
-                    Timber.w("Could not find Menu Item %d", itemId);
-                    continue;
+                    Timber.w("Could not find Menu Item %d", itemId)
+                    continue
                 }
-
-                item.setShowAsAction(entry.getValue());
-                Drawable icon = item.getIcon();
-                item.setEnabled(!mReviewerUi.isControlBlocked());
+                item.setShowAsAction(value)
+                val icon = item.icon
+                item.isEnabled = !reviewerUi.isControlBlocked
                 if (icon != null) {
                     /* Ideally, we want to give feedback to users that
                     buttons are disabled.  However, some actions are
@@ -121,37 +96,43 @@ public class ActionButtonStatus {
                     color only if the buttons are blocked and we
                     expect the next card to take time to arrive.
                     */
-                    Drawable mutableIcon = icon.mutate();
-                    if (mReviewerUi.getControlBlocked() == ReviewerUi.ControlBlock.SLOW) {
-                        mutableIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
+                    val mutableIcon = icon.mutate()
+                    if (reviewerUi.controlBlocked == ReviewerUi.ControlBlock.SLOW) {
+                        mutableIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                     } else {
-                        mutableIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
+                        mutableIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                     }
                 }
             } else {
-                menu.findItem(itemId).setVisible(false);
+                menu.findItem(itemId).isVisible = false
             }
         }
     }
 
-
-    public boolean hideWhiteboardIsDisabled() {
-        return mCustomButtons.get(R.id.action_hide_whiteboard) == MENU_DISABLED;
+    fun hideWhiteboardIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
     }
 
-    public boolean clearWhiteboardIsDisabled() {
-        return mCustomButtons.get(R.id.action_clear_whiteboard) == MENU_DISABLED;
+    fun clearWhiteboardIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_clear_whiteboard] == MENU_DISABLED
     }
 
-    public boolean selectTtsIsDisabled() {
-        return mCustomButtons.get(R.id.action_select_tts) == MENU_DISABLED;
+    fun selectTtsIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_select_tts] == MENU_DISABLED
     }
 
-    public boolean saveWhiteboardIsDisabled() {
-        return mCustomButtons.get(R.id.action_save_whiteboard) == MENU_DISABLED;
+    fun saveWhiteboardIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_save_whiteboard] == MENU_DISABLED
     }
 
-    public boolean whiteboardPenColorIsDisabled() {
-        return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;
+    fun whiteboardPenColorIsDisabled(): Boolean {
+        return mCustomButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
+    }
+
+    companion object {
+        const val SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER
+        const val SHOW_AS_ACTION_IF_ROOM = MenuItem.SHOW_AS_ACTION_IF_ROOM
+        const val SHOW_AS_ACTION_ALWAYS = MenuItem.SHOW_AS_ACTION_ALWAYS
+        const val MENU_DISABLED = 3
     }
 }
