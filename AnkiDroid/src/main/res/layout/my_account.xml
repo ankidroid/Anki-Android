@@ -153,6 +153,20 @@
                 android:layout_gravity="center"
                 android:singleLine="true"
                 android:text="@string/sign_up" />
+
+            <!-- Added new button for lost email -->
+            <Button
+                android:id="@+id/lost_mail_instructions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textSize="@dimen/abc_text_size_button_material"
+                android:textColor="?attr/colorAccent"
+                android:padding="3dp"
+                android:layout_gravity="center"
+                android:singleLine="true"
+                android:text="@string/lost_mail_instructions" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
