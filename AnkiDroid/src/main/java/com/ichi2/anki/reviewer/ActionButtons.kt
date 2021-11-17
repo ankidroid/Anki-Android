@@ -13,69 +13,46 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
+import android.content.SharedPreferences
+import android.view.Menu
+import android.view.MenuItem
+import androidx.annotation.IdRes
+import com.ichi2.anki.R
+import com.ichi2.ui.ActionBarOverflow
+import timber.log.Timber
 
-import android.content.SharedPreferences;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.ichi2.anki.R;
-import com.ichi2.ui.ActionBarOverflow;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class ActionButtons
-{
-    private final ActionButtonStatus mActionButtonStatus;
-
-    @IdRes
-    public static final int RES_FLAG = R.id.action_flag;
-    @IdRes
-    public static final int RES_MARK = R.id.action_mark_card;
-
-    private Menu mMenu;
-
-    public ActionButtons(ReviewerUi reviewerUi) {
-        this.mActionButtonStatus = new ActionButtonStatus(reviewerUi);
+class ActionButtons(reviewerUi: ReviewerUi?) {
+    // DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get
+    // to this point
+    val status: ActionButtonStatus
+    private var mMenu: Menu? = null
+    fun setup(preferences: SharedPreferences?) {
+        status.setup(preferences)
     }
 
-    public void setup(SharedPreferences preferences) {
-        this.mActionButtonStatus.setup(preferences);
+    /** Sets the order of the Action Buttons in the action bar  */
+    fun setCustomButtonsStatus(menu: Menu?) {
+        status.setCustomButtons(menu)
+        mMenu = menu
     }
 
-    /** Sets the order of the Action Buttons in the action bar */
-    public void setCustomButtonsStatus(Menu menu) {
-        this.mActionButtonStatus.setCustomButtons(menu);
-        this.mMenu = menu;
+    fun isShownInActionBar(@IdRes resId: Int): Boolean? {
+        val menuItem = findMenuItem(resId) ?: return null
+        // firstly, see if we can definitively determine whether the action is visible.
+        val isActionButton = ActionBarOverflow.isActionButton(menuItem)
+        return isActionButton ?: isLikelyActionButton(resId)
+        // If not, use heuristics based on preferences.
     }
 
-    public @Nullable Boolean isShownInActionBar(@IdRes int resId) {
-        MenuItem menuItem = findMenuItem(resId);
-        if (menuItem == null) {
-            return null;
-        }
-        //firstly, see if we can definitively determine whether the action is visible.
-        Boolean isActionButton = ActionBarOverflow.isActionButton(menuItem);
-        if (isActionButton != null) {
-            return isActionButton;
-        }
-        //If not, use heuristics based on preferences.
-        return isLikelyActionButton(resId);
+    private fun findMenuItem(@IdRes resId: Int): MenuItem? {
+        return if (mMenu == null) {
+            null
+        } else mMenu!!.findItem(resId)
     }
 
-
-    private @Nullable MenuItem findMenuItem(@IdRes int resId) {
-        if (mMenu == null) {
-            return null;
-        }
-        return mMenu.findItem(resId);
-    }
-
-
-    private boolean isLikelyActionButton(@IdRes int resourceId) {
+    private fun isLikelyActionButton(@IdRes resourceId: Int): Boolean {
         /*
         https://github.com/ankidroid/Anki-Android/pull/5918#issuecomment-609484093
         Heuristic approach: Show the item in the top bar unless the corresponding menu item is set to "always" show.
@@ -91,18 +68,26 @@ public class ActionButtons
 
         In any case, both failure scenarios only happen if the user deviated from the default settings in strange ways.
          */
-        Integer status = mActionButtonStatus.getByMenuResourceId(resourceId);
+        val status = status.getByMenuResourceId(resourceId)
         if (status == null) {
-            Timber.w("Failed to get status for resource: %d", resourceId);
-            //If we return "true", we may hide the flag/mark status completely. False is safer.
-            return false;
+            Timber.w("Failed to get status for resource: %d", resourceId)
+            // If we return "true", we may hide the flag/mark status completely. False is safer.
+            return false
         }
-        return status == ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
+        return status == ActionButtonStatus.SHOW_AS_ACTION_ALWAYS
     }
 
-    public ActionButtonStatus getStatus() {
-        //DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get
-        // to this point
-        return this.mActionButtonStatus;
+    companion object {
+        @JvmField
+        @IdRes
+        val RES_FLAG = R.id.action_flag
+
+        @JvmField
+        @IdRes
+        val RES_MARK = R.id.action_mark_card
+    }
+
+    init {
+        status = ActionButtonStatus(reviewerUi)
     }
 }
