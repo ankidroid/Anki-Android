@@ -227,6 +227,12 @@ public class MyAccount extends AnkiActivity {
         Uri url = Uri.parse(getResources().getString(R.string.register_url));
         signUpButton.setOnClickListener(v -> openUrl(url));
 
+        //Add button to link to instructions on how to find AnkiWeb email
+        Button lostEmail = mLoginToMyAccountView.findViewById(R.id.lost_mail_instructions);
+        Uri lostMailUrl = Uri.parse(getResources().getString((R.string.link_ankiweb_lost_email_instructions)));
+        lostEmail.setOnClickListener(v -> openUrl(lostMailUrl));
+
+
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
         mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
