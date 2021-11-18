@@ -42,7 +42,6 @@ public class LayoutValidationTest extends InstrumentedTest {
 
         // There are hidden public fields: abc_list_menu_item_layout for example
         HashSet<String> nonAnkiFieldNames = new HashSet<>();
-        nonAnkiFieldNames.addAll(getFieldNames(androidx.appcompat.resources.R.layout.class));
         nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout.class));
         nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout.class));
 
