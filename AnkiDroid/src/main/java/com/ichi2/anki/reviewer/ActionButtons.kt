@@ -23,17 +23,17 @@ import com.ichi2.anki.R
 import com.ichi2.ui.ActionBarOverflow
 import timber.log.Timber
 
-class ActionButtons(reviewerUi: ReviewerUi?) {
+class ActionButtons(reviewerUi: ReviewerUi) {
     // DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get
     // to this point
     val status: ActionButtonStatus
     private var mMenu: Menu? = null
-    fun setup(preferences: SharedPreferences?) {
+    fun setup(preferences: SharedPreferences) {
         status.setup(preferences)
     }
 
     /** Sets the order of the Action Buttons in the action bar  */
-    fun setCustomButtonsStatus(menu: Menu?) {
+    fun setCustomButtonsStatus(menu: Menu) {
         status.setCustomButtons(menu)
         mMenu = menu
     }
