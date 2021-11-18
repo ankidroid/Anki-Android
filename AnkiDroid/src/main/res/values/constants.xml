@@ -215,6 +215,7 @@
     <string name="link_anki_2_scheduler">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html</string>
     <string name="link_ankiweb_docs_cloze_deletion">https://docs.ankiweb.net/editing.html#cloze-deletion</string>
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
+    <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
 
     <string-array name="leech_action_values">
         <item>0</item>

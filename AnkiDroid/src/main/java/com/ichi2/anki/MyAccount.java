@@ -227,9 +227,9 @@ public class MyAccount extends AnkiActivity {
         Uri url = Uri.parse(getResources().getString(R.string.register_url));
         signUpButton.setOnClickListener(v -> openUrl(url));
 
-        //Add new button to link to instructions on how to find AnkiWeb email
+        //Add button to link to instructions on how to find AnkiWeb email
         Button lostEmail = mLoginToMyAccountView.findViewById(R.id.lost_mail_instructions);
-        Uri lostMailUrl = Uri.parse("https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions");
+        Uri lostMailUrl = Uri.parse(getResources().getString((R.string.link_ankiweb_lost_email_instructions)));
         lostEmail.setOnClickListener(v -> openUrl(lostMailUrl));
 
 
