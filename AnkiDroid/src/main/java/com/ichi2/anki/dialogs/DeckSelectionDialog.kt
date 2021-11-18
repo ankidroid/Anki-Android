@@ -25,11 +25,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +42,6 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
-import com.ichi2.themes.Themes
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.FilterResultsUtils
 import com.ichi2.utils.FunctionalInterfaces
@@ -249,19 +246,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val deck = mCurrentlyDisplayedDecks[position]
-            val spinner = activity!!.findViewById<Spinner>(R.id.note_deck_spinner)
-            val spinnerSelectedDeckName = spinner.selectedItem.toString()
-            val unselectedTextColor = Themes.getColorFromAttr(context, android.R.attr.textColorPrimary)
-            val selectedTextColor = ContextCompat.getColor(context!!, R.color.note_editor_selected_item_text)
-            val unselectedBackgroundColor = Themes.getColorFromAttr(context, android.R.attr.colorBackground)
-            val selectedBackgroundColor = ContextCompat.getColor(context!!, R.color.note_editor_selected_item_background)
-            if (spinnerSelectedDeckName == deck.name) {
-                holder.deckTextView.setBackgroundColor(selectedBackgroundColor)
-                holder.deckTextView.setTextColor(selectedTextColor)
-            } else {
-                holder.deckTextView.setBackgroundColor(unselectedBackgroundColor)
-                holder.deckTextView.setTextColor(unselectedTextColor)
-            }
             holder.setDeck(deck)
         }
 
