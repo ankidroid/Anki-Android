@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Accesso in corso, attendi...</string>
     <string name="invalid_username_password">Indirizzo di posta elettronica o password errati</string>
     <string name="reset_password">Reimposta la password</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferenze</string>
     <string name="deckpreferences_title">Opzioni per XXX</string>

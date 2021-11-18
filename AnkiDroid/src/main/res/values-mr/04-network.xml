@@ -60,6 +60,7 @@
     <string name="alert_logging_message">लॉग इन करीत आहे&#8230;</string>
     <string name="invalid_username_password">अवैध ईमेल पत्ता किंवा संकेतशब्द</string>
     <string name="reset_password">संकेतशब्द रीसेट करा</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">प्राधान्ये</string>
     <string name="deckpreferences_title">XXX साठी पर्याय</string>

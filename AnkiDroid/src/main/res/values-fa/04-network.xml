@@ -60,6 +60,7 @@
     <string name="alert_logging_message">درحال ورود به حساب کاربری&#8230;</string>
     <string name="invalid_username_password">نشانی رایانامه یا رمز عبور وارد شده اشتباه است</string>
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">تنظيمات</string>
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>

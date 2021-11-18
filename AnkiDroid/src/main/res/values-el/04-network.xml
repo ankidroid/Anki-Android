@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
     <string name="invalid_username_password">Μη έγκυρη διεύθυνση email ή κωδικός πρόσβασης.</string>
     <string name="reset_password">Επαναφορά κωδικού πρόσβασης</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Προτιμήσεις</string>
     <string name="deckpreferences_title">Επιλογές για XXX</string>

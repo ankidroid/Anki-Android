@@ -60,6 +60,7 @@
     <string name="alert_logging_message">로그인하는 중, 잠시 기다려 주십시오...</string>
     <string name="invalid_username_password">잘못된 이메일 주소 혹은 암호입니다.</string>
     <string name="reset_password">암호 재설정</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">환경 설정</string>
     <string name="deckpreferences_title">XXX 옵션</string>

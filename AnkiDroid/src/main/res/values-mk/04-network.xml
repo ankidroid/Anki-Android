@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Најавување&#8230;</string>
     <string name="invalid_username_password">Неважечка имејл адреса или лозинка</string>
     <string name="reset_password">Ресетирај лозинка</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Преференции</string>
     <string name="deckpreferences_title">Опции за XXX</string>

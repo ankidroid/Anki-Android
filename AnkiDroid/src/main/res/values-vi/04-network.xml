@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Đang đăng nhập&#8230;</string>
     <string name="invalid_username_password">Địa chỉ email hoặc mật khẩu không hợp lệ</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Tuỳ chỉnh</string>
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>

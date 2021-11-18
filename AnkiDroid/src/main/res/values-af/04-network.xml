@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Logging in&#8230;</string>
     <string name="invalid_username_password">Ongeldige e-pos adres of wagwoord</string>
     <string name="reset_password">Herstel wagwoord</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Voorkeure</string>
     <string name="deckpreferences_title">Opsies vir XXX</string>

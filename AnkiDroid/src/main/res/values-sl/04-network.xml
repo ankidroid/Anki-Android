@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Prijavljanje &#8230;</string>
     <string name="invalid_username_password">Neveljaven e-poštni naslov ali geslo</string>
     <string name="reset_password">Ponastavi geslo</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Možnosti</string>
     <string name="deckpreferences_title">Možnosti za XXX</string>

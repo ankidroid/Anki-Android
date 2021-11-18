@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Naglo-login&#8230;</string>
     <string name="invalid_username_password">Di-wastong email address o password</string>
     <string name="reset_password">I-reset ang password</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferences</string>
     <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>

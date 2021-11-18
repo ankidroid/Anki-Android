@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Регистриране, моля, изчакайте...</string>
     <string name="invalid_username_password">Невалиден имейл или парола</string>
     <string name="reset_password">Нулиране на паролата</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Предпочитания</string>
     <string name="deckpreferences_title">Опции за ХХХ</string>

@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
     <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
     <string name="reset_password">Jelszó visszaállítása</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Beállítások</string>
     <string name="deckpreferences_title">XXX lehetőségei</string>
