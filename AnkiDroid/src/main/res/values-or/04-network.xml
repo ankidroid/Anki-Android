@@ -53,7 +53,7 @@
     <string name="password">ପାସ୍‍ୱାର୍ଡ଼</string>
     <string name="log_in">ଲଗ୍‌ ଇନ୍‌</string>
     <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା ଅଟେ!</string>
-    <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
+    <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
     <string name="sign_up">ସାଇନ୍ ଅପ୍</string>
     <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
     <string name="log_out">ଲଗ୍ ଆଉଟ୍</string>
@@ -62,7 +62,7 @@
     <string name="reset_password">ପାସ୍‍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ଅଗ୍ରାଧିକାରସମୂହ</string>
-    <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
+    <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_prepare_syncing">ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
@@ -88,7 +88,7 @@
     <string name="sync_log_finish_error">ସର୍ଭରକୁ ଶେଷ ଦିଗ ପଠାଇବା ସମୟରେ ତ୍ରୁଟି</string>
     <string name="sync_writing_db">ଡାଟାବେସରେ ପରିବର୍ତ୍ତନ ଲେଖାହଉଛି&#8230;</string>
     <string name="sync_download_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_upload_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_upload_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_up_down_size">ଉପରକୁ: %1$d KB, ତଳକୁ: %2$d KB</string>
     <string name="sync_generic_error">ଏକ ତ୍ରୁଟି ଘଟିଛି। ପରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_check_upload_file">ଅପଲୋଡ୍ ପୂର୍ବରୁ ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>

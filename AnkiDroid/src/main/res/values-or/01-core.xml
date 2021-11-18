@@ -40,7 +40,7 @@
 <resources>
     <string name="yes">ହଁ</string>
     <!-- Navigation drawer items-->
-    <string name="decks">ଡେକଗୁଡ଼ିକ</string>
+    <string name="decks">ତାସଖଣ୍ଡଗୁଡ଼ିକ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="statistics">ପରିସଂଖ୍ୟାନ</string>
     <string name="settings">ସେଟିଂସମୂହ</string>
@@ -53,8 +53,8 @@
     <string name="studyoptions_eta">ଆନୁମାନିକ ସମୟ (ମିନିଟ୍):</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
     <!-- DeckPicker.java -->
-    <string name="expand">ବିସ୍ତାର କରନ୍ତୁ</string>
-    <string name="collapse">ସଂକୋଚନ କରନ୍ତୁ</string>
+    <string name="expand">ପ୍ରସାରଣ</string>
+    <string name="collapse">ସଙ୍କୋଚନ</string>
     <string name="study_more">ଅଧିକ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$dଟିଏ ପତ୍ର ବାକି (%2$s)</item>
@@ -73,7 +73,7 @@
         <item quantity="other">%d ଦିନ %d ବାକି ଅଛି</item>
     </plurals>
     <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
-    <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
+    <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">ଆଜି %2$s ରେ %1$dଟିଏ ପତ୍ର ଅଧ୍ୟୟନ କଲେ</item>
@@ -91,12 +91,12 @@
     <string name="menu_import">ଆମଦାନି କରନ୍ତୁ</string>
     <string name="undo">ପୂର୍ବବତ୍</string>
     <string name="undo_action_review">ଶେଷ ସମୀକ୍ଷା</string>
-    <string name="undo_action_change_deck_multi">ଡେକ୍ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="undo_action_change_deck_multi">ତାସଖଣ୍ଡ ବଦଳାନ୍ତୁ</string>
     <string name="move_all_to_deck">ସମସ୍ତକୁ ଡେକ୍ କୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
-    <string name="rename_deck">ଡେକ୍ ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="rename_deck">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
+    <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସିଙ୍କ୍ ଖାତା</string>
@@ -126,7 +126,7 @@
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="new_deck">ଡେକ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
@@ -157,12 +157,12 @@
     <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
-    <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଡେକ୍ ର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
-    <string name="search_deck">ଡେକ୍ ସନ୍ଧାନ</string>
+    <string name="search_deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="empty_deck_add_note">ପତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
-    <string name="studyoptions_empty">ଏହି ଡେକ୍ ଖାଲି ଅଛି। ନୂତନ ବିଷୟବସ୍ତୁ ଯୋଗ କରିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
+    <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ବିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>
     <string name="studyoptions_limit_reached">ଦୈନିକ ଅଧ୍ୟୟନ ସୀମା ପହଞ୍ଚିଛି</string>
     <string name="studyoptions_empty_schedule">ଅଧ୍ୟୟନ ପାଇଁ କୌଣସି ପତ୍ର ନିର୍ଦ୍ଧାରିତ ହୋଇନାହିଁ</string>
     <string name="studyoptions_congrats_finished">ଅଭିନନ୍ଦନ! ଆପଣ ଏବେ ପାଇଁ ସବୁ ସମାପ୍ତ କରିଛନ୍ତି।</string>
@@ -171,7 +171,7 @@
     <string name="studyoptions_congrats_custom">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ କରିବାକୁ, “କଷ୍ଟମ୍ ଅଧ୍ୟୟନ” ବଟନ୍ ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">Device storage ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
-    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରନ୍ତୁ ଏବଂ କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
+    <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛି କ୍ଲୋଜ୍ ବିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync">ସିଙ୍କ୍</string>
     <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସିଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
@@ -179,7 +179,7 @@
     <string name="sync_cancel_message">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
     <string name="export">ରପ୍ତାନି</string>
     <string name="export_collection">ସଂଗ୍ରହ ରପ୍ତାନି କରନ୍ତୁ</string>
-    <string name="export_deck">ଡେକ୍ ରପ୍ତାନି କରନ୍ତୁ</string>
+    <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ପତ୍ର ପ୍ରକାର</string>
@@ -210,7 +210,7 @@
     <string name="card_info_title">ପତ୍ର ସୂଚନା</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
-    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଏବଂ ଡେକ୍ ପ୍ରବେଶ କରିବା ବ୍ୟତୀତ ନୂତନଗୁଡ଼ିକୁ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ପ୍ରବେଶ କରିବା ବ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="context_menu_anki_card_label">Anki ପତ୍ର</string>

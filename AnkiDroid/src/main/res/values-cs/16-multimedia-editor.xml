@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Počkejte</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">Náhled pro SVG není dostupný</string>
     <string name="multimedia_editor_png_paste_error">Chyba při převodu obrázku ve schránce na png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Připojit multimediální obsah k poli %1$s</string>
     <string name="multimedia_editor_attach_media">Připojit multimédia</string>
@@ -124,5 +124,5 @@
     <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej oříznout?</string>
     <string name="select_image_failed">"Výběr obrázku selhal, zkuste to prosím znovu"</string>
     <string name="activity_result_unexpected">Aplikace vrátila neočekávanou hodnotu. Možná budete muset použít jinou aplikaci</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Obsah pole</string>
 </resources>

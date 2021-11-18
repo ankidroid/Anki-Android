@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Jestler</string>
     <string name="pref_cat_gestures_summ">Düğmeler yerine dokunma ve kaydırma kullan</string>
     <string name="pref_cat_actions" maxLength="41">Eylemler</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Kontroller</string>
+    <string name="pref_cat_controls_summ">Klavyeyi ve diğer cihazları yapılandır</string>
     <string name="pref_cat_advanced" maxLength="41">Gelişmiş</string>
     <string name="pref_cat_advanced_summ">Optimizasyon ve deneysel özellikler</string>
     <string name="pref_cat_performance" maxLength="41">Performans</string>
@@ -96,14 +96,14 @@
     <string name="gestures_allow_links_summary">Bir linke/ipucuna basılırsa el hareketleri işlenmez.</string>
     <string name="gestures_corner_touch" maxLength="41">9 noktadan dokunma</string>
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Yukarı sürükleme</string>
     <string name="gestures_swipe_down" maxLength="41">Aşağı sürükleme</string>
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
     <string name="gestures_swipe_right" maxLength="41">Sağa sürükleme</string>
     <string name="gestures_double_tap" maxLength="41">Çift dokunma</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Uzun dokunuş</string>
     <string name="gestures_tap_top" maxLength="41">Yukarıya dokunma</string>
     <string name="gestures_tap_left" maxLength="41">Sola dokunma</string>
     <string name="gestures_tap_right" maxLength="41">Sağa dokunma</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Titreş</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Işığı yanıp söndür</string>
     <string name="timeout_answer_text" maxLength="41">Cevabı otomatik göster</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Zaman aşımı yanıtı</string>
     <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
     <string name="timeout_answer_seconds" maxLength="41">Cevabı gösterme zamanı</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -167,12 +167,12 @@
     <string name="vertical_centering" maxLength="41">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_backup_max" maxLength="41">En fazla yedek sayısı</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı (milisaniye)</string>
+    <string name="pref_double_tap_time_interval_summary">Cevaplama düğmelerine ikinci bir tıklama, bu süre geçmediyse, göz ardı edilecektir. Bu, yanlışlıkla çift tıklamayı önler</string>
     <string name="show_estimates" maxLength="41">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Büyük cevap düğmelerini göster</string>
+    <string name="show_large_answer_buttons_summ">Cevap düğmesini 2 satırda göster</string>
     <string name="show_top_bar" maxLength="41">Üst Çubuğu Göster</string>
     <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
@@ -187,10 +187,10 @@
     <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Gece Yarısı</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 zamanlayıcı</string>
+    <string name="sched_v2_summ">Yeni zamanlayıcıyı etkinleştirin. Bir sonraki senkronizasyonda değişiklikleri bir yönde zorlar</string>
     <string name="sched_ver_toggle_title">Onayla</string>
     <string name="sched_ver_1to2">Deneysel zamanlayıcı hatalı zamanlamaya yol açabilir. Lütfen önce dokümentasyonu okuduğunuza emin olun. Devam edilsin mi?</string>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
@@ -210,10 +210,10 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">WebView bağlantılarını etkinleştir, ve kart HTML\'ini AnkiDroid dizinine kaydet</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">Panodaki resimleri PNG olarak yapıştırın</string>
+    <string name="paste_as_png_summary">Varsayılan olarak Anki, disk alanından tasarruf etmek için panodaki görüntüleri JPG dosyası olarak yapıştırır. Bunun yerine PNG görüntüleri olarak yapıştırmak için bu seçeneği kullanabilirsiniz.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Geri gitmek/çıkmak için iki kez basın</string>
+    <string name="exit_via_double_tap_back_summ">Yorumcudan veya uygulamadan yanlışlıkla ayrılmamak için</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
@@ -300,7 +300,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kart seçme ölçütü:</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Zamanını değiştir</string>
     <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
     <string name="deck_conf_cram_steps" maxLength="41">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Bu deste grubundaki desteler için hatırlatma bildirimlerini etkinleştir</string>
@@ -317,18 +317,18 @@
     <string name="type_in_answer_focus_summ">Çalışıcıda otomatik olarak \"Cevabı yaz\" alanına odaklan</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Değişim Kaydını Aç</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Hareket ekle</string>
+    <string name="binding_add_key">Anahtar ekle</string>
+    <string name="key_picker_default_press_key">Bir tuşa basın</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">Kartın tarafını seç</string>
+    <string name="card_side_question">Soru</string>
+    <string name="card_side_answer">Cevap</string>
+    <string name="card_side_both">Soru &amp; Cevap</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">S: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">C: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ kaldır</string>
+    <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
 </resources>

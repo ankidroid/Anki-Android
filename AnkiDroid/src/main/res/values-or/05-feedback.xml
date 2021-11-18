@@ -48,6 +48,6 @@
     <string name="feedback_manual_toast_text">AnkiDroid ଏକ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହୋଇଛି; ଏକ ରିପୋର୍ଟ ପ୍ରସ୍ତୁତ କରାଯାଉଛି&#8230;</string>
     <string name="feedback_copy_debug">ତ୍ରୁଟି ନିବାରଣ ସୂଚନା କପି କରନ୍ତୁ</string>
     <string name="feedback_report">ରିପୋର୍ଟ କରନ୍ତୁ</string>
-    <string name="feedback_report_automatically">ତ୍ରୁଟି ରିପୋର୍ଟଗୁଡ଼ିକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ପଠାନ୍ତୁ</string>
+    <string name="feedback_report_automatically">ତ୍ରୁଟି ରିପୋର୍ଟଗୁଡ଼ିକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ପଠାନ୍ତୁ</string>
     <string name="feedback_no_suitable_app_found">କୌଣସି ଉପଯୁକ୍ତ ଆପ୍ ମିଳିଲା ନାହିଁ</string>
 </resources>

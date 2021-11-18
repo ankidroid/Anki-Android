@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Ses kaydet</string>
     <string name="multimedia_editor_popup_text">Gelişmiş düzenleyici</string>
     <string name="multimedia_editor_popup_cloze">Boşluk doldurma</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Açık alan</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Hizmet glosbe.com tarafından sağlanmaktadır.</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -104,25 +104,25 @@
     <string name="multimedia_editor_progress_wait_title">Bekleyin</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Bir şey ters gitti</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVG\'ler önizleme için ugun değil</string>
+    <string name="multimedia_editor_png_paste_error">Panodaki resmi png\'ye dönüştürülürken hata oluştu: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s alanına multimedya içeriği iliştir</string>
     <string name="multimedia_editor_attach_media">Medya iliştir</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Kayıt başarısız</string>
     <string name="multimedia_editor_audio_view_playing_failed">Çalma başarısız</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Kaydedici araç çubuğu oluşturulamıyor</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Düzenleme Kutusu</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Çeviri</string>
     <!-- Network failure -->
     <string name="network_no_connection">Bağlantı yok.</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_image">Bu resmi kırpmak istiyor musunuz?</string>
+    <string name="crop_button">Görüntüyü kırp</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Alan İçeriği</string>
 </resources>

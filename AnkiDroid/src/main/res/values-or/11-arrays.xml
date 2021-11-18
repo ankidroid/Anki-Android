@@ -44,22 +44,22 @@
         <item>କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>ଅନିୟମିତ କ୍ରମରେ ନୂତନ କାର୍ଡ</item>
-        <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମରେ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
+        <item>ଅନିୟମିତ କ୍ରମରେ ନୂତନ ପତ୍ର</item>
+        <item>ଯୋଡ଼ାଯିବା କ୍ରମରେ ନୂତନ ପତ୍ର</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>ସର୍ବପୁରାତନ ଆଗ </item>
+        <item>ପ୍ରଥମେ ସର୍ବପୁରାତନ</item>
         <item>ଅନିୟମିତ</item>
         <item>ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</item>
         <item>କମୁଥିବା ଅନ୍ତରାଳ</item>
-        <item>ସବୁଠୁ ଅଧିକ ତ୍ରୁଟିଜନିତ </item>
-        <item>ଯୋଡ଼ାଯାଇଥିବା କ୍ରମାନୁସାରେ</item>
-        <item>ବଳକା କ୍ରମାନୁସାରେ</item>
-        <item>ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା ପ୍ରଥମେ</item>
+        <item>ସବୁଠୁ ଅଧିକ ଲାପ୍ସ ହୋଇଥିବା</item>
+        <item>ଯୋଡ଼ାଯିବା କ୍ରମାନୁସାରେ</item>
+        <item>ଧାର୍ଯ୍ୟ କ୍ରମାନୁସାରେ</item>
+        <item>ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</item>
         <item>ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>ସାମ୍ପ୍ରତିକ ଡେକ୍ ବ୍ୟବହାର କରନ୍ତୁ</item>
+        <item>ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</item>
         <item>ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</item>
     </string-array>
     <string-array name="new_spread_labels">

@@ -42,14 +42,14 @@
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="check_db_acknowledge">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଗଲା</string>
     <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏବଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
-    <string name="contextmenu_deckpicker_delete_deck">ଡେକ୍ ବିଲୋପ କରନ୍ତୁ</string>
-    <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ଡେକ୍ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
-    <string name="delete_deck_title">ଡେକ୍ ବିଲୋପ କରିବେ କି?</string>
+    <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
+    <string name="delete_deck_title">ତାସଖଣ୍ଡ ବିଲୋପ କରିବେ କି?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟିଏ ପତ୍ର ଅଛି।</item>
         <item quantity="other">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟି ପତ୍ର ଅଛି।</item>
     </plurals>
-    <string name="delete_cram_deck_message">%s ରେ ଥିବା ସମସ୍ତ ପତ୍ରକୁ ସେଗୁଡ଼ିକର ମୂଳ ଡେକ୍ କୁ ପଠାଇବେ କି?</string>
+    <string name="delete_cram_deck_message">%s ରେ ଥିବା ସମସ୍ତ ପତ୍ରକୁ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡ କୁ ପଠାଇବେ କି?</string>
     <string name="no_tts_available_message">କୌଣସି ଲେଖା-ରୁ-କଥା ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
@@ -64,13 +64,13 @@
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂତନ ପତ୍ରର ପୁନଃଅବସ୍ଥାନ</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ସ୍ଥିତି:</string>
-    <string name="reposition_card_not_new_error">କେବଳ ନୂତନ ପତ୍ରଗୁଡ଼ିକ ପୁନଃଅବସ୍ଥାପିତ କରାଯାଇପାରିବ</string>
+    <string name="reposition_card_not_new_error">କେବଳ ନୂତନ ପତ୍ରଗୁଡ଼ିକ ପୁନଃଅବସ୍ଥାପିତ କରାଯାଇପାରିବ</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃଅବସ୍ଥିତ</item>
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅବସ୍ଥିତ</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
-    <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
+    <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
@@ -91,15 +91,15 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ସ୍ଥିତି ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ର ପୁନଃଅବସ୍ଥାନ’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ଏହାକୁ ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଡେକ୍ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହକୁ ଲେଖିବା ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="custom_study_new_total_new">ଡେକ୍ ରେ ନୂତନ ପତ୍ର ସଂଖ୍ୟା: %d</string>
-    <string name="custom_study_rev_total_rev">ଡେକ୍ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
+    <string name="custom_study_new_total_new">ତାସଖଣ୍ଡ ରେ ନୂତନ ପତ୍ରର ସଂଖ୍ୟା: %d</string>
+    <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_rev_extend">ଆଜିର ସମୀକ୍ଷା ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା କାର୍ଡ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
@@ -242,13 +242,13 @@
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
     </plurals>
-    <string name="deck_picker_new">ଏହି ଡେକ୍ ରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ କାର୍ଡର ସଂଖ୍ୟା।</string>
-    <string name="deck_picker_rev">ଏହି ଡେକ୍ ରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ କାର୍ଡର ସଂଖ୍ୟା।</string>
-    <string name="deck_picker_lrn">ଏହି ଡେକ୍ ର ଶିକ୍ଷାଧିନ କାର୍ଡ ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
+    <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">ଆଜି ଦେଖିବାକୁ ଥିବା କାର୍ଡର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା ଡେକ୍ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
-    <string name="import_deck_package">ଡେକ୍ ପ୍ୟାକେଜ୍ (.apkg)</string>
+    <string name="deck_picker_counts">ଆଜି ଦେଖିବାକୁ ଥିବା ପତ୍ରର ସଂଖ୍ୟା ଧାରଣ କରିଥିବା ଡେକ୍ ବର୍ଣ୍ଣନା ପୃଷ୍ଠା ଖୋଲନ୍ତୁ।</string>
+    <string name="import_deck_package">ତାସଖଣ୍ଡ ପ୍ୟାକେଜ୍ (.apkg)</string>
     <string name="import_collection_package">ସଂଗ୍ରହ ପ୍ୟାକେଜ୍ (.colpkg)</string>
 </resources>
