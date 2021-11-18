@@ -60,6 +60,7 @@
     <string name="alert_logging_message">מתבצעת כניסה&#8230;</string>
     <string name="invalid_username_password">כתובת דוא״ל או ססמה שגויים</string>
     <string name="reset_password">איפוס ססמה</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">העדפות</string>
     <string name="deckpreferences_title">אפשרויות עבור XXX</string>

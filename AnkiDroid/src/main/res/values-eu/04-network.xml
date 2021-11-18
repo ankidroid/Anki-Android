@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Saioa hasten&#8230;</string>
     <string name="invalid_username_password">Invalid email address or password</string>
     <string name="reset_password">Pasahitza berrezarri</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Ezarpenak</string>
     <string name="deckpreferences_title">Options for XXX</string>

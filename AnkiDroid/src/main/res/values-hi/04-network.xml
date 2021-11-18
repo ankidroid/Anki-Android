@@ -60,6 +60,7 @@
     <string name="alert_logging_message">लॉग इन कर रहे हैं...</string>
     <string name="invalid_username_password">अमान्य ईमेल पता या पासवर्ड</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">पसंद</string>
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>

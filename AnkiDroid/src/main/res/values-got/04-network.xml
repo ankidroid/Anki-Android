@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Atgaggand&#8230;</string>
     <string name="invalid_username_password">Unraiht e-mel aiþþau gamotawaurd</string>
     <string name="reset_password">Aftrasatei gamotawaurd</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Waleinos</string>
     <string name="deckpreferences_title">Mahteis faur XXX</string>

@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Kirjaudutaan&#8230;</string>
     <string name="invalid_username_password">Virheellinen sähköpostiosoite tai salasana</string>
     <string name="reset_password">Nollaa salasanasi</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Asetukset</string>
     <string name="deckpreferences_title">Asetukset XXX:lle</string>

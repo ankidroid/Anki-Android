@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Autentificare în curs&#8230;</string>
     <string name="invalid_username_password">Adresă de e-mail sau parolă incorectă</string>
     <string name="reset_password">Resetare parolă</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferinţe</string>
     <string name="deckpreferences_title">Opţiuni pentru XXX</string>

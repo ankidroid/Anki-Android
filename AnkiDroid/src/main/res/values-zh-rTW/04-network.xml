@@ -60,6 +60,7 @@
     <string name="alert_logging_message">正在登入，請稍候...</string>
     <string name="invalid_username_password">無效的電子郵件地址或密碼。</string>
     <string name="reset_password">忘記密碼</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">偏好設定</string>
     <string name="deckpreferences_title">XXX 的選項</string>

@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Вход в систему&#8230;</string>
     <string name="invalid_username_password">Неверный адрес почты или пароль</string>
     <string name="reset_password">Сбросить пароль</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Настройки</string>
     <string name="deckpreferences_title">Параметры для XXX</string>

@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Jungiamasi&#8230;</string>
     <string name="invalid_username_password">Neteisingas el. pašto adresas arba slaptažodis</string>
     <string name="reset_password">Atkurti slaptažodį</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Nuostatos</string>
     <string name="deckpreferences_title">XXX parinktys</string>

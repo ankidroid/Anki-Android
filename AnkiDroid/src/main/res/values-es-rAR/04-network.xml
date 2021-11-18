@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Ingresando a la cuenta&#8230;</string>
     <string name="invalid_username_password">Dirección de correo electrónico o contraseña incorrecta.</string>
     <string name="reset_password">Restablecer contraseña</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferencias</string>
     <string name="deckpreferences_title">Opciones para XXX</string>

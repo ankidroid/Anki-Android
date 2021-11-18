@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Prijavljivanje u toku, molimo da sačekate...</string>
     <string name="invalid_username_password">Пограшна адреса е-поште или лозинка.</string>
     <string name="reset_password">Ресетујте лозинку</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Поставке</string>
     <string name="deckpreferences_title">Опције за XXX</string>

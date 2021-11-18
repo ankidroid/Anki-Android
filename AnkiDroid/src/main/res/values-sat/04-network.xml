@@ -60,6 +60,7 @@
     <string name="alert_logging_message">ᱵᱚᱞᱚᱣᱟᱠ&#8230;</string>
     <string name="invalid_username_password">ᱵᱷᱩᱞ ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ ᱵᱟᱝᱠᱷᱟᱱ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="reset_password">ᱫᱚᱦᱲᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ᱟᱹᱲᱤ ᱠᱩᱥᱤᱭᱟᱠ</string>
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>

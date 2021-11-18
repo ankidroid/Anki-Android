@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Giriş edilir...</string>
     <string name="invalid_username_password">Yanlış e-poçt ünvanı və ya şifrə</string>
     <string name="reset_password">Şifrəni dəyiş</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Seçimlərimiz</string>
     <string name="deckpreferences_title">XXX seçimləri</string>

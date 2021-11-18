@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Здійснення входу, зачекайте, будь ласка...</string>
     <string name="invalid_username_password">Некоректна електронна адреса або пароль.</string>
     <string name="reset_password">Відновити пароль</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Налаштування</string>
     <string name="deckpreferences_title">Параметри для XXX</string>

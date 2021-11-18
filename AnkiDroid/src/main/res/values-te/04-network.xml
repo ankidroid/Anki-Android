@@ -60,6 +60,7 @@
     <string name="alert_logging_message">లాగిన్ అవుతోంది&#8230;</string>
     <string name="invalid_username_password">చెల్లని ఇమెయిల్ చిరునామా లేదా పాస్వర్డ్</string>
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ప్రాధాన్యతలు</string>
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>

@@ -60,6 +60,7 @@
     <string name="alert_logging_message">Prebieha prihlasovanie&#8230;</string>
     <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo</string>
     <string name="reset_password">Obnoviť heslo</string>
+    <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Preferencie</string>
     <string name="deckpreferences_title">Možnosti pre XXX</string>
