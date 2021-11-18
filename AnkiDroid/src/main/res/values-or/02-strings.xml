@@ -44,8 +44,8 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string tools:ignore="UnusedResources" name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
-    <string name="CardEditorCardDeck">ପତ୍ର ଡେକ୍:</string>
-    <string name="CardEditorNoteDeck">ଡେକ୍:</string>
+    <string name="CardEditorCardDeck">ପତ୍ର ତାସଖଣ୍ଡ:</string>
+    <string name="CardEditorNoteDeck">ତାସଖଣ୍ଡ:</string>
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
@@ -83,11 +83,11 @@
     <string-array name="browser_column2_headings">
         <item>ଉତ୍ତର</item>
         <item>ପତ୍ର</item>
-        <item>ଡେକ୍</item>
+        <item>ତାସଖଣ୍ଡ</item>
         <item>ନୋଟ୍</item>
         <item>ପ୍ରଶ୍ନ</item>
         <item>ଟ୍ୟାଗ ସମୂହ</item>
-        <item>ତ୍ରୁଟି ସଂଖ୍ୟା</item>
+        <item>ଲାପ୍ସ ସଂଖ୍ୟା</item>
         <item>ସମୀକ୍ଷା</item>
         <item>ଅନ୍ତରାଳ</item>
         <item>ସହଜତା</item>
@@ -102,7 +102,7 @@
     <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
     <string name="custom_study_review_ahead">ଆଗୁଆ ସମୀକ୍ଷା</string>
     <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
-    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ</string>
+    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
@@ -117,7 +117,7 @@
     <string name="save">ସଞ୍ଚୟ</string>
     <string name="close">ବନ୍ଦ</string>
     <string name="select">ବାଛନ୍ତୁ</string>
-    <string name="saving_changes">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଂରକ୍ଷଣ କରୁଛି&#8230;</string>
+    <string name="saving_changes">ପରିବର୍ତ୍ତନ ସଂରକ୍ଷିତ ହେଉଛି&#8230;</string>
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
@@ -142,16 +142,16 @@
     <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="default_conf_delete_error">ଡିଫଲ୍ଟ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ ହୋଇପାରିବ ନାହିଁ</string>
     <plurals name="factadder_cards_added">
-        <item quantity="one">%dଟିଏ ପତ୍ର ଯୋଗ କରାଯାଇଛି</item>
-        <item quantity="other">%dଟି ପତ୍ର ଯୋଗ କରାଯାଇଛି</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ଯୋଡ଼ାଗଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ଯୋଡ଼ାଗଲା</item>
     </plurals>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
-    <string name="empty_cards">ଖାଲି ପତ୍ରଗୁଡ଼ିକ</string>
+    <string name="empty_cards">ଖାଲି ପତ୍ରଗୁଡ଼ିକ</string>
     <string name="check_db_message">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଯାଉଛି&#8230;</string>
-    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ଡେକ୍ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
+    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
-    <string name="delete_deck">ଡେକ୍ ବିଲୋପ ହେଉଛି&#8230;</string>
+    <string name="delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ ହେଉଛି&#8230;</string>
     <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
@@ -190,23 +190,23 @@
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text_new"><![CDATA[        ନମସ୍କାର!
         <br/><br/>
-        ଏହା <a href="%1$s">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ଡେକ୍।
+        ଏହା <a href="%1$s">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ତାସଖଣ୍ଡ।
         ଉପଲବ୍ଧ <a href="%2$s">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଓ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
         ]]></string>
     <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
-    <string name="menu__deck_options">ଡେକ୍ ବିକଳ୍ପଗୁଡ଼ିକ</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ବିକଳ୍ପଗୁଡ଼ିକ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
+    <string name="menu__deck_options">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="select_tts">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
     <string name="custom_study">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
     <string name="more_options">ଅଧିକ</string>
-    <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
+    <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
     <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆବଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
     <string name="sched_unbury_action">ସେଗୁଡ଼ିକୁ ଦେଖିବା ପାଇଁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
-    <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
+    <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
     <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ, ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
     <!-- Time spans -->
@@ -262,7 +262,7 @@
     <string name="web_page_error">ପୃଷ୍ଠା ଲୋଡ୍ ହେବାରେ ତ୍ରୁଟି: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">ବାହ୍ୟ ପୃଷ୍ଠା ଲିଙ୍କ ପତ୍ରରେ ରହିପାରିବନାହିଁ    </string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">ଉଦ୍ଧାର ହେଇଥିବା ପତ୍ରଗୁଡ଼ିକ</string>
+    <string name="check_integrity_recovered_deck_name">ଉଦ୍ଧାର ହେଇଥିବା ପତ୍ରଗୁଡ଼ିକ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ପୃଷ୍ଠପଟ</string>
     <string name="choose_an_image">ଛବି ବାଛନ୍ତୁ</string>
@@ -278,15 +278,15 @@
     <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
     <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ରଗୁଡ଼ିକ ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡ଼ିକ> ଖାଲି ପତ୍ରଗୁଡ଼ିକ ଚଲାନ୍ତୁ।]]></string>
+    <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ରଗୁଡ଼ିକ ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡ଼ିକ>ଖାଲି ପତ୍ରଗୁଡ଼ିକ ଚଲାନ୍ତୁ।]]></string>
     <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>
     <string name="note_importer_error_first_field_matched">ପ୍ରଥମ କ୍ଷେତ୍ର ମେଳ ହେଲା : %s</string>
     <string name="note_importer_error_added_duplicate_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ସହିତ ନକଲି ଯୋଡ଼ା ହେଲା : %s</string>
     <string name="note_importer_error_appeared_twice">ଫାଇଲରେ ଦୁଇଥର ଦେଖାଗଲା: %s</string>
-    <string name="note_importer_error_empty_notes">ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ଆମଦାନୀ ହୋଇନଥିଲା, କାରଣ ସେମାନେ କୌଣସି ପତ୍ର ସୃଷ୍ଟି କରିନଥିଲେ। ଯେତେବେଳେ ତୁମର ଖାଲି କ୍ଷେତ୍ର ଥାଏ କିମ୍ବା ଯେତେବେଳେ ତୁମେ ଟେକ୍ସଟ୍ ଫାଇଲରେ ଥିବା ବିଷୟବସ୍ତୁକୁ ସଠିକ୍ ଫିଲ୍ଡରେ ମ୍ୟାପ୍ କରିନାହଁ, ଏହା ହୋଇପାରେ</string>
+    <string name="note_importer_error_empty_notes">ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ଆମଦାନୀ ହୋଇନଥିଲା, କାରଣ ସେଗୁଡ଼ିକ କୌଣସି ପତ୍ର ସୃଷ୍ଟି କରିନଥିଲେ। ଏହା ସେତେବେଳେ ହୋଇପାରେ ଯେତେବେଳେ ଆପଣଙ୍କର ଖାଲି କ୍ଷେତ୍ର ଥାଏ କିମ୍ବା ଯେତେବେଳେ ଆପଣ ପାଠ୍ୟ ଫାଇଲରେ ଥିବା ବିଷୟବସ୍ତୁକୁ ସଠିକ୍ କ୍ଷେତ୍ରରେ ମ୍ୟାପ୍ କରିନାହାଁନ୍ତି</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ରେ %2$d କ୍ଷେତ୍ରସବୁ ଥିଲା, %3$d ଆଶା କରାଯାଉଥିଲା</string>
     <string name="csv_importer_error_exception">ପରିତ୍ୟାଗୀତ: %s</string>
-    <string name="user_is_a_robot">ସ୍ୱୟଂଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ ହୋଇଛି। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
+    <string name="user_is_a_robot">ସ୍ୱୟଂଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d ନୋଟ୍ ଯୋଡା ଯାଇଛି</item>
         <item quantity="other">%d ଟି ନୋଟ୍ ଯୋଡା ଯାଇଛି </item>
@@ -351,21 +351,21 @@
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">ଡେକ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ</string>
+    <string name="download_deck">ତାସଖଣ୍ଡ ଡାଉନଲୋଡ୍ କରନ୍ତୁ</string>
     <string name="try_again">ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="cancel_download">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରନ୍ତୁ</string>
     <string name="cancel_download_question_title">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରିବେ କି?</string>
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
-    <string name="import_deck">ଡେକ୍ ଆମଦାନୀ କରନ୍ତୁ</string>
+    <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
     <string name="something_wrong">କିଛି ଭୁଲ୍ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="download_failed">ଡାଉନଲୋଡ୍ ବିଫଳ ହୋଇଛି</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="search_using_deck_name">ଡେକ୍ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
+    <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="home">ଗୃହ</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">%sକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
-    <string name="import_mapped_to_tags">ଟ୍ୟାଗ୍ ଗୁଡ଼ିକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
+    <string name="import_mapped_to_tags">ଟ୍ୟାଗ୍ ଗୁଡ଼ିକୁ ମ୍ୟାପ୍ ହୋଇଛି</string>
     <string name="import_mapped_to_nothing">ଉପେକ୍ଷା କରାଯାଇଛି</string>
     <!-- Reviewer actions -->
     <string name="buried_card">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା</string>

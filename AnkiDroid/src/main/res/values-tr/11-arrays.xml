@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="record_voice">Ses kaydet</string>
     <string name="replay_voice">Sesi tekrar oynat</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Zor (mevcut değilse iyi)</string>
+    <string name="automatic_answer_option_4">Kolay (Müsait değilse iyi)</string>
 </resources>

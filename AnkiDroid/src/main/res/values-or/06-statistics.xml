@@ -48,9 +48,9 @@
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ଶିଖୁଛନ୍ତି</string>
     <string name="statistics_cram">ମୁଖସ୍ଥ</string>
     <string name="stats_cards">ପତ୍ର</string>
-    <string name="stats_cards_intervals">ଦିଆଯାଇଥିବା ଅନ୍ତରାଳ ସହିତ ପତ୍ରଗୁଡ଼ିକ</string>
+    <string name="stats_cards_intervals">ପ୍ରଦତ୍ତ ଅନ୍ତରାଳ ସହିତ ପତ୍ର</string>
     <string name="stats_cumulative_cards">ସମ୍ମିଳିତ ପତ୍ର </string>
-    <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡ଼ିକ</string>
+    <string name="stats_cumulative_answers">ସମ୍ମିଳିତ ଉତ୍ତରଗୁଡ଼ିକ</string>
     <string name="stats_cumulative_time_minutes">ସମ୍ମିଳିତ ମିନିଟ୍</string>
     <string name="stats_cumulative_time_hours">ସମ୍ମିଳିତ ଘଣ୍ଟା</string>
     <string name="stats_cumulative">ସମ୍ମିଳିତ</string>
@@ -59,7 +59,7 @@
     <string name="stats_answers">ଉତ୍ତର</string>
     <string name="stats_minutes">ମିନିଟ୍</string>
     <string name="stats_hours">ଘଣ୍ଟା</string>
-    <string name="stats_percentage">ଶତକଡ଼ା</string>
+    <string name="stats_percentage">ଶତକଡ଼ା</string>
     <string name="stats_period_month">୧ ମାସ</string>
     <string name="stats_period_year">୧ ବର୍ଷ</string>
     <string name="stats_period_lifetime">ତାସଖଣ୍ଡ ବୟସ</string>

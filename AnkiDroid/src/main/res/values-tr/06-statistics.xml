@@ -42,8 +42,8 @@
     <string name="statistics_mature">Olgun</string>
     <string name="statistics_young_and_learn">Genç+Öğrenme</string>
     <string name="statistics_unlearned">Görülmemiş</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Askıya Alınmış</string>
+    <string name="statistics_buried">Gömülmüş</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Yeniden öğrenme</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Öğrenme</string>
     <string name="statistics_cram">İnekleme</string>

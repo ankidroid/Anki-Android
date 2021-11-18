@@ -23,14 +23,14 @@
     <string name="front_field_name">Ön</string>
     <string name="back_field_name">Arka</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Metin</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Arka Ekstra</string>
     <string name="field_to_ask_front_name">Tersini Ekle</string>
     <!--Card type-->
     <string name="card_n_name">Kart: %d</string>
     <!--Note type-->
     <string name="basic_model_name">Temel</string>
     <string name="cloze_model_name">Boşluklu</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_typing_model_name">Temel (cevabı yazın)</string>
+    <string name="forward_reverse_model_name">Temel (ve ters çevrilmiş kart)</string>
+    <string name="forward_optional_reverse_model_name">Temel (isteğe bağlı ters kart)</string>
 </resources>

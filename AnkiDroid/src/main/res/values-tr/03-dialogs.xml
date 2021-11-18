@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
     <string name="tts_no_tts">Konuşma</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nKullanılmayan dosyalar:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid, masaüstü yazılımı <a href=\"%2$s\">Anki</a>\'yle tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstü\'nde materyal oluşturup, indirip ve öğrenip, bunları AnkiWeb\'le kolayca senkronize edebilirsiniz.]]></item>
         <item><![CDATA[AnkiDroid\'i daha iyi hâle getirmemize yardım etmek için, lütfen bugları <a href=\"%1$s\">sorun takipçisi</a>ne bildirin; yeni özellik fikirlerinizi de bekliyoruz. <a href=\"%2$s\">Wiki</a>de sorularınıza cevap arayın veya <a href=\"%3$s\">forum</a>da bir tartışma açın.]]></item>
@@ -91,22 +91,22 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Yeni bir kartın zamanı değiştiriliyor. Zamanını değiştirmek yeni kartları aynı zamanda çalışılacak kartlara dönüştürür. Yeni sıranın içinde \"yeni kartın yerini değiştir\" opsiyonunu kullanabilirsiniz.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Zamanını değiştirmek aynı zamanda gelecekte zamanlayıcının karta muamelesini değiştirecek (kolaylık %d%% yapılacak)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Dosya yöneticinizden desteyi seçin veya içeri aktarmak için about:downloads sayfasını ziyaret edin </string>
     <string name="answering_error_title">Veritabanı hatası</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Koleksiyona yazılamadı. Veritabanı bozuk olabilir veya diskte yeterli boş alan olmayabilir.\n\nBu daha sık oluyorsa, veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin. Bunun için \"seçenekler\"e dokunun.\n\Veya bu bir AnkiDroid hatası da olabilir; Bunu kontrol edebilmemiz için lütfen hatayı bildirin.</string>
     <string name="answering_error_report">Hatayı bildir</string>
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
     <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
     <string name="custom_study_rev_total_rev">Destede çalışma sırası gelmiş kart: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın/azaltın (“-3”) </string>
+    <string name="custom_study_rev_extend">Bugünün inceleme sınırını şu kadar artırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
     <string name="custom_study_random">X kartları rastgele desteden seç:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Özel çalışma destesi yeniden oluşturulamadı</string>
     <string name="importing_collection">Koleksiyon içeri aktarılıyor...</string>
     <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor...</string>
     <string name="import_progress">• Notlar aktarılıyor: %1$d%%\n• Kartlar aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
@@ -116,7 +116,7 @@
     <string name="sd_card_full_title">SD kart dolu</string>
     <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>
     <string name="no_space_to_downgrade_title">Hiç alan yok</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid\'in devam etmesi için %s boş depolama alanına ihtiyacı var. Lütfen biraz yer açın.</string>
     <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
     <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
     <string name="dialog_cancel">İptal</string>
@@ -164,27 +164,27 @@
     <string name="empty_cards_count">Silinecek kartlar %d</string>
     <string name="empty_cards_deleted">Silinen kartlar: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Mikrofon izni alınamadı.</string>
+    <string name="multimedia_editor_camera_permission_refused">Kamera izni alınamadı. İşlevsellik devre dışı bırakıldı.</string>
+    <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">AnkiDroid\'e Hoşgeldiniz!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid, yalnızca AnkiDroid koleksiyonunuzu, flash kart ortamınızı ve yedeklerinizi depolamak için depolama izni gerektirir. Kodumuz açık kaynaklıdır, gönüllüler tarafından yazılmıştır ve milyonlarca kişi tarafından güvenilmektedir.\n\nHerhangi bir sorunuz varsa, lütfen uygulama içi kılavuzumuza erişin veya destek forumlarımızı ziyaret edin.\n\nAnkiDroid\'i denediğiniz için teşekkür ederiz!\n— AnkiDroid Geliştirme Ekibi</string>
+    <string name="mutimedia_editor_assertion_failed">Gelişmiş Düzenleyici görüntülenirken bilinmeyen bir hata oluştu</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var. </string>
+    <string name="integrity_check_fixed_no_home_deck">Hatalı ev destesine sahip %d adet kart kurtarıldı. Daha fazla bilgi için lütfen kılavuza bakın.</string>
     <string name="video_creation_error">Video oynatılamadı</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Deste değiştirilemedi</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
