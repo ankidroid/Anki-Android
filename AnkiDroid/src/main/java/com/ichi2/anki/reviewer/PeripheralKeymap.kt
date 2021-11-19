@@ -14,115 +14,81 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.                          
  */
 
-package com.ichi2.anki.reviewer;
+package com.ichi2.anki.reviewer
 
-import android.content.SharedPreferences;
-import android.view.KeyEvent;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.cardviewer.ViewerCommand.CommandProcessor;
-
-import java.util.HashMap;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.content.SharedPreferences
+import android.view.KeyEvent
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.Binding.Companion.key
+import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
+import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
+import java.util.HashMap
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
- * and converting them to commands for the Reviewer. */
-public class PeripheralKeymap {
-
-    private final KeyMap mKeyMap;
-
-    private boolean mHasSetup = false;
-
-    public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
-        this.mKeyMap = new KeyMap(commandProcessor, reviewerUi);
+ * and converting them to commands for the Reviewer.  */
+class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
+    private val mKeyMap: KeyMap
+    private var mHasSetup = false
+    fun setup() {
+        val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        setup(preferences)
     }
 
-    public void setup() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        setup(preferences);
-    }
-
-
-    public void setup(SharedPreferences preferences) {
-        for (ViewerCommand command : ViewerCommand.values()) {
-            add(command, preferences);
+    fun setup(preferences: SharedPreferences) {
+        for (command in ViewerCommand.values()) {
+            add(command, preferences)
         }
-
-        mHasSetup = true;
+        mHasSetup = true
     }
 
-
-    private void add(ViewerCommand command, SharedPreferences preferences) {
-        List<MappableBinding> bindings = MappableBinding.fromPreference(preferences, command);
-
-        for (MappableBinding b : bindings) {
-            if (!b.isKey()) {
-                continue;
+    private fun add(command: ViewerCommand, preferences: SharedPreferences) {
+        val bindings: MutableList<MappableBinding> = fromPreference(preferences, command)
+        for (b in bindings) {
+            if (!b.isKey) {
+                continue
             }
-            mKeyMap.set(b, command);
+            mKeyMap[b] = command
         }
-
     }
 
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (!mHasSetup || event.getRepeatCount() > 0) {
-            return false;
-        }
-
-        return mKeyMap.onKeyUp(keyCode, event);
+    fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return if (!mHasSetup || event.repeatCount > 0) {
+            false
+        } else mKeyMap.onKeyUp(keyCode, event)
     }
 
-    @SuppressWarnings( {"unused", "RedundantSuppression"})
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return false;
+    @Suppress("UNUSED_PARAMETER")
+    fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        return false
     }
 
-    public static class KeyMap {
-        public final HashMap<MappableBinding, ViewerCommand> mBindingMap = new HashMap<>();
-        private final CommandProcessor mProcessor;
-        private final ReviewerUi mReviewerUI;
+    class KeyMap(private val processor: ViewerCommand.CommandProcessor, private val reviewerUI: ReviewerUi) {
+        val mBindingMap = HashMap<MappableBinding, ViewerCommand>()
 
-
-        public KeyMap(CommandProcessor commandProcessor, ReviewerUi reviewerUi) {
-            this.mProcessor = commandProcessor;
-            this.mReviewerUI = reviewerUi;
-        }
-
-        @SuppressWarnings( {"unused", "RedundantSuppression"})
-        public boolean onKeyUp(int keyCode, KeyEvent event) {
-            boolean ret = false;
-
-            List<Binding> bindings = Binding.key(event);
-            CardSide side = CardSide.fromAnswer(mReviewerUI.isDisplayingAnswer());
-
-            for (Binding b: bindings) {
-
-                MappableBinding binding = new MappableBinding(b, new MappableBinding.Screen.Reviewer(side));
-                ViewerCommand command = mBindingMap.get(binding);
-                if (command == null) {
-                    continue;
-                }
-
-                ret |= mProcessor.executeCommand(command);
+        @Suppress("UNUSED_PARAMETER")
+        fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+            var ret = false
+            val bindings = key(event!!)
+            val side = fromAnswer(reviewerUI.isDisplayingAnswer)
+            for (b in bindings) {
+                val binding = MappableBinding(b, MappableBinding.Screen.Reviewer(side))
+                val command = mBindingMap[binding] ?: continue
+                ret = ret or processor.executeCommand(command)
             }
-
-            return ret;
+            return ret
         }
 
-
-        public void set(@NonNull MappableBinding key, @NonNull ViewerCommand value) {
-            mBindingMap.put(key, value);
+        operator fun set(key: MappableBinding, value: ViewerCommand) {
+            mBindingMap[key] = value
         }
 
-
-        @Nullable
-        public ViewerCommand get(MappableBinding key) {
-            return mBindingMap.get(key);
+        operator fun get(key: MappableBinding): ViewerCommand? {
+            return mBindingMap[key]
         }
+    }
+
+    init {
+        mKeyMap = KeyMap(commandProcessor, reviewerUi)
     }
 }
