@@ -56,6 +56,9 @@
     <!-- Allows Timber issues defined for AnkiDroid without an api dependency on Timber -->
     <issue id="UnknownIssueId" severity="ignore" />
 
+    <!-- Temporarily allows obsolete lint until https://issuetracker.google.com/issues/206855622 is resolved upstream -->
+    <issue id="ObsoleteLintCustomCheck" severity="ignore" />
+
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
     <issue id="RedundantNamespace" severity="ignore" />
