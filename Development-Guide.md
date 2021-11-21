@@ -354,7 +354,7 @@ This can be used inside the AnkiDroid to view console log like Chrome dev tools.
 
 ## Custom Search Engines
 
-Many browser support a "custom search engine" function. These save time while developing. 
+Many browsers support a "custom search engine" function. These save time while developing. 
 
 Instructions to add a Search Engine to Chrome: https://zapier.com/blog/add-search-engine-to-chrome/
 
