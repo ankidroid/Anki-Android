@@ -14,150 +14,140 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.reviewer;
+package com.ichi2.anki.reviewer
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
+import android.content.Context
+import android.text.TextUtils
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.AnkiFont
+import com.ichi2.libanki.Utils
+import com.ichi2.utils.HashUtil.HashMapInit
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.AnkiFont;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HashUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class ReviewerCustomFonts {
-
-    private final String mCustomStyle;
-    private String mDefaultFontStyle;
-    private String mOverrideFontStyle;
-    private String mThemeFontStyle;
-    private String mDominantFontStyle;
-
-    public ReviewerCustomFonts(Context context) {
-        Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
-        mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
+class ReviewerCustomFonts(context: Context) {
+    private val mCustomStyle: String
+    private var mDefaultFontStyle: String? = null
+    private var mOverrideFontStyle: String? = null
+    private var mThemeFontStyle: String? = null
+    private var mDominantFontStyle: String? = null
+    fun updateCssStyle(cssStyle: StringBuilder) {
+        cssStyle.append(mCustomStyle)
     }
-
-    public void updateCssStyle(StringBuilder cssStyle) {
-        cssStyle.append(mCustomStyle);
-    }
-
-
-    /**
-     * Returns the CSS used to handle custom fonts.
-     * <p>
-     * Custom fonts live in fonts directory in the directory used to store decks.
-     * <p>
-     * Each font is mapped to the font family by the same name as the name of the font without the extension.
-     */
-    private static String getCustomFontsStyle(Map<String, AnkiFont> customFontsMap) {
-        StringBuilder builder = new StringBuilder();
-        for (AnkiFont font : customFontsMap.values()) {
-            builder.append(font.getDeclaration());
-            builder.append('\n');
-        }
-        return builder.toString();
-    }
-
 
     /**
      * Returns the CSS used to set the theme font.
-     * 
+     *
      * @return the font style, or the empty string if no font is set
      */
-    private String getThemeFontStyle() {
-        if (mThemeFontStyle == null) {
-            String themeFontName = "OpenSans";
-            if (TextUtils.isEmpty(themeFontName)) {
-                mThemeFontStyle = "";
-            } else {
-                mThemeFontStyle = String.format(
-                        "BODY {"
-                        + "font-family: '%s';"
-                        + "font-weight: normal;"
-                        + "font-style: normal;"
-                        + "font-stretch: normal;"
-                        + "}\n", themeFontName);
+    private val themeFontStyle: String?
+        get() {
+            if (mThemeFontStyle == null) {
+                val themeFontName = "OpenSans"
+                mThemeFontStyle = if (TextUtils.isEmpty(themeFontName)) {
+                    ""
+                } else {
+                    String.format(
+                        """
+                        BODY {font-family: '%s';font-weight: normal;font-style: normal;font-stretch: normal;}
+                        
+                        """.trimIndent(),
+                        themeFontName
+                    )
+                }
             }
+            return mThemeFontStyle
         }
-        return mThemeFontStyle;
-    }
-
 
     /**
      * Returns the CSS used to set the default font.
-     * 
+     *
      * @return the default font style, or the empty string if no default font is set
      */
-    private String getDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+    private fun getDefaultFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
         if (mDefaultFontStyle == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-            AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
-            if (defaultFont != null) {
-                mDefaultFontStyle = "BODY { " + defaultFont.getCSS(false) + " }\n";
+            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val defaultFont = customFontsMap[preferences.getString("defaultFont", null)]
+            mDefaultFontStyle = if (defaultFont != null) {
+                """BODY { ${defaultFont.getCSS(false)} }
+"""
             } else {
-                mDefaultFontStyle = "";
+                ""
             }
         }
-        return mDefaultFontStyle;
+        return mDefaultFontStyle
     }
-
 
     /**
      * Returns the CSS used to set the override font.
-     * 
+     *
      * @return the override font style, or the empty string if no override font is set
      */
-    private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+    private fun getOverrideFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
         if (mOverrideFontStyle == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-            AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
-            boolean overrideFont = "1".equals(preferences.getString("overrideFontBehavior", "0"));
-            if (defaultFont != null && overrideFont) {
-                mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS(true) + " }\n";
+            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val defaultFont = customFontsMap[preferences.getString("defaultFont", null)]
+            val overrideFont = "1" == preferences.getString("overrideFontBehavior", "0")
+            mOverrideFontStyle = if (defaultFont != null && overrideFont) {
+                """BODY, .card, * { ${defaultFont.getCSS(true)} }
+"""
             } else {
-                mOverrideFontStyle = "";
+                ""
             }
         }
-        return mOverrideFontStyle;
+        return mOverrideFontStyle
     }
-
 
     /**
      * Returns the CSS that determines font choice in a global fashion.
-     * 
+     *
      * @return the font style, or the empty string if none applies
      */
-    private String getDominantFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+    private fun getDominantFontStyle(context: Context, customFontsMap: Map<String?, AnkiFont>): String? {
         if (mDominantFontStyle == null) {
-            mDominantFontStyle = getOverrideFontStyle(context, customFontsMap);
+            mDominantFontStyle = getOverrideFontStyle(context, customFontsMap)
             if (TextUtils.isEmpty(mDominantFontStyle)) {
-                mDominantFontStyle = getDefaultFontStyle(context, customFontsMap);
+                mDominantFontStyle = getDefaultFontStyle(context, customFontsMap)
                 if (TextUtils.isEmpty(mDominantFontStyle)) {
-                    mDominantFontStyle = getThemeFontStyle();
+                    mDominantFontStyle = themeFontStyle
                 }
             }
         }
-        return mDominantFontStyle;
+        return mDominantFontStyle
     }
 
-
-    /**
-     * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
-     * <p>
-     * The list of constructed lazily the first time is needed.
-     */
-    private static Map<String, AnkiFont> getCustomFontsMap(Context context) {
-        List<AnkiFont> fonts = Utils.getCustomFonts(context);
-        Map<String, AnkiFont> customFontsMap = HashUtil.HashMapInit(fonts.size());
-        for (AnkiFont f : fonts) {
-            customFontsMap.put(f.getName(), f);
+    companion object {
+        /**
+         * Returns the CSS used to handle custom fonts.
+         * <p>
+         * Custom fonts live in fonts directory in the directory used to store decks.
+         * <p>
+         * Each font is mapped to the font family by the same name as the name of the font without the extension.
+         */
+        private fun getCustomFontsStyle(customFontsMap: Map<String?, AnkiFont>): String {
+            val builder = StringBuilder()
+            for (font in customFontsMap.values) {
+                builder.append(font.declaration)
+                builder.append('\n')
+            }
+            return builder.toString()
         }
-        return customFontsMap;
+
+        /**
+         * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
+         * <p>
+         * The list of constructed lazily the first time is needed.
+         */
+        private fun getCustomFontsMap(context: Context): Map<String?, AnkiFont> {
+            val fonts = Utils.getCustomFonts(context)
+            val customFontsMap: MutableMap<String?, AnkiFont> = HashMapInit(fonts.size)
+            for (f in fonts) {
+                customFontsMap[f.name] = f
+            }
+            return customFontsMap
+        }
     }
 
+    init {
+        val customFontsMap = getCustomFontsMap(context)
+        mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap)
+    }
 }
