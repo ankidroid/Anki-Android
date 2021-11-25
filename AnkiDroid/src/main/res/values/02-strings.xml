@@ -59,6 +59,8 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="custom_color_dialog_title">Enter color hex code</string>
+    <string name="custom_color_dialog_submit">Submit</string>
 
     <!-- Browser -->
     <string-array name="browser_column1_headings">

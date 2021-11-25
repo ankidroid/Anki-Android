@@ -25,10 +25,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
@@ -39,6 +41,8 @@ import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import timber.log.Timber
 import java.io.FileNotFoundException
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -62,6 +66,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private var mSecondFingerY = 0f
     private var mSecondFingerPointerId = 0
     private var mSecondFingerWithinTapTolerance = false
+    private var mCustomColor = ""
     var isCurrentlyDrawing = false
         private set
 
@@ -329,10 +334,45 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
                 penColor = yellowPenColor
             }
+            R.id.pen_color_custom -> {
+                handleCustomColorChange()
+            }
             R.id.stroke_width -> {
                 handleWidthChangeDialog()
             }
         }
+    }
+
+    private fun handleCustomColorChange() {
+        val customColorDialog: View = inflate(context, R.xml.color_code_input_dialog, null)
+        val alert: AlertDialog.Builder = AlertDialog.Builder(context)
+        alert.setTitle(R.string.custom_color_dialog_title)
+        alert.setView(customColorDialog)
+        if (mCustomColor.length != 0) {
+            customColorDialog.findViewById<EditText>(R.id.customColorCode).setText(mCustomColor)
+        }
+        alert.setPositiveButton(R.string.custom_color_dialog_submit) {
+            dialog, _ ->
+            val editText: EditText = customColorDialog.findViewById(R.id.customColorCode)
+            val text: String = editText.text.toString()
+            if (isValidHexaCode(text)) {
+                penColor = Color.parseColor(text)
+                mCustomColor = text
+            }
+            dialog.dismiss()
+        }
+        alert.show()
+    }
+
+    private fun isValidHexaCode(str: String?): Boolean {
+        val regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+
+        val p: Pattern = Pattern.compile(regex)
+        if (str == null) {
+            return false
+        }
+        val m: Matcher = p.matcher(str)
+        return m.matches()
     }
 
     private fun handleWidthChangeDialog() {
@@ -508,14 +548,17 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     init {
         val whitePenColorButton = activity.findViewById<Button>(R.id.pen_color_white)
         val blackPenColorButton = activity.findViewById<Button>(R.id.pen_color_black)
+        val customPenColorButton = activity.findViewById<Button>(R.id.pen_color_custom)
         if (!inverted) {
             whitePenColorButton.visibility = GONE
             blackPenColorButton.setOnClickListener { view: View -> onClick(view) }
             foregroundColor = Color.BLACK
+            customPenColorButton.background.setTint(Color.BLACK)
         } else {
             blackPenColorButton.visibility = GONE
             whitePenColorButton.setOnClickListener { view: View -> onClick(view) }
             foregroundColor = Color.WHITE
+            customPenColorButton.background.setTint(Color.WHITE)
         }
         mPaint = Paint()
         mPaint.isAntiAlias = true
@@ -535,6 +578,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_custom).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.stroke_width).setOnClickListener { view: View -> onClick(view) }
     }
 }
