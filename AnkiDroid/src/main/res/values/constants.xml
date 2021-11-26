@@ -178,10 +178,9 @@
     <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
-    <string name="link_donation">https://ankisrs.net/support</string>
     <string name="link_market">market://details?id=com.ichi2.anki</string>
     <string name="link_market_kindle">http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki</string>
-    <string name="link_translation">http://crowdin.net/project/ankidroid</string>
+    <string name="link_translation">https://crowdin.net/project/ankidroid</string>
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
     <string name="link_help">https://docs.ankidroid.org/help.html</string>
