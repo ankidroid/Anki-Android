@@ -166,8 +166,7 @@ public class Info extends AnkiActivity {
                 String.format(content[2], res.getString(R.string.link_wikipedia_open_source),
                         res.getString(R.string.link_contribution))).append(" ");
         sb.append(
-                String.format(content[3], res.getString(R.string.link_translation),
-                        res.getString(R.string.link_donation))).append("<br/><br/>");
+                String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>");
         sb.append(
                 String.format(content[4], res.getString(R.string.licence_wiki),
                         res.getString(R.string.link_source))).append("<br/><br/>");
