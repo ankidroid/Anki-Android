@@ -788,6 +788,13 @@ public class Preferences extends AnkiActivity {
         }
     }
 
+    /** Whether the user is logged on to AnkiWeb */
+    public static boolean hasAnkiWebAccount(SharedPreferences preferences) {
+        String userName = preferences.getString("username", "");
+        return !TextUtils.isEmpty(userName);
+    }
+
+
     /**
      * Temporary abstraction
      * Due to deprecation, we need to move from all Preference code in the Preference activity

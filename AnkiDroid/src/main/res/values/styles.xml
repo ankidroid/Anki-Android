@@ -161,4 +161,9 @@
         <item name="layout_constraintHeight_percent">0.125</item>
         <item name="android:background">@drawable/ic_gesture_tap</item>
     </style>
+
+    <style name="custom_material_dialog_content">
+        <!--<item name="android:textColor">?attr/md_content_color</item>-->
+        <item name="android:textSize">@dimen/md_content_textsize</item>
+    </style>
 </resources>
