@@ -13,85 +13,72 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.stats;
 
+package com.ichi2.anki.stats
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.view.View;
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.util.AttributeSet
+import android.view.View
+import com.ichi2.anki.Statistics.ChartFragment
+import com.wildplot.android.rendering.PlotSheet
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import timber.log.Timber
 
-import com.ichi2.anki.Statistics;
-import com.wildplot.android.rendering.PlotSheet;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+class ChartView : View {
+    private var mFragment: ChartFragment? = null
+    private var mPlotSheet: PlotSheet? = null
+    private var mDataIsSet = false
 
-import timber.log.Timber;
-
-public class ChartView extends View {
-
-    private Statistics.ChartFragment mFragment;
-    private PlotSheet mPlotSheet;
-    private boolean mDataIsSet;
-
-    //The following constructors are needed for the layout inflater
-    public ChartView(Context context) {
-        super(context);
-        setWillNotDraw(false);
+    // The following constructors are needed for the layout inflater
+    constructor(context: Context?) : super(context) {
+        setWillNotDraw(false)
     }
 
-    public ChartView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setWillNotDraw(false);
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        setWillNotDraw(false)
     }
 
-    public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setWillNotDraw(false);
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        setWillNotDraw(false)
     }
 
-
-    @Override
-    public void onDraw(Canvas canvas) {
-        //Timber.d("drawing chart");
+    public override fun onDraw(canvas: Canvas) {
+        // Timber.d("drawing chart");
         if (mDataIsSet) {
-            //Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-            Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG);
-            paint.setAntiAlias(true);
-            paint.setStyle(Paint.Style.STROKE);
-            GraphicsWrap g = new GraphicsWrap(canvas, paint);
-
-            Rect field = new Rect();
-            this.getDrawingRect(field);
+            // Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+            val paint = Paint(Paint.LINEAR_TEXT_FLAG)
+            paint.isAntiAlias = true
+            paint.style = Paint.Style.STROKE
+            val g = GraphicsWrap(canvas, paint)
+            val field = Rect()
+            getDrawingRect(field)
             if (mPlotSheet != null) {
-                mPlotSheet.paint(g);
+                mPlotSheet!!.paint(g)
             } else {
-                super.onDraw(canvas);
+                super.onDraw(canvas)
             }
         } else {
-            super.onDraw(canvas);
+            super.onDraw(canvas)
         }
     }
 
-
-    public void addFragment(Statistics.ChartFragment fragment) {
-        mFragment = fragment;
+    fun addFragment(fragment: ChartFragment?) {
+        mFragment = fragment
     }
 
-
-    public void setData(PlotSheet plotSheet) {
-        mPlotSheet = plotSheet;
-        mDataIsSet = true;
+    fun setData(plotSheet: PlotSheet?) {
+        mPlotSheet = plotSheet
+        mDataIsSet = true
     }
 
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        Timber.d("ChartView sizeChange!");
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        Timber.d("ChartView sizeChange!")
         if (mFragment != null) {
-            mFragment.checkAndUpdate();
+            mFragment!!.checkAndUpdate()
         }
     }
 }
