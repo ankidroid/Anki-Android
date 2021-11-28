@@ -14,176 +14,161 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.stats;
+package com.ichi2.anki.stats
 
-import com.ichi2.libanki.stats.Stats;
+import android.annotation.SuppressLint
+import com.ichi2.libanki.stats.Stats.AxisType
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * Interface between Stats.java and AdvancedStatistics.java
  */
-public class StatsMetaInfo {
-    boolean mDynamicAxis = false;
-    boolean mHasColoredCumulative = false;
-    Stats.AxisType mType;
-    int mTitle;
-    boolean mBackwards;
-    int[] mValueLabels;
-    int[] mColors;
-    int[] mAxisTitles;
-    int mMaxCards = 0;
-    int mMaxElements = 0;
-    double mFirstElement = 0;
-    double mLastElement = 0;
-    int mZeroIndex = 0;
-    double[][] mCumulative = null;
-    double mMcount;
-
-    double[][] mSeriesList;
-
-    boolean mStatsCalculated;
-    boolean mDataAvailable;
-
-    public boolean isStatsCalculated() {
-        return mStatsCalculated;
+@KotlinCleanup("Remove field prefixes, make properties private")
+@SuppressLint("VariableNamingDetector")
+class StatsMetaInfo {
+    var mDynamicAxis = false
+    var mHasColoredCumulative = false
+    var mType: AxisType? = null
+    var mTitle = 0
+    var mBackwards = false
+    var mValueLabels: IntArray? = null
+    var mColors: IntArray? = null
+    var mAxisTitles: IntArray? = null
+    var mMaxCards = 0
+    var mMaxElements = 0
+    var mFirstElement = 0.0
+    var mLastElement = 0.0
+    var mZeroIndex = 0
+    var mCumulative: Array<DoubleArray>? = null
+    var mMcount = 0.0
+    var mSeriesList: Array<DoubleArray>? = null
+    var isStatsCalculated = false
+    var isDataAvailable = false
+    fun getmSeriesList(): Array<DoubleArray>? {
+        return mSeriesList
     }
 
-    public void setStatsCalculated(boolean statsCalculated) {
-        this.mStatsCalculated = statsCalculated;
+    fun setmSeriesList(seriesList: Array<DoubleArray>) {
+        mSeriesList = seriesList
     }
 
-    public double[][] getmSeriesList() {
-        return mSeriesList;
+    fun ismDynamicAxis(): Boolean {
+        return mDynamicAxis
     }
 
-    public void setmSeriesList(double[][] seriesList) {
-        this.mSeriesList = seriesList;
+    fun setmDynamicAxis(dynamicAxis: Boolean) {
+        mDynamicAxis = dynamicAxis
     }
 
-    public boolean isDataAvailable() {
-        return mDataAvailable;
+    fun ismHasColoredCumulative(): Boolean {
+        return mHasColoredCumulative
     }
 
-    public void setDataAvailable(boolean dataAvailable) {
-        this.mDataAvailable = dataAvailable;
+    fun setmHasColoredCumulative(hasColoredCumulative: Boolean) {
+        mHasColoredCumulative = hasColoredCumulative
     }
 
-    public boolean ismDynamicAxis() {
-        return mDynamicAxis;
+    fun getmType(): AxisType? {
+        return mType
     }
 
-    public void setmDynamicAxis(boolean dynamicAxis) {
-        this.mDynamicAxis = dynamicAxis;
+    fun setmType(type: AxisType?) {
+        mType = type
     }
 
-    public boolean ismHasColoredCumulative() {
-        return mHasColoredCumulative;
+    fun getmTitle(): Int {
+        return mTitle
     }
 
-    public void setmHasColoredCumulative(boolean hasColoredCumulative) {
-        this.mHasColoredCumulative = hasColoredCumulative;
+    fun setmTitle(title: Int) {
+        mTitle = title
     }
 
-    public Stats.AxisType getmType() {
-        return mType;
+    fun ismBackwards(): Boolean {
+        return mBackwards
     }
 
-    public void setmType(Stats.AxisType type) {
-        this.mType = type;
+    fun setmBackwards(backwards: Boolean) {
+        mBackwards = backwards
     }
 
-    public int getmTitle() {
-        return mTitle;
+    fun getmValueLabels(): IntArray? {
+        return mValueLabels
     }
 
-    public void setmTitle(int title) {
-        this.mTitle = title;
+    fun setmValueLabels(valueLabels: IntArray?) {
+        mValueLabels = valueLabels
     }
 
-    public boolean ismBackwards() {
-        return mBackwards;
+    fun getmColors(): IntArray? {
+        return mColors
     }
 
-    public void setmBackwards(boolean backwards) {
-        this.mBackwards = backwards;
+    fun setmColors(colors: IntArray?) {
+        mColors = colors
     }
 
-    public int[] getmValueLabels() {
-        return mValueLabels;
+    fun getmAxisTitles(): IntArray? {
+        return mAxisTitles
     }
 
-    public void setmValueLabels(int[] valueLabels) {
-        this.mValueLabels = valueLabels;
+    fun setmAxisTitles(axisTitles: IntArray?) {
+        mAxisTitles = axisTitles
     }
 
-    public int[] getmColors() {
-        return mColors;
+    fun getmMaxCards(): Int {
+        return mMaxCards
     }
 
-    public void setmColors(int[] colors) {
-        this.mColors = colors;
+    fun setmMaxCards(maxCards: Int) {
+        mMaxCards = maxCards
     }
 
-    public int[] getmAxisTitles() {
-        return mAxisTitles;
+    fun getmMaxElements(): Int {
+        return mMaxElements
     }
 
-    public void setmAxisTitles(int[] axisTitles) {
-        this.mAxisTitles = axisTitles;
+    fun setmMaxElements(maxElements: Int) {
+        mMaxElements = maxElements
     }
 
-    public int getmMaxCards() {
-        return mMaxCards;
+    fun getmFirstElement(): Double {
+        return mFirstElement
     }
 
-    public void setmMaxCards(int maxCards) {
-        this.mMaxCards = maxCards;
+    fun setmFirstElement(firstElement: Double) {
+        mFirstElement = firstElement
     }
 
-    public int getmMaxElements() {
-        return mMaxElements;
+    fun getmLastElement(): Double {
+        return mLastElement
     }
 
-    public void setmMaxElements(int maxElements) {
-        this.mMaxElements = maxElements;
+    fun setmLastElement(lastElement: Double) {
+        mLastElement = lastElement
     }
 
-    public double getmFirstElement() {
-        return mFirstElement;
+    fun getmZeroIndex(): Int {
+        return mZeroIndex
     }
 
-    public void setmFirstElement(double firstElement) {
-        this.mFirstElement = firstElement;
+    fun setmZeroIndex(zeroIndex: Int) {
+        mZeroIndex = zeroIndex
     }
 
-    public double getmLastElement() {
-        return mLastElement;
+    fun getmCumulative(): Array<DoubleArray>? {
+        return mCumulative
     }
 
-    public void setmLastElement(double lastElement) {
-        this.mLastElement = lastElement;
+    fun setmCumulative(cumulative: Array<DoubleArray>?) {
+        mCumulative = cumulative
     }
 
-    public int getmZeroIndex() {
-        return mZeroIndex;
+    fun getmMcount(): Double {
+        return mMcount
     }
 
-    public void setmZeroIndex(int zeroIndex) {
-        this.mZeroIndex = zeroIndex;
-    }
-
-    public double[][] getmCumulative() {
-        return mCumulative;
-    }
-
-    public void setmCumulative(double[][] cumulative) {
-        this.mCumulative = cumulative;
-    }
-
-    public double getmMcount() {
-        return mMcount;
-    }
-
-    public void setmMcount(double Mcount) {
-        this.mMcount = Mcount;
+    fun setmMcount(Mcount: Double) {
+        mMcount = Mcount
     }
 }
