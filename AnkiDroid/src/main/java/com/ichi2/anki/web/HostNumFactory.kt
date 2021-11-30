@@ -14,15 +14,15 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.web;
+package com.ichi2.anki.web
 
-import android.content.Context;
+import android.content.Context
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.libanki.sync.HostNum
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.libanki.sync.HostNum;
-
-public class HostNumFactory {
-    public static HostNum getInstance(Context context) {
-        return PreferenceBackedHostNum.fromPreferences(AnkiDroidApp.getSharedPrefs(context));
+object HostNumFactory {
+    @JvmStatic
+    fun getInstance(context: Context?): HostNum {
+        return PreferenceBackedHostNum.fromPreferences(AnkiDroidApp.getSharedPrefs(context))
     }
 }
