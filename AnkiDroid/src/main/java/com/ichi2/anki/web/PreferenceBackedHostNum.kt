@@ -14,79 +14,62 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.web;
+package com.ichi2.anki.web
 
-import android.content.SharedPreferences;
+import android.content.SharedPreferences
+import androidx.annotation.CheckResult
+import com.ichi2.libanki.sync.HostNum
+import timber.log.Timber
 
-import com.ichi2.libanki.sync.HostNum;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class PreferenceBackedHostNum extends HostNum {
-
-    private final SharedPreferences mPreferences;
-
-    public PreferenceBackedHostNum(Integer hostNum, SharedPreferences preferences) {
-        super(hostNum);
-        this.mPreferences = preferences;
+class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPreferences) : HostNum(hostNum) {
+    /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers */
+    override fun reset() {
+        hostNum = getDefaultHostNum()
     }
 
-    public static PreferenceBackedHostNum fromPreferences(SharedPreferences preferences) {
-        Integer hostNum = getHostNum(preferences);
-        return new PreferenceBackedHostNum(hostNum, preferences);
+    override fun getHostNum(): Int {
+        return getHostNum(preferences)
     }
 
-    /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers*/
-    @Override
-    public void reset() {
-        setHostNum(getDefaultHostNum());
+    override fun setHostNum(newHostNum: Int?) {
+        Timber.d("Setting hostnum to %s", newHostNum)
+        val prefValue = convertToPreferenceValue(newHostNum)
+        preferences.edit().putString("hostNum", prefValue).apply()
+        super.setHostNum(newHostNum)
     }
-
-    @Override
-    public Integer getHostNum() {
-        return getHostNum(this.mPreferences);
-    }
-
-    @Override
-    public void setHostNum(@Nullable Integer newHostNum) {
-        Timber.d("Setting hostnum to %s", newHostNum);
-        String prefValue = convertToPreferenceValue(newHostNum);
-        mPreferences.edit().putString("hostNum", prefValue).apply();
-        super.setHostNum(newHostNum);
-    }
-
-    private static Integer getHostNum(SharedPreferences preferences) {
-        try {
-            String hostNum = preferences.getString("hostNum", null);
-            Timber.v("Obtained hostNum: %s", hostNum);
-            return convertFromPreferenceValue(hostNum);
-        } catch (Exception e) {
-            Timber.e(e, "Failed to get hostNum");
-            return getDefaultHostNum();
-        }
-    }
-
-    private static Integer convertFromPreferenceValue(String hostNum) {
-        if (hostNum == null) {
-            return getDefaultHostNum();
-        }
-        try {
-            return Integer.parseInt(hostNum);
-        } catch (Exception e) {
-            Timber.w(e);
-            return getDefaultHostNum();
-        }
-    }
-
 
     @CheckResult
-    private String convertToPreferenceValue(Integer newHostNum) {
-        if (newHostNum == null) {
-            return null;
-        } else {
-            return newHostNum.toString();
+    private fun convertToPreferenceValue(newHostNum: Int?): String? {
+        return newHostNum?.toString()
+    }
+
+    companion object {
+        @JvmStatic
+        fun fromPreferences(preferences: SharedPreferences): PreferenceBackedHostNum {
+            val hostNum = getHostNum(preferences)
+            return PreferenceBackedHostNum(hostNum, preferences)
+        }
+
+        private fun getHostNum(preferences: SharedPreferences): Int {
+            return try {
+                val hostNum = preferences.getString("hostNum", null)
+                Timber.v("Obtained hostNum: %s", hostNum)
+                convertFromPreferenceValue(hostNum)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to get hostNum")
+                getDefaultHostNum()
+            }
+        }
+
+        private fun convertFromPreferenceValue(hostNum: String?): Int {
+            return if (hostNum == null) {
+                getDefaultHostNum()
+            } else try {
+                hostNum.toInt()
+            } catch (e: Exception) {
+                Timber.w(e)
+                getDefaultHostNum()
+            }
         }
     }
 }
