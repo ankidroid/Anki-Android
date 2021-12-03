@@ -85,7 +85,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
                 Timber.d("Total uncompressed size will be: %d", uncompressedSize);
                 Timber.d("Total available size is:         %d", availableSpace);
-                if (uncompressedSize > availableSpace) {
+                if (uncompressedSize < availableSpace) {
                     Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace);
                     mLog.add(getRes().getString(R.string.import_log_insufficient_space_error,android.text.format.Formatter.formatFileSize(mContext, uncompressedSize), android.text.format.Formatter.formatFileSize(mContext, availableSpace)));
                     return;

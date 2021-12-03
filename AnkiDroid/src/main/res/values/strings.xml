@@ -6,5 +6,4 @@
     <!-- https://developers.google.com/analytics/devguides/collection/android/v4/limits-quotas -->
     <integer name="ga_sampleFrequency">10</integer>
     <bool name="ga_anonymizeIp">true</bool>
-    <string name="import_log_insufficient_space_error">There is not enough space!\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble! Sync uses less space than import. You may try importing the package on some other device (for eg. Anki Desktop) and then sync it to this device.</string>
 </resources>
