@@ -159,6 +159,7 @@
     <string name="import_log_failed_unzip">Gagal mengekstrak apkg: %s</string>
     <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
     <string name="import_log_failed_validate">validasi apkg gagal</string>
+    <string name="import_log_insufficient_space">Tidak ada ruang yang cukup untuk mengekstrak paket. Perlu %1$d, tersedia %2$d</string>
     <string name="import_log_file_cache_cleared">Galat mengimpor berkas. Harap coba lagi</string>
     <string name="import_succeeded_but_check_database">Impor data berhasil namun pembersihan pasca impor gagal.Periksa basisdata nanti. Sebab: %s</string>
     <string name="import_error_unhandled_request">Tidak dapat memproses permintaan impor</string>

@@ -162,6 +162,7 @@
     <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
     <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
     <string name="import_log_failed_validate">apkg-validatie mislukt</string>
+    <string name="import_log_insufficient_space">Er is niet genoeg ruimte om het pakket uit te pakken. %1$d vereist, beschikbare %2$d</string>
     <string name="import_log_file_cache_cleared">Fout bij het importeren van het bestand, waarschijnlijk een cache die tijdens de verwerking wordt gewist.\nGelieve opnieuw te proberen</string>
     <string name="import_succeeded_but_check_database">Het importeren van gegevens is gelukt, maar de opruiming na de import is mislukt. Voer later de databasecontrole uit. Kernoorzaak: %s</string>
     <string name="import_error_unhandled_request">Kan importverzoek niet verwerken</string>

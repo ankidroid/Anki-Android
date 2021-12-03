@@ -162,6 +162,7 @@
     <string name="import_log_failed_unzip">Échec de la décompression de l\'apkg: %s</string>
     <string name="import_log_failed_copy_to">Échec de la copie de l\'apkg vers %s</string>
     <string name="import_log_failed_validate">Validation de l\'apkg a échoué</string>
+    <string name="import_log_insufficient_space">Il n\'y a pas assez d\'espace pour décompresser le fichier. %1$d requis, disponible %2$d</string>
     <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache soit effacé pendant le traitement.\nVeuillez réessayer</string>
     <string name="import_succeeded_but_check_database">L\'importation de données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
     <string name="import_error_unhandled_request">Impossible de traiter la demande d\'importation</string>

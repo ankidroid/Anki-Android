@@ -168,6 +168,7 @@
     <string name="import_log_failed_unzip">Не вдалося розпакувати apkg: %s</string>
     <string name="import_log_failed_copy_to">Помилка копіювання apkg до %s</string>
     <string name="import_log_failed_validate">apkg не пройшло перевірку</string>
+    <string name="import_log_insufficient_space">Недостатньо місця для розархівування пакунку. Необхідно %1$d, доступно %2$d</string>
     <string name="import_log_file_cache_cleared">Помилка імпорту файлу, можливо очищено кеш під час обробки.\nБудь ласка, спробуйте ще раз</string>
     <string name="import_succeeded_but_check_database">Імпорт даних виконано успішно, але не вдалось виконати після імпортну очистку. Запустіть перевірку бази даних пізніше. Корінь причина: %s</string>
     <string name="import_error_unhandled_request">Не вдалося обробити запит на імпорт</string>

@@ -162,6 +162,7 @@
     <string name="import_log_failed_unzip">Apkg ಅನ್ನು ಅನ್ಜಿಪ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ:%s</string>
     <string name="import_log_failed_copy_to">%s ಗೆ apkg ಅನ್ನು ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
     <string name="import_log_failed_validate">apkg ಮೌಲ್ಯಮಾಪನ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="import_log_insufficient_space">ಪ್ಯಾಕೇಜ್ ಅನ್ನು ಅನ್ಜಿಪ್ ಮಾಡಲು ಸಾಕಷ್ಟು ಸ್ಥಳವಿಲ್ಲ. %1$d ಅಗತ್ಯವಿದೆ,%2$d ಲಭ್ಯವಿದೆ</string>
     <string name="import_log_file_cache_cleared">ಫೈಲ್ ಆಮದು ಮಾಡುವಲ್ಲಿ ದೋಷ, ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಸಂಗ್ರಹ ಸ್ಪಷ್ಟವಾಗಿದೆ. \n ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="import_succeeded_but_check_database">ಡೇಟಾ ಆಮದು ಯಶಸ್ವಿಯಾಗಿದೆ ಆದರೆ ಆಮದು ನಂತರದ ಸ್ವಚ್ clean ಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ. ನಂತರ ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ. ಮೂಲ ಕಾರಣ: %s</string>
     <string name="import_error_unhandled_request">ಆಮದು ವಿನಂತಿಯನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>

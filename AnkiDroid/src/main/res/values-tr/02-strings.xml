@@ -162,6 +162,7 @@
     <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
     <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
     <string name="import_log_failed_validate">apkg onaylama başarısız</string>
+    <string name="import_log_insufficient_space">Paketi zipten çıkarmak için yeterli alan yok. %1$d gerekti, %2$d mevcut</string>
     <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
     <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
     <string name="import_error_unhandled_request">Aktarım isteği işlenemedi</string>

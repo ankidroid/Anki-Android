@@ -162,6 +162,7 @@
     <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
     <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
     <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
+    <string name="import_log_insufficient_space">Mankas spaco por maldensigi la pakaĵon. Postulas: %1$d, disponeble: %2$d</string>
     <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
     <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
     <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
