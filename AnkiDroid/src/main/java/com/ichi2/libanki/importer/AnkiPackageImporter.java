@@ -87,7 +87,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 Timber.d("Total available size is:         %d", availableSpace);
                 if (uncompressedSize > availableSpace) {
                     Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace);
-                    mLog.add(getRes().getString(R.string.import_log_insufficient_space, uncompressedSize, availableSpace));
+                    mLog.add(getRes().getString(R.string.import_log_insufficient_space,android.text.format.Formatter.formatFileSize(mContext, uncompressedSize), android.text.format.Formatter.formatFileSize(mContext, availableSpace)));
                     return;
                 }
                 // The filename that we extract should be collection.anki2

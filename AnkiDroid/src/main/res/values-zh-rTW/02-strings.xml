@@ -159,7 +159,6 @@
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
     <string name="import_log_failed_validate">Apkg 驗證失敗</string>
-    <string name="import_log_insufficient_space">無足夠儲存空間用於解壓縮檔案。需要 %1$d，可用 %2$d</string>
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
     <string name="import_error_unhandled_request">無法執行匯入請求</string>

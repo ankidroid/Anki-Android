@@ -164,7 +164,6 @@
     <string name="import_log_failed_unzip">Ispachetamentu de s\'apkg fallidu: %s</string>
     <string name="import_log_failed_copy_to">Còpia de s\'apkg in %s fallida</string>
     <string name="import_log_failed_validate">validatzione de s\'apkg fallida</string>
-    <string name="import_log_insufficient_space">Non b\'at logu bastante pro ispachetare su pachete zip. B\'at bisòngiu de %1$d, e tenes %2$d a disponimentu</string>
     <string name="import_log_file_cache_cleared">Faddina in s\'importatzione de su documentu, probabilmente un\'isboidamentu de sa memòria temporànea durante s\'elaboratzione.\n
                               Torra a proare</string>
     <string name="import_succeeded_but_check_database">S\'importatzione de sos datos est andada bene ma s\'innetadura a pustis de s\'elaboratzione est fallida. Prus a tardu faghe una verìfica de sa base de datos. Càusa de raighina: %s</string>

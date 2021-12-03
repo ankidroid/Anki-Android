@@ -160,7 +160,6 @@
     <string name="import_log_failed_unzip">apkg 압축 해제 실패: %s</string>
     <string name="import_log_failed_copy_to">%s에서 apkg 복사 실패</string>
     <string name="import_log_failed_validate">apkg 검사 실패</string>
-    <string name="import_log_insufficient_space">패키지의 압축을 해제할 공간이 부족합니다. %1$d 만큼 공간이 더 필요하며, 현재 %2$d 만큼 사용 가능합니다.</string>
     <string name="import_log_file_cache_cleared">파일을 불러오는데 문제가 발생했습니다. 처리 중 캐시가 삭제됐을 수 있습니다.\n다시 시도하십시오.</string>
     <string name="import_succeeded_but_check_database">데이타를 가져오는 데는 성공했지만, 정리에 실패했습니다. 나중에 데이터베이스 점검하기를 실행해주십시오. 원인: %s</string>
     <string name="import_error_unhandled_request">가져오기 요청을 처리할 수 없습니다.</string>

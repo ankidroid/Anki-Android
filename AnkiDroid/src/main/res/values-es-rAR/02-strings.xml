@@ -162,7 +162,6 @@
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">falló la validación apkg</string>
-    <string name="import_log_insufficient_space">No hay suficiente espacio para descomprimir el paquete. Necesita %1$d, disponible %2$d</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>

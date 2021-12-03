@@ -159,7 +159,6 @@
     <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
     <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
     <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
-    <string name="import_log_insufficient_space">Пакетны ачу өчен урын җитми. Кирәк: %1$d, бар: %2$d</string>
     <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде.\nЯңадан тырышып карагыз</string>
     <string name="import_succeeded_but_check_database">Импортлау уңышлы үтте, чистарту - уңышсыз. Мәгълүмәт базасын тикшерегез. Төп сәбәп: %s</string>
     <string name="import_error_unhandled_request">Импортлау таләбен эшкәртеп булмый</string>

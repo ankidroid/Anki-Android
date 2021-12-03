@@ -162,7 +162,6 @@
     <string name="import_log_failed_unzip">apkg അൺ‌സിപ്പ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:%s</string>
     <string name="import_log_failed_copy_to">%s ലേക്ക് apkg പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="import_log_failed_validate">apkg മൂല്യനിർണ്ണയം പരാജയപ്പെട്ടു</string>
-    <string name="import_log_insufficient_space">പാക്കേജ് അൺ‌സിപ്പ് ചെയ്യുന്നതിന് മതിയായ ഇടമില്ല. %1$d ആവശ്യമാണ്,%2$d available ലഭ്യമാണ്</string>
     <string name="import_log_file_cache_cleared">ഫയൽ ഇമ്പോർട്ടുചെയ്യുന്നതിൽ പിശക്, പ്രോസസ്സിംഗ് സമയത്ത് ഒരു കാഷെ വ്യക്തമാകും. Lease n വീണ്ടും ശ്രമിക്കുക</string>
     <string name="import_succeeded_but_check_database">ഡാറ്റ ഇറക്കുമതി വിജയിച്ചു, പക്ഷേ ഇറക്കുമതിക്ക് ശേഷമുള്ള വൃത്തിയാക്കൽ പരാജയപ്പെട്ടു. ഡാറ്റാബേസ് പിന്നീട് പ്രവർത്തിപ്പിക്കുക. മൂല കാരണം:%s</string>
     <string name="import_error_unhandled_request">ഇറക്കുമതി അഭ്യർത്ഥന പ്രോസസ്സ് ചെയ്യാൻ കഴിയില്ല</string>

@@ -168,7 +168,6 @@
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
     <string name="import_log_failed_validate">Не удалось проверить apkg</string>
-    <string name="import_log_insufficient_space">Недостаточно места для распаковки. Требуется %1$d, но доступно %2$d</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
     <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>

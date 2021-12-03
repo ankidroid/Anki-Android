@@ -168,7 +168,6 @@
     <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
     <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
     <string name="import_log_failed_validate">Selhalo ověření apkg </string>
-    <string name="import_log_insufficient_space">Není dostatek místa pro rozbalení balíčku. Potřeba %1$d, k dispozici %2$d</string>
     <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
     <string name="import_succeeded_but_check_database">Import dat se zdařil, ale čištění po importu selhalo. Spusťte kontrolu databáze. Příčina: %s</string>
     <string name="import_error_unhandled_request">Nelze zpracovat žádost o import</string>
