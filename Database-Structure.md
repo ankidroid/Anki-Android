@@ -5,9 +5,9 @@ Additional thanks to @bibstha for [more documentation](https://github.com/bibsth
 
 # Anki database structure
 
-Anki uses one single sqlite database to store information of multiple decks, templates, fields and cards. This file can be found inside the Anki package file (.apkg file) with the extension anki2.
+Anki uses a single [SQLite](https://sqlite.org/index.html) database to store information on all of its decks, templates, fields and cards. This file can be found inside the Anki package file (the `.apkg` file) with the extension `.anki2`.
 
-Extracting example.apkg we have the following structure.
+Extracting `example.apkg` we have the following structure.
 
 	.
 	├── example
@@ -15,7 +15,7 @@ Extracting example.apkg we have the following structure.
 	│   └── media
 	└── example.apkg
 
-In linux *sqliteman* or *sqlite3* can be used to read and modify the .anki2 files.
+In linux `sqliteman` or `sqlite3` can be used to read and modify the `.anki2` files.
 
 # Terminology
 
