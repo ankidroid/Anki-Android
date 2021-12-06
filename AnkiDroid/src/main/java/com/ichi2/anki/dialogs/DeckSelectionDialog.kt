@@ -49,6 +49,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.Objects.requireNonNull
+import kotlin.collections.ArrayList
 
 /**
  * The dialog which allow to select a deck. It is opened when the user click on a deck name in stats, browser or note editor.
@@ -89,11 +90,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
         }
         mDialog = builder.build()
+        recyclerView.scrollToPosition(getCurrentSelectedDeckPosition(arguments))
         return mDialog!!
     }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
         return arguments.getString(SUMMARY_MESSAGE)
+    }
+
+    private fun getCurrentSelectedDeckPosition(arguments: Bundle): Int {
+        return arguments.getInt(CURRENT_SELECTED_DECK_POSITION)
     }
 
     private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> {
@@ -323,7 +329,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
             return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
-            } else DeckNameComparator.INSTANCE.compare(name, other.name)
+            } else {
+
+                DeckNameComparator.INSTANCE.compare(name, other.name)
+            }
         }
 
         override fun describeContents(): Int {
@@ -375,15 +384,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
         private const val DECK_NAMES = "deckNames"
+        private const val CURRENT_SELECTED_DECK_POSITION = "currentSelectedDeckPosition"
 
         /**
          * A dialog which handles selecting a deck
          */
         @JvmStatic
-        fun newInstance(title: String, summaryMessage: String?, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
+        fun newInstance(title: String, summaryMessage: String?, currentSelectedDeckId: Long, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()
+            var position = -1
+            // finding the position
+            var deckSorted = decks.sorted()
+            for (item in deckSorted.indices) {
+                if (deckSorted[item].deckId == currentSelectedDeckId) {
+                    position = item
+                    break
+                }
+            }
             args.putString(SUMMARY_MESSAGE, summaryMessage)
+            args.putInt(CURRENT_SELECTED_DECK_POSITION, position)
             args.putString(TITLE, title)
             args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton)
             args.putParcelableArrayList(DECK_NAMES, ArrayList(decks))

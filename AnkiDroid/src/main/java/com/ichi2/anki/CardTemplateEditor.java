@@ -84,6 +84,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
+import static com.ichi2.libanki.stats.Stats.ALL_DECKS_ID;
 
 
 /**
@@ -107,6 +108,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     // the current editor view among front/style/back
     private HashMap<Integer, Integer> mEditorViewId;
     private int mStartingOrdId;
+    private static SelectableDeck selectedDeck;
 
     private static final String EDITOR_POSITION_KEY = "editorPosition";
     private static final String EDITOR_VIEW_ID_KEY = "editorViewId";
@@ -282,6 +284,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             message = getString(R.string.model_manager_deck_override_removed_message, templateName);
         } else {
             Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
+            selectedDeck=deck;
             template.put("did", deck.getDeckId());
             message = getString(R.string.model_manager_deck_override_added_message, templateName, deck.getName());
         }
@@ -741,7 +744,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
             List<SelectableDeck> decks = SelectableDeck.fromCollection(col, nonDynamic);
             String title = getString(R.string.card_template_editor_deck_override);
-            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks);
+            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation,(selectedDeck!=null) ?selectedDeck.getDeckId():ALL_DECKS_ID,true, decks);
             AnkiActivity.showDialogFragment(activity, dialog);
         }
 
