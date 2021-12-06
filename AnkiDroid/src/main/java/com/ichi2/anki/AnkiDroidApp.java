@@ -59,13 +59,10 @@ import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
-import org.acra.annotation.AcraCore;
-import org.acra.annotation.AcraDialog;
-import org.acra.annotation.AcraHttpSender;
-import org.acra.annotation.AcraLimiter;
-import org.acra.annotation.AcraToast;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.HttpSenderConfigurationBuilder;
+import org.acra.config.LimiterConfigurationBuilder;
 import org.acra.config.LimiterData;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
@@ -93,73 +90,6 @@ import static timber.log.Timber.DebugTree;
 /**
  * Application class.
  */
-@SuppressLint("NonConstantResourceId") // https://github.com/ACRA/acra/issues/810
-@AcraCore(
-        buildConfigClass = org.acra.dialog.BuildConfig.class,
-        excludeMatchingSharedPreferencesKeys = {"username","hkey"},
-        reportContent = {
-            ReportField.REPORT_ID,
-            ReportField.APP_VERSION_CODE,
-            ReportField.APP_VERSION_NAME,
-            ReportField.PACKAGE_NAME,
-            ReportField.FILE_PATH,
-            ReportField.PHONE_MODEL,
-            ReportField.ANDROID_VERSION,
-            ReportField.BUILD,
-            ReportField.BRAND,
-            ReportField.PRODUCT,
-            ReportField.TOTAL_MEM_SIZE,
-            ReportField.AVAILABLE_MEM_SIZE,
-            ReportField.BUILD_CONFIG,
-            ReportField.CUSTOM_DATA,
-            ReportField.STACK_TRACE,
-            ReportField.STACK_TRACE_HASH,
-            //ReportField.INITIAL_CONFIGURATION,
-            ReportField.CRASH_CONFIGURATION,
-            //ReportField.DISPLAY,
-            ReportField.USER_COMMENT,
-            ReportField.USER_APP_START_DATE,
-            ReportField.USER_CRASH_DATE,
-            //ReportField.DUMPSYS_MEMINFO,
-            //ReportField.DROPBOX,
-            ReportField.LOGCAT,
-            //ReportField.EVENTSLOG,
-            //ReportField.RADIOLOG,
-            //ReportField.IS_SILENT,
-            ReportField.INSTALLATION_ID,
-            //ReportField.USER_EMAIL,
-            //ReportField.DEVICE_FEATURES,
-            ReportField.ENVIRONMENT,
-            //ReportField.SETTINGS_SYSTEM,
-            //ReportField.SETTINGS_SECURE,
-            //ReportField.SETTINGS_GLOBAL,
-            ReportField.SHARED_PREFERENCES,
-            //ReportField.APPLICATION_LOG,
-            ReportField.MEDIA_CODEC_LIST,
-            ReportField.THREAD_DETAILS
-            //ReportField.USER_IP
-        },
-        logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" }
-)
-@AcraDialog(
-        reportDialogClass = AnkiDroidCrashReportDialog.class,
-        resCommentPrompt =  R.string.empty_string,
-        resTitle =  R.string.feedback_title,
-        resText =  R.string.feedback_default_text,
-        resPositiveButtonText = R.string.feedback_report,
-        resIcon = R.drawable.logo_star_144dp
-)
-@AcraHttpSender(
-        httpMethod = HttpSender.Method.PUT,
-        uri = BuildConfig.ACRA_URL
-)
-@AcraToast(
-        resText = R.string.feedback_auto_toast_text
-)
-@AcraLimiter(
-        exceptionClassLimit = 1000,
-        stacktraceLimit = 1
-)
 public class AnkiDroidApp extends Application {
 
     /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection */
@@ -301,7 +231,56 @@ public class AnkiDroidApp extends Application {
         SharedPreferences preferences = getSharedPrefs(this);
 
         // Setup logging and crash reporting
-        mAcraCoreConfigBuilder = new CoreConfigurationBuilder(this);
+        mAcraCoreConfigBuilder = new CoreConfigurationBuilder(this)
+                .setBuildConfigClass(org.acra.dialog.BuildConfig.class)
+                .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
+                .setReportContent(ReportField.REPORT_ID,
+                        ReportField.APP_VERSION_CODE,
+                        ReportField.APP_VERSION_NAME,
+                        ReportField.PACKAGE_NAME,
+                        ReportField.FILE_PATH,
+                        ReportField.PHONE_MODEL,
+                        ReportField.ANDROID_VERSION,
+                        ReportField.BUILD,
+                        ReportField.BRAND,
+                        ReportField.PRODUCT,
+                        ReportField.TOTAL_MEM_SIZE,
+                        ReportField.AVAILABLE_MEM_SIZE,
+                        ReportField.BUILD_CONFIG,
+                        ReportField.CUSTOM_DATA,
+                        ReportField.STACK_TRACE,
+                        ReportField.STACK_TRACE_HASH,
+                        ReportField.CRASH_CONFIGURATION,
+                        ReportField.USER_COMMENT,
+                        ReportField.USER_APP_START_DATE,
+                        ReportField.USER_CRASH_DATE,
+                        ReportField.LOGCAT,
+                        ReportField.INSTALLATION_ID,
+                        ReportField.ENVIRONMENT,
+                        ReportField.SHARED_PREFERENCES,
+                        ReportField.MEDIA_CODEC_LIST,
+                        ReportField.THREAD_DETAILS)
+                .setLogcatArguments("-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S");
+        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
+                .setReportDialogClass(AnkiDroidCrashReportDialog.class)
+                .setResCommentPrompt(R.string.empty_string)
+                .setResTitle(R.string.feedback_title)
+                .setResText(R.string.feedback_default_text)
+                .setResPositiveButtonText(R.string.feedback_report)
+                .setResIcon(R.drawable.logo_star_144dp)
+                .setEnabled(true);
+        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder.class)
+                .setHttpMethod(HttpSender.Method.PUT)
+                .setUri(BuildConfig.ACRA_URL)
+                .setEnabled(true);
+        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class)
+                .setResText(R.string.feedback_auto_toast_text)
+                .setEnabled(true);
+        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class)
+                .setExceptionClassLimit(1000)
+                .setStacktraceLimit(1)
+                .setEnabled(true);
+
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
