@@ -226,7 +226,7 @@ public class DeckSpinnerSelection {
      * @return True if selection succeeded.
      */
     public boolean selectDeckById(long deckId, boolean setAsCurrentDeck) {
-        mDeckId=deckId;
+        mDeckId = deckId;
         if (deckId == ALL_DECKS_ID) {
             return selectAllDecks();
         }
@@ -278,7 +278,7 @@ public class DeckSpinnerSelection {
         if (shouldHideDefaultDeck()) {
             decks.removeIf(x -> x.getDeckId() == Consts.DEFAULT_DECK_ID);
         }
-        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null,mDeckId, false, decks);
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, mDeckId, false, decks);
         AnkiActivity.showDialogFragment(mWithFragmentManager.getFragmentManager(), dialog);
     }
 

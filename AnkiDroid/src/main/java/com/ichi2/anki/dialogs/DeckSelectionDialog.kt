@@ -80,6 +80,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
+        deckLayoutManager.scrollToPosition(getIndexOfSelectedDeck(arguments, getCurrentSelectedDeckID(arguments)))
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
@@ -90,16 +91,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
         }
         mDialog = builder.build()
-        recyclerView.scrollToPosition(getCurrentSelectedDeckPosition(arguments))
         return mDialog!!
+    }
+
+    private fun getIndexOfSelectedDeck(arguments: Bundle, deckId: Long): Int {
+        var decks: List<SelectableDeck> = getDeckNames(arguments)
+        decks = decks.sorted()
+        for (item in decks.indices) {
+            if (decks[item].deckId == deckId) {
+                return item
+            }
+        }
+        return 0
     }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
         return arguments.getString(SUMMARY_MESSAGE)
     }
 
-    private fun getCurrentSelectedDeckPosition(arguments: Bundle): Int {
-        return arguments.getInt(CURRENT_SELECTED_DECK_POSITION)
+    private fun getCurrentSelectedDeckID(arguments: Bundle): Long {
+        return arguments.getLong(CURRENT_SELECTED_DECK_ID)
     }
 
     private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> {
@@ -329,10 +340,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
             return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
-            } else {
-
-                DeckNameComparator.INSTANCE.compare(name, other.name)
-            }
+            } else DeckNameComparator.INSTANCE.compare(name, other.name)
         }
 
         override fun describeContents(): Int {
@@ -384,7 +392,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
         private const val DECK_NAMES = "deckNames"
-        private const val CURRENT_SELECTED_DECK_POSITION = "currentSelectedDeckPosition"
+        private const val CURRENT_SELECTED_DECK_ID = "currentSelectedDeckID"
 
         /**
          * A dialog which handles selecting a deck
@@ -393,17 +401,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         fun newInstance(title: String, summaryMessage: String?, currentSelectedDeckId: Long, keepRestoreDefaultButton: Boolean, decks: List<SelectableDeck>): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()
-            var position = -1
-            // finding the position
-            var deckSorted = decks.sorted()
-            for (item in deckSorted.indices) {
-                if (deckSorted[item].deckId == currentSelectedDeckId) {
-                    position = item
-                    break
-                }
-            }
             args.putString(SUMMARY_MESSAGE, summaryMessage)
-            args.putInt(CURRENT_SELECTED_DECK_POSITION, position)
+            args.putLong(CURRENT_SELECTED_DECK_ID, currentSelectedDeckId)
             args.putString(TITLE, title)
             args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton)
             args.putParcelableArrayList(DECK_NAMES, ArrayList(decks))

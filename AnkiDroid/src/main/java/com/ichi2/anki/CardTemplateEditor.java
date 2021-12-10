@@ -284,7 +284,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             message = getString(R.string.model_manager_deck_override_removed_message, templateName);
         } else {
             Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
-            selectedDeck=deck;
+            selectedDeck = deck;
             template.put("did", deck.getDeckId());
             message = getString(R.string.model_manager_deck_override_added_message, templateName, deck.getName());
         }
@@ -744,7 +744,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
             List<SelectableDeck> decks = SelectableDeck.fromCollection(col, nonDynamic);
             String title = getString(R.string.card_template_editor_deck_override);
-            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation,(selectedDeck!=null) ?selectedDeck.getDeckId():ALL_DECKS_ID,true, decks);
+            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation, (selectedDeck != null) ? selectedDeck.getDeckId() : ALL_DECKS_ID, true, decks);
             AnkiActivity.showDialogFragment(activity, dialog);
         }
 
