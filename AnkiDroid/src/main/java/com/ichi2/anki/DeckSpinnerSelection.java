@@ -278,6 +278,7 @@ public class DeckSpinnerSelection {
         if (shouldHideDefaultDeck()) {
             decks.removeIf(x -> x.getDeckId() == Consts.DEFAULT_DECK_ID);
         }
+
         DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(mContext.getString(R.string.search_deck), null, mDeckId, false, decks);
         AnkiActivity.showDialogFragment(mWithFragmentManager.getFragmentManager(), dialog);
     }
