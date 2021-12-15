@@ -1503,6 +1503,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     NotificationChannels.Channel.SYNC);
         } else {
             if (syncMessage == null || syncMessage.length() == 0) {
+                Connection.setAllowSyncOnNoConnection(false);
                 if (messageResource == R.string.youre_offline && !Connection.getAllowSyncOnNoConnection()) {
                     //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     View root = this.findViewById(R.id.root_layout);
@@ -1945,7 +1946,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
                         case CONNECTION_ERROR:
-                            dialogMessage = res.getString(R.string.sync_connection_error);
+                            Connection.isOnline();
+                            dialogMessage = "You Are Offline";
                             if (result.length >= 0 && result[0] instanceof Exception) {
                                 dialogMessage += "\n\n" + ((Exception) result[0]).getLocalizedMessage();
                             }
