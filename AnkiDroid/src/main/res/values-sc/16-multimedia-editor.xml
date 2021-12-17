@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Iseta</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">B\'at àpidu unu problema</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">Sos SVGs non sunt a disponimentu pro s\'antiprima</string>
     <string name="multimedia_editor_png_paste_error">Faddina in sa cunversione de s\'immàgine in punta de billete a su formadu png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Allega unu cuntenutu multimediale a su campu %1$s</string>
     <string name="multimedia_editor_attach_media">Allega unu documentu multimediale</string>
@@ -124,5 +124,5 @@
     <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres segare?</string>
     <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
     <string name="activity_result_unexpected">S\'aplicatzione at frunidu unu valore no isetadu. Dias pòdere dèpere impreare un\'aplicatzione diferente</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Cuntenutos de su campu</string>
 </resources>

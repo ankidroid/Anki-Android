@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
     <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱵᱷᱩᱞ</string>
-    <string name="import_log_insufficient_space">ᱯᱮᱠᱮᱡ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ %1$d ᱫᱚᱨᱠᱟᱨ, %2$d ᱢᱮᱱᱟᱜᱼᱟ</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱵᱷᱩᱞ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
     <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
     <string name="import_error_unhandled_request">ᱞᱟᱫᱮ ᱱᱮᱦᱚᱨ ᱵᱟᱝ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>

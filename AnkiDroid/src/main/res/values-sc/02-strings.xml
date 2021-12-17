@@ -139,7 +139,7 @@
     <string name="card_editor_reset_card">Reseta su progressu</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Torra a pranificare</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Antiprima</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="error_insufficient_memory">S\'operatzione no est possìbile pro neghe de sa memòria chi non bastat in su dispositivu tuo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Muda de nùmene</string>
     <string name="default_conf_delete_error">Su grupu de optziones predefinidu non si podet bogare</string>
@@ -164,7 +164,7 @@
     <string name="import_log_failed_unzip">Ispachetamentu de s\'apkg fallidu: %s</string>
     <string name="import_log_failed_copy_to">Còpia de s\'apkg in %s fallida</string>
     <string name="import_log_failed_validate">validatzione de s\'apkg fallida</string>
-    <string name="import_log_insufficient_space">Non b\'at logu bastante pro ispachetare su pachete zip. B\'at bisòngiu de %1$d, e tenes %2$d a disponimentu</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Faddina in s\'importatzione de su documentu, probabilmente un\'isboidamentu de sa memòria temporànea durante s\'elaboratzione.\n
                               Torra a proare</string>
     <string name="import_succeeded_but_check_database">S\'importatzione de sos datos est andada bene ma s\'innetadura a pustis de s\'elaboratzione est fallida. Prus a tardu faghe una verìfica de sa base de datos. Càusa de raighina: %s</string>
@@ -350,7 +350,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">S\'ischermada printzipale tua non permitet a AnkiDroid de annànghere incurtzadas</string>
     <string name="create_shortcut_error">Errore annanghende s\'incurtzada: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Pone in majùsculu sas fràsias</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barra de iscurrimentu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -378,11 +378,11 @@
     <string name="import_mapped_to_tags">Classificadu in sas etichetas</string>
     <string name="import_mapped_to_nothing">Ignoradu</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Carta interrada</string>
+    <string name="buried_note">Nota interrada</string>
+    <string name="deleted_note">Nota iscantzellada</string>
+    <string name="suspended_card">Carta suspesa</string>
+    <string name="suspended_note">Nota suspesa</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
 </resources>

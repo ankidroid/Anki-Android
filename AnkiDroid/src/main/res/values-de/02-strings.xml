@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d von %2$d</string>
     <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
     <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">APKG-Datei konnte nicht entpackt werden: %s</string>
     <string name="import_log_failed_copy_to">APKG-Datei konnte nicht nach %s kopiert werden</string>
     <string name="import_log_failed_validate">Validierung der APKG-Datei nicht erfolgreich</string>
-    <string name="import_log_insufficient_space">Kein ausreichender Speicherplatz zum Entpacken des Pakets. Benötigt %1$d, verfügbar %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
@@ -340,7 +340,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid keine Verknüpfungen hinzuzufügen</string>
     <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Sätze groß schreiben</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll-Werkzeugleiste</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -369,10 +369,10 @@
     <string name="import_mapped_to_nothing">Ignoriert</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Karte aufgeschoben</string>
-    <string name="buried_note">Buried note</string>
+    <string name="buried_note">Vergrabene Notiz</string>
     <string name="deleted_note">Notiz gelöscht</string>
     <string name="suspended_card">Gesperrte Karte</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="suspended_note">Notiz ausschließen</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Feld %s anpinnen</string>
 </resources>

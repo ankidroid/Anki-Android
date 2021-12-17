@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibra</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lampìgiu</string>
     <string name="timeout_answer_text" maxLength="41">Ammustra sa risposta in automàticu</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Risposta a tempus acabadu</string>
     <string name="timeout_answer_summ">Ammustra sa risposta in manera automàtica chene atziones de s\'impreadore. Su ritardu incluet su tempus pro sos documentos sonoros riproduidos in automàticu.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tempus in antis de ammustrare sa risposta</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Incarca 2 bortas in segus pro essire</string>
     <string name="exit_via_double_tap_back_summ">Pro evitare de essire in manera atzidentale dae su revisionadore o dae s\'aplicatzione</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Importende permite totu sos archìvios</string>
+    <string name="media_import_allow_all_files_summ">Si Android non reconnoschet un\'archìviu multimediale</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Istatìsticas avantzadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Abìlita sas istatìsticas avantzadas</string>

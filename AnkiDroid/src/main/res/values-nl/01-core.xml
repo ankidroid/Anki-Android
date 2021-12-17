@@ -94,7 +94,7 @@
     <string name="undo_action_change_deck_multi">leersets wijzigen</string>
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
-    <string name="rename_deck">Leerset hernoemen</string>
+    <string name="rename_deck">hernoem dek</string>
     <string name="create_shortcut">Snelkoppeling maken</string>
     <string name="browse_cards">Blader door kaarten</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
@@ -102,12 +102,12 @@
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
     <string name="menu_dismiss_note">Verbergen / Verwijderen</string>
     <string name="menu_bury_card">Kaart verbergen</string>
-    <string name="menu_bury_note">Memo verbergen</string>
+    <string name="menu_bury_note">Notitie verbergen</string>
     <string name="menu_suspend_card">Blokkeer kaart</string>
-    <string name="menu_suspend_note">Memo opschorten</string>
+    <string name="menu_suspend_note">Notitie opschorten</string>
     <string name="menu_bury">Verbergen</string>
     <string name="menu_suspend">Opschorten</string>
-    <string name="menu_delete_note">Memo verwijderen</string>
+    <string name="menu_delete_note">Notitie verwijderen</string>
     <string name="menu_flag">Vlag</string>
     <string name="menu_flag_card">Markeer kaart</string>
     <string name="menu_flag_card_zero">Geen vlag</string>
@@ -116,12 +116,12 @@
     <string name="menu_flag_card_three">Groene vlag</string>
     <string name="menu_flag_card_four">Blauwe vlag</string>
     <string name="menu_flag_card_five">Money</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_six">Turquoise vlag</string>
+    <string name="menu_flag_card_seven">Paarse vlag</string>
     <string name="menu_edit_tags">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_select">Tekst selecteren</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Opzoeken tekst</string>
     <string name="menu_search">Opzoeken in %1$s</string>
     <string name="menu_mark_note">Memo markeren</string>
     <string name="menu_unmark_note">Memo onmarkeren</string>
@@ -188,12 +188,12 @@
     <string name="card_template_editor_styling">Stijl</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kaartenverkenner Uiterlijk</string>
     <string name="card_template_editor_deck_override">Set overschrijven</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Veld invoegen</string>
+    <string name="card_template_editor_select_field">Gegevensveld selecteren</string>
     <string name="card_template_editor_cant_delete">Minstens een kaarttype is vereist.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Dit zal %1$d kaart aanmaken. Doorgaan?</item>
+        <item quantity="other">Dit zal %1$d kaarten maken. Doorgaan?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Verwijder het “%2$s” kaarttype, en zijn %1$d kaart?</item>
@@ -223,16 +223,16 @@
     <string name="wrong_tag_closed">{{/%1$s}}\' gevonden, maar \'{{/%2$s }}\' verwacht</string>
     <string name="filter_error">Fout in filters %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">De verzamelingen kunnen niet worden gecombineerd.\nWelke collectie wil je behouden?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Je verzameling op AnkiDroid vervangen door je verzameling van AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Je verzameling op AnkiWeb vervangen door je verzameling van AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Verzameling selecteren om te bewaren</string>
+    <string name="sync_conflict_replace_title">Vervang collectie</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d kaart (0 te doen)</item>
+        <item quantity="other">%1$d kaarten (0 te doen)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
 </resources>

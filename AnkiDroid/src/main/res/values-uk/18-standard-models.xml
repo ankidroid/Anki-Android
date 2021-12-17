@@ -23,7 +23,7 @@
     <string name="front_field_name"> Лицьовий бік</string>
     <string name="back_field_name">Зворотній бік</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Текст</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Зворотня сторона (додатково)</string>
     <string name="field_to_ask_front_name">Додати зворотній бік</string>
     <!--Card type-->
     <string name="card_n_name">Картка %d</string>

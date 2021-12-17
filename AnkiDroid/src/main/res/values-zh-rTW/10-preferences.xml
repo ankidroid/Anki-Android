@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">按二次返回鍵返回或者退出</string>
     <string name="exit_via_double_tap_back_summ">避免不小心離開預覽器或者程式</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">允許所有置於媒體匯入中之檔案</string>
+    <string name="media_import_allow_all_files_summ">如果安卓無法辨識一份媒體檔案</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高級統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">啟用高級統計</string>

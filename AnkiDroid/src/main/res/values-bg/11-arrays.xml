@@ -110,9 +110,9 @@
     <string name="gesture_flag_pink">Toggle Pink Flag</string>
     <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
     <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_flag_remove">Премахване на знаме</string>
+    <string name="gesture_page_up">Страница нагоре</string>
+    <string name="gesture_page_down">Страница надолу</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="record_voice">Record Voice</string>

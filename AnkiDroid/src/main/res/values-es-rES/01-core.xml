@@ -45,7 +45,7 @@
     <string name="statistics">Estadísticas</string>
     <string name="settings">Configuración</string>
     <string name="help">Ayuda</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Dibujar</string>
     <string name="send_feedback">Enviar comentarios</string>
     <string name="studyoptions_due_today">Programadas para hoy:</string>
     <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
@@ -73,7 +73,7 @@
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas\nusando el ícono +</string>
+    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -96,7 +96,7 @@
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renombrar mazo</string>
     <string name="create_shortcut">Crear acceso directo</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Buscar cartas</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Añadir</string>
     <string name="menu_add_note">Añadir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Cuenta de sincronización</string>
@@ -115,8 +115,8 @@
     <string name="menu_flag_card_two">Marca naranja</string>
     <string name="menu_flag_card_three">Marca verde</string>
     <string name="menu_flag_card_four">Marca azul</string>
-    <string name="menu_flag_card_five">Uaujskz</string>
-    <string name="menu_flag_card_six">I like your home </string>
+    <string name="menu_flag_card_five">Bandera rosa</string>
+    <string name="menu_flag_card_six">Bandera turquesa</string>
     <string name="menu_flag_card_seven">Bandera violeta</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
@@ -159,8 +159,8 @@
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="empty_deck">Este mazo está vacío</string>
-    <string name="search_deck">Búsqueda de Mazos</string>
-    <string name="empty_deck_add_note">Añadir tarjeta</string>
+    <string name="search_deck">Buscar Mazos</string>
+    <string name="empty_deck_add_note">Añadir tarjetas</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
     <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>

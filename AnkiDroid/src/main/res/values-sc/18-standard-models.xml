@@ -23,7 +23,7 @@
     <string name="front_field_name">Fronte</string>
     <string name="back_field_name">Parte de segus</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Testu</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Extra de segus</string>
     <string name="field_to_ask_front_name">Annanghe unu furriadu</string>
     <!--Card type-->
     <string name="card_n_name">Carta %d</string>

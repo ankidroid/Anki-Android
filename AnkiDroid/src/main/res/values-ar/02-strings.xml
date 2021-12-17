@@ -174,7 +174,7 @@
     <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
     <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
     <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
-    <string name="import_log_insufficient_space">لا توجد مساحة كافية لفك ضغط الحزمة. تحتاج %1$d، لكن المتوفر %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
     <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
     <string name="import_error_unhandled_request">تعذرت معالجة طلب الاستيراد</string>

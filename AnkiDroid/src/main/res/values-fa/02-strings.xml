@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">خطا در بازکردن فایل apkg: %s</string>
     <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
     <string name="import_log_failed_validate">apkg معتبر نیست</string>
-    <string name="import_log_insufficient_space">فضای کافی برای بازکردن بسته وجود ندارد. لازم %1$d، در دسترس %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">خطا در ورود فایل، احتمالاً به دلیل پاکسازی کش در هنگام پردازش.\nلطفاً دوباره تلاش کنید</string>
     <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
     <string name="import_error_unhandled_request">پردازش درخواست ورود ممکن نیست</string>

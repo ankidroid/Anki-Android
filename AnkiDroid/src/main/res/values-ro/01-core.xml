@@ -40,22 +40,22 @@
 <resources>
     <string name="yes">da</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="drawing">Drawing</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="decks">Pachete</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser-ul de carduri</string>
+    <string name="statistics">Statistici</string>
+    <string name="settings">Configurări</string>
+    <string name="help">Ajutor</string>
+    <string name="drawing">Desen</string>
+    <string name="send_feedback">Trimite recenzie</string>
     <string name="studyoptions_due_today">Pentru astăzi:</string>
     <string name="studyoptions_new_total">Totalul cardurilor noi:</string>
     <string name="studyoptions_total_cards">Total carduri:</string>
     <string name="studyoptions_eta">Timp estimat (min):</string>
     <string name="studyoptions_start">Studiază Acum</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Extinde</string>
+    <string name="collapse">Colaps</string>
+    <string name="study_more">Studiaza mai mult </string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="few">%1$d cards due (%2$s)</item>
@@ -76,7 +76,7 @@
         <item quantity="few">%d days %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_title">Colecția este goală</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -85,37 +85,37 @@
         <item quantity="other">Studied %1$d cards in %2$s today</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
+    <string name="type_answer_hint">Scrie răspunsul</string>
     <string name="show_answer">Arată răspuns</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Ascunde raspunsul</string>
     <string name="ease_button_again">Din nou</string>
     <string name="ease_button_hard">Greu</string>
     <string name="ease_button_good">Bine</string>
     <string name="ease_button_easy">Ușor</string>
     <string name="studyoptions_congrats_undo">Anulare %s</string>
-    <string name="menu_import">Import</string>
+    <string name="menu_import">Importă</string>
     <string name="undo">Anulare</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_review">Ultima recenzie</string>
+    <string name="undo_action_change_deck_multi">Schimba punțile</string>
+    <string name="move_all_to_deck">Mută totul pe punte</string>
     <string name="unbury">Dezgroapă</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
+    <string name="rename_deck">Redenumește puntea</string>
+    <string name="create_shortcut">Crează o scurtătură</string>
+    <string name="browse_cards">Răsfoiește carduri</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adaugă</string>
+    <string name="menu_add_note">Adaugă nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizare cont</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
+    <string name="menu_dismiss_note">Ascunde / Elimină</string>
     <string name="menu_bury_card">Îngroapă Card</string>
     <string name="menu_bury_note">Ingroapa notă</string>
     <string name="menu_suspend_card">Suspendă Card</string>
     <string name="menu_suspend_note">Suspenda Notă</string>
     <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
+    <string name="menu_suspend">Suspendă</string>
     <string name="menu_delete_note">Ștergere notă</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag">Marcaj</string>
+    <string name="menu_flag_card">Marchează card</string>
+    <string name="menu_flag_card_zero">Fara marcaj</string>
     <string name="menu_flag_card_one">Red flag</string>
     <string name="menu_flag_card_two">Orange flag</string>
     <string name="menu_flag_card_three">Green flag</string>
@@ -123,18 +123,18 @@
     <string name="menu_flag_card_five">Pink flag</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Editează etichete </string>
     <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
     <string name="menu_select">Selectaţi text</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Căutare text </string>
     <string name="menu_search">Căutare în %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
-    <string name="new_deck">Create deck</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
+    <string name="menu_mark_note">Marcheaza nota</string>
+    <string name="menu_unmark_note">Demarcheaza nota </string>
+    <string name="menu_toggle_mic_tool_bar">Verifica pronunțarea</string>
+    <string name="new_deck">Crează punte</string>
+    <string name="new_dynamic_deck">Crează punte filtrată</string>
     <string name="night_mode">Mod de noapte</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="directory_inaccessible">Directorul AnkiDroid este inaccesibil</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations

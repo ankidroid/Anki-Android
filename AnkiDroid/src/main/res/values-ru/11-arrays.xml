@@ -48,15 +48,15 @@
         <item>Новые карточки в порядке добавления</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>давно не повторяемые</item>
-        <item> случайные</item>
-        <item>увеличению интервалов</item>
-        <item>уменьшению интервалов</item>
-        <item>самые сложные</item>
-        <item>по порядку добавления</item>
-        <item>по расписанию повторения</item>
-        <item>последние добавленные</item>
-        <item>по просрочке</item>
+        <item>Давно не повторяемые</item>
+        <item>Случайные</item>
+        <item>По возрастанию интервалов</item>
+        <item>По убыванию интервалов</item>
+        <item>Самые забываемые</item>
+        <item>По порядку добавления</item>
+        <item>По сроку</item>
+        <item>Последние добавленные</item>
+        <item>По относительной просрочке</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Использовать текущую колоду</item>
@@ -102,7 +102,7 @@
     <string name="gesture_tag_note">Добавить метку</string>
     <string name="gesture_lookup">Посмотреть в словаре</string>
     <string name="gesture_play">Воспроизвести медиафайл</string>
-    <string name="gesture_abort_learning">Прервать обучение</string>
+    <string name="gesture_abort_learning">Прервать учёбу</string>
     <string name="gesture_flag_red">Красный флажок</string>
     <string name="gesture_flag_orange">Оранжевый флажок</string>
     <string name="gesture_flag_green">Зелёный флажок</string>

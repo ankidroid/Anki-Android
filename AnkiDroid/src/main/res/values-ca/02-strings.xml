@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">Error al validar apkg</string>
-    <string name="import_log_insufficient_space">No hi ha prou espai per descomprimir el paquet. Calen %1$d, disponible %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">S\'ha produït un error en importar el fitxer, potser s\'ha esborrat la memòria cau durant el processament.\nIntenteu-ho de nou si us plau</string>
     <string name="import_succeeded_but_check_database">La importació de dades ha funcionat correctament, però ha fallat la neteja posterior a la importació. Executeu la comprovació de la base de dade més tard. Causa fonamental: %s</string>
     <string name="import_error_unhandled_request">No es pot processar la petició d\'importació</string>

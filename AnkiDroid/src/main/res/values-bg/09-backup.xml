@@ -47,7 +47,7 @@
     <string name="backup_full_sync_from_server">Пълно синхронизиране от сървър</string>
     <string name="backup_full_sync_from_server_question">Действително ли искате да презапишете Ваша колекция, която е получено от AnkiWeb? Това може да изтрие целия Ви учебен процес и информацията, която е добавена след последната синхронизация.</string>
     <string name="error_handling_title">Обработка на грешките</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Настройки</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Възможности</string>
     <string name="backup_retry_opening">Повторно отваряне</string>
     <string name="backup_error_menu_repair">Поправка на базата данни</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->

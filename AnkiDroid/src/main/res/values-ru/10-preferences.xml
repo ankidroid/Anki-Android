@@ -247,54 +247,54 @@
         <item quantity="other">%1$s\n%2$d колод использует эту группу</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторения</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторяемые</string>
+    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забытые</string>
     <string name="deck_conf_general" maxLength="41">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
     <string name="deck_conf_order" maxLength="41">Порядок</string>
     <string name="deck_conf_new_cards_day" maxLength="41">Новых карточек в день</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Интервал для «Хорошо»</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">Интервал перевода</string>
     <string name="deck_conf_days">XXX дней</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Интервал для «Легко»</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">Интервал лёгких</string>
     <string name="deck_conf_start_ease" maxLength="41">Начальная лёгкость</string>
-    <string name="deck_conf_max_rev" maxLength="41">Максимум повторений в день</string>
-    <string name="deck_conf_new_bury" maxLength="41">Отложить связанные новые карточки</string>
-    <string name="deck_conf_new_bury_summ">Связанные новые карточки отложены на завтра</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Отложить связанные повторения</string>
-    <string name="deck_conf_rev_bury_summ">Связанные повторения отложены до завтра</string>
+    <string name="deck_conf_max_rev" maxLength="41">Максимум повторяемых в день</string>
+    <string name="deck_conf_new_bury" maxLength="41">Откладывать новые связанные</string>
+    <string name="deck_conf_new_bury_summ">Новые связанные откладываются до следующего дня</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Откладывать новые повторяемые</string>
+    <string name="deck_conf_rev_bury_summ">Повторяемые связанные откладываются до следующего дня</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Использовать общие настройки</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Множитель для \"Легко\"</string>
+    <string name="deck_conf_easy_bonus" maxLength="41">Множитель для «Легко»</string>
     <string name="deck_conf_hard_factor" maxLength="41">Интервал для «Трудно»</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Множитель интервалов</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">Модификатор интервала</string>
     <string name="deck_conf_max_ivl" maxLength="41">Максимальный интервал</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">Новый интервал</string>
     <string name="deck_conf_min_ivl" maxLength="41">Минимальный интервал</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Ошибок для приставучей</string>
+    <string name="deck_conf_leech_thres" maxLength="41">Порог для приставучих</string>
     <string name="deck_conf_fails">XXX ошибок</string>
-    <string name="deck_conf_leech_action" maxLength="41">Что делать с приставучей</string>
+    <string name="deck_conf_leech_action" maxLength="41">Что делать с приставучими</string>
     <string name="deck_conf_max_time" maxLength="41">Максимальное время ответа</string>
     <string name="deck_conf_seconds">XXX секунд</string>
-    <string name="deck_conf_timer" maxLength="41">Показать таймер ответа</string>
+    <string name="deck_conf_timer" maxLength="41">Показывать таймер</string>
     <string name="deck_conf_autoplay" maxLength="41">Воспроизводить звук</string>
     <string name="deck_conf_replayq" maxLength="41">Повторять вопрос</string>
-    <string name="deck_conf_replayq_summ">Воспроизводит вопрос при показе ответа</string>
-    <string name="deck_conf_manage" maxLength="41">Управление конфигурациями</string>
+    <string name="deck_conf_replayq_summ">Воспроизводит вопрос и ответ при показе ответа</string>
+    <string name="deck_conf_manage" maxLength="41">Управление наборами параметров</string>
     <string name="deck_conf_manage_summ">Добавить или изменить набор параметров</string>
-    <string name="deck_conf_current_group" maxLength="41">Текущая конфигурация</string>
+    <string name="deck_conf_current_group" maxLength="41">Текущий набор</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Переименовать</string>
-    <string name="deck_conf_reset" maxLength="41">Сбросить настройки</string>
+    <string name="deck_conf_reset" maxLength="41">Сбросить параметры</string>
     <string name="deck_conf_reset_message">Сбросить текущий набор параметров?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Добавить</string>
-    <string name="deck_conf_add_summ">Создать копию текущего набора опций</string>
+    <string name="deck_conf_add_summ">Создать копию текущего набора параметров</string>
     <string name="deck_conf_remove_message">Удалить текущий набор параметров?</string>
     <string name="deck_conf_set_subdecks" maxLength="41">Установить для всех подколод</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s подколода задействует конфигурацию</item>
-        <item quantity="few">%s подколоды задействуют конфигурацию</item>
-        <item quantity="many">%s подколод задействуют конфигурацию</item>
-        <item quantity="other">%s подколод задействуют конфигурацию</item>
+        <item quantity="one">%s подколода задействует набор</item>
+        <item quantity="few">%s подколоды задействуют набор</item>
+        <item quantity="many">%s подколод задействуют набор</item>
+        <item quantity="other">%s подколод задействуют набор</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Установить текущий набор параметров для всех подколод этой колоды?</string>
     <string name="pref_browser_editor_font" maxLength="41">Шрифт в списке и редакторе</string>

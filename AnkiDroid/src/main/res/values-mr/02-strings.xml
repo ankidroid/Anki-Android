@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">एपीकेजी अनझिप करण्यात अयशस्वी:%s</string>
     <string name="import_log_failed_copy_to">%s वर apkg कॉपी करण्यात अयशस्वी</string>
     <string name="import_log_failed_validate">apkg प्रमाणीकरण अयशस्वी</string>
-    <string name="import_log_insufficient_space">पॅकेज अनझिप करण्यासाठी पुरेसे स्थान नाही. %1$d आवश्यक,%2$d उपलब्ध</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">फाइल आयात करताना त्रुटी, प्रक्रियेदरम्यान कदाचित कॅशे साफ होईल. Lease n कृपया पुन्हा प्रयत्न करा</string>
     <string name="import_succeeded_but_check_database">डेटा आयात यशस्वी झाले परंतु आयातानंतरची साफसफाई अयशस्वी झाली. नंतर चेक डेटाबेस चालवा. मूळ कारणे:%s</string>
     <string name="import_error_unhandled_request">आयात विनंतीवर प्रक्रिया करण्यात अक्षम</string>
