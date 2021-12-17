@@ -64,8 +64,8 @@
     </string-array>
     <string-array name="new_spread_labels">
         <item>ନୂତନ କାର୍ଡ ଏବଂ ସମୀକ୍ଷା ମିଶ୍ରଣ କରନ୍ତୁ</item>
-        <item>ସମୀକ୍ଷା ପରେ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
-        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
+        <item>ସମୀକ୍ଷା ପରେ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
+        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂତନ ପତ୍ରଗୁଡ଼ିକ</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</item>

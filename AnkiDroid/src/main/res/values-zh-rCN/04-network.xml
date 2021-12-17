@@ -60,7 +60,7 @@
     <string name="alert_logging_message">登录中&#8230;&#8230;</string>
     <string name="invalid_username_password">邮箱地址或密码错误</string>
     <string name="reset_password">重置密码</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">忘了电子邮件地址吗？</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">偏好设置</string>
     <string name="deckpreferences_title">XXX 选项</string>

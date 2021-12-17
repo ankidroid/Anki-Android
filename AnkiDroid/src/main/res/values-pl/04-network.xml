@@ -60,7 +60,7 @@
     <string name="alert_logging_message">Logowanie, proszę czekać...</string>
     <string name="invalid_username_password">Nieprawidłowy adres e-mail lub hasło.</string>
     <string name="reset_password">Resetuj hasło</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Zapomniałeś adres e-mail?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Ustawienia</string>
     <string name="deckpreferences_title">Opcje dla XXX</string>

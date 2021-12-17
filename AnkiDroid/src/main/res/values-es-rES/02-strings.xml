@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">Reiniciar el progreso</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reprogramar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vista Previa</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="error_insufficient_memory">La operación no pudo completarse debido a una memoria insuficiente en tu dispositivo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renombrar</string>
     <string name="default_conf_delete_error">El grupo de opciones por defecto no se puede eliminar</string>
@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">falló la validación apkg</string>
-    <string name="import_log_insufficient_space">No hay suficiente espacio para descomprimir el paquete. Necesita %1$d, disponible %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>

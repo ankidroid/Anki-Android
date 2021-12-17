@@ -159,7 +159,7 @@
     <string name="import_log_failed_unzip">Không giải nén được apkg: %s</string>
     <string name="import_log_failed_copy_to">Không sao chép được apkg sang %s</string>
     <string name="import_log_failed_validate">không xác thực được apkg</string>
-    <string name="import_log_insufficient_space">Không có đủ dung lượng để giải nén gói. Cần %1$d, hiện có %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Lỗi khi nhập tệp, có thể là bộ nhớ cache bị xóa trong quá trình xử lý. \nVui lòng thử lại</string>
     <string name="import_succeeded_but_check_database">Nhập dữ liệu thành công nhưng quá trình dọn dẹp sau nhập không thành công. Chạy kiểm tra cơ sở dữ liệu sau. Nguyên nhân chính: %s</string>
     <string name="import_error_unhandled_request">Không thể xử lý yêu cầu nhập</string>

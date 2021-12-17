@@ -176,8 +176,8 @@
     <string name="studyoptions_limit_reached">На сегодня всё</string>
     <string name="studyoptions_empty_schedule">Нет запланированых карточек</string>
     <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
-    <string name="studyoptions_congrats_more_rev">Вы достигли дневного лимита, но ещё остались карточки для повторения. Вы можете увеличить лимит в настройках.</string>
-    <string name="studyoptions_congrats_more_new">Вы достигли дневного лимита, но ещё остались новые карточки. Вы можете увеличить лимит в настройках, и тогда увеличится объём повторения в ближайшие дни.</string>
+    <string name="studyoptions_congrats_more_rev">Вы достигли дневного лимита, но ещё остались карточки для повторения. Вы можете увеличить лимит в параметрах.</string>
+    <string name="studyoptions_congrats_more_new">Вы достигли дневного лимита, но ещё остались новые карточки. Вы можете увеличить лимит в параметрах, но тогда увеличится объём повторения в ближайшие дни.</string>
     <string name="studyoptions_congrats_custom">Для обучения вне плана нажмите кнопку \"Учить ещё\"</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>

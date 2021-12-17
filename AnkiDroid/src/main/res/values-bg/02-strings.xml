@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Неуспешно разархивиране на apkg %s:</string>
     <string name="import_log_failed_copy_to">Неуспешно копиране на apkg до %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">Няма достатъчно място за разархивирането на пакета. Нужни са %1$d наличние  са само %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Импортирането на данните е успешно, но почистването на след импортирането се провали. Стартирайте проверка на базата данни по-късно. Главна причина: %s</string>
     <string name="import_error_unhandled_request">Заявката за импортиране не може да бъде обработена</string>
@@ -345,20 +345,20 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">Изисква се адрес на е-поща</string>
+    <string name="password_empty">Изисква се парола</string>
     <string name="back_pressed_once">Press back again to exit</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="try_again">Опитайте пак</string>
+    <string name="cancel_download">Отмяна на изтеглянето</string>
+    <string name="cancel_download_question_title">Отменяте ли изтеглянето?</string>
+    <string name="downloading_file">Изтегля се %s</string>
     <string name="import_deck">Import Deck</string>
     <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_failed">Неуспешно изтегляне</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
@@ -370,7 +370,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="deleted_note">Изтрита бележка</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->

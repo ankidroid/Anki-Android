@@ -159,7 +159,7 @@
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
     <string name="import_log_failed_validate">Apkg 驗證失敗</string>
-    <string name="import_log_insufficient_space">無足夠儲存空間用於解壓縮檔案。需要 %1$d，可用 %2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
     <string name="import_error_unhandled_request">無法執行匯入請求</string>
@@ -356,10 +356,10 @@
     <string name="import_mapped_to_nothing">忽略</string>
     <!-- Reviewer actions -->
     <string name="buried_card">暫時隱藏的卡片</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_note">隱藏之註記</string>
+    <string name="deleted_note">刪除之註記</string>
+    <string name="suspended_card">擱置之卡片</string>
+    <string name="suspended_note">擱置之註記</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 </resources>

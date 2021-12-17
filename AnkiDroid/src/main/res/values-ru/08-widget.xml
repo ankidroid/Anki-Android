@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Карточек на сегодня</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">К просмотру</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d карточка AnkiDroid к просмотру</item>
         <item quantity="few">%d карточки AnkiDroid к просмотру</item>

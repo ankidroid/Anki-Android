@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Premi 2 volte indietro per tornare/uscire</string>
     <string name="exit_via_double_tap_back_summ">Per evitare di lasciare accidentalmente il recensore o l\'app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Consenti tutti i file nelle importazioni</string>
+    <string name="media_import_allow_all_files_summ">Se Android non riconosce un file multimediale</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiche avanzate</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Attiva le statistiche avanzate</string>

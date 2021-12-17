@@ -265,6 +265,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Otwórz stronę główną talii zawierającą liczbę kart do zobaczenia dzisiaj.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">Pakiet talii (.apkg)</string>
+    <string name="import_collection_package">Pakiet kolekcji (.colpkg)</string>
 </resources>

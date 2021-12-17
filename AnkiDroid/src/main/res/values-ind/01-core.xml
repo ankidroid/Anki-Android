@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Iya</string>
+    <string name="yes">Ya</string>
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Peramban kartu</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Pengaturan</string>
     <string name="help">Bantuan</string>
-    <string name="drawing">Menggambar</string>
+    <string name="drawing">Gambar</string>
     <string name="send_feedback">Kirim Masukan</string>
     <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
     <string name="studyoptions_new_total">Total kartu baru:</string>

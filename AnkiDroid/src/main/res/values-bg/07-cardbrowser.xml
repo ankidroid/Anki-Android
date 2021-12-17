@@ -87,18 +87,18 @@
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">Неизвестно</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Добавено</string>
     <string name="card_info_first_review">First Review</string>
     <string name="card_info_latest_review">Latest Review</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Отзиви</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
     <string name="card_info_average_time">Average Time</string>
     <string name="card_info_total_time">Total Time</string>
@@ -107,13 +107,13 @@
     <string name="card_info_deck_name">Deck Name</string>
     <string name="card_info_card_id">Card Id</string>
     <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_time">Пъти</string>
+    <string name="card_info_revlog_date">Дата</string>
+    <string name="card_info_revlog_rating">Оценка</string>
+    <string name="card_info_revlog_type">Тип</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_review">Отзив</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_revlog_filtered">Филтрирано</string>
+    <string name="card_info_ease_not_applicable">Неприл.</string>
 </resources>

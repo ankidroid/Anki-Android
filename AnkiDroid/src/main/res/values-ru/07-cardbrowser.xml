@@ -68,7 +68,7 @@
     <string name="card_browser_change_display_order">Изменить сортировку</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_browser_change_display_order_reverse">Коснитесь поля дважды, чтобы обратить порядок</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">К просмотру</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Срок</string>
     <string name="card_details_tags">Метки</string>
     <string-array name="card_browser_order_labels">
         <item>Без сортировки (быстро)</item>
@@ -76,7 +76,7 @@
         <item>По времени создания</item>
         <item>По времени изменения записи</item>
         <item>По времени изменения карточки</item>
-        <item>По расписанию</item>
+        <item>По сроку</item>
         <item>По интервалу</item>
         <item>По лёгкости</item>
         <item>По повторениям</item>

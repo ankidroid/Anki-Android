@@ -40,7 +40,7 @@
     <!--Browser-->
     <string name="model_browser_delete">ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରନ୍ତୁ</string>
     <string name="model_browser_rename" comment="Rename a note type">ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="model_browser_template">ପତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
+    <string name="model_browser_template">ପତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="model_browser_add">ନୋଟ୍ ପ୍ରକାର ଯୋଡ଼ନ୍ତୁ</string>
     <!--Rename-->
     <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ନାମ ବଦଳାନ୍ତୁ</string>
@@ -70,12 +70,12 @@
     <string name="card_template_browser_appearance_question_format">ପ୍ରଶ୍ନ ଶୈଳୀ</string>
     <string name="card_template_browser_appearance_answer_format">ଉତ୍ତର ଶୈଳୀ</string>
     <string name="card_template_browser_appearance_restore_default_dialog">ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
-    <string name="card_template_browser_appearance_saving_note">ପତ୍ର ଟେମ୍ପଲେଟ୍ ସଂରକ୍ଷଣ ହେବା ପରେ ଏହି ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ପ୍ରୟୋଗ କରାଯାଏ</string>
+    <string name="card_template_browser_appearance_saving_note">ପତ୍ର ଟେମ୍ପଲେଟ୍ ସଂରକ୍ଷଣ ହେବା ପରେ ଏହି ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ପ୍ରୟୋଗ କରାଯାଏ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ତାସଖଣ୍ଡ ନବଳେଖନ (ଚାଲୁ)</string>
     <string name="card_template_editor_deck_override_off">ତାସଖଣ୍ଡ ନବଳେଖନ (ବନ୍ଦ)</string>
     <string name="model_manager_deck_override_added_message">‘%1$s’ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ‘%2$s’ ରେ ସେଟ୍ କରାଗଲା</string>
     <string name="model_manager_deck_override_removed_message">‘%s’ ପାଇଁ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ ଅପସାରଣ କରାଗଲା</string>
-    <string name="deck_override_explanation">ନୂତନ ‘%s’ ପତ୍ରଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ ତାସଖଣ୍ଡ ଚୟନ କରନ୍ତୁ</string>
+    <string name="deck_override_explanation">ନୂତନ ‘%s’ ପତ୍ରଗୁଡ଼ିକୁ ରଖିବା ପାଇଁ ତାସଖଣ୍ଡ ଚୟନ କରନ୍ତୁ</string>
     <string name="deck_picker_dialog_filter_decks">ତାସଖଣ୍ଡ ଶୋଧନ</string>
 </resources>
