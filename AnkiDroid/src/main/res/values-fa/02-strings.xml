@@ -190,8 +190,8 @@
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
     <string name="export_email_text_new"><![CDATA[        سلام!
         <br/><br/>
-        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="">ankidroid برای شما ارسال شده است</a>.
-        برای استفاده از آن یکی از نسخه‌های در دسترس <a href="">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
+        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="%1$s">ankidroid برای شما ارسال شده است</a>.
+        برای استفاده از آن یکی از نسخه‌های در دسترس <a href="%2$s">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
         ]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
