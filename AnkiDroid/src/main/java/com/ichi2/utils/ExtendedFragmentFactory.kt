@@ -13,78 +13,68 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import com.ichi2.libanki.Collection;
-
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentFactory;
-import androidx.fragment.app.FragmentManager;
+import androidx.annotation.CallSuper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.FragmentManager
 
 /**
- * A factory that enable extending another {@link FragmentFactory}.
+ * A factory that enable extending another [FragmentFactory].
  *
  * This should be useful if you want to add extra instantiations without overriding the instantiations in an old factory
  */
-public abstract class ExtendedFragmentFactory extends FragmentFactory {
-
-    @Nullable
-    private FragmentFactory mBaseFactory;
-
+abstract class ExtendedFragmentFactory : FragmentFactory {
+    private var mBaseFactory: FragmentFactory? = null
 
     /**
      * Create an extended factory from a base factory
      */
-    public ExtendedFragmentFactory(@NonNull FragmentFactory baseFactory) {
-        mBaseFactory = baseFactory;
+    constructor(baseFactory: FragmentFactory) {
+        mBaseFactory = baseFactory
     }
 
-
     /**
-     * Create a factory with no base, you can assign a base factory later using {@link #setBaseFactory(FragmentFactory)}
+     * Create a factory with no base, you can assign a base factory later using [.setBaseFactory]
      */
-    public ExtendedFragmentFactory() {}
-
+    constructor() {}
 
     /**
      * Typically you want to return the result of a super call as the last result, so if the passed class couldn't be
      * instantiated by the extending factory, the base factory should instantiate it.
      */
-    @NonNull
     @CallSuper
-    @Override
-    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
-        return mBaseFactory != null ? mBaseFactory.instantiate(classLoader, className) : super.instantiate(classLoader, className);
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+        return mBaseFactory?.instantiate(classLoader, className)
+            ?: super.instantiate(classLoader, className)
     }
-
 
     /**
      * Sets a base factory to be used as a fallback
      */
-    public void setBaseFactory(@Nullable FragmentFactory baseFactory) {
-        this.mBaseFactory = baseFactory;
+    fun setBaseFactory(baseFactory: FragmentFactory?) {
+        mBaseFactory = baseFactory
     }
-
 
     /**
      * Attaches the factory to an activity by setting the current activity fragment factory as the base factory
      * and updating the activity with the extended factory
      */
-    public <F extends ExtendedFragmentFactory> F attachToActivity(@NonNull AppCompatActivity activity) {
-        return (F) attachToFragmentManager(activity.getSupportFragmentManager());
+    fun <F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F {
+        @Suppress("UNCHECKED_CAST")
+        return attachToFragmentManager<ExtendedFragmentFactory>(activity.supportFragmentManager) as F
     }
 
     /**
      * Attaches the factory to a fragment manager by setting the current fragment factory as the base factory
      * and updating the fragment manager with the extended factory
      */
-    public <F extends ExtendedFragmentFactory> F attachToFragmentManager(@NonNull FragmentManager fragmentManager) {
-        mBaseFactory = fragmentManager.getFragmentFactory();
-        fragmentManager.setFragmentFactory(this);
-        return (F) this;
+    fun <F : ExtendedFragmentFactory?> attachToFragmentManager(fragmentManager: FragmentManager): F {
+        mBaseFactory = fragmentManager.fragmentFactory
+        fragmentManager.fragmentFactory = this
+        @Suppress("UNCHECKED_CAST")
+        return this as F
     }
 }
