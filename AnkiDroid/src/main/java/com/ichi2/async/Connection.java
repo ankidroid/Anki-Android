@@ -482,7 +482,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
                     if (ret == null || ret.first == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)+ "\n\n"+ "\n\n"+ AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)+ "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
                     } else {
                         if (CORRUPT == ret.first) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
