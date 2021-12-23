@@ -17,42 +17,37 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
+import timber.log.Timber
+import java.io.File
+import java.lang.Exception
 
-import androidx.annotation.NonNull;
-import androidx.exifinterface.media.ExifInterface;
-import timber.log.Timber;
-
-import java.io.File;
-
-public class ExifUtil {
-    @NonNull
-    public static Bitmap rotateFromCamera(File theFile, @NonNull Bitmap bmp) {
-        try {
-            ExifInterface exif = new ExifInterface(theFile.getPath());
-            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-            int angle = 0;
-
+object ExifUtil {
+    @JvmStatic
+    fun rotateFromCamera(theFile: File, _bmp: Bitmap): Bitmap {
+        var bmp = _bmp
+        return try {
+            val exif = ExifInterface(theFile.path)
+            val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            var angle = 0
             if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                angle = 90;
+                angle = 90
             } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                angle = 180;
+                angle = 180
             } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                angle = 270;
+                angle = 270
             }
-
-            Matrix mat = new Matrix();
-            mat.postRotate(angle);
-
-            bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mat, true);
-            return bmp;
-        } catch (Exception e) {
-            Timber.w(e);
-            return bmp;
+            val mat = Matrix()
+            mat.postRotate(angle.toFloat())
+            bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, mat, true)
+            bmp
+        } catch (e: Exception) {
+            Timber.w(e)
+            bmp
         }
     }
 }
