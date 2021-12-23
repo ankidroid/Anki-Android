@@ -77,7 +77,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
      */
     private final PowerManager.WakeLock mWakeLock;
-
+    private long kBytesReceived, kBytesSent;
     public static synchronized boolean getIsCancelled() {
         return sIsCancelled;
     }
@@ -482,7 +482,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
                     if (ret == null || ret.first == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)+ "\n\n"+ "\n\n"+ AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
                     } else {
                         if (CORRUPT == ret.first) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
@@ -507,7 +507,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.resultType = USER_ABORTED_SYNC;
                         data.result = new Object[]{e};
                     }
-                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage() + "\n\n"+ AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
@@ -578,6 +578,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
+        kBytesSent =up/1024;
+        kBytesReceived =down/1024;
     }
 
     @SuppressWarnings("deprecation")
