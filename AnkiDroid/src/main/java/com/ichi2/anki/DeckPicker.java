@@ -1946,7 +1946,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                             break;
                         case CONNECTION_ERROR:
-                            Connection.isOnline();
+                            
                             dialogMessage = "You Are Offline";
                             if (result.length >= 0 && result[0] instanceof Exception) {
                                 dialogMessage += "\n\n" + ((Exception) result[0]).getLocalizedMessage();
