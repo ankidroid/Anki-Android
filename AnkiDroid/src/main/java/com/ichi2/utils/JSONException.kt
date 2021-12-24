@@ -40,42 +40,34 @@
  *    SOFTWARE. 
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-
+import java.lang.RuntimeException
+import kotlin.Throws
 
 /**
-   Similar to JSONException in meaning, but unchecked */
-public class JSONException extends RuntimeException {
+ * Similar to JSONException in meaning, but unchecked  */
+class JSONException : RuntimeException {
+    private var mExc: JSONException? = null
 
-    private JSONException mExc = null;
-
-    public JSONException(String s) {
-        super(s);
+    constructor(s: String?) : super(s) {}
+    constructor() : super() {}
+    constructor(e: Throwable?) : super(e) {}
+    constructor(e: JSONException?) : super(e) {
+        mExc = e
     }
 
-    public JSONException() {
-        super();
-    }
-
-    public JSONException(Throwable e) {
-        super(e);
-    }
-
-    public JSONException(JSONException e) {
-        super(e);
-        mExc = e;
-    }
-
-    public JSONException asException() {
-        if (mExc !=null) {
-            return mExc;
+    fun asException(): JSONException {
+        return if (mExc != null) {
+            mExc!!
         } else {
-            return new JSONException(toString());
+            JSONException(toString())
         }
     }
 
-    public void throwAsException() throws JSONException {
-        throw asException();
+    @Throws(JSONException::class)
+    @Suppress("UNUSED")
+    fun throwAsException() {
+        throw asException()
     }
 }
