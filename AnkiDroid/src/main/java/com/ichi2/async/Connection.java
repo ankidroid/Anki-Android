@@ -578,8 +578,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
-        kBytesSent =up/1024;
-        kBytesReceived =down/1024;
+        kBytesSent = up / 1024;
+        kBytesReceived = down / 1024;
     }
 
     @SuppressWarnings("deprecation")
