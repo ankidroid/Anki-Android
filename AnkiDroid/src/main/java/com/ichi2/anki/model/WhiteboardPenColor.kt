@@ -19,12 +19,10 @@ package com.ichi2.anki.model
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
-import com.ichi2.utils.KotlinCleanup
 
 class WhiteboardPenColor(val lightPenColor: Int?, val darkPenColor: Int?) {
-    @KotlinCleanup("Make sharedPrefs non-null")
-    fun fromPreferences(sharedPrefs: SharedPreferences?): Int? {
-        val isInNightMode = isInNightMode(sharedPrefs!!)
+    fun fromPreferences(sharedPrefs: SharedPreferences): Int? {
+        val isInNightMode = isInNightMode(sharedPrefs)
         return if (isInNightMode) {
             darkPenColor
         } else {
