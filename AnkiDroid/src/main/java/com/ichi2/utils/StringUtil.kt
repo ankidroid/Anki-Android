@@ -15,77 +15,67 @@
 
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Contract
+import java.util.*
 
-import androidx.annotation.Nullable;
-
-public class StringUtil {
-
-    /** Trims from the right hand side of a string */
-    @Nullable
+object StringUtil {
+    /** Trims from the right hand side of a string  */
+    @JvmStatic
     @Contract("null -> null; !null -> !null")
-    public static String trimRight(@Nullable String s) {
+    fun trimRight(s: String?): String? {
         if (s == null) {
-            return null;
+            return null
         }
-
-        int newLength = s.length();
-        while (newLength > 0 && Character.isWhitespace(s.charAt(newLength - 1))) {
-            newLength--;
+        var newLength = s.length
+        while (newLength > 0 && Character.isWhitespace(s[newLength - 1])) {
+            newLength--
         }
-        return newLength < s.length() ? s.substring(0, newLength) : s;
+        return if (newLength < s.length) s.substring(0, newLength) else s
     }
 
-
     /**
-     * Remove all whitespace from the start and the end of a {@link String}.
+     * Remove all whitespace from the start and the end of a [String].
      *
-     * A whitespace is defined by {@link Character#isWhitespace(char)}
+     * A whitespace is defined by [Character.isWhitespace]
      *
      * @param string the string to be stripped, may be null
      * @return the stripped string
      */
-    @Nullable
+    @JvmStatic
     @Contract("null -> null; !null -> !null")
-    public static String strip(@Nullable String string) {
-        if (string == null || string.length() == 0) {
-            return string;
+    fun strip(string: String?): String? {
+        if (string == null || string.length == 0) {
+            return string
         }
-
-        int start = 0;
-        while (start < string.length() && Character.isWhitespace(string.charAt(start))) {
-            start++;
+        var start = 0
+        while (start < string.length && Character.isWhitespace(string[start])) {
+            start++
         }
-
-        if (start == string.length()) {
-            return "";
+        if (start == string.length) {
+            return ""
         }
-
-        int end = string.length();
-        while (end > start && Character.isWhitespace(string.charAt(end - 1))) {
-            end--;
+        var end = string.length
+        while (end > start && Character.isWhitespace(string[end - 1])) {
+            end--
         }
-
-        if (start == 0 && end == string.length()) {
-            return string;
-        }
-
-        return string.substring(start, end);
+        return if (start == 0 && end == string.length) {
+            string
+        } else string.substring(start, end)
     }
 
-    /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase */
+    /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
+    @JvmStatic
     @Contract("null -> null; !null -> !null")
-    public static String toTitleCase(@Nullable String s) {
+    fun toTitleCase(_s: String?): String? {
+        var s = _s
         if (s == null) {
-            return null;
+            return null
         }
-
-        if (s.length() > 0) {
-            s = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        if (s.length > 0) {
+            s = s.substring(0, 1).uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
         }
-
-        return s;
+        return s
     }
 }
