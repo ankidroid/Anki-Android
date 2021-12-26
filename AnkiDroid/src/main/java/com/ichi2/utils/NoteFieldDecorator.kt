@@ -14,81 +14,79 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import java.util.Random;
+import java.util.Random
 
-public class NoteFieldDecorator {
+object NoteFieldDecorator {
+    private val random = Random()
+    private val huevoDecorations = arrayOf(
+        "\uD83D\uDC8C",
+        "\uD83D\uDE3B",
+        "\uD83D\uDC96",
+        "\uD83D\uDC97",
+        "\uD83D\uDC93",
+        "\uD83D\uDC9E",
+        "\uD83D\uDC95",
+        "\uD83D\uDC9F",
+        "\uD83D\uDCAF",
+        "\uD83D\uDE03",
+        "\uD83D\uDE0D"
+    )
+    private val huevoOpciones = arrayOf(
+        "qnr",
+        "gvzenr",
+        "aboantb",
+        "avpbynf-enbhy",
+        "Neguhe-Zvypuvbe",
+        "zvxruneql",
+        "qnivq-nyyvfba-1",
+        "vavwh",
+        "uffz",
+        "syreqn",
+        "rqh-mnzben",
+        "ntehraroret",
+        "bfcnyu",
+        "znaqer",
+        "qnavry-fineq",
+        "vasvalgr7",
+        "Oynvfbeoynqr",
+        "genfuphggre",
+        "qzvgel-gvzbsrri",
+        "inabfgra",
+        "unacvatpuvarfr",
+        "jro5atnl"
+    )
 
-    private static final Random random = new Random();
-
-    private static final String[] huevoDecorations = {
-            "\uD83D\uDC8C",
-            "\uD83D\uDE3B",
-            "\uD83D\uDC96",
-            "\uD83D\uDC97",
-            "\uD83D\uDC93",
-            "\uD83D\uDC9E",
-            "\uD83D\uDC95",
-            "\uD83D\uDC9F",
-            "\uD83D\uDCAF",
-            "\uD83D\uDE03",
-            "\uD83D\uDE0D"
-    };
-
-    private static final String[] huevoOpciones = {
-            "qnr",
-            "gvzenr",
-            "aboantb",
-            "avpbynf-enbhy",
-            "Neguhe-Zvypuvbe",
-            "zvxruneql",
-            "qnivq-nyyvfba-1",
-            "vavwh",
-            "uffz",
-            "syreqn",
-            "rqh-mnzben",
-            "ntehraroret",
-            "bfcnyu",
-            "znaqer",
-            "qnavry-fineq",
-            "vasvalgr7",
-            "Oynvfbeoynqr",
-            "genfuphggre",
-            "qzvgel-gvzbsrri",
-            "inabfgra",
-            "unacvatpuvarfr",
-            "jro5atnl"
-    };
-
-    public static String aplicaHuevo(String fieldText) {
-        String revuelto = huevoRevuelto(fieldText);
-        for (String huevo : huevoOpciones) {
-            if (huevo.equalsIgnoreCase(revuelto)) {
-                String decoration = huevoDecorations[getRandomIndex(huevoDecorations.length)];
-                return String.format("%s%s %s %s%s", decoration, decoration, fieldText, decoration, decoration);
+    @JvmStatic
+    fun aplicaHuevo(fieldText: String?): String? {
+        val revuelto = huevoRevuelto(fieldText)
+        for (huevo in huevoOpciones) {
+            if (huevo.equals(revuelto, ignoreCase = true)) {
+                val decoration = huevoDecorations[getRandomIndex(huevoDecorations.size)]
+                return String.format("%s%s %s %s%s", decoration, decoration, fieldText, decoration, decoration)
             }
         }
-        return fieldText;
+        return fieldText
     }
 
-    private static int getRandomIndex(int max) {
-        return random.nextInt(max);
+    private fun getRandomIndex(max: Int): Int {
+        return random.nextInt(max)
     }
 
-    private static String huevoRevuelto(String huevo) {
-        if (huevo == null || huevo.length() == 0) {
-            return huevo;
+    private fun huevoRevuelto(huevo: String?): String? {
+        if (huevo == null || huevo.length == 0) {
+            return huevo
         }
-        StringBuilder revuelto = new StringBuilder();
-        for (int i = 0; i < huevo.length(); i++) {
-            char c = huevo.charAt(i);
-            if       (c >= 'a' && c <= 'm') c += 13;
-            else if  (c >= 'A' && c <= 'M') c += 13;
-            else if  (c >= 'n' && c <= 'z') c -= 13;
-            else if  (c >= 'N' && c <= 'Z') c -= 13;
-            revuelto.append(c);
+        val revuelto = StringBuilder()
+        for (i in 0 until huevo.length) {
+            var c = huevo[i]
+            if (c >= 'a' && c <= 'm') c += 13.toChar().code
+            else if (c >= 'A' && c <= 'M') c += 13.toChar().code
+            else if (c >= 'n' && c <= 'z') c -= 13.toChar().code
+            else if (c >= 'N' && c <= 'Z') c -= 13.toChar().code
+            revuelto.append(c)
         }
-        return revuelto.toString();
+        return revuelto.toString()
     }
 }
