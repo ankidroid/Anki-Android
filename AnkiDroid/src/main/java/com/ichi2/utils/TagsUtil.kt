@@ -13,30 +13,27 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+package com.ichi2.utils
 
-import androidx.annotation.NonNull;
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.stream.Collectors
 
-public class TagsUtil {
-
-    @NonNull
-    public static List<String> getUpdatedTags(@NonNull List<String> previous,
-                                              @NonNull List<String> selected,
-                                              @NonNull List<String> indeterminate) {
+object TagsUtil {
+    @JvmStatic
+    fun getUpdatedTags(
+        previous: List<String?>,
+        selected: List<String?>,
+        indeterminate: List<String?>
+    ): List<String?> {
         if (indeterminate.isEmpty()) {
-            return selected;
+            return selected
         }
-        List<String> updated = new ArrayList<>();
-        Set<String> previousSet = new HashSet<>(previous);
-        updated.addAll(selected);
-        updated.addAll(indeterminate.stream().filter(previousSet::contains).collect(Collectors.toList()));
-        return updated;
+        val updated: MutableList<String?> = ArrayList()
+        val previousSet: Set<String?> = HashSet(previous)
+        updated.addAll(selected)
+        updated.addAll(indeterminate.stream().filter { o: String? -> previousSet.contains(o) }.collect(Collectors.toList()))
+        return updated
     }
-
 }
