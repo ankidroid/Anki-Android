@@ -13,37 +13,35 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.graphics.wrapper;
 
-import android.graphics.Rect;
+package com.wildplot.android.rendering.graphics.wrapper
 
-public class RectangleWrap {
-    public final int x;
-    public final int y;
-    public int width;
-    public int height;
+import android.graphics.Rect
 
+class RectangleWrap(rect: Rect) {
+    @JvmField
+    val x: Int
+    @JvmField
+    val y: Int
+    @JvmField
+    var width: Int
+    @JvmField
+    var height: Int
 
-    public RectangleWrap(int width, int heigth) {
-        this(new Rect(0, 0, width, heigth));
+    constructor(width: Int, heigth: Int) : this(Rect(0, 0, width, heigth)) {}
+
+    fun width(): Int {
+        return width
     }
 
-
-    public RectangleWrap(Rect rect) {
-        super();
-        this.x = rect.left;
-        this.y = rect.top;
-        this.height = rect.height();
-        this.width = rect.width();
+    fun height(): Int {
+        return height
     }
 
-
-    public int width() {
-        return width;
-    }
-
-
-    public int height() {
-        return height;
+    init {
+        x = rect.left
+        y = rect.top
+        height = rect.height()
+        width = rect.width()
     }
 }
