@@ -13,21 +13,20 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.interfaces;
 
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+package com.wildplot.android.rendering.interfaces
 
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 
 /**
  * Classes that implement the Drawable interface have the ability to draw with a provided Graphics object onto
  * a PlotSheet.
  */
-public interface Drawable {
-
+interface Drawable {
     /**
      * Paint the drawable object
      */
-    void paint(GraphicsWrap g);
+    fun paint(g: GraphicsWrap?)
 
     /**
      * Returns true if this Drawable can draw on the outer frame of the plot
@@ -35,9 +34,7 @@ public interface Drawable {
      * If a legend or descriptions shall be drawn onto the outer frame this method of the corresponding Drawables has
      * to return true. For all other cases it is highly recommended to return false.
      */
-    boolean isOnFrame();
-
-    boolean isClusterable();
-
-    boolean isCritical();
+    val isOnFrame: Boolean
+    val isClusterable: Boolean
+    val isCritical: Boolean
 }
