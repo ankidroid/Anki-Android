@@ -13,23 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.graphics.wrapper;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering.graphics.wrapper
 
-@SuppressLint("NonPublicNonStaticFieldName")
-public class StrokeWrap {
-    private final float strokeSize;
-
-
-    public StrokeWrap(float strokeSize) {
-        super();
-        this.strokeSize = strokeSize;
-    }
-
-
-    public float getStrokeSize() {
-        return strokeSize;
-    }
-
-}
+open class StrokeWrap(val strokeSize: Float)
