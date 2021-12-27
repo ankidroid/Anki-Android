@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
@@ -12,52 +12,43 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.widget;
+package com.ichi2.widget
 
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.RemoteViews;
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.content.Intent
+import android.widget.RemoteViews
+import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.R
+import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
-import com.ichi2.anki.NoteEditor;
-import com.ichi2.anki.R;
-import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.compat.CompatHelper;
-
-import timber.log.Timber;
-
-public class AddNoteWidget extends AppWidgetProvider {
-
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "enabled");
+class AddNoteWidget : AppWidgetProvider() {
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
     }
 
-
-    @Override
-    public void onDisabled(Context context) {
-        super.onEnabled(context);
-        UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
+    @KotlinCleanup(
+        "onEnabled being called from onDisabled," +
+            "inspect the validity of this and put a comment with explanation"
+    )
+    override fun onDisabled(context: Context) {
+        super.onEnabled(context)
+        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
-
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-
-        Timber.d("onUpdate");
-
-        final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_add_note);
-        final Intent intent = new Intent(context, NoteEditor.class);
-
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
-
-        final PendingIntent pendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, intent, 0);
-
-        remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent);
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        Timber.d("onUpdate")
+        val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
+        val intent = Intent(context, NoteEditor::class.java)
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+        val pendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, intent, 0)
+        remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
+        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
     }
 }
