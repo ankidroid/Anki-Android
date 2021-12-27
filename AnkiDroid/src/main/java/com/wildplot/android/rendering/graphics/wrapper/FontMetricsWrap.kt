@@ -13,28 +13,14 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.graphics.wrapper;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering.graphics.wrapper
 
-@SuppressLint("NonPublicNonStaticFieldName")
-public class FontMetricsWrap {
-    private final GraphicsWrap g;
-
-
-    public FontMetricsWrap(GraphicsWrap g) {
-        super();
-        this.g = g;
+class FontMetricsWrap(private val g: GraphicsWrap) {
+    fun stringWidth(text: String?): Float {
+        return g.paint.measureText(text)
     }
 
-
-    public float stringWidth(String text) {
-        return g.getPaint().measureText(text);
-
-    }
-
-
-    public float getHeight() {
-        return g.getPaint().getTextSize();
-    }
+    val height: Float
+        get() = g.paint.textSize
 }
