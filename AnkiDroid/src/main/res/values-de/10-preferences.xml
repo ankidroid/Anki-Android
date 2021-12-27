@@ -216,7 +216,7 @@
     <string name="exit_via_double_tap_back_summ">Um zu vermeiden, dass Sie den Rezensenten oder die App versehentlich verlassen</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files_summ">Wenn Android eine Mediendatei nicht erkennt</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Erweiterte Statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Erweiterte Statistik aktivieren</string>

@@ -168,7 +168,7 @@
     <string name="import_log_failed_unzip">נכשל בפריסת החבילה: %s</string>
     <string name="import_log_failed_copy_to">נכשל בהעתקת החבילה ל%s</string>
     <string name="import_log_failed_validate">נכשל אימות החבילה</string>
-    <string name="import_log_insufficient_space">אין זכרון פנוי לחלץ את החבילה. נדרש %1$d, פנוי%2$d</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
     <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
     <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>

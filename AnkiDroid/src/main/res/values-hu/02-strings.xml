@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Nem sikerült kicsomagolni az apkg-t: %s</string>
     <string name="import_log_failed_copy_to">Nem sikerült átmásolni az apkg-t a(z) %s-hoz</string>
     <string name="import_log_failed_validate">Az apkg nem ment át az érvényesítésen</string>
-    <string name="import_log_insufficient_space">Nincs elég hely a csomag kicsomagolásához. %1$d kell, %2$d elérhető</string>
+    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
     <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>

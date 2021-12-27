@@ -14,17 +14,14 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.workarounds;
+package com.ichi2.anki.workarounds
 
-import android.content.Context;
-import android.content.Intent;
-import android.provider.Browser;
-
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-
-import androidx.annotation.NonNull;
-import timber.log.Timber;
+import android.content.Context
+import android.content.Intent
+import android.provider.Browser
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import timber.log.Timber
 
 /** #5374
  *
@@ -36,23 +33,21 @@ import timber.log.Timber;
  *
  * Reported as fixed in Firefox Preview
  */
-public class FirefoxSnackbarWorkaround {
-
-    public static boolean handledLaunchFromWebBrowser(@NonNull Intent intent, @NonNull Context context) {
-        //noinspection ConstantConditions
+object FirefoxSnackbarWorkaround {
+    @JvmStatic
+    fun handledLaunchFromWebBrowser(intent: Intent?, context: Context): Boolean {
         if (intent == null) {
-            Timber.w("FirefoxSnackbarWorkaround: No intent provided");
-            return false;
+            Timber.w("FirefoxSnackbarWorkaround: No intent provided")
+            return false
         }
         if (wasLaunchFromWebBrowser(intent)) {
-            UIUtils.showThemedToast(context, context.getString(R.string.firefox_workaround_launched_reviewer_opening_deck), false);
-            return true;
+            showThemedToast(context, context.getString(R.string.firefox_workaround_launched_reviewer_opening_deck), false)
+            return true
         }
-        return false;
+        return false
     }
 
-
-    private static boolean wasLaunchFromWebBrowser(@NonNull Intent intent) {
-        return intent.getStringExtra(Browser.EXTRA_APPLICATION_ID) != null;
+    private fun wasLaunchFromWebBrowser(intent: Intent): Boolean {
+        return intent.getStringExtra(Browser.EXTRA_APPLICATION_ID) != null
     }
 }

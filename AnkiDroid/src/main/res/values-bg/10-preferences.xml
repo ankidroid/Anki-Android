@@ -61,7 +61,7 @@
     <string name="pref_cat_advanced_summ">Оптимизации и експериментални функции</string>
     <string name="pref_cat_performance" maxLength="41">Производителност</string>
     <string name="pref_cat_workarounds" maxLength="41">Заобикаляне на проблеми</string>
-    <string name="pref_cat_plugins" maxLength="41">Приложения</string>
+    <string name="pref_cat_plugins" maxLength="41">Приставки</string>
     <string name="about_title" maxLength="41">Относно AnkiDroid</string>
     <string name="about_version">Версия: </string>
     <!-- preferences.xml entries-->
@@ -119,13 +119,13 @@
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="gestures_volume_up" maxLength="41">Volume up</string>
     <string name="gestures_volume_down" maxLength="41">Volume down</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
+    <string name="more_scrolling_buttons" maxLength="41">е-четец</string>
     <string name="more_scrolling_buttons_summ">Също така използване на канджи/катакана, емоджи/као-моджи бутони за превъртане</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Двойно превъртане</string>
     <string name="double_scrolling_gap_summ">Удвояване на разстоянието при превъртането при е-четци</string>
-    <string name="swipe_sensitivity" maxLength="41">Чувствителност на натиска</string>
+    <string name="swipe_sensitivity" maxLength="41">Чувствителност на прелистването</string>
     <string name="tts" maxLength="41">Текст към реч</string>
     <string name="tts_summ">Въпрос и отговор се четат, ако няма звуков файл е включен</string>
     <string name="sync_fetch_missing_media" maxLength="41">Привличам медия за синхронизиране</string>
@@ -148,7 +148,7 @@
     <string name="never_notify">Без известяване</string>
     <string name="notify_when_pending">Чакащи съобщения</string>
     <string name="notification_minimum_cards_due">Остават повече от %d карти</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибрация</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вибриране</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мигаща светлина</string>
     <string name="timeout_answer_text" maxLength="41">Автоматично  показване на отговор</string>
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
@@ -191,7 +191,7 @@
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="sched_ver_toggle_title">Потвърждаване</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">Запазване на екрана включен</string>
     <string name="pref_keep_screen_on_summ">Изключване изчакването на екрана</string>
@@ -317,13 +317,13 @@
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Добавяне на жест</string>
+    <string name="binding_add_key">Добавяне на клавиш</string>
+    <string name="key_picker_default_press_key">Натиснете клавиш</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
+    <string name="card_side_selection_title">Изберете страна на картата</string>
+    <string name="card_side_question">Въпрос</string>
+    <string name="card_side_answer">Oтговор</string>
     <string name="card_side_both">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>

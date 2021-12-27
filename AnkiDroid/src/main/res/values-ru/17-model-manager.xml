@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Изменить типы записей</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Изменить поля</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Править типы записей</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Править поля</string>
     <!--Toasts-->
     <string name="toast_last_model">Нельзя удалить последний тип записи</string>
     <string name="toast_last_field">В типе записей должно быть хотя бы одно поле</string>

@@ -60,7 +60,7 @@
     <string name="alert_logging_message">Connexion, patientez s’il vous plaît &#8230;</string>
     <string name="invalid_username_password">Votre adresse électronique ou mot de passe est invalide.</string>
     <string name="reset_password">Réinitialiser le mot de passe</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Adresse oubliée ?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Préférences</string>
     <string name="deckpreferences_title">Options pour XXX</string>

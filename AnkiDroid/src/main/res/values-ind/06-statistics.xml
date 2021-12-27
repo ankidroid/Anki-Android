@@ -42,7 +42,7 @@
     <string name="statistics_mature">Dewasa</string>
     <string name="statistics_young_and_learn">Muda+Belajar</string>
     <string name="statistics_unlearned">Belum dilihat</string>
-    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_suspended">Ditangguhkan</string>
     <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Belajar ulang</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Belajar</string>

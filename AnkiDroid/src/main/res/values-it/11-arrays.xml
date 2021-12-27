@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">Attiva/Disattiva la lavagna</string>
     <string name="record_voice">Registra la voce</string>
     <string name="replay_voice">Riproduci la voce</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Difficile (Se non disponibile)</string>
+    <string name="automatic_answer_option_4">Facile (Buono se non disponibile)</string>
 </resources>

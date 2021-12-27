@@ -73,7 +73,7 @@
         <item quantity="other">%d दिन %d बचे हैं</item>
     </plurals>
     <string name="no_cards_placeholder_title">संग्रह खाली है</string>
-    <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना।</string>
+    <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना शुरू करें।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">आज %2$s में %1$d पत्ते का अध्ययन किया</item>
@@ -93,13 +93,13 @@
     <string name="undo_action_review">पिछली समीक्षा</string>
     <string name="undo_action_change_deck_multi">डेक बदलें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
-    <string name="unbury">स्थगित से वापस लाएं</string>
+    <string name="unbury">वापस लौंटे</string>
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="create_shortcut">क्षुद्र मार्ग बनाएँ </string>
     <string name="browse_cards">कार्ड ढुंढे</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाते को सिंक करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
     <string name="menu_bury_card">पत्ता स्थगित करें</string>
     <string name="menu_bury_note">नोट स्थगित करें</string>
@@ -189,10 +189,13 @@
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउज़र का दिखाव</string>
     <string name="card_template_editor_deck_override">डेक ओवरराइड</string>
     <string name="card_template_editor_insert_field">फ़ील्ड डालें</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_select_field">Select field - फ़ील्ड चुनें
+Front - फ्रंट
+Back - बैक</string>
     <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">AnkiDroid - अंकिड़रोइड
+This will create 24 cards. Proceed?  - यह 24 कार्ड बनाएगा। आगे बढ़ना?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">

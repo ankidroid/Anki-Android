@@ -60,7 +60,7 @@
     <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
     <string name="invalid_username_password">ଅବୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍‍ୱାର୍ଡ଼</string>
     <string name="reset_password">ପାସ୍‍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">ଅଗ୍ରାଧିକାରସମୂହ</string>
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
@@ -83,7 +83,7 @@
     <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି। ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ବହୁତ ବଡ଼ ଫାଇଲ୍ ଅଛି।</string>
     <string name="sync_write_access_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ SD କାର୍ଡରେ ସଂରକ୍ଷିତ ହୋଇପାରିବ ନାହିଁ। କାର୍ଡଟି କେବଳ ପଠନଯୋଗ୍ୟ ଭାବରେ ମାଉଣ୍ଟ ହୋଇଛି କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।</string>
     <string name="sync_error_invalid_sync_server">ବିକଶିତ ସେଟିଂସ୍ ରେ କଷ୍ଟମ୍ ସିଙ୍କ ସର୍ଭର ଅବୈଧ ଅଟେ (%s)। ଦୟାକରି ଏକ ବୈଧ ସର୍ଭର ପ୍ରବେଶ କରନ୍ତୁ, କିମ୍ବା ସେଟିଂଟିକୁ ଅକ୍ଷମ କରନ୍ତୁ।</string>
-    <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
+    <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
     <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
     <string name="sync_finish_message">ସିଙ୍କ୍ ସମାପ୍ତ ହେଲା&#8230;</string>
     <string name="sync_log_finish_error">ସର୍ଭରକୁ ଶେଷ ଦିଗ ପଠାଇବା ସମୟରେ ତ୍ରୁଟି</string>

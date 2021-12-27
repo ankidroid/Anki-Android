@@ -45,7 +45,7 @@
     <string name="statistics">Статистика</string>
     <string name="settings">Настойки</string>
     <string name="help">Помощ</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Рисуване</string>
     <string name="send_feedback">Изпратете отзив</string>
     <string name="studyoptions_due_today">Оставащи днес:</string>
     <string name="studyoptions_new_total">Общо нови карти:</string>
@@ -65,12 +65,12 @@
         <item quantity="other">%d минути остава</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%d час %d остава</item>
+        <item quantity="other">%d часа %d остават</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%d ден %d остава</item>
+        <item quantity="other">%d дни %d остават</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекцията е празна</string>
     <string name="no_cards_placeholder_description">Започнете да добавяте карти\nкато използвате иконата +.</string>
@@ -96,7 +96,7 @@
     <string name="unbury">Откопай</string>
     <string name="rename_deck">Преименувай тестето</string>
     <string name="create_shortcut">Създай пряк път</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Разглеждане на картичките</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добави</string>
     <string name="menu_add_note">Добави бележка</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Акаунт за синхронизириране</string>
@@ -115,9 +115,9 @@
     <string name="menu_flag_card_two">Оранжев флаг</string>
     <string name="menu_flag_card_three">Зелен флаг</string>
     <string name="menu_flag_card_four">Син флаг</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Розово знаме</string>
+    <string name="menu_flag_card_six">Тюркоазено знаме</string>
+    <string name="menu_flag_card_seven">Виолетово знаме</string>
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>
     <string name="menu_select">Избор на текст</string>

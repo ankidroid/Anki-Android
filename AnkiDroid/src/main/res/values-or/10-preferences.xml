@@ -143,7 +143,7 @@
     <string name="override_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ ପ୍ରୟୋଗତା</string>
     <string name="language" maxLength="41">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
-    <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ</string>
+    <string name="notification_pref" maxLength="41">ବିଜ୍ଞପ୍ତିଗୁଡ଼ିକ</string>
     <string name="notification_pref_title" maxLength="41">କେବେ ସୂଚିତ କରାଯିବ</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ</string>
     <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
@@ -208,10 +208,10 @@
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
-    <string name="html_javascript_debugging_summ">ସୁଦୂର ୱେବଭ୍ୟୁ ସଂଯୋଗଗୁଡ଼ିକୁ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
-    <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>
+    <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
+    <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>
     <string name="exit_via_double_tap_back" maxLength="41">ଫେରିବା/ପ୍ରସ୍ଥାନ କରିବାକୁ ଦୁଇଥର ବ୍ୟାକ୍ ଦବାଅ</string>
     <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ଲିକେସନ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
     <!-- Allow all files in media imports -->
@@ -244,7 +244,7 @@
         <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ</item>
         <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">ନୂଆ ପତ୍ରଗୁଡ଼ିକ </string>
+    <string name="deck_conf_new_cards" maxLength="41">ନୂଆ ପତ୍ର</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ଲାପ୍ସ ସଂଖ୍ୟା</string>
     <string name="deck_conf_general" maxLength="41">ସାଧାରଣ </string>
@@ -257,10 +257,10 @@
     <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ଅନ୍ତରାଳ</string>
     <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା</string>
     <string name="deck_conf_max_rev" maxLength="41">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
+    <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
+    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂସ୍ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
@@ -312,7 +312,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
     <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, କାର୍ଡ ସମ୍ପାଦନ କରିବା ସମୟରେ &lt;br&gt; କୁ ନୂତନ ଲାଇନରେ ରୂପାନ୍ତର କରନ୍ତୁ।</string>
     <string name="no_code_formatting" maxLength="41">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
-    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
+    <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <!-- Open Changelog-->

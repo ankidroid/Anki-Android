@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Atendi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Io fiaskis</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG-dosieroj ne povas esti antaŭrigardataj.</string>
     <string name="multimedia_editor_png_paste_error">Eraro dum konverti bildon el tondujo al PNG-formo: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Kunigi plurmedian enhavon al la kampo %1$s</string>
     <string name="multimedia_editor_attach_media">Aldoni aŭdvidaĵon</string>
@@ -124,5 +124,5 @@
     <string name="save_dialog_content">La nuna limigo de grando de bildo estas %s MB. Implicita limigo de grando de bildo estas 1 MB. Ĉu vi volas pritondi ĝin?</string>
     <string name="select_image_failed">"Fiaskis konservi bildon, reprovu"</string>
     <string name="activity_result_unexpected">Aplikaĵo liveris neatenditan valoron. Eble vi uzu alian aplikaĵon</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Enhavo de kampo</string>
 </resources>

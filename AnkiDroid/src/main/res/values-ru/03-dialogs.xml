@@ -105,7 +105,7 @@
     <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учтёт, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Для импорта выберите колоду в файловом менеджере или посетите страницу about:downloads</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
-    <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
+    <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку \'%s\'.</string>
     <string name="intent_aedict_empty">Категория по умолчанию пуста</string>
@@ -260,8 +260,8 @@
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
     <string name="deck_picker_new">Количество новых карт, которые сегодня можно увидеть в этой колоде.</string>
-    <string name="deck_picker_rev">Количество карт на сегодня в этой колоде.</string>
-    <string name="deck_picker_lrn">Количество карт в обучении в этой колоде.</string>
+    <string name="deck_picker_rev">Количество карточек на сегодня в колоде.</string>
+    <string name="deck_picker_lrn">Количество изучаемых карточек в колоде.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
