@@ -13,12 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.graphics.wrapper;
 
-public class BasicStrokeWrap extends StrokeWrap {
+package com.wildplot.android.rendering.graphics.wrapper
 
-    public BasicStrokeWrap(float strokeSize) {
-        super(strokeSize);
-    }
-
-}
+class BasicStrokeWrap(strokeSize: Float) : StrokeWrap(strokeSize)
