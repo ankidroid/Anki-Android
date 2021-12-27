@@ -13,81 +13,72 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.graphics.wrapper;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering.graphics.wrapper
 
-@SuppressLint({"NonPublicNonStaticFieldName", "ConstantFieldName"})
-public class ColorWrap {
-    //android.graphics.Color
-    private final int colorValue;
-    public static final ColorWrap red = new ColorWrap(android.graphics.Color.RED);
-    public static final ColorWrap RED = new ColorWrap(android.graphics.Color.RED);
+import android.graphics.Color
 
-    public static final ColorWrap BLACK = new ColorWrap(android.graphics.Color.BLACK);
-    public static final ColorWrap black = new ColorWrap(android.graphics.Color.BLACK);
+class ColorWrap {
+    // android.graphics.Color
+    val colorValue: Int
+    val red: Int
+        get() = Color.red(colorValue)
+    val green: Int
+        get() = Color.green(colorValue)
+    val blue: Int
+        get() = Color.blue(colorValue)
 
-    public static final ColorWrap GREEN = new ColorWrap(android.graphics.Color.GREEN);
-    public static final ColorWrap green = new ColorWrap(android.graphics.Color.GREEN);
-
-    public static final ColorWrap LIGHT_GRAY = new ColorWrap(android.graphics.Color.LTGRAY);
-
-    public static final ColorWrap WHITE = new ColorWrap(android.graphics.Color.WHITE);
-    public static final ColorWrap white = new ColorWrap(android.graphics.Color.WHITE);
-
-
-    public ColorWrap(int colorValue) {
-        super();
-        this.colorValue = colorValue;
+    constructor(colorValue: Int) : super() {
+        this.colorValue = colorValue
     }
 
-
-    public ColorWrap(int colorValue, float af) {
-        super();
-        int a = Math.round(af * 255);
-        int r = android.graphics.Color.red(colorValue);
-        int g = android.graphics.Color.green(colorValue);
-        int b = android.graphics.Color.blue(colorValue);
-        this.colorValue = android.graphics.Color.argb(a, r, g, b);
+    constructor(colorValue: Int, af: Float) : super() {
+        val a = Math.round(af * 255)
+        val r = Color.red(colorValue)
+        val g = Color.green(colorValue)
+        val b = Color.blue(colorValue)
+        this.colorValue = Color.argb(a, r, g, b)
     }
 
-
-    public ColorWrap(int r, int g, int b) {
-        this.colorValue = android.graphics.Color.rgb(r, g, b);
+    constructor(r: Int, g: Int, b: Int) {
+        colorValue = Color.rgb(r, g, b)
     }
 
-
-    public ColorWrap(int r, int g, int b, int a) {
-        this.colorValue = android.graphics.Color.argb(a, r, g, b);
+    constructor(r: Int, g: Int, b: Int, a: Int) {
+        colorValue = Color.argb(a, r, g, b)
     }
 
-
-    public ColorWrap(float r, float g, float b, float a) {
-        this.colorValue = android.graphics.Color.argb((int) (a * 255), (int) (r * 255), (int) (g * 255), (int) (b * 255));
+    constructor(r: Float, g: Float, b: Float, a: Float) {
+        colorValue = Color.argb((a * 255).toInt(), (r * 255).toInt(), (g * 255).toInt(), (b * 255).toInt())
     }
 
-
-    public ColorWrap(float r, float g, float b) {
-        this.colorValue = android.graphics.Color.rgb((int) (r * 255), (int) (g * 255), (int) (b * 255));
+    constructor(r: Float, g: Float, b: Float) {
+        colorValue = Color.rgb((r * 255).toInt(), (g * 255).toInt(), (b * 255).toInt())
     }
 
+    companion object {
+        val red = ColorWrap(Color.RED)
 
-    public int getColorValue() {
-        return colorValue;
-    }
+        @JvmField
+        val RED = ColorWrap(Color.RED)
 
+        @JvmField
+        val BLACK = ColorWrap(Color.BLACK)
 
-    public int getRed() {
-        return android.graphics.Color.red(colorValue);
-    }
+        @JvmField
+        val black = ColorWrap(Color.BLACK)
 
+        @JvmField
+        val GREEN = ColorWrap(Color.GREEN)
+        val green = ColorWrap(Color.GREEN)
 
-    public int getGreen() {
-        return android.graphics.Color.green(colorValue);
-    }
+        @JvmField
+        val LIGHT_GRAY = ColorWrap(Color.LTGRAY)
 
+        @JvmField
+        val WHITE = ColorWrap(Color.WHITE)
 
-    public int getBlue() {
-        return android.graphics.Color.blue(colorValue);
+        @JvmField
+        val white = ColorWrap(Color.WHITE)
     }
 }
