@@ -79,8 +79,9 @@ CREATE TABLE cards (
       --   to "was answered incorrectly" state
     left            integer not null,
       -- of the form a*1000+b, with:
-      -- b the number of reps left till graduation
       -- a the number of reps left today
+      -- b the number of reps left till graduation
+      -- for example: '2004' means 2 reps left today and 4 reps till graduation
     odue            integer not null,
       -- original due: In filtered decks, it's the original due date that the card had before moving to filtered.
                     -- If the card lapsed in scheduler1, then it's the value before the lapse. (This is used when switching to scheduler 2. At this time, cards in learning becomes due again, with their previous due date)
