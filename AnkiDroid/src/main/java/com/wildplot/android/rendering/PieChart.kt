@@ -13,178 +13,144 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import com.wildplot.android.rendering.interfaces.Legendable
 
-import androidx.annotation.NonNull;
+class PieChart(plotSheet: PlotSheet, values: DoubleArray, colors: Array<ColorWrap>) : Drawable, Legendable {
+    private val mPlotSheet: PlotSheet
+    private val mValues: DoubleArray
+    private val mColors: Array<ColorWrap>
+    private var mName = ""
+    private var mNameIsSet = false
+    private val mPercent: DoubleArray
+    private var mSum = 0.0
+    private fun checkArguments(values: DoubleArray, colors: Array<ColorWrap>) {
+        require(values.size == colors.size) { "The number of colors must match the number of values" }
+    }
 
-@SuppressLint("NonPublicNonStaticFieldName")
-public class PieChart implements Drawable, Legendable {
-    // First sector starts at 12 o'clock.
-    private static final float FIRST_SECTOR_OFFSET = -90;
+    override fun isOnFrame(): Boolean {
+        return false
+    }
 
-    private final PlotSheet mPlotSheet;
-    private final double[] mValues;
-    private final ColorWrap[] mColors;
+    override fun paint(g: GraphicsWrap) {
+        // Do not show chart if segments are all zero
+        if (mSum == 0.0) {
+            return
+        }
+        val maxSideBorders = Math.max(
+            mPlotSheet.frameThickness[PlotSheet.LEFT_FRAME_THICKNESS_INDEX],
+            mPlotSheet.frameThickness[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]
+        )
+        val maxUpperBottomBorders = Math.max(
+            mPlotSheet.frameThickness[PlotSheet.UPPER_FRAME_THICKNESS_INDEX],
+            mPlotSheet.frameThickness[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX]
+        )
+        val realBorder = Math.max(maxSideBorders, maxUpperBottomBorders) + 3
+        val field = g.clipBounds
+        val diameter = Math.min(field.width, field.height) - 2 * realBorder
+        val xCenter = field.width / 2.0f
+        val yCenter = field.height / 2.0f
+        val oldColor = g.color
+        drawSectors(g, diameter, xCenter, yCenter)
+        drawSectorLabels(g, diameter, xCenter, yCenter)
+        g.color = oldColor
+    }
 
-    private String mName = "";
-    private boolean mNameIsSet = false;
-    private final double[] mPercent;
-    private double mSum;
-
-
-    public PieChart(@NonNull PlotSheet plotSheet, double[] values, ColorWrap[] colors) {
-        checkArguments(values, colors);
-        mPlotSheet = plotSheet;
-        mValues = values;
-        mColors = colors;
-        mPercent = new double[mValues.length];
-        for (double v : mValues) {
-            mSum += v;
+    private fun drawSectors(g: GraphicsWrap, diameter: Float, xCenter: Float, yCenter: Float) {
+        val left = xCenter - diameter / 2f
+        val top = yCenter - diameter / 2f
+        var currentAngle = FIRST_SECTOR_OFFSET
+        for (i in 0 until mPercent.size - 1) {
+            g.color = mColors[i]
+            val arcLength = (360 * mValues[i] / mSum).toFloat()
+            g.fillArc(left, top, diameter, diameter, currentAngle, arcLength)
+            currentAngle += arcLength
         }
 
-        double denominator = (mSum == 0) ? 1 : mSum;
-
-        mPercent[0] = mValues[0] / denominator;
-        for (int i = 1; i < mValues.length; i++) {
-            mPercent[i] = mPercent[i - 1] + mValues[i] / denominator;
-        }
+        // last one does need some corrections to fill a full circle:
+        g.color = lastSectorColor
+        g.fillArc(
+            left, top, diameter, diameter, currentAngle,
+            360f + FIRST_SECTOR_OFFSET - currentAngle
+        )
+        g.color = ColorWrap.black
+        g.drawArc(left, top, diameter, diameter, 0f, 360f)
     }
 
+    private val lastSectorColor: ColorWrap
+        get() = mColors[mColors.size - 1]
 
-    private void checkArguments(double[] values, ColorWrap[] colors) {
-        if (values.length != colors.length) {
-            throw new IllegalArgumentException(
-                    "The number of colors must match the number of values");
-        }
-    }
-
-
-    @Override
-    public boolean isOnFrame() {
-        return false;
-    }
-
-
-    @Override
-    public void paint(GraphicsWrap g) {
-        //Do not show chart if segments are all zero
-        if (mSum == 0) {
-            return;
-        }
-
-        float maxSideBorders = Math.max(mPlotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX],
-                mPlotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]);
-        float maxUpperBottomBorders = Math.max(mPlotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX],
-                mPlotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX]);
-
-        float realBorder = Math.max(maxSideBorders, maxUpperBottomBorders) + 3;
-
-        RectangleWrap field = g.getClipBounds();
-        float diameter = Math.min(field.width, field.height) - 2 * realBorder;
-        float xCenter = field.width / 2.0F;
-        float yCenter = field.height / 2.0F;
-
-        ColorWrap oldColor = g.getColor();
-
-        drawSectors(g, diameter, xCenter, yCenter);
-        drawSectorLabels(g, diameter, xCenter, yCenter);
-
-        g.setColor(oldColor);
-    }
-
-
-    private void drawSectors(GraphicsWrap g, float diameter, float xCenter, float yCenter) {
-        float left = xCenter - diameter / 2F;
-        float top = yCenter - diameter / 2F;
-
-        float currentAngle = FIRST_SECTOR_OFFSET;
-        for (int i = 0; i < mPercent.length - 1; i++) {
-            g.setColor(mColors[i]);
-            float arcLength = (float) ((360 * mValues[i]) / mSum);
-            g.fillArc(left, top, diameter, diameter, currentAngle, arcLength);
-            currentAngle += arcLength;
-        }
-
-        //last one does need some corrections to fill a full circle:
-        g.setColor(getLastSectorColor());
-        g.fillArc(left, top, diameter, diameter, currentAngle,
-                (360F + FIRST_SECTOR_OFFSET - currentAngle));
-
-        g.setColor(ColorWrap.black);
-        g.drawArc(left, top, diameter, diameter, 0, 360);
-    }
-
-
-    private ColorWrap getLastSectorColor() {
-        return mColors[mColors.length - 1];
-    }
-
-
-    private void drawSectorLabels(GraphicsWrap g, float diameter, float xCenter, float yCenter) {
-        ColorWrap labelBackground = new ColorWrap(0, 0, 0, 0.5f);
-        for (int j = 0; j < mPercent.length; j++) {
-            if (mValues[j] == 0) {
-                continue;
+    private fun drawSectorLabels(g: GraphicsWrap, diameter: Float, xCenter: Float, yCenter: Float) {
+        val labelBackground = ColorWrap(0.0f, 0.0f, 0.0f, 0.5f)
+        for (j in mPercent.indices) {
+            if (mValues[j] == 0.0) {
+                continue
             }
-            double oldPercent = 0;
+            var oldPercent = 0.0
             if (j != 0) {
-                oldPercent = mPercent[j - 1];
+                oldPercent = mPercent[j - 1]
             }
-            String text = "" + Math.round((((mPercent[j] - oldPercent)) * 100) * 100) / 100.0 + "%";
-            float x = (float) (xCenter + Math.cos(-1 * ((oldPercent + (mPercent[j] - oldPercent) * 0.5) * 360 + FIRST_SECTOR_OFFSET) * Math.PI / 180.0) * 0.375 * diameter) - 20;
-            float y = (float) (yCenter - Math.sin(-1 * ((oldPercent + (mPercent[j] - oldPercent) * 0.5) * 360 + FIRST_SECTOR_OFFSET) * Math.PI / 180.0) * 0.375 * diameter);
-            FontMetricsWrap fm = g.getFontMetrics();
-            float width = fm.stringWidth(text);
-            float height = fm.getHeight();
-            g.setColor(labelBackground);
-            g.fillRect(x - 1, y - height + 3, width + 2, height);
-            g.setColor(ColorWrap.white);
-            g.drawString(text, x, y);
+            val text = "" + Math.round((mPercent[j] - oldPercent) * 100 * 100) / 100.0 + "%"
+            val x = (xCenter + Math.cos(-1 * ((oldPercent + (mPercent[j] - oldPercent) * 0.5) * 360 + FIRST_SECTOR_OFFSET) * Math.PI / 180.0) * 0.375 * diameter).toFloat() - 20
+            val y = (yCenter - Math.sin(-1 * ((oldPercent + (mPercent[j] - oldPercent) * 0.5) * 360 + FIRST_SECTOR_OFFSET) * Math.PI / 180.0) * 0.375 * diameter).toFloat()
+            val fm = g.fontMetrics
+            val width = fm.stringWidth(text)
+            val height = fm.height
+            g.color = labelBackground
+            g.fillRect(x - 1, y - height + 3, width + 2, height)
+            g.color = ColorWrap.white
+            g.drawString(text, x, y)
         }
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return true;
+    override fun isClusterable(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return false;
+    override fun isCritical(): Boolean {
+        return false
     }
 
-
-    @Override
-    public ColorWrap getColor() {
-        return mColors.length > 0 ? mColors[0] : ColorWrap.WHITE;
+    override fun getColor(): ColorWrap {
+        return if (mColors.size > 0) mColors[0] else ColorWrap.WHITE
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun getName(): String {
+        return mName
     }
 
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
+    override fun nameIsSet(): Boolean {
+        return mNameIsSet
     }
 
+    fun setName(name: String) {
+        mName = name
+        mNameIsSet = true
+    }
 
-    public void setName(String name) {
-        mName = name;
-        mNameIsSet = true;
+    companion object {
+        // First sector starts at 12 o'clock.
+        private const val FIRST_SECTOR_OFFSET = -90f
+    }
+
+    init {
+        checkArguments(values, colors)
+        mPlotSheet = plotSheet
+        mValues = values
+        mColors = colors
+        mPercent = DoubleArray(mValues.size)
+        for (v in mValues) {
+            mSum += v
+        }
+        val denominator: Double = if (mSum == 0.0) 1.0 else mSum
+        mPercent[0] = mValues[0] / denominator
+        for (i in 1 until mValues.size) {
+            mPercent[i] = mPercent[i - 1] + mValues[i] / denominator
+        }
     }
 }
