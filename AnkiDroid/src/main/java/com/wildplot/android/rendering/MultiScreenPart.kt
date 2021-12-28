@@ -13,87 +13,73 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering
 
-import com.wildplot.android.rendering.interfaces.Drawable;
-
-import java.util.Vector;
+import com.wildplot.android.rendering.interfaces.Drawable
+import java.util.*
 
 /**
  * This class is used to store informations for a certain plot in a multi-plot sheet.
  * The informations are the drawables for this plotsheet and the x and y limitations
  */
-@SuppressLint("NonPublicNonStaticFieldName")
-public class MultiScreenPart {
-    private final double[] xRange;
-    private final double[] yRange;
-    private Vector<Drawable> drawables = new Vector<>();
-
-
-    /**
-     * Constructor for a screen part,
-     * a screen part is build with its information about x- and y-range.
-     * Drawable objects that will be drawn on the screen part can be added after construction.
-     */
-    public MultiScreenPart(double[] xRange, double[] yRange) {
-        super();
-        this.xRange = xRange;
-        this.yRange = yRange;
-    }
-
-
-    /**
-     * Constructor for a screen part,
-     * a screen part is build with its information about x- and y-range, aswell as a list of Drawable objects that will be drawn
-     * onto the screen part
-     */
-    public MultiScreenPart(double[] xRange, double[] yRange, Vector<Drawable> drawables) {
-        super();
-        this.xRange = xRange;
-        this.yRange = yRange;
-        this.drawables = drawables;
-    }
-
-
-    /**
-     * get the x-range of this screen part
-     *
-     * @return the xRange
-     */
-    public double[] getxRange() {
-        return xRange;
-    }
-
-
-    /**
-     * Get the y-range of this screen part
-     *
-     * @return the yRange
-     */
-    public double[] getyRange() {
-        return yRange;
-    }
-
+class MultiScreenPart {
+    private val xRange: DoubleArray
+    private val yRange: DoubleArray
 
     /**
      * get the Drawable objects associated with this screen part
      *
      * @return the drawables
      */
-    public Vector<Drawable> getDrawables() {
-        return drawables;
+    var drawables = Vector<Drawable>()
+        private set
+
+    /**
+     * Constructor for a screen part,
+     * a screen part is build with its information about x- and y-range.
+     * Drawable objects that will be drawn on the screen part can be added after construction.
+     */
+    constructor(xRange: DoubleArray, yRange: DoubleArray) : super() {
+        this.xRange = xRange
+        this.yRange = yRange
     }
 
+    /**
+     * Constructor for a screen part,
+     * a screen part is build with its information about x- and y-range, aswell as a list of Drawable objects that will be drawn
+     * onto the screen part
+     */
+    constructor(xRange: DoubleArray, yRange: DoubleArray, drawables: Vector<Drawable>) : super() {
+        this.xRange = xRange
+        this.yRange = yRange
+        this.drawables = drawables
+    }
+
+    /**
+     * get the x-range of this screen part
+     *
+     * @return the xRange
+     */
+    fun getxRange(): DoubleArray {
+        return xRange
+    }
+
+    /**
+     * Get the y-range of this screen part
+     *
+     * @return the yRange
+     */
+    fun getyRange(): DoubleArray {
+        return yRange
+    }
 
     /**
      * add another Drawable object that shall be drawn onto the sheet
      *
      * @param draw Drawable object which will be added to plot sheet
      */
-    public void addDrawable(Drawable draw) {
-        this.drawables.add(draw);
+    fun addDrawable(draw: Drawable) {
+        drawables.add(draw)
     }
-
 }
