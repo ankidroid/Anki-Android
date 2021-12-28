@@ -13,75 +13,51 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
-
+import android.annotation.SuppressLint
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import com.wildplot.android.rendering.interfaces.Legendable
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class LegendDrawable implements Drawable, Legendable {
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-
-    private ColorWrap color = ColorWrap.BLACK;
-
-
-    @Override
-    public void paint(GraphicsWrap g) {
-
+class LegendDrawable : Drawable, Legendable {
+    private var mName = ""
+    private var mNameIsSet = false
+    private var color = ColorWrap.BLACK
+    override fun paint(g: GraphicsWrap) {}
+    override fun isOnFrame(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isOnFrame() {
-        return false;
+    override fun isClusterable(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return false;
+    override fun isCritical(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return false;
+    override fun getColor(): ColorWrap {
+        return color
     }
 
-
-    @Override
-    public ColorWrap getColor() {
-        return color;
+    override fun getName(): String {
+        return mName
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun nameIsSet(): Boolean {
+        return mNameIsSet
     }
 
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
+    fun setName(name: String) {
+        mName = name
+        mNameIsSet = true
     }
 
-
-    public void setName(String name) {
-        mName = name;
-        mNameIsSet = true;
-    }
-
-
-    public void setColor(ColorWrap color) {
-        this.color = color;
+    fun setColor(color: ColorWrap) {
+        this.color = color
     }
 }
