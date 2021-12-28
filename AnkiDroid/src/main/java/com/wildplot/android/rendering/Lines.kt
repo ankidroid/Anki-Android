@@ -13,137 +13,97 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering
 
-import com.wildplot.android.rendering.graphics.wrapper.BasicStrokeWrap;
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-import com.wildplot.android.rendering.graphics.wrapper.StrokeWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
-
+import com.wildplot.android.rendering.graphics.wrapper.BasicStrokeWrap
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import com.wildplot.android.rendering.interfaces.Legendable
 
 /**
  * The LinesPoints objects draw points from a data array and connect them with lines on.
  * These LinesPoints are drawn onto a PlotSheet object
  */
-@SuppressLint("NonPublicNonStaticFieldName")
-public class Lines implements Drawable, Legendable {
-
-    private boolean mHasShadow = false;
-    private float mShadowDx = 0.0f;
-    private float mShadowDy = 0.0f;
-    private ColorWrap mShadowColor = ColorWrap.BLACK;
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-    private final PlotSheet plotSheet;
-
-    private final double[][] pointList;
-
-    private final ColorWrap color;
-
-    private float size;
-
-
-    /**
-     * Constructor for points connected with lines without drawn points
-     *
-     * @param plotSheet the sheet the lines and points will be drawn onto
-     * @param pointList x- , y-positions of given points
-     * @param color     point and line color
-     */
-    public Lines(PlotSheet plotSheet, double[][] pointList, ColorWrap color) {
-        this.plotSheet = plotSheet;
-        this.pointList = pointList;
-        this.color = color;
+class Lines
+/**
+ * Constructor for points connected with lines without drawn points
+ *
+ * @param plotSheet the sheet the lines and points will be drawn onto
+ * @param pointList x- , y-positions of given points
+ * @param color     point and line color
+ */(private val plotSheet: PlotSheet, private val pointList: Array<DoubleArray>, private val color: ColorWrap) : Drawable, Legendable {
+    private var mHasShadow = false
+    private var mShadowDx = 0.0f
+    private var mShadowDy = 0.0f
+    private var mShadowColor = ColorWrap.BLACK
+    private var mName = ""
+    private var mNameIsSet = false
+    private var size = 0f
+    fun setSize(size: Float) {
+        this.size = size
     }
 
-
-    public void setSize(float size) {
-        this.size = size;
-    }
-
-
-    @Override
-    public void paint(GraphicsWrap g) {
-        ColorWrap oldColor = g.getColor();
-        RectangleWrap field = g.getClipBounds();
-        g.setColor(color);
-        StrokeWrap oldStroke = g.getStroke();
-        g.setStroke(new BasicStrokeWrap(this.size));  // set stroke width of 10
-
-        float[] coordStart = plotSheet.toGraphicPoint(pointList[0][0], pointList[1][0], field);
-        float[] coordEnd;
-
-        for (int i = 0; i < pointList[0].length; i++) {
-            coordEnd = coordStart;
-            coordStart = plotSheet.toGraphicPoint(pointList[0][i], pointList[1][i], field);
+    override fun paint(g: GraphicsWrap) {
+        val oldColor = g.color
+        val field = g.clipBounds
+        g.color = color
+        val oldStroke = g.stroke
+        g.stroke = BasicStrokeWrap(size) // set stroke width of 10
+        var coordStart = plotSheet.toGraphicPoint(pointList[0][0], pointList[1][0], field)
+        var coordEnd: FloatArray
+        for (i in 0 until pointList[0].size) {
+            coordEnd = coordStart
+            coordStart = plotSheet.toGraphicPoint(pointList[0][i], pointList[1][i], field)
             if (mHasShadow) {
-                StrokeWrap oldShadowLessStroke = g.getStroke();
-                g.setStroke(new BasicStrokeWrap(this.size * 1.5f));  // set stroke width of 10
-                ColorWrap shadowColor = new ColorWrap(mShadowColor.getRed(), mShadowColor.getGreen(), mShadowColor.getBlue(), 80);
-                g.setColor(shadowColor);
-                g.drawLine(coordStart[0] + mShadowDx, coordStart[1] + mShadowDy, coordEnd[0] + mShadowDx, coordEnd[1] + mShadowDy);
-                g.setColor(color);
-                g.setStroke(oldShadowLessStroke);
+                val oldShadowLessStroke = g.stroke
+                g.stroke = BasicStrokeWrap(size * 1.5f) // set stroke width of 10
+                val shadowColor = ColorWrap(mShadowColor.red, mShadowColor.green, mShadowColor.blue, 80)
+                g.color = shadowColor
+                g.drawLine(coordStart[0] + mShadowDx, coordStart[1] + mShadowDy, coordEnd[0] + mShadowDx, coordEnd[1] + mShadowDy)
+                g.color = color
+                g.stroke = oldShadowLessStroke
             }
-            g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
+            g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
         }
-        g.setStroke(oldStroke);
-        g.setColor(oldColor);
+        g.stroke = oldStroke
+        g.color = oldColor
     }
 
-
-    public boolean isOnFrame() {
-        return false;
+    override fun isOnFrame(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return true;
+    override fun isClusterable(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return false;
+    override fun isCritical(): Boolean {
+        return false
     }
 
-
-    @Override
-    public ColorWrap getColor() {
-        return color;
+    override fun getColor(): ColorWrap {
+        return color
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun getName(): String {
+        return mName
     }
 
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
+    override fun nameIsSet(): Boolean {
+        return mNameIsSet
     }
 
-
-    public void setName(String name) {
-        mName = name;
-        mNameIsSet = true;
+    fun setName(name: String) {
+        mName = name
+        mNameIsSet = true
     }
 
-
-    public void setShadow(float dx, float dy, ColorWrap color) {
-        mHasShadow = true;
-        mShadowDx = dx;
-        mShadowDy = dy;
-        mShadowColor = color;
+    fun setShadow(dx: Float, dy: Float, color: ColorWrap) {
+        mHasShadow = true
+        mShadowDx = dx
+        mShadowDy = dy
+        mShadowColor = color
     }
 }
