@@ -13,17 +13,16 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.interfaces;
+
+package com.wildplot.android.rendering.interfaces
 
 /**
  * Interface for functions with one dependent variable
  */
-public interface Function2D {
-
+interface Function2D {
     /**
      * @param x given x value
      * @return calculated y value
      */
-    double f(double x);
-
+    fun f(x: Double): Double
 }
