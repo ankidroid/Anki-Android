@@ -13,15 +13,13 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering.interfaces;
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+package com.wildplot.android.rendering.interfaces
 
-public interface Legendable {
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 
-    ColorWrap getColor();
-
-    String getName();
-
-    boolean nameIsSet();
+interface Legendable {
+    val color: ColorWrap?
+    val name: String?
+    fun nameIsSet(): Boolean
 }
