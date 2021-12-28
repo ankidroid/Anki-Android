@@ -13,63 +13,37 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
 
-import android.annotation.SuppressLint;
+package com.wildplot.android.rendering
 
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import java.util.Vector
 
-import java.util.Vector;
-
-
-@SuppressLint("NonPublicNonStaticFieldName")
-public class DrawableContainer implements Drawable {
-
-    private final Vector<Drawable> drawableVector = new Vector<>();
-    private final boolean isOnFrame;
-    private final boolean isCritical;
-
-
-    public DrawableContainer(boolean isOnFrame, boolean isCritical) {
-        this.isOnFrame = isOnFrame;
-        this.isCritical = isCritical;
+class DrawableContainer(private val isOnFrame: Boolean, private val isCritical: Boolean) : Drawable {
+    private val drawableVector = Vector<Drawable>()
+    fun addDrawable(drawable: Drawable) {
+        drawableVector.add(drawable)
     }
 
-
-    public void addDrawable(Drawable drawable) {
-        drawableVector.add(drawable);
-
-    }
-
-
-    @Override
-    public void paint(GraphicsWrap g) {
-        for (Drawable drawable : drawableVector) {
-            drawable.paint(g);
+    override fun paint(g: GraphicsWrap) {
+        for (drawable in drawableVector) {
+            drawable.paint(g)
         }
     }
 
-
-    @Override
-    public boolean isOnFrame() {
-        return isOnFrame;
+    override fun isOnFrame(): Boolean {
+        return isOnFrame
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return false;
+    override fun isClusterable(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return isCritical;
+    override fun isCritical(): Boolean {
+        return isCritical
     }
 
-
-    public int getSize() {
-        return drawableVector.size();
-    }
+    val size: Int
+        get() = drawableVector.size
 }
