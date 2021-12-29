@@ -14,13 +14,13 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.backend.exception;
+package com.ichi2.libanki.backend.exception
 
-import net.ankiweb.rsdroid.RustCleanup;
+import net.ankiweb.rsdroid.RustCleanup
 
 @RustCleanup("All of these should be removed when JavaBackend is removed")
-public class BackendNotSupportedException extends Exception {
-    public RuntimeException alreadyUsingRustBackend() {
-        return new RuntimeException("A BackendNotSupportedException should not occur when using Rust backend", this);
+class BackendNotSupportedException : Exception() {
+    fun alreadyUsingRustBackend(): RuntimeException {
+        return RuntimeException("A BackendNotSupportedException should not occur when using Rust backend", this)
     }
 }
