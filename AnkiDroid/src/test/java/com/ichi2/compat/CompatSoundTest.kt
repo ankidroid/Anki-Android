@@ -28,9 +28,9 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [21, 26])
 class CompatSoundTest {
-    private var compat: Compat = CompatHelper.getCompat()
-    private var audioManager: AudioManager = AnkiDroidApp.getInstance().applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    private var afChangeListener: OnAudioFocusChangeListener = OnAudioFocusChangeListener { _: Int -> }
+    private val compat: Compat = CompatHelper.getCompat()
+    private val audioManager: AudioManager = AnkiDroidApp.getInstance().applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    private val afChangeListener: OnAudioFocusChangeListener = OnAudioFocusChangeListener { _: Int -> }
 
     @Test
     fun testRequestAudioFocus() {
