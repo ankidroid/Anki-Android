@@ -1,57 +1,40 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.libanki.backend.exception;
+package com.ichi2.libanki.backend.exception
 
-import android.content.res.Resources;
+import android.content.res.Resources
+import com.ichi2.anki.R
 
-import com.ichi2.anki.R;
-
-import androidx.annotation.Nullable;
-
-public class DeckRenameException extends Exception {
-
-    public static final int ALREADY_EXISTS = 0;
-    private static final int FILTERED_NOSUBDECKS = 1;
-
-    private final int mErrorCode;
-
+class DeckRenameException
+(private val errorCode: Int) : Exception() {
     // region only if FILTERED_NOSUBDECKS
-    private String mFilteredAncestorName;
-    private String mDeckName;
+    private var mFilteredAncestorName: String? = null
+    private var mDeckName: String? = null
     // endregion
 
-    public DeckRenameException(int errorCode) {
-        super();
-        mErrorCode = errorCode;
-    }
+    override val message: String?
+        get() = if (errorCode == FILTERED_NOSUBDECKS) {
+            "Deck $mDeckName has filtered ancestor $mFilteredAncestorName"
+        } else super.message
 
-
-    /** Generates a {@link com.ichi2.libanki.backend.exception.DeckRenameException} with additional information in the message */
-    public static DeckRenameException filteredAncestor(String deckName, String filteredAncestorName) {
-        DeckRenameException ex = new DeckRenameException(FILTERED_NOSUBDECKS);
-        ex.mFilteredAncestorName = filteredAncestorName;
-        ex.mDeckName = deckName;
-        return ex;
-    }
-
-
-    @Nullable
-    @Override
-    public String getMessage() {
-        if (mErrorCode == FILTERED_NOSUBDECKS) {
-            return "Deck " + mDeckName + " has filtered ancestor " + mFilteredAncestorName;
+    fun getLocalizedMessage(res: Resources): String {
+        return when (errorCode) {
+            ALREADY_EXISTS -> res.getString(R.string.decks_rename_exists)
+            FILTERED_NOSUBDECKS -> res.getString(R.string.decks_rename_filtered_nosubdecks)
+            else -> ""
         }
-        return super.getMessage();
     }
 
+    companion object {
+        const val ALREADY_EXISTS = 0
+        private const val FILTERED_NOSUBDECKS = 1
 
-    public String getLocalizedMessage(Resources res) {
-        switch (mErrorCode) {
-            case ALREADY_EXISTS:
-                return res.getString(R.string.decks_rename_exists);
-            case FILTERED_NOSUBDECKS:
-                return res.getString(R.string.decks_rename_filtered_nosubdecks);
-            default:
-                return "";
+        /** Generates a {@link com.ichi2.libanki.backend.exception.DeckRenameException} with additional information in the message */
+        @JvmStatic
+        fun filteredAncestor(deckName: String?, filteredAncestorName: String?): DeckRenameException {
+            val ex = DeckRenameException(FILTERED_NOSUBDECKS)
+            ex.mFilteredAncestorName = filteredAncestorName
+            ex.mDeckName = deckName
+            return ex
         }
     }
 }
