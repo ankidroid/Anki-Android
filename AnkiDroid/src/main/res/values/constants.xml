@@ -184,7 +184,9 @@
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
     <string name="link_help">https://docs.ankidroid.org/help.html</string>
+    <string name="asset_link_help">file:///android_asset/help.html</string>
     <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
+    <string name="asset_link_manual">file:///android_asset/manual.html</string>
     <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
     <string name="link_manual_ja">https://docs.ankidroid.org/manual-ja.html</string>
     <string name="link_help_zh">https://docs.ankidroid.org/help-zh.html</string>

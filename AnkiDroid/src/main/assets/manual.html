@@ -1,0 +1,2778 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Asciidoctor 2.0.16">
+  <title>AnkiDroid 2.15 User Manual</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+  <style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;-webkit-tap-highlight-color:transparent}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#03a9f4">
+  <meta name="msapplication-TileColor" content="#303030">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#03a9f4">
+  <style>
+    .rtl * {
+        direction: rtl;
+    }
+    .rtl .anchor {
+        margin-right: -1.5ex;
+    }
+</style>
+</head>
+<body class="article">
+<div id="header">
+  <h1>AnkiDroid 2.15 User Manual</h1>
+  <div id="toc" class="toc">
+    <div id="toctitle">Table of Contents</div>
+    <ul class="sectlevel1">
+      <li><a href="#_introduction">Introduction</a></li>
+      <li><a href="#gettingStarted">Getting started</a></li>
+      <li><a href="#deckPicker">The Deck List</a>
+        <ul class="sectlevel2">
+          <li><a href="#_add_button">Add button</a></li>
+          <li><a href="#_app_bar">App Bar</a></li>
+          <li><a href="#_studying_a_deck">Studying a Deck</a></li>
+          <li><a href="#_other_deck_actions">Other Deck Actions</a></li>
+          <li><a href="#_advanced_actions">Advanced Actions</a></li>
+          <li><a href="#_deck_counts">Deck Counts</a></li>
+        </ul>
+      </li>
+      <li><a href="#drawer">Navigation Drawer</a></li>
+      <li><a href="#deckOverview">Deck Overview Screen</a>
+        <ul class="sectlevel2">
+          <li><a href="#_app_bar_2">App bar</a></li>
+        </ul>
+      </li>
+      <li><a href="#reviewer">Study Screen</a>
+        <ul class="sectlevel2">
+          <li><a href="#_basics">Basics</a></li>
+          <li><a href="#_app_bar_3">App Bar</a></li>
+          <li><a href="#_reaching_the_end_of_the_study_session">Reaching the end of the study session</a></li>
+        </ul>
+      </li>
+      <li><a href="#addingNotes">Add Note Screen</a>
+        <ul class="sectlevel2">
+          <li><a href="#noteFormattingToolbar">Note Formatting Toolbar</a></li>
+        </ul>
+      </li>
+      <li><a href="#editingNotes">Edit Note Screen</a></li>
+      <li><a href="#browser">Finding/Searching/Browsing</a>
+        <ul class="sectlevel2">
+          <li><a href="#_searching">Searching</a></li>
+        </ul>
+      </li>
+      <li><a href="#filtered">Filtered Decks</a></li>
+      <li><a href="#RTL">Using Right-To-Left Languages with AnkiDroid</a>
+        <ul class="sectlevel2">
+          <li><a href="#_editing_fields_as_rtl">Editing Fields as RTL</a></li>
+          <li><a href="#_displaying_fields_as_rtl_during_study">Displaying Fields as RTL during study</a></li>
+        </ul>
+      </li>
+      <li><a href="#AnkiDesktop">Using Anki Desktop with AnkiDroid</a>
+        <ul class="sectlevel2">
+          <li><a href="#_via_cloud_sync">Via Cloud Sync</a></li>
+          <li><a href="#_via_usb">Via USB</a></li>
+        </ul>
+      </li>
+      <li><a href="#importing">Importing Anki Files</a>
+        <ul class="sectlevel2">
+          <li><a href="#_open_the_file_using_android">Open the file using Android</a></li>
+          <li><a href="#_import_the_file_manually_in_ankidroid">Import the file manually in AnkiDroid</a></li>
+        </ul>
+      </li>
+      <li><a href="#_importing_anki_databases_anki2">Importing Anki Databases (.anki2)</a>
+        <ul class="sectlevel2">
+          <li><a href="#_importing_anki2_files_manually">Importing anki2 files manually</a></li>
+        </ul>
+      </li>
+      <li><a href="#exporting">Exporting Anki Files</a>
+        <ul class="sectlevel2">
+          <li><a href="#_exporting_collection_package">Exporting collection package</a></li>
+          <li><a href="#_exporting_deck_package">Exporting deck package</a></li>
+        </ul>
+      </li>
+      <li><a href="#backups">Automatic Backups</a></li>
+      <li><a href="#settings">Preferences</a>
+        <ul class="sectlevel2">
+          <li><a href="#_ankidroid">AnkiDroid</a></li>
+          <li><a href="#_reviewing">Reviewing</a></li>
+          <li><a href="#_fonts">Fonts</a></li>
+          <li><a href="#gestures">Gestures</a></li>
+          <li><a href="#_advanced">Advanced</a></li>
+        </ul>
+      </li>
+      <li><a href="#_advanced_features">Advanced Features</a>
+        <ul class="sectlevel2">
+          <li><a href="#mathjax">MathJax Support</a></li>
+          <li><a href="#reverseCards">Reverse Cards</a></li>
+          <li><a href="#customFonts">Custom Fonts</a></li>
+          <li><a href="#customizingCardLayout">Custom Card Layout</a></li>
+          <li><a href="#typeInAnswer">Type in the answer feature</a></li>
+          <li><a href="#advancedStatistics">Advanced Statistics</a></li>
+          <li><a href="#reminders">Reminders</a></li>
+          <li><a href="#setlanguagehint">Automatic Language Selection</a></li>
+        </ul>
+      </li>
+      <li><a href="#keyboardShortcuts">Keyboard Shortcuts</a>
+        <ul class="sectlevel2">
+          <li><a href="#_home_screen">Home Screen</a></li>
+          <li><a href="#_reviewer">Reviewer</a></li>
+          <li><a href="#_note_editor">Note Editor</a></li>
+          <li><a href="#_card_browser">Card Browser</a></li>
+          <li><a href="#_card_template_editor">Card Template Editor</a></li>
+        </ul>
+      </li>
+      <li><a href="#betaTesting">Beta testing</a></li>
+      <li><a href="#contributing">Contributing to AnkiDroid</a></li>
+    </ul>
+  </div>
+</div>
+<div id="content">
+  <div class="sect1">
+    <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>Thank you for using AnkiDroid, the Android client for the popular
+          <a href="http://ankisrs.net/">Anki</a> spaced repetition system.</p>
+      </div>
+      <div class="paragraph">
+        <p>Anki is spaced repetition technique which is simple but highly effective. It helps you memorize things by automatically repeating them across increasing intervals based on your responses with no need for you to keep track of what to study or when to study it. You create notes (or download shared decks) with content you need to memorize, and the scheduler will make sure you see the content when you need to.</p>
+      </div>
+      <div class="paragraph">
+        <p>AnkiDroid is intended to be used in conjunction with Anki on your computer. While it is possible to function without it,
+          some tasks are either only possible with, or a lot more efficient with Anki Desktop. Furthermore, it is <strong>strongly recommended</strong> to at least read <a href="https://docs.ankiweb.net/#/getting-started?id=key-concepts">"Key Concepts"</a> section of the main Anki manual to understand the terminology used here.</p>
+      </div>
+      <div class="paragraph">
+        <p>If this manual doesn&#8217;t contain what you are looking for, please check the <a href="https://github.com/ankidroid/Anki-Android/wiki">AnkiDroid Wiki</a> for a list of changes, instructions for submitting bug reports and feature requests, a list of frequently asked questions, and much more.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="gettingStarted"><a class="anchor" href="#gettingStarted"></a>Getting started</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>To start using AnkiDroid, we need to add some cards to study. From the main screen, tapping the big blue plus button will allow you to either add a new "note" (i.e. create new flashcards), download shared decks (decks that other people have created and shared online), or create new empty decks.</p>
+      </div>
+      <div class="paragraph">
+        <p>Please watch this 5 minute <a href="https://www.youtube.com/watch?v=F2K1gOSdIZA">tutorial video</a>, which gives an introduction to adding, downloading, and studying cards in AnkiDroid. More detailed information can be found in the sections below.</p>
+      </div>
+      <div class="paragraph">
+        <p>If you are an existing user of Anki Desktop wishing to import your decks from the computer,
+          you might like to skip straight to the <a href="#AnkiDesktop">using AnkiDroid with Anki Desktop</a> section.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="deckPicker"><a class="anchor" href="#deckPicker"></a>The Deck List</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p><strong><em>Note:</em></strong> <em>This section onwards assumes you understand what <a href="https://docs.ankiweb.net/#/getting-started?id=key-concepts">decks and cards</a> are</em></p>
+      </div>
+      <div class="paragraph">
+        <p>The deck list is the screen you see when you start AnkiDroid. It displays a
+          list of the decks which contain all of your flashcards, and allows you to perform various actions:</p>
+      </div>
+      <img src="img/1-decks.png">
+      <div class="sect2">
+        <h3 id="_add_button"><a class="anchor" href="#_add_button"></a>Add button</h3>
+        <div class="paragraph">
+          <p>The big blue + button in the bottom right corner is used to add new material to AnkiDroid. Pressing it expands to give the following three options, which are also described in the <a href="https://www.youtube.com/watch?v=F2K1gOSdIZA">tutorial video</a>.</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Add </dt>
+            <dd>
+              <p>Choose this option if you want to create your own flashcards (notes) with AnkiDroid. "Notes" and "cards" have specific meanings in Anki, which are <a href="https://docs.ankiweb.net/#/getting-started?id=key-concepts">explained in the main Anki manual</a>. Please see the tutorial video for a quick introduction to adding notes, or refer to the <a href="#addingNotes">adding notes</a> section below for more detailed information.</p>
+            </dd>
+            <dt class="hdlist1">Get shared decks </dt>
+            <dd>
+              <p>To download a deck of cards from the internet that another user has contributed:</p>
+              <div class="olist arabic">
+                <ol class="arabic">
+                  <li>
+                    <p>Ensure you&#8217;re connected to the internet.</p>
+                  </li>
+                  <li>
+                    <p>Tap + and then <strong>Get shared decks</strong>. AnkiWeb will open.</p>
+                  </li>
+                  <li>
+                    <p>Select a category, or type in a search.</p>
+                  </li>
+                  <li>
+                    <p>Tap <strong>Info</strong> on a deck you&#8217;d like to study.</p>
+                  </li>
+                  <li>
+                    <p>Scroll down and tap <strong>Download</strong>.</p>
+                  </li>
+                  <li>
+                    <p>You browser will download the file and display a "download complete" notification.
+                      Tap this button.</p>
+                  </li>
+                  <li>
+                    <p>AnkiDroid will appear, and show a confirmation dialog. Tap the <strong>Add</strong> button.</p>
+                  </li>
+                  <li>
+                    <p>When the import completes, your deck should be ready to study.</p>
+                  </li>
+                </ol>
+              </div>
+            </dd>
+            <dt class="hdlist1">Create deck </dt>
+            <dd>
+              <p>To create a new empty deck:</p>
+              <div class="olist arabic">
+                <ol class="arabic">
+                  <li>
+                    <p>Tap the + button and choose "Create deck"</p>
+                  </li>
+                  <li>
+                    <p>Choose a name for the deck, for example "New Japanese"</p>
+                  </li>
+                  <li>
+                    <p>Add cards to it following the "Add" instructions above</p>
+                  </li>
+                </ol>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_app_bar"><a class="anchor" href="#_app_bar"></a>App Bar</h3>
+        <div class="paragraph">
+          <p>At the top of each screen in AnkiDroid is the App Bar, with buttons for performing various actions.
+            The following actions are available from the app bar in the deck list:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Navigation menu button </dt>
+            <dd>
+              <p>Tapping the icon on the far left will show the <a href="#drawer">left navigation menu</a> for quickly navigating between the main parts of the app.</p>
+            </dd>
+            <dt class="hdlist1">Sync button </dt>
+            <dd>
+              <p>The circular button with arrows on the right is for synchronizing your cards with the cloud, as described in the
+                <a href="#AnkiDesktop">adding decks from cloud</a> section.</p>
+            </dd>
+            <dt class="hdlist1">Overflow menu button </dt>
+            <dd>
+              <p>On the far right is the overflow menu which contains less commonly used actions. These actions are described further below.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="paragraph">
+          <p><strong>Hint:</strong> long tapping on a button in the app bar anywhere in the app will display a textual hint describing what the
+            button does!</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_studying_a_deck"><a class="anchor" href="#_studying_a_deck"></a>Studying a Deck</h3>
+        <div class="paragraph">
+          <p>To study the cards in a deck, simply tap on the deck name (or the "STUDY" button on a 10" tablet), and AnkiDroid will switch to study mode.</p>
+        </div>
+        <div class="paragraph">
+          <p>Note that the currently selected deck is highlighted with a grey background, and if you have any <a href="#filtered">filtered decks</a> they will be highlighted using a blue font. Filtered decks are discussed elsewhere in the manual.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_other_deck_actions"><a class="anchor" href="#_other_deck_actions"></a>Other Deck Actions</h3>
+        <div class="paragraph">
+          <p>Long tapping on a deck will show a list of other actions available to perform on that deck:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Rename deck </dt>
+            <dd>
+              <p>Use this option to rename a deck</p>
+            </dd>
+            <dt class="hdlist1">Deck options </dt>
+            <dd>
+              <p>Tapping on deck options allows you to configure various deck specific study options.
+                Please see the <a href="https://docs.ankiweb.net/#/deck-options?id=deck-options">desktop documentation</a> for more information about these study options.</p>
+            </dd>
+            <dt class="hdlist1">Custom study </dt>
+            <dd>
+              <p>Allows you to choose from some convenient presets for studying outside of your normal schedule, for example increasing the study limit for the day. See the section on <a href="#filtered">"filtered decks"</a> for more detailed information.</p>
+            </dd>
+            <dt class="hdlist1">Delete deck </dt>
+            <dd>
+              <p>Use this option to delete a deck (note: this action is not reversible, although you can <a href="#backups">restore from a backup</a>)</p>
+            </dd>
+            <dt class="hdlist1">Export deck </dt>
+            <dd>
+              <p>This option can be used to share a deck with other users. See the <a href="#exporting">exporting decks</a> section for more information.</p>
+            </dd>
+            <dt class="hdlist1">Unbury </dt>
+            <dd>
+              <p>This option is only visble when the selected deck has cards that have been manually or automatically buried.</p>
+            </dd>
+            <dt class="hdlist1">Rebuild / Empty </dt>
+            <dd>
+              <p>If the selected deck is a <a href="#filtered">filtered deck</a> then you also have the option to rebuild or empty the cards in it.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="sect3">
+          <h4 id="_clickable_areas_on_the_decks"><a class="anchor" href="#_clickable_areas_on_the_decks"></a>Clickable areas on the decks</h4>
+          <div class="paragraph">
+            <p>Each deck in the list has three clickable areas:</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Deck expander </dt>
+              <dd>
+                <p>If you are using
+                  <a href="https://docs.ankiweb.net/#/getting-started?id=decks">subdecks</a>, then a deck expander button may appear on the far left of the deck, which can be used to show / hide the subdecks. A ▶ icon means the deck has hidden subdecks which can be shown, a ▼ icon means the deck has visible subdecks that can be hidden, and no icon means that the deck has no subdecks. Note: subdecks can be created by using the naming convention "PARENT::CHILD".</p>
+              </dd>
+              <dt class="hdlist1">Deck name </dt>
+              <dd>
+                <p>This is the main clickable area, which will take you to the study screen if there are cards available to review.</p>
+              </dd>
+              <dt class="hdlist1">Count buttons </dt>
+              <dd>
+                <p>The count buttons on the far right of each deck act as a separate clickable area that takes you to the deck overview instead of the study screen. This can be useful if you want to quickly view the number of cards available in the deck.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_advanced_actions"><a class="anchor" href="#_advanced_actions"></a>Advanced Actions</h3>
+        <div class="paragraph">
+          <p>Some additional actions are located in the overflow menu for less common tasks, which are summarized below:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Undo </dt>
+            <dd>
+              <p>After reviewing the last card in a study session, you can undo it from here.</p>
+            </dd>
+            <dt class="hdlist1">Check database </dt>
+            <dd>
+              <p>This can automatically fix a lot of problems with your database, and will also purge any unused tags. If you experience any problems with your collection, this is the first action you should try.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="admonitionblock note">
+          <table>
+            <tr>
+              <td class="icon">
+                <div class="title">Note</div>
+              </td>
+              <td class="content">
+                Under some circumstances, check database will move cards to a deck named <em>!Recovered Cards</em>. If this occurs, please move the cards to an appropriate deck via the <a href="#browser">card browser</a>, and delete <em>!Recovered Cards</em> when it is empty.
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Check media </dt>
+            <dd>
+              <p>Try to run this if you experience any issues with media syncing.</p>
+            </dd>
+            <dt class="hdlist1">Empty cards </dt>
+            <dd>
+              <p>Remove any empty cards from your collection. See the <a href="https://docs.ankiweb.net/#/templates/generation?id=card-generation-amp-deletion">desktop documentation</a> for more.</p>
+            </dd>
+            <dt class="hdlist1">Restore from backup </dt>
+            <dd>
+              <p>Allows you to restore from one of AnkiDroid&#8217;s <a href="#backups">automatic backups</a></p>
+            </dd>
+            <dt class="hdlist1">Manage note types </dt>
+            <dd>
+              <p>Allows you to add, edit, and delete note types. See the <a href="#customizingCardLayout">customizing card layout</a> section for more help with this advanced feature.</p>
+            </dd>
+            <dt class="hdlist1">Import </dt>
+            <dd>
+              <p>Import a .apkg anki file containing a deck. See the <a href="#importing">importing</a> section for more.</p>
+            </dd>
+            <dt class="hdlist1">Export collection </dt>
+            <dd>
+              <p>Export entire collection as a collection.apkg file. See the <a href="#exporting">exporting</a> section for more.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_deck_counts"><a class="anchor" href="#_deck_counts"></a>Deck Counts</h3>
+        <div class="paragraph">
+          <p>Next to each deck, three numbers are displayed. The left, blue number, corresponds to how
+            many new cards you have to learn today. Anki will introduce 20 new cards a day by default,
+            and you can customize this number if you&#8217;d like. The red number in the middle is for the cards
+            due to be studied today which are currently in the learning phase, and the green number is the
+            cards which are due for review (i.e. cards which have already graduated from the learning phase). On a deck
+            you&#8217;ve never studied before, these numbers will both be zero.</p>
+        </div>
+        <div class="paragraph">
+          <p>As explained above, tapping on the counts will take you to the deck overview screen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="drawer"><a class="anchor" href="#drawer"></a>Navigation Drawer</h2>
+    <div class="sectionbody">
+      <img src="img/2-navigation_drawer.png">
+      <div class="paragraph">
+        <p>The navigation drawer can be opened from most places in the application by pressing the left menu icon,
+          or alternatively swiping outwards from anywhere on the far left side of the screen. It is used
+          for quickly navigating between different parts of the application. You can switch to the following screens:</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">Decks </dt>
+          <dd>
+            <p>Takes you to the top level of the app where the list of cards are shown (<a href="#deckPicker">more info here</a>)</p>
+          </dd>
+          <dt class="hdlist1">Card Browser </dt>
+          <dd>
+            <p>Shows a list of all your cards (<a href="#browser">more info here</a>)</p>
+          </dd>
+          <dt class="hdlist1">Statistics </dt>
+          <dd>
+            <p>Helps you track your study progress (<a href="https://docs.ankiweb.net/#/stats?id=statistics">more info in Anki manual</a> and <a href="#advancedStatistics">here</a>)</p>
+          </dd>
+          <dt class="hdlist1">Night mode </dt>
+          <dd>
+            <p>This switches the app to a dark theme which many users find is less straining on the eyes, particularly when reviewing in the dark. See the <a href="https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting#customize-night-mode-colors">wiki</a> for instructions on how to customize the card background and font color used in night mode.</p>
+          </dd>
+          <dt class="hdlist1">Settings </dt>
+          <dd>
+            <p>Allows you to customize the app (<a href="#settings">more info here</a>)</p>
+          </dd>
+          <dt class="hdlist1">Help </dt>
+          <dd>
+            <p>Opens this web page</p>
+          </dd>
+          <dt class="hdlist1">Send feedback </dt>
+          <dd>
+            <p>Get support from the AnkiDroid team</p>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="deckOverview"><a class="anchor" href="#deckOverview"></a>Deck Overview Screen</h2>
+    <div class="sectionbody">
+      <img src="img/3-deck_overview.png">
+      <div class="paragraph">
+        <p>From the deck list, if you tap the counts area you will be taken to the deck overview screen. On tablets it is always shown in the area to the right of the deck list.</p>
+      </div>
+      <div class="paragraph">
+        <p>On this screen you can view a summary of the deck, build custom study sessions, rebuild / empty filtered decks, and change deck options. When visible, pressing the study button will take you to the study screen for that deck.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_app_bar_2"><a class="anchor" href="#_app_bar_2"></a>App bar</h3>
+        <div class="paragraph">
+          <p>The icons that are shown in the app bar depend on whether your deck is an ordinary deck or a filtered deck.</p>
+        </div>
+        <div class="sect3">
+          <h4 id="_ordinary_decks"><a class="anchor" href="#_ordinary_decks"></a>Ordinary decks</h4>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Custom Study </dt>
+              <dd>
+                <p>Tapping the wrench icon allows you to create a custom session, for example to do extra reviews outside your normal schedule, or study only certain cards inside a deck. See the <a href="#filtered">filtered deck section</a> for more information on this.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_filtered_decks"><a class="anchor" href="#_filtered_decks"></a>Filtered decks</h4>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Empty deck </dt>
+              <dd>
+                <p>Tapping the cross icon will empty all of the cards in the current filtered deck (i.e. return them to their original deck).</p>
+              </dd>
+              <dt class="hdlist1">Rebuild deck </dt>
+              <dd>
+                <p>Tapping the rebuild icon will rebuild the current filtered deck according to the settings specified in filtered deck options.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_overflow_menu"><a class="anchor" href="#_overflow_menu"></a>Overflow menu</h4>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Deck Options </dt>
+              <dd>
+                <p>Allows you to configure some options related to the current
+                  deck, such as the number of new cards and reviews to introduce each day.
+                  Please see the <a href="https://docs.ankiweb.net/#/deck-options?id=deck-options">desktop documentation</a> for more information about these study options.</p>
+              </dd>
+              <dt class="hdlist1">Unbury </dt>
+              <dd>
+                <p>This option is only visble when the selected deck has cards that have been manually or automatically buried.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="reviewer"><a class="anchor" href="#reviewer"></a>Study Screen</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>Tapping on the deck name from the deck list, or the study button from the deck overview screen will take you to the study screen where you do your study.</p>
+      </div>
+      <img src="img/4-reviewer.png">
+      <div class="sect2">
+        <h3 id="_basics"><a class="anchor" href="#_basics"></a>Basics</h3>
+        <div class="paragraph">
+          <p>If you have not used Anki on a computer before, you may like to have a look at the
+            first <a href="https://docs.ankiweb.net/#/getting-started?id=videos">intro video</a>
+            before reading on, as it explains the basic review process.</p>
+        </div>
+        <div class="paragraph">
+          <p>On the top left of the screen you&#8217;ll see three numbers. From the left, these
+            correspond to new cards, learning cards, and cards to review. These are
+            explained in more detail in the intro videos for the desktop program, so
+            please <a href="https://docs.ankiweb.net/#/getting-started?id=videos">check them out</a>
+            if you haven&#8217;t already.</p>
+        </div>
+        <div class="paragraph">
+          <p>When you&#8217;ve looked at a card&#8217;s question and remembered the answer, or decided
+            you don&#8217;t know it, tap the <strong>show answer</strong> button. When you do, the bottom area will change to display 2-4 answer buttons,
+            depending on how you&#8217;ve answered the card previously. The buttons will display
+            the time a card will next be shown, so 10m means "10 minutes" and "5d" means
+            "5 days". You can tap directly on these buttons to choose a particular answer.</p>
+        </div>
+        <div class="paragraph">
+          <p>To make reviewing faster, you can configure gestures (for example taps and swipes) to answer cards without using the buttons.
+            See the <a href="#settings">preferences section</a> for more information on configuring gestures.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_app_bar_3"><a class="anchor" href="#_app_bar_3"></a>App Bar</h3>
+        <div class="paragraph">
+          <p>The App Bar at the top of the study screen has several buttons for performing various common actions. The number of buttons which are shown
+            is determined automatically by Android based on the size and resolution of your screen. If there is not enough space to show the button
+            for a given action, then the action will be available from the menu instead. If you are unsure what a button does, you can long-tap on it to
+            see the name of the action. The following action are available:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Undo </dt>
+            <dd>
+              <p>Undo the answer you chose for the last card you studied (button always shown).</p>
+            </dd>
+            <dt class="hdlist1">Mark Card </dt>
+            <dd>
+              <p>Adds a "marked" tag to the current note, so it can be easily found in the browser.
+                This is useful when you want to take some action on the note at a later date, such as looking up a word when you get home. Marked cards also show a small star in the upper-right-hand corner during reviews.</p>
+            </dd>
+            <dt class="hdlist1">Flag Card </dt>
+            <dd>
+              <p>Adds a color coded "flag" (red, orange, green, or blue)
+                This can be used as a general purpose indicator to differentiate your cards. Flags are represented by a number from 1-4, corresponding to the previously listed colors.</p>
+            </dd>
+            <dt class="hdlist1">Edit Card </dt>
+            <dd>
+              <p>Open the edit note screen, where you can change the content displayed on the flashcard (see the <a href="#editingNotes">editing notes section</a> for more help)</p>
+            </dd>
+            <dt class="hdlist1">Hide / Delete </dt>
+            <dd>
+              <p>Give options to bury, suspend, or delete the current note or card</p>
+              <div class="ulist">
+                <ul>
+                  <li>
+                    <p><strong>Bury card / Bury note: </strong> Hides a card or all of the note’s cards from review until the next day. (If you want to unbury cards before then, you can choose “unbury” from the long-press menu in the <a href="#deckPicker">deck list</a>, or from the <a href="#deckOverview">deck overview screen</a>.) This is useful if you cannot answer the card at the moment or you want to come back to it another time. Burying can also happen automatically for cards of the same note. If cards were in learning when they are buried, they are moved back to the new card queue or review queue prior to being buried.</p>
+                  </li>
+                  <li>
+                    <p><strong>Suspend card / Suspend note: </strong> Hides a card or all of the note’s cards from review until they are manually unsuspended (by long-tapping a card in the <a href="#browser">card browser</a>). This is useful if you want to avoid reviewing the note for some time, but don’t want to delete it. If cards were in learning when they are suspended, they are moved back to the new card queue or review queue prior to being suspended.</p>
+                  </li>
+                  <li>
+                    <p><strong>Delete note: </strong> Deletes the note and all of its cards.</p>
+                  </li>
+                </ul>
+              </div>
+            </dd>
+            <dt class="hdlist1">Replay Audio </dt>
+            <dd>
+              <p>If the card has audio on the front or back, it will be played again.</p>
+            </dd>
+            <dt class="hdlist1">Enable / Disable Whiteboard </dt>
+            <dd>
+              <p>This action enables or disables the whiteboard feature for the current deck. The whiteboard feature allows you to draw on the screen,
+                which is particularly useful for practicing drawing characters from languages such as Japanese. When the whiteboard has been enabled for the current deck,
+                two new actions will become available for clearing and hiding the whiteboard. Disabling the whiteboard will hide these actions as well as the whiteboard itself.</p>
+            </dd>
+            <dt class="hdlist1">Deck options </dt>
+            <dd>
+              <p>Open the deck specific study options. See the <a href="https://docs.ankiweb.net/#/deck-options?id=deck-options">desktop documentation</a> for more information about these study options.</p>
+            </dd>
+            <dt class="hdlist1">Check Pronunciation </dt>
+            <dd>
+              <p>This action enables or disables the temporary audio recorder toolbar at the top of the card. This feature allows you to record your voice and replay it. It is used primarily to check your pronunciation. This toolbar is composed of three buttons: play, stop playing and record microphone audio. This tool can be used while viewing either the question or the answer.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_reaching_the_end_of_the_study_session"><a class="anchor" href="#_reaching_the_end_of_the_study_session"></a>Reaching the end of the study session</h3>
+        <div class="paragraph">
+          <p>When you&#8217;ve finished the cards that are due to be studied today, you&#8217;ll be taken back to the decks list and shown a congratulations message. From here you can select a different deck, or if you&#8217;ve finished studying for the day, you can simply tap the home button in order to
+            close AnkiDroid (and you can also do this in the middle of reviews if you
+            wish).</p>
+        </div>
+        <div class="paragraph">
+          <p>If you wish to keep studying the same deck further, tap on the deck again which will give you several options for continued study. Please see the <a href="#filtered">filtered deck</a> section for more on custom study.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="addingNotes"><a class="anchor" href="#addingNotes"></a>Add Note Screen</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p><strong><em>Note:</em></strong> <em>This section onwards assumes you understand what <a href="https://docs.ankiweb.net/#/getting-started?id=notes-amp-fields">notes, fields, card templates, and note types</a> are</em></p>
+      </div>
+      <div class="paragraph">
+        <p>To add a new note, tap the + button at the bottom of the deck list and choose "Add".</p>
+      </div>
+      <img src="img/5-adding.png">
+      <div class="paragraph">
+        <p>The following controls are available in the add note screen:</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">Type </dt>
+          <dd>
+            <p>Allows you to select the type of note you&#8217;d like to add.
+              For most purposes the "Basic" note type is sufficient, but for example if you would like an extra card generated which is the reverse of the main card
+              (i.e. shows the "Back" field on the front of the card), you could chose the "Basic (and reversed card)" note type.</p>
+          </dd>
+          <dt class="hdlist1">Deck </dt>
+          <dd>
+            <p>Allows you to change the deck the generated card/cards will be added to.</p>
+          </dd>
+          <dt class="hdlist1">Fields </dt>
+          <dd>
+            <p>Below the deck selector are the fields for the note (for example the "Basic" note type has two fields "Front" and "Back"). When you tap on a field,
+              a keyboard will come up, allowing you to type in information.</p>
+          </dd>
+          <dt class="hdlist1">Media Buttons </dt>
+          <dd>
+            <p>Next to each field is an attach icon, which allows you to add media to your note (this feature is currently in the experimental phase).
+              Add image lets you add images either via your device&#8217;s camera (if it has one), or from your photo library.
+              Record audio allows you to record your voice and place it into a field. The advanced editor lets you automatically
+              search for translations or pronunciation audio files online.</p>
+          </dd>
+          <dt class="hdlist1">Tags </dt>
+          <dd>
+            <p>Brings up a dialog which lets you add / remove tags from the note.</p>
+          </dd>
+          <dt class="hdlist1">Cards </dt>
+          <dd>
+            <p>Shows the names of the cards which will be generated for the selected note type. Tapping on this button will bring up a dialog which lets you preview
+              the source code for the card template of the selected note type.  From here you can edit, preview, add, and delete card templates. See the <a href="https://docs.ankiweb.net/#/templates/intro?id=card-templates">cards and templates section</a> of the Anki Desktop manual for more information about card templates.</p>
+          </dd>
+        </dl>
+      </div>
+      <div class="paragraph">
+        <p>Long press in a text entry field to add a cloze deletion around the selected text, or an empty cloze deletion if there is no selected text.</p>
+      </div>
+      <div class="paragraph">
+        <p>When you&#8217;ve finished typing in the content of a note, tap the tick icon in the app bar at the top to add it to
+          your collection. Alternatively, if you want to go back to what you were doing without saving, you can tap the app icon, or
+          use the hardware back button.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="noteFormattingToolbar"><a class="anchor" href="#noteFormattingToolbar"></a>Note Formatting Toolbar</h3>
+        <div class="paragraph">
+          <p>The note formatting toolbar contains basic text formatting buttons (Bold, Italic, Underline, Horizontal Line, Insert Title, Change Font Size, <a href="#mathjax">Insert MathJax</a> and Insert Cloze Deletion).</p>
+        </div>
+        <div class="paragraph">
+          <p>It also allows the addition of user-defined toolbar buttons using HTML. HTML is a powerful language allowing nearly endless customization of your cards. <a href="https://github.com/ankidroid/Anki-Android/wiki/Note-Editor-Toolbar-HTML-Samples">Our wiki</a> contains common code samples to get you started.</p>
+        </div>
+        <div class="paragraph">
+          <p>A user-defined toolbar button can be removed by long pressing the button and selecting "Delete".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="editingNotes"><a class="anchor" href="#editingNotes"></a>Edit Note Screen</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>The edit note screen can be opened by choosing edit while reviewing, or by opening a card in the browser.
+          The edit screen is similar to the add new note screen mentioned above, with some key
+          differences:</p>
+      </div>
+      <div class="ulist">
+        <ul>
+          <li>
+            <p>Changing the deck operates on the selected card (which is underlined in the "Cards" box).
+              If a note type is chosen which has more than one card, only the currently selected card will be moved to the new deck.</p>
+          </li>
+          <li>
+            <p>Changing the "Type" dropdown selector changes to the note type edit mode. In this mode, editing the content of the note (i.e. deck, fields, etc) is disabled,
+              and if a custom note type with more than two fields is being used, additional buttons will appear which let you control the mapping of the fields to the new note type.</p>
+          </li>
+        </ul>
+      </div>
+      <div class="paragraph">
+        <p>If a note type is selected which has less cards than the original note type, only the first n cards will be kept. For example changing from "Basic (and reversed card)" to "Basic"
+          will lead to only the first card being kept. To warn you of this, the text in the "Cards" box will appear red, and a confirmation dialog will be shown before the note is saved.</p>
+      </div>
+      <div class="literalblock">
+        <div class="content">
+          <pre>Hint: to change the type for multiple notes in one go, or to customize the mapping between cards, use the "Change note type" option in the browser on Anki Desktop.</pre>
+        </div>
+      </div>
+      <div class="paragraph">
+        <p>There are also several advanced options available in the main menu:</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">Add note </dt>
+          <dd>
+            <p>Create a new empty note</p>
+          </dd>
+          <dt class="hdlist1">Copy card </dt>
+          <dd>
+            <p>Copy the current note to a new editable note</p>
+          </dd>
+          <dt class="hdlist1">Reset progress </dt>
+          <dd>
+            <p>Move the card to the end of the new card queue. The current state of the card is cleared, but not its revision history.</p>
+          </dd>
+          <dt class="hdlist1">Reschedule </dt>
+          <dd>
+            <p>Allows you to reschedule as a review card on a given date. This is useful if you have imported already-learnt material,
+              and you want to start it off with higher initial intervals.</p>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="browser"><a class="anchor" href="#browser"></a>Finding/Searching/Browsing</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>You can search for or browse cards by tapping the "Card browser" button from the <a href="#drawer">navigation drawer</a>.</p>
+      </div>
+      <img src="img/6-browser.png">
+      <div class="paragraph">
+        <p>The browser screen starts by displaying all the cards in the currently selected deck.  You can search for cards in the selected deck
+          by tapping the magnifying glass icon in the top. You can change the selected deck (or change to all decks) by choosing the deck from the
+          dropdown list on the top left.</p>
+      </div>
+      <div class="paragraph">
+        <p>By default, the first column in the browser gives the text which will be shown on the question (i.e. front side) of the flashcard, and the second column shows the text from the answer (i.e. the back side) of the flashcard.</p>
+      </div>
+      <div class="paragraph">
+        <p>The first column can also be configured to show the <a href="https://docs.ankiweb.net/#/editing?id=customizing-fields">"sort field"</a> for a more compact display. The second column can be configured
+          to show many different parameters by tapping the drop down menu in the column heading.</p>
+      </div>
+      <div class="paragraph">
+        <p>Note that the content of the columns is dynamically calculated as your scroll through the list of the cards.</p>
+      </div>
+      <div class="paragraph">
+        <p>From the search results, you can tap on a card to edit it (see the <a href="#editingNotes">edit note section</a> above), or long-tapping on it will show a menu allowing you to
+          perform the following actions:</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">Mark / unmark note </dt>
+          <dd>
+            <p>Add / remove the "marked" tag from the note. Cards with a marked note are highlighted in purple.</p>
+          </dd>
+          <dt class="hdlist1">Flag card </dt>
+          <dd>
+            <p>Change or remove the color coded "flag" on the card. Cards with a flag are highlighted in the flags color.</p>
+          </dd>
+          <dt class="hdlist1">Suspend / unsuspend card </dt>
+          <dd>
+            <p>Suspended cards are highlighted in yellow, and are not shown during review.</p>
+          </dd>
+          <dt class="hdlist1">Delete note </dt>
+          <dd>
+            <p>Delete the note of the currently selected card, and all cards belonging to that note.
+              This action cannot be undone without <a href="#backups">restoring from backup</a>.</p>
+          </dd>
+          <dt class="hdlist1">Preview </dt>
+          <dd>
+            <p>Render the currently selected card so that you can see what it looks like in the reviewer.</p>
+          </dd>
+          <dt class="hdlist1">Select multiple cards </dt>
+          <dd>
+            <p>Long-tapping on a single card will select the single card. While that card is selected, if you long-tap on another card on your screen, then all of the cards between the first selected card and the last card will be selected. This allows for actions to be performed on multiple cards at once.</p>
+          </dd>
+        </dl>
+      </div>
+      <div class="sect2">
+        <h3 id="_searching"><a class="anchor" href="#_searching"></a>Searching</h3>
+        <div class="paragraph">
+          <p>AnkiDroid supports all the search strings that the desktop version of Anki
+            does, allowing you to perform quite complex searches. Some examples:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">tag:marked </dt>
+            <dd>
+              <p>show cards that with the tag "marked"</p>
+            </dd>
+            <dt class="hdlist1">is:due </dt>
+            <dd>
+              <p>show only cards that are waiting for review</p>
+            </dd>
+            <dt class="hdlist1">front:rabbit </dt>
+            <dd>
+              <p>show only cards where the front field is exactly "rabbit"</p>
+            </dd>
+            <dt class="hdlist1">flag:1 </dt>
+            <dd>
+              <p>show only cards marked with a red flag</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="paragraph">
+          <p>For a full list of the possibilities, please see the section in the
+            <a href="https://docs.ankiweb.net/#/searching?id=searching">desktop manual</a>.</p>
+        </div>
+        <div class="paragraph">
+          <p>Alternatively, some more commonly used filters (marked, suspended, and tagged cards) can be quickly applied without manually typing them by choosing them from the overflow menu. You can also save and recall common search queries from the menu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="filtered"><a class="anchor" href="#filtered"></a>Filtered Decks</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>Anki is designed to optimize the learning process, so that you study the
+          minimum amount necessary to remember the majority of your cards. Once the
+          congratulations screen is reached, further study becomes a case of diminishing
+          returns: the amount of extra time spent going over the same cards again is
+          generally not worth the moderate increase in retention you&#8217;ll see.</p>
+      </div>
+      <div class="paragraph">
+        <p>That said, if you have a test looming, or simply want to pass some time, it&#8217;s
+          possible to keep reviewing even after you are shown the congratulations message.</p>
+      </div>
+      <div class="paragraph">
+        <p>A 'filtered deck' is a temporary deck that contains cards based on various
+          criteria, such as "forgotten today", "is tagged 'hard'", and so on. After
+          studying cards in a filtered deck, or when the filtered deck is deleted, the
+          cards are automatically returned to their original deck.</p>
+      </div>
+      <div class="paragraph">
+        <p>The easiest way to create a filtered deck is by long clicking on a deck and choosing the "custom study" option.</p>
+      </div>
+      <div class="paragraph">
+        <p>Advanced users can create a filtered deck manually, by choosing "Create filtered deck" from the overflow menu in the deck list screen.</p>
+      </div>
+      <div class="paragraph">
+        <p>For further information on filtered decks, please see the <a href="https://docs.ankiweb.net/#/filtered-decks?id=filtered-decks-amp-cramming">desktop documentation</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="RTL"><a class="anchor" href="#RTL"></a>Using Right-To-Left Languages with AnkiDroid</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>Anki and AnkiDroid have full support for RTL languages such as Arabic, Hebrew, and Persian.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_editing_fields_as_rtl"><a class="anchor" href="#_editing_fields_as_rtl"></a>Editing Fields as RTL</h3>
+        <div class="paragraph">
+          <p>Fields can be marked as RTL (currently possible only from Anki Desktop) for RTL editing. When a field is marked as RTL, then the text is right-aligned in editing fields and punctuation is correctly displayed at the end (left) of sentences. Text that contains blocks of LTR characters will be properly displayed as well, with the beginning of the sentence appearing to the right of the LTR block and the end of the sentence being displayed to the left of the LTR block.</p>
+        </div>
+        <div class="paragraph">
+          <p>Directionality is especially important for editing and creating RTL cloze deletions as the cloze format includes both neutral and LTR markup characters. Therefore it is recommended to use a separate note type for LTR cloze deletions and RTL cloze deletions.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_displaying_fields_as_rtl_during_study"><a class="anchor" href="#_displaying_fields_as_rtl_during_study"></a>Displaying Fields as RTL during study</h3>
+        <div class="paragraph">
+          <p>To display a field as RTL, with proper right-alignment and directionality (punctuation at left of sentences, proper flow around LTR blocks), the field should be wrapped in a div or span element with the RTL directionality specified:</p>
+        </div>
+        <div class="literalblock">
+          <div class="content">
+            <pre>&lt;div dir="rtl"&gt;&lt;/div&gt;</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="AnkiDesktop"><a class="anchor" href="#AnkiDesktop"></a>Using Anki Desktop with AnkiDroid</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>Anki has a free cloud synchronization service called AnkiWeb that makes it
+          easy to keep your card decks in sync between mobile devices and your computer.
+          If you cannot use sync for some reason, it&#8217;s also possible to use USB, though this method is more laborious.</p>
+      </div>
+      <div class="paragraph">
+        <p>Note that AnkiDroid is not affiliated with Anki Desktop or AnkiWeb. AnkiDroid is based on Anki Desktop but it is developed by an entirely separate community of volunteers.</p>
+      </div>
+      <img src="img/AnkiDesktop.png">
+      <div class="sect2">
+        <h3 id="_via_cloud_sync"><a class="anchor" href="#_via_cloud_sync"></a>Via Cloud Sync</h3>
+        <div class="paragraph">
+          <p>Before you can use AnkiWeb, you&#8217;ll first need to create an account by visiting <a href="https://ankiweb.net" class="bare">https://ankiweb.net</a> and clicking the <strong>Sign Up</strong> button. If you have used AnkiWeb in the past, you can skip this step. After signing up, see the corresponding instructions below, depending on whether you are trying to get your existing decks into AnkiDroid or out of AnkiDroid.</p>
+        </div>
+        <div class="sect3">
+          <h4 id="_sync_existing_decks_into_a_new_ankidroid_install"><a class="anchor" href="#_sync_existing_decks_into_a_new_ankidroid_install"></a>Sync existing decks into a new AnkiDroid install</h4>
+          <div class="paragraph">
+            <p>In this scenario you have some existing Anki decks that you want to copy into a new install of AnkiDroid by syncing with AnkiWeb. Open the Anki client with your existing decks (usually this would be Anki desktop, but it could also mean a version of AnkiDroid you have been using on another device), and click the synchronization button (which has two arrows in a circle) at the top right of the deck list.</p>
+          </div>
+          <div class="paragraph">
+            <p>If you have never used AnkiWeb before you will need to enter your credentials if prompted, and
+              then press the "Upload to AnkiWeb" button to confirm overwriting the empty collection on AnkiWeb with your existing decks in Anki. Anki will upload all your cards, images and audio to AnkiWeb. If you have a lot of media, this may take some time.</p>
+          </div>
+          <div class="paragraph">
+            <p>Once the synchronization has completed, open AnkiDroid in the device that you are trying to copy the existing decks into, and tap the <strong>Sync</strong> button in the app bar at the top of the main <a href="#deckPicker">deck list</a>.
+              After entering your AnkiWeb credentials, AnkiDroid will download all your cards and media, and remember your login information for next time.</p>
+          </div>
+          <div class="paragraph">
+            <p>Note that if you have any existing material in AnkiDroid before attempting to sync, you may be shown a message
+              asking you to choose to either download from AnkiWeb, or upload to AnkiWeb. If you are happy to lose the cards
+              in AnkiDroid then simply choose <strong>Download</strong>. If you need to merge the existing cards with AnkiDroid then you should see the
+              <a href="#AnkiWebConflicts">resolving conflicts</a> section before continuing.</p>
+          </div>
+          <div class="paragraph">
+            <p>After the first synchronization has completed, you can click the sync button
+              again any time you wish to synchronize your changes to the cloud. Only changes
+              made since the previous sync will be sent, so subsequent syncs are a lot
+              faster.</p>
+          </div>
+          <div class="paragraph">
+            <p>If you add some new cards on the desktop computer and want to sync them to
+              AnkiDroid, you&#8217;d repeat the same basic process: sync on desktop (or close the
+              program, as it syncs automatically on close by default), and then tap the sync
+              button on AnkiDroid.</p>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_sync_from_ankidroid_to_computer"><a class="anchor" href="#_sync_from_ankidroid_to_computer"></a>Sync from AnkiDroid to Computer</h4>
+          <div class="paragraph">
+            <p>The process of syncing from AnkiDroid to computer is essentially the same as syncing from computer to
+              AnkiDroid, but in reverse.</p>
+          </div>
+          <div class="paragraph">
+            <p>From the <a href="#deckPicker">deck list</a>, tap the sync button in the top right (it has two arrows
+              in a circle). If it&#8217;s your first time using AnkiWeb, you may need to
+              enter your login credentials, and then press the "upload" button to upload your AnkiDroid collection
+              to AnkiWeb.</p>
+          </div>
+          <div class="paragraph">
+            <p>Once the synchronization has completed, open Anki Desktop on your computer and press the sync button there
+              (with two arrows in a circle), and Anki will download your collection.</p>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="AnkiWebConflicts"><a class="anchor" href="#AnkiWebConflicts"></a>Dealing with merge conflicts on AnkiWeb</h4>
+          <div class="paragraph">
+            <p>Although it should not happen often, occasionally you may end up in the position where your cards on AnkiDroid can
+              not be automatically merged with the cards on AnkiWeb. In this case it&#8217;s necessary to choose to either upload to or download from
+              AnkiWeb, which would overwrite any changes on the other side.</p>
+          </div>
+          <div class="paragraph">
+            <p>If you have new cards on both sides which you want to keep,
+              before syncing you can <a href="#exporting">export a deck package</a> for each deck containing new cards from AnkiDroid, then when you do the sync
+              choose "download" to download from AnkiWeb. After the synchronization has completed, you can import the decks you previously exported from AnkiDroid,
+              as per the <a href="#importing">importing section</a>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_via_usb"><a class="anchor" href="#_via_usb"></a>Via USB</h3>
+        <div class="paragraph">
+          <p>If you don&#8217;t have regular internet access, it&#8217;s still possible to copy decks
+            back and forth to your device, by using USB.</p>
+        </div>
+        <div class="paragraph">
+          <p>The USB method works by importing or exporting all your decks at once.
+            This means that unlike syncing via AnkiWeb, you can&#8217;t make changes from
+            two locations at once and then merge them. Instead, if you wish to add cards
+            on the desktop, you need to make sure you export the latest version of your
+            collection from your mobile device first, or you&#8217;ll end up losing any reviews
+            done on the mobile device.</p>
+        </div>
+        <div class="paragraph">
+          <p>Thus the workflow you would typically use is to export your collection from
+            your mobile device and import it into the desktop, make modifications on the
+            desktop, and then export your collection and import it back into your mobile
+            device.</p>
+        </div>
+        <div class="paragraph">
+          <p>AnkiDroid can&#8217;t directly import text files. If you wish to do that, you&#8217;ll
+            need to do that with the desktop program, and then import your collection into
+            AnkiDroid.</p>
+        </div>
+        <div class="sect3">
+          <h4 id="_copy_all_decks_from_anki_desktop_to_ankidroid_via_usb"><a class="anchor" href="#_copy_all_decks_from_anki_desktop_to_ankidroid_via_usb"></a>Copy all decks from Anki Desktop to AnkiDroid via USB</h4>
+          <div class="paragraph">
+            <p>On your computer:</p>
+          </div>
+          <div class="olist arabic">
+            <ol class="arabic">
+              <li>
+                <p>Open the desktop program.</p>
+              </li>
+              <li>
+                <p>Choose File&gt;Export from the menu.</p>
+              </li>
+              <li>
+                <p>Click the 'Export&#8230;&#8203;' button. Make sure to leave "all decks" selected, as
+                  it&#8217;s not possible to import individual decks into AnkiDroid. "Include
+                  scheduling information" must also remain checked.</p>
+              </li>
+              <li>
+                <p>Anki will automatically create a collection.apkg on your desktop. If the
+                  file is named something else, please see the previous step again.</p>
+              </li>
+              <li>
+                <p>Connect your Android device to your computer via the USB cable.</p>
+              </li>
+              <li>
+                <p>Open the file explorer on your computer and view the contents of your Android device.</p>
+              </li>
+              <li>
+                <p>Locate the AnkiDroid folder.</p>
+              </li>
+              <li>
+                <p>Drag the collection.apkg file from your desktop into this AnkiDroid folder.</p>
+              </li>
+            </ol>
+          </div>
+          <div class="paragraph">
+            <p>Then in AnkiDroid:</p>
+          </div>
+          <div class="olist arabic">
+            <ol class="arabic">
+              <li>
+                <p>From the main decks screen, tap "Import file" from the menu</p>
+              </li>
+              <li>
+                <p>Tap on "Collection" and then confirm</p>
+              </li>
+            </ol>
+          </div>
+          <div class="paragraph">
+            <p>Once complete, the decks on your device will have been replaced with the decks from your desktop. See the section on
+              <a href="#importing">importing apkg files</a> for more help with importing.</p>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_copy_all_decks_from_ankidroid_to_anki_desktop_via_usb"><a class="anchor" href="#_copy_all_decks_from_ankidroid_to_anki_desktop_via_usb"></a>Copy all decks from AnkiDroid to Anki Desktop via USB</h4>
+          <div class="paragraph">
+            <p>The process to copy your decks from AnkiDroid to Anki Desktop is essentially the same as above, but in reverse.</p>
+          </div>
+          <div class="olist arabic">
+            <ol class="arabic">
+              <li>
+                <p>Start with your device disconnected from USB</p>
+              </li>
+              <li>
+                <p>Choose "Export collection" from the main menu in the Deck Screen</p>
+              </li>
+              <li>
+                <p>Ensure "Include scheduling information" remains checked and press <strong>OK</strong></p>
+              </li>
+              <li>
+                <p>Connect device to computer using USB</p>
+              </li>
+              <li>
+                <p>Copy the "collection.apkg" from the path specified in the message to the desktop on your computer</p>
+              </li>
+              <li>
+                <p>Double click on the file to import into Anki Desktop</p>
+              </li>
+            </ol>
+          </div>
+          <div class="paragraph">
+            <p>See the <a href="#exporting">exporting section</a> below for more detailed information on exporting from AnkiDroid.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="importing"><a class="anchor" href="#importing"></a>Importing Anki Files</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>You can import Anki files (with .apkg file format) directly into AnkiDroid. Other file formats cannot be imported directly into AnkiDroid, however
+          flashcards from most other applications can be imported into Anki Desktop on your computer, which can then be <a href="#AnkiDesktop">added into AnkiDroid in the usual way</a>.
+          See the <a href="https://docs.ankiweb.net/#/importing?id=importing">importing section of the Anki Desktop manual</a> for help on importing into Anki Desktop.</p>
+      </div>
+      <div class="paragraph">
+        <p>As in Anki Desktop, AnkiDroid distinguishes between <a href="https://docs.ankiweb.net/#/exporting?id=exporting">the two types of .apkg files</a>
+          ("collection package" and "deck package") based on the filename.  Collection packages have the name "collection.colpkg", and when imported will
+          completely <em>replace all contents</em> in AnkiDroid. Any apkg file which is <em>*not*</em> named something that ends in ".colpkg" will be treated as a deck package,
+          which will be <em>merged with any existing content</em> when imported into to AnkiDroid.</p>
+      </div>
+      <div class="paragraph">
+        <p>You can import .apkg Anki collection files into AnkiDroid either by opening them using the standard Android system, or by manually
+          importing them from within AnkiDroid:</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_open_the_file_using_android"><a class="anchor" href="#_open_the_file_using_android"></a>Open the file using Android</h3>
+        <div class="paragraph">
+          <p>Apkg files are automatically associated with AnkiDroid, so for example if you open a .apkg email attachment which you sent to yourself, then
+            AnkiDroid will automatically open the file and confirm if you want to import it. Simply click OK and the apkg file will be imported.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_import_the_file_manually_in_ankidroid"><a class="anchor" href="#_import_the_file_manually_in_ankidroid"></a>Import the file manually in AnkiDroid</h3>
+        <div class="paragraph">
+          <p>You can also manually import .apkg files as follows:</p>
+        </div>
+        <div class="ulist">
+          <ul>
+            <li>
+              <p>Connect your device to your computer using USB</p>
+            </li>
+            <li>
+              <p>Copy the .apkg from your computer to the AnkiDroid folder on your device</p>
+            </li>
+            <li>
+              <p>Open AnkiDroid on your device</p>
+            </li>
+            <li>
+              <p>From the main menu in the deck list, choose <strong>Import</strong></p>
+            </li>
+            <li>
+              <p>Choose the apkg file you just copied to your device when prompted</p>
+            </li>
+            <li>
+              <p>Tap OK</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="_importing_anki_databases_anki2"><a class="anchor" href="#_importing_anki_databases_anki2"></a>Importing Anki Databases (.anki2)</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>AnkiDroid does not support directly importing Anki database (<code>.anki2</code>) files. A database import will replace your collection with the contents the provided file. If you want to perform a full replacement, you should import a <code>collection[.apkg/.colpkg]</code> created in the app with the export function.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_importing_anki2_files_manually"><a class="anchor" href="#_importing_anki2_files_manually"></a>Importing anki2 files manually</h3>
+        <div class="paragraph">
+          <p>This is not officially supported, but <code>.anki2</code> files can manually be imported if needed, in cases of troubleshooting for example:</p>
+        </div>
+        <div class="ulist">
+          <ul>
+            <li>
+              <p>Create a new folder on your Android file system</p>
+            </li>
+            <li>
+              <p>Obtain the full path to the folder as provided by your file manager, this will typically appear as: <code>/storage/emulated/0/&lt;FolderName&gt;</code></p>
+            </li>
+            <li>
+              <p>Place the <code>.anki2</code> file in the newly created folder</p>
+            </li>
+            <li>
+              <p>Rename the file to <code>collection.anki2</code></p>
+            </li>
+            <li>
+              <p>(If applicable) Temporarily log out of your AnkiWeb account: <code>Settings - AnkiDroid - AnkiWeb account</code></p>
+            </li>
+            <li>
+              <p>Open <code>Settings - Advanced - AnkiDroid Directory</code> and set the AnkiDroid Directory to the newly created folder.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="exporting"><a class="anchor" href="#exporting"></a>Exporting Anki Files</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>AnkiDroid can export your flashcards in the .apkg Anki file format so that you can import them into Anki Desktop, or share them with other people.
+          As in Anki Desktop, you can either export a <a href="https://docs.ankiweb.net/#/exporting?id=packaged-decks">collection package or deck package</a>, depending
+          on what you are trying to achieve.</p>
+      </div>
+      <div class="paragraph">
+        <p>There are two export options available: "include scheduling information" and "include media". Generally the default options are sufficient,
+          if you choose not to include scheduling information, Anki will assume that you are sharing the deck with other people,
+          and will remove marked and leech tags so that they will have a clean copy of it.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_exporting_collection_package"><a class="anchor" href="#_exporting_collection_package"></a>Exporting collection package</h3>
+        <div class="paragraph">
+          <p>When exporting for use in Anki Desktop, you generally want to <a href="https://docs.ankiweb.net/#/exporting?id=collection-colpkg">export your entire collection</a>, including all your review history etc.</p>
+        </div>
+        <div class="paragraph">
+          <p>From the main menu in the decks screen:</p>
+        </div>
+        <div class="olist arabic">
+          <ol class="arabic">
+            <li>
+              <p>Tap the <strong>Export</strong> item in the menu.</p>
+            </li>
+            <li>
+              <p>Tap <strong>OK</strong> using default options</p>
+            </li>
+            <li>
+              <p>Tap <strong>OK</strong> again to email the exported collection.apkg file to yourself, or alternatively you can manually copy to your computer using USB</p>
+            </li>
+          </ol>
+        </div>
+        <div class="paragraph">
+          <p>To import the file on your computer:</p>
+        </div>
+        <div class="olist arabic">
+          <ol class="arabic">
+            <li>
+              <p>Save the file "collection.apkg" to your desktop</p>
+            </li>
+            <li>
+              <p>Double-click on the file to start Anki.</p>
+            </li>
+            <li>
+              <p>Confirm you wish to replace, so that the deck from your mobile device
+                overwrites the old data on your desktop.</p>
+            </li>
+            <li>
+              <p>After importing, you can delete the apkg file on your desktop if you wish.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_exporting_deck_package"><a class="anchor" href="#_exporting_deck_package"></a>Exporting deck package</h3>
+        <div class="paragraph">
+          <p>If you want to share a deck in AnkiDroid with another user, you can export a deck package.</p>
+        </div>
+        <div class="paragraph">
+          <p>From the main menu in the decks screen:</p>
+        </div>
+        <div class="olist arabic">
+          <ol class="arabic">
+            <li>
+              <p>Long tap on the deck you wish to export</p>
+            </li>
+            <li>
+              <p>Tap <strong>Export</strong></p>
+            </li>
+            <li>
+              <p>Tap <strong>OK</strong> using the default options</p>
+            </li>
+            <li>
+              <p>Tap <strong>OK</strong> again to email the exported apkg to another user</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="backups"><a class="anchor" href="#backups"></a>Automatic Backups</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>AnkiDroid will automatically create backups of your collection for you. The backups include all your cards and statistics, but do not include
+          sounds or images.</p>
+      </div>
+      <div class="paragraph">
+        <p>The backup is taken in the background when you first start the app. A backup will only happen if more than 5 hours has elapsed since the last time a backup was created.
+          By default, AnkiDroid will store the last 8 backups; this number can be changed in the main settings.</p>
+      </div>
+      <div class="paragraph">
+        <p>You can restore a backup by choosing the <strong>restore from backup</strong> option from the main menu of the <a href="#deckPicker">decks screen</a>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="settings"><a class="anchor" href="#settings"></a>Preferences</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>The preferences screen can be accessed by opening the navigation drawer, and choosing "Settings".
+          It allows you to customize various application settings and how AnkiDroid appears.</p>
+      </div>
+      <div class="paragraph">
+        <p>The Preferences screen is divided up into different sections, which are
+          covered below.</p>
+      </div>
+      <div class="sect2">
+        <h3 id="_ankidroid"><a class="anchor" href="#_ankidroid"></a>AnkiDroid</h3>
+        <div class="paragraph">
+          <p>These are the general settings which affect the whole app:</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">AnkiWeb account</dt>
+            <dd>
+              <p>Change the account used for syncing with the cloud. For more information on syncing, please see <a href="#AnkiDesktop">this
+                section</a>.</p>
+            </dd>
+            <dt class="hdlist1">Fetch media on sync</dt>
+            <dd>
+              <p>By default, AnkiDroid will sync sounds and images as well as your cards and review history.
+                If you disable this option, sounds and images will not be downloaded from or uploaded to the sync server by AnkiDroid.</p>
+            </dd>
+            <dt class="hdlist1">Automatic synchronization</dt>
+            <dd>
+              <p>Enable this option if you want AnkiDroid to sync every time you open and close the app. There is a limit of once every ten minutes for this behavior. Once a sync begins you can cancel it by pressing your device&#8217;s back button, however it can take some time for the cancellation to take effect.</p>
+              <div class="paragraph">
+                <p>Users that want more fine-grained control over when sync occurred might like to use a 3rd party app like Tasker to automate synchronization. See the <a href="https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-API#sync-intent">API documentation</a> for more information on this.</p>
+              </div>
+            </dd>
+            <dt class="hdlist1">Deck for new cards</dt>
+            <dd>
+              <p>The default of "Use current deck" means that Anki saves the last-used note type for each deck
+                and selects it again then next time you choose the deck (and, in addition, will start with the current deck selected when choosing
+                Add from anywhere). The other option, "Decide by note type," saves the last-used deck for each note type
+                (and opens the add window to the last-used note type when you choose Add). This may be more convenient if you always use a single note
+                type for each deck.</p>
+            </dd>
+            <dt class="hdlist1">Language</dt>
+            <dd>
+              <p>Change the language. Note: AnkiDroid translations are contributed by volunteers. If you find missing or incorrect translations,
+                feel free to contribute to the translation project. More details can be found on the <a href="https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid">AnkiDroid Wiki</a>.</p>
+            </dd>
+            <dt class="hdlist1">Error reporting mode</dt>
+            <dd>
+              <p>Control whether or not AnkiDroid asks your permission before sending error reports to our error reporting system
+                when AnkiDroid crashes. You can also disable the reporting feature entirely if you wish.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="sect3">
+          <h4 id="_notifications"><a class="anchor" href="#_notifications"></a>Notifications</h4>
+          <div class="paragraph">
+            <p>This subsection allows you configure when and how AnkiDroid shows alerts in the Android notification bar.</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Notify when </dt>
+              <dd>
+                <p><strong>Never notify</strong> will disable all notifications from AnkiDroid. <strong>Pending messages available</strong> will only show important status updates like when a sync completed. <strong>More than n cards due</strong> will show a notification when you have more than n cards due (requires the widget to be enabled).</p>
+              </dd>
+              <dt class="hdlist1">Vibrate</dt>
+              <dd>
+                <p>Checking this will make your device vibrate when showing a notification</p>
+              </dd>
+              <dt class="hdlist1">Blink light</dt>
+              <dd>
+                <p>Checking this will make your device light blink when an unread notification exists (if your device has a notification LED)</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_reviewing"><a class="anchor" href="#_reviewing"></a>Reviewing</h3>
+        <div class="paragraph">
+          <p>The reviewing screen allows you to customize how AnkiDroid behaves when you&#8217;re
+            reviewing cards. Note that only the reviewing settings which are applied to <strong>all decks</strong> are shown here. There are more settings related
+            to reviewing which are <strong>deck specific</strong>. These deck specific settings are located in <strong>Deck options</strong>.</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">New card position </dt>
+            <dd>
+              <p>Controls when new cards are shown: either mixed with, after, or before all reviews.</p>
+            </dd>
+            <dt class="hdlist1">Start of next day </dt>
+            <dd>
+              <p>Controls when AnkiDroid should start showing the next day&#8217;s cards.
+                The default setting of 4AM ensures that if you&#8217;re studying around midnight, you won&#8217;t have two days worth of cards shown to you in one
+                session. If you stay up very late or wake up very early, you may want to adjust this to a time you&#8217;re usually sleeping.</p>
+            </dd>
+            <dt class="hdlist1">Learn ahead limit </dt>
+            <dd>
+              <p>The Learn ahead limit tells AnkiDroid how to behave when there is nothing left to study in the current deck
+                but cards in learning. The default setting of 20 minutes tells AnkiDroid that cards should be shown early if they are due to be shown in
+                less than 20 minutes and there&#8217;s nothing else to do. If you set this to 0, Anki will always wait the full period, showing the congratulations
+                screen until the remaining cards are ready to be reviewed.</p>
+            </dd>
+            <dt class="hdlist1">Timebox limit</dt>
+            <dd>
+              <p>Timeboxing is a technique to help you focus by dividing a longer activity (such as a 30 minute study session) into smaller
+                blocks. If you set the timebox time limit to a non-zero number of minutes, AnkiDroid will periodically show a message saying you how many
+                cards you&#8217;ve managed to study during the prescribed time limit.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="sect3">
+          <h4 id="_display"><a class="anchor" href="#_display"></a>Display</h4>
+          <div class="paragraph">
+            <p>This subsection relates to the way cards are displayed during reviewing</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Keep screen on </dt>
+              <dd>
+                <p>Ignore the automatic screen timeout setting in Android to always keep the screen on.</p>
+              </dd>
+              <dt class="hdlist1">Fullscreen mode </dt>
+              <dd>
+                <p>Switches to an immersive fullscreen mode so that you can use more of the screen. You can choose between "Hide the system bars" which will hide the system status bar, action bar, and bottom navigation buttons. Alternatively you can choose "Hide the system bars and answer buttons", which will hide everything except for the actual card content itself. You can temporarily exit fullscreen mode by swiping inwards (i.e. down or up) from the system bars.</p>
+                <div class="paragraph">
+                  <p>Note that immersive fullscreen mode is only supported on Android 4.4+</p>
+                </div>
+              </dd>
+              <dt class="hdlist1">Center align </dt>
+              <dd>
+                <p>By default AnkiDroid tries to show cards exactly as they are shown on Anki Desktop, however if you prefer your cards
+                  to be center aligned vertically in AnkiDroid then you can enable this feature.</p>
+              </dd>
+              <dt class="hdlist1">Show button time </dt>
+              <dd>
+                <p>By default, the answer buttons will display the time a card will
+                  next be shown. If you disable this option, the times will not appear, and only labels like "Again", "Good" and
+                  "Easy" will be shown.</p>
+              </dd>
+              <dt class="hdlist1">Card zoom </dt>
+              <dd>
+                <p>Here you can increase the zoom level of the card content (excluding images). You can use this option if you want to increase the font size for all cards.</p>
+              </dd>
+              <dt class="hdlist1">Image zoom </dt>
+              <dd>
+                <p>Here you can increase the zoom level of any images embedded in your cards.</p>
+              </dd>
+              <dt class="hdlist1">Answer button size </dt>
+              <dd>
+                <p>If you find it difficult to press the answer button, you can use this setting to make it bigger.</p>
+              </dd>
+              <dt class="hdlist1">Show remaining </dt>
+              <dd>
+                <p>Disabling this allows you to hide the card count in the top left of the screen.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_whiteboard"><a class="anchor" href="#_whiteboard"></a>Whiteboard</h4>
+          <div class="paragraph">
+            <p>This subsection controls the whiteboard in the reviewer.
+              Note: the whiteboard must be enabled in each deck individually from the menu in the study screen.</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Stroke width </dt>
+              <dd>
+                <p>Control the stroke width of the whiteboard. Reducing the stroke width may allow you to draw with more detail.</p>
+              </dd>
+              <dt class="hdlist1">Black strokes </dt>
+              <dd>
+                <p>Use black strokes instead of color, which may reduce memory usage. Note: this setting doesn&#8217;t apply when night mode is enabled.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="sect3">
+          <h4 id="_automatic_display_answer"><a class="anchor" href="#_automatic_display_answer"></a>Automatic display answer</h4>
+          <div class="paragraph">
+            <p>The automatic display answer feature allows you to have the answer shown automatically after some timeout period. You can also have the next
+              question shown automatically; in this case the card is assumed to be failed (i.e. the again button is automatically chosen)</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Time to show answer </dt>
+              <dd>
+                <p>Time to wait until answer is automatically shown</p>
+              </dd>
+              <dt class="hdlist1">Time to show next question </dt>
+              <dd>
+                <p>Time to wait until next question is automatically shown.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_fonts"><a class="anchor" href="#_fonts"></a>Fonts</h3>
+        <div class="paragraph">
+          <p>In this screen you can change the font used by AnkiDroid, and some scaling options related to fonts.
+            See the <a href="#customFonts">custom fonts</a> section for more information about using custom fonts.</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Default font </dt>
+            <dd>
+              <p>Choose the default font used by the AnkiDroid reviewer. You can add fonts to this list by copying them to the "fonts" folder.</p>
+            </dd>
+            <dt class="hdlist1">Default font applicability </dt>
+            <dd>
+              <p>The default setting is to only use the default font when no font has been specified in the card styling
+                via Anki Desktop, however you can also force the default font to be applied, ignoring any font specification in the card styling.</p>
+            </dd>
+            <dt class="hdlist1">Browser and editor font </dt>
+            <dd>
+              <p>The font to be used by the browser and editor</p>
+            </dd>
+            <dt class="hdlist1">Card browser font scaling </dt>
+            <dd>
+              <p>Lets you change the font size used in the card browser.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="gestures"><a class="anchor" href="#gestures"></a>Gestures</h3>
+        <div class="paragraph">
+          <p>AnkiDroid allows you to customize the interface, so that actions you perform
+            frequently can be accomplished quickly by using tap and swipe gestures.</p>
+        </div>
+        <div class="sect3">
+          <h4 id="_actions"><a class="anchor" href="#_actions"></a>Actions</h4>
+          <div class="paragraph">
+            <p>The following gestures can be used:</p>
+          </div>
+          <div class="ulist">
+            <ul>
+              <li>
+                <p>Swipe up</p>
+              </li>
+              <li>
+                <p>Swipe down</p>
+              </li>
+              <li>
+                <p>Swipe left</p>
+              </li>
+              <li>
+                <p>Swipe right</p>
+              </li>
+              <li>
+                <p>Double touch</p>
+              </li>
+              <li>
+                <p>Touch top</p>
+              </li>
+              <li>
+                <p>Touch bottom</p>
+              </li>
+              <li>
+                <p>Touch left</p>
+              </li>
+              <li>
+                <p>Tough right</p>
+              </li>
+            </ul>
+          </div>
+          <div class="paragraph">
+            <p>The following actions are available for each gesture:</p>
+          </div>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">No action </dt>
+              <dd>
+                <p>Don&#8217;t do anything. Useful if you want to disable certain swipes, tap zones and so on.</p>
+              </dd>
+              <dt class="hdlist1">Answer button 1 </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the red
+                  button, indicating you wish to review the card again soon. This is useful when
+                  you forgot a card or wish to review it more frequently.
+                  When the question is shown, this action (and all other answer actions below) will simply show the answer.</p>
+              </dd>
+              <dt class="hdlist1">Answer button 2 </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the second button from the left,
+                  generally indicating you found the card hard to remember.</p>
+              </dd>
+              <dt class="hdlist1">Answer button 3 </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the third button from the left.</p>
+              </dd>
+              <dt class="hdlist1">Answer button 4 </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the fourth button from the left (when applicable).</p>
+              </dd>
+              <dt class="hdlist1">Answer recommended (green) </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the green button.
+                  This is the button you should end up using the most.</p>
+              </dd>
+              <dt class="hdlist1">Answer better than recommended </dt>
+              <dd>
+                <p>When the answer screen is shown, choose the button on the
+                  right, indicating you found the card too easy to remember and would like a
+                  much longer delay.</p>
+              </dd>
+              <dt class="hdlist1">Undo </dt>
+              <dd>
+                <p>Undoes the last action.</p>
+              </dd>
+              <dt class="hdlist1">Edit card </dt>
+              <dd>
+                <p>Edits the current card.</p>
+              </dd>
+              <dt class="hdlist1">Mark </dt>
+              <dd>
+                <p>Adds a tag called "Marked" the current note, so it can be easily found in a search.</p>
+              </dd>
+              <dt class="hdlist1">Lookup expression </dt>
+              <dd>
+                <p>When the lookup feature is enabled (in advanced settings), lookup an expression
+                  in the selected dictionary. Note: the expression needs to be copied to the clipboard before this action will work.</p>
+              </dd>
+              <dt class="hdlist1">Bury card </dt>
+              <dd>
+                <p>Hides the current card from review.</p>
+              </dd>
+              <dt class="hdlist1">Suspend card </dt>
+              <dd>
+                <p>Prevent current card from being shown during review until you unsuspend it via the card browser.</p>
+              </dd>
+              <dt class="hdlist1">Delete note </dt>
+              <dd>
+                <p>Deletes the currently shown note and all of its cards.</p>
+              </dd>
+              <dt class="hdlist1">Play media </dt>
+              <dd>
+                <p>Replay any audio on the card.</p>
+              </dd>
+              <dt class="hdlist1">Abort learning </dt>
+              <dd>
+                <p>Stop reviewing and go back to the deck overview page.</p>
+              </dd>
+              <dt class="hdlist1">Bury note </dt>
+              <dd>
+                <p>Bury the current note (i.e. hide it until the next day).</p>
+              </dd>
+              <dt class="hdlist1">Suspend note </dt>
+              <dd>
+                <p>Suspend the current note (i.e. hide it until you unsuspend it).</p>
+              </dd>
+              <dt class="hdlist1">Toggle Red Flag </dt>
+              <dd>
+                <p>Enables the red flag, unless the flag is already red, in which case the flag is disabled.</p>
+              </dd>
+              <dt class="hdlist1">Toggle Orange Flag </dt>
+              <dd>
+                <p>Enables the orange flag, unless the flag is already orange, in which case the flag is disabled.</p>
+              </dd>
+              <dt class="hdlist1">Toggle Green Flag </dt>
+              <dd>
+                <p>Enables the green flag, unless the flag is already green, in which case the flag is disabled.</p>
+              </dd>
+              <dt class="hdlist1">Toggle Blue Flag </dt>
+              <dd>
+                <p>Enables the blue flag, unless the flag is already blue, in which case the flag is disabled.</p>
+              </dd>
+              <dt class="hdlist1">Remove Flag </dt>
+              <dd>
+                <p>Removes the flag from the card.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="_advanced"><a class="anchor" href="#_advanced"></a>Advanced</h3>
+        <div class="paragraph">
+          <p>Some less common features for advanced users are shown here</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Collection path </dt>
+            <dd>
+              <p>Change the location where AnkiDroid&#8217;s data is stored (not recommended)</p>
+            </dd>
+            <dt class="hdlist1">Force full sync </dt>
+            <dd>
+              <p>Tap this item to force a full upload or download on the next sync (for example, because you accidentally deleted a deck on one side and want to restore the deck rather than having its deletion synchronized).</p>
+            </dd>
+            <dt class="hdlist1">Advanced Statistics </dt>
+            <dd>
+              <p>Take into account the effect of future reviews in the 'Forecast' graph. More info <a href="#advancedStatistics">here</a>.</p>
+            </dd>
+          </dl>
+        </div>
+        <div class="sect3">
+          <h4 id="_workarounds"><a class="anchor" href="#_workarounds"></a>Workarounds</h4>
+          <div class="dlist">
+            <dl>
+              <dt class="hdlist1">Type answer into the card </dt>
+              <dd>
+                <p>If you have set up your cards to ask you to type in the answer (as explained in <a href="https://docs.ankiweb.net/#/templates/intro?id=card-templates">this section of the desktop manual</a>), AnkiDroid will display a keyboard on such cards and allow you to check your answer.</p>
+                <div class="openblock">
+                  <div class="content">
+                    <div class="paragraph">
+                      <p>In order to improve user experience when working with the whiteboard and gestures, we use a typing box separate from the card, which is inconsistent with the way the feature works on Anki Desktop.</p>
+                    </div>
+                    <div class="paragraph">
+                      <p>For full consistency with Anki Desktop, you can enable this option which allows you to save screen area, and choose an appropriate font (e.g. Japanese vs Chinese) for the input box.</p>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dt class="hdlist1">Input Workaround </dt>
+              <dd>
+                <p>Some older devices couldn&#8217;t gain focus into the text input box for typed-answer fields, so this was added (Hidden for API &gt; 14).</p>
+              </dd>
+              <dt class="hdlist1">Longclick Workaround </dt>
+              <dd>
+                <p>Some older devices couldn&#8217;t detect longclick for initiating selecting/copying of text, so this was added (Hidden for API &gt; 10).</p>
+              </dd>
+              <dt class="hdlist1">Fix for Hebrew Vowels </dt>
+              <dd>
+                <p>Some older devices couldn&#8217;t render Hebrew text, so this feature was added which allows the user to download and install a Hebrew font which is known to work (Hidden for API &gt; 15).</p>
+              </dd>
+              <dt class="hdlist1">Text to Speech </dt>
+              <dd>
+                <p>Enable this option to have Android read out all the text on your flashcards using the default text to speech engine. Google&#8217;s built-in TTS engine should work; 3rd party TTS engines may or may not.
+                  AnkiDroid will ask you to select the language for the front and back of your cards once for each deck on the first time you review a card in that deck.
+                  To change the language or disable TTS for a given deck after making your initial choice, you&#8217;ll need to use the "reset languages" option described below and reconfigure for each deck.</p>
+                <div class="openblock">
+                  <div class="content">
+                    <div class="paragraph">
+                      <p>Alternatively, if you want only fragments of cards to be read aloud, or if you want to set the TTS language for multiple decks at once, you can insert <code>&lt;tts&gt;</code> tags into <a href="#customizingCardLayout">card templates</a>. For example, with the following template for the back of the card</p>
+                    </div>
+                    <div class="literalblock">
+                      <div class="content">
+<pre>{{FrontSide}}
+
+&lt;hr id=answer&gt;
+
+<strong>&lt;tts service="android" voice="en_GB"&gt;</strong>{{EnglishTranslation}}<strong>&lt;/tts&gt;</strong>
+&lt;br&gt;&lt;br&gt;
+{{Example}}</pre>
+                      </div>
+                    </div>
+                    <div class="paragraph">
+                      <p>only the <code>EnglishTranslation</code> field will be read aloud in a British English voice; the <code>Example</code> field, lying outside the <code>&lt;tts&gt;</code> tag, won&#8217;t be read aloud. Every <code>&lt;tts&gt;</code> tag needs to have the following two attributes:</p>
+                    </div>
+                    <div class="ulist">
+                      <ul>
+                        <li>
+                          <p><code>service</code>: should be set to <code>"android"</code>, otherwise the contents of the <code>&lt;tts&gt;</code> tag won&#8217;t be read aloud;</p>
+                        </li>
+                        <li>
+                          <p><code>voice</code>: used to select the TTS language; should be a <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes">two- or three- letter language code</a>, optionally followed by an underscore and a <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">two-letter country or region code</a>. A frequently updated list of languages supported by the Google TTS engine can be found on its <a href="https://en.wikipedia.org/wiki/Google_Text-to-Speech">Wikipedia page</a>.</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="paragraph">
+                      <p>To make both AnkiDroid and the <a href="https://ankiatts.appspot.com/">AwesomeTTS</a> plugin to the desktop application use a TTS engine to read aloud certain card fragments, put the <code>&lt;tts service="android" &#8230;&#8203;&gt;</code> tag inside the <code>&lt;tts&gt;</code> tag recognised by AwesomeTTS, or vice versa. An example:</p>
+                    </div>
+                    <div class="literalblock">
+                      <div class="content">
+<pre>&lt;tts service="sapi5js" quality="39" speed="0" voice="Microsoft David Desktop" volume="100" xml="0"&gt;
+    &lt;tts service="android" voice="en_GB"&gt;
+        {{EnglishTranslation}}
+    &lt;/tts&gt;
+&lt;/tts&gt;</pre>
+                      </div>
+                    </div>
+                    <div class="paragraph">
+                      <p>AnkiDroid automatically ignores <code>&lt;tts&gt;</code> tags selecting an unknown TTS service. In contrast, AwesomeTTS may display a warning message on encountering the <code>&lt;tts service="android" &#8230;&#8203;&gt;</code> tag; to suppress it, uncheck the two <em>Show errors</em> checkboxes on the <em>Playback</em> tab of the <em>AwesomeTTS: Configuration</em> dialog in the desktop application.</p>
+                    </div>
+                    <div class="paragraph">
+                      <p><em>This feature may be removed in the future in favor of a separately downloadable plugin</em></p>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dt class="hdlist1">Lookup Dictionary </dt>
+              <dd>
+                <p>Dictionary to use to lookup words copied to the clipboard in the reviewer. After setting up a dictionary, do the following to perform the lookup:</p>
+                <div class="openblock">
+                  <div class="content">
+                    <div class="ulist">
+                      <ul>
+                        <li>
+                          <p>Longclick on the text you want to copy in the reviewer</p>
+                        </li>
+                        <li>
+                          <p>After selecting the word you want to copy, press the "copy" icon in the app bar at the top of the screen</p>
+                        </li>
+                        <li>
+                          <p>Tap once anywhere on the flashcard</p>
+                        </li>
+                        <li>
+                          <p>A magnifying glass icon should appear, which performs the lookup when clicked</p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="paragraph">
+                      <p>Alternatively, the lookup action can be performed via a gesture.</p>
+                    </div>
+                    <div class="paragraph">
+                      <p><em>This feature will likely be removed in the future in favor of a plugin</em></p>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dt class="hdlist1">Reset Languages </dt>
+              <dd>
+                <p>Useful for resetting the TTS language</p>
+              </dd>
+              <dt class="hdlist1">eReader (up/down buttons) </dt>
+              <dd>
+                <p>Support for eReader hardware buttons (see <a href="https://github.com/ankidroid/Anki-Android/issues/1625">issue 1625</a>)</p>
+                <div class="paragraph">
+                  <p><em>This feature will likely be removed in the future in favor of a plugin</em></p>
+                </div>
+              </dd>
+              <dt class="hdlist1">eReader Double Scrolling </dt>
+              <dd>
+                <p>Double the scrolling distance when using the eReader hardware buttons</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="_advanced_features"><a class="anchor" href="#_advanced_features"></a>Advanced Features</h2>
+    <div class="sectionbody">
+      <div class="sect2">
+        <h3 id="mathjax"><a class="anchor" href="#mathjax"></a>MathJax Support</h3>
+        <div class="paragraph">
+          <p>Mathjax is a modern typesetting library for math and chemistry.  AnkiDroid supports Mathjax cards out of the box.  Mathjax is configured to expect TeX formatting, with <code>\(</code> and <code>\)</code> delimiting inline equations and <code>\[</code> and <code>\]</code> for display equations.</p>
+        </div>
+        <div class="paragraph">
+          <p>To try it out, enter the following into a field:</p>
+        </div>
+        <div class="paragraph">
+          <p>&#8230;&#8203;
+            \(\sqrt{x}\)
+            &#8230;&#8203;</p>
+        </div>
+        <div class="paragraph">
+          <p>and preview the card.</p>
+        </div>
+        <div class="paragraph">
+          <p>For more details, see <a href="https://docs.ankiweb.net/#/math?id=mathjax">Mathjax Support</a> in the Anki Manual.</p>
+        </div>
+        <div class="paragraph">
+          <p><a href="https://www.reddit.com/r/Anki/comments/ar7lxd/how_to_load_mathjax_color_extension_on_anki/egm6u5j/">Previous workarounds</a> are no longer necessary as of AnkiDroid 2.9.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="reverseCards"><a class="anchor" href="#reverseCards"></a>Reverse Cards</h3>
+        <div class="paragraph">
+          <p>The Anki system has <a href="https://docs.ankiweb.net/#/getting-started?id=note-types">built-in note types which allow you to review cards in both directions</a>.
+            When <a href="#addingNotes">creating new material</a> in AnkiDroid, you should choose one of these note types, such as "Basic (and reversed card)",
+            which will automatically generate a reverse card for you.</p>
+        </div>
+        <img src="img/ReverseNoteType.png">
+        <div class="paragraph">
+          <p>If you used the wrong note type when adding your material, you can change the note type via the <a href="#editingNotes">edit note screen</a>,
+            or you can change the note type for multiple cards at once using the browser in Anki Desktop.
+            To do this, follow the instructions in the <a href="#AnkiDesktop">syncing with Anki Desktop section</a>, then in Anki Desktop open the browser,
+            select the cards you want to change, then choose <strong>Change note type</strong> from the menu.</p>
+        </div>
+        <div class="paragraph">
+          <p>Alternatively, if your cards are using a custom card layout which doesn&#8217;t include a reverse card, you can edit the note type to include a reverse card by following the instructions in the <a href="https://docs.ankiweb.net/#/templates/generation?id=reverse-cards">reverse cards section</a> of the Anki Desktop user manual. While less convenient than using Anki Desktop, it is possible to edit the note type from directly within AnkiDroid as well; see the <a href="#customizingCardLayout">custom card layout section</a> for more on this.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="customFonts"><a class="anchor" href="#customFonts"></a>Custom Fonts</h3>
+        <div class="paragraph">
+          <p>AnkiDroid allows you to use non-system fonts on your cards. To set them up properly,
+            it is strongly recommended to use the official method that is used by Anki Desktop. Please see
+            <a href="https://docs.ankiweb.net/#/templates/styling?id=installing-fonts">the corresponding section in the desktop
+              manual</a> for more information.</p>
+        </div>
+        <div class="paragraph">
+          <p>Alternatively, you can create a new subfolder "fonts" in the main AnkiDroid directory (i.e. the folder which contains the "backups" subfolder, specified under Settings &gt; Advanced &gt; AnkiDroid directory), copy a compatible font file (i.e. .ttf) there,
+            and then set this as the default font under Settings &gt; Fonts &gt; Default font.
+            Note: this method will change the default font for <strong>all</strong> of your cards, whereas the official method can be more specific. Also, if you sync with AnkiWeb, using this method will lead to cards being displayed differently on different devices.</p>
+        </div>
+        <div class="paragraph">
+          <p>Only fonts in the ttf format are officially supported in Anki/AnkiDroid;
+            the <a href="https://www.google.com/get/noto/#/">Google Noto</a> font set is highly recommended for all languages,
+            and some other free fonts can be found <a href="https://github.com/ankidroid/Anki-Android/wiki/Freely-distributable-fonts">here</a>.</p>
+        </div>
+        <div class="paragraph">
+          <p>Please note that AnkiDroid has to load the entire font into memory in order
+            to use it, and fonts for Asian languages can be quite large. If you have an
+            older device and notice AnkiDroid crashing frequently after installing a
+            font, you may have exceeded your device&#8217;s memory limits. For Google Noto,
+            it&#8217;s not recommended to use the combined CJK font, rather get the individual languages <a href="https://github.com/googlei18n/noto-cjk">separately from here</a>.</p>
+        </div>
+        <div class="paragraph">
+          <p><strong>Note 1</strong>: If you have "Fetch media on sync" disabled, you may need to manually copy the font file from Anki Desktop to your AnkiDroid/collection.media folder.</p>
+        </div>
+        <div class="paragraph">
+          <p><strong>Note 2</strong>: If you can&#8217;t get your font to work after following the steps in here and the Anki Desktop manual, please refer to the FAQ for <a href="https://github.com/ankidroid/Anki-Android/wiki/FAQ#i-followed-the-instructions-in-the-manual-but-i-still-cant-get-my-custom-font-to-work">detailed steps on how to debug font issues</a>.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="customizingCardLayout"><a class="anchor" href="#customizingCardLayout"></a>Custom Card Layout</h3>
+        <div class="paragraph">
+          <p>The layout of flashcards is completely customizable, although this is an advanced topic with a fairly steep learning curve, and you will probably find it a lot more convenient to do the customization with <a href="#AnkiDesktop">Anki Desktop</a>.</p>
+        </div>
+        <div class="paragraph">
+          <p>The <a href="https://docs.ankiweb.net/#/templates/intro?id=card-templates">card templates section</a> of the Anki Desktop manual has detailed instructions on how to edit note types, and most of the actions discussed there are also available from AnkiDroid by tapping "cards" at the bottom of the note editor, or choosing the "manage note types" option in the deck picker. Since detailed information on customizing card layouts is available in the Anki desktop manual, it will not be repeated here.</p>
+        </div>
+        <div class="paragraph">
+          <p>There is an <a href="https://github.com/ankidroid/Anki-Android/wiki/Advanced-formatting">advanced formatting page</a> on the AnkiDroid wiki with various hints on how you can get the most out of your card formatting, and we encourage you to read it, and edit it freely if you have any tips that you&#8217;d like to share with the community.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="typeInAnswer"><a class="anchor" href="#typeInAnswer"></a>Type in the answer feature</h3>
+        <div class="paragraph">
+          <p>AnkiDroid allows you to type in the correct answer and then compare it to the right answer. You have to set this up with Anki desktop,
+            as described in the <a href="https://docs.ankiweb.net/#/templates/fields?id=checking-your-answer">Anki Desktop manual</a>.</p>
+        </div>
+        <div class="paragraph">
+          <p>Anki desktop replaces the “{{type:NN}}” field on
+            the front of a card with an input box in the card. On AnkiDroid it is replaced with a “&#8230;&#8203;&#8230;&#8203;” prompt instead, and a text
+            input box is shown at the bottom. The comparison between typed text and
+            the correct text is shown on the answer side in place of the
+            “{{type:NN}}” field there, like on Anki desktop.</p>
+        </div>
+        <div class="paragraph">
+          <p>The text input box and the soft keyboard can be hidden by ticking
+            “Disable typing in answer” in the preferences.</p>
+        </div>
+        <div class="paragraph">
+          <p>Even with typing disabled, the correct answer is shown on the answer
+            side. This is done on purpose; otherwise the correct answer might not
+            be shown at all.</p>
+        </div>
+        <div class="paragraph">
+          <p>To hide the comparison (e.g. because the correct answer is shown anyway), the HTML id
+            “typeans” can be used. Add “.mobile <mark>typeans {display: none;}” to the
+              <a href="https://docs.ankiweb.net/" class="bare">https://docs.ankiweb.net/</a></mark>/templates/styling?id=card-styling[card styling] using Anki Desktop.</p>
+        </div>
+        <div class="paragraph">
+          <p>The type answer prompt and the comparison have more classes that
+            can be used to change the way they are displayed. Some of these are
+            the same as on Anki Desktop, some are specific to AnkiDroid.</p>
+        </div>
+        <div class="paragraph">
+          <p>The comparison uses three classes, typeGood, typeBad and typeMissing
+            to add green, red and gray background to the typing comparison. These
+            three classes are used on Anki desktop as well.</p>
+        </div>
+        <div class="paragraph">
+          <p>The “&#8230;&#8203;&#8230;&#8203;” prompt has the class “typePrompt”.</p>
+        </div>
+        <div class="paragraph">
+          <p>When typing is set to off in the preferences, the class “typeOff” is
+            added to the prompt on the question side, and to the div element
+            containing the comparison on the answer side. This class can be used
+            to show the type prompt or to hide the typing comparison in
+            this case.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="advancedStatistics"><a class="anchor" href="#advancedStatistics"></a>Advanced Statistics</h3>
+        <div class="paragraph">
+          <p>If Advanced Statistics are enabled, it changes the 'Forecast' graph so that it shows the estimated number of reviews that will be due on a given day in the future taking into account future reviews, learning new cards and failing cards. The bars and the left axis show the number of cards due on each day if you study all cards each day, while the line and the right axis show the number of unseen (shown as 'learn'), young and mature cards your deck or collection will consist of if you study all cards each day. The forecast graph does count reviews that are currently overdue. It assumes that the overdue cards will be reviewed according to the 'maximum reviews/day' deck option.</p>
+        </div>
+        <div class="paragraph">
+          <p>Advanced Statistics can be enabled in Settings &#8594; Advanced &#8594; Advanced Statistics (in plugin section).</p>
+        </div>
+        <div class="paragraph">
+          <p>The outcome of future reviewing, learning or failing cards affects reviews after that future review. To take this into account, the probability of each outcome is computed from the review log. Then the outcome is randomly chosen, such that an outcome which is more likely according to the review log is more likely to be chosen than an outcome which is less likely according to the review log. The settings all affect how the effect of the outcome of future reviews on subsequent reviews is taken into account.</p>
+        </div>
+        <div class="dlist">
+          <dl>
+            <dt class="hdlist1">Compute first n days, simulate remainder </dt>
+            <dd>
+              <p>If this setting is set to a number greater than 0, instead of randomly choosing an outcome, each possible outcome is taken into account in the simulation, together with its probability. The probability is taken into account for the graph and for future reviews in which it results, which also affect the graph.
+                One review has a couple of possible outcomes (say 4), which all result in a review. That review also has a couple of possible outcomes and so on. If many reviews are simulated this way, many reviews (4 x 4 x 4 x &#8230;&#8203; ) have to be taken into account which increases the time it takes to compose the graph.
+                Therefore, for reviews later than n days from now are simulated by randomly choosing an outcome.</p>
+              <div class="paragraph">
+                <p>In summary, higher n gives a more accurate graph, but it takes more time to compose the graph.</p>
+              </div>
+            </dd>
+            <dt class="hdlist1">Precision of computation </dt>
+            <dd>
+              <p>Reviews which occur with a probability smaller than 100% minus the configured precision of the computation are simulated by randomly choosing an outcome rather than taking into account each possible outcome. This setting is only applicable if the first n days are computed.
+                If Advanced Statistics are disabled, the 'Forecast' graph shows the estimated number of reviews that will be due on a given day in the future if you do not review cards, learn no new cards and fail no cards.</p>
+              <div class="paragraph">
+                <p>In summary, higher precision gives a more accurate graph, but it takes more time to compose the graph.</p>
+              </div>
+            </dd>
+            <dt class="hdlist1">Number of iterations of  the simulation </dt>
+            <dd>
+              <p>Composes the graph several times and then displays the average of these graphs.
+                Each time the graph is composed, another outcome might be randomly chosen.  If we average many outcomes which are randomly chosen taking into account the probabilities from the review log, the average outcome will likely be close to the average of the probabilities from the review log.
+                If we average many graphs, the average graph will likely be close to the graph which is generated by taking into account all possible outcomes.
+                If the number of graphs which are averaged is not too high, it will be faster than taking into account all possible outcomes.</p>
+              <div class="paragraph">
+                <p>In summary, a higher number of iterations gives a more accurate graph, but it takes more time to compose the graph.</p>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="reminders"><a class="anchor" href="#reminders"></a>Reminders</h3>
+        <div class="paragraph">
+          <p>AnkiDroid can remind you to devote some time to reviewing cards every day at a specific time via Android&#8217;s notification framework.
+            You can configure reminders for each options group independently.
+            To configure a notification go to Deck options &gt; Reminders, then tick the checkbox and select the time you want to be notified at.
+            To stop receiving notifications go to Deck options &gt; Reminders and unmark the checkbox.</p>
+        </div>
+        <div class="paragraph">
+          <p>Notifications only work for top level decks. Please let us know if you want us to add notifications for subdecks too.</p>
+        </div>
+      </div>
+      <div class="sect2">
+        <h3 id="setlanguagehint"><a class="anchor" href="#setlanguagehint"></a>Automatic Language Selection</h3>
+        <div class="paragraph">
+          <p>AnkiDroid has an in Automatic Language Selection feature in the Note Editor starting with AnkiDroid 2.13. This feature allows you to define a default language to be used in your keyboard for a field in a note type.</p>
+        </div>
+        <div class="paragraph">
+          <p>For example, if you have Russian and English note fields, and your keyboard supports the setImeHintLocales Android API, the keyboard layout will switch to Russian in the first field and back to English in the second automatically when the fields get focus. <a href="https://youtu.be/JrxDjTrRhBE">Checkout video reference for demonstration</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="keyboardShortcuts"><a class="anchor" href="#keyboardShortcuts"></a>Keyboard Shortcuts</h2>
+    <div class="sectionbody">
+      <div class="sect2">
+        <h3 id="_home_screen"><a class="anchor" href="#_home_screen"></a>Home Screen</h3>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Shortcut</th>
+            <th class="tableblock halign-left valign-top">Purpose</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>A</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Add Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>B</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Card Browser</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>Y</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Sync</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect2">
+        <h3 id="_reviewer"><a class="anchor" href="#_reviewer"></a>Reviewer</h3>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Shortcut</th>
+            <th class="tableblock halign-left valign-top">Purpose</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>1</kbd>,<kbd>2</kbd>,<kbd>3</kbd>,<kbd>4</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Press the nth answer button</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Gamepad Y</p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Flip Card/Press the first answer button</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Gamepad X</p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Flip Card/Press the second answer button</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Gamepad B</p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Flip Card/Press the third answer button</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Gamepad A</p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Flip Card/Press the fourth answer button</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>Space</kbd>,<kbd>Enter</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Flip Card/Answer Good</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>e</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Edit Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>*</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Mark Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>-</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Bury Card</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>=</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Bury Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>@</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Suspend Card</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>!</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Suspend Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>r</kbd>,<kbd>F5</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Replay Media</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>z</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Undo</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect2">
+        <h3 id="_note_editor"><a class="anchor" href="#_note_editor"></a>Note Editor</h3>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Shortcut</th>
+            <th class="tableblock halign-left valign-top">Purpose</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Save Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>D</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Select Deck</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>L</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Card Template Editor</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>N</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Select Note Type</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><kbd>T</kbd></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Edit Tags</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Preview Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>B</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Bold</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>I</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Italic</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>U</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Underline</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>R</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert Horizontal Rule</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>H</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert Title</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>F</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Change Font Size</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>M</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert MathJax Equation</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert New Cloze Deletion</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert Cloze Deletion using existing number</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>1..0</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Insert User-Defined HTML</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect2">
+        <h3 id="_card_browser"><a class="anchor" href="#_card_browser"></a>Card Browser</h3>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Shortcut</th>
+            <th class="tableblock halign-left valign-top">Purpose</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>A</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Select All</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>E</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Edit Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>D</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Change Deck</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>K</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Mark Note</p></td>
+          </tr>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Reschedule</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sect2">
+        <h3 id="_card_template_editor"><a class="anchor" href="#_card_template_editor"></a>Card Template Editor</h3>
+        <table class="tableblock frame-all grid-all stretch">
+          <colgroup>
+            <col style="width: 50%;">
+            <col style="width: 50%;">
+          </colgroup>
+          <thead>
+          <tr>
+            <th class="tableblock halign-left valign-top">Shortcut</th>
+            <th class="tableblock halign-left valign-top">Purpose</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="tableblock halign-left valign-top"><p class="tableblock"><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></p></td>
+            <td class="tableblock halign-left valign-top"><p class="tableblock">Preview Changed</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="betaTesting"><a class="anchor" href="#betaTesting"></a>Beta testing</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>If you want to try out the latest features in AnkiDroid, you can sign up for the beta testing program as follows:</p>
+      </div>
+      <div class="olist arabic">
+        <ol class="arabic">
+          <li>
+            <p>Visit the <a href="https://play.google.com/apps/testing/com.ichi2.anki">Google Play Beta page</a></p>
+          </li>
+          <li>
+            <p>Click <strong>Become a beta tester</strong></p>
+          </li>
+        </ol>
+      </div>
+      <div class="paragraph">
+        <p>After following these steps, the latest beta version will automatically be installed by Google Play in the same way as ordinary updates.
+          If you are more adventurous, you can also become an alpha tester, by joining the <a href="https://groups.google.com/forum/#!forum/ankidroidalphatesters">alpha testers group</a>
+          in addition to performing the above steps for beta testing.</p>
+      </div>
+      <div class="paragraph">
+        <p>Please submit any bugs you find in these development versions to the AnkiDroid issue tracker, as per the <a href="help.html">main help page</a>.</p>
+      </div>
+      <div class="paragraph">
+        <p>If you wish to leave the testing program at any time, simply visit the <a href="https://play.google.com/apps/testing/com.ichi2.anki">Google Play Beta page</a> and click <strong>Leave the test</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="sect1">
+    <h2 id="contributing"><a class="anchor" href="#contributing"></a>Contributing to AnkiDroid</h2>
+    <div class="sectionbody">
+      <div class="paragraph">
+        <p>AnkiDroid is an open source project, and its development relies on contributions from volunteers. Here are some of the ways you can contribute to the AnkiDroid project:</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">Get involved </dt>
+          <dd>
+            <p>Rate the app, join the <a href="https://groups.google.com/forum/#!forum/anki-android">AnkiDroid forum</a> and answer questions for other users, submit bug reports, become a <a href="#betaTest">beta tester</a>, etc. More detailed information on ways you can contribute as a non-developer can be found on the <a href="https://github.com/ankidroid/Anki-Android/wiki/Contributing">Wiki</a>.</p>
+          </dd>
+          <dt class="hdlist1">Translate </dt>
+          <dd>
+            <p>Translations of AnkiDroid and this user manual are all contributed by users, and are greatly appreciated.
+              See the <a href="https://github.com/ankidroid/Anki-Android/wiki/Contributing#translate-ankidroid">translating</a> wiki page for detailed instructions on how to contribute translations.</p>
+          </dd>
+          <dt class="hdlist1">Develop </dt>
+          <dd>
+            <p>The source code for AnkiDroid is available on our main <a href="https://github.com/ankidroid/Anki-Android">Github page</a>, and bug fixes as well as new features are very welcome.
+              Before investing a lot of time on working on a new feature, you may like to ask on the forum first if it&#8217;s likely to be merged into the main project, as not all features will be accepted.
+              If you are just getting started with Android programming, feel free to ask on the forum for some tips and/or tasks which are suitable for beginners.</p>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div id="footer-text">
+    Last updated 2021-12-07 18:07:33 UTC
+  </div>
+</div>
+</body>
+</html>

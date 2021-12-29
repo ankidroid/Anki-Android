@@ -52,6 +52,8 @@ public class Info extends AnkiActivity {
 
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_NEW_VERSION = 2;
+    public static final int TYPE_MANUAL = 3;
+    public static final int TYPE_HELP = 4;
 
     private WebView mWebView;
 
@@ -78,7 +80,14 @@ public class Info extends AnkiActivity {
         enableToolbar(mainView);
         findViewById(R.id.info_donate).setOnClickListener((v) -> openUrl(Uri.parse(getString(R.string.link_opencollective_donate))));
 
-        setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
+        if (type == TYPE_MANUAL) {
+            setTitle(R.string.help_item_ankidroid_manual);
+        } else if (type == TYPE_HELP) {
+            setTitle(R.string.help_title_ankidroid_support);
+        } else {
+            setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
+        }
+
         mWebView = findViewById(R.id.info);
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
@@ -106,6 +115,8 @@ public class Info extends AnkiActivity {
 
         ViewGroupUtils.setRenderWorkaround(this);
 
+        String background = String.format("#%06X", (0xFFFFFF & backgroundColor));
+
         switch (type) {
             case TYPE_ABOUT: {
                 String htmlContent = getAboutAnkiDroidHtml(res, textColor);
@@ -119,34 +130,50 @@ public class Info extends AnkiActivity {
                 Button continueButton = (findViewById(R.id.right_button));
                 continueButton.setText(res.getString(R.string.dialog_continue));
                 continueButton.setOnClickListener((arg) -> close());
-                String background = String.format("#%06X", (0xFFFFFF & backgroundColor));
-                mWebView.loadUrl("file:///android_asset/changelog.html");
-                mWebView.getSettings().setJavaScriptEnabled(true);
-
-                mWebView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-
-                        /* The order of below javascript code must not change (this order works both in debug and release mode)
-                         *  or else it will break in any one mode.
-                         */
-                        mWebView.loadUrl(
-                                "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");"
-                                        + "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
-                                        + "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";"
-                                        + "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
-                                        + "document.body.style.setProperty(\"background\", \"" + background + "\");"
-                        );
-                    }
-                });
+                loadWebpage("file:///android_asset/changelog.html", textColor, background);
+                break;
             }
-            break;
+            case TYPE_MANUAL:
+                removeButtons();
+                loadWebpage(AnkiDroidApp.getManualUrl(), textColor, background);
+                break;
+            case TYPE_HELP:
+                removeButtons();
+                loadWebpage(AnkiDroidApp.getFeedbackUrl(), textColor, background);
+                break;
             default:
                 finishWithoutAnimation();
                 break;
         }
     }
 
+    private void removeButtons() {
+        findViewById(R.id.right_button).setVisibility(View.GONE);
+        findViewById(R.id.left_button).setVisibility(View.GONE);
+        findViewById(R.id.info_donate).setVisibility(View.GONE);
+    }
+
+    private void loadWebpage(String fileUri, String textColor, String background) {
+        mWebView.loadUrl(fileUri);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+                /* The order of below javascript code must not change (this order works both in debug and release mode)
+                 *  or else it will break in any one mode.
+                 */
+                mWebView.loadUrl(
+                        "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");"
+                                + "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
+                                + "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";"
+                                + "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}"
+                                + "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                );
+            }
+        });
+    }
 
     @VisibleForTesting
     static String getAboutAnkiDroidHtml(Resources res, String textColor) {

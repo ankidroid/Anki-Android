@@ -626,7 +626,7 @@ public class AnkiDroidApp extends Application {
         } else if (isCurrentLanguage("ar")) {
             return getAppResources().getString(R.string.link_help_ar);
         } else {
-            return getAppResources().getString(R.string.link_help);
+            return getAppResources().getString(R.string.asset_link_help);
         }
     }
 
@@ -644,7 +644,7 @@ public class AnkiDroidApp extends Application {
         } else if (isCurrentLanguage("ar")) {
             return getAppResources().getString(R.string.link_manual_ar);
         } else {
-            return getAppResources().getString(R.string.link_manual);
+            return getAppResources().getString(R.string.asset_link_manual);
         }
     }
 

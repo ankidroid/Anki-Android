@@ -232,6 +232,7 @@
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_ankidroid_support">AnkiDroid support</string>
 
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>

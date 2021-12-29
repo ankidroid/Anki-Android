@@ -16,6 +16,7 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
@@ -24,6 +25,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.Info
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -46,11 +48,15 @@ import java.util.*
 
 object HelpDialog {
     private fun openManual(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()))
+        val infoIntent = Intent(ankiActivity, Info::class.java)
+        infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_MANUAL)
+        ankiActivity.startActivityWithoutAnimation(infoIntent)
     }
 
     private fun openFeedback(ankiActivity: AnkiActivity) {
-        ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()))
+        val infoIntent = Intent(ankiActivity, Info::class.java)
+        infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_HELP)
+        ankiActivity.startActivityWithoutAnimation(infoIntent)
     }
 
     @JvmStatic

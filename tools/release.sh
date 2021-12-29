@@ -28,11 +28,21 @@ if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
+if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/manual.asc ]; then
+  echo "Could not find ../ankidroiddocs/manual.asc?"
+  exit 1
+fi
+if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/help.asc ]; then
+  echo "Could not find ../ankidroiddocs/help.asc?"
+  exit 1
+fi
 
 # Define the location of the manifest file
 SRC_DIR="./AnkiDroid"
 GRADLEFILE="$SRC_DIR/build.gradle"
 CHANGELOG="$SRC_DIR/src/main/assets/changelog.html"
+MANUAL="$SRC_DIR/src/main/assets/manual.html"
+HELP="$SRC_DIR/src/main/assets/help.html"
 
 if ! VERSION=$(grep 'versionName=' $GRADLEFILE | sed -e 's/.*="//' | sed -e 's/".*//')
 then
@@ -56,6 +66,20 @@ if [ "$PUBLIC" = "public" ]; then
   if ! grep "Version $VERSION " "$CHANGELOG"
   then
     echo "Could not find entry for version $VERSION in rendered $CHANGELOG ?"
+    exit 1
+  fi
+
+  # Render the new manual
+  if ! asciidoctor ../ankidroiddocs/manual.asc -o "$MANUAL"
+  then
+    echo "Failed to render manual?"
+    exit 1
+  fi
+
+  # Render the new help
+  if ! asciidoctor ../ankidroiddocs/help.asc -o "$HELP"
+  then
+    echo "Failed to render help?"
     exit 1
   fi
 
