@@ -15,25 +15,25 @@
 </p>
 
 # AnkiDroid
-A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
+A semi-official port of the open-source [Anki](https://apps.ankiweb.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
 
 <img src="docs/graphics/logos/ankidroid_logo.png" align="right" width="40%" height="100%"></img>
 
-### Features
+### Features :
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
-- detailed statistics
-- syncing with AnkiWeb
-- write answers (optional)
+- Night Mode
+- Whiteboard 
+- Progress Widget
+- Detailed Statistics
+- Syncing with AnkiWeb
+- Write answers (optional)
 - text-to-speech integration
-- more than 6000 premade decks
-- spaced repetition (supermemo 2 algorithm)
-- supported contents: text, images, sounds, MathJax
-- add cards by intent from other applications like dictionaries
+- More than 6000 premade decks
+- Spaced repetition (SuperMemo 2 Algorithm)
+- Supported contents: text, images, sounds, MathJax
+- Add cards by intent from other applications like dictionaries
 
 </div>
 
