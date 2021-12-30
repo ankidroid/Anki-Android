@@ -13,22 +13,19 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.backend
 
-package com.ichi2.libanki.backend;
-
-import android.content.Context;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.TemplateManager;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.utils.Time;
-
-import net.ankiweb.rsdroid.RustCleanup;
-
-import BackendProto.Backend;
-import androidx.annotation.NonNull;
+import BackendProto.Backend.ExtractAVTagsOut
+import BackendProto.Backend.RenderCardOut
+import android.content.Context
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.backend.model.SchedTimingToday
+import com.ichi2.libanki.utils.Time
+import net.ankiweb.rsdroid.RustCleanup
+import kotlin.Throws
 
 /**
  * A class which implements the Rust backend functionality in Java - this is to allow moving our current Java code to
@@ -37,75 +34,56 @@ import androidx.annotation.NonNull;
  * This also allows an easy switch of functionality once we are happy that there are no regressions
  */
 @RustCleanup("After the rust conversion is complete - this will be removed")
-public class JavaDroidBackend implements DroidBackend {
-    @Override
-    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
-        return new Collection(context, db, path, server, log, time, this);
+class JavaDroidBackend : DroidBackend {
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection {
+        return Collection(context, db, path, server, log, time, this)
     }
 
-
-    @Override
-    public DB openCollectionDatabase(String path) {
-        return new DB(path);
+    override fun openCollectionDatabase(path: String): DB {
+        return DB(path)
     }
 
-
-    @Override
-    public void closeCollection(DB db, boolean downgradeToSchema11) {
-        db.close();
+    override fun closeCollection(db: DB, downgradeToSchema11: Boolean) {
+        db.close()
     }
 
-
-    @Override
-    public boolean databaseCreationCreatesSchema() {
-        return false;
+    override fun databaseCreationCreatesSchema(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean databaseCreationInitializesData() {
-        return false;
+    override fun databaseCreationInitializesData(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isUsingRustBackend() {
-        return false;
+    override fun isUsingRustBackend(): Boolean {
+        return false
     }
 
-
-    @Override
-    public void debugEnsureNoOpenPointers() {
+    override fun debugEnsureNoOpenPointers() {
         // no-op
     }
 
-
-    @Override
-    public SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    @Throws(BackendNotSupportedException::class)
+    override fun sched_timing_today(createdSecs: Long, createdMinsWest: Int, nowSecs: Long, nowMinsWest: Int, rolloverHour: Int): SchedTimingToday {
+        throw BackendNotSupportedException()
     }
 
-
-    @Override
-    public int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    @Throws(BackendNotSupportedException::class)
+    override fun local_minutes_west(timestampSeconds: Long): Int {
+        throw BackendNotSupportedException()
     }
 
-
-    @Override
-    public void useNewTimezoneCode(Collection col) {
+    override fun useNewTimezoneCode(col: Collection) {
         // intentionally blank - unavailable on Java backend
     }
 
-
-    @Override
-    public @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    @Throws(BackendNotSupportedException::class)
+    override fun extract_av_tags(text: String, question_side: Boolean): ExtractAVTagsOut {
+        throw BackendNotSupportedException()
     }
 
-
-    @Override
-    public @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    @Throws(BackendNotSupportedException::class)
+    override fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut {
+        throw BackendNotSupportedException()
     }
 }
