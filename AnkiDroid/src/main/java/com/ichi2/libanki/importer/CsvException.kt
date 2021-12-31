@@ -13,15 +13,7 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.ichi2.libanki.importer;
-
-import androidx.annotation.NonNull;
+package com.ichi2.libanki.importer
 
 // This should be a checked exception, but we want to throw it from an iterator in CsvReader
-public class CsvException extends RuntimeException {
-
-    public CsvException(@NonNull String message) {
-        super(message);
-    }
-}
+class CsvException(message: String) : RuntimeException(message)
