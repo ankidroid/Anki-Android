@@ -13,16 +13,19 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.backend.model
 
-package com.ichi2.libanki.backend.model;
+interface SchedTimingToday {
+    /** The number of days that have passed since the collection was created.
+     *
+     * uint32 upstream
+     * */
+    fun days_elapsed(): Int
 
-public interface SchedTimingToday {
-    /** The number of days that have passed since the collection was created.<br/>
-     *  uint32 upstream */
-    int days_elapsed();
     /**
-     * Timestamp of the next day rollover.<br/>
-     * int64 upstream */
-    long next_day_at();
+     * Timestamp of the next day rollover.
+     *
+     * int64 upstream
+     * */
+    fun next_day_at(): Long
 }
-
