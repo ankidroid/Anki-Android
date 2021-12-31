@@ -34,7 +34,10 @@ class CsvReader(data: Iterator<String>, delimiter: Char, inputDialect: CsvDialec
         if (iter == null) {
             iter = CsvReaderIterator(this)
         }
-        return iter!!
+
+        @Suppress("UNCHECKED_CAST")
+        val _iter = iter as MutableIterator<List<String>>?
+        return _iter!!
     }
 
     operator fun next(): List<String> {
