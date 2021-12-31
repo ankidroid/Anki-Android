@@ -13,31 +13,19 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.backend.model
 
-package com.ichi2.libanki.backend.model;
-
-import BackendProto.AdBackend;
+import BackendProto.AdBackend.SchedTimingTodayOut2
 
 /**
  * Adapter for SchedTimingTodayOut2 result from Rust
  */
-public class SchedTimingTodayProto implements SchedTimingToday {
-
-    private final AdBackend.SchedTimingTodayOut2 mData;
-
-    public SchedTimingTodayProto(AdBackend.SchedTimingTodayOut2 data) {
-        mData = data;
+class SchedTimingTodayProto(private val data: SchedTimingTodayOut2) : SchedTimingToday {
+    override fun days_elapsed(): Int {
+        return data.daysElapsed
     }
 
-
-    @Override
-    public int days_elapsed() {
-        return mData.getDaysElapsed();
-    }
-
-
-    @Override
-    public long next_day_at() {
-        return mData.getNextDayAt();
+    override fun next_day_at(): Long {
+        return data.nextDayAt
     }
 }
