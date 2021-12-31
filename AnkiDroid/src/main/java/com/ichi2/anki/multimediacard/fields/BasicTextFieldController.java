@@ -69,7 +69,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     @Override
     public void createUI(Context context, LinearLayout layout) {
         mEditText = new FixedEditText(mActivity);
-        mEditText.setMinLines(3);
+        mEditText.setMinLines(25);
+        mEditText.setGravity(Gravity.TOP);
         mEditText.setText(mField.getText());
         layout.addView(mEditText, LayoutParams.MATCH_PARENT);
 
