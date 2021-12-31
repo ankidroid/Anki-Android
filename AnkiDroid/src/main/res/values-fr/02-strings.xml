@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Échec de la décompression de l\'apkg: %s</string>
     <string name="import_log_failed_copy_to">Échec de la copie de l\'apkg vers %s</string>
     <string name="import_log_failed_validate">Validation de l\'apkg a échoué</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Il n\'y a pas assez d\'espace pour importer le paquet.\nEspace nécessaire - %1$s \nEspace disponible - %2$s.\n\nVous avez du mal ? Si possible essayez de libérer de l\'espace sur votre appareil. Sinon, la synchronisation utilise moins d\'espace que l\'importation. Vous pouvez essayer d\'importer le paquet sur un appareil qui plus d\'espace (par exemple Anki Desktop) et ensuite synchronisez le à cet appareil.</string>
     <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache soit effacé pendant le traitement.\nVeuillez réessayer</string>
     <string name="import_succeeded_but_check_database">L\'importation de données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
     <string name="import_error_unhandled_request">Impossible de traiter la demande d\'importation</string>

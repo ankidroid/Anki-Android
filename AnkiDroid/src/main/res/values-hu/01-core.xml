@@ -45,7 +45,7 @@
     <string name="statistics">Statisztika</string>
     <string name="settings">Beállítások</string>
     <string name="help">Segítség</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Rajz</string>
     <string name="send_feedback">Visszajelzés küldése</string>
     <string name="studyoptions_due_today">Ma esedékes:</string>
     <string name="studyoptions_new_total">Összes új kártya:</string>
@@ -115,13 +115,13 @@
     <string name="menu_flag_card_two">Narancs jelölő</string>
     <string name="menu_flag_card_three">Zöld jelölő</string>
     <string name="menu_flag_card_four">Kék jelölő</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Rózsaszín zászló</string>
+    <string name="menu_flag_card_six">Türkiz zászló</string>
+    <string name="menu_flag_card_seven">Lila zászló</string>
     <string name="menu_edit_tags">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
     <string name="menu_select">Szöveg kijelölése</string>
-    <string name="menu_lookup">Lookup text</string>
+    <string name="menu_lookup">Felkeresési szöveg</string>
     <string name="menu_search">Keresés itt: %1$s</string>
     <string name="menu_mark_note">Jegyzet megjelölése</string>
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
@@ -188,11 +188,11 @@
     <string name="card_template_editor_styling">Stílus</string>
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
     <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Mező beszúrása</string>
+    <string name="card_template_editor_select_field">Válasszon mezőt</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">Ez a művelet %1$d kártyát hoz létre. Folytatja?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
@@ -214,9 +214,9 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kártya böngésző</string>
     <string name="context_menu_anki_card_label">Anki Kártya</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s hibás: <br/>%2$s</string>
     <string name="more_information">További információ</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
+    <string name="no_field">Megtaláltuk a(z) \'{{%1$s}}\' mezőt, azonban a(z) \'%1$s\' mező nem létezik.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>

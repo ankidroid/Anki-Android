@@ -339,11 +339,11 @@
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="download_deck">덱 다운로드</string>
+    <string name="try_again">다시 시도하세요.</string>
+    <string name="cancel_download">다운로드 취소</string>
+    <string name="cancel_download_question_title">다운로드를 취소하시겠습니까?</string>
+    <string name="downloading_file">다운로드 중 %s</string>
     <string name="import_deck">Import Deck</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Download failed</string>
@@ -358,7 +358,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="deleted_note">노트가 삭제되었습니다</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->

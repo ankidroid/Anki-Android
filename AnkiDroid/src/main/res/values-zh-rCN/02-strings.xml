@@ -159,7 +159,7 @@
     <string name="import_log_failed_unzip">无法解压 apkg：%s</string>
     <string name="import_log_failed_copy_to">无法将 apkg 复制到 %s</string>
     <string name="import_log_failed_validate">apkg 验证失败</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">没有足够的空间来导入包。\n 需要 - %1$s \n 可用 - %2$s。\n\n 有问题？如果可能，请尝试在您的手机上腾出空间。 或者，同步使用的空间少于导入。 您可以尝试用具备更多可用空间的设备 (例如 Anki Desktop) 导入包，然后将其同步到此设备。</string>
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
     <string name="import_error_unhandled_request">无法处理导入请求</string>
