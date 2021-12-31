@@ -51,6 +51,7 @@ import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
+import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
@@ -70,12 +71,21 @@ import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.webkit.WebViewCompat;
+import leakcanary.DefaultOnHeapAnalyzedListener;
+import leakcanary.LeakCanary;
+import shark.AndroidMetadataExtractor;
+import shark.AndroidObjectInspectors;
+import shark.AndroidReferenceMatchers;
+import shark.KeyedWeakReferenceFinder;
+import shark.ReferenceMatcher;
 import timber.log.Timber;
 import static timber.log.Timber.DebugTree;
 
@@ -285,6 +295,11 @@ public class AnkiDroidApp extends Application {
             }
         }
         sInstance = this;
+
+        List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
+        // Add known memory leaks to 'referenceMatchers'
+        matchKnownMemoryLeaks(referenceMatchers);
+
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
@@ -748,4 +763,28 @@ public class AnkiDroidApp extends Application {
         return webViewInfo;
     }
 
+    /**
+     * Matching known library leaks or leaks which have been already reported previously.
+     */
+    @KotlinCleanup("Only pass referenceMatchers to copy() method after conversion to Kotlin")
+    private void matchKnownMemoryLeaks(List<ReferenceMatcher> knownLeaks) {
+        List<ReferenceMatcher> referenceMatchers = AndroidReferenceMatchers.Companion.getAppDefaults();
+        referenceMatchers.addAll(knownLeaks);
+
+        // Passing default values will not be required after migration to Kotlin.
+        LeakCanary.setConfig(LeakCanary.getConfig().copy(
+                true,
+                false,
+                5,
+                referenceMatchers,
+                AndroidObjectInspectors.Companion.getAppDefaults(),
+                DefaultOnHeapAnalyzedListener.Companion.create(),
+                AndroidMetadataExtractor.INSTANCE,
+                true,
+                7,
+                false,
+                KeyedWeakReferenceFinder.INSTANCE,
+                false
+        ));
+    }
 }
