@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '3.6.0'
+ id 'com.github.triplet.play' version '3.7.0'
 }
 
 apply plugin: 'com.android.application'
@@ -271,11 +271,11 @@ dependencies {
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation "androidx.preference:preference-ktx:1.1.1"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.sqlite:sqlite-framework:2.1.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.2.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     // noinspection GradleDependency - pinned at 1.12 until API26 minSdkVersion (File.toPath usage)
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.webkit:webkit:1.4.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.3.0'
@@ -309,7 +309,7 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.arcao:slf4j-timber:3.1'
     implementation 'com.jakewharton.timber:timber:5.0.1'
     implementation 'org.jsoup:jsoup:1.14.3'
@@ -320,8 +320,8 @@ dependencies {
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.1'
-    testImplementation 'org.mockito:mockito-inline:4.0.0'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
+    testImplementation 'org.mockito:mockito-inline:4.2.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
