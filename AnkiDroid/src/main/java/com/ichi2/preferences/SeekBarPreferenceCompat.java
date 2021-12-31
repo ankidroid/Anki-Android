@@ -116,7 +116,7 @@ public class SeekBarPreferenceCompat extends androidx.preference.DialogPreferenc
         persistInt(value);
     }
 
-    private void onCompleted() {
+    private void onValueUpdated() {
         if (shouldPersist()) {
             persistInt(mValue);
         }
@@ -176,6 +176,7 @@ public class SeekBarPreferenceCompat extends androidx.preference.DialogPreferenc
         public void onProgressChanged(SeekBar seekBar, int value, boolean fromUser) {
             if (fromUser) {
                 getPreference().setRelativeValue(value);
+                getPreference().onValueUpdated();
                 onValueUpdated();
             }
         }
@@ -194,7 +195,6 @@ public class SeekBarPreferenceCompat extends androidx.preference.DialogPreferenc
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            getPreference().onCompleted();
             this.getDialog().dismiss();
         }
 
