@@ -23,22 +23,37 @@
 <!-- Fonts & Style Prefrences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-            android:title="@string/pref_cat_appearance"
-        android:key="appearance_preference_group"
-        android:summary="@string/pref_cat_appearance_summ">
+    android:title="@string/pref_cat_appearance"
+    android:key="appearance_preference_group"
+    android:summary="@string/pref_cat_appearance_summ">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/app_theme_mode_labels"
+            android:entryValues="@array/app_theme_mode_values"
+            android:key="appThemeMode"
+            android:title="@string/app_theme_mode" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/day_theme_labels"
             android:entryValues="@array/day_theme_values"
             android:key="dayTheme"
-            android:title="@string/day_theme" />
+            android:shouldDisableView="true"
+            android:title="@string/default_day_theme" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="2"
             android:entries="@array/night_theme_labels"
             android:entryValues="@array/night_theme_values"
             android:key="nightTheme"
-            android:title="@string/night_theme" />
+            android:shouldDisableView="true"
+            android:title="@string/default_night_theme" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/single_theme_labels"
+            android:entryValues="@array/single_theme_values"
+            android:key="singleThemeOption"
+            android:shouldDisableView="true"
+            android:title="@string/pick_single_theme" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
         <CheckBoxPreference
@@ -48,32 +63,32 @@
             android:shouldDisableView="true"
             android:title="@string/choose_an_image" />
     </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_fonts" >
-            <ListPreference
-                android:defaultValue="@string/empty_string"
-                android:key="defaultFont"
-                android:shouldDisableView="true"
-                android:title="@string/default_font" />
-            <ListPreference
-                android:defaultValue="0"
-                android:key="overrideFontBehavior"
-                android:entries="@array/override_font_labels"
-                android:entryValues="@array/override_font_values"
-                android:title="@string/override_font" />
-            <ListPreference
-                android:defaultValue="@string/empty_string"
-                android:key="browserEditorFont"
-                android:title="@string/pref_browser_editor_font" />
-            <com.ichi2.preferences.SeekBarPreferenceCompat
-                android:defaultValue="100"
-                android:key="relativeCardBrowserFontSize"
-                android:max="200"
-                android:summary="@string/preference_summary_percentage"
-                android:text=" %"
-                android:title="@string/card_browser_font_size"
-                app:interval="10"
-                app:min="10" />
-        </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_fonts" >
+        <ListPreference
+            android:defaultValue="@string/empty_string"
+            android:key="defaultFont"
+            android:shouldDisableView="true"
+            android:title="@string/default_font" />
+        <ListPreference
+            android:defaultValue="0"
+            android:key="overrideFontBehavior"
+            android:entries="@array/override_font_labels"
+            android:entryValues="@array/override_font_values"
+            android:title="@string/override_font" />
+        <ListPreference
+            android:defaultValue="@string/empty_string"
+            android:key="browserEditorFont"
+            android:title="@string/pref_browser_editor_font" />
+        <com.ichi2.preferences.SeekBarPreferenceCompat
+            android:defaultValue="100"
+            android:key="relativeCardBrowserFontSize"
+            android:max="200"
+            android:summary="@string/preference_summary_percentage"
+            android:text=" %"
+            android:title="@string/card_browser_font_size"
+            app:interval="10"
+            app:min="10" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <CheckBoxPreference
             android:checked="false"

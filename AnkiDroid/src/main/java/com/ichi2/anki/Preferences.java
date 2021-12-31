@@ -987,8 +987,52 @@ public class Preferences extends AnkiActivity {
                 }
                 return true;
             });
+
+            boolean followSystem = "0".equals(AnkiDroidApp.getSharedPrefs(requireContext()).getString("appThemeMode", "0"));
+
+            requirePreference("nightTheme").setEnabled(followSystem);
+            requirePreference("dayTheme").setEnabled(followSystem);
+            requirePreference("singleThemeOption").setEnabled(!followSystem);
+
+            requirePreference("appThemeMode").setOnPreferenceChangeListener((preference, newValue) -> {
+                requirePreference("nightTheme").setEnabled("0".equals(newValue));
+                requirePreference("dayTheme").setEnabled("0".equals(newValue));
+                requirePreference("singleThemeOption").setEnabled(!"0".equals(newValue));
+
+                return true;
+            });
+
+            requirePreference("dayTheme").setOnPreferenceChangeListener((preference, newValue) -> {
+                restartActivity();
+                return true;
+            });
+
+            requirePreference("nightTheme").setOnPreferenceChangeListener((preference, newValue) -> {
+                restartActivity();
+                return true;
+            });
+
+            requirePreference("singleThemeOption").setOnPreferenceChangeListener((preference, newValue) -> {
+                restartActivity();
+                return true;
+            });
+
             initializeCustomFontsDialog();
         }
+
+        private void restartActivity() {
+            Timber.i("PreferenceActivity -- restartActivity()");
+
+            Intent intent = new Intent();
+            intent.setClass(requireContext(), this.getActivity().getClass());
+            intent.putExtras(new Bundle());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+            requireContext().startActivity(intent);
+
+            this.getActivity().finish();
+        }
+
 
         /** Initializes the list of custom fonts shown in the preferences. */
         private void initializeCustomFontsDialog() {

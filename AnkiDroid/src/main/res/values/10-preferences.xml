@@ -119,8 +119,10 @@
         minutes ago.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
+    <string name="app_theme_mode" maxLength="41">App theme mode</string>
+    <string name="default_day_theme" maxLength="41">Default day theme</string>
+    <string name="default_night_theme" maxLength="41">Default night theme</string>
+    <string name="pick_single_theme" maxLength="41">Pick a single theme</string>
     <string name="default_font" maxLength="41">Default font</string>
     <string name="override_font" maxLength="41">Default font applicability</string>
     <string name="language" maxLength="41">Language</string>
