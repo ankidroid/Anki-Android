@@ -13,220 +13,197 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-
-package com.ichi2.anki;
-
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-
-import com.ichi2.anki.multimediacard.fields.ImageField;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.exception.EmptyMediaException;
-import com.ichi2.utils.ContentResolverUtil;
-import com.ichi2.utils.FileUtil;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.annotation.CheckResult
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.ContentResolverUtil.getFileName
+import com.ichi2.utils.FileUtil.getFileNameAndExtension
+import timber.log.Timber
+import java.io.*
+import java.lang.Exception
+import java.lang.NullPointerException
+import java.util.*
+import kotlin.Throws
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,
  * this class is required in summer note class for paste image event and in visual editor activity for importing media,
  * (extracted code to avoid duplication of code).
  */
-public class MediaRegistration {
-
-    private static final int MEDIA_MAX_SIZE = 5 * 1000 * 1000;
-    public final static int COLOR_GREY = 0;
-    public final static int COLOR_TRUE = 2;
-    public final static int COLOR_INDEX = 3;
-    public final static int COLOR_GREY_ALPHA = 4;
-    public final static int COLOR_TRUE_ALPHA = 6;
-
+class MediaRegistration(private val context: Context) {
     // Use the same HTML if the same image is pasted multiple times.
-    private final HashMap<String, String> mPastedImageCache = new HashMap<>();
-    private final Context mContext;
-
-
-    public MediaRegistration(Context context) {
-        mContext = context;
-    }
+    private val mPastedImageCache = HashMap<String, String?>()
 
     /**
      * Loads an image into the collection.media folder and returns a HTML reference
      * @param uri The uri of the image to load
      * @return HTML referring to the loaded image
      */
-    @Nullable
-    public String loadImageIntoCollection(Uri uri) throws IOException {
-        String fileName;
-
-        String filename = ContentResolverUtil.getFileName(mContext.getContentResolver(), uri);
-        InputStream fd = openInputStreamWithURI(uri);
-
-        Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
-
-        if (checkFilename(Objects.requireNonNull(fileNameAndExtension))) {
-            fileName = String.format("%s-name", fileNameAndExtension.getKey());
+    @Throws(IOException::class)
+    fun loadImageIntoCollection(uri: Uri): String? {
+        val fileName: String
+        val filename = getFileName(context.contentResolver, uri)
+        val fd = openInputStreamWithURI(uri)
+        val fileNameAndExtension = getFileNameAndExtension(filename)
+        fileName = if (checkFilename(fileNameAndExtension!!)) {
+            String.format("%s-name", fileNameAndExtension.key)
         } else {
-            fileName = fileNameAndExtension.getKey();
+            fileNameAndExtension.key
         }
-
-        File clipCopy;
-        long bytesWritten;
-
-        try (InputStream copyFd = openInputStreamWithURI(uri)) {
+        var clipCopy: File
+        var bytesWritten: Long
+        openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.getValue(), copyFd)) {
-                clipCopy = File.createTempFile(fileName, ".jpg");
-                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
+            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd!!)) {
+                clipCopy = File.createTempFile(fileName, ".jpg")
+                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
                 if (!convertToJPG(clipCopy)) {
-                    return null;
+                    return null
                 }
             } else {
-                clipCopy = File.createTempFile(fileName, fileNameAndExtension.getValue());
-                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.getAbsolutePath());
+                clipCopy = File.createTempFile(fileName, fileNameAndExtension.value)
+                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.absolutePath)
             }
         }
-
-        String tempFilePath = clipCopy.getAbsolutePath();
+        val tempFilePath = clipCopy.absolutePath
         // register media for webView
         if (!registerMediaForWebView(tempFilePath)) {
-            return null;
+            return null
         }
-
-        Timber.d("File was %d bytes", bytesWritten);
+        Timber.d("File was %d bytes", bytesWritten)
         if (bytesWritten > MEDIA_MAX_SIZE) {
-            Timber.w("File was too large: %d bytes", bytesWritten);
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.note_editor_paste_too_large), false);
-            //noinspection ResultOfMethodCallIgnored
-            new File(tempFilePath).delete();
-            return null;
+            Timber.w("File was too large: %d bytes", bytesWritten)
+            showThemedToast(context, context.getString(R.string.note_editor_paste_too_large), false)
+            File(tempFilePath).delete()
+            return null
         }
-
-        ImageField field = new ImageField();
-        field.setHasTemporaryMedia(true);
-        field.setImagePath(tempFilePath);
-        return field.getFormattedValue();
+        val field = ImageField()
+        field.setHasTemporaryMedia(true)
+        field.imagePath = tempFilePath
+        return field.formattedValue
     }
 
-
-    private InputStream openInputStreamWithURI(Uri uri) throws FileNotFoundException {
-        return mContext.getContentResolver().openInputStream(uri);
+    @Throws(FileNotFoundException::class)
+    private fun openInputStreamWithURI(uri: Uri): InputStream? {
+        return context.contentResolver.openInputStream(uri)
     }
 
-    private boolean convertToJPG(File file) {
-        Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
-        try (FileOutputStream outStream = new FileOutputStream(file.getAbsolutePath())) {
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-            outStream.flush();
-        } catch (IOException e) {
-            Timber.w("MediaRegistration : Unable to convert file to png format");
-            AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format");;
-            UIUtils.showThemedToast(mContext, mContext.getResources().getString(R.string.multimedia_editor_png_paste_error, e.getMessage()), true);
-            return false;
-        }
-        return true; // successful conversion to jpg.
-    }
-
-    private boolean shouldConvertToJPG(String fileNameExtension, InputStream fileStream) {
-        if (".jpg".equals(fileNameExtension)) {
-            return false; // we are already a jpg, no conversion
-        }
-        if (".gif".equals(fileNameExtension)) {
-            return false; // gifs may have animation, conversion would ruin them
-        }
-        if ((".png".equals(fileNameExtension) && doesInputStreamContainTransparency(fileStream))) {
-            return false; // pngs with transparency would be ruined by conversion
-        }
-        return true;
-    }
-
-    /**
-     * given an inputStream of a file,
-     * returns true if found that it has transparency (in its header)
-     * code: https://stackoverflow.com/a/31311718/14148406
-     */
-    private static boolean doesInputStreamContainTransparency(InputStream inputStream) {
+    private fun convertToJPG(file: File): Boolean {
+        val bm = BitmapFactory.decodeFile(file.absolutePath)
         try {
-            // skip: png signature,header chunk declaration,width,height,bitDepth :
-            inputStream.skip(12 + 4 + 4 + 4 + 1);
-            final byte colorType = (byte) inputStream.read();
-            switch (colorType) {
-                case COLOR_GREY_ALPHA:
-                case COLOR_TRUE_ALPHA:
-                    return true;
-                case COLOR_INDEX:
-                case COLOR_GREY:
-                case COLOR_TRUE:
-                    return false;
+            FileOutputStream(file.absolutePath).use { outStream ->
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, outStream)
+                outStream.flush()
             }
-            return true;
-        } catch (final Exception e) {
-            Timber.w(e, "Failed to check transparency of inputStream");
+        } catch (e: IOException) {
+            Timber.w("MediaRegistration : Unable to convert file to png format")
+            AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format")
+            showThemedToast(context, context.resources.getString(R.string.multimedia_editor_png_paste_error, e.message), true)
+            return false
         }
-        return false;
+        return true // successful conversion to jpg.
     }
 
-    public boolean checkFilename(Map.Entry<String, String> fileNameAndExtension) {
-        return fileNameAndExtension.getKey().length() <= 3;
+    private fun shouldConvertToJPG(fileNameExtension: String, fileStream: InputStream): Boolean {
+        if (".jpg" == fileNameExtension) {
+            return false // we are already a jpg, no conversion
+        }
+        if (".gif" == fileNameExtension) {
+            return false // gifs may have animation, conversion would ruin them
+        }
+        if (".png" == fileNameExtension && doesInputStreamContainTransparency(fileStream)) {
+            return false // pngs with transparency would be ruined by conversion
+        }
+        return true
     }
 
-    public String onImagePaste(Uri uri) {
-        try {
+    private fun checkFilename(fileNameAndExtension: Map.Entry<String, String>): Boolean {
+        return fileNameAndExtension.key.length <= 3
+    }
+
+    fun onImagePaste(uri: Uri): String? {
+        return try {
             // check if cache already holds registered file or not
             if (!mPastedImageCache.containsKey(uri.toString())) {
-                mPastedImageCache.put(uri.toString(), loadImageIntoCollection(uri));
+                mPastedImageCache[uri.toString()] = loadImageIntoCollection(uri)
             }
-            return mPastedImageCache.get(uri.toString());
-        } catch (NullPointerException | SecurityException ex) {
+            mPastedImageCache[uri.toString()]
+        } catch (ex: NullPointerException) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
 
             //  java.lang.SecurityException: Permission Denial: opening provider
             //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
             //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste image");
-            return null;
-        } catch (Exception e) {
+            Timber.w(ex, "Failed to paste image")
+            null
+        } catch (ex: SecurityException) {
+            Timber.w(ex, "Failed to paste image")
+            null
+        } catch (e: Exception) {
             // NOTE: This is happy path coding which works on Android 9.
-            AnkiDroidApp.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:" + uri);
-            Timber.w(e, "Failed to paste image");
-            UIUtils.showThemedToast(mContext, mContext.getString(R.string.multimedia_editor_something_wrong), false);
-            return null;
+            AnkiDroidApp.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
+            Timber.w(e, "Failed to paste image")
+            showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
+            null
         }
     }
 
-    @SuppressWarnings( {"BooleanMethodIsAlwaysInverted", "RedundantSuppression"})
     @CheckResult
-    public boolean registerMediaForWebView(String imagePath) {
+    fun registerMediaForWebView(imagePath: String?): Boolean {
         if (imagePath == null) {
-            //Nothing to register - continue with execution.
-            return true;
+            // Nothing to register - continue with execution.
+            return true
         }
-        Timber.i("Adding media to collection: %s", imagePath);
-        File f = new File(imagePath);
-        try {
-            CollectionHelper.getInstance().getCol(mContext).getMedia().addFile(f);
-            return true;
-        } catch (IOException | EmptyMediaException e) {
-            Timber.w(e, "Failed to add file");
-            return false;
+        Timber.i("Adding media to collection: %s", imagePath)
+        val f = File(imagePath)
+        return try {
+            CollectionHelper.getInstance().getCol(context).media.addFile(f)
+            true
+        } catch (e: IOException) {
+            Timber.w(e, "Failed to add file")
+            false
+        } catch (e: EmptyMediaException) {
+            Timber.w(e, "Failed to add file")
+            false
         }
     }
 
+    companion object {
+        private const val MEDIA_MAX_SIZE = 5 * 1000 * 1000
+        private const val COLOR_GREY = 0
+        const val COLOR_TRUE = 2
+        private const val COLOR_INDEX = 3
+        private const val COLOR_GREY_ALPHA = 4
+        private const val COLOR_TRUE_ALPHA = 6
+
+        /**
+         * given an inputStream of a file,
+         * returns true if found that it has transparency (in its header)
+         * code: https://stackoverflow.com/a/31311718/14148406
+         */
+        private fun doesInputStreamContainTransparency(inputStream: InputStream): Boolean {
+            try {
+                // skip: png signature,header chunk declaration,width,height,bitDepth :
+                inputStream.skip((12 + 4 + 4 + 4 + 1).toLong())
+                when (inputStream.read()) {
+                    COLOR_GREY_ALPHA, COLOR_TRUE_ALPHA -> return true
+                    COLOR_INDEX, COLOR_GREY, COLOR_TRUE -> return false
+                }
+                return true
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to check transparency of inputStream")
+            }
+            return false
+        }
+    }
 }
