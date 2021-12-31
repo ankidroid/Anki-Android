@@ -13,9 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.ichi2.libanki.exception;
+package com.ichi2.libanki.exception
 
 // Empty media files cannot be added to AnkiWeb
-public class EmptyMediaException extends Exception {
-}
+class EmptyMediaException : Exception()
