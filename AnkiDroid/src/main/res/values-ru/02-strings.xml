@@ -168,7 +168,7 @@
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
     <string name="import_log_failed_validate">Не удалось проверить apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не работает? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki Desktop) и синхронизировать его с этим устройством.</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
     <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>

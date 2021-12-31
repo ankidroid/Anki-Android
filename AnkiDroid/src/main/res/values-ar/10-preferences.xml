@@ -269,7 +269,7 @@
     <string name="deck_conf_use_general_timeout_settings_summ">استخدم إعدادات «عرض الجواب التلقائي» العامة بدلًا من إعدادات هذه المجموعة.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">مكافأة البطاقات السهلة</string>
     <string name="deck_conf_hard_factor" maxLength="41">الفاصل الزمني للبطاقات الصعبة</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">مُعدِّل الفاصل الزمني</string>
+    <string name="deck_conf_ivl_fct" maxLength="41">مضاعف الفاصل</string>
     <string name="deck_conf_max_ivl" maxLength="41">الفاصل الزمني الأقصى</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">الفاصل الزمني الجديد</string>
     <string name="deck_conf_min_ivl" maxLength="41">الفاصل الزمني الأصغر</string>
