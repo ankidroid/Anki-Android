@@ -13,25 +13,27 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.dialogs;
+package com.ichi2.anki.dialogs
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ArrayList
+import java.util.HashMap
 
-public class ContextMenuHelper {
-    public static String[] getValuesFromKeys(HashMap<Integer, String> map, int[] keys) {
-        String[] values = new String[keys.length];
-        for (int i = 0; i < keys.length; i++) {
-            values[i] = map.get(keys[i]);
+object ContextMenuHelper {
+    @JvmStatic
+    fun getValuesFromKeys(map: HashMap<Int, String>, keys: IntArray): Array<String?> {
+        val values = arrayOfNulls<String>(keys.size)
+        for (i in keys.indices) {
+            values[i] = map[keys[i]]
         }
-        return values;
+        return values
     }
 
-    public static int[] integerListToArray(ArrayList<Integer> itemIds) {
-        int[] intItemIds = new int[itemIds.size()];
-        for (int i = 0; i < itemIds.size(); i++) {
-            intItemIds[i] = itemIds.get(i);
+    @JvmStatic
+    fun integerListToArray(itemIds: ArrayList<Int>): IntArray {
+        val intItemIds = IntArray(itemIds.size)
+        for (i in itemIds.indices) {
+            intItemIds[i] = itemIds[i]
         }
-        return intItemIds;
+        return intItemIds
     }
 }
