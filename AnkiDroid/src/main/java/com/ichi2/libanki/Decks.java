@@ -1042,6 +1042,8 @@ public class Decks extends DeckManager {
     /** {@inheritDoc} */
     @Override
     public void select(long did) {
+        if (mDecks.get(did) == null) return;
+
         String name = mDecks.get(did).getString("name");
 
         // current deck
