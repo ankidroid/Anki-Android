@@ -1,18 +1,3 @@
-package com.ichi2.anki;
-import com.ichi2.libanki.Sound;
-import com.ichi2.themes.Themes;
-
-import android.app.Activity;
-import android.content.res.Configuration;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.view.WindowManager;
-import android.widget.VideoView;
-
-import timber.log.Timber;
-
-
 /****************************************************************************************
  * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
@@ -29,67 +14,83 @@ import timber.log.Timber;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-public class VideoPlayer extends Activity implements android.view.SurfaceHolder.Callback {
-    VideoView mVideoView;
-    String mPath;
-    Sound mSoundPlayer;
+package com.ichi2.anki
 
-    /** Called when the activity is first created. */
-    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Timber.i("onCreate");
-        super.onCreate(savedInstanceState);
-        Themes.disableXiaomiForceDarkMode(this);
-        setContentView(R.layout.video_player);
-        mPath = getIntent().getStringExtra("path");
-        Timber.i("Video Player intent had path: %s", mPath);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);        
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mVideoView = findViewById(R.id.video_surface);
-        mVideoView.getHolder().addCallback(this);
-        mSoundPlayer = new Sound();
+import android.app.Activity
+import android.content.res.Configuration
+import android.media.MediaPlayer
+import android.os.Bundle
+import android.view.SurfaceHolder
+import android.view.WindowManager
+import android.widget.VideoView
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.Sound
+import com.ichi2.themes.Themes
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+
+@KotlinCleanup("for better possibly-null handling")
+class VideoPlayer : Activity(), SurfaceHolder.Callback {
+    private var mVideoView: VideoView? = null
+    private var mPath: String? = null
+    private var mSoundPlayer: Sound? = null
+
+    /** Called when the activity is first created.  */
+    @Suppress("DEPRECATION") // #9332: UI Visibility -> Insets
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.i("onCreate")
+        super.onCreate(savedInstanceState)
+        Themes.disableXiaomiForceDarkMode(this)
+        setContentView(R.layout.video_player)
+        mPath = intent.getStringExtra("path")
+        Timber.i("Video Player intent had path: %s", mPath)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        mVideoView = findViewById(R.id.video_surface)
+        mVideoView!!.holder.addCallback(this)
+        mSoundPlayer = Sound()
     }
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        Timber.i("surfaceCreated");
 
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        Timber.i("surfaceCreated")
         if (mPath == null) {
-            //#5911 - path shouldn't be null. I couldn't determine why this happens.
-            AnkiDroidApp.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated");
-            Timber.e("path was unexpectedly null");
-            UIUtils.showThemedToast(this, getString(R.string.video_creation_error), true);
-            finish();
-            return;
+            // #5911 - path shouldn't be null. I couldn't determine why this happens.
+            AnkiDroidApp.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated")
+            Timber.e("path was unexpectedly null")
+            showThemedToast(this, getString(R.string.video_creation_error), true)
+            finish()
+            return
         }
+        mSoundPlayer!!.playSound(mPath, { mp: MediaPlayer? ->
+            finish()
+            val originalListener = mSoundPlayer!!.mediaCompletionListener
+            originalListener?.onCompletion(mp)
+        }, mVideoView, null)
+    }
 
-        mSoundPlayer.playSound(mPath, mp -> {
-            finish();
-            MediaPlayer.OnCompletionListener originalListener = mSoundPlayer.getMediaCompletionListener();
-            if (originalListener != null) {
-                originalListener.onCompletion(mp);
-            }
-        }, mVideoView, null);
-    }
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-            int height) {
+    override fun surfaceChanged(
+        holder: SurfaceHolder,
+        format: Int,
+        width: Int,
+        height: Int
+    ) {
         // TODO Auto-generated method stub
-        
     }
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        mSoundPlayer.stopSounds();
-        finish();
+
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
+        mSoundPlayer!!.stopSounds()
+        finish()
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mSoundPlayer.notifyConfigurationChanged(mVideoView);
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        mSoundPlayer!!.notifyConfigurationChanged(mVideoView)
     }
-    @Override
-    public void onStop() {
-        super.onStop();
+
+    public override fun onStop() {
+        super.onStop()
     }
 }
