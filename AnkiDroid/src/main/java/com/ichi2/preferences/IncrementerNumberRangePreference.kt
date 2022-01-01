@@ -14,132 +14,115 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.preferences;
+package com.ichi2.preferences
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import com.ichi2.anki.R
+import java.lang.NumberFormatException
 
-import com.ichi2.anki.R;
+// TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
+@Suppress("deprecation")
+class IncrementerNumberRangePreference : NumberRangePreference {
+    private val mLinearLayout = LinearLayout(context)
+    private val mEditText = editText // Get default EditText from parent
+    private val mIncrementButton = Button(context)
+    private val mDecrementButton = Button(context)
+    private var mLastValidEntry = 0
 
-
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
-public class IncrementerNumberRangePreference extends NumberRangePreference {
-
-    private final LinearLayout mLinearLayout = new LinearLayout(getContext());
-    private final EditText mEditText = getEditText(); // Get default EditText from parent
-    private final Button mIncrementButton = new Button(getContext());
-    private final Button mDecrementButton = new Button(getContext());
-    private int mLastValidEntry;
-
-
-    public IncrementerNumberRangePreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initialize();
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+        initialize()
     }
 
-
-    public IncrementerNumberRangePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initialize();
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        initialize()
     }
 
-
-    public IncrementerNumberRangePreference(Context context) {
-        super(context);
-        initialize();
+    constructor(context: Context?) : super(context) {
+        initialize()
     }
 
-
-    @Override
-    protected View onCreateDialogView() {
-        mLinearLayout.addView(mDecrementButton);
-        mLinearLayout.addView(mEditText);
-        mLinearLayout.addView(mIncrementButton);
-
-        return mLinearLayout;
+    override fun onCreateDialogView(): View {
+        mLinearLayout.addView(mDecrementButton)
+        mLinearLayout.addView(mEditText)
+        mLinearLayout.addView(mIncrementButton)
+        return mLinearLayout
     }
 
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
+    override fun onDialogClosed(positiveResult: Boolean) {
+        super.onDialogClosed(positiveResult)
 
         // Need to remove Views explicitly otherwise the app crashes when the setting is accessed again
         // Remove mEditText, mIncrementButton, mDecrementButton before removing mLinearLayout
-        mLinearLayout.removeAllViews();
-        ViewGroup parent = (ViewGroup) mLinearLayout.getParent();
-        parent.removeView(mLinearLayout);
+        mLinearLayout.removeAllViews()
+        val parent = mLinearLayout.parent as ViewGroup
+        parent.removeView(mLinearLayout)
     }
-
 
     /**
      * Performs initial configurations which are common for all constructors.
-     * <p>
-     * Sets appropriate Text and OnClickListener to {@link #mIncrementButton} and {@link #mDecrementButton}
+     *
+     *
+     * Sets appropriate Text and OnClickListener to [.mIncrementButton] and [.mDecrementButton]
      * respectively.
-     * <p>
-     * Sets orientation for {@link #mLinearLayout}.
-     * <p>
-     * Sets {@link #mEditText} width and gravity.
+     *
+     *
+     * Sets orientation for [.mLinearLayout].
+     *
+     *
+     * Sets [.mEditText] width and gravity.
      */
-    private void initialize() {
+    private fun initialize() {
         // Layout parameters for mEditText
-        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                3.0f
-        );
+        val editTextParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            3.0f
+        )
         // Layout parameters for mIncrementButton and mDecrementButton
-        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-
-        try {
-            mLastValidEntry = Integer.parseInt(mEditText.getText().toString());
-        } catch (NumberFormatException nfe) {
+        val buttonParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1.0f
+        )
+        mLastValidEntry = try {
+            mEditText.text.toString().toInt()
+        } catch (nfe: NumberFormatException) {
             // This should not be possible but just in case, recover with a valid minimum from superclass
-            mLastValidEntry = mMin;
+            mMin
         }
-
-        mEditText.setLayoutParams(editTextParams);
+        mEditText.layoutParams = editTextParams
         // Centre text inside mEditText
-        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        mIncrementButton.setText(R.string.plus_sign);
-        mDecrementButton.setText(R.string.minus_sign);
-        mIncrementButton.setLayoutParams(buttonParams);
-        mDecrementButton.setLayoutParams(buttonParams);
-        mIncrementButton.setOnClickListener(view -> updateEditText(true));
-        mDecrementButton.setOnClickListener(view -> updateEditText(false));
-
-        mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        mEditText.gravity = Gravity.CENTER_HORIZONTAL
+        mIncrementButton.setText(R.string.plus_sign)
+        mDecrementButton.setText(R.string.minus_sign)
+        mIncrementButton.layoutParams = buttonParams
+        mDecrementButton.layoutParams = buttonParams
+        mIncrementButton.setOnClickListener { updateEditText(true) }
+        mDecrementButton.setOnClickListener { updateEditText(false) }
+        mLinearLayout.orientation = LinearLayout.HORIZONTAL
     }
 
-
     /**
-     * Increments/Decrements the value of {@link #mEditText} by 1 based on the parameter value.
+     * Increments/Decrements the value of [.mEditText] by 1 based on the parameter value.
      *
      * @param isIncrement Indicator for whether to increase or decrease the value.
      */
-    private void updateEditText(boolean isIncrement) {
-        int value;
-        try {
-            value = Integer.parseInt(mEditText.getText().toString());
-        } catch (NumberFormatException e) {
+    private fun updateEditText(isIncrement: Boolean) {
+        var value: Int = try {
+            mEditText.text.toString().toInt()
+        } catch (e: NumberFormatException) {
             // If the user entered a non-number then incremented, restore to a good value
-            value = mLastValidEntry;
+            mLastValidEntry
         }
-        value = isIncrement ? value + 1 : value - 1;
+        value = if (isIncrement) value + 1 else value - 1
         // Make sure value is within range
-        mLastValidEntry = super.getValidatedRangeFromInt(value);
-        mEditText.setText(String.valueOf(mLastValidEntry));
+        mLastValidEntry = super.getValidatedRangeFromInt(value)
+        mEditText.setText(mLastValidEntry.toString())
     }
 }
