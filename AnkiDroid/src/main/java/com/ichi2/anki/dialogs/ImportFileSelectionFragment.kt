@@ -33,7 +33,11 @@ class ImportFileSelectionFragment {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
 
             // This is required for serialization of the lambda
-            val openFilePicker = FunctionItem.ActivityConsumer { a -> openImportFilePicker(a) }
+            val openFilePicker = object : FunctionItem.ActivityConsumer {
+                override fun consume(activity: AnkiActivity) {
+                    openImportFilePicker(activity)
+                }
+            }
 
             val importItems = arrayListOf<RecursivePictureMenu.Item>(
                 FunctionItem(
