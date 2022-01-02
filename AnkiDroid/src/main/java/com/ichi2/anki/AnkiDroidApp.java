@@ -79,6 +79,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.webkit.WebViewCompat;
+import leakcanary.AppWatcher;
 import leakcanary.DefaultOnHeapAnalyzedListener;
 import leakcanary.LeakCanary;
 import shark.AndroidMetadataExtractor;
@@ -310,7 +311,11 @@ public class AnkiDroidApp extends Application {
             // Add known memory leaks to 'referenceMatchers'
             matchKnownMemoryLeaks(referenceMatchers);
 
-            // Show 'Leaks' app launcher. It has been removed by default in constants.xml.
+            if (!AppWatcher.INSTANCE.isInstalled()) {
+                AppWatcher.INSTANCE.manualInstall(this);
+            }
+
+            // Show 'Leaks' app launcher. It has been removed by default via constants.xml.
             LeakCanary.INSTANCE.showLeakDisplayActivityLauncherIcon(true);
         } else {
             Timber.plant(new ProductionCrashReportingTree());

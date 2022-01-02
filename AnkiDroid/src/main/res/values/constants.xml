@@ -306,4 +306,5 @@
     <string name="reset_onboarding_desc">Show all tutorials again</string>
     <bool tools:ignore="UnusedResources" name="leak_canary_allow_in_non_debuggable_build">true</bool>
     <bool tools:ignore="UnusedResources" name="leak_canary_add_launcher_icon">false</bool>
+    <bool tools:ignore="UnusedResources" name="leak_canary_watcher_auto_install">false</bool>
 </resources>
