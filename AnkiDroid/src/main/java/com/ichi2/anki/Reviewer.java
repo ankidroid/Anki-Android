@@ -1167,7 +1167,6 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     private void setFullScreen(final AbstractFlashcardViewer a) {
-        //Hide System Bars
         CompatHelper.getCompat().hideSystembars(getWindow());
         // Show / hide the Action bar together with the status bar
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(a);
