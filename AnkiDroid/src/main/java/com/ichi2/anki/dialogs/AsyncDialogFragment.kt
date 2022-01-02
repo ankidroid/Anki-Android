@@ -13,35 +13,33 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
-import android.content.res.Resources;
-import android.os.Message;
+import android.content.res.Resources
+import android.os.Message
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-
-import timber.log.Timber;
-
-public abstract class AsyncDialogFragment extends AnalyticsDialogFragment {
+abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
     /* provide methods for text to show in notification bar when the DialogFragment
        can't be shown due to the host activity being in stopped state.
        This can happen when the DialogFragment is shown from 
        the onPostExecute() method of an AsyncTask */
-    
-    public abstract String getNotificationMessage();
-    public abstract String getNotificationTitle();
-
-    public Message getDialogHandlerMessage() {
-        return null;
+    @KotlinCleanup("convert these back to properties")
+    abstract fun getNotificationMessage(): String?
+    abstract fun getNotificationTitle(): String?
+    open fun getDialogHandlerMessage(): Message? {
+        return null
     }
 
-    protected Resources res() {
-        try {
-            return AnkiDroidApp.getAppResources();
-        } catch (Exception e) {
-            Timber.w(e, "AnkiDroidApp.getAppResources failure. Returning Fragment resources as fallback.");
-            return getResources();
+    protected fun res(): Resources {
+        return try {
+            AnkiDroidApp.getAppResources()
+        } catch (e: Exception) {
+            Timber.w(e, "AnkiDroidApp.getAppResources failure. Returning Fragment resources as fallback.")
+            resources
         }
     }
-} 
+}
