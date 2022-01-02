@@ -2062,6 +2062,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Select the deck
             getCol().getDecks().select(did);
         } catch (NullPointerException npe) {
+            Timber.e(npe);
             // Show database error dialog
             showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_ERROR);
         }
