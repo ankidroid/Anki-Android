@@ -13,38 +13,24 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.dialogs.customstudy;
+package com.ichi2.anki.dialogs.customstudy
 
-import com.ichi2.anki.StudyOptionsFragment;
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener;
-import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
+import com.ichi2.async.TaskListenerWithContext
 
-import androidx.annotation.NonNull;
-
-import static com.ichi2.anki.dialogs.customstudy.CreateCustomStudySessionListener.*;
-
-class CreateCustomStudySessionListener extends TaskListenerWithContext<Callback, Void, StudyOptionsFragment.DeckStudyData> {
-
-    public interface Callback {
-        void hideProgressBar();
-        void onCreateCustomStudySession();
-        void showProgressBar();
+internal class CreateCustomStudySessionListener(callback: Callback?) : TaskListenerWithContext<CreateCustomStudySessionListener.Callback?, Void?, DeckStudyData?>(callback) {
+    interface Callback {
+        fun hideProgressBar()
+        fun onCreateCustomStudySession()
+        fun showProgressBar()
     }
 
-    public CreateCustomStudySessionListener(Callback callback) {
-        super(callback);
+    override fun actualOnPreExecute(callback: Callback) {
+        callback.showProgressBar()
     }
 
-
-    @Override
-    public void actualOnPreExecute(@NonNull Callback callback) {
-        callback.showProgressBar();
-    }
-
-
-    @Override
-    public void actualOnPostExecute(@NonNull Callback callback, StudyOptionsFragment.DeckStudyData v) {
-        callback.hideProgressBar();
-        callback.onCreateCustomStudySession();
+    override fun actualOnPostExecute(callback: Callback, result: DeckStudyData?) {
+        callback.hideProgressBar()
+        callback.onCreateCustomStudySession()
     }
 }
