@@ -13,20 +13,20 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentFactory;
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentFactory
 
-public class FragmentFactoryUtils {
-
+object FragmentFactoryUtils {
     /**
-     * A convenience util method that instantiate a fragment using the passed activity {@link FragmentFactory}
+     * A convenience util method that instantiate a fragment using the passed activity [FragmentFactory]
      */
-    public static <F extends Fragment> F instantiate(FragmentActivity activity, Class<F> cls) {
-        final FragmentFactory factory = activity.getSupportFragmentManager().getFragmentFactory();
-        return (F) factory.instantiate(activity.getClassLoader(), cls.getName());
+    @JvmStatic
+    @Suppress("UNCHECKED_CAST")
+    fun <F : Fragment?> instantiate(activity: FragmentActivity, cls: Class<F>): F {
+        val factory = activity.supportFragmentManager.fragmentFactory
+        return factory.instantiate(activity.classLoader, cls.name) as F
     }
-
 }
