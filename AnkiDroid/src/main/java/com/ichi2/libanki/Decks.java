@@ -24,9 +24,12 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.text.TextUtils;
 
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 
@@ -1044,24 +1047,19 @@ public class Decks extends DeckManager {
     /** {@inheritDoc} */
     @Override
     public void select(long did) {
-        try {
-            String name = mDecks.get(did).getString("name");
+        String name = mDecks.get(did).getString("name");
 
-            // current deck
-            mCol.set_config(CURRENT_DECK, did);
-            // and active decks (current + all children)
-            TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
-            actv.put(name, did);
-            JSONArray activeDecks = new JSONArray();
-            for (Long n : actv.values()) {
-                activeDecks.put(n);
-            }
-
-            mCol.set_config(ACTIVE_DECKS, activeDecks);
-        } catch (NullPointerException npe) {
-            Timber.e(npe);
-            UIUtils.showThemedToast(mCol.getContext(), mCol.getContext().getString(R.string.corrupt_collection), true);
+        // current deck
+        mCol.set_config(CURRENT_DECK, did);
+        // and active decks (current + all children)
+        TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
+        actv.put(name, did);
+        JSONArray activeDecks = new JSONArray();
+        for (Long n : actv.values()) {
+            activeDecks.put(n);
         }
+
+        mCol.set_config(ACTIVE_DECKS, activeDecks);
     }
 
 

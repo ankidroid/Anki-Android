@@ -2058,8 +2058,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (getCol().getDecks().selected() != did) {
             getCol().clearUndo();
         }
-        // Select the deck
-        getCol().getDecks().select(did);
+        try {
+            // Select the deck
+            getCol().getDecks().select(did);
+        } catch (NullPointerException npe) {
+            // Show database error dialog
+            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_ERROR);
+        }
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId();
         // Reset the schedule so that we get the counts for the currently selected deck
