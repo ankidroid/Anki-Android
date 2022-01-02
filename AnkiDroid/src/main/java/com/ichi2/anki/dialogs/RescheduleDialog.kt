@@ -13,84 +13,69 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs
 
-package com.ichi2.anki.dialogs;
+import android.content.res.Resources
+import androidx.annotation.CheckResult
+import com.ichi2.anki.R
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.sched.SchedV2
+import java.util.function.Consumer
 
-import android.content.res.Resources;
-
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.sched.SchedV2;
-
-import java.util.function.Consumer;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import androidx.annotation.CheckResult;
-
-public class RescheduleDialog extends IntegerDialog {
-    private RescheduleDialog() {
-        super();
-    }
-
-    @NonNull
+object RescheduleDialog : IntegerDialog() {
+    @JvmStatic
     @CheckResult
-    public static RescheduleDialog rescheduleSingleCard(Resources resources, Card currentCard,
-                                                        Consumer<Integer> consumer) {
-        RescheduleDialog rescheduleDialog = new RescheduleDialog();
-
-        String content = getContentString(resources, currentCard);
-
+    fun rescheduleSingleCard(
+        resources: Resources,
+        currentCard: Card,
+        consumer: Consumer<Int>?
+    ): RescheduleDialog {
+        val rescheduleDialog = RescheduleDialog
+        val content = getContentString(resources, currentCard)
         rescheduleDialog.setArgs(
-                resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, 1),
-                resources.getString(R.string.reschedule_card_dialog_message),
-                4,
-                content);
-
+            resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, 1),
+            resources.getString(R.string.reschedule_card_dialog_message),
+            4,
+            content
+        )
         if (consumer != null) {
-            rescheduleDialog.setCallbackRunnable(consumer);
+            rescheduleDialog.setCallbackRunnable(consumer)
         }
-
-        return rescheduleDialog;
+        return rescheduleDialog
     }
 
-    @NonNull
+    @JvmStatic
     @CheckResult
-    public static RescheduleDialog rescheduleMultipleCards(Resources resources, Consumer<Integer> consumer, int cardCount) {
-        RescheduleDialog rescheduleDialog = new RescheduleDialog();
-
+    fun rescheduleMultipleCards(resources: Resources, consumer: Consumer<Int>?, cardCount: Int): RescheduleDialog {
+        val rescheduleDialog = RescheduleDialog
         rescheduleDialog.setArgs(
-                resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, cardCount),
-                resources.getString(R.string.reschedule_card_dialog_message),
-                4);
-
+            resources.getQuantityString(R.plurals.reschedule_cards_dialog_title, cardCount),
+            resources.getString(R.string.reschedule_card_dialog_message),
+            4
+        )
         if (consumer != null) {
-            rescheduleDialog.setCallbackRunnable(consumer);
+            rescheduleDialog.setCallbackRunnable(consumer)
         }
-
-        return rescheduleDialog;
+        return rescheduleDialog
     }
 
-
-    @Nullable
-    private static String getContentString(Resources resources, Card currentCard) {
-        if (currentCard.isNew()) {
-            return resources.getString(R.string.reschedule_card_dialog_new_card_warning);
+    private fun getContentString(resources: Resources, currentCard: Card): String? {
+        if (currentCard.isNew) {
+            return resources.getString(R.string.reschedule_card_dialog_new_card_warning)
         }
 
         // #5595 - Help a user reschedule cards by showing them the current interval.
         // DEFECT: We should be able to calculate this for all card types - not yet performed for non-review or dynamic cards
-        if (!currentCard.isReview()) {
-            return null;
+        if (!currentCard.isReview) {
+            return null
         }
-
-        String message = resources.getString(R.string.reschedule_card_dialog_warning_ease_reset, SchedV2.RESCHEDULE_FACTOR / 10);
-        if (currentCard.isInDynamicDeck()) {
-            return message;
-        }
-
-        return message + "\n\n" + resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.getIvl(), currentCard.getIvl());
+        val message = resources.getString(R.string.reschedule_card_dialog_warning_ease_reset, SchedV2.RESCHEDULE_FACTOR / 10)
+        return if (currentCard.isInDynamicDeck) {
+            message
+        } else """
+     $message
+     
+     ${resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.ivl, currentCard.ivl)}
+        """.trimIndent()
     }
-
 }
