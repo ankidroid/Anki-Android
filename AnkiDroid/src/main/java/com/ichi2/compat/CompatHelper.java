@@ -28,8 +28,7 @@ public class CompatHelper {
     private CompatHelper() {
         if(getSdkVersion() >= Build.VERSION_CODES.R) {
             mCompat = new CompatV30();
-        }
-        else if (getSdkVersion() >= Build.VERSION_CODES.Q) {
+        } else if (getSdkVersion() >= Build.VERSION_CODES.Q) {
             mCompat = new CompatV29();
         } else if (getSdkVersion() >= Build.VERSION_CODES.O) {
             mCompat = new CompatV26();
