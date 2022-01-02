@@ -296,10 +296,6 @@ public class AnkiDroidApp extends Application {
         }
         sInstance = this;
 
-        List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
-        // Add known memory leaks to 'referenceMatchers'
-        matchKnownMemoryLeaks(referenceMatchers);
-
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
@@ -308,11 +304,18 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
-
             setDebugACRAConfig(preferences);
+
+            List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
+            // Add known memory leaks to 'referenceMatchers'
+            matchKnownMemoryLeaks(referenceMatchers);
+
+            // Show 'Leaks' app launcher. It has been removed by default in constants.xml.
+            LeakCanary.INSTANCE.showLeakDisplayActivityLauncherIcon(true);
         } else {
             Timber.plant(new ProductionCrashReportingTree());
             setProductionACRAConfig(preferences);
+            disableLeakCanary();
         }
         Timber.tag(TAG);
 
@@ -782,6 +785,28 @@ public class AnkiDroidApp extends Application {
                 AndroidMetadataExtractor.INSTANCE,
                 true,
                 7,
+                false,
+                KeyedWeakReferenceFinder.INSTANCE,
+                false
+        ));
+    }
+
+    /**
+     * Disable LeakCanary
+     */
+    @KotlinCleanup("Only pass relevant arguments to copy() method after conversion to Kotlin")
+    private void disableLeakCanary() {
+        // Passing default values will not be required after migration to Kotlin.
+        LeakCanary.setConfig(LeakCanary.getConfig().copy(
+                false,
+                false,
+                0,
+                AndroidReferenceMatchers.Companion.getAppDefaults(),
+                AndroidObjectInspectors.Companion.getAppDefaults(),
+                DefaultOnHeapAnalyzedListener.Companion.create(),
+                AndroidMetadataExtractor.INSTANCE,
+                false,
+                0,
                 false,
                 KeyedWeakReferenceFinder.INSTANCE,
                 false
