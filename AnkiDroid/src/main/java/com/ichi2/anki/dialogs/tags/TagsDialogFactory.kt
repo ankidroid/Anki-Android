@@ -13,36 +13,20 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.dialogs.tags;
+package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.anki.dialogs.tags.TagsDialogListener;
-import com.ichi2.utils.ExtendedFragmentFactory;
+import androidx.fragment.app.Fragment
+import com.ichi2.utils.ExtendedFragmentFactory
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-public class TagsDialogFactory extends ExtendedFragmentFactory {
-
-    final TagsDialogListener mListener;
-
-
-    public TagsDialogFactory(TagsDialogListener listener) {
-        this.mListener = listener;
+class TagsDialogFactory(val listener: TagsDialogListener) : ExtendedFragmentFactory() {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+        val cls = loadFragmentClass(classLoader, className)
+        return if (cls == TagsDialog::class.java) {
+            newTagsDialog()
+        } else super.instantiate(classLoader, className)
     }
 
-
-    @NonNull
-    @Override
-    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
-        Class<? extends Fragment> cls = loadFragmentClass(classLoader, className);
-        if (cls == TagsDialog.class) {
-            return newTagsDialog();
-        }
-        return super.instantiate(classLoader, className);
-    }
-
-
-    public TagsDialog newTagsDialog() {
-        return new TagsDialog(mListener);
+    fun newTagsDialog(): TagsDialog {
+        return TagsDialog(listener)
     }
 }
