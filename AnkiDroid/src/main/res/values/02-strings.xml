@@ -408,4 +408,6 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 
+    <string name="corrupt_collection">Error: Collection seems to be corrupt</string>
+
 </resources>
