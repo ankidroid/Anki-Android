@@ -13,39 +13,23 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.dialogs.customstudy;
+package com.ichi2.anki.dialogs.customstudy
 
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener;
-import com.ichi2.libanki.Collection;
-import com.ichi2.utils.ExtendedFragmentFactory;
+import androidx.fragment.app.Fragment
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.ExtendedFragmentFactory
+import java.util.function.Supplier
 
-import java.util.function.Supplier;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-public class CustomStudyDialogFactory extends ExtendedFragmentFactory {
-
-    final Supplier<Collection> mCollectionSupplier;
-    final CustomStudyListener mCustomStudyListener;
-
-    public CustomStudyDialogFactory(Supplier<Collection> collectionSupplier, CustomStudyListener customStudyListener) {
-        this.mCollectionSupplier = collectionSupplier;
-        this.mCustomStudyListener = customStudyListener;
+class CustomStudyDialogFactory(val collectionSupplier: Supplier<Collection>, private val customStudyListener: CustomStudyListener?) : ExtendedFragmentFactory() {
+    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+        val cls = loadFragmentClass(classLoader, className)
+        return if (cls == CustomStudyDialog::class.java) {
+            newCustomStudyDialog()
+        } else super.instantiate(classLoader, className)
     }
 
-    @NonNull
-    @Override
-    public Fragment instantiate(@NonNull ClassLoader classLoader, @NonNull String className) {
-        Class<? extends Fragment> cls = loadFragmentClass(classLoader, className);
-        if (cls == CustomStudyDialog.class) {
-            return newCustomStudyDialog();
-        }
-        return super.instantiate(classLoader, className);
-    }
-
-    @NonNull
-    public CustomStudyDialog newCustomStudyDialog() {
-        return new CustomStudyDialog(mCollectionSupplier.get(), mCustomStudyListener);
+    fun newCustomStudyDialog(): CustomStudyDialog {
+        return CustomStudyDialog(collectionSupplier.get(), customStudyListener)
     }
 }
