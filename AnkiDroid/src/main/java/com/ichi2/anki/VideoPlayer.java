@@ -45,9 +45,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         setContentView(R.layout.video_player);
         mPath = getIntent().getStringExtra("path");
         Timber.i("Video Player intent had path: %s", mPath);
-
         CompatHelper.getCompat().setFullscreen(getWindow());
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mVideoView = findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
