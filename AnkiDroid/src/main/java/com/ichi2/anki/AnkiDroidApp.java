@@ -311,6 +311,7 @@ public class AnkiDroidApp extends Application {
             // Add known memory leaks to 'referenceMatchers'
             matchKnownMemoryLeaks(referenceMatchers);
 
+            // AppWatcher manual install if not already installed
             if (!AppWatcher.INSTANCE.isInstalled()) {
                 AppWatcher.INSTANCE.manualInstall(this);
             }
