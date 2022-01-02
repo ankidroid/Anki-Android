@@ -27,10 +27,10 @@ class MediaCheckDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val builder = MaterialDialog.Builder(requireActivity())
-        builder.title(notificationTitle)
+        builder.title(getNotificationTitle())
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
-                builder.content(notificationMessage)
+                builder.content(getNotificationMessage())
                     .positiveText(res().getString(R.string.dialog_ok))
                     .negativeText(res().getString(R.string.dialog_cancel))
                     .cancelable(true)
