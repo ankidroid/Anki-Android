@@ -76,7 +76,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerFragmentResultReceiver(this)
+        TagsDialogListener.registerFragmentResultReceiver(this)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
