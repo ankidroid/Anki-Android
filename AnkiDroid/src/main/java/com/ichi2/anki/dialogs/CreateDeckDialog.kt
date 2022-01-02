@@ -52,7 +52,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     /** Used for rename  */
     var deckName: String
-        get() = mShownDialog!!.inputEditText!!.text.toString()
+        get() = mShownDialog?.inputEditText?.text.toString()
         set(deckName) {
             mPreviousDeckName = deckName
             mInitialDeckName = deckName
@@ -66,7 +66,9 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             .inputRange(1, -1)
             .onPositive { _: MaterialDialog?, _: DialogAction? -> onPositiveButtonClicked() }
             .show()
-        displayKeyboard(show.inputEditText!!, show)
+        show.inputEditText?.let {
+            displayKeyboard(it, show)
+        }
         mShownDialog = show
         return show
     }
@@ -75,12 +77,14 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         if (mShownDialog == null) {
             return
         }
-        mShownDialog!!.dismiss()
+        mShownDialog?.dismiss()
     }
 
     fun createSubDeck(did: Long, deckName: String?) {
         val deckNameWithParentName = CollectionHelper.getInstance().getCol(context).decks.getSubdeckName(did, deckName)
-        createDeck(deckNameWithParentName!!)
+        deckNameWithParentName?.let {
+            createDeck(it)
+        }
     }
 
     fun createDeck(deckName: String) {
@@ -98,7 +102,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             // create filtered deck
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = CollectionHelper.getInstance().getCol(context).decks.newDyn(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
+            mOnNewDeckCreated?.accept(newDeckId)
         } catch (ex: DeckRenameException) {
             showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
             return false
@@ -111,7 +115,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             // create normal deck or sub deck
             Timber.i("CreateDeckDialog::createNewDeck")
             val newDeckId = CollectionHelper.getInstance().getCol(context).decks.id(deckName)
-            mOnNewDeckCreated!!.accept(newDeckId)
+            mOnNewDeckCreated?.accept(newDeckId)
         } catch (filteredAncestor: DeckRenameException) {
             Timber.w(filteredAncestor)
             return false
@@ -133,7 +137,9 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                 DeckDialogType.SUB_DECK -> {
 
                     // create sub deck
-                    createSubDeck(parentId!!, deckName)
+                    parentId?.let {
+                        createSubDeck(it, deckName)
+                    }
                 }
                 DeckDialogType.FILTERED_DECK -> {
 
@@ -152,9 +158,14 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         } else if (newName != mPreviousDeckName) {
             try {
                 val col = CollectionHelper.getInstance().getCol(context)
-                val deckId = col.decks.id(mPreviousDeckName!!)
-                col.decks.rename(col.decks.get(deckId), newName)
-                mOnNewDeckCreated!!.accept(deckId)
+                val deckId = mPreviousDeckName?.let {
+                    col.decks.id(it)
+                }
+
+                if (deckId != null) {
+                    col.decks.rename(col.decks.get(deckId), newName)
+                    mOnNewDeckCreated?.accept(deckId)
+                }
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
