@@ -84,7 +84,6 @@ public interface Compat {
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
 
-
     /**
      * Copies the directory represented by srcDir to the directory represented by destDir, and optionally makes a
      * best-effort to delete srcDir if the deleteAfterCopy param is set to <code>true</code>. The source must be a
