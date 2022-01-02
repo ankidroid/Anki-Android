@@ -802,7 +802,6 @@ public class AnkiDroidApp extends Application {
      */
     @KotlinCleanup("Only pass relevant arguments to copy() method after conversion to Kotlin")
     private void disableLeakCanary() {
-        // Passing default values will not be required after migration to Kotlin.
         LeakCanary.setConfig(LeakCanary.getConfig().copy(
                 false,
                 false,
