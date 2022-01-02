@@ -13,104 +13,66 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.noteeditor
 
-package com.ichi2.anki.noteeditor;
+import android.text.TextUtils
+import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.libanki.Consts
+import com.ichi2.utils.HashUtil.HashSetInit
+import timber.log.Timber
+import java.util.*
 
-import android.text.TextUtils;
-
-import com.ichi2.utils.HashUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
-
-public class CustomToolbarButton {
-
-    private static final int KEEP_EMPTY_ENTRIES = -1;
-
-    private int mIndex;
-    private final String mPrefix;
-    private final String mSuffix;
-
-
-    public CustomToolbarButton(int index, String prefix, String suffix) {
-        mIndex = index;
-        mPrefix = prefix;
-        mSuffix = suffix;
+class CustomToolbarButton(var index: Int, private val prefix: String, private val suffix: String) {
+    fun toFormatter(): Toolbar.TextFormatter {
+        return TextWrapper(prefix, suffix)
     }
 
-    @Nullable
-    public static CustomToolbarButton fromString(String s) {
-        if (s == null || s.length() == 0) {
-            return null;
-        }
-
-        String[] fields = s.split(FIELD_SEPARATOR, KEEP_EMPTY_ENTRIES);
-
-        if (fields.length != 3) {
-            return null;
-        }
-
-        int index;
-        try {
-            index = Integer.parseInt(fields[0]);
-        } catch (Exception e) {
-            Timber.w(e);
-            return null;
-        }
-
-        return new CustomToolbarButton(index, fields[1], fields[2]);
-    }
-
-
-    @NonNull
-    public static ArrayList<CustomToolbarButton> fromStringSet(Set<String> hs) {
-        ArrayList<CustomToolbarButton> buttons = new ArrayList<>(hs.size());
-
-        for (String s : hs) {
-            CustomToolbarButton customToolbarButton = CustomToolbarButton.fromString(s);
-            if (customToolbarButton != null) {
-                buttons.add(customToolbarButton);
+    companion object {
+        private const val KEEP_EMPTY_ENTRIES = -1
+        fun fromString(s: String?): CustomToolbarButton? {
+            if (s == null || s.isEmpty()) {
+                return null
             }
-        }
-        Collections.sort(buttons, (o1, o2) -> Integer.compare(o1.getIndex(), o2.getIndex()));
-
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).mIndex = i;
-        }
-
-        return buttons;
-    }
-
-
-    public static Set<String> toStringSet(ArrayList<CustomToolbarButton> buttons) {
-        HashSet<String> ret = HashUtil.HashSetInit(buttons.size());
-        for (CustomToolbarButton b : buttons) {
-            String[] values = new String[] { Integer.toString(b.mIndex), b.mPrefix, b.mSuffix };
-
-            for (int i = 0; i < values.length; i++) {
-                values[i] = values[i].replace(FIELD_SEPARATOR, "");
+            val fields = s.split(Consts.FIELD_SEPARATOR.toRegex(), KEEP_EMPTY_ENTRIES.coerceAtLeast(0)).toTypedArray()
+            if (fields.size != 3) {
+                return null
             }
-
-            ret.add(TextUtils.join(FIELD_SEPARATOR, values));
+            val index: Int = try {
+                fields[0].toInt()
+            } catch (e: Exception) {
+                Timber.w(e)
+                return null
+            }
+            return CustomToolbarButton(index, fields[1], fields[2])
         }
-        return ret;
-    }
 
+        @JvmStatic
+        fun fromStringSet(hs: Set<String?>): ArrayList<CustomToolbarButton> {
+            val buttons = ArrayList<CustomToolbarButton>(hs.size)
+            for (s in hs) {
+                val customToolbarButton = fromString(s)
+                if (customToolbarButton != null) {
+                    buttons.add(customToolbarButton)
+                }
+            }
+            buttons.sortWith { o1: CustomToolbarButton, o2: CustomToolbarButton -> o1.index.compareTo(o2.index) }
+            for (i in buttons.indices) {
+                buttons[i].index = i
+            }
+            return buttons
+        }
 
-    public Toolbar.TextFormatter toFormatter() {
-        return new Toolbar.TextWrapper(mPrefix, mSuffix);
-    }
-
-
-    public int getIndex() {
-        return mIndex;
+        @JvmStatic
+        fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
+            val ret = HashSetInit<String>(buttons.size)
+            for (b in buttons) {
+                val values = arrayOf(b.index.toString(), b.prefix, b.suffix)
+                for (i in values.indices) {
+                    values[i] = values[i].replace(Consts.FIELD_SEPARATOR, "")
+                }
+                ret.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+            }
+            return ret
+        }
     }
 }
