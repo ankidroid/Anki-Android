@@ -15,7 +15,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.reviewer.FullScreenMode;
 
 
-/** Implementation of {@link Compat} for SDK level 30 and higher. Check  {@link Compat}'s for more detail. */
+/** Implementation of {@link Compat} for SDK level 30 and higher. Check {@link Compat}'s for more detail. */
 @TargetApi(30)
 public class CompatV30 extends CompatV26 implements Compat {
     @Override
