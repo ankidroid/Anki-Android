@@ -2065,6 +2065,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.e(npe);
             // Show database error dialog
             showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_ERROR);
+            return;
         }
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId();
