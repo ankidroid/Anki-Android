@@ -13,31 +13,27 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.stats
 
-package com.ichi2.anki.stats;
-
-import android.view.View;
-
-import timber.log.Timber;
+import android.view.View
+import timber.log.Timber
 
 /**
  * Async task which handles cancellation (#6192)
  */
-@SuppressWarnings("deprecation") // #7108: AsyncTask
-public abstract class StatsAsyncTask<TResult> extends android.os.AsyncTask<View, Void, TResult> {
-
-    @Override
-    protected final TResult doInBackground(View... views) {
-        try {
-            return doInBackgroundSafe(views);
-        } catch (Exception e) {
-            if (this.isCancelled()) {
-                Timber.w(e, "ignored exception in cancelled stats task");
-                return null;
+@Suppress("deprecation") // #7108: AsyncTask
+abstract class StatsAsyncTask<TResult> : android.os.AsyncTask<View?, Void?, TResult?>() {
+    override fun doInBackground(vararg views: View?): TResult? {
+        return try {
+            doInBackgroundSafe(*views)
+        } catch (e: Exception) {
+            if (this.isCancelled) {
+                Timber.w(e, "ignored exception in cancelled stats task")
+                return null
             }
-            throw e;
+            throw e
         }
     }
 
-    protected abstract TResult doInBackgroundSafe(View... views);
+    protected abstract fun doInBackgroundSafe(vararg views: View?): TResult
 }
