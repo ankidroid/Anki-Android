@@ -18,159 +18,150 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.web;
-
-import android.content.Context;
-
-import com.ichi2.async.Connection;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.sync.Tls12SocketFactory;
-import com.ichi2.utils.VersionUtils;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import timber.log.Timber;
+package com.ichi2.anki.web
+import android.content.Context
+import com.ichi2.async.Connection
+import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.sync.Tls12SocketFactory
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.VersionUtils.pkgVersionName
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import timber.log.Timber
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+import java.net.URL
+import java.nio.charset.Charset
+import java.util.concurrent.TimeUnit
 
 /**
  * Helper class to download from web.
  * <p>
  * Used in AsyncTasks in Translation and Pronunciation activities, and more...
  */
-public class HttpFetcher {
-
+object HttpFetcher {
     /**
      * Get an OkHttpClient configured with correct timeouts and headers
      *
      * @param fakeUserAgent true if we should issue "fake" User-Agent header 'Mozilla/5.0' for compatibility
      * @return OkHttpClient.Builder ready for use or further configuration
      */
-    public static OkHttpClient.Builder getOkHttpBuilder(boolean fakeUserAgent) {
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+    @JvmStatic
+    fun getOkHttpBuilder(fakeUserAgent: Boolean): OkHttpClient.Builder {
+        val clientBuilder = OkHttpClient.Builder()
         Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
-                .connectTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(Connection.CONN_TIMEOUT, TimeUnit.SECONDS);
-
+            .connectTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)
+            .readTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)
         if (fakeUserAgent) {
-            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
-                    chain.request()
+            clientBuilder.addNetworkInterceptor(
+                Interceptor { chain: Interceptor.Chain ->
+                    chain.proceed(
+                        chain.request()
                             .newBuilder()
                             .header("Referer", "com.ichi2.anki")
                             .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
                             .header("Accept", "*/*")
                             .build()
-            ));
+                    )
+                }
+            )
         } else {
-            clientBuilder.addNetworkInterceptor(chain -> chain.proceed(
-                    chain.request()
+            clientBuilder.addNetworkInterceptor(
+                Interceptor { chain: Interceptor.Chain ->
+                    chain.proceed(
+                        chain.request()
                             .newBuilder()
-                            .header("User-Agent", "AnkiDroid-" + VersionUtils.getPkgVersionName())
+                            .header("User-Agent", "AnkiDroid-$pkgVersionName")
                             .build()
-            ));
+                    )
+                }
+            )
         }
-        return clientBuilder;
+        return clientBuilder
     }
 
-    public static String fetchThroughHttp(String address) {
-        return fetchThroughHttp(address, "utf-8");
-    }
-
-    public static String fetchThroughHttp(String address, String encoding) {
-
-        Timber.d("fetching %s", address);
-        Response response = null;
-
-        try {
-            Request.Builder requestBuilder = new Request.Builder();
-            requestBuilder.url(address).get();
-            Request httpGet = requestBuilder.build();
-
-            OkHttpClient client = getOkHttpBuilder(true).build();
-            response = client.newCall(httpGet).execute();
-
-
-            if (response.code() != 200) {
-                Timber.d("Response code was %s, returning failure", response.code());
-                return "FAILED";
+    @JvmStatic
+    @JvmOverloads
+    fun fetchThroughHttp(address: String?, encoding: String? = "utf-8"): String {
+        Timber.d("fetching %s", address)
+        var response: Response? = null
+        return try {
+            val requestBuilder = Request.Builder()
+            requestBuilder.url(address!!).get()
+            val httpGet: Request = requestBuilder.build()
+            val client: OkHttpClient = getOkHttpBuilder(true).build()
+            response = client.newCall(httpGet).execute()
+            if (response.code != 200) {
+                Timber.d("Response code was %s, returning failure", response.code)
+                return "FAILED"
             }
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.body().byteStream(),
-                    Charset.forName(encoding)));
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
+            val reader = BufferedReader(
+                InputStreamReader(
+                    response.body!!.byteStream(),
+                    Charset.forName(encoding)
+                )
+            )
+            val stringBuilder = StringBuilder()
+            var line: String?
+            @KotlinCleanup("it's strange")
+            while (reader.readLine().also { line = it } != null) {
+                stringBuilder.append(line)
             }
-
-            return stringBuilder.toString();
-
-        } catch (Exception e) {
-            Timber.d(e, "Failed with an exception");
-            return "FAILED with exception: " + e.getMessage();
+            stringBuilder.toString()
+        } catch (e: Exception) {
+            Timber.d(e, "Failed with an exception")
+            "FAILED with exception: " + e.message
         } finally {
-            if (response != null && response.body() != null) {
-                response.body().close();
+            @KotlinCleanup("response?.body?.close()")
+            if (response?.body != null) {
+                response.body!!.close()
             }
         }
     }
 
-
-    public static String downloadFileToSdCard(String UrlToFile, Context context, String prefix) {
-        String str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "GET");
+    @JvmStatic
+    fun downloadFileToSdCard(UrlToFile: String, context: Context, prefix: String?): String {
+        var str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "GET")
         if (str.startsWith("FAIL")) {
-            str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "POST");
+            str = downloadFileToSdCardMethod(UrlToFile, context, prefix, "POST")
         }
-
-        return str;
+        return str
     }
 
-
-    public static String downloadFileToSdCardMethod(String UrlToFile, Context context, String prefix, String method) {
-
-        Response response = null;
-
-        try {
-            URL url = new URL(UrlToFile);
-
-            String extension = UrlToFile.substring(UrlToFile.length() - 4);
-
-            Request.Builder requestBuilder = new Request.Builder();
-            requestBuilder.url(url);
-            if ("GET".equals(method)) {
-                requestBuilder.get();
+    @JvmStatic
+    private fun downloadFileToSdCardMethod(UrlToFile: String, context: Context, prefix: String?, method: String): String {
+        var response: Response? = null
+        return try {
+            val url = URL(UrlToFile)
+            val extension = UrlToFile.substring(UrlToFile.length - 4)
+            val requestBuilder = Request.Builder()
+            requestBuilder.url(url)
+            if ("GET" == method) {
+                requestBuilder.get()
             } else {
-                requestBuilder.post(RequestBody.create(new byte[0], null));
+                requestBuilder.post(ByteArray(0).toRequestBody(null, 0, 0))
             }
-            Request request = requestBuilder.build();
-            OkHttpClient client = getOkHttpBuilder(true).build();
-            response = client.newCall(request).execute();
-
-            File file = File.createTempFile(prefix, extension, context.getCacheDir());
-            InputStream inputStream = response.body().byteStream();
-            CompatHelper.getCompat().copyFile(inputStream, file.getCanonicalPath());
-            inputStream.close();
-            return file.getAbsolutePath();
-
-        } catch (Exception e) {
-            Timber.w(e);
-            return "FAILED " + e.getMessage();
+            val request: Request = requestBuilder.build()
+            val client: OkHttpClient = getOkHttpBuilder(true).build()
+            response = client.newCall(request).execute()
+            val file = File.createTempFile(prefix!!, extension, context.cacheDir)
+            val inputStream = response.body!!.byteStream()
+            CompatHelper.getCompat().copyFile(inputStream, file.canonicalPath)
+            inputStream.close()
+            file.absolutePath
+        } catch (e: Exception) {
+            Timber.w(e)
+            "FAILED " + e.message
         } finally {
-            if (response != null && response.body() != null) {
-                response.body().close();
+            @KotlinCleanup("response?.body?.close()")
+            if (response?.body != null) {
+                response.body!!.close()
             }
         }
     }
-
 }
