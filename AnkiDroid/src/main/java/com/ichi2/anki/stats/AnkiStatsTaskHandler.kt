@@ -13,300 +13,246 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.stats;
+package com.ichi2.anki.stats
 
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.util.Pair;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.R
+import android.util.Pair
+import android.view.View
+import android.webkit.WebView
+import android.widget.ProgressBar
+import android.widget.TextView
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.stats.Stats
+import com.ichi2.libanki.stats.Stats.AxisType
+import com.ichi2.libanki.stats.Stats.ChartType
+import com.ichi2.themes.Themes.getColorFromAttr
+import com.wildplot.android.rendering.PlotSheet
+import timber.log.Timber
+import java.io.UnsupportedEncodingException
+import java.lang.ref.WeakReference
+import java.net.URLEncoder
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.math.roundToInt
 
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.stats.Stats;
-import com.ichi2.themes.Themes;
-import com.wildplot.android.rendering.PlotSheet;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.ref.WeakReference;
-import java.net.URLEncoder;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import timber.log.Timber;
-
-import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
-
-public class AnkiStatsTaskHandler {
-
-    private static AnkiStatsTaskHandler sInstance;
-
-    private final Collection mCollectionData;
-    private float mStandardTextSize = 10f;
-    private Stats.AxisType mStatType = Stats.AxisType.TYPE_MONTH;
-    private long mDeckId;
-    private static final Lock sLock = new ReentrantLock();
-
-
-    private AnkiStatsTaskHandler(Collection collection){
-        mCollectionData = collection;
+class AnkiStatsTaskHandler private constructor(private val collectionData: Collection) {
+    private var mStandardTextSize = 10f
+    var statType = AxisType.TYPE_MONTH
+    private var mDeckId: Long = 0
+    fun setDeckId(deckId: Long) {
+        mDeckId = deckId
     }
 
-    public void setDeckId(long deckId) {
-        mDeckId = deckId;
+    @Suppress("deprecation") // #7108: AsyncTask
+    fun createChart(chartType: ChartType, vararg views: View?): CreateChartTask {
+        val createChartTask = CreateChartTask(chartType, collectionData, statType, mDeckId)
+        createChartTask.execute(*views)
+        return createChartTask
     }
 
-    public static AnkiStatsTaskHandler getInstance() {
-        return sInstance;
+    @Suppress("deprecation") // #7108: AsyncTask
+    fun createStatisticsOverview(vararg views: View?): CreateStatisticsOverview {
+        val createChartTask = CreateStatisticsOverview(collectionData, statType, mDeckId)
+        createChartTask.execute(*views)
+        return createChartTask
     }
 
-    public synchronized static AnkiStatsTaskHandler getInstance(Collection collection) {
-        if (sInstance == null || sInstance.mCollectionData != collection) {
-            sInstance = new AnkiStatsTaskHandler(collection);
-        }
-        return sInstance;
-    }
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public CreateChartTask createChart(Stats.ChartType chartType, View... views){
-        CreateChartTask createChartTask = new CreateChartTask(chartType, mCollectionData, mStatType, mDeckId);
-        createChartTask.execute(views);
-        return createChartTask;
-    }
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public CreateStatisticsOverview createStatisticsOverview(View... views){
-        CreateStatisticsOverview createChartTask = new CreateStatisticsOverview(mCollectionData, mStatType, mDeckId);
-        createChartTask.execute(views);
-        return createChartTask;
-    }
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public static DeckPreviewStatistics createReviewSummaryStatistics(Collection col, TextView view){
-        DeckPreviewStatistics deckPreviewStatistics = new DeckPreviewStatistics();
-        deckPreviewStatistics.execute(new Pair<>(col, view));
-        return deckPreviewStatistics;
-    }
-
-    private static class CreateChartTask extends StatsAsyncTask<PlotSheet>{
-        private WeakReference<ChartView> mImageView;
-        private WeakReference<ProgressBar> mProgressBar;
-        private final WeakReference<Collection> mCollectionData;
-        private final Stats.AxisType mStatType;
-        private final long mDeckId;
-
-        private boolean mIsRunning = false;
-        private final Stats.ChartType mChartType;
-
-        public CreateChartTask(Stats.ChartType chartType, Collection collection, Stats.AxisType statType, long deckId){
-            super();
-            mIsRunning = true;
-            mChartType = chartType;
-            mCollectionData = new WeakReference<>(collection);
-            mStatType = statType;
-            mDeckId = deckId;
-        }
-
-        @Override
-        protected PlotSheet doInBackgroundSafe(View... params) {
-            //make sure only one task of CreateChartTask is running, first to run should get sLock
-            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock();
-            Collection collectionData = mCollectionData.get();
-            try {
-                if (!mIsRunning || (collectionData == null)) {
-                    Timber.d("Quitting CreateChartTask (%s) before execution", mChartType.name());
-                    return null;
+    class CreateChartTask(chartType: ChartType, collection: Collection, statType: AxisType, deckId: Long) : StatsAsyncTask<PlotSheet?>() {
+        private var mImageView: WeakReference<ChartView>? = null
+        private var mProgressBar: WeakReference<ProgressBar>? = null
+        private val mCollectionData: WeakReference<Collection>
+        private val mStatType: AxisType
+        private val mDeckId: Long
+        private var mIsRunning = false
+        private val mChartType: ChartType
+        override fun doInBackgroundSafe(vararg params: View): PlotSheet? {
+            // make sure only one task of CreateChartTask is running, first to run should get sLock
+            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock()
+            val collectionData = mCollectionData.get()
+            return try {
+                if (!mIsRunning || collectionData == null) {
+                    Timber.d("Quitting CreateChartTask (%s) before execution", mChartType.name)
+                    return null
                 } else {
-                    Timber.d("Starting CreateChartTask, type: %s", mChartType.name());
+                    Timber.d("Starting CreateChartTask, type: %s", mChartType.name)
                 }
-                ChartView imageView = (ChartView) params[0];
-                mImageView = new WeakReference<>(imageView);
-                mProgressBar = new WeakReference<>((ProgressBar) params[1]);
-
-                ChartBuilder chartBuilder = new ChartBuilder(imageView, collectionData,
-                        mDeckId, mChartType);
-                return chartBuilder.renderChart(mStatType);
+                val imageView = params[0] as ChartView
+                mImageView = WeakReference(imageView)
+                mProgressBar = WeakReference(params[1] as ProgressBar)
+                val chartBuilder = ChartBuilder(
+                    imageView, collectionData,
+                    mDeckId, mChartType
+                )
+                chartBuilder.renderChart(mStatType)
             } finally {
-                sLock.unlock();
+                sLock.unlock()
             }
         }
 
-        @SuppressWarnings("deprecation") // #7108: AsyncTask
-        @Override
-        protected void onCancelled() {
-            mIsRunning = false;
+        override fun onCancelled() {
+            mIsRunning = false
         }
 
-        @SuppressWarnings("deprecation") // #7108: AsyncTask
-        @Override
-        protected void onPostExecute(PlotSheet plotSheet) {
-            ChartView imageView = mImageView.get();
-            ProgressBar progressBar = mProgressBar.get();
-
-            if ((plotSheet != null) && mIsRunning && (imageView != null) && (progressBar != null)) {
-                imageView.setData(plotSheet);
-                progressBar.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-                imageView.invalidate();
+        override fun onPostExecute(plotSheet: PlotSheet?) {
+            val imageView = mImageView!!.get()
+            val progressBar = mProgressBar!!.get()
+            if (plotSheet != null && mIsRunning && imageView != null && progressBar != null) {
+                imageView.setData(plotSheet)
+                progressBar.visibility = View.GONE
+                imageView.visibility = View.VISIBLE
+                imageView.invalidate()
             }
+        }
+
+        init {
+            mIsRunning = true
+            mChartType = chartType
+            mCollectionData = WeakReference(collection)
+            mStatType = statType
+            mDeckId = deckId
         }
     }
 
-    private static class CreateStatisticsOverview extends StatsAsyncTask<String>{
-        private WeakReference<WebView> mWebView;
-        private WeakReference<ProgressBar> mProgressBar;
-        private final WeakReference<Collection> mCollectionData;
-        private final Stats.AxisType mStatType;
-        private final long mDeckId;
-
-        private boolean mIsRunning = false;
-
-        public CreateStatisticsOverview(Collection collection, Stats.AxisType statType, long deckId){
-            super();
-            mIsRunning = true;
-            mCollectionData = new WeakReference<>(collection);
-            mStatType = statType;
-            mDeckId = deckId;
-        }
-
-        @Override
-        protected String doInBackgroundSafe(View... params) {
-            //make sure only one task of CreateChartTask is running, first to run should get sLock
-            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock();
-            Collection collectionData = mCollectionData.get();
-            try {
-                if (!mIsRunning || (collectionData == null)) {
-                    Timber.d("Quitting CreateStatisticsOverview before execution");
-                    return null;
+    class CreateStatisticsOverview(collection: Collection, statType: AxisType, deckId: Long) : StatsAsyncTask<String?>() {
+        private var mWebView: WeakReference<WebView>? = null
+        private var mProgressBar: WeakReference<ProgressBar>? = null
+        private val mCollectionData: WeakReference<Collection>
+        private val mStatType: AxisType
+        private val mDeckId: Long
+        private var mIsRunning = false
+        override fun doInBackgroundSafe(vararg params: View): String? {
+            // make sure only one task of CreateChartTask is running, first to run should get sLock
+            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock()
+            val collectionData = mCollectionData.get()
+            return try {
+                if (!mIsRunning || collectionData == null) {
+                    Timber.d("Quitting CreateStatisticsOverview before execution")
+                    return null
                 } else {
-                    Timber.d("Starting CreateStatisticsOverview");
+                    Timber.d("Starting CreateStatisticsOverview")
                 }
-
-                WebView webView = (WebView) params[0];
-                mWebView = new WeakReference<>(webView);
-                mProgressBar = new WeakReference<>((ProgressBar) params[1]);
-
-                OverviewStatsBuilder overviewStatsBuilder = new OverviewStatsBuilder(webView, collectionData, mDeckId, mStatType);
-                return overviewStatsBuilder.createInfoHtmlString();
+                val webView = params[0] as WebView
+                mWebView = WeakReference(webView)
+                mProgressBar = WeakReference(params[1] as ProgressBar)
+                val overviewStatsBuilder = OverviewStatsBuilder(webView, collectionData, mDeckId, mStatType)
+                overviewStatsBuilder.createInfoHtmlString()
             } finally {
-                sLock.unlock();
+                sLock.unlock()
             }
         }
 
-        @SuppressWarnings("deprecation") // #7108: AsyncTask
-        @Override
-        protected void onCancelled() {
-            mIsRunning = false;
+        override fun onCancelled() {
+            mIsRunning = false
         }
 
-        @SuppressWarnings("deprecation") // #7108: AsyncTask
-        @Override
-        protected void onPostExecute(String html) {
-            WebView webView = mWebView.get();
-            ProgressBar progressBar = mProgressBar.get();
-
-            if ((html != null) && mIsRunning && (webView != null) && (progressBar != null)) {
+        override fun onPostExecute(html: String?) {
+            val webView = mWebView!!.get()
+            val progressBar = mProgressBar!!.get()
+            if (html != null && mIsRunning && webView != null && progressBar != null) {
                 try {
-                    webView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+", " "), "text/html; charset=utf-8", "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    Timber.w(e);
+                    webView.loadData(URLEncoder.encode(html, "UTF-8").replace("\\+".toRegex(), " "), "text/html; charset=utf-8", "utf-8")
+                } catch (e: UnsupportedEncodingException) {
+                    Timber.w(e)
                 }
-                progressBar.setVisibility(View.GONE);
-                int backgroundColor = Themes.getColorFromAttr(webView.getContext(), android.R.attr.colorBackground);
-                webView.setBackgroundColor(backgroundColor);
-                webView.setVisibility(View.VISIBLE);
-                webView.invalidate();
+                progressBar.visibility = View.GONE
+                val backgroundColor = getColorFromAttr(webView.context, R.attr.colorBackground)
+                webView.setBackgroundColor(backgroundColor)
+                webView.visibility = View.VISIBLE
+                webView.invalidate()
             }
+        }
+
+        init {
+            mIsRunning = true
+            mCollectionData = WeakReference(collection)
+            mStatType = statType
+            mDeckId = deckId
         }
     }
 
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    private static class DeckPreviewStatistics extends android.os.AsyncTask<Pair<Collection, TextView>, Void, String> {
-        private WeakReference<TextView> mTextView;
-
-        private boolean mIsRunning = true;
-
-        public DeckPreviewStatistics() {
-            super();
-        }
-
-        @Override
-        protected String doInBackground(Pair<Collection, TextView>... params) {
-            //make sure only one task of CreateChartTask is running, first to run should get sLock
-            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock();
-            try {
-                Collection collection = params[0].first;
-
-                TextView textView = params[0].second;
-                mTextView = new WeakReference<>(textView);
-
-                if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Timber.d("Quitting DeckPreviewStatistics before execution");
-                    return null;
+    @Suppress("deprecation") // #7108: AsyncTask
+    class DeckPreviewStatistics : android.os.AsyncTask<Pair<Collection?, TextView?>?, Void?, String?>() {
+        private var mTextView: WeakReference<TextView>? = null
+        private var mIsRunning = true
+        override fun doInBackground(vararg params: Pair<Collection?, TextView?>?): String? {
+            // make sure only one task of CreateChartTask is running, first to run should get sLock
+            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock()
+            return try {
+                val collection = params[0]!!.first
+                val textView = params[0]!!.second
+                mTextView = WeakReference(textView)
+                if (!mIsRunning || collection == null || collection.db == null) {
+                    Timber.d("Quitting DeckPreviewStatistics before execution")
+                    return null
                 } else {
-                    Timber.d("Starting DeckPreviewStatistics");
+                    Timber.d("Starting DeckPreviewStatistics")
                 }
 
-                //eventually put this in Stats (in desktop it is not though)
-                int cards;
-                int minutes;
-                String query = "select sum(case when ease > 0 then 1 else 0 end), "+ /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
-                "sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
-                Timber.d("DeckPreviewStatistics query: %s", query);
-
-                try (Cursor cur = collection.getDb()
-                            .query(query)) {
-
-                    cur.moveToFirst();
-                    cards = cur.getInt(0);
-                    minutes = (int) Math.round(cur.getInt(1) / 60.0);
-                }
-                Resources res = textView.getResources();
-                final String span = res.getQuantityString(R.plurals.in_minutes, minutes, minutes);
-                return res.getQuantityString(R.plurals.studied_cards_today, cards, cards, span);
+                // eventually put this in Stats (in desktop it is not though)
+                var cards: Int
+                var minutes: Int
+                val query = "select sum(case when ease > 0 then 1 else 0 end), " + /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                    "sum(time)/1000 from revlog where id > " + (collection.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
+                Timber.d("DeckPreviewStatistics query: %s", query)
+                collection.db
+                    .query(query).use { cur ->
+                        cur.moveToFirst()
+                        cards = cur.getInt(0)
+                        minutes = (cur.getInt(1) / 60.0).roundToInt()
+                    }
+                val res = textView!!.resources
+                val span = res.getQuantityString(com.ichi2.anki.R.plurals.in_minutes, minutes, minutes)
+                res.getQuantityString(com.ichi2.anki.R.plurals.studied_cards_today, cards, cards, span)
             } finally {
-                sLock.unlock();
+                sLock.unlock()
             }
         }
 
-        @Override
-        protected void onCancelled() {
-            mIsRunning = false;
+        override fun onCancelled() {
+            mIsRunning = false
         }
 
-        @Override
-        protected void onPostExecute(String todayStatString) {
-            TextView textView = mTextView.get();
-
-            if ((todayStatString != null) && mIsRunning && (textView != null)) {
-                textView.setText(todayStatString);
-                textView.setVisibility(View.VISIBLE);
-                textView.invalidate();
+        override fun onPostExecute(todayStatString: String?) {
+            val textView = mTextView!!.get()
+            if (todayStatString != null && mIsRunning && textView != null) {
+                textView.text = todayStatString
+                textView.visibility = View.VISIBLE
+                textView.invalidate()
             }
         }
     }
 
-
-
-    public float getmStandardTextSize() {
-        return mStandardTextSize;
+    fun getmStandardTextSize(): Float {
+        return mStandardTextSize
     }
 
-    public void setmStandardTextSize(float standardTextSize) {
-        this.mStandardTextSize = standardTextSize;
+    fun setmStandardTextSize(standardTextSize: Float) {
+        mStandardTextSize = standardTextSize
     }
 
-    public Stats.AxisType getStatType() {
-        return mStatType;
-    }
+    companion object {
+        @JvmStatic
+        var instance: AnkiStatsTaskHandler? = null
+            private set
+        private val sLock: Lock = ReentrantLock()
+        @JvmStatic
+        @Synchronized
+        fun getInstance(collection: Collection): AnkiStatsTaskHandler? {
+            if (instance == null || instance!!.collectionData !== collection) {
+                instance = AnkiStatsTaskHandler(collection)
+            }
+            return instance
+        }
 
-    public void setStatType(Stats.AxisType statType) {
-        this.mStatType = statType;
+        @Suppress("deprecation") // #7108: AsyncTask
+        @JvmStatic
+        fun createReviewSummaryStatistics(col: Collection, view: TextView): DeckPreviewStatistics {
+            val deckPreviewStatistics = DeckPreviewStatistics()
+            deckPreviewStatistics.execute(Pair(col, view))
+            return deckPreviewStatistics
+        }
     }
-
 }
