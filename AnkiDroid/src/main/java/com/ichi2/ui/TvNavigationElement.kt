@@ -13,100 +13,68 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.view.View;
-
-import com.ichi2.anki.NavigationDrawerActivity;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Rect
+import android.util.AttributeSet
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.ichi2.anki.NavigationDrawerActivity
+import timber.log.Timber
 
 /** Hack to allow the navigation and options menu to appear when on a TV
- *  This is a view to handle dispatchUnhandledMove without using onKeyUp/Down
- *  (which interferes with other view events) */
-public class TvNavigationElement extends View {
-    public TvNavigationElement(Context context) {
-        super(context);
+ * This is a view to handle dispatchUnhandledMove without using onKeyUp/Down
+ * (which interferes with other view events)  */
+class TvNavigationElement : View {
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    @Suppress("unused")
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+
+    override fun onFocusChanged(gainFocus: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        Timber.d("onFocusChanged %d", direction)
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect)
     }
 
-
-    public TvNavigationElement(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    public TvNavigationElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-
-    @SuppressWarnings( {"unused", "RedundantSuppression"})
-    public TvNavigationElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-
-    @Override
-    protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
-        Timber.d("onFocusChanged %d", direction);
-        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-    }
-
-
-    @Override
-    public boolean dispatchUnhandledMove(View focused, int direction) {
-        Timber.d("dispatchUnhandledMove %d", direction);
-
-        AppCompatActivity activity = getActivity();
-        if (activity == null) {
-            return super.dispatchUnhandledMove(focused, direction);
-        }
-
-        if (direction == FOCUS_LEFT && activity instanceof NavigationDrawerActivity) {
+    override fun dispatchUnhandledMove(focused: View, direction: Int): Boolean {
+        Timber.d("dispatchUnhandledMove %d", direction)
+        val activity = activity ?: return super.dispatchUnhandledMove(focused, direction)
+        if (direction == FOCUS_LEFT && activity is NavigationDrawerActivity) {
             // COULD_BE_BETTER: This leaves focus on the top item when navigation occurs.
-            NavigationDrawerActivity navigationDrawerActivity = (NavigationDrawerActivity) activity;
-            navigationDrawerActivity.toggleDrawer();
-            navigationDrawerActivity.focusNavigation();
-            return true;
+            val navigationDrawerActivity = activity
+            navigationDrawerActivity.toggleDrawer()
+            navigationDrawerActivity.focusNavigation()
+            return true
         }
-
         if (direction == FOCUS_RIGHT) {
-            Timber.d("Opening options menu");
+            Timber.d("Opening options menu")
             // COULD_BE_BETTER: This crashes inside the framework if right is pressed on the
-            openOptionsMenu(activity);
-            return true;
+            openOptionsMenu(activity)
+            return true
         }
-        return super.dispatchUnhandledMove(focused, direction);
+        return super.dispatchUnhandledMove(focused, direction)
     }
-
 
     @SuppressLint("RestrictedApi")
-    private void openOptionsMenu(AppCompatActivity activity) {
+    private fun openOptionsMenu(activity: AppCompatActivity) {
         // This occasionally glitches graphically on my emulator
-        ActionBar supportActionBar = activity.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.openOptionsMenu();
-        }
+        val supportActionBar = activity.supportActionBar
+        supportActionBar?.openOptionsMenu()
     }
 
-
-    private AppCompatActivity getActivity() {
-        Context context = getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof AppCompatActivity) {
-                return (AppCompatActivity)context;
+    private val activity: AppCompatActivity?
+        get() {
+            var context = context
+            while (context is ContextWrapper) {
+                if (context is AppCompatActivity) {
+                    return context
+                }
+                context = context.baseContext
             }
-            context = ((ContextWrapper)context).getBaseContext();
+            return null
         }
-        return null;
-    }
 }
