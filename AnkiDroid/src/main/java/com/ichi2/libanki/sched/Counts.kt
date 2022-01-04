@@ -14,111 +14,69 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-
-import java.util.Arrays;
-
-import androidx.annotation.NonNull;
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
 /**
  * Represents the three counts shown in deck picker and reviewer. Semantically more meaningful than int[]
  */
-public class Counts {
-    public enum Queue {
+class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
+    enum class Queue {
         NEW, LRN, REV
-    }
-
-    private int mNew;
-    private int mLrn;
-    private int mRev;
-
-    public Counts() {
-        this(0, 0, 0);
-    }
-
-    public Counts(int new_, int lrn, int rev) {
-        mNew = new_;
-        mLrn = lrn;
-        mRev = rev;
-    }
-
-    public int getLrn() {
-        return mLrn;
-    }
-
-    public int getNew() {
-        return mNew;
-    }
-
-    public int getRev() {
-        return mRev;
     }
 
     /**
      * @param index Queue in which it elements are added
-     * @param number How much to add. */
-    public void changeCount(@NonNull Queue index, int number) {
-        switch (index) {
-            case NEW:
-                mNew += number;
-                break;
-            case LRN:
-                mLrn += number;
-                break;
-            case REV:
-                mRev += number;
-                break;
-            default:
-                throw new RuntimeException("Index " + index + " does not exists.");
+     * @param number How much to add.
+     */
+    fun changeCount(index: Queue, number: Int) {
+        when (index) {
+            @Suppress("Redundant")
+            Queue.NEW -> new += number
+            Queue.LRN -> lrn += number
+            Queue.REV -> rev += number
+            else -> throw RuntimeException("Index $index does not exist.")
         }
     }
 
-    public void addNew(int new_) {
-        mNew += new_;
+    fun addNew(new_: Int) {
+        new += new_
     }
 
-    public void addLrn(int lrn) {
-        mLrn += lrn;
+    fun addLrn(lrn: Int) {
+        this.lrn += lrn
     }
 
-    public void addRev(int rev) {
-        mRev += rev;
+    fun addRev(rev: Int) {
+        this.rev += rev
     }
-
 
     /**
      * @return the sum of the three counts
      */
-    public int count() {
-        return mNew + mLrn + mRev;
+    fun count(): Int {
+        return new + lrn + rev
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+        if (other == null || javaClass != other.javaClass) {
+            return false
         }
-        Counts counts = (Counts) o;
-        return mNew == counts.mNew &&
-                mRev == counts.mRev &&
-                mLrn == counts.mLrn;
+        val counts = other as Counts
+        return new == counts.new && rev == counts.rev && lrn == counts.lrn
     }
 
-
-    @Override
-    public int hashCode() {
-        return Arrays.asList(mNew, mRev, mLrn).hashCode();
+    override fun hashCode(): Int {
+        @KotlinCleanup("Kotlin listOf instead of Java Arrays.asList")
+        return Arrays.asList(new, rev, lrn).hashCode()
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "[" + mNew + ", " + mLrn + ", " + mRev + "]";
+    override fun toString(): String {
+        return "[" + new + ", " + lrn + ", " + rev + "]"
     }
 }
