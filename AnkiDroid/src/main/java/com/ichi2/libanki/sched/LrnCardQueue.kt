@@ -14,45 +14,35 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import java.util.Collections;
+import java.util.*
 
-class LrnCardQueue extends CardQueue<LrnCard> {
+internal class LrnCardQueue(sched: AbstractSched?) : CardQueue<LrnCard?>(sched) {
     /**
      * Whether the queue already contains its current expected value.
      * If it's not the case, then we won't add cards reviewed immediately and wait for a filling to occur.
      */
-    private boolean mIsFilled = false;
+    var isFilled = false
+        private set
 
-    public LrnCardQueue(AbstractSched sched) {
-        super(sched);
+    fun add(due: Long, cid: Long) {
+        add(LrnCard(col, due, cid))
     }
 
-    public void add(long due, long cid) {
-        add(new LrnCard(getCol(), due, cid));
+    fun sort() {
+        Collections.sort(queue)
     }
 
-    public void sort() {
-        Collections.sort(getQueue());
+    val firstDue: Long
+        get() = queue.first!!.due
+
+    override fun clear() {
+        super.clear()
+        isFilled = false
     }
 
-    public long getFirstDue() {
-        return getQueue().getFirst().getDue();
-    }
-
-
-    @Override
-    public void clear() {
-        super.clear();
-        mIsFilled = false;
-    }
-
-    public void setFilled() {
-        mIsFilled = true;
-    }
-
-    public boolean isFilled() {
-        return mIsFilled;
+    fun setFilled() {
+        isFilled = true
     }
 }
