@@ -14,18 +14,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Card
+import com.ichi2.utils.KotlinCleanup
 
-import androidx.annotation.VisibleForTesting;
-
-class SimpleCardQueue extends CardQueue<Card.Cache> {
-    public SimpleCardQueue(AbstractSched sched) {
-        super(sched);
-    }
-
-    public void add(long id) {
-        add(new Card.Cache(getCol(), id));
+@KotlinCleanup("Make sched non-null ")
+internal class SimpleCardQueue(sched: AbstractSched?) : CardQueue<Card.Cache?>(sched) {
+    fun add(id: Long) {
+        add(Card.Cache(col, id))
     }
 }
