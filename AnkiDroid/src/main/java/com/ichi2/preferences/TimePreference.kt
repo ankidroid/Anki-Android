@@ -1,83 +1,70 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.preferences;
+package com.ichi2.preferences
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TimePicker;
+import android.R
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import android.widget.TimePicker
+import com.ichi2.compat.CompatHelper
 
-import com.ichi2.compat.CompatHelper;
-
-
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public class TimePreference extends android.preference.DialogPreference {
-    public static final String DEFAULT_VALUE = "00:00";
-
-    private TimePicker mTimepicker;
-    private int mHours;
-    private int mMinutes;
-
-    public TimePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        setPositiveButtonText(android.R.string.ok);
-        setNegativeButtonText(android.R.string.cancel);
+@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+class TimePreference(context: Context?, attrs: AttributeSet?) : android.preference.DialogPreference(context, attrs) {
+    private var mTimepicker: TimePicker? = null
+    private var mHours = 0
+    private var mMinutes = 0
+    override fun onCreateDialogView(): View {
+        mTimepicker = TimePicker(context)
+        mTimepicker!!.setIs24HourView(true)
+        return mTimepicker!!
     }
 
-    @Override
-    protected View onCreateDialogView() {
-        mTimepicker = new TimePicker(getContext());
-
-        mTimepicker.setIs24HourView(true);
-
-        return mTimepicker;
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        String time;
-
-        if (restorePersistedValue) {
+    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
+        val time: String = if (restorePersistedValue) {
             if (null == defaultValue) {
-                time = getPersistedString(DEFAULT_VALUE);
+                getPersistedString(DEFAULT_VALUE)
             } else {
-                time = getPersistedString(defaultValue.toString());
+                getPersistedString(defaultValue.toString())
             }
         } else {
-            time = defaultValue.toString();
+            defaultValue.toString()
         }
-
-        mHours = parseHours(time);
-        mMinutes = parseMinutes(time);
+        mHours = parseHours(time)
+        mMinutes = parseMinutes(time)
     }
 
-    @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
-        CompatHelper.getCompat().setTime(mTimepicker, mHours, mMinutes);
+    override fun onBindDialogView(view: View) {
+        super.onBindDialogView(view)
+        CompatHelper.getCompat().setTime(mTimepicker, mHours, mMinutes)
     }
 
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
-
+    override fun onDialogClosed(positiveResult: Boolean) {
+        super.onDialogClosed(positiveResult)
         if (positiveResult) {
-            mHours = CompatHelper.getCompat().getHour(mTimepicker);
-            mMinutes = CompatHelper.getCompat().getMinute(mTimepicker);
-
-            final String time = String.format("%1$02d:%2$02d", mHours, mMinutes);
-
+            mHours = CompatHelper.getCompat().getHour(mTimepicker)
+            mMinutes = CompatHelper.getCompat().getMinute(mTimepicker)
+            val time = String.format("%1$02d:%2$02d", mHours, mMinutes)
             if (callChangeListener(time)) {
-                persistString(time);
+                persistString(time)
             }
         }
     }
 
-    public static int parseHours(String time) {
-        return (Integer.parseInt(time.split(":")[0]));
+    companion object {
+        const val DEFAULT_VALUE = "00:00"
+        @JvmStatic
+        fun parseHours(time: String): Int {
+            return time.split(":".toRegex()).toTypedArray()[0].toInt()
+        }
+
+        @JvmStatic
+        fun parseMinutes(time: String): Int {
+            return time.split(":".toRegex()).toTypedArray()[1].toInt()
+        }
     }
 
-    public static int parseMinutes(String time) {
-        return (Integer.parseInt(time.split(":")[1]));
+    init {
+        setPositiveButtonText(R.string.ok)
+        setNegativeButtonText(R.string.cancel)
     }
 }
