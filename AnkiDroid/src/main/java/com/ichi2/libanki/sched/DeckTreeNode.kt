@@ -14,25 +14,19 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Collection
 
-import java.util.List;
-
-public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
-    public DeckTreeNode(Collection col, String name, long did) {
-        super(col, name, did);
-    }
-
-
-    @Override
-    public DeckTreeNode withChildren(List<DeckTreeNode> children) {
-        Collection col = getCol();
-        String name = getFullDeckName();
-        long did = getDid();
-        DeckTreeNode node = new DeckTreeNode(col, name, did);
-        node.setChildren(children, false);
-        return node;
+class DeckTreeNode(col: Collection?, name: String?, did: Long) : AbstractDeckTreeNode<DeckTreeNode?>(col, name, did) {
+    override fun withChildren(children: MutableList<DeckTreeNode?>?): DeckTreeNode {
+        val col = col
+        val name = fullDeckName
+        val did = did
+        val node = DeckTreeNode(col, name, did)
+        if (children != null) {
+            node.setChildren(children, false)
+        }
+        return node
     }
 }
