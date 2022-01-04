@@ -1,344 +1,268 @@
 /****************************************************************************************
- * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>                        *
- *                                                                                      *
+ * Copyright (c) 2015 Houssam Salem <houssam.salem.au></houssam.salem.au>@gmail.com>                        *
+ * *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
  * version.                                                                             *
- *                                                                                      *
+ * *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
+ * *
  * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+ * this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.                           *
+ */
+package com.ichi2.anki.widgets
 
-package com.ichi2.anki.widgets;
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnLongClickListener
+import android.view.ViewGroup
+import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.R
+import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.sched.AbstractDeckTreeNode
+import com.ichi2.libanki.sched.Counts
+import com.ichi2.utils.FilterResultsUtils
+import java.util.*
+import kotlin.collections.ArrayList
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+class DeckAdapter<T : AbstractDeckTreeNode<T>?>(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+    private val mDeckList: MutableList<T>
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.ichi2.anki.R;
-import com.ichi2.anki.servicelayer.DeckService;
-import com.ichi2.libanki.Collection;
-
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.utils.FilterResultsUtils;
-import com.ichi2.libanki.sched.Counts;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
-import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
-
-public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView.Adapter<DeckAdapter.ViewHolder> implements Filterable {
-
-    /* Make the selected deck roughly half transparent if there is a background */
-    public static final double SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45;
-
-    private final LayoutInflater mLayoutInflater;
-    private final List<T> mDeckList;
-    /** A subset of mDeckList (currently displayed) */
-    private final List<AbstractDeckTreeNode<?>> mCurrentDeckList = new ArrayList<>();
-    private final int mZeroCountColor;
-    private final int mNewCountColor;
-    private final int mLearnCountColor;
-    private final int mReviewCountColor;
-    private final int mRowCurrentDrawable;
-    private final int mDeckNameDefaultColor;
-    private final int mDeckNameDynColor;
-    private final Drawable mExpandImage;
-    private final Drawable mCollapseImage;
-    private final Drawable mNoExpander = new ColorDrawable(Color.TRANSPARENT);
+    /** A subset of mDeckList (currently displayed)  */
+    private val mCurrentDeckList: MutableList<AbstractDeckTreeNode<*>> = ArrayList()
+    private val mZeroCountColor: Int
+    private val mNewCountColor: Int
+    private val mLearnCountColor: Int
+    private val mReviewCountColor: Int
+    private val mRowCurrentDrawable: Int
+    private val mDeckNameDefaultColor: Int
+    private val mDeckNameDynColor: Int
+    private val mExpandImage: Drawable?
+    private val mCollapseImage: Drawable?
+    private val mNoExpander: Drawable = ColorDrawable(Color.TRANSPARENT)
 
     // Listeners
-    private View.OnClickListener mDeckClickListener;
-    private View.OnClickListener mDeckExpanderClickListener;
-    private View.OnLongClickListener mDeckLongClickListener;
-    private View.OnClickListener mCountsClickListener;
-
-    private Collection mCol;
+    private var mDeckClickListener: View.OnClickListener? = null
+    private var mDeckExpanderClickListener: View.OnClickListener? = null
+    private var mDeckLongClickListener: OnLongClickListener? = null
+    private var mCountsClickListener: View.OnClickListener? = null
+    private var mCol: Collection? = null
 
     // Totals accumulated as each deck is processed
-    private int mNew;
-    private int mLrn;
-    private int mRev;
-    private boolean mNumbersComputed;
+    private var mNew = 0
+    private var mLrn = 0
+    private var mRev = 0
+    private var mNumbersComputed = false
 
     // Flags
-    private boolean mHasSubdecks;
+    private var mHasSubdecks = false
 
     // Whether we have a background (so some items should be partially transparent).
-    private boolean mPartiallyTransparentForBackground;
+    private var mPartiallyTransparentForBackground = false
 
     // ViewHolder class to save inflated views for recycling
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final RelativeLayout deckLayout;
-        public final LinearLayout countsLayout;
-        public final ImageButton deckExpander;
-        public final ImageButton indentView;
-        public final TextView deckName;
-        public final TextView deckNew;
-        public final TextView deckLearn;
-        public final TextView deckRev;
-
-        public ViewHolder(View v) {
-            super(v);
-            deckLayout = v.findViewById(R.id.DeckPickerHoriz);
-            countsLayout = v.findViewById(R.id.counts_layout);
-            deckExpander = v.findViewById(R.id.deckpicker_expander);
-            indentView = v.findViewById(R.id.deckpicker_indent);
-            deckName = v.findViewById(R.id.deckpicker_name);
-            deckNew = v.findViewById(R.id.deckpicker_new);
-            deckLearn = v.findViewById(R.id.deckpicker_lrn);
-            deckRev = v.findViewById(R.id.deckpicker_rev);
-        }
+    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        val deckLayout: RelativeLayout = v.findViewById(R.id.DeckPickerHoriz)
+        val countsLayout: LinearLayout = v.findViewById(R.id.counts_layout)
+        val deckExpander: ImageButton = v.findViewById(R.id.deckpicker_expander)
+        val indentView: ImageButton = v.findViewById(R.id.deckpicker_indent)
+        val deckName: TextView = v.findViewById(R.id.deckpicker_name)
+        val deckNew: TextView = v.findViewById(R.id.deckpicker_new)
+        val deckLearn: TextView = v.findViewById(R.id.deckpicker_lrn)
+        val deckRev: TextView = v.findViewById(R.id.deckpicker_rev)
     }
 
-    public DeckAdapter(LayoutInflater layoutInflater, Context context) {
-        mLayoutInflater = layoutInflater;
-        mDeckList = new ArrayList<>((mCol == null) ? 10 : mCol.getDecks().count());
-        // Get the colors from the theme attributes
-        int[] attrs = new int[] {
-                R.attr.zeroCountColor,
-                R.attr.newCountColor,
-                R.attr.learnCountColor,
-                R.attr.reviewCountColor,
-                R.attr.currentDeckBackground,
-                android.R.attr.textColor,
-                R.attr.dynDeckColor,
-                R.attr.expandRef,
-                R.attr.collapseRef };
-        TypedArray ta = context.obtainStyledAttributes(attrs);
-        mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black));
-        mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black));
-        mLearnCountColor = ta.getColor(2, ContextCompat.getColor(context, R.color.black));
-        mReviewCountColor = ta.getColor(3, ContextCompat.getColor(context, R.color.black));
-        mRowCurrentDrawable = ta.getResourceId(4, 0);
-        mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black));
-        mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700));
-        mExpandImage = ta.getDrawable(7);
-        mExpandImage.setAutoMirrored(true);
-        mCollapseImage = ta.getDrawable(8);
-        mCollapseImage.setAutoMirrored(true);
-        ta.recycle();
+    fun setDeckClickListener(listener: View.OnClickListener?) {
+        mDeckClickListener = listener
     }
 
-    public void setDeckClickListener(View.OnClickListener listener) {
-        mDeckClickListener = listener;
+    fun setCountsClickListener(listener: View.OnClickListener?) {
+        mCountsClickListener = listener
     }
 
-    public void setCountsClickListener(View.OnClickListener listener) {
-        mCountsClickListener = listener;
+    fun setDeckExpanderClickListener(listener: View.OnClickListener?) {
+        mDeckExpanderClickListener = listener
     }
 
-    public void setDeckExpanderClickListener(View.OnClickListener listener) {
-        mDeckExpanderClickListener = listener;
+    fun setDeckLongClickListener(listener: OnLongClickListener?) {
+        mDeckLongClickListener = listener
     }
 
-    public void setDeckLongClickListener(View.OnLongClickListener listener) {
-        mDeckLongClickListener = listener;
+    /** Sets whether the control should have partial transparency to allow a background to be seen  */
+    fun enablePartialTransparencyForBackground(isTransparent: Boolean) {
+        mPartiallyTransparentForBackground = isTransparent
     }
-
-    /** Sets whether the control should have partial transparency to allow a background to be seen */
-    public void enablePartialTransparencyForBackground(boolean isTransparent) {
-        mPartiallyTransparentForBackground = isTransparent;
-    }
-
 
     /**
-     * Consume a list of {@link AbstractDeckTreeNode}s to render a new deck list.
+     * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    public void buildDeckList(List<T> nodes, Collection col, @Nullable CharSequence filter) {
-        mCol = col;
-        mDeckList.clear();
-        mCurrentDeckList.clear();
-        mNew = mLrn = mRev = 0;
-        mNumbersComputed = true;
-        mHasSubdecks = false;
-        processNodes(nodes);
+    fun buildDeckList(nodes: List<T>, col: Collection?, filter: CharSequence?) {
+        mCol = col
+        mDeckList.clear()
+        mCurrentDeckList.clear()
+        mRev = 0
+        mLrn = mRev
+        mNew = mLrn
+        mNumbersComputed = true
+        mHasSubdecks = false
+        processNodes(nodes)
         // Filtering performs notifyDataSetChanged after the async work is complete
-        getFilter().filter(filter);
+        getFilter().filter(filter)
     }
 
-    public AbstractDeckTreeNode<?> getNodeByDid(long did) {
-        int pos = findDeckPosition(did);
-        return getDeckList().get(pos);
+    fun getNodeByDid(did: Long): AbstractDeckTreeNode<*> {
+        val pos = findDeckPosition(did)
+        return deckList[pos]
     }
 
-
-    @NonNull
-    @Override
-    public DeckAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = mLayoutInflater.inflate(R.layout.deck_item, parent, false);
-        return new ViewHolder(v);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
+        return ViewHolder(v)
     }
 
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Update views for this node
-        AbstractDeckTreeNode<?> node = mCurrentDeckList.get(position);
+        val node = mCurrentDeckList[position]
         // Set the expander icon and padding according to whether or not there are any subdecks
-        RelativeLayout deckLayout = holder.deckLayout;
-        int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
+        val deckLayout = holder.deckLayout
+        val rightPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
         if (mHasSubdecks) {
-            int smallPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding_small);
-            deckLayout.setPadding(smallPadding, 0, rightPadding, 0);
-            holder.deckExpander.setVisibility(View.VISIBLE);
+            val smallPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
+            deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
+            holder.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
-            setDeckExpander(holder.deckExpander, holder.indentView, node);
+            setDeckExpander(holder.deckExpander, holder.indentView, node)
         } else {
-            holder.deckExpander.setVisibility(View.GONE);
-            int normalPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_left_padding);
-            deckLayout.setPadding(normalPadding, 0, rightPadding, 0);
+            holder.deckExpander.visibility = View.GONE
+            val normalPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
+            deckLayout.setPadding(normalPadding, 0, rightPadding, 0)
         }
-
         if (node.hasChildren()) {
-            holder.deckExpander.setTag(node.getDid());
-            holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
+            holder.deckExpander.tag = node.did
+            holder.deckExpander.setOnClickListener(mDeckExpanderClickListener)
         } else {
-            holder.deckExpander.setClickable(false);
+            holder.deckExpander.isClickable = false
         }
-        holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
+        holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
         // Set background colour. The current deck has its own color
         if (isCurrentlySelectedDeck(node)) {
-            holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
+            holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
             if (mPartiallyTransparentForBackground) {
-                setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND);
+                setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND)
             }
         } else {
             // Ripple effect
-            int[] attrs = new int[] {android.R.attr.selectableItemBackground};
-            TypedArray ta = holder.deckLayout.getContext().obtainStyledAttributes(attrs);
-            holder.deckLayout.setBackgroundResource(ta.getResourceId(0, 0));
-            ta.recycle();
+            val attrs = intArrayOf(android.R.attr.selectableItemBackground)
+            val ta = holder.deckLayout.context.obtainStyledAttributes(attrs)
+            holder.deckLayout.setBackgroundResource(ta.getResourceId(0, 0))
+            ta.recycle()
         }
         // Set deck name and colour. Filtered decks have their own colour
-        holder.deckName.setText(node.getLastDeckNameComponent());
-        if (mCol.getDecks().isDyn(node.getDid())) {
-            holder.deckName.setTextColor(mDeckNameDynColor);
+        holder.deckName.text = node.lastDeckNameComponent
+        if (mCol!!.decks.isDyn(node.did)) {
+            holder.deckName.setTextColor(mDeckNameDynColor)
         } else {
-            holder.deckName.setTextColor(mDeckNameDefaultColor);
+            holder.deckName.setTextColor(mDeckNameDefaultColor)
         }
 
         // Set the card counts and their colors
         if (node.shouldDisplayCounts()) {
-            holder.deckNew.setText(String.valueOf(node.getNewCount()));
-            holder.deckNew.setTextColor((node.getNewCount() == 0) ? mZeroCountColor : mNewCountColor);
-            holder.deckLearn.setText(String.valueOf(node.getLrnCount()));
-            holder.deckLearn.setTextColor((node.getLrnCount() == 0) ? mZeroCountColor : mLearnCountColor);
-            holder.deckRev.setText(String.valueOf(node.getRevCount()));
-            holder.deckRev.setTextColor((node.getRevCount() == 0) ? mZeroCountColor : mReviewCountColor);
+            holder.deckNew.text = node.newCount.toString()
+            holder.deckNew.setTextColor(if (node.newCount == 0) mZeroCountColor else mNewCountColor)
+            holder.deckLearn.text = node.lrnCount.toString()
+            holder.deckLearn.setTextColor(if (node.lrnCount == 0) mZeroCountColor else mLearnCountColor)
+            holder.deckRev.text = node.revCount.toString()
+            holder.deckRev.setTextColor(if (node.revCount == 0) mZeroCountColor else mReviewCountColor)
         }
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
-        holder.deckLayout.setTag(node.getDid());
-        holder.countsLayout.setTag(node.getDid());
+        holder.deckLayout.tag = node.did
+        holder.countsLayout.tag = node.did
 
         // Set click listeners
-        holder.deckLayout.setOnClickListener(mDeckClickListener);
-        holder.deckLayout.setOnLongClickListener(mDeckLongClickListener);
-        holder.countsLayout.setOnClickListener(mCountsClickListener);
+        holder.deckLayout.setOnClickListener(mDeckClickListener)
+        holder.deckLayout.setOnLongClickListener(mDeckLongClickListener)
+        holder.countsLayout.setOnClickListener(mCountsClickListener)
     }
 
-
-    private void setBackgroundAlpha(View view, @SuppressWarnings("SameParameterValue") double alphaPercentage) {
-        Drawable background = view.getBackground().mutate();
-        background.setAlpha((int) (255 * alphaPercentage));
-        view.setBackground(background);
+    private fun setBackgroundAlpha(view: View, alphaPercentage: Double) {
+        val background = view.background.mutate()
+        background.alpha = (255 * alphaPercentage).toInt()
+        view.background = background
     }
 
-
-    private boolean isCurrentlySelectedDeck(AbstractDeckTreeNode<?> node) {
-        return node.getDid() == mCol.getDecks().current().optLong("id");
+    private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode<*>): Boolean {
+        return node.did == mCol!!.decks.current().optLong("id")
     }
 
-
-    @Override
-    public int getItemCount() {
-        return mCurrentDeckList.size();
+    override fun getItemCount(): Int {
+        return mCurrentDeckList.size
     }
 
-
-    private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractDeckTreeNode<?> node){
-        boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
+    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: AbstractDeckTreeNode<*>) {
+        val collapsed = mCol!!.decks.get(node.did).optBoolean("collapsed", false)
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
-            expander.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+            expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
             if (collapsed) {
-                expander.setImageDrawable(mExpandImage);
-                expander.setContentDescription(expander.getContext().getString(R.string.expand));
-            } else  {
-                expander.setImageDrawable(mCollapseImage);
-                expander.setContentDescription(expander.getContext().getString(R.string.collapse));
+                expander.setImageDrawable(mExpandImage)
+                expander.contentDescription = expander.context.getString(R.string.expand)
+            } else {
+                expander.setImageDrawable(mCollapseImage)
+                expander.contentDescription = expander.context.getString(R.string.collapse)
             }
         } else {
-            expander.setImageDrawable(mNoExpander);
-            expander.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
+            expander.setImageDrawable(mNoExpander)
+            expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         }
         // Add some indenting for each nested level
-        int width = (int) indent.getResources().getDimension(R.dimen.keyline_1) * node.getDepth();
-        indent.setMinimumWidth(width);
+        val width = indent.resources.getDimension(R.dimen.keyline_1).toInt() * node.depth
+        indent.minimumWidth = width
     }
 
-
-    private void processNodes(List<T> nodes) {
-        for (T node : nodes) {
+    private fun processNodes(nodes: List<T>) {
+        for (node in nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
-                if (!DeckService.defaultDeckHasCards(mCol)) {
-                    continue;
+            if (node!!.did == 1L && nodes.size > 1 && !node.hasChildren()) {
+                if (!defaultDeckHasCards(mCol!!)) {
+                    continue
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (Deck parent : mCol.getDecks().parents(node.getDid())) {
-                mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
+            for (parent in mCol!!.decks.parents(node.did)) {
+                mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
-                    return;
+                    return
                 }
             }
-            mDeckList.add(node);
-            mCurrentDeckList.add(node);
+            mDeckList.add(node)
+            mCurrentDeckList.add(node)
 
             // Add this node's counts to the totals if it's a parent deck
-            if (node.getDepth() == 0) {
+            if (node.depth == 0) {
                 if (node.shouldDisplayCounts()) {
-                    mNew += node.getNewCount();
-                    mLrn += node.getLrnCount();
-                    mRev += node.getRevCount();
+                    mNew += node.newCount
+                    mLrn += node.lrnCount
+                    mRev += node.revCount
                 }
             }
             // Process sub-decks
-            processNodes(node.getChildren());
+            processNodes(node.children)
         }
     }
-
 
     /**
      * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
@@ -346,121 +270,131 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
      *
      * An invalid deck ID will return position 0.
      */
-    public int findDeckPosition(long did) {
-        for (int i = 0; i < mCurrentDeckList.size(); i++) {
-            if (mCurrentDeckList.get(i).getDid() == did) {
-                return i;
+    fun findDeckPosition(did: Long): Int {
+        for (i in mCurrentDeckList.indices) {
+            if (mCurrentDeckList[i].did == did) {
+                return i
             }
         }
         // If the deck is not in our list, we search again using the immediate parent
-        List<Deck> parents = mCol.getDecks().parents(did);
-        if (parents.isEmpty()) {
-            return 0;
+        val parents = mCol!!.decks.parents(did)
+        return if (parents.isEmpty()) {
+            0
         } else {
-            return findDeckPosition(parents.get(parents.size() - 1).optLong("id", 0));
+            findDeckPosition(parents[parents.size - 1].optLong("id", 0))
         }
     }
 
-    @Nullable
-    public Integer getEta() {
-        if (mNumbersComputed) {
-            return mCol.getSched().eta(new Counts(mNew, mLrn, mRev));
+    val eta: Int?
+        get() = if (mNumbersComputed) {
+            mCol!!.sched.eta(Counts(mNew, mLrn, mRev))
         } else {
-            return null;
+            null
         }
-    }
-
-    @Nullable
-    public Integer getDue() {
-        if (mNumbersComputed) {
-            return mNew + mLrn + mRev;
+    val due: Int?
+        get() = if (mNumbersComputed) {
+            mNew + mLrn + mRev
         } else {
-            return null;
+            null
         }
+    private val deckList: List<AbstractDeckTreeNode<*>>
+        get() = mCurrentDeckList
+
+    override fun getFilter(): Filter {
+        return DeckFilter()
     }
 
-    private List<AbstractDeckTreeNode<?>> getDeckList() {
-        return mCurrentDeckList;
-    }
+    private inner class DeckFilter : Filter() {
+        private val mFilteredDecks = ArrayList<AbstractDeckTreeNode<*>>()
+        private val allDecks: List<T>
+            get() = mDeckList
 
-
-    @Override
-    public Filter getFilter() {
-        return new DeckFilter();
-    }
-
-
-    private class DeckFilter extends Filter {
-        private final @NonNull ArrayList<AbstractDeckTreeNode<?>> mFilteredDecks = new ArrayList<>();
-        private DeckFilter() {
-            super();
-        }
-
-        private List<T> getAllDecks() {
-            return mDeckList;
-        }
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            mFilteredDecks.clear();
-            mFilteredDecks.ensureCapacity(mCol.getDecks().count());
-
-            List<T> allDecks = getAllDecks();
+        override fun performFiltering(constraint: CharSequence): FilterResults {
+            mFilteredDecks.clear()
+            mFilteredDecks.ensureCapacity(mCol!!.decks.count())
             if (TextUtils.isEmpty(constraint)) {
-                mFilteredDecks.addAll(allDecks);
+                mFilteredDecks.addAll(allDecks as ArrayList<AbstractDeckTreeNode<*>>)
             } else {
-                final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                List<T> filteredDecks = filterDecks(filterPattern, allDecks);
-                mFilteredDecks.addAll(filteredDecks);
+                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                val filteredDecks = filterDecks(filterPattern, allDecks)
+                mFilteredDecks.addAll(filteredDecks as ArrayList<AbstractDeckTreeNode<*>>)
             }
-
-            return FilterResultsUtils.fromCollection(mFilteredDecks);
+            return FilterResultsUtils.fromCollection(mFilteredDecks)
         }
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mCurrentDeckList.clear();
-            mCurrentDeckList.addAll(mFilteredDecks);
-            notifyDataSetChanged();
+        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+            mCurrentDeckList.clear()
+            mCurrentDeckList.addAll(mFilteredDecks)
+            notifyDataSetChanged()
         }
 
-
-        private List<T> filterDecks(String filterPattern, List<T> allDecks) {
-            ArrayList<T> ret = new ArrayList<>(allDecks.size());
-            for (T tag : allDecks) {
-                T node = filterDeckInternal(filterPattern, tag);
+        private fun filterDecks(filterPattern: String, allDecks: List<T>): ArrayList<T> {
+            val ret = ArrayList<T>(allDecks.size)
+            for (tag in allDecks) {
+                val node = filterDeckInternal(filterPattern, tag)
                 if (node != null) {
-                    ret.add(node);
+                    ret.add(node)
                 }
             }
-            return ret;
+            return ret
         }
 
-        @Nullable
-        private T filterDeckInternal(String filterPattern, T root) {
+        private fun filterDeckInternal(filterPattern: String, root: T): T? {
 
             // If a deck contains the string, then all its children are valid
             if (containsFilterString(filterPattern, root)) {
-                return root;
+                return root
             }
-
-            List<T> children = root.getChildren();
-            List<T> ret = new ArrayList<>(children.size());
-            for (T child : children) {
-                T returned = filterDeckInternal(filterPattern, child);
+            val children = root!!.children
+            val ret: MutableList<T> = ArrayList(children.size)
+            for (child in children) {
+                val returned = filterDeckInternal(filterPattern, child)
                 if (returned != null) {
-                    ret.add(returned);
+                    ret.add(returned)
                 }
             }
 
             // If any of a deck's children contains the search string, then the deck is valid
-            return ret.isEmpty() ? null : root.withChildren(ret);
+            return if (ret.isEmpty()) null else root.withChildren(ret)
         }
 
-
-        private boolean containsFilterString(String filterPattern, T root) {
-            String deckName = root.getFullDeckName();
-            return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.ROOT).contains(filterPattern);
+        private fun containsFilterString(filterPattern: String, root: T): Boolean {
+            val deckName = root!!.fullDeckName
+            return deckName.lowercase(Locale.getDefault()).contains(filterPattern) || deckName.lowercase(Locale.ROOT).contains(filterPattern)
         }
+    }
+
+    companion object {
+        /* Make the selected deck roughly half transparent if there is a background */
+        const val SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45
+    }
+
+    init {
+        mDeckList = ArrayList(if (mCol == null) 10 else mCol!!.decks.count())
+        // Get the colors from the theme attributes
+        val attrs = intArrayOf(
+            R.attr.zeroCountColor,
+            R.attr.newCountColor,
+            R.attr.learnCountColor,
+            R.attr.reviewCountColor,
+            R.attr.currentDeckBackground,
+            android.R.attr.textColor,
+            R.attr.dynDeckColor,
+            R.attr.expandRef,
+            R.attr.collapseRef
+        )
+        val ta = context.obtainStyledAttributes(attrs)
+        mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black))
+        mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black))
+        mLearnCountColor = ta.getColor(2, ContextCompat.getColor(context, R.color.black))
+        mReviewCountColor = ta.getColor(3, ContextCompat.getColor(context, R.color.black))
+        mRowCurrentDrawable = ta.getResourceId(4, 0)
+        mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black))
+        mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700))
+        mExpandImage = ta.getDrawable(7)
+        mExpandImage!!.isAutoMirrored = true
+        mCollapseImage = ta.getDrawable(8)
+        mCollapseImage!!.isAutoMirrored = true
+        ta.recycle()
     }
 }
