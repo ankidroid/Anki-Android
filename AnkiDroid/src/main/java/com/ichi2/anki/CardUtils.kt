@@ -1,77 +1,75 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import com.ichi2.anki.servicelayer.NoteService;
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
-import com.ichi2.utils.HashUtil;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import com.ichi2.anki.servicelayer.NoteService.isMarked
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Note
+import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
 /**
  * Utilities for working on multiple cards
  */
-public class CardUtils {
-
+object CardUtils {
     /**
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
-    public static Set<Note> getNotes(Collection<Card> cards) {
-        Set<Note> notes = HashUtil.HashSetInit(cards.size());
-
-        for (Card card : cards) {
-            notes.add(card.note());
+    @JvmStatic
+    fun getNotes(cards: Collection<Card>): Set<Note> {
+        val notes: MutableSet<Note> = HashSetInit(cards.size)
+        for (card in cards) {
+            notes.add(card.note())
         }
-
-        return notes;
+        return notes
     }
 
     /**
      * @return All cards of all notes
      */
-    public static List<Card> getAllCards(Set<Note> notes) {
-        List<Card> allCards = new ArrayList<>(notes.size());
-        for (Note note : notes) {
-            allCards.addAll(note.cards());
+    @JvmStatic
+    fun getAllCards(notes: Set<Note>): List<Card> {
+        val allCards: MutableList<Card> = ArrayList(notes.size)
+        for (note in notes) {
+            allCards.addAll(note.cards())
         }
-        return allCards;
+        return allCards
     }
 
-    public static void markAll(List<Note> notes, boolean mark) {
-        for (Note note : notes) {
+    @JvmStatic
+    fun markAll(notes: List<Note>, mark: Boolean) {
+        for (note in notes) {
             if (mark) {
-                if (!NoteService.isMarked(note)) {
-                    note.addTag("marked");
-                    note.flush();
+                if (!isMarked(note)) {
+                    note.addTag("marked")
+                    note.flush()
                 }
             } else {
-                note.delTag("marked");
-                note.flush();
+                note.delTag("marked")
+                note.flush()
             }
         }
     }
 
-    public static boolean isIn(long[] array, long val) {
-        for (long v : array) {
-            if (v == val) {
-                return true;
+    @KotlinCleanup("rename val")
+    fun isIn(array: LongArray, `val`: Long): Boolean {
+        for (v in array) {
+            if (v == `val`) {
+                return true
             }
         }
-        return false;
+        return false
     }
 
     /**
-     * Returns the deck ID of the given {@link Card}.
+     * Returns the deck ID of the given [Card].
      *
-     * @param card The {@link Card} to get the deck ID
-     * @return The deck ID of the {@link Card}
+     * @param card The [Card] to get the deck ID
+     * @return The deck ID of the [Card]
      */
-    public static long getDeckIdForCard(final Card card) {
+    fun getDeckIdForCard(card: Card): Long {
         // Try to get the configuration by the original deck ID (available in case of a cram deck),
         // else use the direct deck ID (in case of a 'normal' deck.
-        return card.getODid() == 0 ? card.getDid() : card.getODid();
+        return if (card.oDid == 0L) card.did else card.oDid
     }
 }
