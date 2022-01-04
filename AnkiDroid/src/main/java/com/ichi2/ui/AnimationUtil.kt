@@ -13,92 +13,72 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.ScaleAnimation
 
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-
-public class AnimationUtil {
-
+object AnimationUtil {
     // please test this on Huawei devices (if possible) and not just on the emulator -
     // having view.setVisibility(View.VISIBLE); on the expand worked fine on the emulator, but looked bad on my phone
-
     /** This is a fast animation - We don't want the user incorrectly selecting the current position
-     * for the next collapse operation */
-    public static final int DURATION_MILLIS = 200;
-
-
-    public static void collapseView(View view, boolean animationEnabled) {
-        view.animate().cancel();
-
+     * for the next collapse operation  */
+    private const val DURATION_MILLIS = 200
+    @JvmStatic
+    fun collapseView(view: View, animationEnabled: Boolean) {
+        view.animate().cancel()
         if (!animationEnabled) {
-            view.setVisibility(View.GONE);
-            return;
+            view.visibility = View.GONE
+            return
         }
-
-        AnimationSet set = new AnimationSet(true);
-        ScaleAnimation expandAnimation = new ScaleAnimation(
-                1f, 1f,
-                1f, 0.5f);
-        expandAnimation.setDuration(DURATION_MILLIS);
-
-        expandAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
+        val set = AnimationSet(true)
+        val expandAnimation = ScaleAnimation(
+            1f, 1f,
+            1f, 0.5f
+        )
+        expandAnimation.duration = DURATION_MILLIS.toLong()
+        expandAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {}
+            override fun onAnimationEnd(animation: Animation) {
+                view.visibility = View.GONE
             }
 
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                view.setVisibility(View.GONE);
-            }
-
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0f);
-        alphaAnimation.setDuration(DURATION_MILLIS);
-        alphaAnimation.setFillAfter(true);
-        set.addAnimation(expandAnimation);
-        set.addAnimation(alphaAnimation);
-
-        view.startAnimation(set);
+            override fun onAnimationRepeat(animation: Animation) {}
+        })
+        val alphaAnimation = AlphaAnimation(1.0f, 0f)
+        alphaAnimation.duration = DURATION_MILLIS.toLong()
+        alphaAnimation.fillAfter = true
+        set.addAnimation(expandAnimation)
+        set.addAnimation(alphaAnimation)
+        view.startAnimation(set)
     }
 
-
-    public static void expandView(View view, boolean enableAnimation) {
-        view.animate().cancel();
+    @JvmStatic
+    fun expandView(view: View, enableAnimation: Boolean) {
+        view.animate().cancel()
         if (!enableAnimation) {
-            view.setVisibility(View.VISIBLE);
-            view.setAlpha(1.0f);
-            view.setScaleY(1.0f);
-            return;
+            view.visibility = View.VISIBLE
+            view.alpha = 1.0f
+            view.scaleY = 1.0f
+            return
         }
 
         // Sadly this seems necessary - yScale didn't work.
-        AnimationSet set = new AnimationSet(true);
-        ScaleAnimation resetEditTextScale = new ScaleAnimation(
-                1f, 1f,
-                1f, 1f);
-        resetEditTextScale.setDuration(DURATION_MILLIS);
-
-
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-        alphaAnimation.setFillAfter(true);
-        alphaAnimation.setDuration(DURATION_MILLIS);
-
-        set.addAnimation(resetEditTextScale);
-        set.addAnimation(alphaAnimation);
-        view.startAnimation(set);
-        view.setVisibility(View.VISIBLE);
+        val set = AnimationSet(true)
+        val resetEditTextScale = ScaleAnimation(
+            1f, 1f,
+            1f, 1f
+        )
+        resetEditTextScale.duration = DURATION_MILLIS.toLong()
+        val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
+        alphaAnimation.fillAfter = true
+        alphaAnimation.duration = DURATION_MILLIS.toLong()
+        set.addAnimation(resetEditTextScale)
+        set.addAnimation(alphaAnimation)
+        view.startAnimation(set)
+        view.visibility = View.VISIBLE
     }
 }
