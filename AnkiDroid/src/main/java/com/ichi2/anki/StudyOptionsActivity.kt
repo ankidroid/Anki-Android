@@ -13,135 +13,107 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
+import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
+import com.ichi2.utils.ExtendedFragmentFactory
+import com.ichi2.widget.WidgetStatus
+import timber.log.Timber
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog;
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
-import com.ichi2.widget.WidgetStatus;
-
-import timber.log.Timber;
-
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
-
-public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener,
-        CustomStudyDialog.CustomStudyListener {
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, CustomStudyListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        CustomStudyDialogFactory customStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this);
-        customStudyDialogFactory.attachToActivity(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.studyoptions);
+        val customStudyDialogFactory = CustomStudyDialogFactory({ this.col }, this)
+        customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.studyoptions)
         // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer(findViewById(android.R.id.content));
+        initNavigationDrawer(findViewById(android.R.id.content))
         if (savedInstanceState == null) {
-            loadStudyOptionsFragment();
+            loadStudyOptionsFragment()
         }
     }
 
-    private void loadStudyOptionsFragment() {
-        boolean withDeckOptions = false;
-        if (getIntent().getExtras() != null) {
-            withDeckOptions = getIntent().getExtras().getBoolean("withDeckOptions");
+    private fun loadStudyOptionsFragment() {
+        var withDeckOptions = false
+        if (intent.extras != null) {
+            withDeckOptions = intent.extras!!.getBoolean("withDeckOptions")
         }
-        StudyOptionsFragment currentFragment = StudyOptionsFragment.newInstance(withDeckOptions);
-        getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit();
+        val currentFragment = StudyOptionsFragment.newInstance(withDeckOptions)
+        supportFragmentManager.beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit()
     }
 
+    private val currentFragment: StudyOptionsFragment?
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame) as StudyOptionsFragment?
 
-    private StudyOptionsFragment getCurrentFragment() {
-        return (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_frame);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true
         }
-        if (item.getItemId() == android.R.id.home) {
-            closeStudyOptions();
-            return true;
+        if (item.itemId == android.R.id.home) {
+            closeStudyOptions()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
+    @Suppress("deprecation") // #10086
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode)
     }
 
-
-    private void closeStudyOptions() {
-        closeStudyOptions(RESULT_OK);
-    }
-
-
-    private void closeStudyOptions(int result) {
+    private fun closeStudyOptions(result: Int = RESULT_OK) {
         // mCompat.invalidateOptionsMenu(this);
-        setResult(result);
-        finishWithAnimation(END);
+        setResult(result)
+        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-
-    @Override
-    public void onBackPressed() {
-        if (isDrawerOpen()) {
-            super.onBackPressed();
+    override fun onBackPressed() {
+        if (isDrawerOpen) {
+            super.onBackPressed()
         } else {
-            Timber.i("Back key pressed");
-            closeStudyOptions();
+            Timber.i("Back key pressed")
+            closeStudyOptions()
         }
     }
 
-
-    @Override
-    public void onStop() {
-        super.onStop();
+    public override fun onStop() {
+        super.onStop()
         if (colIsOpen()) {
-            WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            WidgetStatus.update(this)
+            saveCollectionInBackground()
         }
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        selectNavigationItem(-1);
+    public override fun onResume() {
+        super.onResume()
+        selectNavigationItem(-1)
     }
 
-
-    @Override
-    public void onRequireDeckListUpdate() {
-        getCurrentFragment().refreshInterface();
+    override fun onRequireDeckListUpdate() {
+        currentFragment!!.refreshInterface()
     }
 
     /**
      * Callback methods from CustomStudyDialog
      */
-    @Override
-    public void onCreateCustomStudySession() {
+    override fun onCreateCustomStudySession() {
         // Sched already reset by CollectionTask in CustomStudyDialog
-        getCurrentFragment().refreshInterface();
+        currentFragment!!.refreshInterface()
     }
 
-    @Override
-    public void onExtendStudyLimits() {
+    override fun onExtendStudyLimits() {
         // Sched needs to be reset so provide true argument
-        getCurrentFragment().refreshInterface(true);
+        currentFragment!!.refreshInterface(true)
     }
 }
