@@ -13,38 +13,34 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 
 /**
  * provide a singleton instances of serialization classes ({@link ObjectMapper}, {@link JsonFactory})
  */
-public final class AnkiSerialization {
-
-    private static ObjectMapper objectMapper;
-
-    private AnkiSerialization(){}
-
-
+object AnkiSerialization {
     /**
      * @return singleton of {@link ObjectMapper} used to bind json to java classes
      */
-    public static ObjectMapper getObjectMapper() {
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    @JvmStatic
+    var objectMapper: ObjectMapper? = null
+        get() {
+            if (field == null) {
+                field = ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            }
+            return field
         }
-        return objectMapper;
-    }
-
+        private set
 
     /**
      * @return singleton of {@link JsonFactory} used for json stream processing
      */
-    public static JsonFactory getFactory() {
-        return getObjectMapper().getFactory();
-    }
+    @JvmStatic
+    val factory: JsonFactory
+        get() = objectMapper!!.factory
 }
