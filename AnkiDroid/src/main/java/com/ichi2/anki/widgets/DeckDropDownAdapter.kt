@@ -14,111 +14,91 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.widgets;
+package com.ichi2.anki.widgets
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import com.ichi2.anki.R
+import com.ichi2.libanki.Deck
+import com.ichi2.utils.KotlinCleanup
 
-import com.ichi2.anki.R;
-
-import com.ichi2.libanki.Deck;
-
-import java.util.List;
-
-
-public final class DeckDropDownAdapter extends BaseAdapter {
-
-    public interface SubtitleListener {
-        String getSubtitleText();
+@KotlinCleanup("make decks non-null")
+class DeckDropDownAdapter(private val context: Context, private val decks: List<Deck?>?) : BaseAdapter() {
+    interface SubtitleListener {
+        val subtitleText: String?
     }
 
-    private final Context mContext;
-    private final List<Deck> mDecks;
-
-    public DeckDropDownAdapter(Context context, List<Deck> decks) {
-        this.mContext = context;
-        this.mDecks = decks;
+    internal class DeckDropDownViewHolder {
+        var deckNameView: TextView? = null
+        var deckCountsView: TextView? = null
     }
 
-    static class DeckDropDownViewHolder {
-        public TextView deckNameView;
-        public TextView deckCountsView;
+    override fun getCount(): Int {
+        return decks!!.size + 1
     }
 
-
-    @Override
-    public int getCount() {
-        return mDecks.size() + 1;
-    }
-
-
-    @Override
-    public Object getItem(int position) {
-        if (position == 0) {
-            return null;
+    override fun getItem(position: Int): Any? {
+        return if (position == 0) {
+            null
         } else {
-            return mDecks.get(position + 1);
+            decks!![position + 1]
         }
     }
 
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        DeckDropDownViewHolder viewHolder;
-        TextView deckNameView;
-        TextView deckCountsView;
+    override fun getView(position: Int, view: View?, parent: ViewGroup): View? {
+        var convertView = view
+        val viewHolder: DeckDropDownViewHolder
+        val deckNameView: TextView?
+        val deckCountsView: TextView?
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.dropdown_deck_selected_item, parent, false);
-            deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
-            deckCountsView = convertView.findViewById(R.id.dropdown_deck_counts);
-            viewHolder = new DeckDropDownViewHolder();
-            viewHolder.deckNameView = deckNameView;
-            viewHolder.deckCountsView = deckCountsView;
-            convertView.setTag(viewHolder);
+            convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false)
+            deckNameView = convertView.findViewById(R.id.dropdown_deck_name)
+            deckCountsView = convertView.findViewById(R.id.dropdown_deck_counts)
+            viewHolder = DeckDropDownViewHolder()
+            viewHolder.deckNameView = deckNameView
+            viewHolder.deckCountsView = deckCountsView
+            convertView.tag = viewHolder
         } else {
-            viewHolder = (DeckDropDownViewHolder) convertView.getTag();
-            deckNameView = viewHolder.deckNameView;
-            deckCountsView = viewHolder.deckCountsView;
+            viewHolder = convertView.tag as DeckDropDownViewHolder
+            deckNameView = viewHolder.deckNameView
+            deckCountsView = viewHolder.deckCountsView
         }
         if (position == 0) {
-            deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
+            deckNameView!!.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            Deck deck = mDecks.get(position - 1);
-            String deckName = deck.getString("name");
-            deckNameView.setText(deckName);
+            val deck = decks!![position - 1]
+            val deckName = deck!!.getString("name")
+            deckNameView!!.text = deckName
         }
-        deckCountsView.setText(((SubtitleListener) mContext).getSubtitleText());
-        return convertView;
+        deckCountsView!!.text = (context as SubtitleListener).subtitleText
+        return convertView
     }
 
-
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        TextView deckNameView;
+    override fun getDropDownView(position: Int, view: View?, parent: ViewGroup): View? {
+        var convertView = view
+        val deckNameView: TextView
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.dropdown_deck_item, parent, false);
-            deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
-            convertView.setTag(deckNameView);
+            convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false)
+            deckNameView = convertView.findViewById(R.id.dropdown_deck_name)
+            convertView.tag = deckNameView
         } else {
-            deckNameView = (TextView) convertView.getTag();
+            deckNameView = convertView.tag as TextView
         }
         if (position == 0) {
-            deckNameView.setText(mContext.getResources().getString(R.string.card_browser_all_decks));
+            deckNameView.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            Deck deck = mDecks.get(position - 1);
-            String deckName = deck.getString("name");
-            deckNameView.setText(deckName);
+            val deck = decks!![position - 1]
+            val deckName = deck!!.getString("name")
+            deckNameView.text = deckName
         }
-        return convertView;
+        return convertView
     }
 }
