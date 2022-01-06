@@ -32,6 +32,9 @@ The program will help you to improve your listening skills.
 You can listen phrases from tatoeba.org and import them directly to AnkiDroid.
 [code here](https://bitbucket.org/snailp4el/tatoeba/src/master/)
 
+### [Nordict](https://github.com/vitkyrka/nordict)
+App with a learner-friendly interface to (monolingual) Swedish, Danish and French dictionaries.  AnkiDroid integration is one of the main features.  Flashcards can be created directly from the app, with one meaning per flashcard.  Images can be added to the card from Google Image Search, and JavaScript is used to display a subset of the embedded images and example sentences on the front.  The pronunciation audio from the dictionary is embedded in the flashcard.  Open source.
+
 ### [Pleco Chinese Dictionary](https://play.google.com/store/apps/details?id=com.pleco.chinesesystem)
 Pleco is the ultimate Chinese learning companion - an integrated Chinese English dictionary / document reader / flashcard system with fullscreen handwriting input and live camera-based character lookups. Flashcards can be added directly into AnkiDroid and the Note type and field mappings are customizable.
 ### [ReadDict](https://play.google.com/store/apps/details?id=com.a10adevelopment.readdict)
