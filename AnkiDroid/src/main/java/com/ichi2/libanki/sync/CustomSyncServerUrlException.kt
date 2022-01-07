@@ -14,33 +14,23 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.sync;
+package com.ichi2.libanki.sync
 
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.CUSTOM_SYNC_SERVER_URL;
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType
+import com.ichi2.utils.KotlinCleanup
 
-public class CustomSyncServerUrlException extends RuntimeException {
-    private final String mUrl;
-
-
-    public CustomSyncServerUrlException(String url, IllegalArgumentException ex) {
-        super(getMessage(url), ex);
-        this.mUrl = url;
-    }
-
-
-    private static String getMessage(String url) {
-        return "Invalid Custom Sync Server URL: " + url;
-    }
-
-
-    @Override
-    public String getLocalizedMessage() {
+class CustomSyncServerUrlException(
+    val url: String,
+    @KotlinCleanup("See if ex can be made non-null") ex: IllegalArgumentException?
+) : RuntimeException(getMessage(url), ex) {
+    override fun getLocalizedMessage(): String {
         // Janky. Connection uses this as a string to return, which is switched on to determine the message in DeckPicker
-        return CUSTOM_SYNC_SERVER_URL.toString();
+        return ConnectionResultType.CUSTOM_SYNC_SERVER_URL.toString()
     }
 
-
-    public String getUrl() {
-        return mUrl;
+    companion object {
+        private fun getMessage(url: String): String {
+            return "Invalid Custom Sync Server URL: $url"
+        }
     }
 }
