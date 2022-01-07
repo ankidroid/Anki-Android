@@ -13,68 +13,67 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.sync
 
-package com.ichi2.libanki.sync;
-
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-
-import timber.log.Timber;
+import timber.log.Timber
+import java.security.KeyStore
+import java.security.KeyStoreException
+import java.security.NoSuchAlgorithmException
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+import java.util.*
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 // https://stackoverflow.com/questions/27562666/programmatically-add-a-certificate-authority-while-keeping-android-system-ssl-ce
 // Changes:
 // We try the local manager first.
 // Cached the accepted issuers.
 // Did not ignore NoSuchAlgorithmException
-class UnifiedTrustManager implements X509TrustManager {
-    private X509TrustManager mDefaultTrustManager;
-    private X509TrustManager mLocalTrustManager;
-    private X509Certificate[] mAcceptedIssuers;
+internal class UnifiedTrustManager(localKeyStore: KeyStore?) : X509TrustManager {
+    private val mDefaultTrustManager: X509TrustManager
+    private val mLocalTrustManager: X509TrustManager
+    private val mAcceptedIssuers: Array<X509Certificate>
 
-    public UnifiedTrustManager(KeyStore localKeyStore) throws KeyStoreException, NoSuchAlgorithmException {
-        this.mDefaultTrustManager = createTrustManager(null);
-        this.mLocalTrustManager = createTrustManager(localKeyStore);
-        X509Certificate[] first = mDefaultTrustManager.getAcceptedIssuers();
-        X509Certificate[] second = mLocalTrustManager.getAcceptedIssuers();
-        mAcceptedIssuers = Arrays.copyOf(first, first.length + second.length);
-        System.arraycopy(second, 0, mAcceptedIssuers, first.length, second.length);
+    @Throws(NoSuchAlgorithmException::class, KeyStoreException::class)
+    private fun createTrustManager(store: KeyStore?): X509TrustManager {
+        val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
+        val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
+        tmf.init(store)
+        val trustManagers = tmf.trustManagers
+        return trustManagers[0] as X509TrustManager
     }
 
-    private X509TrustManager createTrustManager(KeyStore store) throws NoSuchAlgorithmException, KeyStoreException {
-        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-        tmf.init(store);
-        TrustManager[] trustManagers = tmf.getTrustManagers();
-        return (X509TrustManager) trustManagers[0];
-    }
-
-    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    @Throws(CertificateException::class)
+    override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
         try {
-            mLocalTrustManager.checkServerTrusted(chain, authType);
-        } catch (CertificateException ce) {
-            Timber.w(ce);
-            mDefaultTrustManager.checkServerTrusted(chain, authType);
+            mLocalTrustManager.checkServerTrusted(chain, authType)
+        } catch (ce: CertificateException) {
+            Timber.w(ce)
+            mDefaultTrustManager.checkServerTrusted(chain, authType)
         }
     }
-    @Override
-    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+    @Throws(CertificateException::class)
+    override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
         try {
-            mLocalTrustManager.checkClientTrusted(chain, authType);
-        } catch (CertificateException ce) {
-            Timber.w(ce);
-            mDefaultTrustManager.checkClientTrusted(chain, authType);
+            mLocalTrustManager.checkClientTrusted(chain, authType)
+        } catch (ce: CertificateException) {
+            Timber.w(ce)
+            mDefaultTrustManager.checkClientTrusted(chain, authType)
         }
     }
-    @Override
-    public X509Certificate[] getAcceptedIssuers() {
-        return mAcceptedIssuers;
+
+    override fun getAcceptedIssuers(): Array<X509Certificate> {
+        return mAcceptedIssuers
+    }
+
+    init {
+        mDefaultTrustManager = createTrustManager(null)
+        mLocalTrustManager = createTrustManager(localKeyStore)
+        val first = mDefaultTrustManager.acceptedIssuers
+        val second = mLocalTrustManager.acceptedIssuers
+        mAcceptedIssuers = Arrays.copyOf(first, first.size + second.size)
+        System.arraycopy(second, 0, mAcceptedIssuers, first.size, second.size)
     }
 }
