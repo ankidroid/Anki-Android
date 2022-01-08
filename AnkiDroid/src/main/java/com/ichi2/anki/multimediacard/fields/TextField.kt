@@ -17,119 +17,85 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Collection
 
 /**
  * Text Field implementation.
  */
-public class TextField extends FieldBase implements IField {
-    private static final long serialVersionUID = -6508967905716947525L;
-    String mText = "";
-    private String mName;
-
-
-    @Override
-    public EFieldType getType() {
-        return EFieldType.TEXT;
+class TextField : FieldBase(), IField {
+    private var mText = ""
+    private var mName: String? = null
+    override fun getType(): EFieldType {
+        return EFieldType.TEXT
     }
 
-
-    @Override
-    public boolean setType(EFieldType type) {
-        return false;
+    override fun setType(type: EFieldType): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isModified() {
-        return getThisModified();
+    override fun isModified(): Boolean {
+        return thisModified
     }
 
-
-    @Override
-    public String getHtml() {
-        return null;
+    override fun getHtml(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setHtml(String html) {
-        return false;
+    override fun setHtml(html: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean setImagePath(String pathToImage) {
-        return false;
+    override fun setImagePath(pathToImage: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public String getImagePath() {
-        return null;
+    override fun getImagePath(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setAudioPath(String pathToAudio) {
-        return false;
+    override fun setAudioPath(pathToAudio: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public String getAudioPath() {
-        return null;
+    override fun getAudioPath(): String? {
+        return null
     }
 
-
-    @Override
-    public String getText() {
-        return mText;
+    override fun getText(): String {
+        return mText
     }
 
-
-    @Override
-    public boolean setText(String text) {
-        mText = text;
-        setThisModified();
-        return true;
+    override fun setText(text: String): Boolean {
+        mText = text
+        setThisModified()
+        return true
     }
 
-
-    @Override
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-    }
-
-
-    @Override
-    public boolean hasTemporaryMedia() {
+    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {}
+    override fun hasTemporaryMedia(): Boolean {
         // TODO Auto-generated method stub
-        return false;
+        return false
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun getName(): String {
+        return mName!!
     }
 
-
-    @Override
-    public void setName(String name) {
-        mName = name;
+    override fun setName(name: String) {
+        mName = name
     }
 
-
-    @Override
-    public String getFormattedValue() {
-        return getText();
+    override fun getFormattedValue(): String {
+        return text
     }
 
+    override fun setFormattedString(col: Collection, value: String) {
+        mText = value
+    }
 
-    @Override
-    public void setFormattedString(Collection col, String value) {
-        mText = value;
+    companion object {
+        private const val serialVersionUID = -6508967905716947525L
     }
 }
