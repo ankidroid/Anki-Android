@@ -15,19 +15,19 @@ class AudioRecordingField : AudioField() {
     }
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
-        mHasTemporaryMedia = hasTemporaryMedia
+        currentHasTemporaryMedia = hasTemporaryMedia
     }
 
     override fun hasTemporaryMedia(): Boolean {
-        return mHasTemporaryMedia
+        return currentHasTemporaryMedia
     }
 
-    override fun getName(): String {
-        return mName
+    override fun getName(): String? {
+        return currentName
     }
 
     override fun setName(name: String) {
-        mName = name
+        currentName = name
     }
 
     companion object {
