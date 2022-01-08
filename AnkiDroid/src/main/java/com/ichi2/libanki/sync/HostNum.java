@@ -18,6 +18,8 @@ package com.ichi2.libanki.sync;
 
 import com.ichi2.libanki.Consts;
 
+import androidx.annotation.Nullable;
+
 /**
  * The server provides hostNum in the /sync/meta call. All requests after that (including future meta requests)
  * should use that hostNum to construct the sync URL, until a future /sync/meta call advises otherwise.
@@ -53,6 +55,7 @@ public class HostNum {
         mHostNum = getDefaultHostNum();
     }
 
+    @Nullable
     protected static Integer getDefaultHostNum() {
         return Consts.DEFAULT_HOST_NUM;
     }
