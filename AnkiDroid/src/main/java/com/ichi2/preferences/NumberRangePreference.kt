@@ -13,58 +13,46 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.preferences
 
-package com.ichi2.preferences;
+import android.content.Context
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
+import android.text.InputType
+import android.text.TextUtils
+import android.util.AttributeSet
+import com.ichi2.anki.AnkiDroidApp
+import timber.log.Timber
 
-import android.content.Context;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.util.AttributeSet;
+@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
+open class NumberRangePreference : android.preference.EditTextPreference {
+    protected val mMin: Int
+    private val mMax: Int
 
-import com.ichi2.anki.AnkiDroidApp;
-
-import timber.log.Timber;
-
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
-public class NumberRangePreference extends android.preference.EditTextPreference {
-
-    protected final int mMin;
-    private final int mMax;
-
-
-    public NumberRangePreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        mMin = getMinFromAttributes(attrs);
-        mMax = getMaxFromAttributes(attrs);
-        updateSettings();
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+        mMin = getMinFromAttributes(attrs)
+        mMax = getMaxFromAttributes(attrs)
+        updateSettings()
     }
 
-
-    public NumberRangePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mMin = getMinFromAttributes(attrs);
-        mMax = getMaxFromAttributes(attrs);
-        updateSettings();
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        mMin = getMinFromAttributes(attrs)
+        mMax = getMaxFromAttributes(attrs)
+        updateSettings()
     }
 
-
-    public NumberRangePreference(Context context) {
-        super(context);
-        mMin = getMinFromAttributes(null);
-        mMax = getMaxFromAttributes(null);
-        updateSettings();
+    constructor(context: Context?) : super(context) {
+        mMin = getMinFromAttributes(null)
+        mMax = getMaxFromAttributes(null)
+        updateSettings()
     }
 
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
+    override fun onDialogClosed(positiveResult: Boolean) {
         if (positiveResult) {
-            int validated = getValidatedRangeFromString(getEditText().getText().toString());
-            setValue(validated);
+            val validated = getValidatedRangeFromString(editText.text.toString())
+            value = validated
         }
     }
-
 
     /*
      * Since this preference deals with integers only, it makes sense to only store and retrieve integers. However,
@@ -72,116 +60,106 @@ public class NumberRangePreference extends android.preference.EditTextPreference
      * type. The two methods below intercept the persistence and retrieval methods for Strings and replaces them with
      * their Integer equivalents.
      */
-
-    @Override
-    protected String getPersistedString(String defaultReturnValue) {
-        return String.valueOf(getPersistedInt(mMin));
+    override fun getPersistedString(defaultReturnValue: String): String {
+        return getPersistedInt(mMin).toString()
     }
 
-
-    @Override
-    protected boolean persistString(String value) {
-        return persistInt(Integer.parseInt(value));
+    override fun persistString(value: String): Boolean {
+        return persistInt(value.toInt())
     }
-
 
     /**
      * Return the string as an int with the number rounded to the nearest bound if it is outside of the acceptable
      * range.
-     * 
+     *
      * @param input User input in text editor.
      * @return The input value within acceptable range.
      */
-    private int getValidatedRangeFromString(String input) {
-        if (TextUtils.isEmpty(input)) {
-            return mMin;
+    private fun getValidatedRangeFromString(input: String): Int {
+        return if (TextUtils.isEmpty(input)) {
+            mMin
         } else {
             try {
-                return getValidatedRangeFromInt(Integer.parseInt(input));
-            } catch (NumberFormatException e) {
-                Timber.w(e);
-                return mMin;
+                getValidatedRangeFromInt(input.toInt())
+            } catch (e: NumberFormatException) {
+                Timber.w(e)
+                mMin
             }
         }
     }
 
-
     /**
      * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
-     * 
+     *
      * @param input Integer to validate.
      * @return The input value within acceptable range.
      */
-    protected int getValidatedRangeFromInt(int input) {
+    protected fun getValidatedRangeFromInt(input: Int): Int {
+        var result = input
         if (input < mMin) {
-            input = mMin;
+            result = mMin
         } else if (input > mMax) {
-            input = mMax;
+            result = mMax
         }
-        return input;
+        return result
     }
-
 
     /**
      * Returns the value of the min attribute, or its default value if not specified
-     * <p>
+     *
+     *
      * This method should only be called once from the constructor.
      */
-    private int getMinFromAttributes(AttributeSet attrs) {
-        return attrs == null ? 0 : attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
+    private fun getMinFromAttributes(attrs: AttributeSet?): Int {
+        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
     }
-
 
     /**
      * Returns the value of the max attribute, or its default value if not specified
-     * <p>
+     *
+     *
      * This method should only be called once from the constructor.
      */
-    private int getMaxFromAttributes(AttributeSet attrs) {
-        return attrs == null ? Integer.MAX_VALUE : attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max",
-                Integer.MAX_VALUE);
+    private fun getMaxFromAttributes(attrs: AttributeSet?): Int {
+        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE)
+            ?: Int.MAX_VALUE
     }
-
 
     /**
      * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based
-     * on the current value of the {@link #mMax} field.
-     * <p>
+     * on the current value of the [.mMax] field.
+     *
+     *
      * This method should only be called once from the constructor.
      */
-    private void updateSettings() {
+    private fun updateSettings() {
         // Only allow integer input
-        getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         // Set max number of digits
-        int maxLength = String.valueOf(mMax).length();
+        val maxLength = mMax.toString().length
         // Clone the existing filters so we don't override them, then append our one at the end.
-        InputFilter[] filters = getEditText().getFilters();
-        InputFilter[] newFilters = new InputFilter[filters.length + 1];
-        System.arraycopy(filters, 0, newFilters, 0, filters.length);
-        newFilters[newFilters.length - 1] = new InputFilter.LengthFilter(maxLength);
-        getEditText().setFilters(newFilters);
+        val filters = editText.filters
+        val newFilters = arrayOfNulls<InputFilter>(filters.size + 1)
+        System.arraycopy(filters, 0, newFilters, 0, filters.size)
+        newFilters[newFilters.size - 1] = LengthFilter(maxLength)
+        editText.filters = newFilters
     }
-
-
-    /**
-     * Get the persisted value held by this preference.
-     * 
-     * @return the persisted value.
-     */
-    public int getValue() {
-        return getPersistedInt(mMin);
-    }
-
-
-    /**
-     * Set this preference's value. The value is validated and persisted as an Integer.
-     * 
-     * @param value to set.
-     */
-    public void setValue(int value) {
-        int validated = getValidatedRangeFromInt(value);
-        setText(Integer.toString(validated));
-        persistInt(validated);
-    }
+    var value: Int
+        /**
+         * Get the persisted value held by this preference.
+         *
+         * @return the persisted value.
+         */
+        get() = getPersistedInt(mMin)
+        /**
+         * Set this preference's value. The value is validated and persisted as an Integer.
+         *
+         * @param value to set.
+         */
+        set(value) {
+            val validated = getValidatedRangeFromInt(value)
+            text = validated.toString()
+            persistInt(validated)
+        }
 }
