@@ -152,14 +152,17 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     mMountReceiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
+                            // baseContext() is null, applicationContext() throws a NPE,
+                            // context may not have the locale override from AnkiDroidApp
+                            context = AnkiDroidApp.getInstance();
                             String action = intent.getAction();
                             if (action != null && action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                                 Timber.d("mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
-                                    WidgetStatus.update(getBaseContext());
+                                    WidgetStatus.update(context);
                                     remounted = false;
                                     if (mMountReceiver != null) {
-                                        AnkiDroidApp.getInstance().unregisterReceiver(mMountReceiver);
+                                        context.unregisterReceiver(mMountReceiver);
                                     }
                                 } else {
                                     remounted = true;
