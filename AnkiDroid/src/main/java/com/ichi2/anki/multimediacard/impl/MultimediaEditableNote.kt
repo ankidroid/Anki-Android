@@ -17,126 +17,92 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.impl;
+package com.ichi2.anki.multimediacard.impl
 
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.IField;
-
-import java.util.ArrayList;
-
-import androidx.annotation.Nullable;
-
-import static org.acra.util.IOUtils.deserialize;
-import static org.acra.util.IOUtils.serialize;
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.fields.IField
+import org.acra.util.IOUtils
+import java.util.*
 
 /**
  * Implementation of the editable note.
  * <p>
  * Has to be translate to and from anki db format.
  */
+class MultimediaEditableNote : IMultimediaEditableNote {
+    override var isModified = false
+        private set
+    private var mFields: ArrayList<IField?>? = null
+    var modelId: Long = 0
 
-public class MultimediaEditableNote implements IMultimediaEditableNote {
-    private static final long serialVersionUID = -6161821367135636659L;
-    private boolean mIsModified = false;
-    private ArrayList<IField> mFields;
-    private long mModelId;
     /**
      * Field values in the note editor, before any editing has taken place
      * These values should not be modified
      */
-    public ArrayList<IField> mInitialFields;
-
-
-    private void setThisModified() {
-        mIsModified = true;
+    private var mInitialFields: ArrayList<IField?>? = null
+    private fun setThisModified() {
+        isModified = true
     }
-
-
-    @Override
-    public boolean isModified() {
-        return mIsModified;
-    }
-
 
     // package
-    public void setNumFields(int numberOfFields) {
-        getFieldsPrivate().clear();
-        for (int i = 0; i < numberOfFields; ++i) {
-            getFieldsPrivate().add(null);
+    fun setNumFields(numberOfFields: Int) {
+        fieldsPrivate.clear()
+        for (i in 0 until numberOfFields) {
+            fieldsPrivate.add(null)
         }
     }
 
-
-    private ArrayList<IField> getFieldsPrivate() {
-        if (mFields == null) {
-            mFields = new ArrayList<>(0);
+    private val fieldsPrivate: ArrayList<IField?>
+        get() {
+            if (mFields == null) {
+                mFields = ArrayList(0)
+            }
+            return mFields!!
         }
+    override val numberOfFields: Int
+        get() = fieldsPrivate.size
 
-        return mFields;
+    override fun getField(index: Int): IField? {
+        return if (index in 0 until numberOfFields) {
+            fieldsPrivate[index]
+        } else null
     }
 
-
-    @Override
-    public int getNumberOfFields() {
-        return getFieldsPrivate().size();
-    }
-
-
-    @Override
-    public IField getField(int index) {
-        if (index >= 0 && index < getNumberOfFields()) {
-            return getFieldsPrivate().get(index);
-        }
-        return null;
-    }
-
-
-    @Override
-    public boolean setField(int index, IField field) {
-        if (index >= 0 && index < getNumberOfFields()) {
+    override fun setField(index: Int, field: IField?): Boolean {
+        if (index in 0 until numberOfFields) {
             // If the same unchanged field is set.
-            if (getField(index) == field) {
-                if (field.isModified()) {
-                    setThisModified();
+            if (getField(index) === field) {
+                if (field!!.isModified) {
+                    setThisModified()
                 }
             } else {
-                setThisModified();
+                setThisModified()
             }
-
-            getFieldsPrivate().set(index, field);
-
-            return true;
+            fieldsPrivate[index] = field
+            return true
         }
-        return false;
+        return false
     }
 
-
-    public void setModelId(long modelId) {
-        mModelId = modelId;
-    }
-
-
-    public long getModelId() {
-        return mModelId;
-    }
-
-    public void freezeInitialFieldValues() {
-        mInitialFields = new ArrayList<>();
-        for (IField f : mFields) {
-            mInitialFields.add(cloneField(f));
+    fun freezeInitialFieldValues() {
+        mInitialFields = ArrayList()
+        for (f in mFields!!) {
+            mInitialFields!!.add(cloneField(f))
         }
     }
 
-    public int getInitialFieldCount() {
-        return mInitialFields.size();
+    override val initialFieldCount: Int
+        get() = mInitialFields!!.size
+
+    override fun getInitialField(index: Int): IField? {
+        return cloneField(mInitialFields!![index])
     }
 
-    public IField getInitialField(int index) {
-        return cloneField(mInitialFields.get(index));
+    private fun cloneField(f: IField?): IField? {
+        return IOUtils.deserialize(IField::class.java, IOUtils.serialize(f!!))
     }
 
-    @Nullable
-    private IField cloneField(IField f) {
-        return deserialize(IField.class, serialize(f));
+    companion object {
+        private const val serialVersionUID = -6161821367135636659L
     }
 }
