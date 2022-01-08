@@ -27,7 +27,7 @@ class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPref
         hostNum = getDefaultHostNum()
     }
 
-    override fun getHostNum(): Int {
+    override fun getHostNum(): Int? {
         return getHostNum(preferences)
     }
 
@@ -50,7 +50,7 @@ class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPref
             return PreferenceBackedHostNum(hostNum, preferences)
         }
 
-        private fun getHostNum(preferences: SharedPreferences): Int {
+        private fun getHostNum(preferences: SharedPreferences): Int? {
             return try {
                 val hostNum = preferences.getString("hostNum", null)
                 Timber.v("Obtained hostNum: %s", hostNum)
@@ -61,7 +61,7 @@ class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPref
             }
         }
 
-        private fun convertFromPreferenceValue(hostNum: String?): Int {
+        private fun convertFromPreferenceValue(hostNum: String?): Int? {
             return if (hostNum == null) {
                 getDefaultHostNum()
             } else try {
