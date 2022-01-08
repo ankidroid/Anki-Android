@@ -14,84 +14,70 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-import com.ichi2.utils.MethodLogger;
-import com.ichi2.utils.Threads;
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.utils.MethodLogger.log
+import com.ichi2.utils.Threads
 
-import androidx.annotation.Nullable;
-
-import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
-
-@SuppressWarnings("deprecation") // #7108: AsyncTask
-public class BaseAsyncTask<Params, Progress, Result> extends android.os.AsyncTask<Params, Progress, Result> implements ProgressSenderAndCancelListener<Progress> {
-
-    /** Set this to {@code true} to enable detailed debugging for this class. */
-    private static final boolean DEBUG = false;
-
-
-    public BaseAsyncTask() {
+@Suppress("deprecation") // #7108: AsyncTask
+open class BaseAsyncTask<Params, Progress, Result> : android.os.AsyncTask<Params, Progress, Result?>(), ProgressSenderAndCancelListener<Progress> {
+    override fun onPreExecute() {
         if (DEBUG) {
-            MethodLogger.log();
+            log()
         }
-        Threads.checkMainThread();
+        Threads.checkMainThread()
+        super.onPreExecute()
     }
 
-
-    @Override
-    protected void onPreExecute() {
+    override fun onPostExecute(result: Result?) {
         if (DEBUG) {
-            MethodLogger.log();
+            log()
         }
-        Threads.checkMainThread();
-        super.onPreExecute();
+        if (isCancelled) {
+            AnkiDroidApp.sendExceptionReport("onPostExecute called with task cancelled. This should never occur !", "BaseAsyncTask - onPostExecute")
+        }
+        Threads.checkMainThread()
+        super.onPostExecute(result)
     }
 
-
-    @Override
-    protected void onPostExecute(Result result) {
+    override fun onProgressUpdate(vararg values: Progress) {
         if (DEBUG) {
-            MethodLogger.log();
+            log()
         }
-        if (isCancelled()) {
-            sendExceptionReport("onPostExecute called with task cancelled. This should never occur !", "BaseAsyncTask - onPostExecute");
-        }
-        Threads.checkMainThread();
-        super.onPostExecute(result);
+        Threads.checkMainThread()
+        super.onProgressUpdate(*values)
     }
 
-
-    @Override
-    protected void onProgressUpdate(Progress... values) {
+    override fun onCancelled() {
         if (DEBUG) {
-            MethodLogger.log();
+            log()
         }
-        Threads.checkMainThread();
-        super.onProgressUpdate(values);
+        Threads.checkMainThread()
+        super.onCancelled()
     }
 
-
-    @Override
-    protected void onCancelled() {
+    override fun doInBackground(vararg arg0: Params): Result? {
         if (DEBUG) {
-            MethodLogger.log();
+            log()
         }
-        Threads.checkMainThread();
-        super.onCancelled();
+        Threads.checkNotMainThread()
+        return null
     }
 
-
-    @Override
-    protected Result doInBackground(Params... arg0) {
-        if (DEBUG) {
-            MethodLogger.log();
-        }
-        Threads.checkNotMainThread();
-        return null;
+    override fun doProgress(value: Progress?) {
+        publishProgress(value)
     }
 
+    companion object {
+        /** Set this to `true` to enable detailed debugging for this class.  */
+        private const val DEBUG = false
+    }
 
-    public void doProgress(@Nullable Progress value) {
-        publishProgress(value);
+    init {
+        if (DEBUG) {
+            log()
+        }
+        Threads.checkMainThread()
     }
 }
