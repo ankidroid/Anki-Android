@@ -17,128 +17,86 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.libanki.Collection;
-
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
+import java.io.File
+import java.util.regex.Pattern
 
 /**
  * Implementation of Audio field types
  */
-public abstract class AudioField extends FieldBase implements IField {
-    protected String mAudioPath;
-    protected String mName;
-    protected boolean mHasTemporaryMedia = false;
-
-    protected static final String PATH_REGEX = "\\[sound:(.*)]";
-
-
-    @Override
-    public abstract EFieldType getType();
-
-
-    @Override
-    public boolean setType(EFieldType type) {
-        return false;
+@KotlinCleanup("want name & hasTemporaryMedia to be a property in the interface rather than a getter/setter")
+abstract class AudioField : FieldBase(), IField {
+    private var mAudioPath: String? = null
+    protected var currentName: String? = null
+    protected var currentHasTemporaryMedia = false
+    abstract override fun getType(): EFieldType
+    override fun setType(type: EFieldType): Boolean {
+        return false
     }
 
-
-    @Override
-    public abstract boolean isModified();
-
-
-    @Override
-    public String getHtml() {
-        return null;
+    abstract override fun isModified(): Boolean
+    override fun getHtml(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setHtml(String html) {
-        return false;
+    override fun setHtml(html: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean setImagePath(String pathToImage) {
-        return false;
+    override fun setImagePath(pathToImage: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public String getImagePath() {
-        return null;
+    override fun getImagePath(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setAudioPath(String pathToAudio) {
-        mAudioPath = pathToAudio;
-        setThisModified();
-        return true;
+    override fun setAudioPath(pathToAudio: String): Boolean {
+        mAudioPath = pathToAudio
+        setThisModified()
+        return true
     }
 
-
-    @Override
-    public String getAudioPath() {
-        return mAudioPath;
+    override fun getAudioPath(): String {
+        return mAudioPath!!
     }
 
-
-    @Override
-    public String getText() {
-        return null;
+    override fun getText(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setText(String text) {
-        return false;
+    override fun setText(text: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public abstract void setHasTemporaryMedia(boolean hasTemporaryMedia);
-
-
-    @Override
-    public abstract boolean hasTemporaryMedia();
-
-
-    @Override
-    public abstract String getName();
-
-
-    @Override
-    public abstract void setName(String name);
-
-
-    @Override
-    public String getFormattedValue() {
-        String formattedValue = "";
-        if (getAudioPath() != null) {
-            File file = new File(getAudioPath());
-            if (file.exists()) {
-                formattedValue = String.format("[sound:%s]", file.getName());
-            }
+    abstract override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
+    abstract override fun hasTemporaryMedia(): Boolean
+    abstract override fun getName(): String?
+    abstract override fun setName(name: String)
+    override fun getFormattedValue(): String {
+        var formattedValue = ""
+        val file = File(audioPath)
+        if (file.exists()) {
+            formattedValue = String.format("[sound:%s]", file.name)
         }
-
-        return formattedValue;
+        return formattedValue
     }
 
-
-    @Override
-    public void setFormattedString(Collection col, String value) {
-        Pattern p = Pattern.compile(PATH_REGEX);
-        Matcher m = p.matcher(value);
-        String res = "";
+    override fun setFormattedString(col: Collection, value: String) {
+        val p = Pattern.compile(PATH_REGEX)
+        val m = p.matcher(value)
+        var res = ""
         if (m.find()) {
-            res = m.group(1);
+            res = m.group(1)!!
         }
-        String mediaDir = col.getMedia().dir() + "/";
-        setAudioPath(mediaDir + res);
+        val mediaDir = col.media.dir() + "/"
+        audioPath = mediaDir + res
+    }
+
+    companion object {
+        protected const val PATH_REGEX = "\\[sound:(.*)]"
     }
 }
