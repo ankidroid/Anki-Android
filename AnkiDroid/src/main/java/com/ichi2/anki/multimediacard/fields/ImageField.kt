@@ -17,176 +17,130 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.libanki.Collection;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.io.File;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import com.ichi2.libanki.Collection
+import org.jsoup.Jsoup
+import timber.log.Timber
+import java.io.File
 
 /**
  * Field with an image.
  */
-public class ImageField extends FieldBase implements IField {
-    private static final long serialVersionUID = 4431611060655809687L;
-    String mImagePath;
-    private boolean mHasTemporaryMedia = false;
-    private String mName;
-
-
-    @Override
-    public EFieldType getType() {
-        return EFieldType.IMAGE;
+class ImageField : FieldBase(), IField {
+    private var mImagePath: String? = null
+    private var mHasTemporaryMedia = false
+    private var mName: String? = null
+    override fun getType(): EFieldType {
+        return EFieldType.IMAGE
     }
 
-
-    @Override
-    public boolean setType(EFieldType type) {
-        return false;
+    override fun setType(type: EFieldType): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isModified() {
-        return getThisModified();
+    override fun isModified(): Boolean {
+        return thisModified
     }
 
-
-    @Override
-    public String getHtml() {
-        return null;
+    override fun getHtml(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setHtml(String html) {
-        return false;
+    override fun setHtml(html: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean setImagePath(String pathToImage) {
-        mImagePath = pathToImage;
-        setThisModified();
-        return true;
+    override fun setImagePath(pathToImage: String): Boolean {
+        mImagePath = pathToImage
+        setThisModified()
+        return true
     }
 
-
-    @Override
-    public String getImagePath() {
-        return mImagePath;
+    override fun getImagePath(): String? {
+        return mImagePath
     }
 
-
-    @Override
-    public boolean setAudioPath(String pathToAudio) {
-        return false;
+    override fun setAudioPath(pathToAudio: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public String getAudioPath() {
-        return null;
+    override fun getAudioPath(): String? {
+        return null
     }
 
-
-    @Override
-    public String getText() {
-        return null;
+    override fun getText(): String? {
+        return null
     }
 
-
-    @Override
-    public boolean setText(String text) {
-        return false;
+    override fun setText(text: String): Boolean {
+        return false
     }
 
-
-    @Override
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
-        mHasTemporaryMedia = hasTemporaryMedia;
+    override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
+        mHasTemporaryMedia = hasTemporaryMedia
     }
 
-
-    @Override
-    public boolean hasTemporaryMedia() {
-        return mHasTemporaryMedia;
+    override fun hasTemporaryMedia(): Boolean {
+        return mHasTemporaryMedia
     }
 
-
-    @Override
-    public String getName() {
-        return mName;
+    override fun getName(): String {
+        return mName!!
     }
 
-
-    @Override
-    public void setName(String name) {
-        mName = name;
+    override fun setName(name: String) {
+        mName = name
     }
 
-
-    @Override
-    public String getFormattedValue() {
-        File file = new File(getImagePath());
-        return formatImageFileName(file);
+    override fun getFormattedValue(): String {
+        val file = File(imagePath!!)
+        return formatImageFileName(file)
     }
 
-
-    @NonNull
-    @VisibleForTesting
-    static String formatImageFileName(@NonNull File file) {
-        if (file.exists()) {
-            return String.format("<img src=\"%s\">", file.getName());
-        } else {
-            return "";
-        }
+    override fun setFormattedString(col: Collection, value: String) {
+        setImagePath(getImageFullPath(col, value))
     }
 
-
-    @Override
-    public void setFormattedString(Collection col, String value) {
-        setImagePath(getImageFullPath(col, value));
-    }
-
-
-    @NonNull
-    @VisibleForTesting
-    static String getImageFullPath(Collection col, String value) {
-        String path = parseImageSrcFromHtml(value);
-        if ("".equals(path)) {
-            return "";
-        }
-        String mediaDir = col.getMedia().dir() + "/";
-        return mediaDir + path;
-    }
-
-
-    @VisibleForTesting
-    @CheckResult
-    @NonNull
-    static String parseImageSrcFromHtml(String html) {
-        if (html == null) {
-            return "";
-        }
-        try {
-            Document doc = Jsoup.parseBodyFragment(html);
-            Element image = doc.selectFirst("img[src]");
-            if (image == null) {
-                return "";
+    companion object {
+        private const val serialVersionUID = 4431611060655809687L
+        @JvmStatic
+        @VisibleForTesting
+        fun formatImageFileName(file: File): String {
+            return if (file.exists()) {
+                String.format("<img src=\"%s\">", file.name)
+            } else {
+                ""
             }
-            return image.attr("src");
-        } catch (Exception e) {
-            Timber.w(e);
-            return "";
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        fun getImageFullPath(col: Collection, value: String): String {
+            val path = parseImageSrcFromHtml(value)
+            if ("" == path) {
+                return ""
+            }
+            val mediaDir = col.media.dir() + "/"
+            return mediaDir + path
+        }
+
+        @JvmStatic
+        @VisibleForTesting
+        @CheckResult
+        fun parseImageSrcFromHtml(html: String?): String {
+            return if (html == null) {
+                ""
+            } else try {
+                val doc = Jsoup.parseBodyFragment(html)
+                val image = doc.selectFirst("img[src]") ?: return ""
+                image.attr("src")
+            } catch (e: Exception) {
+                Timber.w(e)
+                ""
+            }
         }
     }
 }
