@@ -15,117 +15,112 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sync;
+package com.ichi2.libanki.sync
 
-import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.async.Connection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.VersionUtils;
+import com.ichi2.anki.exception.UnknownHttpResponseException
+import com.ichi2.async.Connection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Utils
+import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.VersionUtils.pkgVersionName
+import okhttp3.Response
+import timber.log.Timber
+import java.io.IOException
+import java.util.*
 
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-
-import okhttp3.Response;
-import timber.log.Timber;
-
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
-public class RemoteServer extends HttpSyncer {
-
-    public RemoteServer(Connection con, String hkey, HostNum hostNum) {
-        super(hkey, con, hostNum);
-    }
-
-
-    /** Returns hkey or null if user/pw incorrect. */
-    public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
-        try {
-            mPostVars = HashUtil.HashMapInit(0);
-            JSONObject credentials = new JSONObject();
-            credentials.put("u", user);
-            credentials.put("p", pw);
-            return super.req("hostKey", HttpSyncer.getInputStream(Utils.jsonToString(credentials)));
-        } catch (JSONException e) {
-            Timber.w(e);
-            return null;
+class RemoteServer(con: Connection?, hkey: String?, hostNum: HostNum?) : HttpSyncer(hkey, con, hostNum) {
+    /** Returns hkey or null if user/pw incorrect.  */
+    @Throws(UnknownHttpResponseException::class)
+    fun hostKey(user: String?, pw: String?): Response? {
+        return try {
+            mPostVars = HashMapInit(0)
+            val credentials = JSONObject()
+            credentials.put("u", user)
+            credentials.put("p", pw)
+            super.req("hostKey", getInputStream(Utils.jsonToString(credentials)))
+        } catch (e: JSONException) {
+            Timber.w(e)
+            null
         }
     }
 
-
-    public Response meta() throws UnknownHttpResponseException {
-        mPostVars = HashUtil.HashMapInit(2);
-        mPostVars.put("k", mHKey);
-        mPostVars.put("s", mSKey);
-        JSONObject meta = new JSONObject();
-        meta.put("v", Consts.SYNC_VER);
-        meta.put("cv",
-                String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
-        return super.req("meta", HttpSyncer.getInputStream(Utils.jsonToString(meta)));
+    @Throws(UnknownHttpResponseException::class)
+    fun meta(): Response {
+        mPostVars = HashMapInit(2)
+        mPostVars["k"] = mHKey
+        mPostVars["s"] = mSKey
+        val meta = JSONObject()
+        meta.put("v", Consts.SYNC_VER)
+        meta.put("cv", String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc()))
+        return super.req("meta", getInputStream(Utils.jsonToString(meta)))
     }
 
-
-    public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
-        return parseDict(_run("applyChanges", kw));
+    @Throws(UnknownHttpResponseException::class)
+    fun applyChanges(kw: JSONObject): JSONObject {
+        return parseDict(_run("applyChanges", kw))
     }
 
-
-    public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
-        return parseDict(_run("start", kw));
+    @Throws(UnknownHttpResponseException::class)
+    fun start(kw: JSONObject): JSONObject {
+        return parseDict(_run("start", kw))
     }
 
-
-    public JSONObject chunk() throws UnknownHttpResponseException {
-        JSONObject co = new JSONObject();
-        return parseDict(_run("chunk", co));
+    @Throws(UnknownHttpResponseException::class)
+    fun chunk(): JSONObject {
+        val co = JSONObject()
+        return parseDict(_run("chunk", co))
     }
 
-
-    public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
-        _run("applyChunk", sech);
+    @Throws(UnknownHttpResponseException::class)
+    fun applyChunk(sech: JSONObject) {
+        _run("applyChunk", sech)
     }
 
-    public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
-        return parseDict(_run("sanityCheck2", client));
+    @Throws(UnknownHttpResponseException::class)
+    fun sanityCheck2(client: JSONObject): JSONObject {
+        return parseDict(_run("sanityCheck2", client))
     }
 
-    public long finish() throws UnknownHttpResponseException {
-        return parseLong(_run("finish", new JSONObject()));
+    @Throws(UnknownHttpResponseException::class)
+    fun finish(): Long {
+        return parseLong(_run("finish", JSONObject()))
     }
 
-    public void abort() throws UnknownHttpResponseException {
-        _run("abort", new JSONObject());
+    @Throws(UnknownHttpResponseException::class)
+    fun abort() {
+        _run("abort", JSONObject())
     }
 
-    /** Python has dynamic type deduction, but we don't, so return String **/
-    private String _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
-        Response ret = super.req(cmd, HttpSyncer.getInputStream(Utils.jsonToString(data)));
-        try {
-            return ret.body().string();
-        } catch (IllegalStateException | IOException e) {
-            throw new RuntimeException(e);
+    /** Python has dynamic type deduction, but we don't, so return String  */
+    @Throws(UnknownHttpResponseException::class)
+    private fun _run(cmd: String, data: JSONObject): String {
+        val ret = super.req(cmd, getInputStream(Utils.jsonToString(data)))
+        return try {
+            ret.body!!.string()
+        } catch (e: IllegalStateException) {
+            throw RuntimeException(e)
+        } catch (e: IOException) {
+            throw RuntimeException(e)
         }
     }
 
-    /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there **/
-    private JSONObject parseDict(String s) {
-        if (!"null".equalsIgnoreCase(s) && s.length() != 0) {
-            return new JSONObject(s);
+    /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there  */
+    private fun parseDict(s: String): JSONObject {
+        return if (!"null".equals(s, ignoreCase = true) && s.length != 0) {
+            JSONObject(s)
         } else {
-            return new JSONObject();
+            JSONObject()
         }
     }
 
-    private long parseLong(String s) {
-        try {
-            return Long.parseLong(s);
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            return 0;
+    private fun parseLong(s: String): Long {
+        return try {
+            s.toLong()
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            0
         }
     }
 }
