@@ -65,7 +65,7 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
         private val mDeckId: Long
         private var mIsRunning = false
         private val mChartType: ChartType
-        override fun doInBackgroundSafe(vararg params: View): PlotSheet? {
+        override fun doInBackgroundSafe(vararg views: View?): PlotSheet? {
             // make sure only one task of CreateChartTask is running, first to run should get sLock
             // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock()
@@ -77,9 +77,9 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
                 } else {
                     Timber.d("Starting CreateChartTask, type: %s", mChartType.name)
                 }
-                val imageView = params[0] as ChartView
+                val imageView = views[0] as ChartView
                 mImageView = WeakReference(imageView)
-                mProgressBar = WeakReference(params[1] as ProgressBar)
+                mProgressBar = WeakReference(views[1] as ProgressBar)
                 val chartBuilder = ChartBuilder(
                     imageView, collectionData,
                     mDeckId, mChartType
@@ -121,7 +121,7 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
         private val mStatType: AxisType
         private val mDeckId: Long
         private var mIsRunning = false
-        override fun doInBackgroundSafe(vararg params: View): String? {
+        override fun doInBackgroundSafe(vararg views: View?): String? {
             // make sure only one task of CreateChartTask is running, first to run should get sLock
             // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock()
@@ -133,9 +133,9 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
                 } else {
                     Timber.d("Starting CreateStatisticsOverview")
                 }
-                val webView = params[0] as WebView
+                val webView = views[0] as WebView
                 mWebView = WeakReference(webView)
-                mProgressBar = WeakReference(params[1] as ProgressBar)
+                mProgressBar = WeakReference(views[1] as ProgressBar)
                 val overviewStatsBuilder = OverviewStatsBuilder(webView, collectionData, mDeckId, mStatType)
                 overviewStatsBuilder.createInfoHtmlString()
             } finally {
