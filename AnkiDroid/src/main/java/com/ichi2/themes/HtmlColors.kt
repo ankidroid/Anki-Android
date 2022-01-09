@@ -19,7 +19,6 @@ package com.ichi2.themes
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.NumberFormatException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -33,8 +32,8 @@ object HtmlColors {
     private val fLongHexColorPattern = Pattern.compile("^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", Pattern.CASE_INSENSITIVE)
     private val fRgbColorPattern = Pattern.compile("^rgb\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\)$", Pattern.CASE_INSENSITIVE)
 
-    // In Android, } should be escaped
-    private val fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*})", Pattern.CASE_INSENSITIVE)
+    @Suppress("RegExpRedundantEscape") // In Android, } should be escaped
+    private val fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE)
     private fun nameToHex(name: String): String? {
         if (sColorsMap == null) {
             sColorsMap = HashMapInit(fColorsRawList.size)
