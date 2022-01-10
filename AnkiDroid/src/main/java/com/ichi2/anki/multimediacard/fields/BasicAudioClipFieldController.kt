@@ -41,7 +41,9 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
 
     @KotlinCleanup("Convert to FixedTextView and make lateinit")
     private var tvAudioClip: TextView? = null
-    override fun createUI(context: Context, layout: LinearLayout) {
+
+    @KotlinCleanup("make context non-null")
+    override fun createUI(context: Context?, layout: LinearLayout?) {
         val col = CollectionHelper.getInstance().getCol(context)
         storingDirectory = File(col.media.dir())
         // #9639: .opus is application/octet-stream in API 26,
@@ -64,7 +66,7 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
             val chooserPrompt = mActivity.resources.getString(R.string.multimedia_editor_popup_audio_clip)
             mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), ACTIVITY_SELECT_AUDIO_CLIP)
         }
-        layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
+        layout!!.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(mActivity)
         if (mField.audioPath == null) {
             (tvAudioClip as FixedTextView).setVisibility(View.GONE)
@@ -75,10 +77,11 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    @KotlinCleanup("make data non-null")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
             try {
-                handleAudioSelection(data)
+                handleAudioSelection(data!!)
             } catch (e: Exception) {
                 AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled")
                 showThemedToast(
