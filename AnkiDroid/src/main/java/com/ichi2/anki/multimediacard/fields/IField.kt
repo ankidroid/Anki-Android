@@ -17,85 +17,58 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.libanki.Collection;
-
-import java.io.Serializable;
+import com.ichi2.libanki.Collection
+import java.io.Serializable
 
 /**
  * General interface for a field of any type.
  */
-public interface IField extends Serializable {
-    EFieldType getType();
-
-
-    boolean setType(EFieldType type);
-
-
-    boolean isModified();
-
+interface IField : Serializable {
+    val type: EFieldType?
+    fun setType(type: EFieldType?): Boolean
+    val isModified: Boolean
 
     // For mixed type
-    String getHtml();
-
-
-    boolean setHtml(String html);
-
+    val html: String?
+    fun setHtml(html: String?): Boolean
 
     // For image type. Resets type.
     // Makes no sense to call when type is not image.
     // the same for other groups below.
-    boolean setImagePath(String pathToImage);
-
-
-    String getImagePath();
-
+    fun setImagePath(pathToImage: String?): Boolean
+    val imagePath: String?
 
     // For Audio type
-    boolean setAudioPath(String pathToAudio);
-
-
-    String getAudioPath();
-
+    fun setAudioPath(pathToAudio: String?): Boolean
+    val audioPath: String?
 
     // For Text type
-    String getText();
-
-
-    boolean setText(String text);
-
+    val text: String?
+    fun setText(text: String?): Boolean
 
     /**
      * Mark if the current media path is temporary and if it should be deleted once the media has been processed.
-     * 
+     *
      * @param hasTemporaryMedia True if the media is temporary, False if it is existing media.
      * @return
      */
-    void setHasTemporaryMedia(boolean hasTemporaryMedia);
-
-
-    boolean hasTemporaryMedia();
-
-
-    String getName();
-
-
-    void setName(String name);
-
+    fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
+    fun hasTemporaryMedia(): Boolean
+    var name: String?
 
     /**
      * Returns the formatted value for this field. Each implementation of IField should return in a format which will be
      * used to store in the database
-     * 
+     *
      * @return
      */
-    String getFormattedValue();
-
+    val formattedValue: String?
 
     /**
      * @param col Collection - bad abstraction, used to obtain media directory only.
      * @param value The HTML to send to the field.
      */
-    void setFormattedString(Collection col, String value);
+    fun setFormattedString(col: Collection?, value: String?)
 }
