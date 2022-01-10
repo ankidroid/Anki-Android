@@ -17,56 +17,48 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.activity;
+package com.ichi2.anki.multimediacard.activity
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
+import android.R
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import androidx.fragment.app.DialogFragment
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
 /**
  * This dialog fragment support a choice from a list of strings.
  */
-public class PickStringDialogFragment extends DialogFragment {
-    private ArrayList<String> mPossibleChoices;
-    private android.content.DialogInterface.OnClickListener mListener;
-    private String mTitle;
+class PickStringDialogFragment : DialogFragment() {
+    private var mPossibleChoices: ArrayList<String>? = null
+    private var mListener: DialogInterface.OnClickListener? = null
+    private var mTitle: String? = null
 
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @KotlinCleanup("requireActivity")
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(mTitle);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(),
-                android.R.layout.simple_list_item_1, mPossibleChoices);
-
-        builder.setAdapter(adapter, mListener);
-
-        return builder.create();
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(mTitle)
+        val adapter = ArrayAdapter(
+            this.activity!!,
+            R.layout.simple_list_item_1, mPossibleChoices!!
+        )
+        builder.setAdapter(adapter, mListener)
+        return builder.create()
     }
 
-
-    public void setTitle(String title) {
-        this.mTitle = title;
+    fun setTitle(title: String?) {
+        mTitle = title
     }
 
-
-    public void setChoices(ArrayList<String> possibleClones) {
-        mPossibleChoices = possibleClones;
+    fun setChoices(possibleClones: ArrayList<String>?) {
+        mPossibleChoices = possibleClones
     }
 
-
-    public void setOnclickListener(DialogInterface.OnClickListener listener) {
-        mListener = listener;
+    fun setOnclickListener(listener: DialogInterface.OnClickListener?) {
+        mListener = listener
     }
-
 }
