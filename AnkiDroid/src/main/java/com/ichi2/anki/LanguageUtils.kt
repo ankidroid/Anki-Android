@@ -14,45 +14,45 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.                            *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import java.util.Locale;
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
-public class LanguageUtils {
-
+object LanguageUtils {
     /**
      * Convert a string representation of a locale, in the format returned by Locale.toString(),
      * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
      * language, country and variant fields).
-     * <p>
+     *
+     *
      * Returns a Locale object constructed from an empty string if the input string is null, empty
      * or contains more than 3 fields separated by underscores.
      */
-    public static Locale localeFromStringIgnoringScriptAndExtensions(String localeCode) {
-      if (localeCode == null) {
-          return new Locale("");
-      }
+    @JvmStatic
+    @KotlinCleanup("localeCodeStr")
+    fun localeFromStringIgnoringScriptAndExtensions(localeCodeStr: String?): Locale {
+        var localeCode = localeCodeStr
+        if (localeCode == null) {
+            return Locale("")
+        }
+        localeCode = stripScriptAndExtensions(localeCode)
+        val fields = localeCode.split("_".toRegex()).toTypedArray()
+        return when (fields.size) {
+            1 -> Locale(fields[0])
+            2 -> Locale(fields[0], fields[1])
+            3 -> Locale(fields[0], fields[1], fields[2])
+            else -> Locale("")
+        }
+    }
 
-      localeCode = stripScriptAndExtensions(localeCode);
-
-      String[] fields = localeCode.split("_");
-      switch (fields.length) {
-          case 1:
-              return new Locale(fields[0]);
-          case 2:
-              return new Locale(fields[0], fields[1]);
-          case 3:
-              return new Locale(fields[0], fields[1], fields[2]);
-          default:
-              return new Locale("");
-      }
-  }
-
-  private static String stripScriptAndExtensions(String localeCode) {
-      int hashPos = localeCode.indexOf('#');
-      if (hashPos >= 0) {
-          localeCode = localeCode.substring(0, hashPos);
-      }
-      return localeCode;
-  }
+    @KotlinCleanup("localeCodeStr")
+    private fun stripScriptAndExtensions(localeCodeStr: String): String {
+        var localeCode = localeCodeStr
+        val hashPos = localeCode.indexOf('#')
+        if (hashPos >= 0) {
+            localeCode = localeCode.substring(0, hashPos)
+        }
+        return localeCode
+    }
 }
