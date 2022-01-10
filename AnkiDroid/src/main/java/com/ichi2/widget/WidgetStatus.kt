@@ -12,44 +12,30 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.widget;
+package com.ichi2.widget
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Pair;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.services.NotificationService;
-import com.ichi2.async.BaseAsyncTask;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.Counts;
-import com.ichi2.libanki.sched.DeckDueTreeNode;
-
-import java.util.List;
-
-import timber.log.Timber;
-
-import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
+import android.content.Context
+import android.content.Intent
+import android.util.Pair
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.MetaDB
+import com.ichi2.anki.Preferences
+import com.ichi2.anki.services.NotificationService
+import com.ichi2.async.BaseAsyncTask
+import com.ichi2.libanki.sched.Counts
+import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
+import timber.log.Timber
 
 /**
  * The status of the widget.
  */
-public final class WidgetStatus {
+object WidgetStatus {
+    private var sSmallWidgetEnabled = false
 
-    private static boolean sSmallWidgetEnabled = false;
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    private static android.os.AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
-
-
-    /** This class should not be instantiated. */
-    private WidgetStatus() {
-    }
-
+    @Suppress("deprecation") // #7108: AsyncTask
+    private var sUpdateDeckStatusAsyncTask: android.os.AsyncTask<Context?, Void?, Context?>? = null
 
     /**
      * Request the widget to update its status.
@@ -57,84 +43,82 @@ public final class WidgetStatus {
      *             and replacing it with an alarm we set so device doesn't wake to update the widget, see:
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public static void update(Context context) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        boolean notificationEnabled = Integer.parseInt(preferences.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")) < 1000000;
-        boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == android.os.AsyncTask.Status.FINISHED));
+    @Suppress("deprecation") // #7108: AsyncTask
+    @JvmStatic
+    fun update(context: Context?) {
+        val preferences = AnkiDroidApp.getSharedPrefs(context)
+        sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
+        val notificationEnabled = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!.toInt() < 1000000
+        val canExecuteTask = sUpdateDeckStatusAsyncTask == null || sUpdateDeckStatusAsyncTask!!.status == android.os.AsyncTask.Status.FINISHED
         if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
-            Timber.d("WidgetStatus.update(): updating");
-            sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
-            sUpdateDeckStatusAsyncTask.execute(context);
+            Timber.d("WidgetStatus.update(): updating")
+            sUpdateDeckStatusAsyncTask = UpdateDeckStatusAsyncTask()
+            sUpdateDeckStatusAsyncTask!!.execute(context)
         } else {
-            Timber.d("WidgetStatus.update(): already running or not enabled");
+            Timber.d("WidgetStatus.update(): already running or not enabled")
         }
     }
 
-
-    /** Returns the status of each of the decks. */
-    public static int[] fetchSmall(Context context) {
-        return MetaDB.getWidgetSmallStatus(context);
+    /** Returns the status of each of the decks.  */
+    @JvmStatic
+    fun fetchSmall(context: Context?): IntArray {
+        return MetaDB.getWidgetSmallStatus(context)
     }
 
-
-    public static int fetchDue(Context context) {
-        return MetaDB.getNotificationStatus(context);
+    fun fetchDue(context: Context?): Int {
+        return MetaDB.getNotificationStatus(context)
     }
 
-
-    private static class UpdateDeckStatusAsyncTask extends BaseAsyncTask<Context, Void, Context> {
-
-        // due, eta
-        private static Pair<Integer, Integer> sSmallWidgetStatus = new Pair<>(0, 0);
-
-        @Override
-        protected Context doInBackground(Context... params) {
-            super.doInBackground(params);
-            Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
-            Context context = params[0];
+    private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context?, Void?, Context?>() {
+        @Suppress("deprecation") // #7108: AsyncTask
+        override fun doInBackground(vararg arg0: Context?): Context? {
+            super.doInBackground(*arg0)
+            Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()")
+            val context = arg0[0]
             if (!AnkiDroidApp.isSdCardMounted()) {
-                return context;
+                return context
             }
             try {
-                updateCounts(context);
-            } catch (Exception e) {
-                Timber.e(e, "Could not update widget");
+                updateCounts(context!!)
+            } catch (e: Exception) {
+                Timber.e(e, "Could not update widget")
             }
-            return context;
+            return context
         }
 
-
-        @Override
-        protected void onPostExecute(Context context) {
-            super.onPostExecute(context);
-            Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
-            MetaDB.storeSmallWidgetStatus(context, sSmallWidgetStatus);
+        @Suppress("deprecation") // #7108: AsyncTask
+        override fun onPostExecute(result: Context?) {
+            super.onPostExecute(result)
+            Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()")
+            MetaDB.storeSmallWidgetStatus(result, sSmallWidgetStatus)
             if (sSmallWidgetEnabled) {
-                new AnkiDroidWidgetSmall.UpdateService().doUpdate(context);
+                result?.let { UpdateService().doUpdate(it) }
             }
-            Intent intent = new Intent(NotificationService.INTENT_ACTION);
-            Context appContext = context.getApplicationContext();
-            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
+            val intent = Intent(NotificationService.INTENT_ACTION)
+            val appContext = result!!.applicationContext
+            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent)
         }
 
-
-        private void updateCounts(Context context) {
-            Counts total = new Counts();
-            Collection col = CollectionHelper.getInstance().getCol(context);
+        private fun updateCounts(context: Context) {
+            val total = Counts()
+            val col = CollectionHelper.getInstance().getCol(context)
             // Ensure queues are reset if we cross over to the next day.
-            col.getSched()._checkDay();
+            col.sched._checkDay()
 
             // Only count the top-level decks in the total
-            List<DeckDueTreeNode> nodes = col.getSched().deckDueTree();
-            for (DeckDueTreeNode node : nodes) {
-                total.addNew(node.getNewCount());
-                total.addLrn(node.getLrnCount());
-                total.addRev(node.getRevCount());
+            val nodes = col.sched.deckDueTree()
+            for (node in nodes) {
+                total.addNew(node.newCount)
+                total.addLrn(node.lrnCount)
+                total.addRev(node.revCount)
             }
-            int eta = col.getSched().eta(total, false);
-            sSmallWidgetStatus = new Pair<>(total.count(), eta);
+            val eta = col.sched.eta(total, false)
+            sSmallWidgetStatus = Pair(total.count(), eta)
+        }
+
+        companion object {
+            // due, eta
+            private var sSmallWidgetStatus = Pair(0, 0)
         }
     }
 }
