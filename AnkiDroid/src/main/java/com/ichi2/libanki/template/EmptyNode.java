@@ -45,4 +45,10 @@ public class EmptyNode extends ParsedNode {
     public boolean equals(@Nullable Object obj) {
         return obj instanceof EmptyNode;
     }
+
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
