@@ -1134,10 +1134,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mDisableClipboard && mClipboard != null) {
             if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.VISIBLE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.Fade.FADE_IN, mFadeDuration, 0));
             } else if (mLookUpIcon.getVisibility() == View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.GONE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.Fade.FADE_OUT, mFadeDuration, 0));
             }
         }
     }
@@ -1146,7 +1146,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void hideLookupButton() {
         if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
             mLookUpIcon.setVisibility(View.GONE);
-            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
+            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.Fade.FADE_OUT, mFadeDuration, 0));
             clearClipboard();
         }
     }
