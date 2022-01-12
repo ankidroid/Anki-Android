@@ -40,9 +40,9 @@ import androidx.annotation.VisibleForTesting;
 @KotlinCleanup("priority to convert to kotlin for named arguments")
 public interface DroidBackend {
     /** Should only be called from "Storage.java" */
-    Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time);
+    Collection createCollection(@NonNull Context context, @NonNull DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time);
 
-    DB openCollectionDatabase(String path);
+    DB openCollectionDatabase(@NonNull String path);
     void closeCollection(DB db, boolean downgradeToSchema11);
 
     /** Whether a call to {@link DroidBackend#openCollectionDatabase(String)} will generate a schema and indices for the database */

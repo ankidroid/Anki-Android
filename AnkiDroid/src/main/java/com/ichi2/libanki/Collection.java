@@ -131,7 +131,7 @@ public class Collection implements CollectionGetter {
     // API 21: Use a ConcurrentLinkedDeque
     private LinkedBlockingDeque<UndoAction> mUndo;
 
-    private final String mPath;
+    private final @NonNull String mPath;
     protected final DroidBackend mDroidBackend;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
@@ -166,7 +166,7 @@ public class Collection implements CollectionGetter {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
+    public Collection(Context context, DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
         mContext = context;
         mDebugLog = log;
         mDb = db;

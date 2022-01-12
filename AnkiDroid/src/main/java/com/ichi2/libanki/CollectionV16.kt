@@ -30,7 +30,7 @@ import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 class CollectionV16(
     context: Context,
     db: DB,
-    path: String?,
+    path: String,
     server: Boolean,
     log: Boolean,
     time: Time,

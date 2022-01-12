@@ -28,12 +28,14 @@ import com.ichi2.libanki.Collection;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 @SuppressWarnings({"PMD.MethodNamingConventions"})
 public abstract class Importer {
 
     protected boolean mNeedMapper = false;
     protected boolean mNeedDelimiter = false;
-    protected String mFile;
+    protected @NonNull String mFile;
     protected List<String> mLog;
     protected final Collection mCol;
     protected int mTotal;
@@ -45,7 +47,7 @@ public abstract class Importer {
     protected final Context mContext;
     protected TaskManager.ProgressCallback<String> mProgress;
 
-    public Importer(Collection col, String file) {
+    public Importer(Collection col, @NonNull String file) {
         mFile = file;
         mLog = new ArrayList<>();
         mCol = col;
