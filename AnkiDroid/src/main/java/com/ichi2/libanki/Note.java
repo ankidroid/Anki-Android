@@ -109,7 +109,7 @@ public class Note implements Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     public void flush() {
-    	flush(null);
+        flush(null);
     }
 
     public void flush(Long mod) {
@@ -222,7 +222,7 @@ public class Note implements Cloneable {
     }
     
     public boolean contains(String key) {
-    	return mFMap.containsKey(key);
+        return mFMap.containsKey(key);
     }
 
 

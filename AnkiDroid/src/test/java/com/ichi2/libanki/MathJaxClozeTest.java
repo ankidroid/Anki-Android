@@ -69,7 +69,7 @@ public class MathJaxClozeTest extends RobolectricTest {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection c = getCol();
-	{
+        {
             Note f = c.newNote(c.getModels().byName("Cloze"));
             f.setItem("Text", "\\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}");
             c.addNote(f);
@@ -81,9 +81,9 @@ public class MathJaxClozeTest extends RobolectricTest {
             assertThat(q, containsString("\\(1 \\div 2 =\\)"));
             assertThat(a, containsString("\\(1 \\div 2 =\\)"));
             assertThat(a, containsString("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
-	}
+        }
 
-	{
+        {
             Note f = c.newNote(c.getModels().byName("Cloze"));
             f.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]");
             c.addNote(f);
@@ -91,7 +91,7 @@ public class MathJaxClozeTest extends RobolectricTest {
             Card c2 = cards.get(0);
             String q = c2.q();
             assertThat(q, containsString("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"));
-	}
+        }
     }
 
     @Test
