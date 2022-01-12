@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
+
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -92,7 +94,7 @@ public class Shared {
      * Files located inside the application's assets collection are not stored on the file
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
-    public static String getTestFilePath(Context context, String name) throws IOException {
+    public static @NonNull String getTestFilePath(Context context, String name) throws IOException {
         InputStream is = context.getClassLoader().getResourceAsStream("assets/" + name);
         if (is == null) {
             throw new FileNotFoundException("Could not find test file: assets/" + name);

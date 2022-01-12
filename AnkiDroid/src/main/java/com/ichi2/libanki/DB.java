@@ -59,14 +59,14 @@ public class DB {
     private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
-    public DB(String ankiFilename) {
+    public DB(@NonNull String ankiFilename) {
         this(ankiFilename, null);
     }
 
     /**
      * Open a connection to the SQLite collection database.
      */
-    public DB(String ankiFilename, @Nullable OpenHelperFactory openHelperFactory) {
+    public DB(@NonNull String ankiFilename, @Nullable OpenHelperFactory openHelperFactory) {
 
         SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
                 .name(ankiFilename)

@@ -205,7 +205,7 @@ class AnkiExporter extends Exporter {
      * @throws IOException
      */
 
-    public void exportInto(String path, Context context) throws JSONException, IOException, ImportExportException {
+    public void exportInto(@NonNull String path, Context context) throws JSONException, IOException, ImportExportException {
         // create a new collection at the target
         new File(path).delete();
         Collection dst = Storage.Collection(context, path);

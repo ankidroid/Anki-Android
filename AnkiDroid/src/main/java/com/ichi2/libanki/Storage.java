@@ -52,7 +52,7 @@ public class Storage {
 
 
     /* Open a new or existing collection. Path must be unicode */
-    public static Collection Collection(Context context, String path) {
+    public static Collection Collection(Context context, @NonNull String path) {
         return Collection(context, path, false, false);
     }
 
@@ -72,10 +72,10 @@ public class Storage {
         }
     }
 
-    public static Collection Collection(Context context, String path, boolean server, boolean log) {
+    public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log) {
         return Collection(context, path, server, log, new SystemTime());
     }
-    public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
+    public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
         assert (path.endsWith(".anki2") || path.endsWith(".anki21"));
         File dbFile = new File(path);
         boolean create = !dbFile.exists();

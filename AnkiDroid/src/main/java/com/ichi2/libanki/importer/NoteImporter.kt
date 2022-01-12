@@ -17,7 +17,7 @@ import com.ichi2.utils.JSONObject
 
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
-open class NoteImporter(col: com.ichi2.libanki.Collection, file: String?) : Importer(col, file) {
+open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Importer(col, file) {
     private val mNeedMapper = true
     private val mNeedDelimiter = false
     private var mAllowHTML = false

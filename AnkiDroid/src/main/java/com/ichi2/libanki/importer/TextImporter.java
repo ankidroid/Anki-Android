@@ -48,7 +48,7 @@ public class TextImporter extends NoteImporter {
     private boolean mFirstLineWasTags;
 
 
-    public TextImporter(Collection col, String file) {
+    public TextImporter(Collection col, @NonNull String file) {
         super(col, file);
         mFileobj = null;
         mDelimiter = '\0';
