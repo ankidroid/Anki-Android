@@ -2,11 +2,7 @@
 
 package com.ichi2.anim
 
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.TranslateAnimation
+import android.view.animation.*
 
 object ViewAnimation {
     enum class SlideIn {
@@ -21,53 +17,54 @@ object ViewAnimation {
         FADE_IN(0f),
         FADE_OUT(1f),
     }
+
+    fun translateAnimation(fromXValue: Float, toXValue: Float, fromYValue: Float, toYValue: Float, interpolator: Interpolator): TranslateAnimation {
+        val animation = TranslateAnimation(Animation.RELATIVE_TO_SELF, fromXValue, Animation.RELATIVE_TO_SELF, toXValue, Animation.RELATIVE_TO_SELF, fromYValue, Animation.RELATIVE_TO_SELF, toYValue)
+        animation.setInterpolator(interpolator)
+        return animation
+    }
+
     fun slide(type: SlideIn, duration: Int, offset: Int): Animation? {
         val animation: Animation?
         when (type) {
             SlideIn.SLIDE_IN_FROM_RIGHT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = +1.0f, toXValue = 0.0f,
+                    fromYValue = 0.0f, toYValue = 0.0f, interpolator = DecelerateInterpolator()
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SlideIn.SLIDE_OUT_TO_RIGHT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = 0.0f, toXValue = +1.0f,
+                    fromYValue = 0.0f, toYValue = 0.0f, interpolator = AccelerateInterpolator()
                 )
-                animation.setInterpolator(AccelerateInterpolator())
             }
             SlideIn.SLIDE_IN_FROM_LEFT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = -1.0f, toXValue = 0.0f,
+                    fromYValue = 0.0f, toYValue = 0.0f, interpolator = DecelerateInterpolator()
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SlideIn.SLIDE_OUT_TO_LEFT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = 0.0f, toXValue = -1.0f,
+                    fromYValue = 0.0f, toYValue = 0.0f, interpolator = AccelerateInterpolator()
                 )
-                animation.setInterpolator(AccelerateInterpolator())
             }
             SlideIn.SLIDE_IN_FROM_BOTTOM -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = 0.0f, toXValue = 0.0f,
+                    fromYValue = +1.0f, toYValue = 0.0f, interpolator = DecelerateInterpolator()
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SlideIn.SLIDE_IN_FROM_TOP -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    fromXValue = 0.0f, toXValue = 0.0f,
+                    fromYValue = -1.0f, toYValue = 0.0f, interpolator = DecelerateInterpolator()
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
         }
-        animation!!.duration = duration.toLong()
+        animation.duration = duration.toLong()
         animation.startOffset = offset.toLong()
         return animation
     }
