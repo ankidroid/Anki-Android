@@ -125,9 +125,16 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
             mValue = (value * mInterval) + mMin;
             String t = String.valueOf(mValue);
             mValueText.setText(mSuffix == null ? t : t + mSuffix);
+            onValueUpdated();
         }
     }
 
+    private void onValueUpdated() {
+        if (shouldPersist()) {
+            persistInt(mValue);
+        }
+        callChangeListener(mValue);
+    }
 
     public int getValue() {
         if (mValue == 0) {
@@ -147,10 +154,6 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
 
 
     public void onStopTrackingTouch(SeekBar seek) {
-        if (shouldPersist()) {
-            persistInt(mValue);
-        }
-        callChangeListener(mValue);
         this.getDialog().dismiss();
     }
 

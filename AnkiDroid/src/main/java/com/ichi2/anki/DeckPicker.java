@@ -905,7 +905,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
-        mFloatingActionMenu.setIsFABOpen(savedInstanceState.getBoolean("mIsFABOpen"));
+        mFloatingActionMenu.setFABOpen(savedInstanceState.getBoolean("mIsFABOpen"));
     }
 
 

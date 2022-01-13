@@ -33,8 +33,8 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState)
         return MaterialDialog.Builder(requireActivity())
-            .titleNullable(notificationTitle)
-            .contentNullable(notificationMessage)
+            .titleNullable(getNotificationTitle())
+            .contentNullable(getNotificationMessage())
             .positiveText(res().getString(R.string.dialog_ok))
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 (activity as SimpleMessageDialogListener?)

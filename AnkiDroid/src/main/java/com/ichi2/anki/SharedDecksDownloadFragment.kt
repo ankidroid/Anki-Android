@@ -208,7 +208,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 stopDownloadProgressChecker()
 
                 // Halt execution if file doesn't have extension as 'apkg' or 'colpkg'
-                if (!ImportUtils.isFileAValidDeck(mFileName)) {
+                if (!ImportUtils.isFileAValidDeck(mFileName!!)) {
                     Timber.i("File does not have 'apkg' or 'colpkg' extension, abort the deck opening task")
                     checkDownloadStatusAndUnregisterReceiver(isSuccessful = false, isInvalidDeckFile = true)
                     return

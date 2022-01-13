@@ -58,6 +58,7 @@ public class ActivityStartupMetaTest extends RobolectricTest {
                 .filter(x -> !x.startsWith("com.yalantis"))
                 .filter(x -> !x.startsWith("androidx"))
                 .filter(x -> !x.startsWith("org.acra"))
+                .filter(x -> !x.startsWith("leakcanary.internal"))
                 .toArray();
         assertThat(testedActivityClassNames, containsInAnyOrder(manifestActivityNames));
     }

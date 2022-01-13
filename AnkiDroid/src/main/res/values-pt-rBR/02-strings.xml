@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">Redefinir progresso</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reagendar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
     <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Falha ao descompactar apkg: %s</string>
     <string name="import_log_failed_copy_to">Falha ao copiar apkg para %s</string>
     <string name="import_log_failed_validate">falha na validação do apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Não há espaço suficiente para importar o pacote.\nNecessário - %1$s \nDisponível - %2$s.\n\nTendo problemas? Tente liberar espaço no seu telefone, se possível. Alternativamente, a sincronização usa menos espaço do que a importação. Você pode tentar importar o pacote com um dispositivo com mais espaço (por exemplo, Anki Desktop) e, em seguida, sincronizá-lo com este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Erro ao importar arquivo, provavelmente um cache foi limpo durante o processamento.\nPor favor, tente novamente</string>
     <string name="import_succeeded_but_check_database">Importação de dados bem-sucedida, mas a limpeza pós importação falhou. Execute a verificação do banco de dados mais tarde. Causa: %s</string>
     <string name="import_error_unhandled_request">Não foi possível completar a importação</string>
@@ -368,11 +368,24 @@
     <string name="import_mapped_to_tags">Movido para Tags</string>
     <string name="import_mapped_to_nothing">Ignorado</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Cartão enterrado</string>
+    <string name="buried_note">Nota enterrada</string>
+    <string name="deleted_note">Nota excluída</string>
+    <string name="suspended_card">Cartão suspenso</string>
+    <string name="suspended_note">Nota suspensa</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <!-- Scoped Storage Migration -->
+    <string name="scoped_storage_title">Storage migration</string>
+    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
+\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
+\n\nPlease perform the migration as soon as possible</string>
+    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
+    <string name="scoped_storage_term_1">I have backed up my data</string>
+    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
+    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
+    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_postpone">Postpone</string>
+    <string name="scoped_storage_migrate">Migrate</string>
 </resources>
