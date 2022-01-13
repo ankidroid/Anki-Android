@@ -60,7 +60,7 @@ open class NumberRangePreference : android.preference.EditTextPreference {
      * type. The two methods below intercept the persistence and retrieval methods for Strings and replaces them with
      * their Integer equivalents.
      */
-    override fun getPersistedString(defaultReturnValue: String): String {
+    override fun getPersistedString(defaultReturnValue: String?): String? {
         return getPersistedInt(mMin).toString()
     }
 
