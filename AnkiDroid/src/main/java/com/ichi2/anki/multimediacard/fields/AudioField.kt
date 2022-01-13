@@ -54,14 +54,14 @@ abstract class AudioField : FieldBase(), IField {
         return null
     }
 
-    override fun setAudioPath(pathToAudio: String): Boolean {
+    override fun setAudioPath(pathToAudio: String?): Boolean {
         mAudioPath = pathToAudio
         setThisModified()
         return true
     }
 
-    override fun getAudioPath(): String {
-        return mAudioPath!!
+    override fun getAudioPath(): String? {
+        return mAudioPath
     }
 
     override fun getText(): String? {
@@ -78,7 +78,7 @@ abstract class AudioField : FieldBase(), IField {
     abstract override fun setName(name: String)
     override fun getFormattedValue(): String {
         var formattedValue = ""
-        val file = File(audioPath)
+        val file = File(audioPath!!)
         if (file.exists()) {
             formattedValue = String.format("[sound:%s]", file.name)
         }
