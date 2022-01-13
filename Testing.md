@@ -46,7 +46,9 @@ There are also facilities (provided by Robolectric) to start Activities and very
 
 These tests are usually not needed but occasionally functionality may only be verified when executing on an actual running Android instance (device or emulator). These tests live in `src/androidTest` and are typically very low performance but if there is no alternative to on-device verification, this is the place to put the test.
 
-Be careful with these tests (both running them, and designing them) as the collection you operate on will either be the live collection of another developer running the tests, or will be the test harness data from existing on-device import/export tests and so may contain information you don't expect. To be more specific: if you create data make sure it is completely separate and easy to identify from any other existing data, carefully clean your tests data and only your test data up when your test is done, and if you create test data make sure you make no assumptions about it being the only data in the collection
+Be careful with these tests (both running them, and designing them) as the collection you operate on will either be the live collection of another developer running the tests, or will be the test harness data from existing on-device import/export tests and so may contain information you don't expect. To be more specific: if you create data make sure it is completely separate and easy to identify from any other existing data, carefully clean your tests data and only your test data up when your test is done, and if you create test data make sure you make no assumptions about it being the only data in the collection.
+
+When you run on-devices tests, you may want to run them on a new collection. To do so, rename your folder `AnkiDroid` to any other name, such as `AnkiDroidBackup`. Once you are done testing, delete the `AnkiDroid` folder that was created during the test and rename `AnkiDroidBackup`  to `AnkiDroid` to get back your collection.
 
 # Writing Good Tests
 
