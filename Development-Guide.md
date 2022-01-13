@@ -57,6 +57,8 @@ Provided you are able to use hardware acceleration for the Android emulators, [s
 ## Connecting your device to Android studio via adb to use for testing
 In order to run a custom build of AnkiDroid on your device or attach the debugger, you'll need to connect your device over the adb protocol. Open your Android device, and [enable](https://developer.android.com/studio/debug/dev-options.html) developer options and `USB debugging`. Finally when you connect your device to your computer over USB, it should get recognized by Android Studio and you should start to see output from it in the logcat section of Android studio.
 
+If you don't want to test on your actual collection, you just have to rename the `AnkiDroid` folder to any other name, such as `AnkiDroidBack` and restart AnkiDroid. Since AnkiDroid won't find an `AnkiDroid` folder, it will create one and assume it's a new collection. Note however that it will still have your AnkiWeb login and some preference settings. When you are done testing, you can rename this folder `AnkiDroidBack` to `AnkiDroid`.
+
 ## Running AnkiDroid from within Android studio
 Connect your device to your computer, or [setup an emulator](https://developer.android.com/tools/devices/managing-avds.html), then select `Run -> Run 'AnkiDroid'` from the menu in Android Studio. This will compile a version of AnkiDroid suitable for testing (i.e. signed with a debug key), and pop up a window where you can select the device or emulator that you want to install and run the code on. See the main [Android developer documentation](https://developer.android.com/tools/building/building-studio.html) for more detailed information. 
 
