@@ -55,7 +55,7 @@ class TextField : FieldBase(), IField {
         return null
     }
 
-    override fun setAudioPath(pathToAudio: String): Boolean {
+    override fun setAudioPath(pathToAudio: String?): Boolean {
         return false
     }
 

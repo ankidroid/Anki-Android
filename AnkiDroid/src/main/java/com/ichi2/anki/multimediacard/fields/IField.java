@@ -23,6 +23,8 @@ import com.ichi2.libanki.Collection;
 
 import java.io.Serializable;
 
+import androidx.annotation.Nullable;
+
 /**
  * General interface for a field of any type.
  */
@@ -53,9 +55,9 @@ public interface IField extends Serializable {
 
 
     // For Audio type
-    boolean setAudioPath(String pathToAudio);
+    boolean setAudioPath(@Nullable String pathToAudio);
 
-
+    @Nullable
     String getAudioPath();
 
 

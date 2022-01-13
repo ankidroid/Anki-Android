@@ -24,6 +24,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
+import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 
 import org.mockito.Mockito;
@@ -43,6 +44,12 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
         ShadowApplication app = Shadows.shadowOf(application);
         app.grantPermissions(Manifest.permission.CAMERA);
     }
+
+    protected void grantRecordAudioPermission() {
+        Application application = ApplicationProvider.getApplicationContext();
+        ShadowApplication app = Shadows.shadowOf(application);
+        app.grantPermissions(Manifest.permission.RECORD_AUDIO);
+    }
     
     protected IFieldController getControllerForField(IField field, IMultimediaEditableNote note, int fieldIndex) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -55,6 +62,8 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
     protected IMultimediaEditableNote getEmptyNote() {
         MultimediaEditableNote note = new MultimediaEditableNote();
         note.setNumFields(1);
+        note.setField(0, new TextField());
+        note.freezeInitialFieldValues();
         return note;
     }
 
