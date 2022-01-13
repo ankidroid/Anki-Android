@@ -13,12 +13,11 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-
 package com.wildplot.android.rendering
 
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import com.wildplot.android.rendering.interfaces.Drawable
-import java.util.Vector
+import java.util.*
 
 class DrawableContainer(private val isOnFrame: Boolean, private val isCritical: Boolean) : Drawable {
     private val drawableVector = Vector<Drawable>()

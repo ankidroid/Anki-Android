@@ -26,7 +26,7 @@ interface Drawable {
     /**
      * Paint the drawable object
      */
-    fun paint(g: GraphicsWrap?)
+    fun paint(g: GraphicsWrap)
 
     /**
      * Returns true if this Drawable can draw on the outer frame of the plot
@@ -34,7 +34,7 @@ interface Drawable {
      * If a legend or descriptions shall be drawn onto the outer frame this method of the corresponding Drawables has
      * to return true. For all other cases it is highly recommended to return false.
      */
-    val isOnFrame: Boolean
-    val isClusterable: Boolean
-    val isCritical: Boolean
+    fun isOnFrame(): Boolean
+    fun isClusterable(): Boolean
+    fun isCritical(): Boolean
 }
