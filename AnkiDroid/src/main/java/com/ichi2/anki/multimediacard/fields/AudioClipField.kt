@@ -15,7 +15,7 @@ class AudioClipField : AudioField() {
     }
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
-        mHasTemporaryMedia = hasTemporaryMedia
+        currentHasTemporaryMedia = hasTemporaryMedia
     }
 
     override fun hasTemporaryMedia(): Boolean {

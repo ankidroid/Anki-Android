@@ -15,7 +15,11 @@
  */
 package com.ichi2.utils;
 
+import com.ichi2.testutils.MockFragmentClassLoader;
+
 import org.junit.Test;
+
+import javax.annotation.Nonnull;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,8 +35,8 @@ import static org.mockito.Mockito.when;
 public class ExtendedFragmentFactoryTest {
 
 
-    private static final ClassLoader fakeClassLoader = mock(ClassLoader.class);
-    private static final String fakeClassName = "FAKE CLASS NAME";
+    @Nonnull
+    private static final ClassLoader fakeClassLoader = new MockFragmentClassLoader();
 
     static class TestFragmentFactoryTest extends ExtendedFragmentFactory {
         public TestFragmentFactoryTest() {
@@ -48,9 +52,9 @@ public class ExtendedFragmentFactoryTest {
         final FragmentFactory baseFF = mock(FragmentFactory.class);
         final ExtendedFragmentFactory testFF = new TestFragmentFactoryTest(baseFF);
 
-        testFF.instantiate(fakeClassLoader, fakeClassName);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
 
-        verify(baseFF, times(1)).instantiate(fakeClassLoader, fakeClassName);
+        verify(baseFF, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
     }
 
 
@@ -71,9 +75,9 @@ public class ExtendedFragmentFactoryTest {
 
         verify(fragmentManager, times(1)).setFragmentFactory(testFF);
 
-        testFF.instantiate(fakeClassLoader, fakeClassName);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
 
-        verify(baseFactory, times(1)).instantiate(fakeClassLoader, fakeClassName);
+        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
     }
 
 
@@ -92,8 +96,8 @@ public class ExtendedFragmentFactoryTest {
 
         verify(fragmentManager, times(1)).setFragmentFactory(testFF);
 
-        testFF.instantiate(fakeClassLoader, fakeClassName);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
 
-        verify(baseFactory, times(1)).instantiate(fakeClassLoader, fakeClassName);
+        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
     }
 }

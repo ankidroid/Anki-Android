@@ -62,7 +62,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
         setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM)
-        if (!Lookup.isAvailable()) {
+        if (!Lookup.isAvailable) {
             mCustomButtons[R.id.action_search_dictionary] = MENU_DISABLED
         } else {
             setupButton(preferences, R.id.action_search_dictionary, "customButtonLookup", SHOW_AS_ACTION_NEVER)

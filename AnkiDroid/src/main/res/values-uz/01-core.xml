@@ -93,12 +93,12 @@
     <string name="undo_action_review">last review</string>
     <string name="undo_action_change_deck_multi">change decks</string>
     <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
+    <string name="unbury">Abandon</string>
     <string name="rename_deck">Rename deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
+    <string name="menu_add_note">I go to the university</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note">Hide / delete</string>
     <string name="menu_bury_card">Bury card</string>
