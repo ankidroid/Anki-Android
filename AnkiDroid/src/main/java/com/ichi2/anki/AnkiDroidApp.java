@@ -31,17 +31,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.pm.PackageInfoCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.util.Log;
-import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
@@ -53,7 +47,6 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.LanguageUtil;
-import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.WebViewDebugging;
 
@@ -78,6 +71,11 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.pm.PackageInfoCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.webkit.WebViewCompat;
 import leakcanary.AppWatcher;
 import leakcanary.DefaultOnHeapAnalyzedListener;
@@ -88,6 +86,7 @@ import shark.AndroidReferenceMatchers;
 import shark.KeyedWeakReferenceFinder;
 import shark.ReferenceMatcher;
 import timber.log.Timber;
+
 import static timber.log.Timber.DebugTree;
 
 /**
@@ -597,7 +596,7 @@ public class AnkiDroidApp extends Application {
                 toastBuilder.setResText(R.string.feedback_auto_toast_text);
             } else if (value.equals(FEEDBACK_REPORT_ASK)) {
                 dialogBuilder.setEnabled(true);
-                toastBuilder.setResText(R.string.feedback_manual_toast_text);
+                toastBuilder.setResText(R.string.feedback_for_manual_toast_text);
             }
             setAcraConfigBuilder(builder);
         }
