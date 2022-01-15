@@ -447,4 +447,16 @@
     <string name="success">Success</string>
     <string name="addon_install_complete">%s addon installation complete</string>
     <string name="error_occur_downloading_addon">Error occur in downloading packages json. Try again</string>
+    <string name="get_addons">Get Addons</string>
+    <string name="download_addons">Download Addons</string>
+    <string name="js_addons">JavaScript Addons</string>
+    <string name="addons">Addons</string>
+    <string name="addon_enabled">%s addon enabled</string>
+    <string name="addon_disabled">%s addon disabled</string>
+    <string name="confirm_remove_addon">Do you want to remove %s ?</string>
+    <string name="failed_to_remove_addon">Failed to remove addon. Try again or remove it manually</string>
+    <string name="addon_type_and_version">Type: %s  Version: %s</string>
+    <string name="is_not_valid_js_addon">%s is not a valid js addon package for AnkiDroid</string>
+    <string name="addon_details">Details</string>
+    <string name="no_addons_found">No Addons found, Get addons from options menu</string>
 </resources>
