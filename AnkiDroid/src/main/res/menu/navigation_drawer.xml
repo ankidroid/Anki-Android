@@ -22,6 +22,11 @@
             app:actionLayout="@layout/night_mode_switch"
             android:title="@string/night_mode"/>
         <item
+            android:id="@+id/nav_addons"
+            android:icon="@drawable/ic_baseline_extension_24"
+            android:title="@string/addons"
+            android:visible="@bool/anki_show_addon_menu" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black"
             android:title="@string/settings"/>

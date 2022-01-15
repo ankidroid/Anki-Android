@@ -94,6 +94,9 @@ android {
             // make the icon red if in debug mode
             resValue 'color', 'anki_foreground_icon_color_0', "#FFFF0000"
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
+
+            // show addon menu in side nav, will be remove after all jsaddons PR merged
+            resValue 'bool', 'anki_show_addon_menu', "true"
         }
         release {
             minifyEnabled true
@@ -103,6 +106,9 @@ android {
             buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
+
+            // hide addon menu in side nav, will be remove after all jsaddons PR merged
+            resValue 'bool', 'anki_show_addon_menu', "false"
         }
     }
 
