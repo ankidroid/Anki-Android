@@ -13,71 +13,58 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import junit.framework.TestCase
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.*
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import com.ichi2.anki.RobolectricTest;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertNotEquals;
-
-@RunWith(AndroidJUnit4.class)
-public class TagsTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class TagsTest : RobolectricTest() {
     @Test
-    public void test_split() {
-        Collection col = getCol();
-        Tags tags = new Tags(col);
-
-        ArrayList<String> tags_list1 = new ArrayList<>();
-        tags_list1.add("Todo");
-        tags_list1.add("todo");
-        tags_list1.add("Needs revision");
-
-        ArrayList<String> tags_list2 = new ArrayList<>();
-        tags_list2.add("Todo");
-        tags_list2.add("todo");
-        tags_list2.add("Needs");
-        tags_list2.add("Revision");
-
-        assertNotEquals(tags_list1, tags.split("Todo todo Needs Revision"));
-        assertEquals(tags_list2, tags.split("Todo todo Needs Revision"));
-        assertEquals(0, tags.split("").size());
+    fun test_split() {
+        val col = col
+        val tags = Tags(col)
+        val tagsList1 = ArrayList<String>()
+        tagsList1.add("Todo")
+        tagsList1.add("todo")
+        tagsList1.add("Needs revision")
+        val tagsList2 = ArrayList<String>()
+        tagsList2.add("Todo")
+        tagsList2.add("todo")
+        tagsList2.add("Needs")
+        tagsList2.add("Revision")
+        Assert.assertNotEquals(tagsList1, tags.split("Todo todo Needs Revision"))
+        TestCase.assertEquals(tagsList2, tags.split("Todo todo Needs Revision"))
+        TestCase.assertEquals(0, tags.split("").size)
     }
 
     @Test
-    public void test_in_list() {
-        Collection col = getCol();
-        Tags tags = new Tags(col);
-
-        ArrayList<String> tags_list = new ArrayList<>();
-        tags_list.add("Todo");
-        tags_list.add("Needs revision");
-        tags_list.add("Once more");
-        tags_list.add("test1 content");
-
-        assertFalse(tags.inList("Done", tags_list));
-        assertTrue(tags.inList("Needs revision", tags_list));
-        assertTrue(tags.inList("once More", tags_list));
-        assertFalse(tags.inList("test1Content", tags_list));
-        assertFalse(tags.inList("", new ArrayList<String>()));
+    fun test_in_list() {
+        val col = col
+        val tags = Tags(col)
+        val tagsList = ArrayList<String>()
+        tagsList.add("Todo")
+        tagsList.add("Needs revision")
+        tagsList.add("Once more")
+        tagsList.add("test1 content")
+        TestCase.assertFalse(tags.inList("Done", tagsList))
+        TestCase.assertTrue(tags.inList("Needs revision", tagsList))
+        TestCase.assertTrue(tags.inList("once More", tagsList))
+        TestCase.assertFalse(tags.inList("test1Content", tagsList))
+        TestCase.assertFalse(tags.inList("", ArrayList()))
     }
 
     @Test
-    public void test_add_to_str() {
-        Collection col = getCol();
-        Tags tags = new Tags(col);
-
-        assertEquals(" Needs Revision Todo ", tags.addToStr("todo", "Todo todo Needs Revision"));
-        assertEquals(" Todo ", tags.addToStr("Todo", ""));
-        assertEquals(" Needs Revision Todo ", tags.addToStr("", "Todo todo Needs Revision"));
+    fun test_add_to_str() {
+        val col = col
+        val tags = Tags(col)
+        TestCase.assertEquals(" Needs Revision Todo ", tags.addToStr("todo", "Todo todo Needs Revision"))
+        TestCase.assertEquals(" Todo ", tags.addToStr("Todo", ""))
+        TestCase.assertEquals(" Needs Revision Todo ", tags.addToStr("", "Todo todo Needs Revision"))
     }
 }
