@@ -13,393 +13,328 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.core.util.Pair
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JsonUtils.toOrderedString
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.math.min
 
-import android.database.Cursor;
-
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.testutils.JsonUtils;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
-
-/** Regression test for Rust */
-@RunWith(AndroidJUnit4.class)
-public class StorageTest extends RobolectricTest {
-
-    @Override
-    protected boolean useLegacyHelper() {
-        return true;
+/** Regression test for Rust  */
+@RunWith(AndroidJUnit4::class)
+open class StorageTest : RobolectricTest() {
+    override fun useLegacyHelper(): Boolean {
+        return true
     }
 
-
-    @Override
-    public void setUp() {
-        Storage.setUseBackend(false);
-        super.setUp();
+    override fun setUp() {
+        Storage.setUseBackend(false)
+        super.setUp()
     }
-
 
     @Test
-    public void compareNewDatabases() {
-
-        CollectionData expected = getResults();
+    fun compareNewDatabases() {
+        val expected = results
 
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false, "compareNewDatabases");
+        CollectionHelper.getInstance().closeCollection(false, "compareNewDatabases")
 
         // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
-        disableNullCollection();
-
-        Storage.setUseBackend(true);
-
-        CollectionData actual = getResults();
-
-        actual.assertEqualTo(expected);
+        disableNullCollection()
+        Storage.setUseBackend(true)
+        val actual = results
+        actual.assertEqualTo(expected)
     }
 
-
-    protected static void remove(JSONObject actualJson, JSONObject expectedJson, String key) {
-        actualJson.remove(key);
-        expectedJson.remove(key);
-    }
-
-
-    protected static void renameKeys(JSONObject actualJson) {
-        List<Pair<String, String>> keys = new ArrayList<>();
-        Iterator<String> keyIt = actualJson.keys();
-        while (keyIt.hasNext()) {
-            String name = keyIt.next();
-            keys.add(new Pair<>(name, actualJson.getJSONObject(name).getString("name")));
+    private val results: CollectionData
+        get() {
+            val results = CollectionData()
+            val col = col
+            results.loadFromCollection(col)
+            return results
         }
 
-        Collections.sort(keys, Comparator.comparing(x -> x.second));
+    open class CollectionData {
+        companion object {
+            const val CONF = 8
+            const val MODELS = 9
+            const val DECKS = 10
+            const val DCONF = 11
+            const val TAGS = 12
+            val M_V_11_ONLY_COLUMNS = HashSet<Int>()
 
-        for (int i = 0; i < keys.size(); i++) {
-            String keyName = keys.get(i).first;
-            actualJson.put(Integer.toString(i+i), actualJson.get(keyName));
-            actualJson.remove(keyName);
+            init {
+                M_V_11_ONLY_COLUMNS.add(CONF)
+                M_V_11_ONLY_COLUMNS.add(MODELS)
+                M_V_11_ONLY_COLUMNS.add(DECKS)
+                M_V_11_ONLY_COLUMNS.add(DCONF)
+                M_V_11_ONLY_COLUMNS.add(TAGS)
+            }
         }
 
-    }
+        var id: String? = null
+        private var crt: String? = null
+        var mod: String? = null
+        private var scm: String? = null
+        private var ver: String? = null
+        private var dty: String? = null
+        private var usn: String? = null
+        private var ls: String? = null
+        var conf: String? = null
+        var models: String? = null
+        var decks: String? = null
+        private var dConf: String? = null
+        var tags: String? = null
 
-
-    protected CollectionData getResults() {
-        CollectionData results = new CollectionData();
-        Collection col = getCol();
-        results.loadFromCollection(col);
-        return results;
-    }
-
-    public static class CollectionData {
-        public static final int CONF = 8;
-        public static final int MODELS = 9;
-        public static final int DECKS = 10;
-        public static final int DCONF = 11;
-        public static final int TAGS = 12;
-
-        public static final HashSet<Integer> M_V_11_ONLY_COLUMNS = new HashSet<>();
-
-        static {
-            M_V_11_ONLY_COLUMNS.add(CONF);
-            M_V_11_ONLY_COLUMNS.add(MODELS);
-            M_V_11_ONLY_COLUMNS.add(DECKS);
-            M_V_11_ONLY_COLUMNS.add(DCONF);
-            M_V_11_ONLY_COLUMNS.add(TAGS);
-        }
-
-        String mId;
-        String mCrt;
-        String mMod;
-        String mScm;
-        String mVer;
-        String mDty;
-        String mUsn;
-        String mLs;
-        String mConf;
-        String mModels;
-        String mDecks;
-        String mDConf;
-        String mTags;
-
-
-
-        public void loadFromCollection(Collection col) {
-            if (col instanceof CollectionV16) {
-                loadV16(col);
+        fun loadFromCollection(col: Collection) {
+            if (col is CollectionV16) {
+                loadV16(col)
             } else {
-                loadV11(col);
+                loadV11(col)
             }
         }
 
-
-        private void loadV16(Collection col) {
-            try (Cursor c = col.getDb().query("select * from col")) {
-                c.moveToFirst();
-                for (int i = 0; i < c.getColumnCount(); i++) {
+        private fun loadV16(col: Collection) {
+            col.db.query("select * from col").use { c ->
+                c.moveToFirst()
+                for (i in 0 until c.columnCount) {
                     if (M_V_11_ONLY_COLUMNS.contains(i)) {
-                        assertThat(c.getString(i), isEmptyOrNullString());
-                        continue;
+                        MatcherAssert.assertThat(c.getString(i), Matchers.isEmptyOrNullString())
+                        continue
                     }
-
-                    loadV11(i, c.getString(i));
+                    loadV11(i, c.getString(i))
                 }
             }
-
-            mConf = col.getConf().toString();
-            mModels = loadModelsV16(col);
-            mDecks = loadDecksV16(col);
-            mDConf = loadDConf(col);
-            mTags = new JSONObject(col.mTags.all().stream()
-                    .map(x -> new Pair<>(x, 0))
-                    .collect(Collectors.toMap(x -> x.first, x -> x.second))
-                    )
-                    .toString();
+            conf = col.conf.toString()
+            models = loadModelsV16(col)
+            decks = loadDecksV16(col)
+            dConf = loadDConf(col)
+            tags = JSONObject(
+                col.mTags.all().stream()
+                    .map { x: String -> Pair(x, 0) }
+                    .collect(Collectors.toMap({ x: Pair<String?, Int?> -> x.first }, { x: Pair<String?, Int?> -> x.second }))
+            )
+                .toString()
         }
 
-
-        private String loadDecksV16(Collection col) {
-            JSONObject ret = new JSONObject();
-            for (Deck deck : col.getDecks().all()) {
-                ret.put(deck.getString("id"), deck);
+        private fun loadDecksV16(col: Collection): String {
+            val ret = JSONObject()
+            for (deck in col.decks.all()) {
+                ret.put(deck.getString("id"), deck)
             }
-            return ret.toString(0);
+            return ret.toString(0)
         }
 
-        private String loadDConf(Collection col) {
-            JSONObject ret = new JSONObject();
-            for (DeckConfig dcof : col.getDecks().allConf()) {
-                ret.put(dcof.getString("id"), dcof);
+        private fun loadDConf(col: Collection): String {
+            val ret = JSONObject()
+            for (dcof in col.decks.allConf()) {
+                ret.put(dcof.getString("id"), dcof)
             }
-            return ret.toString(0);
+            return ret.toString(0)
         }
 
-        /** Extract models from models.all() and reformat as the JSON style used in the `col.models` column */
-        private String loadModelsV16(Collection col) {
-            JSONObject ret = new JSONObject();
-            for (Model m : col.getModels().all()) {
-                ret.put(m.getString("id"), m);
+        /** Extract models from models.all() and reformat as the JSON style used in the `col.models` column  */
+        private fun loadModelsV16(col: Collection): String {
+            val ret = JSONObject()
+            for (m in col.models.all()) {
+                ret.put(m.getString("id"), m)
             }
-            return ret.toString(0);
+            return ret.toString(0)
         }
 
-
-        private void loadV11(Collection col) {
-            try (Cursor c = col.getDb().query("select * from col")) {
-                c.moveToFirst();
-                for (int i = 0; i < c.getColumnCount(); i++) {
-                    loadV11(i, c.getString(i));
+        private fun loadV11(col: Collection) {
+            col.db.query("select * from col").use { c ->
+                c.moveToFirst()
+                for (i in 0 until c.columnCount) {
+                    loadV11(i, c.getString(i))
                 }
             }
         }
 
-        public void loadV11(int i, String string) {
-            switch (i) {
-                case 0: mId = string; return;
-                case 1: mCrt = string; return;
-                case 2: mMod = string; return;
-                case 3: mScm = string; return;
-                case 4: mVer = string; return;
-                case 5: mDty = string; return;
-                case 6: mUsn = string; return;
-                case 7: mLs = string; return;
-                case CONF: mConf = string; return;
-                case MODELS: mModels = string; return;
-                case DECKS: mDecks = string; return;
-                case DCONF: mDConf = string; return;
-                case TAGS: mTags = string; return;
-                default: throw new IllegalStateException("unknown i: " + i);
+        private fun loadV11(i: Int, string: String?) {
+            when (i) {
+                0 -> id = string
+                1 -> crt = string
+                2 -> mod = string
+                3 -> scm = string
+                4 -> ver = string
+                5 -> dty = string
+                6 -> usn = string
+                7 -> ls = string
+                CONF -> conf = string
+                MODELS -> models = string
+                DECKS -> decks = string
+                DCONF -> dConf = string
+                TAGS -> tags = string
+                else -> throw IllegalStateException("unknown i: $i")
             }
         }
 
-
-        public void assertEqualTo(CollectionData expected) {
-            assertThat(this.mId, equalTo(expected.mId));
+        fun assertEqualTo(expected: CollectionData) {
+            MatcherAssert.assertThat(id, Matchers.equalTo(expected.id))
             // ignore due to timestamp: mCrt
             // ignore due to timestamp: mMod
             // ignore due to timestamp: mScm
-            assertThat(this.mVer, equalTo(expected.mVer));
-            assertThat(this.mDty, equalTo(expected.mDty));
-            assertThat(this.mUsn, equalTo(expected.mUsn));
-            assertThat(this.mLs, equalTo(expected.mLs));
-
-            assertConfEqual(expected);
-
-            assertModelsEqual(expected);
-            assertJsonEqual(this.mDecks, expected.mDecks, "mod");
-            assertDConfEqual(this.mDConf, expected.mDConf);
-            assertThat(this.mTags, equalTo(expected.mTags));
+            MatcherAssert.assertThat(ver, Matchers.equalTo(expected.ver))
+            MatcherAssert.assertThat(dty, Matchers.equalTo(expected.dty))
+            MatcherAssert.assertThat(usn, Matchers.equalTo(expected.usn))
+            MatcherAssert.assertThat(ls, Matchers.equalTo(expected.ls))
+            assertConfEqual(expected)
+            assertModelsEqual(expected)
+            assertJsonEqual(decks, expected.decks, "mod")
+            assertDConfEqual(dConf, expected.dConf)
+            MatcherAssert.assertThat(tags, Matchers.equalTo(expected.tags))
         }
 
-
-        private void assertDConfEqual(String actualConf, String expectedConf) {
-            actualConf = removeUnusedNewIntervalValue(actualConf);
-            expectedConf = removeUnusedNewIntervalValue(expectedConf);
-
-            assertJsonEqual(actualConf, expectedConf);
+        @Suppress("Name_Shadowing")
+        @KotlinCleanup("make parameters val")
+        private fun assertDConfEqual(actualConf: String?, expectedConf: String?) {
+            var actualConf = actualConf
+            var expectedConf = expectedConf
+            actualConf = removeUnusedNewIntervalValue(actualConf)
+            expectedConf = removeUnusedNewIntervalValue(expectedConf)
+            assertJsonEqual(actualConf, expectedConf)
         }
 
-
-        @NonNull
-        private String removeUnusedNewIntervalValue(String actualDecks) {
+        private fun removeUnusedNewIntervalValue(actualDecks: String?): String {
             // remove ints[2] - this is unused. And Anki Desktop is inconsistent with the initial value
 
             // permalinks for defaults (0 is used):
             // 0: https://github.com/ankitects/anki/blob/7ba35b7249e1ac829843f365105a13c6209d4f57/rslib/src/deckconfig/schema11.rs#L340
             // 7: https://github.com/ankitects/anki/blob/7ba35b7249e1ac829843f365105a13c6209d4f57/rslib/src/deckconfig/schema11.rs#L92
-            JSONObject obj = new JSONObject(actualDecks);
-            for (String key : obj.names().toStringList()) {
-                obj.getJSONObject(key).getJSONObject("new").getJSONArray("ints").remove(2);
+            val obj = JSONObject(actualDecks)
+            for (key in obj.names()!!.toStringList()) {
+                obj.getJSONObject(key).getJSONObject("new").getJSONArray("ints").remove(2)
             }
-
-
-            return obj.toString();
+            return obj.toString()
         }
 
-
-        protected void assertJsonEqual(String actual, String expected, String... keysToRemove) {
-            JSONObject expectedRawJson = new JSONObject(expected);
-            JSONObject actualRawJson = new JSONObject(actual);
-
-            for (String k : keysToRemove) {
-                removeFromAllObjects(expectedRawJson, actualRawJson, k);
+        private fun assertJsonEqual(actual: String?, expected: String?, vararg keysToRemove: String) {
+            val expectedRawJson = JSONObject(expected)
+            val actualRawJson = JSONObject(actual)
+            for (k in keysToRemove) {
+                removeFromAllObjects(expectedRawJson, actualRawJson, k)
             }
-
-            String expectedJson = JsonUtils.toOrderedString(expectedRawJson);
-            String actualJson = JsonUtils.toOrderedString(actualRawJson);
-
-            assertThat(actualJson, equalTo(expectedJson));
+            val expectedJson = expectedRawJson.toOrderedString()
+            val actualJson = actualRawJson.toOrderedString()
+            MatcherAssert.assertThat(actualJson, Matchers.equalTo(expectedJson))
         }
 
-        /** Removes a given key from all sub-objects, example: for all deck ids, remove the "name" */
-        private void removeFromAllObjects(JSONObject actualJson, JSONObject expectedJson, String key) {
-            for (String id : actualJson) {
-                actualJson.getJSONObject(id).remove(key);
+        /** Removes a given key from all sub-objects, example: for all deck ids, remove the "name"  */
+        private fun removeFromAllObjects(actualJson: JSONObject, expectedJson: JSONObject, key: String) {
+            for (id in actualJson) {
+                actualJson.getJSONObject(id).remove(key)
             }
-            for (String id : expectedJson) {
-                expectedJson.getJSONObject(id).remove(key);
+            for (id in expectedJson) {
+                expectedJson.getJSONObject(id).remove(key)
             }
         }
 
-
-        protected void assertModelsEqual(CollectionData expectedData) {
-            JSONObject actualJson = new JSONObject(this.mModels);
-            JSONObject expectedJson = new JSONObject(expectedData.mModels);
-
-            renameKeys(actualJson);
-            renameKeys(expectedJson);
-
-            for (String k : actualJson) {
-                JSONObject actualJsonModel = actualJson.getJSONObject(k);
-                JSONObject expectedJsonModel = expectedJson.getJSONObject(k);
-
-                remove(actualJsonModel, expectedJsonModel, "id");
+        private fun assertModelsEqual(expectedData: CollectionData) {
+            val actualJson = JSONObject(models)
+            val expectedJson = JSONObject(expectedData.models)
+            renameKeys(actualJson)
+            renameKeys(expectedJson)
+            for (k in actualJson) {
+                val actualJsonModel = actualJson.getJSONObject(k)
+                val expectedJsonModel = expectedJson.getJSONObject(k)
+                remove(actualJsonModel, expectedJsonModel, "id")
                 // mod is set in V11, but not in V16
-                remove(actualJsonModel, expectedJsonModel, "mod");
-
-                String name = actualJsonModel.getString("name");
-                if ("Basic (type in the answer)".equals(name) || "Cloze".equals(name)) {
-                    remove(actualJsonModel, expectedJsonModel, "req");
+                remove(actualJsonModel, expectedJsonModel, "mod")
+                val name = actualJsonModel.getString("name")
+                if ("Basic (type in the answer)" == name || "Cloze" == name) {
+                    remove(actualJsonModel, expectedJsonModel, "req")
                 }
-
-                removeSingletonReq(actualJsonModel, expectedJsonModel);
-
-
+                removeSingletonReq(actualJsonModel, expectedJsonModel)
             }
-
-            String actual = JsonUtils.toOrderedString(actualJson);
-            String expected = JsonUtils.toOrderedString(expectedJson);
-            assertThat(actual, is(expected));
+            val actual = actualJson.toOrderedString()
+            val expected = expectedJson.toOrderedString()
+            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
         }
 
-        /** A req over a singleton can either be "any" or "all". Remove singletons which match */
-        private void removeSingletonReq(JSONObject actualJson, JSONObject expectedJson) {
-            JSONArray areq = actualJson.optJSONArray("req");
-            JSONArray ereq = expectedJson.optJSONArray("req");
-
+        /** A req over a singleton can either be "any" or "all". Remove singletons which match  */
+        private fun removeSingletonReq(actualJson: JSONObject, expectedJson: JSONObject) {
+            val areq = actualJson.optJSONArray("req")
+            val ereq = expectedJson.optJSONArray("req")
             if (areq == null || ereq == null) {
-                return;
+                return
             }
-
-            List<Integer> toRemove = new ArrayList<>();
-            for (int i = 0; i < Math.min(areq.length(), ereq.length()); i++) {
-                JSONArray a = areq.getJSONArray(i);
-                JSONArray e = ereq.getJSONArray(i);
-
+            val toRemove: MutableList<Int> = ArrayList()
+            for (i in 0 until min(areq.length(), ereq.length())) {
+                val a = areq.getJSONArray(i)
+                val e = ereq.getJSONArray(i)
                 if (areEqualSingletonReqs(a, e)) {
-                    toRemove.add(i);
+                    toRemove.add(i)
                 }
             }
-
-            Collections.reverse(toRemove);
-
-            for (int i : toRemove) {
-                areq.remove(i);
-                ereq.remove(i);
+            toRemove.reverse()
+            for (i in toRemove) {
+                areq.remove(i)
+                ereq.remove(i)
             }
         }
 
-
-        private boolean areEqualSingletonReqs(JSONArray a, JSONArray e) {
-            JSONArray areq = a.getJSONArray(2);
-            JSONArray breq = e.getJSONArray(2);
-            if (areq.length() != 1 || breq.length() != 1) {
-                return false;
-            }
-
-            return areq.getInt(0) == breq.getInt(0);
+        private fun areEqualSingletonReqs(a: JSONArray, e: JSONArray): Boolean {
+            val areq = a.getJSONArray(2)
+            val breq = e.getJSONArray(2)
+            return if (areq.length() != 1 || breq.length() != 1) {
+                false
+            } else areq.getInt(0) == breq.getInt(0)
         }
 
-
-        protected void assertConfEqual(CollectionData expectedData) {
-            JSONObject actualJson = new JSONObject(this.mConf);
-            JSONObject expectedJson = new JSONObject(expectedData.mConf);
-
-            Long curModel = actualJson.getLong("curModel");
-            Long curModelEx = expectedJson.getLong("curModel");
-
-            assertModelIdsEqual(curModel, curModelEx, expectedData);
-
-            remove(actualJson, expectedJson, "curModel");
-            remove(actualJson, expectedJson, "creationOffset");
-            remove(actualJson, expectedJson, "localOffset");
-
-            String actual = JsonUtils.toOrderedString(actualJson);
-            String expected = JsonUtils.toOrderedString(expectedJson);
-            assertThat(actual, is(expected));
+        private fun assertConfEqual(expectedData: CollectionData) {
+            val actualJson = JSONObject(conf)
+            val expectedJson = JSONObject(expectedData.conf)
+            val curModel = actualJson.getLong("curModel")
+            val curModelEx = expectedJson.getLong("curModel")
+            assertModelIdsEqual(curModel, curModelEx, expectedData)
+            remove(actualJson, expectedJson, "curModel")
+            remove(actualJson, expectedJson, "creationOffset")
+            remove(actualJson, expectedJson, "localOffset")
+            val actual = actualJson.toOrderedString()
+            val expected = expectedJson.toOrderedString()
+            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
 
             // regression: curModel
         }
 
-
-        private void assertModelIdsEqual(Long actualMid, Long expectedMid, CollectionData expectedData) {
-            String actual = new JSONObject(this.mModels).getJSONObject(actualMid.toString()).getString("name");
-
-            String expected = new JSONObject(expectedData.mModels).getJSONObject(expectedMid.toString()).getString("name");
-
-            assertThat("current model", actual, equalTo(expected));
+        private fun assertModelIdsEqual(actualMid: Long, expectedMid: Long, expectedData: CollectionData) {
+            val actual = JSONObject(models).getJSONObject(actualMid.toString()).getString("name")
+            val expected = JSONObject(expectedData.models).getJSONObject(expectedMid.toString()).getString("name")
+            MatcherAssert.assertThat("current model", actual, Matchers.equalTo(expected))
         }
     }
 
+    companion object {
+        protected fun remove(actualJson: JSONObject, expectedJson: JSONObject, key: String?) {
+            actualJson.remove(key)
+            expectedJson.remove(key)
+        }
+
+        protected fun renameKeys(actualJson: JSONObject) {
+            val keys: MutableList<Pair<String, String>> = ArrayList()
+            val keyIt = actualJson.keys()
+            while (keyIt.hasNext()) {
+                val name = keyIt.next()
+                keys.add(Pair(name, actualJson.getJSONObject(name).getString("name")))
+            }
+            Collections.sort(keys, Comparator.comparing { x: Pair<String, String> -> x.second })
+            for (i in keys.indices) {
+                val keyName = keys[i].first
+                actualJson.put((i + i).toString(), actualJson[keyName])
+                actualJson.remove(keyName)
+            }
+        }
+    }
 }
