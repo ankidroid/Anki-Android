@@ -13,46 +13,29 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs.utils
 
-package com.ichi2.anki.dialogs.utils;
+import android.net.Uri
+import androidx.fragment.app.DialogFragment
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
 
-import android.net.Uri;
+class FragmentTestActivity : AnkiActivity() {
+    var lastUrlOpened: String? = null
+        private set
+    var lastShownDialogFragment: DialogFragment? = null
+        private set
 
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.RobolectricTest;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
-public class FragmentTestActivity extends AnkiActivity {
-
-    private String mLastUriOpened = null;
-    private DialogFragment mLastShownDialogFragment;
-
-
-    public String getLastUrlOpened() {
-        return mLastUriOpened;
+    override fun openUrl(url: Uri) {
+        lastUrlOpened = url.toString()
+        super.openUrl(url)
     }
 
-
-    @Override
-    public void openUrl(@NonNull Uri url) {
-        mLastUriOpened = url.toString();
-        super.openUrl(url);
-    }
-
-
-    @Override
-    public void showDialogFragment(DialogFragment newFragment) {
-        super.showDialogFragment(newFragment);
-        mLastShownDialogFragment = newFragment;
+    override fun showDialogFragment(newFragment: DialogFragment?) {
+        super.showDialogFragment(newFragment)
+        lastShownDialogFragment = newFragment
         // Note: I saw a potential solution for this sleeping on StackOverflow - can't find the code again.
-        RobolectricTest.advanceRobolectricLooperWithSleep(); // 6 of normal advance wasn't enough
-        RobolectricTest.advanceRobolectricLooperWithSleep(); // 1 sleep wasn't enough :/
-    }
-
-
-    public DialogFragment getLastShownDialogFragment() {
-        return mLastShownDialogFragment;
+        advanceRobolectricLooperWithSleep() // 6 of normal advance wasn't enough
+        advanceRobolectricLooperWithSleep() // 1 sleep wasn't enough :/
     }
 }
