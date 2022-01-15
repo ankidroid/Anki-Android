@@ -13,72 +13,69 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard.activity
 
-package com.ichi2.anki.multimediacard.activity;
+import android.Manifest
+import android.app.Application
+import android.content.Intent
+import androidx.test.core.app.ApplicationProvider
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.IFieldController
+import com.ichi2.anki.multimediacard.fields.TextField
+import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.utils.KotlinCleanup
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.robolectric.Robolectric
+import org.robolectric.Shadows
+import org.robolectric.android.controller.ActivityController
 
-import android.Manifest;
-import android.app.Application;
-import android.content.Intent;
-
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.IField;
-import com.ichi2.anki.multimediacard.fields.IFieldController;
-import com.ichi2.anki.multimediacard.fields.TextField;
-import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
-
-import org.mockito.Mockito;
-import org.robolectric.Robolectric;
-import org.robolectric.Shadows;
-import org.robolectric.android.controller.ActivityController;
-import org.robolectric.shadows.ShadowApplication;
-
-import androidx.test.core.app.ApplicationProvider;
-
-import static org.mockito.Mockito.when;
-
-public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTest {
-
-    protected void grantCameraPermission() {
-        Application application = ApplicationProvider.getApplicationContext();
-        ShadowApplication app = Shadows.shadowOf(application);
-        app.grantPermissions(Manifest.permission.CAMERA);
+abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
+    protected fun grantCameraPermission() {
+        val application = ApplicationProvider.getApplicationContext<Application>()
+        val app = Shadows.shadowOf(application)
+        app.grantPermissions(Manifest.permission.CAMERA)
     }
 
-    protected void grantRecordAudioPermission() {
-        Application application = ApplicationProvider.getApplicationContext();
-        ShadowApplication app = Shadows.shadowOf(application);
-        app.grantPermissions(Manifest.permission.RECORD_AUDIO);
-    }
-    
-    protected IFieldController getControllerForField(IField field, IMultimediaEditableNote note, int fieldIndex) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, fieldIndex);
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field);
-        intent.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note);
-        return getControllerForIntent(intent);
+    protected fun grantRecordAudioPermission() {
+        val application = ApplicationProvider.getApplicationContext<Application>()
+        val app = Shadows.shadowOf(application)
+        app.grantPermissions(Manifest.permission.RECORD_AUDIO)
     }
 
-    protected IMultimediaEditableNote getEmptyNote() {
-        MultimediaEditableNote note = new MultimediaEditableNote();
-        note.setNumFields(1);
-        note.setField(0, new TextField());
-        note.freezeInitialFieldValues();
-        return note;
+    protected fun getControllerForField(field: IField?, note: IMultimediaEditableNote?, fieldIndex: Int): IFieldController {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, fieldIndex)
+        intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD, field)
+        intent.putExtra(MultimediaEditFieldActivity.EXTRA_WHOLE_NOTE, note)
+        return getControllerForIntent(intent)
     }
 
-    protected IFieldController getControllerForIntent(Intent intent) {
-        ActivityController<?> multimediaController = Robolectric.buildActivity(MultimediaEditFieldActivity.class, intent)
-                .create().start().resume().visible();
-        saveControllerForCleanup(multimediaController);
-        MultimediaEditFieldActivity testCardTemplatePreviewer = (MultimediaEditFieldActivity) multimediaController.get();
-        return testCardTemplatePreviewer.getFieldController();
+    protected val emptyNote: IMultimediaEditableNote
+        get() {
+            val note = MultimediaEditableNote()
+            note.setNumFields(1)
+            note.setField(0, TextField())
+            note.freezeInitialFieldValues()
+            return note
+        }
+
+    private fun getControllerForIntent(intent: Intent?): IFieldController {
+        val multimediaController: ActivityController<*> = Robolectric.buildActivity(MultimediaEditFieldActivity::class.java, intent)
+            .create().start().resume().visible()
+        saveControllerForCleanup(multimediaController)
+        val testCardTemplatePreviewer = multimediaController.get() as MultimediaEditFieldActivity
+        return testCardTemplatePreviewer.fieldController
     }
 
-    protected MultimediaEditFieldActivity setupActivityMock(IFieldController controller, MultimediaEditFieldActivity editFieldActivity) {
-        MultimediaEditFieldActivity activity = Mockito.mock(MultimediaEditFieldActivity.class);
-        when(activity.getResources()).thenReturn(editFieldActivity.getResources());
-        controller.setEditingActivity(activity);
-        return activity;
+    @KotlinCleanup("need a disabled lint check for this as it's a common issue/operation")
+    protected fun setupActivityMock(controller: IFieldController, editFieldActivity: MultimediaEditFieldActivity): MultimediaEditFieldActivity {
+        val activity = mock(MultimediaEditFieldActivity::class.java)
+
+        `when`(activity.resources).thenReturn(editFieldActivity.resources)
+        controller.setEditingActivity(activity)
+        return activity
     }
 }
