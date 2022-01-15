@@ -13,48 +13,37 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.dialogs.utils
 
-package com.ichi2.anki.dialogs.utils;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.RunInBackground
+import com.ichi2.anki.dialogs.HelpDialog.createInstance
+import com.ichi2.anki.dialogs.HelpDialog.createInstanceForSupportAnkiDroid
+import com.ichi2.anki.dialogs.RecursivePictureMenu
+import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil.Companion.getRecyclerViewFor
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
 
-
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.RunInBackground;
-import com.ichi2.anki.dialogs.HelpDialog;
-import com.ichi2.anki.dialogs.RecursivePictureMenu;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class HelpDialogTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class HelpDialogTest : RobolectricTest() {
     @Test
     @RunInBackground
-    public void testMenuDoesNotCrash() {
-        RecursivePictureMenu dialog = (RecursivePictureMenu) HelpDialog.createInstance(getTargetContext());
-
-        super.openDialogFragmentUsingActivity(dialog);
-
-        RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
-
-        assertThat(v.getChildCount(), is(4));
+    fun testMenuDoesNotCrash() {
+        val dialog = createInstance(targetContext) as RecursivePictureMenu
+        super.openDialogFragmentUsingActivity(dialog)
+        val v = getRecyclerViewFor(dialog)
+        MatcherAssert.assertThat(v.childCount, Matchers.`is`(4))
     }
 
     @Test
     @RunInBackground
-    public void testmenuSupportAnkiDroidDoesNotCrash() {
-        RecursivePictureMenu dialog = (RecursivePictureMenu) HelpDialog.createInstanceForSupportAnkiDroid(getTargetContext());
-
-        super.openDialogFragmentUsingActivity(dialog);
-
-        RecyclerView v = RecursivePictureMenuUtil.getRecyclerViewFor(dialog);
-
-        assertThat(v.getChildCount(), is(5));
+    fun testmenuSupportAnkiDroidDoesNotCrash() {
+        val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
+        super.openDialogFragmentUsingActivity(dialog)
+        val v = getRecyclerViewFor(dialog)
+        MatcherAssert.assertThat(v.childCount, Matchers.`is`(5))
     }
 }
