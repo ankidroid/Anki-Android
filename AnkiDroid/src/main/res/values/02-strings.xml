@@ -439,4 +439,12 @@
     <string name="addon_author">Author</string>
     <string name="addon_license">License</string>
     <string name="addon_homepage">Homepage</string>
+    <string name="ankidroid_js_addon_json">https://raw.githubusercontent.com/infinyte7/anki-js-addon-json/main/anki-js-addon.json</string>
+    <string name="downloading_npm_package">Downloading...</string>
+    <string name="extracting_npm_package">Extracting...</string>
+    <string name="failed_to_extract_addon_package">Failed to extract the %s addon package</string>
+    <string name="failed">Failed</string>
+    <string name="success">Success</string>
+    <string name="addon_install_complete">%s addon installation complete</string>
+    <string name="error_occur_downloading_addon">Error occur in downloading packages json. Try again</string>
 </resources>
