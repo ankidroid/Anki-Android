@@ -12,7 +12,7 @@
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.                  *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ***************************************************************************************/
 package com.ichi2.anki.jsaddons
 
@@ -57,7 +57,7 @@ class AddonsAdapter(private var addonList: MutableList<AddonModel>) : RecyclerVi
         val jsAddonKey: String = addonModel.addonType.toString()
         val enabledAddonSet = preferences!!.getStringSet(jsAddonKey, HashSet())
         for (s in enabledAddonSet!!) {
-            if (s == addonModel.name) {
+            if (s == addonModel.addonTitle) {
                 holder.addonActivate.isChecked = true
             }
         }

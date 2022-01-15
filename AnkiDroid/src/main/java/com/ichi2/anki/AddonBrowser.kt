@@ -12,7 +12,7 @@
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
  *                                                                                      *
  * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.                  *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  *                                                                                      *
  * *************************************************************************************/
 
@@ -76,9 +76,7 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
     }
 
     /**
-     * It adds a **Get More Addons** menu button to Addon Browser screen
-     * When **Get More Addons** button is clicked,
-     * then it opens url https://www.npmjs.com/search?q=keywords:ankidroid-js-addon
+     * It adds a **Get Addons** menu button to Addon Browser screen
      *
      * @param menu
      * @return true

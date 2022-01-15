@@ -20,8 +20,8 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.web.HttpFetcher
 import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
@@ -37,6 +37,7 @@ class NpmPackageTgzExtractTest : RobolectricTest() {
     private lateinit var context: Context
     private lateinit var url: URL
     private lateinit var tarballUrl: String
+    private lateinit var packageName: String
     private lateinit var downloadPath: String
     private lateinit var result: MutableList<AddonModel>
     private lateinit var currentAnkiDroidDirectory: String
@@ -46,12 +47,16 @@ class NpmPackageTgzExtractTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         context = targetContext
+        url = URL(context.getString(R.string.ankidroid_js_addon_json))
 
-        // valid addon tarball url
-        tarballUrl = "https://registry.npmjs.org/valid-ankidroid-js-addon-test/-/valid-ankidroid-js-addon-test-1.0.0.tgz"
+        result = NpmPackageDownloader.GetAddonsPackageJson(context).getJson(url)!!
+
+        // For valid json the following will be true
+        tarballUrl = result[0].dist?.get("tarball")!!
+        packageName = result[0].name!!
 
         // use the .tgz url to download
-        downloadPath = HttpFetcher.downloadFileToSdCard(tarballUrl!!, context, "addons")
+        downloadPath = NpmPackageDownloader.DownloadAddon(context, tarballUrl).downloadPackage()
 
         currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         addonDir = File(currentAnkiDroidDirectory, "addons")

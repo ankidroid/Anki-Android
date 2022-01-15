@@ -47,7 +47,6 @@ class AddonModel {
 
     /**
      * @param jsAddonKey  REVIEWER_ADDON_KEY
-     * @param addonName addonName i.e addon directory in AnkiDroid/addons folder
      * @param remove    true for removing from prefs
      *
      *
@@ -58,10 +57,10 @@ class AddonModel {
         val newStrSet: MutableSet<String> = reviewerEnabledAddonSet?.toHashSet()!!
 
         if (remove) {
-            newStrSet.remove(name)
+            newStrSet.remove(addonTitle)
         } else {
-            if (name != null) {
-                newStrSet.add(name)
+            if (addonTitle != null) {
+                newStrSet.add(addonTitle)
             }
         }
 
@@ -73,25 +72,23 @@ class AddonModel {
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
  * addon_type (reviewer or note editor) in addonModel
  *
- * @param addonModel mapped readvalue of fecthed npm package.json
  * @return true for valid addon else false
  */
 fun AddonModel.isValidAnkiDroidAddon(): Boolean {
     // either fields not present in package.json or failed to parse the fields
-    if (name == null || addonTitle == null || main == null ||
-        ankidroidJsApi == null || addonType == null || homepage == null ||
-        keywords == null
+    if (name.isNullOrBlank() || addonTitle.isNullOrBlank() || main.isNullOrBlank() ||
+        ankidroidJsApi.isNullOrBlank() || addonType.isNullOrBlank() || homepage.isNullOrBlank() ||
+        keywords.isNullOrEmpty()
     ) {
         return false
     }
 
-    // if fields are empty
-    if (name.isEmpty() || addonTitle.isEmpty() || main.isEmpty() ||
-        ankidroidJsApi.isEmpty() || addonType.isEmpty() || homepage.isEmpty()
-    ) {
+    // check if name is safe and valid
+    if (!validateName(name)) {
         return false
     }
 
+    // if addon type is note editor then it must have icon
     if (addonType == NOTE_EDITOR_ADDON && icon.isNullOrBlank()) {
         return false
     }
