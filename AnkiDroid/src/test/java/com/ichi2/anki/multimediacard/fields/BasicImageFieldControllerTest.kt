@@ -13,128 +13,111 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard.fields
 
-package com.ichi2.anki.multimediacard.fields;
+import android.app.Activity
+import android.content.Intent
+import androidx.annotation.CheckResult
+import com.ichi2.anki.R
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBase
+import com.ichi2.testutils.AnkiAssert
+import com.ichi2.testutils.MockContentResolver
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.shadows.ShadowToast
+import java.io.File
 
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Intent;
-
-import com.ichi2.anki.R;
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityTestBase;
-import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.testutils.MockContentResolver;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowToast;
-
-import java.io.File;
-
-import androidx.annotation.CheckResult;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
-
-
-@RunWith(RobolectricTestRunner.class)
-public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTestBase {
-
+@RunWith(RobolectricTestRunner::class)
+open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase() {
     @Test
-    public void constructionWithoutDataGivesNoError() {
-        IFieldController controller = getValidControllerNoImage();
-        assertThat(controller, instanceOf(BasicImageFieldController.class));
+    fun constructionWithoutDataGivesNoError() {
+        val controller: IFieldController = validControllerNoImage
+        assertThat(controller, instanceOf(BasicImageFieldController::class.java))
     }
 
     @Test
-    public void constructionWithDataSucceeds() {
-        grantCameraPermission();
-
-        IFieldController controller = getControllerForField(imageFieldWithData(), getEmptyNote(), 0);
-
-        assertThat(controller, instanceOf(BasicImageFieldController.class));
+    fun constructionWithDataSucceeds() {
+        grantCameraPermission()
+        val controller = getControllerForField(imageFieldWithData(), emptyNote, 0)
+        assertThat(controller, instanceOf(BasicImageFieldController::class.java))
     }
 
     @Test
-    public void nonExistingFileDoesNotDisplayPreview() {
-        BasicImageFieldController controller = getValidControllerNoImage();
-        assertThat(controller.isShowingPreview(), is(false));
-
-        File f =  Mockito.mock(File.class);
-        when(f.exists()).thenReturn(false);
-
-        controller.setImagePreview(f, 100);
-
-        assertThat("A non existing file should not display a preview",
-                controller.isShowingPreview(),
-                is(false));
+    fun nonExistingFileDoesNotDisplayPreview() {
+        val controller = validControllerNoImage
+        assertThat(controller.isShowingPreview, `is`(false))
+        val f = mock(File::class.java)
+        `when`(f.exists()).thenReturn(false)
+        controller.setImagePreview(f, 100)
+        assertThat(
+            "A non existing file should not display a preview",
+            controller.isShowingPreview,
+            `is`(false)
+        )
     }
 
     @Test
-    public void erroringFileDoesNotDisplayPreview() {
-        BasicImageFieldController controller = getValidControllerNoImage();
-        assertThat(controller.isShowingPreview(), is(false));
-
-        File f =  Mockito.mock(File.class);
-        when(f.exists()).thenReturn(true); //true, but it'll throw due to being a mock.
-
-        controller.setImagePreview(f, 100);
-
-        assertThat("A broken existing file should not display a preview",
-                controller.isShowingPreview(),
-                is(false));
+    fun erroringFileDoesNotDisplayPreview() {
+        val controller = validControllerNoImage
+        assertThat(controller.isShowingPreview, `is`(false))
+        val f = mock(File::class.java)
+        `when`(f.exists()).thenReturn(true) // true, but it'll throw due to being a mock.
+        controller.setImagePreview(f, 100)
+        assertThat(
+            "A broken existing file should not display a preview",
+            controller.isShowingPreview,
+            `is`(false)
+        )
     }
 
     @Test
-    public void fileSelectedOnSVG() {
-        BasicImageFieldController controller = getValidControllerNoImage();
-
-        File f =  new File("test.svg");
-
-        controller.setImagePreview(f, 100);
-        assertThat("A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.multimedia_editor_svg_preview)));
-        assertThat("A SVG image file can't be previewed", controller.isShowingPreview(), is(false));
+    fun fileSelectedOnSVG() {
+        val controller = validControllerNoImage
+        val f = File("test.svg")
+        controller.setImagePreview(f, 100)
+        assertThat(
+            "A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
+            equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
+        )
+        assertThat("A SVG image file can't be previewed", controller.isShowingPreview, `is`(false))
     }
 
     @Test
-    public void invalidImageResultDoesNotCrashController() {
-        BasicImageFieldController controller = getValidControllerNoImage();
-        MultimediaEditFieldActivity activity = setupActivityMock(controller, controller.mActivity);
+    fun invalidImageResultDoesNotCrashController() {
+        val controller = validControllerNoImage
+        val activity = setupActivityMock(controller, controller.mActivity)
+        val mock = MockContentResolver.returningEmptyCursor()
+        `when`(activity.contentResolver).thenReturn(mock)
 
-        ContentResolver mock = MockContentResolver.returningEmptyCursor();
-        when(activity.getContentResolver()).thenReturn(mock);
-
-        //Act & Assert
-        AnkiAssert.assertDoesNotThrow(() -> performImageResult(controller, new Intent()));
+        // Act & Assert
+        AnkiAssert.assertDoesNotThrow { performImageResult(controller, Intent()) }
     }
 
-
-    private void performImageResult(BasicImageFieldController controller, Intent intent) {
-        controller.onActivityResult(BasicImageFieldController.ACTIVITY_SELECT_IMAGE, Activity.RESULT_OK, intent);
+    private fun performImageResult(controller: BasicImageFieldController, intent: Intent) {
+        controller.onActivityResult(BasicImageFieldController.ACTIVITY_SELECT_IMAGE, Activity.RESULT_OK, intent)
     }
 
-    @CheckResult
-    protected BasicImageFieldController getValidControllerNoImage() {
-        grantCameraPermission();
+    @get:CheckResult
+    protected val validControllerNoImage: BasicImageFieldController
+        get() {
+            grantCameraPermission()
+            return getControllerForField(emptyImageField(), emptyNote, 0) as BasicImageFieldController
+        }
 
-        return (BasicImageFieldController) getControllerForField(emptyImageField(), getEmptyNote(), 0);
+    private fun imageFieldWithData(): IField {
+        val field = emptyImageField()
+        field.imagePath = targetContext.externalCacheDir.toString() + "/temp-photos/test"
+        return field
     }
 
-
-    private static IField emptyImageField() {
-        return new ImageField();
-    }
-
-    private IField imageFieldWithData() {
-        IField field = emptyImageField();
-        field.setImagePath(getTargetContext().getExternalCacheDir() + "/temp-photos/test");
-        return field;
+    companion object {
+        private fun emptyImageField(): IField {
+            return ImageField()
+        }
     }
 }
