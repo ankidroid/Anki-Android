@@ -863,7 +863,7 @@ public class Media {
         List<String> fnames = new ArrayList<>();
         try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
              Cursor cur = mDb.query(
-                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT)
+                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_MAX_FILES)
         ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
@@ -906,7 +906,7 @@ public class Media {
                     mCol.log("-media zip " + fname);
                     meta.put(new JSONArray().put(normname).put(""));
                 }
-                if (sz >= Consts.SYNC_ZIP_SIZE) {
+                if (sz >= Consts.SYNC_MAX_BYTES) {
                     break;
                 }
             }
