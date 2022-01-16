@@ -597,7 +597,7 @@ public class AnkiDroidApp extends Application {
                 toastBuilder.setResText(R.string.feedback_auto_toast_text);
             } else if (value.equals(FEEDBACK_REPORT_ASK)) {
                 dialogBuilder.setEnabled(true);
-                toastBuilder.setResText(R.string.feedback_manual_toast_text);
+                toastBuilder.setResText(R.string.feedback_for_manual_toast_text);
             }
             setAcraConfigBuilder(builder);
         }
