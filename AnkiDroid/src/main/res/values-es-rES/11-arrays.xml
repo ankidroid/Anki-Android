@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">Alternar Pizarra</string>
     <string name="record_voice">Grabar Voz</string>
     <string name="replay_voice">Reproducir Voz</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Difícil (Bueno si no está disponible)</string>
+    <string name="automatic_answer_option_4">Fácil (Bueno si no está disponible)</string>
 </resources>

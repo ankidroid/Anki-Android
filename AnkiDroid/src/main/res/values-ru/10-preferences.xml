@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- generic strings -->
-    <string name="disabled">Выключено</string>
+    <string name="disabled">Выкл.</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general_summ">Общие настройки</string>
@@ -53,10 +53,10 @@
     <string name="pref_cat_themes" maxLength="41">Темы</string>
     <string name="pref_cat_fonts" maxLength="41">Шрифты</string>
     <string name="pref_cat_gestures" maxLength="41">Жесты</string>
-    <string name="pref_cat_gestures_summ">Использовать касания и смахивание вместо кнопок</string>
+    <string name="pref_cat_gestures_summ">Нажатия и смахивания вместо кнопок</string>
     <string name="pref_cat_actions" maxLength="41">Действия</string>
     <string name="pref_cat_controls" maxLength="41">Управление</string>
-    <string name="pref_cat_controls_summ">Настроить устройства ввода</string>
+    <string name="pref_cat_controls_summ">Настроить клавиатуру и устройства ввода</string>
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
     <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
     <string name="pref_cat_performance" maxLength="41">Производительность</string>
@@ -81,7 +81,7 @@
     <string name="card_browser_hide_media_summary">Показывает имена медиафайлов в полях вопросов и ответов в списке карточек</string>
     <string name="col_path" maxLength="41">Папка AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Полноэкранный режим</string>
-    <string name="full_screen_off">Выключен</string>
+    <string name="full_screen_off">Выкл.</string>
     <string name="full_screen_system">Скрыть системную панель</string>
     <string name="full_screen_complete">Скрыть системную панель и кнопки ответа</string>
     <string name="full_screen_error_gestures">Включите жесты, чтобы скрыть кнопки</string>
@@ -157,7 +157,7 @@
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
     <string name="timeout_question_seconds" maxLength="41">Показать следующий вопрос через</string>
     <string name="select_locale_title">Выберите язык</string>
-    <string name="software_render" maxLength="41">Отключить аппаратную отрисовку карточек</string>
+    <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
     <string name="safe_display" maxLength="41">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
@@ -184,7 +184,7 @@
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
-    <string name="new_timezone" maxLength="41">Обработка нового часового пояса</string>
+    <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <string name="day_offset_summ">XXX ч. утра</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
@@ -215,8 +215,8 @@
     <string name="exit_via_double_tap_back" maxLength="41">Нажмите «Назад» дважды, чтобы выйти</string>
     <string name="exit_via_double_tap_back_summ">Предотвращает случайный выход</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Разрешить все файлы при импорте медиа</string>
-    <string name="media_import_allow_all_files_summ">Если Android не распознает медиафайл</string>
+    <string name="media_import_allow_all_files" maxLength="41">Разрешить все медиафайлы при импорте</string>
+    <string name="media_import_allow_all_files_summ">Используйте, если Android не распознаёт файлы</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Расширенная статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Включить расширенную статистику</string>
@@ -318,7 +318,7 @@
     <string name="no_code_formatting" maxLength="41">Простое форматирование ответа</string>
     <string name="no_code_formatting_summ">Исправляет «􏿾» при вводе ответа</string>
     <string name="type_in_answer_focus" maxLength="41">Переключать на «Ввести ответ»</string>
-    <string name="type_in_answer_focus_summ">При повторении автоматически переходит к полю «Ввести ответ»</string>
+    <string name="type_in_answer_focus_summ">Во время учёбы автоматически переходит к полю «Ввести ответ»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Показать список изменений</string>
     <string name="binding_add_gesture">Добавить жест</string>

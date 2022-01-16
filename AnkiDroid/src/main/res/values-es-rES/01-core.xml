@@ -73,7 +73,7 @@
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
+    <string name="no_cards_placeholder_description">Empieza a añadir tarjetas\nusando el icono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -117,7 +117,7 @@
     <string name="menu_flag_card_four">Marca azul</string>
     <string name="menu_flag_card_five">Bandera rosa</string>
     <string name="menu_flag_card_six">Bandera turquesa</string>
-    <string name="menu_flag_card_seven">Bandera violeta</string>
+    <string name="menu_flag_card_seven">Bandera morada</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
     <string name="menu_select">Seleccionar texto</string>
@@ -151,16 +151,16 @@
     <string name="time_quantity_months">%.1f mes</string>
     <string name="time_quantity_years">%.1f año</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Reconstruyendo mazo filtrado</string>
+    <string name="rebuild_filtered_deck">Reconstruyendo mazo filtrado&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Vaciar</string>
     <string name="create_subdeck">Crear submazo</string>
-    <string name="empty_filtered_deck">Vaciando mazo filtrado</string>
+    <string name="empty_filtered_deck">Vaciando mazo filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="empty_deck">Este mazo está vacío</string>
     <string name="search_deck">Buscar Mazos</string>
-    <string name="empty_deck_add_note">Añadir tarjetas</string>
+    <string name="empty_deck_add_note">Añadir tarjeta</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
     <string name="studyoptions_limit_reached">Límite de estudio diario alcanzado</string>

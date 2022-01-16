@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">falló la validación apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>
@@ -368,24 +368,24 @@
     <string name="import_mapped_to_tags">Mapeado a Tags</string>
     <string name="import_mapped_to_nothing">Ignorado</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Carta enterrada</string>
+    <string name="buried_note">Nota enterrada</string>
+    <string name="deleted_note">Nota eliminada</string>
+    <string name="suspended_card">Carta suspendida</string>
+    <string name="suspended_note">Nota suspendida</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Dejar fijo el campo %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_initial_message">AnkiDroid debe mover sus datos para cumplir con las nuevas reglas de privacidad de Android
+\n\nSi desinstalas AnkiDroid antes de la migración, tus datos se perderán
+\n\nPor favor realiza la migración tan pronto como sea posible</string>
+    <string name="scoped_storage_terms_message">La migración tendrá lugar en segundo plano. No podrás sincronizar mientras migras\n\nDuración estimada: %s</string>
+    <string name="scoped_storage_term_1">He respaldado mis datos</string>
+    <string name="scoped_storage_term_1_ankiweb">He sincronizado con AnkiWeb recientemente</string>
+    <string name="scoped_storage_term_2">No desinstalaré la aplicación mientras se mueven los datos</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_learn_more">Aprende más</string>
+    <string name="scoped_storage_postpone">Posponer</string>
+    <string name="scoped_storage_migrate">Migrar</string>
 </resources>
