@@ -13,95 +13,75 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard
 
-package com.ichi2.anki.multimediacard;
+import android.media.MediaRecorder
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
+import java.io.IOException
 
+@RunWith(AndroidJUnit4::class)
+class AudioRecorderTest : RobolectricTest() {
+    private lateinit var mAudioRecorder: AudioRecorder
 
-import android.media.MediaRecorder;
-
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.io.IOException;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-@RunWith(AndroidJUnit4.class)
-public class AudioRecorderTest extends RobolectricTest {
-
-    private AudioRecorder mAudioRecorder;
-
-    @Mock (name = "mRecorder")
-    private MediaRecorder mMockedMediaRecorder;
+    @Mock(name = "mRecorder")
+    private val mMockedMediaRecorder: MediaRecorder? = null
 
     @InjectMocks
-    private AudioRecorder mInjectedRecorder;
-
+    private lateinit var mInjectedRecorder: AudioRecorder
     @Before
-    public void before() {
-        MockitoAnnotations.openMocks(this);
-        mAudioRecorder = new AudioRecorder();
+    fun before() {
+        MockitoAnnotations.openMocks(this)
+        mAudioRecorder = AudioRecorder()
     }
 
-    //verifies that stopRecording() and release() calls the proper methods in mRecorder
+    // verifies that stopRecording() and release() calls the proper methods in mRecorder
     @Test
-    public void testStopAndRelease() {
-        mInjectedRecorder.stopRecording();
-        mInjectedRecorder.release();
-
-        verify(mMockedMediaRecorder, times(1)).stop();
-        verify(mMockedMediaRecorder, times(1)).release();
+    fun testStopAndRelease() {
+        mInjectedRecorder.stopRecording()
+        mInjectedRecorder.release()
+        verify(mMockedMediaRecorder, times(1))?.stop()
+        verify(mMockedMediaRecorder, times(1))?.release()
     }
 
-    //verify that the audio recorder is initialized in high sampling mode
+    // verify that the audio recorder is initialized in high sampling mode
     @Test
-    public void testStartRecordingHighSampling() throws IOException {
-
-        Runnable recordingHandler = mock(Runnable.class);
-
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler);
-        mAudioRecorder.startRecording(getTargetContext(), "testpath");
-
-        verify(recordingHandler, times(1)).run();
+    @Throws(IOException::class)
+    fun testStartRecordingHighSampling() {
+        val recordingHandler = mock(Runnable::class.java)
+        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
+        mAudioRecorder.startRecording(targetContext, "testpath")
+        verify(recordingHandler, times(1)).run()
     }
 
-    //verify that the audio recorder is initialized in low sampling mode
+    // verify that the audio recorder is initialized in low sampling mode
     @Test
-    public void testRecordingLowSampling() throws IOException {
-
-        class initHandlerWithError implements Runnable {
-            private int mTimesRun = 0;
-            private boolean mHasThrown = false;
-            @Override
-            public void run() {
-                mTimesRun++;
-                if(!mHasThrown) {
-                    mHasThrown = true;
-                    //the try-catch in AudioRecorder should catch this exception and move to low-sampling mode
-                    throw new RuntimeException();
+    @Throws(IOException::class)
+    fun testRecordingLowSampling() {
+        class InitHandlerWithError : Runnable {
+            var timesRun = 0
+                private set
+            private var mHasThrown = false
+            override fun run() {
+                timesRun++
+                if (!mHasThrown) {
+                    mHasThrown = true
+                    throw RuntimeException()
                 }
             }
-            public int getTimesRun() {
-                return mTimesRun;
-            }
         }
-        initHandlerWithError recordingHandler = new initHandlerWithError();
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler);
-        mAudioRecorder.startRecording(getTargetContext(), "testpath");
 
-        assertEquals("Initialization handler should run twice", 2, recordingHandler.getTimesRun());
+        val recordingHandler = InitHandlerWithError()
+        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
+        mAudioRecorder.startRecording(targetContext, "testpath")
+        assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun.toLong())
     }
-
-
 }
