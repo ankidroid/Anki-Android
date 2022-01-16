@@ -44,7 +44,7 @@
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
-    <string name="help">Помощь</string>
+    <string name="help">Справка</string>
     <string name="drawing">Рисование</string>
     <string name="send_feedback">Отправить отзыв</string>
     <string name="studyoptions_due_today">На сегодня:</string>
@@ -106,7 +106,7 @@
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Создать ярлык</string>
-    <string name="browse_cards">Список карточек</string>
+    <string name="browse_cards">Показать список</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
@@ -196,7 +196,7 @@
     <string name="card_template_editor_front">Шаблон лица</string>
     <string name="card_template_editor_back">Шаблон оборота</string>
     <string name="card_template_editor_styling">Стилизация</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
     <string name="card_template_editor_insert_field">Вставить поле</string>
     <string name="card_template_editor_select_field">Выбрать поле</string>

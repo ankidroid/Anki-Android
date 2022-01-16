@@ -124,5 +124,5 @@
     <string name="save_dialog_content">O tamanho atual da imagem é de %sMB. O tamanho padrão da imagem é de 1MB. Você deseja recortá-la?</string>
     <string name="select_image_failed">"A seleção de imagem falhou. Por favor, tente novamente."</string>
     <string name="activity_result_unexpected">O aplicativo retornou um valor inesperado. Você pode precisar usar um app diferente</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conteúdos do campo</string>
 </resources>

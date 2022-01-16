@@ -186,32 +186,32 @@
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Deste seçenekleri işlenemedi: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Veritabanı kilitli</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_summary">AnkiDroid veritabanı başka bir uygulama tarafından kullanılıyor. Lütfen diğer uygulamayı kapatın ve ardından AnkiDroid\'i yeniden açın.</string>
+    <string name="incompatible_database_version_title">Uyumsuz Veritabanı Sürümü</string>
+    <string name="incompatible_database_version_summary">Veritabanı, AnkiDroid\'in bu sürümünün çalışabileceğinden daha gelişmiş bir sürümdür. Açmak için AnkiDroid\'i yükseltin veya veritabanını düşürün\n\nDesteklenen sürüm: %1$d\nVeritabanı sürümü: %2$d\n\nAşağıdaki geri yükleme seçenekleri, muhtemelen uyumlu bir veritabanı sürümüyle mevcut koleksiyonunuzun üzerine yazacaktır:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
+    <string name="background_image_applied">Arka plan görüntüsü uygulandı</string>
+    <string name="background_image_removed">Arka plan görüntüsü kaldırıldı</string>
     <string name="no_image_selected">Görsel seçilmedi</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
+    <string name="error_selecting_image">Resim seçilirken hata oluştu. Lütfen kılavuza bakın. %s</string>
     <string name="error_deleting_image">Görsel silinirken hata</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="failed_to_apply_background_image">Arka plan görüntüsü kaydetme başarısız oldu %s</string>
+    <string name="background_image_too_large">Deste Seçici arka planı çok büyük</string>
+    <string name="image_max_size_allowed">İzin verilen en fazla görüntü boyutu %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Gerekli depolama izni eksik. Lütfen depolama izni verin ve ardından işleminizi yeniden deneyin.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Kart Tarayıcı Görünümü yüklenemedi</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Hatırlatıcılar planlanamadı</string>
+    <string name="boot_service_too_many_notifications">Çok fazla hatırlatıcı planlandı. Bazıları görünmeyecek</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Klavye dili seçimi</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">GBoard gibi bazı çok dilli klavyeler, metin düzenlerken dil değiştirmeyi destekler\n\nKlavyeniz dili değiştirmiyorsa lütfen klavye üreticinizden “setImeHintLocales” özelliğini isteyin.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid kullanımı</string>
     <string name="help_item_ankidroid_manual">AnkiDroid Kılavuzu</string>
@@ -239,16 +239,16 @@
     <string name="help_dialog_exception_report_debounce">Rapor zaten gönderildi</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
+        <item quantity="other">%d saniye içinde otomatik bir eşitleme tetiklenebilir</item>
     </plurals>
     <string name="deck_picker_new">Bu destede bugün görülecek yeni kart sayısı</string>
     <string name="deck_picker_rev">Bu destede bugün vakti ğeçen yeni kart sayısı</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_lrn">Bu destede öğrenilen kart sayısı.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="deck_picker_counts">Bugün bakılacak kart sayısını içeren deste genel görünüm sayfasını açın.</string>
+    <string name="import_deck_package">Deste paketi (.apkg)</string>
+    <string name="import_collection_package">Koleksiyon paketi (.colpkg)</string>
 </resources>

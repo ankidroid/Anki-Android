@@ -372,7 +372,7 @@
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">瞭解更多</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
 </resources>
