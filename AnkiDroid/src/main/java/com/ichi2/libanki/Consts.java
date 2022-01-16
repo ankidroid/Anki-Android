@@ -124,8 +124,8 @@ public class Consts {
     public static int SCHEMA_VERSION = 11;
     /** The database schema version that we can downgrade from */
     public static final int SCHEMA_DOWNGRADE_SUPPORTED_VERSION = 16;
-    public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
-    public static final int SYNC_ZIP_COUNT = 25;
+    public static final int SYNC_MAX_BYTES = (int)(2.5*1024*1024);
+    public static final int SYNC_MAX_FILES = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final Integer DEFAULT_HOST_NUM = null;
     /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
