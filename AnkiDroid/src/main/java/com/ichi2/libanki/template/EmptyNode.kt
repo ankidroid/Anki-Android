@@ -14,41 +14,23 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.template;
+package com.ichi2.libanki.template
 
-import java.util.Map;
-import java.util.Set;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class EmptyNode extends ParsedNode {
-    @Override
-    public boolean template_is_empty(@NonNull Set<String> nonempty_fields) {
-        return true;
+class EmptyNode : ParsedNode() {
+    override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
+        return true
     }
 
-
-    @Override
-    public void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) {
+    override fun render_into(fields: Map<String, String>, nonempty_fields: Set<String>, builder: StringBuilder) {}
+    override fun toString(): String {
+        return "new EmptyNode()"
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "new EmptyNode()";
+    override fun equals(other: Any?): Boolean {
+        return other is EmptyNode
     }
 
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        return obj instanceof EmptyNode;
-    }
-
-
-    @Override
-    public int hashCode() {
-        return 0;
+    override fun hashCode(): Int {
+        return 0
     }
 }
