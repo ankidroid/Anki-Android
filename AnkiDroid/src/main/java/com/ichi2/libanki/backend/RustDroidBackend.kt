@@ -14,112 +14,88 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.backend;
+package com.ichi2.libanki.backend
 
-import android.content.Context;
+import BackendProto.Backend.ExtractAVTagsOut
+import BackendProto.Backend.RenderCardOut
+import android.content.Context
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.backend.model.SchedTimingToday
+import com.ichi2.libanki.backend.model.SchedTimingTodayProto
+import com.ichi2.libanki.utils.Time
+import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.database.RustV11SQLiteOpenHelperFactory
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.TemplateManager;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
-import com.ichi2.libanki.utils.Time;
-
-import net.ankiweb.rsdroid.BackendFactory;
-import net.ankiweb.rsdroid.database.RustV11SQLiteOpenHelperFactory;
-
-import BackendProto.AdBackend;
-import BackendProto.Backend;
-import androidx.annotation.NonNull;
-
-/** The V11 Backend in Rust */
-public class RustDroidBackend implements DroidBackend {
-    public static final int UNUSED_VALUE = 0;
-
+/** The V11 Backend in Rust  */
+open class RustDroidBackend(
     // I think we can change this to BackendV1 once new DB() accepts it.
-    private final BackendFactory mBackend;
-
-
-    public RustDroidBackend(BackendFactory backend) {
-        this.mBackend = backend;
+    private val backend: BackendFactory
+) : DroidBackend {
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection {
+        return Collection(context, db, path, server, log, time, this)
     }
 
-    @Override
-    public Collection createCollection(@NonNull Context context, @NonNull DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
-        return new Collection(context, db, path, server, log, time, this);
+    override fun openCollectionDatabase(path: String): DB {
+        return DB(path) { RustV11SQLiteOpenHelperFactory(backend) }
     }
 
-    @Override
-    public DB openCollectionDatabase(@NonNull String path) {
-        return new DB(path, () -> new RustV11SQLiteOpenHelperFactory(mBackend));
+    override fun closeCollection(db: DB?, downgradeToSchema11: Boolean) {
+        db?.close()
     }
 
-
-    @Override
-    public void closeCollection(DB db, boolean downgradeToSchema11) {
-        db.close();
+    override fun databaseCreationCreatesSchema(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean databaseCreationCreatesSchema() {
-        return true;
+    /** Whether the 'Decks' , 'Deck Config', 'Note Types' etc.. are set by database creation  */
+    override fun databaseCreationInitializesData(): Boolean {
+        return false // only true in V16, not V11
     }
 
-    /** Whether the 'Decks' , 'Deck Config', 'Note Types' etc.. are set by database creation */
-    @Override
-    public boolean databaseCreationInitializesData() {
-        return false; // only true in V16, not V11
+    override fun isUsingRustBackend(): Boolean {
+        return true
     }
 
-    @Override
-    public boolean isUsingRustBackend() {
-        return true;
-    }
-
-
-    @Override
-    public void debugEnsureNoOpenPointers() {
-        AdBackend.DebugActiveDatabaseSequenceNumbersOut result = mBackend.getBackend().debugActiveDatabaseSequenceNumbers(UNUSED_VALUE);
-        if (result.getSequenceNumbersCount() > 0) {
-            String numbers = result.getSequenceNumbersList().toString();
-            throw new IllegalStateException("Contained unclosed sequence numbers: " + numbers);
+    override fun debugEnsureNoOpenPointers() {
+        val result = backend.backend.debugActiveDatabaseSequenceNumbers(UNUSED_VALUE.toLong())
+        if (result.sequenceNumbersCount > 0) {
+            val numbers = result.sequenceNumbersList.toString()
+            throw IllegalStateException("Contained unclosed sequence numbers: $numbers")
         }
     }
 
-    @Override
-    public SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) {
-        AdBackend.SchedTimingTodayOut2 res = mBackend.getBackend().schedTimingTodayLegacy(createdSecs, createdMinsWest, nowSecs, nowMinsWest, rolloverHour);
-        return new SchedTimingTodayProto(res);
+    override fun sched_timing_today(createdSecs: Long, createdMinsWest: Int, nowSecs: Long, nowMinsWest: Int, rolloverHour: Int): SchedTimingToday {
+        val res = backend.backend.schedTimingTodayLegacy(createdSecs, createdMinsWest, nowSecs, nowMinsWest, rolloverHour)
+        return SchedTimingTodayProto(res)
     }
 
-
-    @Override
-    public int local_minutes_west(long timestampSeconds) {
-        return mBackend.getBackend().localMinutesWest(timestampSeconds).getVal();
+    override fun local_minutes_west(timestampSeconds: Long): Int {
+        return backend.backend.localMinutesWest(timestampSeconds).getVal()
     }
 
-
-    @Override
-    public void useNewTimezoneCode(Collection col) {
+    override fun useNewTimezoneCode(col: Collection) {
         // enable the new timezone code on a new collection
         try {
-            col.getSched().set_creation_offset();
-        } catch (BackendNotSupportedException e) {
-            throw e.alreadyUsingRustBackend();
+            col.sched.set_creation_offset()
+        } catch (e: BackendNotSupportedException) {
+            throw e.alreadyUsingRustBackend()
         }
     }
 
-
-    @Override
-    public @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    @Throws(BackendNotSupportedException::class)
+    override fun extract_av_tags(text: String, question_side: Boolean): ExtractAVTagsOut {
+        throw BackendNotSupportedException()
     }
 
+    @Throws(BackendNotSupportedException::class)
+    override fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut {
+        throw BackendNotSupportedException()
+    }
 
-    @Override
-    public @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException {
-        throw new BackendNotSupportedException();
+    companion object {
+        const val UNUSED_VALUE = 0
     }
 }
