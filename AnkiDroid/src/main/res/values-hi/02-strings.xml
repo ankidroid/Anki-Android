@@ -268,6 +268,9 @@
     <string name="choose_an_image">चित्र चुनें</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">कृपया जावास्क्रिप्ट का उपयोग करके शो नेविगेशन दराज का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
