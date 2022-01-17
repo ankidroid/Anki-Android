@@ -258,6 +258,9 @@
     <string name="choose_an_image">选择图片</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">请开启全屏以使用 JavaScript 显示导航抽屉。</string>

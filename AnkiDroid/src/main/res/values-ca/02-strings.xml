@@ -268,6 +268,9 @@
     <string name="choose_an_image">Selecciona una imatge</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaura els valors per defecte</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanc</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Activeu la pantalla completa per utilitzar la carpeta de mostrar la navegació usant JavaScript.</string>
