@@ -78,6 +78,16 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      */
     private final PowerManager.WakeLock mWakeLock;
     private long kBytesReceived, kBytesSent;
+    private long filesDownloaded=0;
+    private long filesUploaded=0;
+
+    public void setFilesUploaded(long filesUploaded) {
+        this.filesUploaded = filesUploaded;
+    }
+    public void setFilesDownloaded(long filesDownloaded) {
+        this.filesDownloaded = filesDownloaded;
+    }
+
     public static synchronized boolean getIsCancelled() {
         return sIsCancelled;
     }
@@ -482,7 +492,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
                     if (ret == null || ret.first == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)+ "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                     } else {
                         if (CORRUPT == ret.first) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
@@ -507,7 +517,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.resultType = USER_ABORTED_SYNC;
                         data.result = new Object[]{e};
                     }
-                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage() + "\n\n"+ AnkiDroidApp.getAppResources().getString(R.string.sync_up_down_size,kBytesSent,kBytesReceived);
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage() + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count,filesDownloaded)  + "\n\n" + "Uploaded "+filesUploaded+ " media files";
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
