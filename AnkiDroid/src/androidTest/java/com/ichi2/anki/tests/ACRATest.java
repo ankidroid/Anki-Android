@@ -128,7 +128,7 @@ public class ACRATest extends InstrumentedTest {
         setAcraConfig("Production");
         verifyACRANotDisabled();
 
-        assertToastMessage(R.string.feedback_manual_toast_text);
+        assertToastMessage(R.string.feedback_for_manual_toast_text);
         assertToastIsEnabled();
         assertDialogEnabledStatus("Dialog should be enabled", true);
     }
@@ -211,7 +211,7 @@ public class ACRATest extends InstrumentedTest {
         setAcraReportingMode(FEEDBACK_REPORT_ASK);
 
         assertDialogEnabledStatus("dialog should be re-enabled after changed to ASK", true);
-        assertToastMessage(R.string.feedback_manual_toast_text);
+        assertToastMessage(R.string.feedback_for_manual_toast_text);
     }
 
     @Test
@@ -223,7 +223,7 @@ public class ACRATest extends InstrumentedTest {
         setAcraConfig("Production");
         verifyACRANotDisabled();
 
-        assertToastMessage(R.string.feedback_manual_toast_text);
+        assertToastMessage(R.string.feedback_for_manual_toast_text);
 
         setAcraReportingMode(FEEDBACK_REPORT_ALWAYS);
 
