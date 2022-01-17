@@ -390,7 +390,7 @@ public class CollectionHelper {
      *
      * @return the path to the actual {@link Collection} file
      */
-    public static String getCollectionPath(Context context) {
+    public static @NonNull String getCollectionPath(Context context) {
         return new File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).getAbsolutePath();
     }
 

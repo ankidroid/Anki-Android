@@ -22,6 +22,7 @@ import android.Manifest;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.anki.testutil.ThreadUtils;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,7 @@ public class DeckPickerTest {
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+    @Ignore("This test appears to be flaky everywhere")
     @Test
     public void checkIfClickOnCountsLayoutOpensStudyOptionsOnMobile() {
         // Run the test only on emulator.

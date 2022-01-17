@@ -96,7 +96,7 @@ public class Anki2Importer extends Importer {
     /** If importing SchedV1 into SchedV2 we need to reset the learning cards */
     private boolean mMustResetLearning;
 
-    public Anki2Importer(Collection col, String file) {
+    public Anki2Importer(Collection col, @NonNull String file) {
         super(col, file);
         mNeedMapper = false;
         mDeckPrefix = null;

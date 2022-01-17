@@ -117,6 +117,19 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
+    public void noErrorShouldOccurIfSoundFileNotPresent() {
+        Note firstNote = addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World");
+        moveToReviewQueue(firstNote.firstCard());
+
+        Reviewer reviewer = startReviewer();
+        reviewer.generateQuestionSoundList();
+        reviewer.displayCardQuestion();
+
+        assertThat("If the sound file with given name is not present, then no error occurs", true);
+    }
+
+
+    @Test
     public void jsTime4ShouldBeBlankIfButtonUnavailable() {
         // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
         Note firstNote = addNoteUsingBasicModel("Hello", "World");

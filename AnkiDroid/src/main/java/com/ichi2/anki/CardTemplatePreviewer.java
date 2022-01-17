@@ -69,6 +69,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private int mTemplateCount;
     private int mTemplateIndex = 0;
 
+    private boolean mAllFieldsNull = true;
+    private String mCardType = null;
     protected PreviewLayout mPreviewLayout;
 
     @Override
@@ -96,6 +98,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() loading edited model from %s", mEditedModelFileName);
             try {
                 mEditedModel = TemporaryModel.getTempModel(mEditedModelFileName);
+                mCardType = mEditedModel.optString("name");
             } catch (IOException e) {
                 Timber.w(e, "Unable to load temp model from file %s", mEditedModelFileName);
                 closeCardTemplatePreviewer();
@@ -179,6 +182,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void displayCardAnswer() {
+        if (mAllFieldsNull && (mCardType != null) && mCardType.equals(getString(R.string.basic_typing_model_name))) {
+            mAnswerField.setText(getString(R.string.basic_answer_sample_text_user));
+        }
         super.displayCardAnswer();
         mShowingAnswer = true;
         mPreviewLayout.setShowingAnswer(true);
@@ -272,6 +278,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
         if (mNoteEditorBundle != null) {
+            mAllFieldsNull = false;
             // loading from the note editor
             Card toPreview = setCurrentCardFromNoteEditorBundle(col);
             if (toPreview != null) {
@@ -284,6 +291,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         } else {
             // loading from the card template editor
 
+            mAllFieldsNull = true;
             // card template with associated card due to opening from note editor
             if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList.length) {
                 setCurrentCard(new PreviewerCard(col, mCardList[mCardListIndex]));
@@ -339,6 +347,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         return mCurrentCard;
     }
 
+    private void getLabels(List<String> fieldValues) {
+        if ((mCardType != null) && mCardType.equals(getString(R.string.cloze_model_name))) {
+            fieldValues.set(0, getString(R.string.cloze_sample_text, "c1"));
+        }
+        if ((mCardType != null) && mCardType.equals(getString(R.string.basic_typing_model_name))) {
+            fieldValues.set(1, getString(R.string.basic_answer_sample_text));
+        }
+    }
 
     private List<String> getBundleEditFields(Bundle noteEditorBundle) {
         Bundle noteFields = noteEditorBundle.getBundle("editFields");
@@ -373,9 +389,22 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         if (model == null) {
             return null;
         }
+        if (mAllFieldsNull) {
+            getLabels(fieldValues);
+        }
         Note n = getCol().newNote(model);
         for (int i = 0; i < fieldValues.size() && i < n.getFields().length; i++) {
-            n.setField(i, fieldValues.get(i));
+            if (mAllFieldsNull) {
+                if ((mCardType != null) && (mCardType.equals(getString(R.string.cloze_model_name)) && (i == 0)) ||
+                        (mCardType.equals(getString(R.string.basic_typing_model_name)) && (i == 1))) {
+                    n.setField(i, fieldValues.get(i));
+                } else {
+                    n.setField(i, "(" + fieldValues.get(i) + ")");
+                }
+            }
+            else {
+                n.setField(i, fieldValues.get(i));
+            }
         }
 
         try {

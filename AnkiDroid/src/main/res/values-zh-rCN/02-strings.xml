@@ -258,6 +258,9 @@
     <string name="choose_an_image">选择图片</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">请开启全屏以使用 JavaScript 显示导航抽屉。</string>
@@ -363,16 +366,16 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定字段 %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">存储迁移</string>
+    <string name="scoped_storage_initial_message">AnkiDroid 必须移动其数据以符合新的 Android 隐私规则
+\n\n如果您在迁移前卸载 AnkiDroid，您的数据将丢失
+\n\n请尽快执行迁移。</string>
+    <string name="scoped_storage_terms_message">迁移将发生在后台。迁移时您将无法同步\n\n预计持续时间: %s </string>
+    <string name="scoped_storage_term_1">我已备份我的数据</string>
+    <string name="scoped_storage_term_1_ankiweb">我最近已与 AnkiWeb 同步</string>
+    <string name="scoped_storage_term_2">移动数据时我不会卸载应用</string>
+    <string name="scoped_storage_select_all_terms">请接受所有项目以继续</string>
+    <string name="scoped_storage_learn_more">了解更多</string>
+    <string name="scoped_storage_postpone">推迟</string>
+    <string name="scoped_storage_migrate">迁移</string>
 </resources>

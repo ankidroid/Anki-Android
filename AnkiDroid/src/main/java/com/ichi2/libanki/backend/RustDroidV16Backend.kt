@@ -41,10 +41,10 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
 
     override fun databaseCreationInitializesData(): Boolean = true
 
-    override fun createCollection(context: Context, db: DB, path: String?, server: Boolean, log: Boolean, time: Time): Collection =
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection =
         CollectionV16(context, db, path, server, log, time, this)
 
-    override fun openCollectionDatabase(path: String?): DB {
+    override fun openCollectionDatabase(path: String): DB {
         // This Helper factory updates the database schema on open
         return DB(path) { RustVNextSQLiteOpenHelperFactory(backendFactory) }
     }

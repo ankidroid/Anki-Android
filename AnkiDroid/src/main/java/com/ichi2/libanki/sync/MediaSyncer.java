@@ -242,7 +242,7 @@ public class MediaSyncer {
         mCol.log(fnames.size() + " files to fetch");
         while (!fnames.isEmpty()) {
             try {
-                List<String> top = fnames.subList(0, Math.min(fnames.size(), Consts.SYNC_ZIP_COUNT));
+                List<String> top = fnames.subList(0, Math.min(fnames.size(), Consts.SYNC_MAX_FILES));
                 mCol.log("fetch " + top);
                 ZipFile zipData = mServer.downloadFiles(top);
                 int cnt = mCol.getMedia().addFilesFromZip(zipData);

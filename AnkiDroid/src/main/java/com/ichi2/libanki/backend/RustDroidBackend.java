@@ -46,12 +46,12 @@ public class RustDroidBackend implements DroidBackend {
     }
 
     @Override
-    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
+    public Collection createCollection(@NonNull Context context, @NonNull DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
         return new Collection(context, db, path, server, log, time, this);
     }
 
     @Override
-    public DB openCollectionDatabase(String path) {
+    public DB openCollectionDatabase(@NonNull String path) {
         return new DB(path, () -> new RustV11SQLiteOpenHelperFactory(mBackend));
     }
 

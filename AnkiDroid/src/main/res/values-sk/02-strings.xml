@@ -288,6 +288,9 @@
     <string name="choose_an_image">Zvoliť obrázok</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Obnoviť predvolené</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdny</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Zapnite, prosím, režim celej obrazovky pre použitie zobrazenia navigačnej lišty využívajúcej JavaScript.</string>
@@ -411,7 +414,7 @@
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">Dozvedieť sa viac</string>
     <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_migrate">Migrácia</string>
 </resources>

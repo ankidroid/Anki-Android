@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
     <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
     <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Mankas spaco por enporti la pakaĵon.\nPostulata: %1$s\nDisponebla: %2$s\n\nProvu liberigi iom da spaco en via telefono. Samtempigado uzas malpli da spaco ol enportado. Vi povas enporti la pakaĵon ĉe aparato kun pli da spaco (ekzemple per Anki Desktop ĉe via komputilo) kaj sekve samtempigi ĝin kun tiu ĉi aparato.</string>
     <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
     <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
     <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
@@ -267,6 +267,9 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="choose_an_image">Elekti bildon</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restarigi implicitajn</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per JavaScript.</string>
@@ -375,16 +378,16 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Alpingli la kampon %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Movado de datumoj</string>
+    <string name="scoped_storage_initial_message">AnkiDroid devas movi siajn datumojn por kongrui kun la novaj privatecaj reguloj de Android.
+\n\nSe vi malinstalos AnkiDroid antaŭ la movado, viaj datumoj perdiĝos.
+\n\nPlenumu movadon de datumoj kiel eble plej frue.</string>
+    <string name="scoped_storage_terms_message">Movado de datumoj fariĝos fone. Samtempigo estas nedisponebla dum movado.\n\nProksimuma tempo: %s</string>
+    <string name="scoped_storage_term_1">Mi faris sekurkopion de miaj datumoj</string>
+    <string name="scoped_storage_term_1_ankiweb">Mi antaŭnelonge samtempigis datumojn kun la servo AnkiWeb</string>
+    <string name="scoped_storage_term_2">Mi ne malinstalos la aplikaĵon dum movado de datumoj</string>
+    <string name="scoped_storage_select_all_terms">Akceptu ĉiujn kondiĉojn por pluigi</string>
+    <string name="scoped_storage_learn_more">Pli da informoj</string>
+    <string name="scoped_storage_postpone">Ne nun</string>
+    <string name="scoped_storage_migrate">Movi datumojn</string>
 </resources>

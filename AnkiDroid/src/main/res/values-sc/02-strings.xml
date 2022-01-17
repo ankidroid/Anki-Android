@@ -164,7 +164,7 @@
     <string name="import_log_failed_unzip">Ispachetamentu de s\'apkg fallidu: %s</string>
     <string name="import_log_failed_copy_to">Còpia de s\'apkg in %s fallida</string>
     <string name="import_log_failed_validate">validatzione de s\'apkg fallida</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Non b\'est memòria lìbera bastante pro importare su pachete.\nNetzessàrios - %1$s \nA disponimentu - %2$s.\n\nTenes problemas? Pro a liberare memòria in su telèfonu tuo, si podes. In alternativa, sa sincronizatzione impreat prus pagu memòria de s\'importatzione. Dias pòdere proare a importare su pachete cun unu dispositivu cun prus memòria lìbera (a esèmpiu Anki Desktop) e a pustis a lu sincronizare cun custu dispositivu.</string>
     <string name="import_log_file_cache_cleared">Faddina in s\'importatzione de su documentu, probabilmente un\'isboidamentu de sa memòria temporànea durante s\'elaboratzione.\n
                               Torra a proare</string>
     <string name="import_succeeded_but_check_database">S\'importatzione de sos datos est andada bene ma s\'innetadura a pustis de s\'elaboratzione est fallida. Prus a tardu faghe una verìfica de sa base de datos. Càusa de raighina: %s</string>
@@ -276,6 +276,9 @@
     <string name="choose_an_image">Issèbera un\'immàgine</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Torra a sos valores predefinidos</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Bòidu</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Allughe s\'ischermu intreu pro impreare Ammustra sa barra de navigatzione impreende JavaScript.</string>
@@ -386,16 +389,16 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Tràmuda de sos datos</string>
+    <string name="scoped_storage_initial_message">AnkiDroid depet mòvere sos datos suos pro rispetare sas règulas de riservadesa noas de Android
+\n\nSi as a disinstallare AnkiDroid in antis de su tramudòngiu sos datos tuos s\'ant a pèrdere
+\n\nPro praghere faghe su tramudòngiu su prus in presse chi podes</string>
+    <string name="scoped_storage_terms_message">Su tramudòngiu s\'at a fàghere in s\'isfundu. In su mentres no as a pòdere fàghere sincronizatziones\n\nDurada carculada: %s</string>
+    <string name="scoped_storage_term_1">Apo fatu una còpia de seguresa de sos datos meos</string>
+    <string name="scoped_storage_term_1_ankiweb">Apo fatu dae pagu una sicronizatzione cun AnkiWeb</string>
+    <string name="scoped_storage_term_2">No apo a disinstallare s\'aplicatzione durante su tramudòngiu de sos datos</string>
+    <string name="scoped_storage_select_all_terms">Atzeta totu sos elementos pro sighire</string>
+    <string name="scoped_storage_learn_more">Àteras informatziones</string>
+    <string name="scoped_storage_postpone">Postìtzipa</string>
+    <string name="scoped_storage_migrate">Tràmuda</string>
 </resources>
