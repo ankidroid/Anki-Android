@@ -14,63 +14,55 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.Collection
+import timber.log.Timber
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.libanki.Collection;
-
-import timber.log.Timber;
-
-
-@SuppressWarnings("deprecation") // #7108: AsyncTask
-public final class CollectionLoader extends android.os.AsyncTask<Void, Void, Collection> {
-    private final LifecycleOwner mLifecycleOwner;
-    private final Callback mCallback;
-
-    public interface Callback {
-        void execute(Collection col);
+// #7108: AsyncTask
+@Suppress("Deprecation")
+class CollectionLoader private constructor(private val lifecycleOwner: LifecycleOwner, private val callback: Callback) : android.os.AsyncTask<Void?, Void?, Collection?>() {
+    interface Callback {
+        fun execute(col: Collection?)
     }
 
-    public static void load(LifecycleOwner lifecycleOwner, Callback callback) {
-        CollectionLoader loader = new CollectionLoader(lifecycleOwner, callback);
-        loader.execute();
-    }
-
-    private CollectionLoader(LifecycleOwner lifecycleOwner, Callback callback) {
-        mLifecycleOwner = lifecycleOwner;
-        mCallback = callback;
-    }
-
-    @Override
-    protected Collection doInBackground(Void... params) {
+    override fun doInBackground(vararg params: Void?): Collection? {
         // Don't touch collection if lockCollection flag is set
-        if (CollectionHelper.getInstance().isCollectionLocked()) {
-            Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.");
-            return null;
+        if (CollectionHelper.getInstance().isCollectionLocked) {
+            Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.")
+            return null
         }
         // load collection
-        try {
-            Timber.d("CollectionLoader accessing collection");
-            Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().getApplicationContext());
-            Timber.i("CollectionLoader obtained collection");
-            return col;
-        } catch (RuntimeException e) {
-            Timber.e(e, "loadInBackground - RuntimeException on opening collection");
-            AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
-            return null;
+        return try {
+            Timber.d("CollectionLoader accessing collection")
+            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().applicationContext)
+            Timber.i("CollectionLoader obtained collection")
+            col
+        } catch (e: RuntimeException) {
+            Timber.e(e, "loadInBackground - RuntimeException on opening collection")
+            AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground")
+            null
         }
     }
 
-    @Override
-    protected void onPostExecute(Collection col) {
-        super.onPostExecute(col);
-        if (mLifecycleOwner.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.CREATED)) {
-            mCallback.execute(col);
+    override fun onPostExecute(col: Collection?) {
+        @Suppress("Deprecation")
+        super.onPostExecute(col)
+        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
+            callback.execute(col)
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
+            val loader = CollectionLoader(lifecycleOwner, callback)
+            @Suppress("Deprecation")
+            loader.execute()
+        }
+    }
 }
