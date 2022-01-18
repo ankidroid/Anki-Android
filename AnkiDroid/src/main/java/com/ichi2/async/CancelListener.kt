@@ -14,19 +14,19 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-import androidx.annotation.Nullable;
+fun interface CancelListener {
+    fun isCancelled(): Boolean
 
-@FunctionalInterface
-public interface CancelListener {
-    boolean isCancelled();
-
-    /**
-     * @param cancelListener Either null or a cancel listener
-     * @return whether the listener exists and is cancelled
-     */
-    static boolean isCancelled(@Nullable CancelListener cancelListener) {
-        return cancelListener != null && cancelListener.isCancelled();
+    companion object {
+        /**
+         * @param cancelListener Either null or a cancel listener
+         * @return whether the listener exists and is cancelled
+         */
+        @JvmStatic
+        fun isCancelled(cancelListener: CancelListener?): Boolean {
+            return cancelListener != null && cancelListener.isCancelled()
+        }
     }
 }

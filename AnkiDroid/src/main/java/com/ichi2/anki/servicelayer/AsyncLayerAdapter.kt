@@ -164,7 +164,7 @@ fun <TProgress, TResult> AnkiTask<TProgress, TResult>.asDelegate(): TaskDelegate
     return object : TaskDelegate<TProgress, TResult>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<TProgress>): TResult {
             val executionContext = object : TaskExecutionContext<TProgress> {
-                override fun isCancelled(): Boolean = collectionTask.isCancelled
+                override fun isCancelled(): Boolean = collectionTask.isCancelled()
                 override val col: Collection = col
                 override fun doProgress(progress: TProgress) = collectionTask.doProgress(progress)
             }
