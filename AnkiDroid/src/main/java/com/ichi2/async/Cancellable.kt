@@ -14,10 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.ichi2.async
 
-package com.ichi2.async;
-
-public interface Cancellable {
+interface Cancellable {
     /**
      * <p>Attempts to cancel execution of this task.  This attempt will
      * fail if the task has already completed, already been cancelled,
@@ -51,9 +50,10 @@ public interface Cancellable {
      * @see android.os.AsyncTask#isCancelled()
      * @see android.os.AsyncTask#onCancelled(Object)
      */
-    boolean cancel(boolean mayInterruptIfRunning);
+    fun cancel(mayInterruptIfRunning: Boolean): Boolean
 
     /** Cancel the current task.
-     * @return whether cancelling did occur.*/
-    boolean safeCancel();
+     * @return whether cancelling did occur.
+     */
+    fun safeCancel(): Boolean
 }
