@@ -19,7 +19,7 @@ fr: AnkiDroid (Cartes mémoire)
 fy-NL: AnkiDroid flitskaarten
 gl: Cartóns AnkiDroid
 he: קלפי לימוד של AnkiDroid
-hi: AnkiDroid फ़्लैशकार्ड
+hi: एंकीड्रॉयड फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
 hy-AM: AnkiDroid քարտեր
 id: Kartu flash AnkiDroid
