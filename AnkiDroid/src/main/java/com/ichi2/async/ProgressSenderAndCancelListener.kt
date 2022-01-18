@@ -14,7 +14,6 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-public interface ProgressSenderAndCancelListener<T> extends ProgressSender<T>, CancelListener{
-}
+interface ProgressSenderAndCancelListener<T> : ProgressSender<T>, CancelListener
