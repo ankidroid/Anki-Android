@@ -18,7 +18,6 @@ import com.ichi2.async.TaskManager
 import com.ichi2.libanki.utils.Time
 import timber.log.Timber
 import java.util.*
-import kotlin.jvm.JvmOverloads
 
 object UIUtils {
     @JvmStatic
@@ -160,7 +159,7 @@ object UIUtils {
                     Timber.d("saveCollectionInBackground: start")
                 }
 
-                override fun onPostExecute(v: Void?) {
+                override fun onPostExecute(result: Void?) {
                     Timber.d("saveCollectionInBackground: finished")
                 }
             }

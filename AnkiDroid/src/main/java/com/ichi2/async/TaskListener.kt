@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
 /**
  * Listener for the status and result of a {@link CollectionTask}.
@@ -23,30 +23,27 @@ package com.ichi2.async;
  * <p>
  * Their semantics is equivalent to the methods of {@link android.os.AsyncTask}.
  */
-public abstract class TaskListener<Progress, Result> {
-
-    /** Invoked before the task is started. */
-    public abstract void onPreExecute();
-
+abstract class TaskListener<Progress, Result> {
+    /** Invoked before the task is started.  */
+    abstract fun onPreExecute()
 
     /**
      * Invoked after the task has completed.
      * <p>
      * The semantics of the result depends on the task itself.
      */
-    public abstract void onPostExecute(Result result);
-
+    abstract fun onPostExecute(result: Result)
 
     /**
      * Invoked when the background task publishes an update.
      * <p>
      * The semantics of the update data depends on the task itself.
      */
-    public void onProgressUpdate(Progress value) {
+    open fun onProgressUpdate(value: Progress) {
         // most implementations do nothing with this, provide them a default implementation
     }
 
-    public void onCancelled() {
+    open fun onCancelled() {
         // most implementations do nothing with this, provide them a default implementation
     }
 }
