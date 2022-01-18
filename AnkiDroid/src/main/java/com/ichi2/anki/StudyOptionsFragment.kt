@@ -509,9 +509,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun getCollectionTaskListener(refreshDecklist: Boolean): TaskListener<Void?, DeckStudyData?> {
         return object : TaskListener<Void?, DeckStudyData?>() {
             override fun onPreExecute() {}
-            override fun onPostExecute(data: DeckStudyData?) {
+            override fun onPostExecute(result: DeckStudyData?) {
                 dismissProgressDialog()
-                if (data != null) {
+                if (result != null) {
 
                     // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                     if (activity == null) {
@@ -552,13 +552,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
                     // Switch between the empty view, the ordinary view, and the "congratulations" view
                     val isDynamic = deck.isDyn
-                    if (data.numberOfCardsInDeck == 0 && !isDynamic) {
+                    if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY
                         mDeckInfoLayout!!.visibility = View.VISIBLE
                         mTextCongratsMessage!!.visibility = View.VISIBLE
                         mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
                         mButtonStart!!.visibility = View.GONE
-                    } else if (data.newCardsToday + data.lrnCardsToday + data.revCardsToday == 0) {
+                    } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                         mCurrentContentView = CONTENT_CONGRATS
                         if (!isDynamic) {
                             mDeckInfoLayout!!.visibility = View.GONE
@@ -591,14 +591,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     }
 
                     // Set new/learn/review card counts
-                    mTextTodayNew!!.text = data.newCardsToday.toString()
-                    mTextTodayLrn!!.text = data.lrnCardsToday.toString()
-                    mTextTodayRev!!.text = data.revCardsToday.toString()
+                    mTextTodayNew!!.text = result.newCardsToday.toString()
+                    mTextTodayLrn!!.text = result.lrnCardsToday.toString()
+                    mTextTodayRev!!.text = result.revCardsToday.toString()
 
                     // Set the total number of new cards in deck
-                    if (data.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
+                    if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
                         // if it hasn't been truncated by libanki then just set it usually
-                        mTextNewTotal!!.text = data.numberOfNewCardsInDeck.toString()
+                        mTextNewTotal!!.text = result.numberOfNewCardsInDeck.toString()
                     } else {
                         // if truncated then make a thread to allow full count to load
                         mTextNewTotal!!.text = ">1000"
@@ -624,10 +624,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     }
 
                     // Set total number of cards
-                    mTextTotal!!.text = data.numberOfCardsInDeck.toString()
+                    mTextTotal!!.text = result.numberOfCardsInDeck.toString()
                     // Set estimated time remaining
-                    if (data.eta != -1) {
-                        mTextETA!!.text = data.eta.toString()
+                    if (result.eta != -1) {
+                        mTextETA!!.text = result.eta.toString()
                     } else {
                         mTextETA!!.text = "-"
                     }
