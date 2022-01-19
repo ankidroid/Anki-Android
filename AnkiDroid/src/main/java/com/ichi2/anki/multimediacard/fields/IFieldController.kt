@@ -17,15 +17,15 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.multimediacard.fields;
+package com.ichi2.anki.multimediacard.fields
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.LinearLayout;
-
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.widget.LinearLayout
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * A note in anki has fields. Each of the fields can be edited.
@@ -35,49 +35,43 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
  * <p>
  * MultimediaEditFieldActivity calls controller's set methods by protocol before it works on UI creation.
  */
-public interface IFieldController {
+interface IFieldController {
+    @KotlinCleanup("make field non-null")
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field, including type an content.
-    void setField(IField field);
-
+    fun setField(field: IField?)
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the note.
-    void setNote(IMultimediaEditableNote note);
-
+    fun setNote(note: IMultimediaEditableNote?)
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field index in the note.
-    void setFieldIndex(int index);
-
+    fun setFieldIndex(index: Int)
 
     // Called before other
-    void setEditingActivity(MultimediaEditFieldActivity activity);
-
+    fun setEditingActivity(activity: MultimediaEditFieldActivity?)
 
     // Called after setting field/note/index/activity, allows state persistence across Activity restarts
-    void loadInstanceState(Bundle savedInstanceState);
-
+    fun loadInstanceState(savedInstanceState: Bundle?)
 
     // Called during editing Activity pause, allows state persistence across Activity restarts
-    Bundle saveInstanceState();
+    fun saveInstanceState(): Bundle?
 
-
+    @KotlinCleanup("make context non-null")
     // Layout is vertical inside a scroll view already
-    void createUI(Context context, LinearLayout layout);
-
+    fun createUI(context: Context?, layout: LinearLayout?)
 
     // If the controller ever starts an activity for result, this is going to be
     // called back on result.
-    void onActivityResult(int requestCode, int resultCode, Intent data);
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
     // Called when the controller has stopped showing the field in favor of another one
-    void onFocusLost();
+    fun onFocusLost()
 
     // Is called to apply in the field new data from UI.
-    void onDone();
-
+    fun onDone()
 
     // Called to free memory
-    void onDestroy();
+    fun onDestroy()
 }
