@@ -15,70 +15,65 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.preferences;
+package com.ichi2.preferences
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.AttributeSet;
+import android.content.Context
+import android.os.Bundle
+import android.util.AttributeSet
+import androidx.preference.DialogPreference
+import androidx.preference.PreferenceDialogFragmentCompat
 
-import androidx.annotation.NonNull;
-import androidx.preference.PreferenceDialogFragmentCompat;
+class ConfirmationPreferenceCompat : DialogPreference {
+    private var mCancelHandler = Runnable {}
+    private var mOkHandler = Runnable {}
 
-public class ConfirmationPreferenceCompat extends androidx.preference.DialogPreference {
-
-    @NonNull
-    private Runnable mCancelHandler = () -> { /* do nothing by default */ };
-    @NonNull
-    private Runnable mOkHandler = () -> { /* do nothing by default */ };
-
-    public ConfirmationPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    @Suppress("Unused")
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
     }
 
-    public ConfirmationPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    @Suppress("Unused")
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
     }
 
-
-    public ConfirmationPreferenceCompat(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    @Suppress("Unused")
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
     }
 
-    public ConfirmationPreferenceCompat(Context context) {
-        super(context);
+    @Suppress("Unused")
+    constructor(context: Context?) : super(context) {
     }
 
-    public void setCancelHandler(@NonNull Runnable cancelHandler) {
-        this.mCancelHandler = cancelHandler;
+    @Suppress("Unused")
+    fun setCancelHandler(cancelHandler: Runnable) {
+        mCancelHandler = cancelHandler
     }
 
-
-    public void setOkHandler(@NonNull Runnable okHandler) {
-        this.mOkHandler = okHandler;
+    fun setOkHandler(okHandler: Runnable) {
+        mOkHandler = okHandler
     }
 
-    public static class ConfirmationDialogFragmentCompat extends PreferenceDialogFragmentCompat {
-
-        @Override
-        public ConfirmationPreferenceCompat getPreference() {
-            return (ConfirmationPreferenceCompat) super.getPreference();
+    class ConfirmationDialogFragmentCompat : PreferenceDialogFragmentCompat() {
+        override fun getPreference(): ConfirmationPreferenceCompat {
+            return super.getPreference() as ConfirmationPreferenceCompat
         }
 
-        @Override
-        public void onDialogClosed(boolean positiveResult) {
+        override fun onDialogClosed(positiveResult: Boolean) {
             if (positiveResult) {
-                getPreference().mOkHandler.run();
+                preference.mOkHandler.run()
             } else {
-                getPreference().mCancelHandler.run();
+                preference.mCancelHandler.run()
             }
         }
 
-        public static ConfirmationDialogFragmentCompat newInstance(@NonNull String key) {
-            ConfirmationDialogFragmentCompat fragment = new ConfirmationDialogFragmentCompat();
-            Bundle b = new Bundle(1);
-            b.putString(ARG_KEY, key);
-            fragment.setArguments(b);
-            return fragment;
+        companion object {
+            @JvmStatic
+            fun newInstance(key: String): ConfirmationDialogFragmentCompat {
+                val fragment = ConfirmationDialogFragmentCompat()
+                val b = Bundle(1)
+                b.putString(ARG_KEY, key)
+                fragment.arguments = b
+                return fragment
+            }
         }
     }
 }
