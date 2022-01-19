@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -14,48 +14,35 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.preferences;
+package com.ichi2.preferences
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences.Editor;
-import android.util.AttributeSet;
+import android.content.Context
+import android.content.DialogInterface
+import android.util.AttributeSet
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see implementation at ResetLanguageDialogPreference
-public class CustomDialogPreference extends android.preference.DialogPreference implements DialogInterface.OnClickListener {
-    private final Context mContext;
-
-
-    public CustomDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mContext = context;
-    }
-
-
-    public void onClick(DialogInterface dialog, int which) {
+// TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see implementation at ResetLanguageDialogPreference
+@Suppress("Deprecation", "Unused")
+class CustomDialogPreference(private val context_: Context, attrs: AttributeSet?) : android.preference.DialogPreference(context_, attrs), DialogInterface.OnClickListener {
+    override fun onClick(dialog: DialogInterface, which: Int) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_reset))) {
+            if (this.title == context_.resources.getString(R.string.deck_conf_reset)) {
                 // Deck Options :: Restore Defaults for Options Group
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
-                editor.putBoolean("confReset", true);
-                editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.dialog_positive_remove))) {
+                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
+                editor.putBoolean("confReset", true)
+                editor.commit()
+            } else if (this.title == context_.resources.getString(R.string.dialog_positive_remove)) {
                 // Deck Options :: Remove Options Group
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
-                editor.putBoolean("confRemove", true);
-                editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_set_subdecks))) {
+                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
+                editor.putBoolean("confRemove", true)
+                editor.commit()
+            } else if (this.title == context_.resources.getString(R.string.deck_conf_set_subdecks)) {
                 // Deck Options :: Set Options Group for all Sub-decks
-                Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
-                editor.putBoolean("confSetSubdecks", true);
-                editor.commit();
+                val editor = AnkiDroidApp.getSharedPrefs(context_).edit()
+                editor.putBoolean("confSetSubdecks", true)
+                editor.commit()
             }
         }
     }
-
 }
