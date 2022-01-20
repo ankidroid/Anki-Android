@@ -77,9 +77,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
      */
     private final PowerManager.WakeLock mWakeLock;
-    private long kBytesReceived, kBytesSent;
     private long filesDownloaded = 0;
-    private long filesUploaded=0;
+    private long filesUploaded = 0;
 
     public void setFilesUploaded(long filesUploaded) {
         this.filesUploaded = filesUploaded;
@@ -588,8 +587,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @SuppressWarnings("deprecation") // #7108: AsyncTask
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
-        kBytesSent = up / 1024;
-        kBytesReceived = down / 1024;
     }
 
     @SuppressWarnings("deprecation")
