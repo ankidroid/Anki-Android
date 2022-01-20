@@ -78,7 +78,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      */
     private final PowerManager.WakeLock mWakeLock;
     private long kBytesReceived, kBytesSent;
-    private long filesDownloaded=0;
+    private long filesDownloaded = 0;
     private long filesUploaded=0;
 
     public void setFilesUploaded(long filesUploaded) {
