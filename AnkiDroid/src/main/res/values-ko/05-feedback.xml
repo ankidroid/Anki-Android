@@ -45,7 +45,7 @@
     <string name="feedback_title">AnkiDroid 오류 보고</string>
     <string name="feedback_default_text">보고하실 오류에 대해 피드백이나 정보를 기입해주세요.</string>
     <string name="feedback_auto_toast_text">AnkiDroid에 예기치 못한 오류가 발생했습니다. 개발자에게 오류 보고가 전송됩니다.</string>
-    <string name="feedback_manual_toast_text">AnkiDroid에 예기치 못한 오류가 발생했습니다. 오류 보고를 작성중입니다.</string>
+    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
     <string name="feedback_copy_debug">디버그 정보 복사</string>
     <string name="feedback_report">보고</string>
     <string name="feedback_report_automatically">오류 보고를 자동으로 전송</string>

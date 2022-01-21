@@ -60,7 +60,7 @@
     <string name="alert_logging_message">Loggar in, var god vänta...</string>
     <string name="invalid_username_password">Ogiltig e-postadress eller lösenord.</string>
     <string name="reset_password">Återställ lösenord</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Glömt e-post?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Inställningar</string>
     <string name="deckpreferences_title">Alternativ för XXX</string>

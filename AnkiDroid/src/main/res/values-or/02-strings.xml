@@ -268,9 +268,9 @@
     <string name="choose_an_image">ଛବି ବାଛନ୍ତୁ</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">ଏହା ଏକ {{%1$s::ନମୁନା}} କ୍ଲୋଜ ବିଲୋପ।</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ଉଧାହରଣ</string>
+    <string name="basic_answer_sample_text">ଏକ ଉଦାହରଣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ଜାଭାସ୍କ୍ରିପ୍ଟ ବ୍ୟବହାର କରି ଶୋ ନେଭିଗେସନ୍ ଡ୍ରୟର ବ୍ୟବହାର କରିବାକୁ ଦୟାକରି ପୂର୍ଣ ସ୍କ୍ରିନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
@@ -360,7 +360,7 @@
     <string name="cancel_download_question_title">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରିବେ କି?</string>
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
     <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
-    <string name="something_wrong">କିଛି ଭୁଲ୍ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="download_failed">ଡାଉନଲୋଡ୍ ବିଫଳ ହୋଇଛି</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
@@ -379,16 +379,16 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s କ୍ଷେତ୍ରଟିକୁ sticky କରନ୍ତୁ</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_title">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ</string>
+    <string name="scoped_storage_initial_message">ନୂତନ ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ନିୟମ ପୂରଣ କରିବା ପାଇଁ AnkiDroid ନିଶ୍ଚିତ ଭାବରେ ଏହାର ଡାଟା ଘୁଞ୍ଚାଇବ
+\n\nଯଦି ଆପଣ ସ୍ଥାନାନ୍ତରଣ ପୂର୍ବରୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ କରନ୍ତି, ତେବେ ଆପଣଙ୍କ ଡାଟା ହଜିଯିବ
+\n\nଦୟାକରି ଯଥାଶୀଘ୍ର ସ୍ଥାନାନ୍ତରଣ କରନ୍ତୁ</string>
+    <string name="scoped_storage_terms_message">ପୃଷ୍ଠଭୂମିରେ ସ୍ଥାନାନ୍ତରଣ ଘଟିବ। ସ୍ଥାନାନ୍ତର କରିବା ସମୟରେ ଆପଣ ସିଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ\n\nଆନୁମାନିକ ଅବଧି: %s</string>
+    <string name="scoped_storage_term_1">ମୁଁ ମୋର ଡାଟାର ବ୍ୟାକଅପ୍ ନେଇଛି</string>
+    <string name="scoped_storage_term_1_ankiweb">ମୁଁ ନିକଟରେ AnkiWeb ସହିତ ସିଙ୍କ୍ କରିଛି</string>
+    <string name="scoped_storage_term_2">ଡାଟା ଘୁଞ୍ଚାଇବାବେଳେ ମୁଁ ଆପ୍ ଅନଇନଷ୍ଟଲ୍ କରିବି ନାହିଁ</string>
     <string name="scoped_storage_select_all_terms">ଜାରି ରଖିବାକୁ ଦୟାକରି ସମସ୍ତ ଆଇଟମ୍ ଗ୍ରହଣ କରନ୍ତୁ</string>
     <string name="scoped_storage_learn_more">ଅଧିକ ଜାଣନ୍ତୁ</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
+    <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
 </resources>

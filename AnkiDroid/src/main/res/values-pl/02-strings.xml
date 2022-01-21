@@ -290,7 +290,7 @@
     <string name="restore_default">Przywróć domyślne</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text">przykład</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Włącz tryb pełnoekranowy by pokazywać menu boczne przy użyciu JavaScript</string>
@@ -412,7 +412,7 @@
     <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
     <string name="scoped_storage_term_1">I have backed up my data</string>
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_term_2">Nie odinstaluję aplikacji podczas przenoszenia danych</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>

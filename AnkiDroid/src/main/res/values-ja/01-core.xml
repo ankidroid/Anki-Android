@@ -226,5 +226,5 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
 </resources>

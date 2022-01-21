@@ -45,7 +45,7 @@
     <string name="statistics">Statistik</string>
     <string name="settings">Inställningar</string>
     <string name="help">Hjälp</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Ritning</string>
     <string name="send_feedback">Skicka feedback</string>
     <string name="studyoptions_due_today">Aktuella idag:</string>
     <string name="studyoptions_new_total">Totalt antal nya kort:</string>
@@ -115,9 +115,9 @@
     <string name="menu_flag_card_two">Orange flagga</string>
     <string name="menu_flag_card_three">Grön flagga</string>
     <string name="menu_flag_card_four">Blå flagga</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Rosa flagga</string>
+    <string name="menu_flag_card_six">Turkos flagga</string>
+    <string name="menu_flag_card_seven">Lila flagga</string>
     <string name="menu_edit_tags">Redigera taggar</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
     <string name="menu_select">Markera text</string>
@@ -234,5 +234,5 @@
         <item quantity="one">%1$d kort (0 förfallet)</item>
         <item quantity="other">%1$d kort (0 förfallet)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopia</string>
 </resources>

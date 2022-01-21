@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gester</string>
     <string name="pref_cat_gestures_summ">Använd klickningar och svepningar istället för knappar</string>
     <string name="pref_cat_actions" maxLength="41">Handlingar</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Kontroller</string>
+    <string name="pref_cat_controls_summ">Konfigurera tangentbord och andra enheter</string>
     <string name="pref_cat_advanced" maxLength="41">Avancerat</string>
     <string name="pref_cat_advanced_summ">Optimeringar och experimentella funktioner</string>
     <string name="pref_cat_performance" maxLength="41">Prestanda</string>
@@ -94,7 +94,7 @@
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
     <string name="gestures_allow_links" maxLength="41">Ignorera tryckgester på länkar</string>
     <string name="gestures_allow_links_summary">Tryckgester kommer inte att bearbetas om en länk/ledtråd trycks in.</string>
-    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
+    <string name="gestures_corner_touch" maxLength="41">9-punkters pekning</string>
     <string name="gestures_corner_touch_summary">Tillåt tryckgester i skärmhörnen</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Fullskärm navigationsmeny</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Öppna navigationsmeny när du swipar höger var som helst på skärmen</string>
@@ -122,7 +122,7 @@
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Använd även Kanji/Katakana, Emoji/Kao-moji-knapparna för att scrolla</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Meny</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu_summary">Aktiverar sammanhangsmenyn ‘%s’ globalt</string>
     <string name="double_scrolling_gap" maxLength="41">Dubbelrullning</string>
     <string name="double_scrolling_gap_summ">Aktivera detta om du vill dubbla scroll gap med eReader</string>
     <string name="swipe_sensitivity" maxLength="41">Svepkänslighet</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrera</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blinka</string>
     <string name="timeout_answer_text" maxLength="41">Visa svar automatiskt</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Tidsgräns för svar</string>
     <string name="timeout_answer_summ">Visa svar automatiskt utan att användaren gör något. Fördröjningen inkluderar tiden som det tar för automatisk uppspelning av ljudfiler.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tid för att visa svar</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -163,7 +163,7 @@
     <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-bläckenheter kan kräva detta.</string>
     <string name="disable_extended_text_ui" maxLength="41">Inaktivera redigeringsläge för enfald</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Tillåter sammanhangsmeny \'Lucka\' i liggande läge.</string>
     <string name="vertical_centering" maxLength="41">Centrera</string>
     <string name="vertical_centering_summ">Vertikal centrering av kortinnehåll</string>
     <string name="pref_backup_max" maxLength="41">Max antal säkerhetskopior</string>
@@ -173,8 +173,8 @@
     <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
     <string name="show_large_answer_buttons_summ">Visa svarsknappen i 2 rader</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar" maxLength="41">Visa översta verktygsfältet</string>
+    <string name="show_top_bar_summ">Visa kortstatistik, flagga och märkning i översta raden</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>
     <string name="show_progress_summ">Visa antal återstående kort</string>
     <string name="show_eta" maxLength="41">Visa ETA</string>
@@ -212,11 +212,11 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
     <string name="paste_as_png_summary">Som standard klistrar Anki in bilder från urklipp som JPG-filer för att spara diskutrymme. Du kan använda den här inställningen för att klistra in bilder som PNG-filer istället.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Tryck bakåt 2 ggr för att gå bakåt/sluta</string>
     <string name="exit_via_double_tap_back_summ">För att undvika att av misstag lämna granskaren eller appen</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Tillåt alla filer i medieimport</string>
+    <string name="media_import_allow_all_files_summ">Om Android inte känner igen en mediafil</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Avancerad statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktivera avancerad statistik</string>
@@ -233,7 +233,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediasynkroniseringsurl</string>
     <string name="custom_sync_server_media_url_invalid">Media sync URL är ogiltig</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">Kommandomappning</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ändringar till kortleksgruppsinställningar kommer att påverka flera kortlekar. Om du bara vill ändra nuvarande kortlek, var då vänlig och lägg först till en ny konfigurationsgrupp</string>
     <string name="studyoptions_limit_select_tags">Välj etiketter</string>
@@ -262,7 +262,7 @@
     <string name="deck_conf_rev_bury" maxLength="41">Dölj relaterade repetitioner</string>
     <string name="deck_conf_rev_bury_summ">Relaterade repetitioner döljs till påföljande dag</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Använd allmänna inställningar</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Använd allmänna inställningar för \'Automatisk skärmsvar\' istället för att använda inställningarna för denna grupp.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Lätt bonus</string>
     <string name="deck_conf_hard_factor" maxLength="41">Hård intervall</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Intervallmodifikator</string>
@@ -309,26 +309,26 @@
     <string name="analytics_dialog_title">Hjälp till att förbättra AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Dela funktionsanvändning</string>
     <string name="analytics_summ">Du kan bidra till AnkiDroid genom att hjälpa utvecklingslaget se vilka funktioner som används</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Ersätt radbrytningar med HTML</string>
+    <string name="note_editor_replace_newlines_summ">I anteckningsredigeraren, konvertera alla instanser av &lt;br&gt; till radbrytningar när du redigerar ett kort.</string>
+    <string name="no_code_formatting" maxLength="41">Enkel formattering för skrivet svar</string>
+    <string name="no_code_formatting_summ">Fixar ‘􏿾 ’ visas i skrivna svarsresultat</string>
     <string name="type_in_answer_focus" maxLength="41">Fokusera på ‘skriv in svar’</string>
     <string name="type_in_answer_focus_summ">Fokusera automatiskt på fältet ‘skriv in svar’ i granskaren</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Öppna ändringslogg</string>
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Lägg till gest</string>
+    <string name="binding_add_key">Lägg till knapp</string>
+    <string name="key_picker_default_press_key">Tryck på en knapp</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_selection_title">Välj kortsida</string>
     <string name="card_side_question">Fråga</string>
     <string name="card_side_answer">Svar</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_both">Frågor &amp; Svar</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">S: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Ta bort ‘%s’</string>
+    <string name="bindings_already_bound">Redan bunden till %s</string>
 </resources>
