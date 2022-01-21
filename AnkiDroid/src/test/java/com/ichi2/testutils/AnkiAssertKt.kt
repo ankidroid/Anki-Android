@@ -19,10 +19,10 @@ package com.ichi2.testutils
 /** assertThrows, allowing for lambda shorthand
  *
  * ```kotlin
- * val exception = assertThrows(IllegalStateException::class) {
+ * val exception = assertThrows<IllegalStateException> {
  *     foo()
  * }
  * ```
  * */
-fun <T : Throwable> assertThrows(expected: Class<T>, r: Runnable): T =
-    AnkiAssert.assertThrows(r, expected)
+inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
+    AnkiAssert.assertThrows(r, T::class.java)
