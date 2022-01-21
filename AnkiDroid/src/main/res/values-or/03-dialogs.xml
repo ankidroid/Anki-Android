@@ -41,7 +41,7 @@
     <string name="check_db_title">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="check_db_acknowledge">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏବଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
+    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏବଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
     <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
     <string name="delete_deck_title">ତାସଖଣ୍ଡ ବିଲୋପ କରିବେ କି?</string>

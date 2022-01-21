@@ -45,7 +45,7 @@
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Ipasok ang iyong komentaryo o impormasyon tungkol sa likas na katangian ng anumang mga error na iyong naiulat.</string>
     <string name="feedback_auto_toast_text">Nakaranas ang AnkiDroid ng problema; isang ulat ay ipinadala sa mga developer&#8230;</string>
-    <string name="feedback_manual_toast_text">Nakaranas ang AnkiDroid ng problema; isang ulat ay kasalukuyang binubuo&#8230;</string>
+    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
     <string name="feedback_copy_debug">Kopyahin ang impormasyon ng pag-debug</string>
     <string name="feedback_report">Report</string>
     <string name="feedback_report_automatically">Magpadala ng mga ulat ng error nang awtomatiko</string>
