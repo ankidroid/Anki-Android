@@ -1139,7 +1139,7 @@ public class Preferences extends AnkiActivity {
             addPreferencesFromResource(R.xml.preferences_advanced);
             PreferenceScreen screen = getPreferenceScreen();
             // Check that input is valid before committing change in the collection path
-            EditTextPreference collectionPathPreference = requirePreference("deckPath");
+            EditTextPreference collectionPathPreference = requirePreference(CollectionHelper.PREF_DECK_PATH);
             collectionPathPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 final String newPath = (String) newValue;
                 try {
