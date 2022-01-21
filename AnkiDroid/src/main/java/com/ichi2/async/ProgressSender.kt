@@ -14,19 +14,18 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-import androidx.annotation.Nullable;
+fun interface ProgressSender<T> {
+    fun doProgress(value: T?)
 
-@FunctionalInterface
-public interface ProgressSender<T> {
-    void doProgress(@Nullable T value);
-
-
-    static <T> void publishProgress(ProgressSender<T> progress, T value) {
-        if (progress == null) {
-            return;
+    companion object {
+        @JvmStatic
+        fun <T> publishProgress(progress: ProgressSender<T>?, value: T) {
+            if (progress == null) {
+                return
+            }
+            progress.doProgress(value)
         }
-        progress.doProgress(value);
     }
 }

@@ -581,7 +581,7 @@ open class Card : Cloneable {
             val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance())
             val copies = mutableListOf<Card>()
             for (i in originals.indices) {
-                if (cancelListener.isCancelled) {
+                if (cancelListener.isCancelled()) {
                     Timber.i("Cancelled during deep copy, probably memory pressure?")
                     throw CancellationException("Cancelled during deep copy")
                 }
