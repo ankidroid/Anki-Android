@@ -242,6 +242,12 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.allWarningsAsErrors = true
 }
 
+//Workaround for: https://github.com/pinterest/ktlint/issues/1216
+//To be removed when upstream gets patched
+tasks.withType(org.jlleitschuh.gradle.ktlint.worker.KtLintWorkAction) {
+    workerMaxHeapSize = "2048m"
+}
+
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
