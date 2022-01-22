@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">APKG-Datei konnte nicht entpackt werden: %s</string>
     <string name="import_log_failed_copy_to">APKG-Datei konnte nicht nach %s kopiert werden</string>
     <string name="import_log_failed_validate">Validierung der APKG-Datei nicht erfolgreich</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Es gibt nicht genügend Speicherplatz, um das Paket zu importieren.\nBenötigt - %1$s \nVerfügbar - %2$s.\n\nHaben Sie Probleme? Versuchen Sie, wenn möglich, Platz auf Ihrem Telefon freizugeben. Alternativ verbraucht die Synchronisation weniger Speicherplatz als der Import. Sie können versuchen, das Paket auf einem Gerät mit mehr Speicherplatz zu importieren (z.B. Anki Desktop) und es dann mit diesem Gerät synchronisieren.</string>
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
@@ -208,7 +208,7 @@
     <string name="sched_has_buried">Einige verwandte oder aufgeschobene Karten wurden bis morgen verzögert</string>
     <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
-    <string name="lookup_hint">Nach dem Kopieren des Textes, tippen Sie irgendwo auf der Karteikarte um das Suchsymbol anzuzeigen</string>
+    <string name="lookup_hint">Tippen Sie nach Kopieren des Texts irgendwo auf die Karteikarte, um das Suchsymbol anzuzeigen</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s Sekunde</item>
@@ -268,6 +268,9 @@
     <string name="choose_an_image">Bild auswählen</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Beispiel</string>
+    <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Seitenleiste anzeigen« mit JavaScript zu verwenden.</string>
@@ -376,16 +379,16 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feld %s anpinnen</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Datenmigration</string>
+    <string name="scoped_storage_initial_message">AnkiDroid muss seine Daten verschieben, um den neuen Android-Datenschutzregeln zu entsprechen.
+\n\nWenn Sie AnkiDroid vor der Migration der Daten deinstallieren, gehen ihre Daten verloren.
+\n\nBitte führen Sie die Migration der Daten so bald wie möglich durch.</string>
+    <string name="scoped_storage_terms_message">Datenmigration erfolgt im Hintergrund. Sie können die Daten während der Datenmigration nicht synchronisieren\n\nGeschätzte Dauer: %s</string>
+    <string name="scoped_storage_term_1">Ich habe meine Daten gesichert</string>
+    <string name="scoped_storage_term_1_ankiweb">Ich habe meine Daten kürzlich mit AnkiWeb synchronisiert</string>
+    <string name="scoped_storage_term_2">Ich werde die App nicht deinstallieren, während Daten verschoben werden</string>
+    <string name="scoped_storage_select_all_terms">Bitte akzeptieren Sie alle Elemente um fortzufahren</string>
+    <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
+    <string name="scoped_storage_postpone">Aufschieben</string>
+    <string name="scoped_storage_migrate">Daten verschieben</string>
 </resources>

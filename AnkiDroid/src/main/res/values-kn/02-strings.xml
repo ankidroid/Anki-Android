@@ -268,6 +268,9 @@
     <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ಡೀಫಾಲ್ಟ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ಖಾಲಿ</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಬಳಸಿ ಶೋ ನ್ಯಾವಿಗೇಷನ್ ಡ್ರಾಯರ್ ಅನ್ನು ಬಳಸಲು ದಯವಿಟ್ಟು ಪೂರ್ಣಪರದೆ ಆನ್ ಮಾಡಿ</string>

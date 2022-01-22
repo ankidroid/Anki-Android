@@ -268,6 +268,9 @@
     <string name="choose_an_image">Choisir une image</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Rétablir par défaut</string>
+    <string name="cloze_sample_text">Ceci est un {{%1$s::sample}} de suppression des trous</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">un exemple</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vide</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Veuillez activer le plein écran pour utiliser Afficher le tiroir de navigation en utilisant JavaScript.</string>
@@ -376,16 +379,14 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Transfert du stockage</string>
+    <string name="scoped_storage_initial_message">AnkiDroid doit dépacer ses données pour être conforme aux nouvelles règles de confidentialité d\'Android\n\nSi vous désinstallez AnkiDroid avant le transfert, vos données seront perdu\n\nVeuillez réaliser le transfert de vos données dès que possible</string>
+    <string name="scoped_storage_terms_message">Le transfert va se dérouler en arrière-plan. Vous ne pourrez pas vous synchronisez pendant ce temps\n\nTemps estimé : %s</string>
+    <string name="scoped_storage_term_1">J\'ai fait une sauvegarde de mes données</string>
+    <string name="scoped_storage_term_1_ankiweb">J\'ai récemment synchronisé avec AnkiWeb </string>
+    <string name="scoped_storage_term_2">Je ne vais pas désinstaller l\'application pendant le transfert des données</string>
+    <string name="scoped_storage_select_all_terms">Veuillez accepter tous les éléments pour continuer</string>
+    <string name="scoped_storage_learn_more">En savoir plus</string>
+    <string name="scoped_storage_postpone">Reporter</string>
+    <string name="scoped_storage_migrate">Transférer</string>
 </resources>

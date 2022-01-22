@@ -80,7 +80,7 @@
     <string name="stats_overview_days_studied">Dagar med studier: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d av %3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">Genomsnitt för dagar med studier: &lt;b&gt;%1$.1f&lt;/b&gt; granskningar/dag</string>
     <string name="stats_overview_reviews_per_day_all">Om du studerat varje dag: &lt;b&gt;%1$.1f&lt;/b&gt; granskningar/dag</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Totalt: &lt;b&gt;%d&lt;/b&gt; minuter</string>
     <string name="stats_overview_time_per_day_studydays">Genomsnitt för dagar med studier: &lt;b&gt;%1$.1f&lt;/b&gt; minuter/dag</string>
     <string name="stats_overview_time_per_day_all">Om du studerade varje dag: &lt;b&gt;%1$.1f&lt;/b&gt; minuter/dag</string>
     <string name="stats_overview_average_answer_time">Genomsnittlig svarstid: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kort/minut)</string>
@@ -92,14 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; månader</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dagar</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; timmar</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_learn">Under inlärning: &lt;b&gt;%1$.2f%%&lt;/b&gt; rätt (%2$d av %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Ung: &lt;b&gt;%1$.2f%%&lt;/b&gt; rätt (%2$d av %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Mogen: &lt;b&gt;%1$.2f%%&lt;/b&gt; rätt (%2$d av %3$d)</string>
     <string name="stats_overview_card_types_total_cards">Totala antal kort: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_overview_card_types_total_notes">Totala antal anteckningar: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Lägsta lätthet: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Genomsnittlig lätthet: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Högsta lätthet: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">Välj tidsram</string>
     <string-array name="due_x_axis_title">
         <item>Dagar</item>

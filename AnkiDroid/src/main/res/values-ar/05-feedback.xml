@@ -45,7 +45,7 @@
     <string name="feedback_title">آراء واقتراحات حول أنكيدرويد</string>
     <string name="feedback_default_text">أدخل ملاحظاتك أو معلومات حول طبيعة أي أخطاء تبلغ عنها.</string>
     <string name="feedback_auto_toast_text">واجه أنكيدرويد مشكلة؛ يجري إرسال تقرير إلى المطورين&#8230;</string>
-    <string name="feedback_manual_toast_text">واجه أنكيدرويد مشكلة؛ يجري إنشاء تقرير&#8230;</string>
+    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
     <string name="feedback_copy_debug">نسخ معلومات التصحيح</string>
     <string name="feedback_report">إبلاغ</string>
     <string name="feedback_report_automatically">إرسال تقارير الأخطاء تلقائيًا</string>

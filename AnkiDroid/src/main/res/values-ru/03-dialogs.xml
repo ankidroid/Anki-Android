@@ -236,7 +236,7 @@
     <string name="help_item_mailing_list">Список рассылки</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Сообщить об ошибке</string>
-    <string name="help_title_support_ankidroid">Поддержка AnkiDroid</string>
+    <string name="help_title_support_ankidroid">Помочь AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Пожертвовать</string>
     <string name="help_item_support_develop_ankidroid">Программировать</string>
     <string name="help_item_support_rate_ankidroid">Оценить</string>
@@ -246,7 +246,7 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Конфиденциальность</string>
+    <string name="help_title_privacy">Приватность</string>
     <string name="help_item_ankidroid_privacy_policy">Политика конфиденциальности AnkiDroid</string>
     <string name="help_item_ankiweb_privacy_policy">Политика конфиденциальности AnkiWeb</string>
     <string name="help_item_ankiweb_terms_and_conditions">Условия использования AnkiWeb</string>
@@ -259,7 +259,7 @@
         <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
-    <string name="deck_picker_new">Количество новых карт, которые сегодня можно увидеть в этой колоде.</string>
+    <string name="deck_picker_new">Количество новых карточек на сегодня в этой колоде.</string>
     <string name="deck_picker_rev">Количество карточек на сегодня в колоде.</string>
     <string name="deck_picker_lrn">Количество изучаемых карточек в колоде.</string>
     <!-- This description is valid fos

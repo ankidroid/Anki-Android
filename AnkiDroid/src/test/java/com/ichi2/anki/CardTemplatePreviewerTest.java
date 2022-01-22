@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,68 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
+    }
+
+    @Test
+    public void testPreviewUnsavedTemplate_Basic() {
+        String modelName = "Basic";
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        List<String> fields = collectionBasicModelOriginal.getFieldsNames();
+        JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
+        template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+        intent.putExtra("index", 0);
+
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup((previewerController));
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+        String[] arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).note().getFields();
+        assertThat(arr[0], is("(" + fields.get(0) + ")"));
+        assertThat(arr[1], is("(" + fields.get(1) + ")"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void testPreviewUnsavedTemplate_Cloze() {
+        String modelName = "Cloze";
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        List<String> fields = collectionBasicModelOriginal.getFieldsNames();
+        JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
+        template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+        intent.putExtra("index", 0);
+
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup((previewerController));
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+        String[] arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).note().getFields();
+        assertThat(arr[0], is(testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1")));
+        assertThat(arr[1], is("(" + fields.get(1) + ")"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void testPreviewUnsavedTemplate_basic_answer() {
+        String modelName = "Basic (type in the answer)";
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        List<String> fields = collectionBasicModelOriginal.getFieldsNames();
+        JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
+        template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST");
+        String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
+        intent.putExtra("index", 0);
+
+        ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
+        saveControllerForCleanup((previewerController));
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
+        String[] arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).note().getFields();
+        assertThat(arr[0], is("(" + fields.get(0) + ")"));
+        assertThat(arr[1], is(testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text)));
     }
 
     @Test

@@ -1268,13 +1268,13 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
     public static class ExportApkg extends TaskDelegate<Void, Pair<Boolean, String>> {
-        private final String mApkgPath;
+        private final @NonNull String mApkgPath;
         private final Long mDid;
         private final Boolean mIncludeSched;
         private final Boolean mIncludeMedia;
 
 
-        public ExportApkg(String apkgPath, Long did, Boolean includeSched, Boolean includeMedia) {
+        public ExportApkg(@NonNull String apkgPath, Long did, Boolean includeSched, Boolean includeMedia) {
             this.mApkgPath = apkgPath;
             this.mDid = did;
             this.mIncludeSched = includeSched;

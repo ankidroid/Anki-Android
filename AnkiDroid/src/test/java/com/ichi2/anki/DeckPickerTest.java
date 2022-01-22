@@ -477,7 +477,7 @@ public class DeckPickerTest extends RobolectricTest {
 
         // set collection path
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
-        preferences.edit().putString("deckPath", collectionDirectory).apply();
+        preferences.edit().putString(CollectionHelper.PREF_DECK_PATH, collectionDirectory).apply();
 
         // ensure collection not loaded yet
         assertThat("collection should not be loaded", CollectionHelper.getInstance().colIsOpen(), is(false));

@@ -268,6 +268,9 @@
     <string name="choose_an_image">Escolha uma imagem</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar Padrões</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
@@ -340,7 +343,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Sua tela de início não permite que AnkiDroid adicione atalhos</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Iniciar frases em letra maíuscula</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rolar a barra de funções</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -374,18 +377,18 @@
     <string name="suspended_card">Cartão suspenso</string>
     <string name="suspended_note">Nota suspensa</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Fixar o campo %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Migração do armazenamento</string>
+    <string name="scoped_storage_initial_message">O AnkiDroid deve mover seus dados para cumprir as novas regras de privacidade do Android
+\n\nSe você remover o AnkiDroid antes da migração, seus dados serão perdidos
+\n\nPor favor execute a migração o quanto antes</string>
+    <string name="scoped_storage_terms_message">A migração ocorrerá em segundo plano. Você não poderá fazer a sincronização durante a migração\n\nTempo estimado: %s</string>
+    <string name="scoped_storage_term_1">Fiz backup dos meus dados</string>
+    <string name="scoped_storage_term_1_ankiweb">Fiz a sincronização com o AnkiWeb recentemente</string>
+    <string name="scoped_storage_term_2">Não removerei o aplicativo enquanto os dados estiverem sendo movidos</string>
+    <string name="scoped_storage_select_all_terms">Por favor aceite todos os itens para continuar</string>
+    <string name="scoped_storage_learn_more">Saiba mais</string>
+    <string name="scoped_storage_postpone">Adiar</string>
+    <string name="scoped_storage_migrate">Migrar</string>
 </resources>

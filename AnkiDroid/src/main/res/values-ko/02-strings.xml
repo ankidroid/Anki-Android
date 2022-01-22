@@ -259,6 +259,9 @@
     <string name="choose_an_image">이미지 선택</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">기본값 복원</string>
+    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">공백</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript를 이용하여 탐색창 서랍을 이용하려면 전체 화면을 켜주십시오.</string>

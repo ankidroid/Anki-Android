@@ -141,7 +141,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
 
 
     @Override
-    public DeckDueTreeNode withChildren(List<DeckDueTreeNode> children) {
+    public DeckDueTreeNode withChildren(@NonNull List<DeckDueTreeNode> children) {
         Collection col = getCol();
         String name = getFullDeckName();
         long did = getDid();

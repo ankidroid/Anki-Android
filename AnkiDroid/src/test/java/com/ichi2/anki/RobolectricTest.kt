@@ -80,6 +80,9 @@ open class RobolectricTest : CollectionGetter {
 
     @Before
     open fun setUp() {
+        // resolved issues with the collection being reused if useInMemoryDatabase is false
+        CollectionHelper.getInstance().setColForTests(null)
+
         if (mTaskScheduler.shouldRunInForeground()) {
             runTasksInForeground()
         } else {

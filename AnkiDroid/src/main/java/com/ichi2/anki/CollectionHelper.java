@@ -56,6 +56,19 @@ public class CollectionHelper {
     public static final String COLLECTION_FILENAME = "collection.anki2";
 
     /**
+     * The preference key for the path to the current AnkiDroid folder
+     * <br>
+     * This folder contains all AnkiDroid data and media for a given collection
+     * Except the Android preferences, cached files and {@link MetaDB}
+     * <br>
+     * This can be changed by the {@link Preferences} screen
+     * to allow a user to access a second collection via the same AnkiDroid app instance.
+     * <br>
+     * The path also defines the collection that the AnkiDroid API accesses
+     */
+    public static final String PREF_DECK_PATH = "deckPath";
+
+    /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
      *
      * <p>Accessed only from synchronized methods.
@@ -187,7 +200,7 @@ public class CollectionHelper {
     /**
      * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
      *
-     * The AnkiDroid directory is a user preference stored under the "deckPath" key, and a sensible
+     * The AnkiDroid directory is a user preference stored under {@link #PREF_DECK_PATH}, and a sensible
      * default is chosen if the preference hasn't been created yet (i.e., on the first run).
      *
      * The presence of a .nomedia file indicates to media scanners that the directory must be
@@ -236,7 +249,7 @@ public class CollectionHelper {
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
-     * This directory is stored under the key "deckPath" in SharedPreferences
+     * This directory is stored under {@link #PREF_DECK_PATH}
      * @return <code>true</code> if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
     public static boolean isLegacyStorage(Context context) {
@@ -390,7 +403,7 @@ public class CollectionHelper {
      *
      * @return the path to the actual {@link Collection} file
      */
-    public static String getCollectionPath(Context context) {
+    public static @NonNull String getCollectionPath(Context context) {
         return new File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).getAbsolutePath();
     }
 
@@ -407,7 +420,7 @@ public class CollectionHelper {
         }
         return PreferenceExtensions.getOrSetString(
                 preferences,
-                "deckPath",
+                PREF_DECK_PATH,
                 () -> getDefaultAnkiDroidDirectory(context));
     }
 

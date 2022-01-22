@@ -60,7 +60,7 @@
     <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
     <string name="invalid_username_password">Geçersiz eposta adresi veya şifre</string>
     <string name="reset_password">Parolayı Sıfırla</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Tercihler</string>
     <string name="deckpreferences_title">XXX Seçenekleri</string>

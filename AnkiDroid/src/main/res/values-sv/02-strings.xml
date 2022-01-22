@@ -98,7 +98,7 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_review_limit">Modifiera dagens dagens gräns för kortrepetitioner</string>
     <string name="custom_study_review_forgotten">Repetera glömda kort</string>
     <string name="custom_study_review_ahead">Repetera i förväg</string>
     <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
@@ -109,9 +109,9 @@
     <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_first_field">Det första fältet är tomt</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_no_cloze_delations">Denna typ av anteckning måste innehålla textluckor</string>
+    <string name="note_editor_no_cards_created_all_fields">Den aktuella anteckningstypen producerade inga kort.\nVälj en annan anteckningstyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Luckborttagningar fungerar bara för anteckningar av Textluck-typ</string>
     <string name="saving_facts">Sparar not</string>
     <string name="saving_model">Sparar anteckningstyp</string>
     <string name="save">Spara</string>
@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">Återställ framsteg</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Omplanera</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Förhandsgranska</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d av %2$d</string>
     <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Byt namn</string>
     <string name="default_conf_delete_error">Standardkonfigurationsgruppen kan ej tas bort</string>
@@ -162,14 +162,14 @@
     <string name="import_log_failed_unzip">Misslyckades med att packa upp apkg: %s</string>
     <string name="import_log_failed_copy_to">Det gick inte att kopiera apkg till %s</string>
     <string name="import_log_failed_validate">apkg misslyckades validering</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_insufficient_space_error">Det finns inte tillräckligt med utrymme för att importera paketet.\nBehövs - %1$s \nTillgänglig - %2$s.\n\nHar du problem? Försök att frigöra utrymme på telefonen om möjligt. Alternativt så använder synkronisering mindre utrymme än import. Du kan försöka importera paketet med en enhet med mer utrymme (till exempel Anki Desktop) och sedan synkronisera det med den här enheten.</string>
+    <string name="import_log_file_cache_cleared">Fel vid import av fil, sannolikt en cacherensning under behandling.\nFörsök igen</string>
+    <string name="import_succeeded_but_check_database">Dataimport lyckades, men rensningen efter import misslyckades. Kontrollera databasen senare. Rotorsak: %s</string>
     <string name="import_error_unhandled_request">Det går inte att bearbeta importbegäran</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">apkg-filen är skadad. Vänligen ta bort och ladda ner den igen.\n\nRotorsak: %s</string>
     <string name="import_error_exception">Det gick inte att importera paket\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">Anki Database (.anki2) ersättningar stöds inte än. Se manualen för ersättningsinstruktioner.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() misslyckades (möjligen slut på lagringsutrymme)</string>
     <string name="import_error_unhandled_scheme">Ohanterad import från: ”%s”</string>
@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
     <string name="export_successful">Filen ”%s” har exporterats. Vill du skicka den med en annan app?</string>
     <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text_new"><![CDATA[        Hej!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        Detta är en kortlek med Anki-flashcards som skickats från <a href="">AnkiDroid</a>.
+        Testa att öppna den med någon av de tillgängliga <a href="">Anki-distributionerna</a> och njut av ett enkelt och effektivt lärande!
         ]]></string>
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
@@ -262,29 +262,32 @@
     <string name="web_page_error">Fel vid inläsning av sidan: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Extern sidlänk i kort stöds inte.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Återvunna kort</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrund</string>
     <string name="choose_an_image">Välj en bild</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">Återställ standardvärde</string>
+    <string name="cloze_sample_text">Detta är ett {{%1$s::exempel}} på en textlucka.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Exompel</string>
+    <string name="basic_answer_sample_text">ett exempel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivera helskärm för att använda Visa navigeringslåda med JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivera helskärm för att använda menyn Visa alternativ med JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="white_board_image_save_failed">Det gick inte att spara whiteboardbilden. %s</string>
+    <string name="white_board_image_saved">Whiteboard-bild sparad till %s</string>
     <string name="title_whiteboard_pen_color">Färg på whiteboardpenna</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Redigerare för whiteboard</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Tomma kort hittades. Kör Verktyg>Tomma kort.]]></string>
+    <string name="note_importer_error_empty_first_field">Tomt första fält: %s</string>
     <string name="note_importer_error_first_field_matched">Första fältet matchade: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="note_importer_error_added_duplicate_first_field">Lade till dubblett med första fältet: %s</string>
+    <string name="note_importer_error_appeared_twice">Förekommer två gånger i filen: %s</string>
+    <string name="note_importer_error_empty_notes">En eller flera anteckningar importerades inte, eftersom de inte genererade några kort. Detta kan hända när du har tomma fält eller när du inte har mappat innehållet i textfilen till rätt fält</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ hade %2$d fält, förväntade %3$d</string>
     <string name="csv_importer_error_exception">Avbruten: %s</string>
     <string name="user_is_a_robot">Upptäckte automatiskt test. Om du är en människa, kontakta AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
@@ -325,22 +328,22 @@
     <string name="format_insert_italic">Formatera som kursiv</string>
     <string name="format_insert_underline">Formatera som understruken</string>
     <string name="insert_horizontal_line">Infoga horisontell linje</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_heading">Infoga rubrik</string>
     <string name="format_font_size">Ändra teckenstorlek</string>
     <string name="insert_mathjax">Infoga MathJax ekvation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="insert_cloze">Infoga textlucka</string>
+    <string name="before_text">HTML före markering</string>
+    <string name="after_text">HTML efter markering</string>
     <string name="add_toolbar_item">Skapa objekt i verktygsfältet</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">Ange HTML som ska infogas före och efter den markerade texten\n\nTryck länge på ett verktygsfält för att ta bort det</string>
     <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
     <string name="note_editor_paste_too_large">Bilden är för stor för att klistra in, vänligen infoga bilden manuellt</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Säkerhetskopiering av Android pågår. Försök igen</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Du kan behöva använda iManager för att tillåta AnkiDroid att lägga till genvägar</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Din startskärm tillåter inte AnkiDroid att lägga till genvägar</string>
     <string name="create_shortcut_error">Kunde inte lägga till genväg: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Versalisera meningar</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rulla verktygsfält</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -351,41 +354,41 @@
     <string name="back_pressed_once_reviewer">Tryck tillbaka igen för att återvända</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Hämta kortlek</string>
+    <string name="try_again">Försök igen</string>
+    <string name="cancel_download">Avbryt hämtning</string>
+    <string name="cancel_download_question_title">Avbryt hämtning?</string>
+    <string name="downloading_file">Hämtar %s</string>
+    <string name="import_deck">Importera kortlek</string>
+    <string name="something_wrong">Något gick fel, vänligen försök igen</string>
+    <string name="download_failed">Hämtning misslyckades</string>
+    <string name="deck_download_progress_message">Du kan använda andra appar medan nedladdningen kör</string>
+    <string name="check_network">Kontrollera din nätverksanslutning</string>
+    <string name="search_using_deck_name">Sök efter kortlekens namn</string>
+    <string name="home">Hem</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">Mappad till %s</string>
+    <string name="import_mapped_to_tags">Mappad till taggar</string>
+    <string name="import_mapped_to_nothing">Ignorerad</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Nedgrävt kort</string>
+    <string name="buried_note">Nedgrävd anteckning</string>
+    <string name="deleted_note">Borttagen anteckning</string>
+    <string name="suspended_card">Uteslutet kort</string>
+    <string name="suspended_note">Utesluten anteckning</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Gör fältet %s klibbigt</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_title">Migrering av lagring</string>
+    <string name="scoped_storage_initial_message">AnkiDroid måste flytta sina data för att uppfylla nya Android-sekretessregler
+\n\nOm du avinstallerar AnkiDroid innan migreringen, kommer dina data att försvinna
+\n\nVänligen utför migreringen så snart som möjligt</string>
+    <string name="scoped_storage_terms_message">Migrering kommer att ske i bakgrunden. Du kommer inte att kunna synkronisera när du migrerar\n\nBeräknad varaktighet: %s</string>
+    <string name="scoped_storage_term_1">Jag har säkerhetskopierat mina data</string>
+    <string name="scoped_storage_term_1_ankiweb">Jag har nyligen synkroniserat med AnkiWeb</string>
+    <string name="scoped_storage_term_2">Jag kommer inte avinstallera appen när data flyttas</string>
+    <string name="scoped_storage_select_all_terms">Vänligen acceptera alla objekt för att fortsätta</string>
+    <string name="scoped_storage_learn_more">Läs mer</string>
+    <string name="scoped_storage_postpone">Senarelägg</string>
+    <string name="scoped_storage_migrate">Migrera</string>
 </resources>

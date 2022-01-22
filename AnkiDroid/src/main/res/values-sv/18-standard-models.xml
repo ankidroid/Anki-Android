@@ -23,13 +23,13 @@
     <string name="front_field_name">Framsida</string>
     <string name="back_field_name">Baksida</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Baksida extra</string>
     <string name="field_to_ask_front_name">Lägg till Omvänt</string>
     <!--Card type-->
     <string name="card_n_name">Kort %d</string>
     <!--Note type-->
     <string name="basic_model_name">Enkel</string>
-    <string name="cloze_model_name">Glosor</string>
+    <string name="cloze_model_name">Textlucka</string>
     <string name="basic_typing_model_name">Enkel (skriv in svaret)</string>
     <string name="forward_reverse_model_name">Enkel (och omvänt kort)</string>
     <string name="forward_optional_reverse_model_name">Enkel (valbart omvänt kort)</string>

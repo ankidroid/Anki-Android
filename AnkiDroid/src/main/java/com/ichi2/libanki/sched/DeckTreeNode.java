@@ -20,6 +20,8 @@ import com.ichi2.libanki.Collection;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
     public DeckTreeNode(Collection col, String name, long did) {
         super(col, name, did);
@@ -27,7 +29,7 @@ public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
 
 
     @Override
-    public DeckTreeNode withChildren(List<DeckTreeNode> children) {
+    public DeckTreeNode withChildren(@NonNull List<DeckTreeNode> children) {
         Collection col = getCol();
         String name = getFullDeckName();
         long did = getDid();

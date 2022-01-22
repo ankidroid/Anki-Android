@@ -16,9 +16,7 @@
 
 package com.ichi2.libanki.sched
 
-import java.util.*
-
-internal class LrnCardQueue(sched: AbstractSched?) : CardQueue<LrnCard?>(sched) {
+internal class LrnCardQueue(sched: AbstractSched) : CardQueue<LrnCard>(sched) {
     /**
      * Whether the queue already contains its current expected value.
      * If it's not the case, then we won't add cards reviewed immediately and wait for a filling to occur.
@@ -31,11 +29,11 @@ internal class LrnCardQueue(sched: AbstractSched?) : CardQueue<LrnCard?>(sched) 
     }
 
     fun sort() {
-        Collections.sort(queue)
+        queue.sort()
     }
 
     val firstDue: Long
-        get() = queue.first!!.due
+        get() = queue.first.due
 
     override fun clear() {
         super.clear()

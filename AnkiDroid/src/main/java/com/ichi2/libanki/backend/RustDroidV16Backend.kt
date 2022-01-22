@@ -41,10 +41,10 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
 
     override fun databaseCreationInitializesData(): Boolean = true
 
-    override fun createCollection(context: Context, db: DB, path: String?, server: Boolean, log: Boolean, time: Time): Collection =
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection =
         CollectionV16(context, db, path, server, log, time, this)
 
-    override fun openCollectionDatabase(path: String?): DB {
+    override fun openCollectionDatabase(path: String): DB {
         // This Helper factory updates the database schema on open
         return DB(path) { RustVNextSQLiteOpenHelperFactory(backendFactory) }
     }
@@ -58,18 +58,18 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
         return backend.extractAVTags(text, question_side)
     }
 
-    override fun renderCardForTemplateManager(context: TemplateManager.TemplateRenderContext): Backend.RenderCardOut {
-        return if (context._template != null) {
+    override fun renderCardForTemplateManager(templateRenderContext: TemplateManager.TemplateRenderContext): Backend.RenderCardOut {
+        return if (templateRenderContext._template != null) {
             // card layout screen
             backend.renderUncommittedCard(
-                context._note.to_backend_note(),
-                context._card.ord,
-                to_json_bytes(JSONObject(context._template!!)),
-                context._fill_empty,
+                templateRenderContext._note.to_backend_note(),
+                templateRenderContext._card.ord,
+                to_json_bytes(JSONObject(templateRenderContext._template!!)),
+                templateRenderContext._fill_empty,
             )
         } else {
             // existing card (eg study mode)
-            backend.renderExistingCard(context._card.id, context._browser)
+            backend.renderExistingCard(templateRenderContext._card.id, templateRenderContext._browser)
         }
     }
 }

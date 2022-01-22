@@ -45,7 +45,7 @@ public class JavaDroidBackend implements DroidBackend {
 
 
     @Override
-    public DB openCollectionDatabase(String path) {
+    public DB openCollectionDatabase(@NonNull String path) {
         return new DB(path);
     }
 

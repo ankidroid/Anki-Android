@@ -46,16 +46,16 @@
     <string name="statistics_buried">Gömülmüş</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Yeniden öğrenme</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Öğrenme</string>
-    <string name="statistics_cram">İnekleme</string>
+    <string name="statistics_cram">Sıkı çalış</string>
     <string name="stats_cards">Kart</string>
-    <string name="stats_cards_intervals">Verilen aralıktaki kart</string>
-    <string name="stats_cumulative_cards">Toplam Kart</string>
-    <string name="stats_cumulative_answers">Toplam cevap</string>
-    <string name="stats_cumulative_time_minutes">Toplam Dakika</string>
-    <string name="stats_cumulative_time_hours">Toplam Saat</string>
+    <string name="stats_cards_intervals">Verilen aralıktaki kartlar</string>
+    <string name="stats_cumulative_cards">Birikmiş kartlar</string>
+    <string name="stats_cumulative_answers">Birikmiş cevaplar</string>
+    <string name="stats_cumulative_time_minutes">Birikmiş dakikalar</string>
+    <string name="stats_cumulative_time_hours">Birikmiş saatler</string>
     <string name="stats_cumulative">Kümülatif</string>
-    <string name="stats_cumulative_percentage">Toplam Yüzde</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">Toplam Doğru %</string>
+    <string name="stats_cumulative_percentage">Birikmiş yüzdelik</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Birikmiş doğru %</string>
     <string name="stats_answers">Cevap</string>
     <string name="stats_minutes">Dakika</string>
     <string name="stats_hours">Saat</string>
@@ -80,10 +80,10 @@
     <string name="stats_overview_days_studied">Çalışılan gün: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d/%3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">Çalışılan günlerin ortalaması: &lt;b&gt;%1$.1f&lt;/b&gt; çalışma/gün</string>
     <string name="stats_overview_reviews_per_day_all">Her gün çalışsanız: &lt;b&gt;%1$.1f&lt;/b&gt; çalışma/gün</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Toplam: &lt;b&gt;%d&lt;/b&gt; dakika</string>
     <string name="stats_overview_time_per_day_studydays">Çalışılan günlerin ortalaması: &lt;b&gt;%1$.1f&lt;/b&gt; dakika/gün</string>
     <string name="stats_overview_time_per_day_all">Her gün çalışsanız: &lt;b&gt;%1$.1f&lt;/b&gt; dakika/gün</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
+    <string name="stats_overview_average_answer_time">Ortalama yanıtlama süresi: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kart/dakika)</string>
     <string name="stats_overview_new_cards_per_day">Ortalama: &lt;b&gt;%1$.1f&lt;/b&gt; kart/gün</string>
     <string name="stats_overview_total_new_cards">Toplam: &lt;b&gt;%1$d&lt;/b&gt; kart</string>
     <string name="stats_overview_average_interval">"Ortalama aralık: "</string>
@@ -92,14 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; ay</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; gün</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; saat</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_answer_buttons_learn">Öğrenme sürecinde: &lt;b&gt;%1$.2f%%&lt;/b&gt; doğru (%2$d / %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Yeni öğrenilen: &lt;b&gt;%1$.2f%%&lt;/b&gt; doğru (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Artık öğrenilmiş: &lt;b&gt;%1$.2f%%&lt;/b&gt; doğru (%2$d of %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Bütün kartlar: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Bütün notlar: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">En az seviyede çaba: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Ortalama seviyede çaba: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">En yüksek seviyede çaba: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">Zaman ölçeği seçin</string>
     <string-array name="due_x_axis_title">
         <item>Gün</item>
