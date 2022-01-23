@@ -14,59 +14,39 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.Context;
-import android.os.Build;
-import android.util.AttributeSet;
-import android.view.autofill.AutofillValue;
+import android.content.Context
+import android.os.Build
+import android.util.AttributeSet
+import android.view.autofill.AutofillValue
+import androidx.annotation.RequiresApi
+import com.google.android.material.textfield.TextInputEditText
 
-import com.google.android.material.textfield.TextInputEditText;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-public class TextInputEditField extends TextInputEditText {
+class TextInputEditField : TextInputEditText {
     @RequiresApi(Build.VERSION_CODES.O)
-    private AutoFillListener mAutoFillListener;
+    private var mAutoFillListener: AutoFillListener? = null
 
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
-    public TextInputEditField(@NonNull Context context) {
-        super(context);
-    }
-
-
-    public TextInputEditField(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    public TextInputEditField(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-
-    @Override
-    public void autofill(AutofillValue value) {
-        super.autofill(value);
-
+    override fun autofill(value: AutofillValue) {
+        super.autofill(value)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (mAutoFillListener != null) {
-                mAutoFillListener.onAutoFill(value);
+                mAutoFillListener!!.onAutoFill(value)
             }
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @FunctionalInterface
-    public interface AutoFillListener {
-        void onAutoFill(@NonNull AutofillValue value);
+    fun interface AutoFillListener {
+        fun onAutoFill(value: AutofillValue)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    public void setAutoFillListener(@NonNull AutoFillListener listener) {
-        this.mAutoFillListener = listener;
+    fun setAutoFillListener(listener: AutoFillListener) {
+        mAutoFillListener = listener
     }
 }
