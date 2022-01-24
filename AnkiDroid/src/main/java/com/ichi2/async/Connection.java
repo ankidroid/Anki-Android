@@ -77,15 +77,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
      */
     private final PowerManager.WakeLock mWakeLock;
-    private long filesDownloaded = 0;
-    private long filesUploaded = 0;
-
-    public void setFilesUploaded(long filesUploaded) {
-        this.filesUploaded = filesUploaded;
-    }
-    public void setFilesDownloaded(long filesDownloaded) {
-        this.filesDownloaded = filesDownloaded;
-    }
 
     public static synchronized boolean getIsCancelled() {
         return sIsCancelled;
@@ -517,8 +508,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.result = new Object[]{e};
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage()
-                            + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count, filesDownloaded)
-                            + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_uploaded_count, filesUploaded);
+                            + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count, mediaClient.getDownloadCount())
+                            + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_uploaded_count, mediaClient.getUploadCount());
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
