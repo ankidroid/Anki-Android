@@ -14,66 +14,47 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.Context;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.appcompat.widget.SearchView
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
+class CardBrowserSearchView : SearchView {
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
-public class CardBrowserSearchView extends SearchView {
-    public CardBrowserSearchView(@NonNull Context context) {
-        super(context);
+    /** Whether an action to set text should be ignored  */
+    private var mIgnoreValueChange = false
+
+    /** Whether an action to set text should be ignored  */
+    fun shouldIgnoreValueChange(): Boolean {
+        return mIgnoreValueChange
     }
 
-
-    public CardBrowserSearchView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    public CardBrowserSearchView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    /** Whether an action to set text should be ignored */
-    private boolean mIgnoreValueChange = false;
-
-    /** Whether an action to set text should be ignored */
-    public boolean shouldIgnoreValueChange() {
-        return mIgnoreValueChange;
-    }
-
-
-    @Override
-    public void onActionViewCollapsed() {
+    override fun onActionViewCollapsed() {
         try {
-            mIgnoreValueChange = true;
-            super.onActionViewCollapsed();
+            mIgnoreValueChange = true
+            super.onActionViewCollapsed()
         } finally {
-            mIgnoreValueChange = false;
+            mIgnoreValueChange = false
         }
     }
 
-
-    @Override
-    public void onActionViewExpanded() {
+    override fun onActionViewExpanded() {
         try {
-            mIgnoreValueChange = true;
-            super.onActionViewExpanded();
+            mIgnoreValueChange = true
+            super.onActionViewExpanded()
         } finally {
-            mIgnoreValueChange = false;
+            mIgnoreValueChange = false
         }
     }
 
-
-    @Override
-    public void setQuery(CharSequence query, boolean submit) {
+    override fun setQuery(query: CharSequence, submit: Boolean) {
         if (mIgnoreValueChange) {
-            return;
+            return
         }
-        super.setQuery(query, submit);
+        super.setQuery(query, submit)
     }
 }
