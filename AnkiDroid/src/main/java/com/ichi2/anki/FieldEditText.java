@@ -147,7 +147,7 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
         }
         EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES);
 
-        ViewCompat.setOnReceiveContentListener(this, IMAGE_MIME_TYPES, (view, payload)-> {
+        ViewCompat.setOnReceiveContentListener(this, IMAGE_MIME_TYPES, (view, payload) -> {
 
             if (mImageListener == null) {
                 return null;
