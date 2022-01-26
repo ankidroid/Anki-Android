@@ -14,86 +14,66 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.view.MenuItem;
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.os.Build
+import android.view.MenuItem
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.ichi2.anki.R
+import timber.log.Timber
 
-import com.ichi2.anki.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-import timber.log.Timber;
-
-public class BadgeDrawableBuilder {
-    private final Resources mResources;
-    private char mChar;
-    private Integer mColor;
-
-
-    public BadgeDrawableBuilder(@NonNull Resources resources) {
-        mResources = resources;
+class BadgeDrawableBuilder(private val resources: Resources) {
+    private var mChar = '\u0000'
+    private var mColor: Int? = null
+    fun withText(c: Char): BadgeDrawableBuilder {
+        mChar = c
+        return this
     }
 
+    fun withColor(color: Int?): BadgeDrawableBuilder {
+        mColor = color
+        return this
+    }
 
-    public static void removeBadge(MenuItem menuItem) {
+    fun replaceBadge(menuItem: MenuItem) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return;
+            return
         }
-
-        Drawable icon = menuItem.getIcon();
-        if (icon instanceof BadgeDrawable) {
-            BadgeDrawable bd = (BadgeDrawable) icon;
-            menuItem.setIcon(bd.getCurrent());
-            Timber.d("Badge removed");
+        Timber.d("Adding badge")
+        var originalIcon = menuItem.icon
+        if (originalIcon is BadgeDrawable) {
+            originalIcon = originalIcon.current
         }
-    }
-
-
-    @NonNull
-    public BadgeDrawableBuilder withText(char c) {
-        this.mChar = c;
-        return this;
-    }
-
-
-    @NonNull
-    public BadgeDrawableBuilder withColor(@Nullable Integer color) {
-        this.mColor = color;
-        return this;
-    }
-
-
-    public void replaceBadge(@NonNull MenuItem menuItem) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return;
-        }
-
-        Timber.d("Adding badge");
-
-        Drawable originalIcon = menuItem.getIcon();
-        if (originalIcon instanceof BadgeDrawable) {
-            BadgeDrawable bd = (BadgeDrawable) originalIcon;
-            originalIcon = bd.getCurrent();
-        }
-
-        BadgeDrawable badge = new BadgeDrawable(originalIcon);
-        if (mChar != '\0') {
-            badge.setText(mChar);
+        val badge = BadgeDrawable(originalIcon)
+        if (mChar != '\u0000') {
+            badge.setText(mChar)
         }
         if (mColor != null) {
-            Drawable badgeDrawable = VectorDrawableCompat.create(mResources, R.drawable.badge_drawable, null);
+            val badgeDrawable: Drawable? = VectorDrawableCompat.create(resources, R.drawable.badge_drawable, null)
             if (badgeDrawable == null) {
-                Timber.w("Unable to find badge_drawable - not drawing badge");
-                return;
+                Timber.w("Unable to find badge_drawable - not drawing badge")
+                return
             }
-            Drawable mutableDrawable = badgeDrawable.mutate();
-            mutableDrawable.setTint(mColor);
-            badge.setBadgeDrawable(mutableDrawable);
-            menuItem.setIcon(badge);
+            val mutableDrawable = badgeDrawable.mutate()
+            mutableDrawable.setTint(mColor!!)
+            badge.setBadgeDrawable(mutableDrawable)
+            menuItem.icon = badge
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun removeBadge(menuItem: MenuItem) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                return
+            }
+            val icon = menuItem.icon
+            if (icon is BadgeDrawable) {
+                menuItem.icon = icon.current
+                Timber.d("Badge removed")
+            }
         }
     }
 }
