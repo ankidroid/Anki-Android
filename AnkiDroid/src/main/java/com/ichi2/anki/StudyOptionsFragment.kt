@@ -127,7 +127,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         i.putExtra("defaultConfig", defaultConfig)
         Timber.i("openFilteredDeckOptions()")
         onDeckOptionsActivityResult.launch(i)
-        slide(activity!!, ActivityTransitionAnimation.Direction.FADE)
+        slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,7 +135,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onCreate(savedInstanceState)
         // If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && arguments != null) {
-            mLoadWithDeckOptions = arguments!!.getBoolean("withDeckOptions")
+            mLoadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
         }
     }
 
@@ -147,7 +147,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
         mStudyOptionsView = studyOptionsView
-        mFragmented = activity!!.javaClass != StudyOptionsActivity::class.java
+        mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
         if (mToolbar != null) {
@@ -197,13 +197,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // Go to DeckPicker after studying when not tablet
             reviewer.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
             startActivity(reviewer)
-            activity!!.finish()
+            requireActivity().finish()
         }
         animateLeft()
     }
 
     private fun animateLeft() {
-        slide(activity!!, ActivityTransitionAnimation.Direction.START)
+        slide(requireActivity(), ActivityTransitionAnimation.Direction.START)
     }
 
     private fun initAllContentViews(studyOptionsView: View) {
@@ -266,7 +266,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     val i = Intent(activity, DeckOptions::class.java)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
-                    slide(activity!!, ActivityTransitionAnimation.Direction.FADE)
+                    slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true
             }
@@ -285,7 +285,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
                 mProgressDialog = show(
-                    activity!!, null,
+                    requireActivity(), null,
                     resources.getString(R.string.rebuild_filtered_deck), true
                 )
                 TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
@@ -294,7 +294,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
                 mProgressDialog = show(
-                    activity!!, null,
+                    requireActivity(), null,
                     resources.getString(R.string.empty_filtered_deck), false
                 )
                 TaskManager.launchCollectionTask(EmptyCram(), getCollectionTaskListener(true))
@@ -365,7 +365,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             // Set the back button listener
             if (!mFragmented) {
-                val icon = AppCompatResources.getDrawable(context!!, R.drawable.ic_arrow_back_white)
+                val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 mToolbar!!.navigationIcon = icon
                 mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
@@ -403,7 +403,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
             if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
                 val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
-                showSnackbar(activity!!, R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
+                showSnackbar(requireActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
             }
         }
     }
@@ -421,7 +421,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 deck.remove("empty")
             }
             mProgressDialog = show(
-                activity!!, null,
+                requireActivity(), null,
                 resources.getString(R.string.rebuild_filtered_deck), true
             )
             TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
