@@ -158,8 +158,8 @@
                 <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/x-colpkg"/>
-                <data android:mimeType="application/octet-stream" android:scheme="content"/>
-                <data android:mimeType="application/zip" android:scheme="content"/>
+                <data android:mimeType="application/octet-stream"/>
+                <data android:mimeType="application/zip"/>
             </intent-filter>
 
             <!-- Tasker DO_SYNC intent -->
