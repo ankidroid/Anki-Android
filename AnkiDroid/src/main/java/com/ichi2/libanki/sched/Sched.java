@@ -405,13 +405,13 @@ public class Sched extends SchedV2 {
     @Override
     protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         JSONObject conf = _lrnConf(card);
-        @Consts.CARD_TYPE int type;
+        @Consts.REVLOG_TYPE int type;
         if (card.isInDynamicDeck() && !card.getWasNew()) {
-            type = Consts.CARD_TYPE_RELEARNING;
+            type = Consts.REVLOG_CRAM;
         } else if (card.getType() == Consts.CARD_TYPE_REV) {
-            type = Consts.CARD_TYPE_REV;
+            type = Consts.REVLOG_RELRN;
         } else {
-            type = Consts.CARD_TYPE_NEW;
+            type = Consts.REVLOG_LRN;
         }
         boolean leaving = false;
         // lrnCount was decremented once when card was fetched
