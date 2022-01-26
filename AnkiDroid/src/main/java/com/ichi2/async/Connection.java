@@ -509,7 +509,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage()
                             + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count, mediaClient.getDownloadCount())
-                            + "\n\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_uploaded_count, mediaClient.getUploadCount());
+                            + "\n" + AnkiDroidApp.getAppResources().getString(R.string.sync_media_uploaded_count, mediaClient.getUploadCount());
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
