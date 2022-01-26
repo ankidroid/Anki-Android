@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.lint.rules;
 
+import com.android.tools.lint.checks.infrastructure.TestMode;
+
 import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
@@ -146,6 +148,7 @@ public class PreferIsEmptyOverSizeCheckTest {
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(create(discoverableFile))
+            .testModes(TestMode.DEFAULT)
             .issues(PreferIsEmptyOverSizeCheck.ISSUE)
             .run()
             .expect("" +
