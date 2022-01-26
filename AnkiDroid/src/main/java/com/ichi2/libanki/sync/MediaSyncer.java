@@ -206,8 +206,8 @@ public class MediaSyncer {
                                                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
 
                     JSONArray changes = mServer.uploadChanges(zip);
-                    mUploadCount = changes.getInt(0);
                     int processedCnt = changes.getInt(0);
+                    mUploadCount += processedCnt;
                     int serverLastUsn = changes.getInt(1);
                     mCol.getMedia().markClean(fnames.subList(0, processedCnt));
 
