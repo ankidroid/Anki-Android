@@ -50,6 +50,16 @@
     <issue id="RtlCompat" severity="fatal" />
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
+
+    <!-- this is new with AGP7.1+, does not appear to create value -->
+    <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
+
+    <!-- We cannot move to targetSdk 30+ yet: https://github.com/ankidroid/Anki-Android/issues/7348 -->
+    <issue id="ExpiredTargetSdkVersion" severity="ignore" />
+
+    <!-- cannot enable play store language downloads until ABB used vs APK: https://github.com/ankidroid/Anki-Android/issues/9259 -->
+    <issue id="AppBundleLocaleChanges" severity="ignore" />
+
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
 
