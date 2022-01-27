@@ -336,7 +336,7 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.3'
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
