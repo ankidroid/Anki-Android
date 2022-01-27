@@ -238,8 +238,22 @@ task installGitHook(type: Copy) {
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
+/**
+    The Kotlin compilation task names in Android projects contain the build variant names (those are combined from build type, product flavor and other settings and look like debug or releaseUnitTest -- the tasks are compileDebugKotlin and compileReleaseUnitTestKotlin respectively).
+    In kotlinOptions freeCompilerArgs(list of additional compiler arguments) is a attribute,
+    https://kotlinlang.org/docs/gradle.html#attributes-common-to-jvm-js-and-js-dce
+
+    There's no freeCompilerArgs in our kotlinCompile, we want to configure and to do that, we used freeCompilerArgs = ['-Xjvm-default=all'],
+    https://kotlinlang.org/docs/gradle.html#compiler-options
+
+    and we used "all" because we don't have downstream consumers
+    https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+ */
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions {
+        allWarningsAsErrors = true
+        freeCompilerArgs = ['-Xjvm-default=all'] 
+    }
 }
 
 apply from: "./robolectricDownloader.gradle"
