@@ -50,10 +50,10 @@ import java.util.stream.Collectors
  * * Allow maps other than the reviewer
  */
 class ControlPreference : ListPreference {
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    @Suppress("unused") constructor(context: Context?) : super(context)
+    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    @Suppress("unused") constructor(context: Context) : super(context)
 
     /**
      * Could be better: ListPreference.`value` was broken in converting to the preference support library

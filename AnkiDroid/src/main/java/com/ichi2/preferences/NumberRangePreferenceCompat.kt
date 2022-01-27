@@ -31,22 +31,22 @@ import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 
 open class NumberRangePreferenceCompat : EditTextPreference {
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
         defaultValue = getDefaultValueFromAttributes(attrs)
     }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
         defaultValue = getDefaultValueFromAttributes(attrs)
     }
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
         defaultValue = getDefaultValueFromAttributes(attrs)
     }
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         defaultValue = null
     }
 
@@ -188,10 +188,10 @@ open class NumberRangePreferenceCompat : EditTextPreference {
          * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based
          * on the current value of the [.mMax] field.
          */
-        override fun onBindDialogView(view: View?) {
+        override fun onBindDialogView(view: View) {
             super.onBindDialogView(view)
 
-            editText = view?.findViewById(android.R.id.edit)!!
+            editText = view.findViewById(android.R.id.edit)!!
 
             // Only allow integer input
             editText.inputType = InputType.TYPE_CLASS_NUMBER
