@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -149,36 +150,35 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
 
         ViewCompat.setOnReceiveContentListener(this, IMAGE_MIME_TYPES, (view, payload) -> {
 
-            if (mImageListener == null) {
-                return null;
-            }
-
             Pair<ContentInfoCompat, ContentInfoCompat> split = payload.partition(
                     item -> item.getUri() != null);
             ContentInfoCompat uriContent = split.first;
             ContentInfoCompat remaining = split.second;
 
-            ClipDescription description = remaining.getClip().getDescription();
-
-            if (!ClipboardUtil.hasImage(description)) {
-                return null;
+            if (mImageListener == null || uriContent == null) {
+                return remaining;
             }
 
-            if (uriContent != null) {
-                Uri uri = uriContent.getClip().getItemAt(0).getUri();
+            ClipData clip = uriContent.getClip();
+            ClipDescription description = clip.getDescription();
+
+            if (!ClipboardUtil.hasImage(description)) {
+                return remaining;
+            }
+
+            for (int i = 0; i < clip.getItemCount(); i++){
+                Uri uri = clip.getItemAt(i).getUri();
                 try {
-                    if (!onImagePaste(uri)) {
-                        return null;
-                    }
-                    return remaining;
-                } catch (Exception e) {
+                    mImageListener.onImagePaste(this, uri);
+                }
+                catch (Exception e) {
                     Timber.w(e);
                     AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage");
-                    return null;
+                    return remaining;
                 }
             }
 
-            return null;
+            return remaining;
         });
 
         return InputConnectionCompat.createWrapper(this, inputConnection, editorInfo);
