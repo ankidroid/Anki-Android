@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.Consts
+import com.ichi2.testutils.assertThrows
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -42,6 +43,11 @@ class DeckPickerContextMenuTest : RobolectricTest() {
                 equalTo(getResourceString(R.string.contextmenu_deckpicker_delete_deck))
             )
         }
+    }
+
+    @Test
+    fun ensure_cannot_be_instantiated_without_arguments() {
+        assertThrows<IllegalStateException> { DeckPickerContextMenu(col).deckId }
     }
 
     /**
