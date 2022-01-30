@@ -18,7 +18,9 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.did
+import java.util.*
 
 object DeckService {
     @JvmStatic
@@ -32,4 +34,28 @@ object DeckService {
     @JvmStatic
     fun defaultDeckHasCards(col: Collection) =
         col.db.queryScalar("select 1 from cards where did = 1") != 0
+
+    /**
+     * Counts cards in the supplied deck and child decks.
+     *
+     * Includes the count of filtered decks
+     * Includes filtered cards outside the tree if the home deck is included
+     *
+     * @param did Id of the deck to search
+     * @return the number of cards in the supplied deck and child decks
+     */
+    @JvmStatic
+    fun countCardsInDeckTree(col: Collection, did: did): Int {
+        val children: TreeMap<String, Long> = col.decks.children(did)
+        val dids = LongArray(children.size + 1)
+        dids[0] = did
+        var i = 1
+        for (l in children.values) {
+            dids[i++] = l
+        }
+        val ids = Utils.ids2str(dids)
+        return col.db.queryScalar(
+            "select count() from cards where did in $ids or odid in $ids"
+        )
+    }
 }

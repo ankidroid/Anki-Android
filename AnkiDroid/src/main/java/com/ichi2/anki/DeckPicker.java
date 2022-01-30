@@ -104,6 +104,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.export.ActivityExportingDelegate;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.DeckService;
 import com.ichi2.anki.servicelayer.SchedulerService;
 import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -142,7 +143,6 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.util.List;
-import java.util.TreeMap;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -2401,16 +2401,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         // Get the number of cards contained in this deck and its subdecks
-        TreeMap<String, Long> children = getCol().getDecks().children(did);
-        long[] dids = new long[children.size() + 1];
-        dids[0] = did;
-        int i = 1;
-        for (Long l : children.values()) {
-            dids[i++] = l;
-        }
-        String ids = Utils.ids2str(dids);
-        int cnt = getCol().getDb().queryScalar(
-                "select count() from cards where did in " + ids + " or odid in " + ids);
+        int cnt = DeckService.countCardsInDeckTree(getCol(), did);
         boolean isDyn = getCol().getDecks().isDyn(did);
         // Delete empty decks without warning. Filtered decks save filters in the deck data, so require confirmation.
         if (cnt == 0 && !isDyn) {
