@@ -253,6 +253,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SearchView mToolbarSearchView;
 
     private CustomStudyDialogFactory mCustomStudyDialogFactory;
+    private DeckPickerContextMenu.Factory mContextMenuFactory;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -313,7 +314,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
             mContextMenuDid = deckId;
-            showDialogFragment(DeckPickerContextMenu.newInstance(deckId));
+            showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId));
             return true;
         }
     };
@@ -418,6 +419,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mExportingDelegate = new ActivityExportingDelegate(this, this::getCol);
 
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
+        mContextMenuFactory = new DeckPickerContextMenu.Factory(this::getCol).attachToActivity(this);
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
