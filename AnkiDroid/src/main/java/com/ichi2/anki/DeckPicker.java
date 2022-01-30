@@ -2411,8 +2411,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         String ids = Utils.ids2str(dids);
         int cnt = getCol().getDb().queryScalar(
                 "select count() from cards where did in " + ids + " or odid in " + ids);
-        // Delete empty decks without warning
-        if (cnt == 0) {
+        boolean isDyn = getCol().getDecks().isDyn(did);
+        // Delete empty decks without warning. Filtered decks save filters in the deck data, so require confirmation.
+        if (cnt == 0 && !isDyn) {
             deleteDeck(did);
             dismissAllDialogFragments();
             return;
@@ -2420,7 +2421,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Otherwise we show a warning and require confirmation
         String msg;
         String deckName = "'" + getCol().getDecks().name(did) + "'";
-        boolean isDyn = getCol().getDecks().isDyn(did);
         if (isDyn) {
             msg = res.getString(R.string.delete_cram_deck_message, deckName);
         } else {
