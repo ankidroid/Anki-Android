@@ -107,12 +107,12 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             if (!dyn) {
                 itemIds.add(CONTEXT_MENU_CUSTOM_STUDY)
             }
-            itemIds.add(CONTEXT_MENU_DELETE_DECK)
             itemIds.add(CONTEXT_MENU_EXPORT_DECK)
             if (collection.sched.haveBuried(did)) {
                 itemIds.add(CONTEXT_MENU_UNBURY)
             }
             itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT)
+            itemIds.add(CONTEXT_MENU_DELETE_DECK)
             return ContextMenuHelper.integerListToArray(itemIds)
         }
 
