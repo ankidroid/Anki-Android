@@ -29,6 +29,7 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.BundleUtils.requireLong
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -47,7 +48,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     }
 
     /** The selected deck for the context menu */
-    private val deckId get() = requireArguments().getLong("did")
+    val deckId get() = requireArguments().requireLong("did")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)

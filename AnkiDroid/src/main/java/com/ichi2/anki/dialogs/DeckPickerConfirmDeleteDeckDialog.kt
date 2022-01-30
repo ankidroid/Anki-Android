@@ -23,9 +23,10 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.BundleUtils.requireLong
 
 class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
-    val deckId get() = requireArguments().getLong("deckId")
+    val deckId get() = requireArguments().requireLong("deckId")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
