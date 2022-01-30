@@ -123,11 +123,11 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         when (view.id) {
             CONTEXT_MENU_DELETE_DECK -> {
                 Timber.i("Delete deck selected")
-                (activity as DeckPicker?)!!.confirmDeckDeletion()
+                (activity as DeckPicker?)!!.confirmDeckDeletion(deckId)
             }
             CONTEXT_MENU_DECK_OPTIONS -> {
                 Timber.i("Open deck options selected")
-                (activity as DeckPicker?)!!.showContextMenuDeckOptions()
+                (activity as DeckPicker?)!!.showContextMenuDeckOptions(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CUSTOM_STUDY -> {
@@ -139,15 +139,15 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             CONTEXT_MENU_CREATE_SHORTCUT -> {
                 Timber.i("Create icon for a deck")
-                (activity as DeckPicker?)!!.createIcon(context)
+                (activity as DeckPicker?)!!.createIcon(context, deckId)
             }
             CONTEXT_MENU_RENAME_DECK -> {
                 Timber.i("Rename deck selected")
-                (activity as DeckPicker?)!!.renameDeckDialog()
+                (activity as DeckPicker?)!!.renameDeckDialog(deckId)
             }
             CONTEXT_MENU_EXPORT_DECK -> {
                 Timber.i("Export deck selected")
-                (activity as DeckPicker?)!!.showContextMenuExportDialog()
+                (activity as DeckPicker?)!!.exportDeck(deckId)
             }
             CONTEXT_MENU_UNBURY -> {
                 Timber.i("Unbury deck selected")
@@ -157,17 +157,17 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             CONTEXT_MENU_CUSTOM_STUDY_REBUILD -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker?)!!.rebuildFiltered()
+                (activity as DeckPicker?)!!.rebuildFiltered(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CUSTOM_STUDY_EMPTY -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker?)!!.emptyFiltered()
+                (activity as DeckPicker?)!!.emptyFiltered(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CREATE_SUBDECK -> {
                 Timber.i("Create Subdeck selected")
-                (activity as DeckPicker?)!!.createSubdeckDialog()
+                (activity as DeckPicker?)!!.createSubDeckDialog(deckId)
             }
             CONTEXT_MENU_BROWSE_CARDS -> {
                 collection.decks?.select(deckId)

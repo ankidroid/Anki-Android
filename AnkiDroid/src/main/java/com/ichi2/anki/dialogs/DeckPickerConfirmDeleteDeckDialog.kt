@@ -25,6 +25,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 
 class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
+    val deckId get() = requireArguments().getLong("deckId")
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val res = resources
@@ -36,7 +38,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             .negativeText(R.string.dialog_cancel)
             .cancelable(true)
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                (activity as DeckPicker?)!!.deleteContextMenuDeck()
+                (activity as DeckPicker?)!!.deleteDeck(deckId)
                 (activity as DeckPicker?)!!.dismissAllDialogFragments()
             }
             .onNegative { _: MaterialDialog?, _: DialogAction? -> (activity as DeckPicker?)!!.dismissAllDialogFragments() }
@@ -45,10 +47,11 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(dialogMessage: String?): DeckPickerConfirmDeleteDeckDialog {
+        fun newInstance(dialogMessage: String?, deckId: Long): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()
             args.putString("dialogMessage", dialogMessage)
+            args.putLong("deckId", deckId)
             f.arguments = args
             return f
         }

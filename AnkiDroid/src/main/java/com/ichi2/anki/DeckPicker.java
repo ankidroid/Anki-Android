@@ -211,8 +211,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private long mContextMenuDid;
-
     private EditText mDialogEditText;
 
     private DeckPickerFloatingActionMenu mFloatingActionMenu;
@@ -313,7 +311,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public boolean onLongClick(View v) {
             long deckId = (long) v.getTag();
             Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
-            mContextMenuDid = deckId;
             showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId));
             return true;
         }
@@ -897,7 +894,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen());
     }
@@ -906,7 +902,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mContextMenuDid = savedInstanceState.getLong("mContextMenuDid");
         mFloatingActionMenu.setFABOpen(savedInstanceState.getBoolean("mIsFABOpen"));
     }
 
@@ -2330,41 +2325,37 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback to show study options for currently selected deck
-    public void showContextMenuDeckOptions() {
+    public void showContextMenuDeckOptions(long did) {
         // open deck options
-        if (getCol().getDecks().isDyn(mContextMenuDid)) {
+        if (getCol().getDecks().isDyn(did)) {
             // open cram options if filtered deck
             Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra("did", did);
             startActivityWithAnimation(i, FADE);
         } else {
             // otherwise open regular options
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
-            i.putExtra("did", mContextMenuDid);
+            i.putExtra("did", did);
             startActivityWithAnimation(i, FADE);
         }
     }
 
 
-    // Callback to show export dialog for currently selected deck
-    public void showContextMenuExportDialog() {
-        exportDeck(mContextMenuDid);
-    }
     public void exportDeck(long did) {
         String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
         mExportingDelegate.showExportDialog(msg, did);
     }
 
-    public void createIcon(Context context) {
+    public void createIcon(Context context, long did) {
         // This code should not be reachable with lower versions
-        ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(this, Long.toString(mContextMenuDid))
+        ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(this, Long.toString(did))
                 .setIntent(new Intent(context, Reviewer.class)
                         .setAction(Intent.ACTION_VIEW)
-                        .putExtra("deckId", mContextMenuDid)
+                        .putExtra("deckId", did)
                 )
                 .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-                .setShortLabel(Decks.basename(getCol().getDecks().name(mContextMenuDid)))
-                .setLongLabel(getCol().getDecks().name(mContextMenuDid))
+                .setShortLabel(Decks.basename(getCol().getDecks().name(did)))
+                .setLongLabel(getCol().getDecks().name(did))
                 .build();
 
         try {
@@ -2384,13 +2375,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    // Callback to show dialog to rename the current deck
-    public void renameDeckDialog() {
-        renameDeckDialog(mContextMenuDid);
-    }
-
     public void renameDeckDialog(final long did) {
-        final Resources res = getResources();
         final String currentName = getCol().getDecks().name(did);
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null);
         createDeckDialog.setDeckName(currentName);
@@ -2403,12 +2388,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
         createDeckDialog.showDialog();
-    }
-
-
-    // Callback to show confirm deck deletion dialog before deleting currently selected deck
-    public void confirmDeckDeletion() {
-        confirmDeckDeletion(mContextMenuDid);
     }
 
     public void confirmDeckDeletion(long did) {
@@ -2447,14 +2426,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else {
             msg = res.getQuantityString(R.plurals.delete_deck_message, cnt, deckName, cnt);
         }
-        showDialogFragment(DeckPickerConfirmDeleteDeckDialog.newInstance(msg));
+        showDialogFragment(DeckPickerConfirmDeleteDeckDialog.newInstance(msg, did));
     }
 
 
-    // Callback to delete currently selected deck
-    public void deleteContextMenuDeck() {
-        deleteDeck(mContextMenuDid);
-    }
     public void deleteDeck(final long did) {
         TaskManager.launchCollectionTask(new CollectionTask.DeleteDeck(did), deleteDeckListener(did));
     }
@@ -2535,13 +2510,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    public void rebuildFiltered() {
-        getCol().getDecks().select(mContextMenuDid);
+    public void rebuildFiltered(long did) {
+        getCol().getDecks().select(did);
         TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), simpleProgressListener());
     }
 
-    public void emptyFiltered() {
-        getCol().getDecks().select(mContextMenuDid);
+    public void emptyFiltered(long did) {
+        getCol().getDecks().select(did);
         TaskManager.launchCollectionTask(new CollectionTask.EmptyCram(), simpleProgressListener());
     }
 
@@ -2670,13 +2645,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-
-    public void createSubdeckDialog() {
-        createSubDeckDialog(mContextMenuDid);
-    }
-
-
-    private void createSubDeckDialog(long did) {
+    public void createSubDeckDialog(long did) {
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did);
         createDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
