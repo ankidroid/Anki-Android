@@ -43,7 +43,7 @@ class PickStringDialogFragment : DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(mTitle)
         val adapter = ArrayAdapter(
-            this.activity!!,
+            requireActivity(),
             R.layout.simple_list_item_1, mPossibleChoices!!
         )
         builder.setAdapter(adapter, mListener)
