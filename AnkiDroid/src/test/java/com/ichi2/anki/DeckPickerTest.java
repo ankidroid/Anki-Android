@@ -10,11 +10,13 @@ import android.content.pm.PackageManager;
 import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
+import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.testutils.AnkiActivityUtils;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.DbUtils;
@@ -37,11 +39,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ActivityScenario;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -235,6 +239,19 @@ public class DeckPickerTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         assertThat("deck was deleted", getCol().getDecks().count(), is(1));
+    }
+
+    @Test
+    public void deletion_of_filtered_deck_shows_warning_issue_10238() {
+        // Filtered decks contain their own options, deleting one can cause a significant loss of work.
+        // And they are more likely to be empty temporarily
+        long did = addDynamicDeck("filtered");
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+        deckPicker.confirmDeckDeletion(did);
+
+
+        DialogFragment fragment = AnkiActivityUtils.getDialogFragment(deckPicker);
+        assertThat("deck deletion confirmation window should be shown", fragment, instanceOf(DeckPickerConfirmDeleteDeckDialog.class));
     }
 
     @Test
