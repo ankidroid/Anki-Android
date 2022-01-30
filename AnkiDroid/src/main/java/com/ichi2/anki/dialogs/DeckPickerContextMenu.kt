@@ -46,10 +46,12 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         return this
     }
 
+    /** The selected deck for the context menu */
+    private val deckId get() = requireArguments().getLong("did")
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val did = requireArguments().getLong("did")
-        val title = collection.decks.name(did)
+        val title = collection.decks.name(deckId)
         val itemIds = listIds
         return MaterialDialog.Builder(requireActivity())
             .title(title)
@@ -91,7 +93,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     @get:DECK_PICKER_CONTEXT_MENU
     private val listIds: IntArray
         get() {
-            val did = requireArguments().getLong("did")
+            val did = deckId
             val dyn = collection.decks.isDyn(did)
             val itemIds = ArrayList<Int>(11) // init with our fixed list size for performance
             itemIds.add(CONTEXT_MENU_BROWSE_CARDS)
@@ -130,10 +132,9 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             CONTEXT_MENU_CUSTOM_STUDY -> {
                 Timber.i("Custom study option selected")
-                val did = requireArguments().getLong("did")
                 val ankiActivity = requireActivity() as AnkiActivity
                 val d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog::class.java)
-                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, did)
+                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, deckId)
                 ankiActivity.showDialogFragment(d)
             }
             CONTEXT_MENU_CREATE_SHORTCUT -> {
@@ -150,7 +151,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             CONTEXT_MENU_UNBURY -> {
                 Timber.i("Unbury deck selected")
-                collection.sched.unburyCardsForDeck(requireArguments().getLong("did"))
+                collection.sched.unburyCardsForDeck(deckId)
                 (activity as StudyOptionsListener?)!!.onRequireDeckListUpdate()
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
@@ -169,8 +170,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as DeckPicker?)!!.createSubdeckDialog()
             }
             CONTEXT_MENU_BROWSE_CARDS -> {
-                val did = requireArguments().getLong("did")
-                collection.decks?.select(did)
+                collection.decks?.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
