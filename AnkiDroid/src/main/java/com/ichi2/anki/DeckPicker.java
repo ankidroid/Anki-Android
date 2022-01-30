@@ -2430,6 +2430,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    /**
+     * Deletes the provided deck, child decks. and all cards inside.
+     * Use {@link #confirmDeckDeletion(long)} for a confirmation dialog
+     * @param did the deck to delete
+     */
     public void deleteDeck(final long did) {
         TaskManager.launchCollectionTask(new CollectionTask.DeleteDeck(did), deleteDeckListener(did));
     }
