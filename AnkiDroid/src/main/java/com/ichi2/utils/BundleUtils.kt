@@ -25,7 +25,7 @@ object BundleUtils {
      * Retrieves a [Long] value from a [Bundle] using a key, returns null if not found
      *
      * @param bundle the bundle to look into
-     * can be null to support nullable bundles like [Fragment.getArguments]
+     * can be null to support nullable bundles like [androidx.fragment.app.Fragment.getArguments]
      * @param key the key to use
      * @return the long value, or null if not found
      */
