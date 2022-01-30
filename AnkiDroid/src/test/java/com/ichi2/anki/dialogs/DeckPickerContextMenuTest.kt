@@ -25,14 +25,12 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.Consts
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
-    @Ignore("assertion not met")
     fun delete_deck_is_last_in_menu_issue_10283() {
         // "Delete deck" was previously close to "Custom study" which caused misclicks.
         // This is less likely at the bottom of the list
