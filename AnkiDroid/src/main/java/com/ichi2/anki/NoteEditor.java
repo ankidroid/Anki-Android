@@ -1913,8 +1913,7 @@ public class NoteEditor extends AnkiActivity implements
 
             // 0th button shows as '1' and is Ctrl + 1
             int visualIndex = b.getIndex() + 1;
-            String text = Integer.toString(visualIndex);
-            Drawable bmp = mToolbar.createDrawableForString(text);
+            Drawable bmp = mToolbar.createDrawableForString(b.getIcon());
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
 
@@ -1946,14 +1945,14 @@ public class NoteEditor extends AnkiActivity implements
                 .apply();
     }
 
-    private void addToolbarButton(String prefix, String suffix) {
-        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
+    private void addToolbarButton(String icon, String prefix, String suffix) {
+        if (TextUtils.isEmpty(icon) && TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
             return;
         }
 
         ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
 
-        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix));
+        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), icon, prefix, suffix));
         saveToolbarButtons(toolbarButtons);
 
         updateToolbar();
@@ -1988,10 +1987,11 @@ public class NoteEditor extends AnkiActivity implements
                 .onNeutral((m, v) -> openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar))))
                 .onPositive((m, v) -> {
                     View view = m.getView();
+                    EditText etIcon =  view.findViewById(R.id.note_editor_toolbar_item_icon);
                     EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
                     EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
 
-                    addToolbarButton(et.getText().toString(), et2.getText().toString());
+                    addToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString());
                 })
                 .show();
     }
