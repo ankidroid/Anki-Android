@@ -356,7 +356,7 @@ public class AnkiDroidApp extends Application {
         // make default HTML / JS debugging true for debug build and disable for unit/android tests
         boolean isDebug = false;
         try {
-            Class.forName ("org.junit.Test");
+            Class.forName("org.junit.Test");
         } catch (ClassNotFoundException e) {
             isDebug = true;
         }
