@@ -357,7 +357,7 @@ public class AnkiDroidApp extends Application {
         boolean isDebug = false;
         try {
             Class.forName("org.junit.Test");
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException ignored) {
             isDebug = true;
         }
         Timber.d("isDebug: %s", Boolean.toString(isDebug));
