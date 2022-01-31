@@ -161,4 +161,18 @@ object AdaptionUtil {
             val manufacturer = Build.MANUFACTURER ?: return false
             return manufacturer.lowercase(Locale.ROOT) == "vivo"
         }
+
+    // make default HTML / JS debugging true for debug build and disable for unit/android tests
+    @JvmStatic
+    val isDebug: Boolean
+        get() {
+            try {
+                Class.forName("org.junit.Test")
+            } catch (ignored: ClassNotFoundException) {
+                Timber.d("isDebug: %b", true)
+                return true
+            }
+            Timber.d("isDebug: %b", false)
+            return false
+        }
 }
