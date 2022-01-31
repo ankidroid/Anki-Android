@@ -51,6 +51,7 @@ import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.ClipboardUtil;
+import com.ichi2.utils.KotlinCleanup;
 
 import java.util.Objects;
 
@@ -141,6 +142,7 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
     }
 
     @Override
+    @KotlinCleanup("add extension method to iterate clip items")
     public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
         InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
         if (inputConnection == null) {
