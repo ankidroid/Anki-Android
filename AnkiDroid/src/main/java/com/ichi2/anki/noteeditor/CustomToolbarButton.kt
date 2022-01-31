@@ -22,13 +22,15 @@ import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 import java.util.*
 
-class CustomToolbarButton(var index: Int, var icon: String, private val prefix: String, private val suffix: String) {
+typealias ButtonText = String
+
+class CustomToolbarButton(var index: Int, var buttonText: ButtonText, private val prefix: String, private val suffix: String) {
     fun toFormatter(): Toolbar.TextFormatter {
         return TextWrapper(prefix, suffix)
     }
 
     companion object {
-        private const val KEEP_EMPTY_ENTRIES = -1
+        const val KEEP_EMPTY_ENTRIES = -1
         fun fromString(s: String?): CustomToolbarButton? {
             if (s == null || s.isEmpty()) {
                 return null
@@ -66,7 +68,7 @@ class CustomToolbarButton(var index: Int, var icon: String, private val prefix: 
         fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
             val ret = HashSetInit<String>(buttons.size)
             for (b in buttons) {
-                val values = arrayOf(b.index.toString(), b.icon, b.prefix, b.suffix)
+                val values = arrayOf(b.index.toString(), b.buttonText, b.prefix, b.suffix)
                 for (i in values.indices) {
                     values[i] = values[i].replace(Consts.FIELD_SEPARATOR, "")
                 }

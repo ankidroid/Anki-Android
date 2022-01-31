@@ -1913,7 +1913,13 @@ public class NoteEditor extends AnkiActivity implements
 
             // 0th button shows as '1' and is Ctrl + 1
             int visualIndex = b.getIndex() + 1;
-            Drawable bmp = mToolbar.createDrawableForString(b.getIcon());
+            String text = Integer.toString(visualIndex);
+
+            if (!b.getButtonText().isEmpty()) {
+                text = b.getButtonText();
+            }
+
+            Drawable bmp = mToolbar.createDrawableForString(text);
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
 
@@ -1945,14 +1951,14 @@ public class NoteEditor extends AnkiActivity implements
                 .apply();
     }
 
-    private void addToolbarButton(String icon, String prefix, String suffix) {
-        if (TextUtils.isEmpty(icon) && TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
+    private void addToolbarButton(String buttonText, String prefix, String suffix) {
+        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
             return;
         }
 
         ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
 
-        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), icon, prefix, suffix));
+        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), buttonText, prefix, suffix));
         saveToolbarButtons(toolbarButtons);
 
         updateToolbar();
