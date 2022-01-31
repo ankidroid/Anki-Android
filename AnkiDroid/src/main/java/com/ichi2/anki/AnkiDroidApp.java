@@ -360,7 +360,7 @@ public class AnkiDroidApp extends Application {
         } catch (ClassNotFoundException ignored) {
             isDebug = true;
         }
-        Timber.d("isDebug: %s", Boolean.toString(isDebug));
+        Timber.d("isDebug: %b", isDebug);
 
         if (BuildConfig.DEBUG && isDebug) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
