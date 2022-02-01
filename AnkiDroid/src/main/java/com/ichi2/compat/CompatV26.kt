@@ -14,43 +14,28 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.compat;
+package com.ichi2.compat
 
-import android.annotation.TargetApi;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.media.AudioFocusRequest;
-import android.media.AudioManager;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-
-import com.ichi2.async.ProgressSenderAndCancelListener;
-import com.ichi2.utils.FileUtil;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
-
-import timber.log.Timber;
+import android.annotation.TargetApi
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.media.AudioManager.OnAudioFocusChangeListener
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.core.app.NotificationCompat
+import com.ichi2.async.ProgressSenderAndCancelListener
+import com.ichi2.utils.FileUtil.ensureFileIsDirectory
+import timber.log.Timber
+import java.io.*
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
 
 /** Implementation of {@link Compat} for SDK level 26 and higher. Check  {@link Compat}'s for more detail. */
 @TargetApi(26)
-public class CompatV26 extends CompatV23 implements Compat {
-
+open class CompatV26 : CompatV23(), Compat {
     /**
      * In Oreo and higher, you must create a channel for all notifications.
      * This will create the channel if it doesn't exist, or if it exists it will update the name.
@@ -62,107 +47,108 @@ public class CompatV26 extends CompatV23 implements Compat {
      * @param id the unique (within the package) id the channel for programmatic access
      * @param name the user-visible name for the channel
      */
-    @Override
-    public void setupNotificationChannel(Context context, String id, String name) {
-        Timber.i("Creating notification channel with id/name: %s/%s",id, name);
-        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel notificationChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
-        notificationChannel.setShowBadge(true);
-        notificationChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        manager.createNotificationChannel(notificationChannel);
+    override fun setupNotificationChannel(context: Context, id: String, name: String) {
+        Timber.i("Creating notification channel with id/name: %s/%s", id, name)
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationChannel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT)
+        notificationChannel.setShowBadge(true)
+        notificationChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+        manager.createNotificationChannel(notificationChannel)
     }
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+    @Suppress("deprecation")
+    override fun vibrate(context: Context, durationMillis: Long) {
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (vibratorManager != null) {
-            VibrationEffect effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE);
-            vibratorManager.vibrate(effect);
+            val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
+            vibratorManager.vibrate(effect)
         }
     }
 
-    @Override
-    public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
-        Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+    @Throws(IOException::class)
+    override fun copyFile(source: String, target: String) {
+        Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
 
-    @Override
-    public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
-        return Files.copy(Paths.get(source), target);
+    @Throws(IOException::class)
+    override fun copyFile(source: String, target: OutputStream): Long {
+        return Files.copy(Paths.get(source), target)
     }
 
-    @Override
-    public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
-        return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+    @Throws(IOException::class)
+    override fun copyFile(source: InputStream, target: String): Long {
+        return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
 
-    @Override
-    public void deleteFile(@NonNull File file) throws IOException {
-        Files.delete(file.toPath());
+    @Throws(IOException::class)
+    override fun deleteFile(file: File) {
+        Files.delete(file.toPath())
     }
 
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
-    @Override
-    public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {
+    @Throws(IOException::class)
+    override fun copyDirectory(srcDir: File, destDir: File, ioTask: ProgressSenderAndCancelListener<Int>, deleteAfterCopy: Boolean) {
         // If destDir exists, it must be a directory. If not, create it
-        FileUtil.ensureFileIsDirectory(destDir);
-
-        Path sourceDirPath = srcDir.toPath();
-        Path destinationDirPath = destDir.toPath();
-
-        Files.walkFileTree(sourceDirPath, new SimpleFileVisitor<Path>() {
-
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                Files.createDirectories(destinationDirPath.resolve(sourceDirPath.relativize(dir)));
-                return FileVisitResult.CONTINUE;
-            }
-
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                File destFile = destinationDirPath.resolve(sourceDirPath.relativize(file)).toFile();
-
-                // Copy if source file and destination file aren't of the same length
-                // i.e., copy if destination file wasn't copied completely
-                if (file.toFile().length() != destFile.length()) {
-                    OutputStream outputStream = new FileOutputStream(destFile, false);
-                    long bytesCopied = copyFile(file.toString(), outputStream);
-                    ioTask.doProgress((int) bytesCopied / 1024);
-                    outputStream.close();
+        ensureFileIsDirectory(destDir)
+        val sourceDirPath = srcDir.toPath()
+        val destinationDirPath = destDir.toPath()
+        Files.walkFileTree(
+            sourceDirPath,
+            object : SimpleFileVisitor<Path>() {
+                @Throws(IOException::class)
+                override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                    Files.createDirectories(destinationDirPath.resolve(sourceDirPath.relativize(dir)))
+                    return FileVisitResult.CONTINUE
                 }
-                if (deleteAfterCopy) {
-                    Files.delete(file);
-                }
-                return FileVisitResult.CONTINUE;
-            }
 
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (deleteAfterCopy) {
-                    Files.delete(dir);
+                @Throws(IOException::class)
+                override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+                    val destFile = destinationDirPath.resolve(sourceDirPath.relativize(file)).toFile()
+
+                    // Copy if source file and destination file aren't of the same length
+                    // i.e., copy if destination file wasn't copied completely
+                    if (file.toFile().length() != destFile.length()) {
+                        val outputStream: OutputStream = FileOutputStream(destFile, false)
+                        val bytesCopied = copyFile(file.toString(), outputStream)
+                        ioTask.doProgress(bytesCopied.toInt() / 1024)
+                        outputStream.close()
+                    }
+                    if (deleteAfterCopy) {
+                        Files.delete(file)
+                    }
+                    return FileVisitResult.CONTINUE
                 }
-                return FileVisitResult.CONTINUE;
+
+                @Throws(IOException::class)
+                override fun postVisitDirectory(dir: Path, exc: IOException): FileVisitResult {
+                    if (deleteAfterCopy) {
+                        Files.delete(dir)
+                    }
+                    return FileVisitResult.CONTINUE
+                }
             }
-        });
+        )
     }
 
-    @Override
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
-                                  @Nullable AudioFocusRequest audioFocusRequest) {
+    override fun requestAudioFocus(
+        audioManager: AudioManager,
+        audioFocusChangeListener: OnAudioFocusChangeListener,
+        audioFocusRequest: AudioFocusRequest?
+    ) {
         // requestAudioFocus needs NonNull argument
         if (audioFocusRequest != null) {
-            audioManager.requestAudioFocus(audioFocusRequest);
+            audioManager.requestAudioFocus(audioFocusRequest)
         }
     }
 
-    @Override
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
-                                  @Nullable AudioFocusRequest audioFocusRequest) {
+    override fun abandonAudioFocus(
+        audioManager: AudioManager,
+        audioFocusChangeListener: OnAudioFocusChangeListener,
+        audioFocusRequest: AudioFocusRequest?
+    ) {
         // abandonAudioFocusRequest needs NonNull argument
         if (audioFocusRequest != null) {
-            audioManager.abandonAudioFocusRequest(audioFocusRequest);
+            audioManager.abandonAudioFocusRequest(audioFocusRequest)
         }
     }
 }
