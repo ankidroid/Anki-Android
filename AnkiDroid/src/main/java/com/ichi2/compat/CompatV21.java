@@ -137,6 +137,13 @@ public class CompatV21 implements Compat {
         return count;
     }
 
+    @Override
+    public void deleteFile(@NonNull File file) throws IOException {
+        if (!file.delete()) {
+            throw new IOException("Unable to delete: " + file.getCanonicalPath());
+        }
+    }
+
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
     @Override
     public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {

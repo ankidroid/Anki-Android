@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.nio.file.Path;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -84,6 +85,14 @@ public interface Compat {
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
+
+    /**
+     * Deletes a provided file/directory. If the file is a directory then the directory must be empty
+     * @throws IOException If the file failed to be deleted
+     * @see File#delete()
+     * @see java.nio.file.Files#delete(Path)
+     */
+    void deleteFile(@NonNull File file) throws IOException;
 
     /**
      * Copies the directory represented by srcDir to the directory represented by destDir, and optionally makes a
