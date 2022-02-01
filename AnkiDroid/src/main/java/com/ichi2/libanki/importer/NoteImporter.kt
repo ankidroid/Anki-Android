@@ -18,8 +18,8 @@ import com.ichi2.utils.JSONObject
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
 open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Importer(col, file) {
-    private val mNeedMapper = true
-    private val mNeedDelimiter = false
+    override var mNeedMapper = true
+    override var mNeedDelimiter = false
     private var mAllowHTML = false
     private var mImportMode = ImportMode.UPDATE_MODE
 
@@ -215,10 +215,10 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             else -> 0
         }
         val part3 = getQuantityString(R.plurals.note_importer_notes_unchanged, unchanged)
-        mLog.add(String.format("%s, %s, %s.", part1, part2, part3))
-        mLog.addAll(updateLog)
+        log.add(String.format("%s, %s, %s.", part1, part2, part3))
+        log.addAll(updateLog)
         if (mEmptyNotes) {
-            mLog.add(getString(R.string.note_importer_error_empty_notes))
+            log.add(getString(R.string.note_importer_error_empty_notes))
         }
         mTotal = mIds!!.size
     }
