@@ -138,7 +138,7 @@ public class CompatV21 implements Compat {
     @Override
     public void deleteFile(@NonNull File file) throws IOException {
         if (!file.delete()) {
-            throw new IOException("Unable to delete :" + file.getCanonicalPath());
+            throw new IOException("Unable to delete: " + file.getCanonicalPath());
         }
     }
 
