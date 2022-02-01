@@ -85,6 +85,7 @@ public interface Compat {
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
+
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
      * @throws IOException If the file failed to be deleted
