@@ -134,11 +134,15 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     true
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
-                    showThemedToast(context, context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), false)
+                    activity.runOnUiThread {
+                        showThemedToast(context, context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), false)
+                    }
                     versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
-                    showThemedToast(context, context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), false)
+                    activity.runOnUiThread {
+                        showThemedToast(context, context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), false)
+                    }
                     false
                 }
             }
@@ -173,7 +177,9 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString()
         } catch (j: JSONException) {
             Timber.w(j)
-            showThemedToast(context, context.getString(R.string.invalid_json_data, j.localizedMessage), false)
+            activity.runOnUiThread {
+                showThemedToast(context, context.getString(R.string.invalid_json_data, j.localizedMessage), false)
+            }
         }
         return apiStatusJson
     }
