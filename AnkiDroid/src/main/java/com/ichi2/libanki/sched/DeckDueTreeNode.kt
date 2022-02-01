@@ -13,20 +13,14 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.sched
 
-package com.ichi2.libanki.sched;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
-import com.ichi2.utils.JSONObject;
-
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Decks
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list
@@ -38,120 +32,107 @@ import androidx.annotation.NonNull;
  * between a string and a list of strings throughout processing, we always use an array for
  * this field and use getNamePart(0) for those cases.
  */
-public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
-    private int mRevCount;
-    private int mLrnCount;
-    private int mNewCount;
-
-    public DeckDueTreeNode(Collection col, String name, long did, int revCount, int lrnCount, int newCount) {
-        super(col, name, did);
-        this.mRevCount = revCount;
-        this.mLrnCount = lrnCount;
-        this.mNewCount = newCount;
+class DeckDueTreeNode(col: Collection?, name: String?, did: Long, private var revCount: Int, private var lrnCount: Int, private var newCount: Int) : AbstractDeckTreeNode<DeckDueTreeNode?>(col, name, did) {
+    override fun toString(): String {
+        return String.format(
+            Locale.US, "%s, %d, %d, %d, %d, %s",
+            fullDeckName, did, revCount, lrnCount, newCount, children
+        )
     }
 
-    @Override
-    public @NonNull String toString() {
-        return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
-                             getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount, getChildren());
+    override fun getRevCount(): Int {
+        return revCount
     }
 
-
-    public int getRevCount() {
-        return mRevCount;
+    private fun limitRevCount(limit: Int) {
+        revCount = max(0, min(revCount, limit))
     }
 
-    private void limitRevCount(int limit) {
-        mRevCount = Math.max(0, Math.min(mRevCount, limit));
+    override fun getNewCount(): Int {
+        return newCount
     }
 
-    public int getNewCount() {
-        return mNewCount;
+    private fun limitNewCount(limit: Int) {
+        newCount = max(0, min(newCount, limit))
     }
 
-    private void limitNewCount(int limit) {
-        mNewCount = Math.max(0, Math.min(mNewCount, limit));
+    override fun getLrnCount(): Int {
+        return lrnCount
     }
 
-    public int getLrnCount() {
-        return mLrnCount;
-    }
-
-    public void setChildren(@NonNull List<DeckDueTreeNode> children, boolean addRev) {
-        super.setChildren(children, addRev);
+    @KotlinCleanup("non-null")
+    override fun setChildren(children: MutableList<DeckDueTreeNode?>, addRev: Boolean) {
+        super.setChildren(children, addRev)
         // tally up children counts
-        for (DeckDueTreeNode ch : children) {
-            mLrnCount += ch.getLrnCount();
-            mNewCount += ch.getNewCount();
+        for (ch in children) {
+            lrnCount += ch!!.lrnCount
+            newCount += ch.newCount
             if (addRev) {
-                mRevCount += ch.getRevCount();
+                revCount += ch.revCount
             }
         }
         // limit the counts to the deck's limits
-        DeckConfig conf = getCol().getDecks().confForDid(getDid());
-        if (conf.isStd()) {
-            Deck deck = getCol().getDecks().get(getDid());
-            limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1));
+        val conf = col.decks.confForDid(did)
+        if (conf.isStd) {
+            val deck = col.decks.get(did)
+            limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1))
             if (addRev) {
-                limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1));
+                limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1))
             }
         }
     }
 
-    @Override
-    public int hashCode() {
-        int childrenHash = getChildren() == null ? 0 : getChildren().hashCode();
-        return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + childrenHash;
+    override fun hashCode(): Int {
+        val childrenHash = if (children == null) 0 else children.hashCode()
+        return fullDeckName.hashCode() + revCount + lrnCount + newCount + childrenHash
     }
-
 
     /**
      * Whether both elements have the same structure and numbers.
-     * @param object
+     * @param other
      * @return
      */
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof DeckDueTreeNode)) {
-            return false;
+    override fun equals(other: Any?): Boolean {
+        if (other !is DeckDueTreeNode) {
+            return false
         }
-        DeckDueTreeNode tree = (DeckDueTreeNode) object;
-        return Decks.equalName(getFullDeckName(), tree.getFullDeckName()) &&
-            mRevCount == tree.mRevCount &&
-            mLrnCount == tree.mLrnCount &&
-            mNewCount == tree.mNewCount &&
-            (getChildren() == tree.getChildren() || // Would be the case if both are null, or the same pointer
-             getChildren().equals(tree.getChildren()))
-            ;
+        return Decks.equalName(fullDeckName, other.fullDeckName) &&
+            revCount == other.revCount &&
+            lrnCount == other.lrnCount &&
+            newCount == other.newCount &&
+            (
+                children == other.children || // Would be the case if both are null, or the same pointer
+                    children.equals(other.children)
+                )
     }
 
-    /** Line representing this string without its children. Used in timbers only. */
-    protected String toStringLine() {
-        return String.format(Locale.US, "%s, %d, %d, %d, %d\n",
-                             getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount);
+    /** Line representing this string without its children. Used in timbers only.  */
+    override fun toStringLine(): String {
+        return String.format(
+            Locale.US, "%s, %d, %d, %d, %d\n",
+            fullDeckName, did, revCount, lrnCount, newCount
+        )
     }
 
-    public boolean shouldDisplayCounts() {
-        return true;
+    override fun shouldDisplayCounts(): Boolean {
+        return true
     }
 
-    public boolean knownToHaveRep() {
-        return mRevCount > 0 || mNewCount > 0 || mLrnCount > 0;
+    override fun knownToHaveRep(): Boolean {
+        return revCount > 0 || newCount > 0 || lrnCount > 0
     }
 
+    private fun setChildrenSuper(children: MutableList<DeckDueTreeNode?>) {
+        super.setChildren(children, false)
+    }
 
-    @Override
-    public DeckDueTreeNode withChildren(@NonNull List<DeckDueTreeNode> children) {
-        Collection col = getCol();
-        String name = getFullDeckName();
-        long did = getDid();
-        DeckDueTreeNode node = new DeckDueTreeNode(col, name, did, mRevCount, mLrnCount, mNewCount);
+    override fun withChildren(children: MutableList<DeckDueTreeNode?>): DeckDueTreeNode {
+        val col = col
+        val name = fullDeckName
+        val did = did
+        val node = DeckDueTreeNode(col, name, did, revCount, lrnCount, newCount)
         // We've already calculated the counts, don't bother doing it again, just set the variable.
-        node.setChildrenSuper(children);
-        return node;
-    }
-
-    private void setChildrenSuper(List<DeckDueTreeNode> children) {
-        super.setChildren(children, false);
+        node.setChildrenSuper(children)
+        return node
     }
 }
