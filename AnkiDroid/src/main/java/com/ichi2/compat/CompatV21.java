@@ -43,7 +43,6 @@ import java.io.OutputStream;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import timber.log.Timber;
 
 /** Baseline implementation of {@link Compat}. Check  {@link Compat}'s for more detail. */
@@ -134,6 +133,13 @@ public class CompatV21 implements Compat {
         }
         target.flush();
         return count;
+    }
+
+    @Override
+    public void deleteFile(@NonNull File file) throws IOException {
+        if (!file.delete()) {
+            throw new IOException("Unable to delete :" + file.getCanonicalPath());
+        }
     }
 
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
