@@ -65,7 +65,7 @@
     <string name="multimedia_editor_poweredbeolingus">Beolingus ଦ୍ୱାରା ଚାଳିତ</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ଲେଖା</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ପାଠ୍ୟ</string>
     <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
     <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
     <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>

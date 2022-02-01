@@ -117,6 +117,6 @@
     <string name="gesture_toggle_whiteboard">切換白板</string>
     <string name="record_voice">錄製音頻</string>
     <string name="replay_voice">重播音頻</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">困難 (很好如果無效)</string>
+    <string name="automatic_answer_option_4">簡單 (很好如果無效)</string>
 </resources>

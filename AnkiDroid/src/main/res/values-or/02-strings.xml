@@ -133,7 +133,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ପତ୍ର</string>
     <string name="note_editor_copy_note">ନୋଟ୍ କପି କରନ୍ତୁ</string>
-    <string name="card_editor_reposition_card">ପୁନଃଅବସ୍ଥାନ</string>
+    <string name="card_editor_reposition_card">ରିପୋଜିସନ୍ କର</string>
     <string name="card_editor_reset_card">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଧାରଣ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ବାବଲୋକନ</string>
@@ -360,7 +360,7 @@
     <string name="cancel_download_question_title">ଡାଉନଲୋଡ୍ ବାତିଲ୍ କରିବେ କି?</string>
     <string name="downloading_file">%s ଡାଉନଲୋଡ୍ ହେଉଛି</string>
     <string name="import_deck">ତାସଖଣ୍ଡ ଆମଦାନୀ କରନ୍ତୁ</string>
-    <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି, ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="download_failed">ଡାଉନଲୋଡ୍ ବିଫଳ ହୋଇଛି</string>
     <string name="deck_download_progress_message">ଡାଉନଲୋଡ୍ ଚାଲୁଥିବା ସମୟରେ ଆପଣ ଅନ୍ୟ ଆପସ୍ ବ୍ୟବହାର କରିପାରିବେ</string>
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>

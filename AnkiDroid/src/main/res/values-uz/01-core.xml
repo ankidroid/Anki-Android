@@ -38,103 +38,104 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">Random</string>
+    <string name="yes">ha</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="drawing">Drawing</string>
-    <string name="send_feedback">Send feedback</string>
+    <string name="decks">To\'plamlar</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Karta qidiruvchi</string>
+    <string name="statistics">Statistika</string>
+    <string name="settings">Sozlamalar</string>
+    <string name="help">Yordam</string>
+    <string name="drawing">Rasm chizish</string>
+    <string name="send_feedback">Fikr-mulohazalarni jo\'natish</string>
     <string name="studyoptions_due_today">Bugun tugashi lozim:</string>
     <string name="studyoptions_new_total">Barcha yangi kartalar:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="studyoptions_total_cards">Barcha kartalar:</string>
+    <string name="studyoptions_eta">Taxminiy vaqt (min):</string>
+    <string name="studyoptions_start">O\'rganish</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Kengaytirish</string>
+    <string name="collapse">Toraytirish</string>
+    <string name="study_more">Ko\'proq o\'rganish</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
+        <item quantity="one">%1$d karta lozim (%2$s)
+%1$d kartalar lozim (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
+        <item quantity="one">%d soat %d qoldi</item>
         <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d kun %d qoldi</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
         <item quantity="other">Studied %1$d cards in %2$s today</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
-    <string name="undo_action_review">last review</string>
+    <string name="type_answer_hint">Javobingizni yozing</string>
+    <string name="show_answer">Javobni ko\'rsatish</string>
+    <string name="hide_answer">Javobni yashirish</string>
+    <string name="ease_button_again">Yana</string>
+    <string name="ease_button_hard">Qiyin</string>
+    <string name="ease_button_good">Yaxshi</string>
+    <string name="ease_button_easy">Oson</string>
+    <string name="studyoptions_congrats_undo">Bekor qilish %s</string>
+    <string name="menu_import">Import qilish</string>
+    <string name="undo">Bekor qilish</string>
+    <string name="undo_action_review">oxirgi takrorlash</string>
     <string name="undo_action_change_deck_multi">change decks</string>
     <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Abandon</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">I go to the university</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="unbury">Tiklash</string>
+    <string name="rename_deck">To\'plamni qayta nomlash</string>
+    <string name="create_shortcut">Yorliq yaratish</string>
+    <string name="browse_cards">Kartalarni ko\'rib chiqish</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Qo\'shish</string>
+    <string name="menu_add_note">Qayd qo\'shish</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlashtirish</string>
+    <string name="menu_dismiss_note">Yashirish / O\'chirish</string>
+    <string name="menu_bury_card">Kartani ko\'mish</string>
+    <string name="menu_bury_note">Qaydni ko\'mish</string>
+    <string name="menu_suspend_card">Kartani to\'xtatib turish</string>
+    <string name="menu_suspend_note">Qaydni to\'xtatib turish</string>
+    <string name="menu_bury">Ko\'mish</string>
+    <string name="menu_suspend">To\'xtatib turish</string>
+    <string name="menu_delete_note">Qaydni o\'chirish</string>
+    <string name="menu_flag">Bayroq</string>
+    <string name="menu_flag_card">Kartaga bayroq qo\'yish</string>
+    <string name="menu_flag_card_zero">Bayroqsiz</string>
+    <string name="menu_flag_card_one">Qizil bayroq</string>
+    <string name="menu_flag_card_two">Apelsinrang bayroq</string>
+    <string name="menu_flag_card_three">Yashil bayroq</string>
+    <string name="menu_flag_card_four">Ko\'k bayroq</string>
+    <string name="menu_flag_card_five">Pushti bayroq</string>
+    <string name="menu_flag_card_six">Feruza bayroq</string>
+    <string name="menu_flag_card_seven">Siyohrang bayroq</string>
     <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_select">Select text</string>
-    <string name="menu_lookup">Lookup text</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
+    <string name="menu_select">Matnni tanlash</string>
+    <string name="menu_lookup">Matnni qidirish</string>
+    <string name="menu_search">%1$s dan izlab k\'ring</string>
+    <string name="menu_mark_note">Qaydni belgilash</string>
+    <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
+    <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
     <string name="new_deck">Create deck</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Iltimos davom etish uchun AnkiDroid ga \'Saqlash\' ruxsatini bering</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -142,31 +143,31 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
+    <string name="time_quantity_seconds">%d se</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_hours_minutes">%1$d so %2$d m</string>
+    <string name="time_quantity_hours">%d so</string>
+    <string name="time_quantity_days">%d k</string>
+    <string name="time_quantity_days_hours">%1$d k %2$d so</string>
+    <string name="time_quantity_months">%.1f oy</string>
+    <string name="time_quantity_years">%.1f y</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
+    <string name="rebuild_cram_label">Qayta qurish</string>
+    <string name="empty_cram_label">Bo\'sh</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
+    <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
     <string name="search_deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
+    <string name="empty_deck_add_note">Karta qo\'shish</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
+    <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
+    <string name="studyoptions_empty_schedule">O\'rganilishi rejalashtirilgan karta yo\'q</string>
+    <string name="studyoptions_congrats_finished">Tabriklaymiz! Siz hozircha tugatdingiz</string>
+    <string name="studyoptions_congrats_more_rev">Bugungi limitga yetdingiz, lekin hali ham takrorlash uchun kartalar bor. Limitni sozlamalar qismidan oshirishingiz mumkin.</string>
     <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
     <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
@@ -177,8 +178,8 @@
     <string name="continue_sync">Continue sync</string>
     <string name="sync_cancelled">Sync cancelled</string>
     <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export">Eksport qilish</string>
+    <string name="export_collection">Jamlanmani eksport qilish</string>
     <string name="export_deck">Export deck</string>
     <string name="nothing">Nothing</string>
     <!-- Card template editor -->
@@ -209,19 +210,19 @@
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_label">AnkiDroid ma\'lumotlar bazasiga yozish va o\'qish</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karat qidiruvchi</string>
+    <string name="context_menu_anki_card_label">Anki Karta</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ning muammosi bor:<br/>%2$s</string>
+    <string name="more_information">Qo\'shimcha ma\'lumot</string>
+    <string name="no_field">Topildi \'{{%1$s}}\', ammo \'%1$s\' nomli maydon yo\'q</string>
+    <string name="closed_tag_not_open">Topildi \'{{/%1$s}}\', ammo \'{{#%1$s}}\' yoki \'{{^%1$s}}\' yo\'qolgan</string>
+    <string name="missing_closing_bracket">\'%s\' da \'}}\' yo\'qolgan</string>
+    <string name="open_tag_not_closed">\'{{%s}}\' yo\'qolgan.</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' topildi, ammo \'{{/%2$s}}\' kutilgan edi</string>
+    <string name="filter_error">%s filtrda xatolik</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -231,8 +232,9 @@
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="one">%1$d karta (0 lozim)
+%1$d kartalar (0 lozim)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s nusxa</string>
 </resources>

@@ -53,7 +53,7 @@
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="initializing_tts">TTS initialiseren&#8230;</string>
     <string name="tts_no_tts">Niet spreken</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nOngebruikte bestanden:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s: <br/> Flashcards voor Android</h2>AnkiDroid is een flashcard-app die volledig compatibel met de desktopsoftware <a href=\"%2$s\"> Anki</a>. Zowel in AnkiDroid als in Anki voor desktop kunt u kaarten maken, downloaden en leren en deze gemakkelijk synchroniseren met AnkiWeb.]]></item>
         <item><![CDATA[Om AnkiDroid beter te helpen maken, gelieve de bugs te rapporteren in <a href=\"%1$s\"> de issue tracker</a>; nieuwe ideeën voor functionaliteiten zijn ook zeer welkom. U kunt ook antwoorden vinden op <a href=\"%2$s\"> de wiki</a> of een discussie starten op <a href=\"%3$s\"> het forum</a>.]]></item>
@@ -115,8 +115,8 @@
     <string name="import_complete_count">Kaarten geïmporteerd: %d</string>
     <string name="sd_card_full_title">SD-kaart vol</string>
     <string name="sd_card_almost_full_title">SD-kaart bijna vol</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Geen ruimte</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid vereist %s vrije ruimte om door te gaan.  Gelieve ruimte vrij maken</string>
     <string name="restore_backup_title">Back-up herstellen?</string>
     <string name="restore_backup">Uw collectie zal worden vervangen door een oudere kopie. Alle niet-opgeslagen vooruitgang zal verloren gaan.</string>
     <string name="dialog_cancel">Annuleren</string>
@@ -232,9 +232,9 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_item_ankidroid_privacy_policy">Ankidroid Privacybeleid </string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacybeleid </string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Voorwaarden</string>
     <string name="help_title_send_exception">Stuur probleemoplossingsrapport</string>
     <string name="help_dialog_exception_report_debounce">Rapport is al ingediend</string>
     <!--Sync-->
@@ -242,13 +242,13 @@
         <item quantity="one">Een automatische synchronisatie kan worden geactiveerd in %d seconde</item>
         <item quantity="other">Een automatische synchronisatie kan worden geactiveerd in %d seconden</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>
+    <string name="deck_picker_rev">Aantal nieuwe kaarten die u vandaag in deze leerset ziet.</string>
+    <string name="deck_picker_lrn">Aantal kaarten in \"leren\" in deze leerset</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="deck_picker_counts">Open de leerset overzichtspagina, die het aantal kaarten die u vandaag ziet bevat</string>
+    <string name="import_deck_package">Leerset pakket (.apkg)</string>
+    <string name="import_collection_package">Verzamelingspakket (.colpkg)</string>
 </resources>
