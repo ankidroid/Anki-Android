@@ -353,8 +353,8 @@ public class AnkiDroidApp extends Application {
             UIUtils.showThemedToast(this.getApplicationContext(), getString(R.string.user_is_a_robot), false);
         }
 
-        // make default HTML / JS debugging true for debug build
-        if (BuildConfig.DEBUG) {
+        // make default HTML / JS debugging true for debug build and disable for unit/android tests
+        if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest()) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
         
