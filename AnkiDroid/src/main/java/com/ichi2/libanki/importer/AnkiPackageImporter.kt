@@ -1,5 +1,5 @@
 /***************************************************************************************
-  * Copyright (c) 2016 Houssam Salem <houssam.salem.au@gmail.com>                        *
+ * Copyright (c) 2016 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -14,181 +14,166 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.importer;
+package com.ichi2.libanki.importer
 
+import android.text.format.Formatter
+import com.fasterxml.jackson.core.JsonToken
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.AnkiSerialization.factory
+import com.ichi2.anki.BackupManager.Companion.removeDir
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
+import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Storage
+import com.ichi2.libanki.Utils
+import com.ichi2.utils.HashUtil.HashMapInit
+import org.apache.commons.compress.archivers.zip.ZipFile
+import timber.log.Timber
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.util.*
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.AnkiSerialization;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HashUtil;
+class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, file!!) {
+    private var mZip: ZipFile? = null
+    private var mNameToNum: MutableMap<String, String>? = null
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import org.apache.commons.compress.archivers.zip.ZipFile;
-
-import timber.log.Timber;
-
-@SuppressWarnings({"PMD.NPathComplexity"})
-public class AnkiPackageImporter extends Anki2Importer {
-
-    private ZipFile mZip;
-    private Map<String, String> mNameToNum;
-
-    public AnkiPackageImporter(Collection col, String file) {
-        super(col, file);
-    }
-
-    @Override
-    public void run() throws ImportExportException {
-        publishProgress(0, 0, 0);
-        File tempDir = new File(new File(mCol.getPath()).getParent(), "tmpzip");
-        Collection tmpCol; //self.col into Anki.
-        Timber.d("Attempting to import package %s", mFile);
+    @Throws(ImportExportException::class)
+    override fun run() {
+        publishProgress(0, 0, 0)
+        val tempDir = File(File(mCol.path).parent, "tmpzip")
+        val tmpCol: Collection? // self.col into Anki.
+        Timber.d("Attempting to import package %s", mFile)
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
-            String colname = "collection.anki21";
+            var colname = "collection.anki21"
             try {
                 // extract the deck from the zip file
-                try {
-                    mZip = new ZipFile(new File(mFile));
-                } catch (FileNotFoundException fileNotFound) {
-                    Timber.w(fileNotFound);
+                mZip = try {
+                    ZipFile(File(mFile))
+                } catch (fileNotFound: FileNotFoundException) {
+                    Timber.w(fileNotFound)
                     // The cache can be cleared between copying the file in and importing. This is temporary
-                    if (fileNotFound.getMessage().contains("ENOENT")) {
-                        mLog.add(getRes().getString(R.string.import_log_file_cache_cleared));
-                        return;
+                    if (fileNotFound.message!!.contains("ENOENT")) {
+                        mLog.add(res.getString(R.string.import_log_file_cache_cleared))
+                        return
                     }
-                    throw fileNotFound; //displays: failed to unzip
+                    throw fileNotFound // displays: failed to unzip
                 }
                 // v2 scheduler?
-                if (mZip.getEntry(colname) == null) {
-                    colname = CollectionHelper.COLLECTION_FILENAME;
+                if (mZip!!.getEntry(colname) == null) {
+                    colname = CollectionHelper.COLLECTION_FILENAME
                 }
 
                 // Make sure we have sufficient free space
-                long uncompressedSize = Utils.calculateUncompressedSize(mZip);
-                long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
-                Timber.d("Total uncompressed size will be: %d", uncompressedSize);
-                Timber.d("Total available size is:         %d", availableSpace);
+                val uncompressedSize = Utils.calculateUncompressedSize(mZip)
+                val availableSpace = Utils.determineBytesAvailable(mCol.path)
+                Timber.d("Total uncompressed size will be: %d", uncompressedSize)
+                Timber.d("Total available size is:         %d", availableSpace)
                 if (uncompressedSize > availableSpace) {
-                    Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace);
-                    mLog.add(getRes().getString(R.string.import_log_insufficient_space_error,android.text.format.Formatter.formatFileSize(mContext, uncompressedSize), android.text.format.Formatter.formatFileSize(mContext, availableSpace)));
-                    return;
+                    Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace)
+                    mLog.add(res.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(mContext, uncompressedSize), Formatter.formatFileSize(mContext, availableSpace)))
+                    return
                 }
                 // The filename that we extract should be collection.anki2
                 // Importing collection.anki21 fails due to some media regexes expecting collection.anki2.
                 // We follow how Anki does it and fix the problem here.
-                HashMap<String, String> mediaToFileNameMap = HashUtil.HashMapInit(1);
-                mediaToFileNameMap.put(colname, CollectionHelper.COLLECTION_FILENAME);
-                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, mediaToFileNameMap);
-                colname = CollectionHelper.COLLECTION_FILENAME;
-            } catch (IOException e) {
-                Timber.e(e, "Failed to unzip apkg.");
-                AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip");
-                mLog.add(getRes().getString(R.string.import_log_failed_unzip, e.getLocalizedMessage()));
-                return;
+                val mediaToFileNameMap = HashMapInit<String, String>(1)
+                mediaToFileNameMap[colname] = CollectionHelper.COLLECTION_FILENAME
+                Utils.unzipFiles(mZip, tempDir.absolutePath, arrayOf(colname, "media"), mediaToFileNameMap)
+                colname = CollectionHelper.COLLECTION_FILENAME
+            } catch (e: IOException) {
+                Timber.e(e, "Failed to unzip apkg.")
+                AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip")
+                mLog.add(res.getString(R.string.import_log_failed_unzip, e.localizedMessage))
+                return
             }
-            String colpath = new File(tempDir, colname).getAbsolutePath();
-            if (!(new File(colpath)).exists()) {
-                mLog.add(getRes().getString(R.string.import_log_failed_copy_to, colpath));
-                return;
+            val colpath = File(tempDir, colname).absolutePath
+            if (!File(colpath).exists()) {
+                mLog.add(res.getString(R.string.import_log_failed_copy_to, colpath))
+                return
             }
-            tmpCol = Storage.Collection(mContext, colpath);
+            tmpCol = Storage.Collection(mContext, colpath)
             try {
                 if (!tmpCol.validCollection()) {
-                    mLog.add(getRes().getString(R.string.import_log_failed_validate));
-                    return;
+                    mLog.add(res.getString(R.string.import_log_failed_validate))
+                    return
                 }
             } finally {
-                if (tmpCol != null) {
-                    tmpCol.close();
-                }
+                tmpCol?.close()
             }
-            mFile = colpath;
+            mFile = colpath
             // we need the media dict in advance, and we'll need a map of fname ->
             // number to use during the import
-            File mediaMapFile = new File(tempDir, "media");
-            mNameToNum = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
-            String dirPath = tmpCol.getMedia().dir();
-            File dir = new File(dirPath);
+            val mediaMapFile = File(tempDir, "media")
+            mNameToNum = HashMap() // Number of file in mediamMMapFile as json. Not knowable
+            val dirPath = tmpCol.media.dir()
+            val dir = File(dirPath)
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
-            Map<String, String> numToName = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
-            try (JsonParser jp = AnkiSerialization.getFactory().createParser(mediaMapFile)) {
-                String name; // v in anki
-                String num; // k in anki
-                if (jp.nextToken() != JsonToken.START_OBJECT) {
-                    throw new IllegalStateException("Expected content to be an object");
-                }
-                while (jp.nextToken() != JsonToken.END_OBJECT) {
-                    num = jp.currentName();
-                    name = jp.nextTextValue();
-                    File file= new File(dir, name);
-                    if (!Utils.isInside(file, dir)) {
-                        throw (new RuntimeException("Invalid file"));
+            val numToName: MutableMap<String, String> = HashMap() // Number of file in mediamMMapFile as json. Not knowable
+            try {
+                factory.createParser(mediaMapFile).use { jp ->
+                    var name: String // v in anki
+                    var num: String // k in anki
+                    check(jp.nextToken() == JsonToken.START_OBJECT) { "Expected content to be an object" }
+                    while (jp.nextToken() != JsonToken.END_OBJECT) {
+                        num = jp.currentName()
+                        name = jp.nextTextValue()
+                        val file = File(dir, name)
+                        if (!Utils.isInside(file, dir)) {
+                            throw RuntimeException("Invalid file")
+                        }
+                        Utils.nfcNormalized(num)
+                        (mNameToNum as HashMap<String, String>)[name] = num
+                        numToName[num] = name
                     }
-                    Utils.nfcNormalized(num);
-                    mNameToNum.put(name, num);
-                    numToName.put(num, name);
                 }
-            } catch (FileNotFoundException e) {
-                Timber.e("Apkg did not contain a media dict. No media will be imported.");
-            } catch (IOException e) {
-                Timber.e("Malformed media dict. Media import will be incomplete.");
+            } catch (e: FileNotFoundException) {
+                Timber.e("Apkg did not contain a media dict. No media will be imported.")
+            } catch (e: IOException) {
+                Timber.e("Malformed media dict. Media import will be incomplete.")
             }
             // run anki2 importer
-            super.run();
+            super.run()
             // import static media
-            for (Map.Entry<String, String> entry : mNameToNum.entrySet()) {
-                String file = entry.getKey();
-                String c = entry.getValue();
+            for ((file, c) in mNameToNum!!) {
                 if (!file.startsWith("_") && !file.startsWith("latex-")) {
-                    continue;
+                    continue
                 }
-                File path = new File(mCol.getMedia().dir(), Utils.nfcNormalized(file));
+                val path = File(mCol.media.dir(), Utils.nfcNormalized(file))
                 if (!path.exists()) {
                     try {
-                        Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[]{c}, numToName);
-                    } catch (IOException e) {
-                        Timber.e("Failed to extract static media file. Ignoring.");
+                        Utils.unzipFiles(mZip, mCol.media.dir(), arrayOf(c), numToName)
+                    } catch (e: IOException) {
+                        Timber.e("Failed to extract static media file. Ignoring.")
                     }
                 }
             }
         } finally {
-            long availableSpace = Utils.determineBytesAvailable(mCol.getPath());
-            Timber.d("Total available size is: %d", availableSpace);
+            val availableSpace = Utils.determineBytesAvailable(mCol.path)
+            Timber.d("Total available size is: %d", availableSpace)
 
             // Clean up our temporary files
             if (tempDir.exists()) {
-                BackupManager.removeDir(tempDir);
+                removeDir(tempDir)
             }
         }
-        publishProgress(100, 100, 100);
+        publishProgress(100, 100, 100)
     }
 
-    @Override
-    protected BufferedInputStream _srcMediaData(String fname) {
-        if (mNameToNum.containsKey(fname)) {
+    override fun _srcMediaData(fname: String): BufferedInputStream? {
+        if (mNameToNum!!.containsKey(fname)) {
             try {
-                return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(mNameToNum.get(fname))));
-            } catch (IOException | NullPointerException e) {
-                Timber.e("Could not extract media file %s from zip file.", fname);
+                return BufferedInputStream(mZip!!.getInputStream(mZip!!.getEntry(mNameToNum!![fname])))
+            } catch (e: IOException) {
+                Timber.e("Could not extract media file %s from zip file.", fname)
+            } catch (e: NullPointerException) {
+                Timber.e("Could not extract media file %s from zip file.", fname)
             }
         }
-        return null;
+        return null
     }
 }
