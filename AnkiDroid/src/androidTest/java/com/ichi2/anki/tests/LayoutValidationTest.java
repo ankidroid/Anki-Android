@@ -60,7 +60,7 @@ public class LayoutValidationTest extends InstrumentedTest {
         HashSet<String> nonAnkiFieldNames = new HashSet<>();
         nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout.class));
         nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout.class));
-
+        nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout.class)); // preference_category_material
 
         List<Object[]> layouts = new ArrayList<>();
         for (Field f : R.layout.class.getFields()) {
