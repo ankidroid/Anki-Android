@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
     <string name="error_insufficient_memory">ᱠᱟᱹᱢᱤ ᱠᱚᱢ ᱩᱭᱦᱟᱹᱨ ᱫᱟᱲᱮᱟᱼᱜ ᱠᱷᱟᱹᱛᱤᱨ ᱵᱟᱭ ᱚᱯᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱦᱩᱭ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="default_conf_delete_error">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ ᱫᱚᱞ ᱵᱟᱭ ᱚᱰᱚᱠ ᱦᱩᱭᱩᱜᱼᱟ</string>
@@ -270,7 +270,7 @@
     <string name="restore_default">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text">ᱢᱤᱫᱴᱟᱹᱝ ᱫᱟᱹᱭᱠᱟᱹ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ᱮᱠᱷᱮᱵᱟᱜ</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">ᱡᱟᱵᱷᱟᱥᱨᱤᱯᱴ ᱛᱮ ᱱᱮᱵᱷᱤᱠᱮᱥᱚᱱ ᱰᱨᱣᱟᱹᱨ ᱫᱮᱠᱷᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱷᱩᱞᱼᱥᱠᱨᱤᱱ ᱚᱱ ᱛᱟᱢ ᱾</string>
@@ -373,7 +373,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="deleted_note">ᱱᱳᱴ ᱢᱮᱴᱟᱣ ᱢᱳᱰ</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->
@@ -388,7 +388,7 @@
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_learn_more">ᱰᱷᱮᱨ ᱥᱮᱬᱟᱭ ᱢᱮ</string>
+    <string name="scoped_storage_postpone">ᱵᱚᱸᱫ</string>
+    <string name="scoped_storage_migrate">ᱩᱪᱟᱹᱲ</string>
 </resources>

@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gebaren</string>
     <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
     <string name="pref_cat_actions" maxLength="41">Acties</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Besturing</string>
+    <string name="pref_cat_controls_summ">Stel toetsenborden en andere apparaten in</string>
     <string name="pref_cat_advanced" maxLength="41">Geavanceerd</string>
     <string name="pref_cat_advanced_summ">Optimalisatie en experimentele functies</string>
     <string name="pref_cat_performance" maxLength="41">Prestaties</string>
@@ -96,14 +96,14 @@
     <string name="gestures_allow_links_summary">Aanraakgebaren worden niet verwerkt als een link/hint wordt ingedrukt.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punts aanraakscherm</string>
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Omhoog vegen</string>
     <string name="gestures_swipe_down" maxLength="41">Omlaag vegen</string>
     <string name="gestures_swipe_left" maxLength="41">Naar links vegen</string>
     <string name="gestures_swipe_right" maxLength="41">Naar rechts vegen</string>
     <string name="gestures_double_tap" maxLength="41">Dubbele tik</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Lange aanraking</string>
     <string name="gestures_tap_top" maxLength="41">Druk bovenaan</string>
     <string name="gestures_tap_left" maxLength="41">Druk links</string>
     <string name="gestures_tap_right" maxLength="41">Druk rechts</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Time-out antwoord</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tijd om het antwoord te tonen</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -167,12 +167,12 @@
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
     <string name="pref_backup_max" maxLength="41">Maximum aantal back-ups</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
+    <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
+    <string name="show_large_answer_buttons_summ">Laat antwoordknop in 2 rijen zien</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
     <string name="show_top_bar_summ">Toon aantal kaarten, vlag en markering in de bovenste balk</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
@@ -187,9 +187,9 @@
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX uur na middernacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Middernacht</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 planner</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">Bevestigen</string>
     <string name="sched_ver_1to2">De experimentele planner kan leiden tot een verkeerde planning. Zorg ervoor dat u eerst de documentatie hebt gelezen. Verdergaan?</string>
