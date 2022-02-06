@@ -100,7 +100,6 @@ object FileSystemUtils {
  * Returns a new directory in the OS's default temp directory, using the given [prefix] to generate its name.
  * This directory is deleted on exit
  */
-@Suppress("unused")
 fun createTransientDirectory(prefix: String? = null): File =
     createTempDirectory(prefix = prefix).let {
         val file = File(it.pathString)
@@ -109,7 +108,6 @@ fun createTransientDirectory(prefix: String? = null): File =
     }
 
 /** Returns a temp file with [content]. The file is deleted on exit. */
-@Suppress("unused")
 fun createTransientFile(content: String = ""): File =
     File(kotlin.io.path.createTempFile().pathString).also {
         it.deleteOnExit()
