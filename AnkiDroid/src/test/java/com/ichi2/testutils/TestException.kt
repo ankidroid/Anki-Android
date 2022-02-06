@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -16,15 +16,8 @@
 
 package com.ichi2.testutils
 
-/** assertThrows, allowing for lambda shorthand
- *
- * ```kotlin
- * val exception = assertThrows<IllegalStateException> {
- *     foo()
- * }
- * ```
- *
- * @see TestException if a test-only exception is needed
- * */
-inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
-    AnkiAssert.assertThrows(r, T::class.java)
+/**
+ * An exception to be thrown by tests
+ * Ensures that an actual exception is not mistaken for an exception we want to catch
+ */
+class TestException(message: String) : RuntimeException(message)
