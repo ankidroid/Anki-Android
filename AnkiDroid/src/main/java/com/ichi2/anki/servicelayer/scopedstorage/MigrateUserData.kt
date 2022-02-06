@@ -16,7 +16,9 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.model.DiskFile
 import timber.log.Timber
+import java.io.File
 
 typealias NumberOfBytes = Long
 
@@ -32,14 +34,43 @@ typealias NumberOfBytes = Long
  */
 class MigrateUserData {
     /**
+     * If a file exists in [destination] with different content than [source]
+     *
+     * If a file named `filename` exists in [destination] and in [source] with different content, move `source/filename` to `source/conflict/filename`.
+     */
+    class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException()
+
+    /**
+     * If one or more required directories were missing
+     */
+    class MissingDirectoryException(val directories: List<File>) : RuntimeException() {
+        init {
+            if (directories.isNullOrEmpty()) {
+                throw IllegalArgumentException("directories should not be empty")
+            }
+        }
+    }
+
+    /**
+     * If during a file move, two files refer to the same path
+     * This implies that the file move should be cancelled
+     */
+    class EquivalentFileException(val source: File, val destination: File) : RuntimeException("Source and destination path are the same")
+
+    /**
      * Context for an [Operation], allowing a change of execution behavior and
      * allowing progress and exception reporting logic when executing
      * a large mutable queue of tasks
      */
-    @Suppress("unused")
     abstract class MigrationContext {
         abstract fun reportError(context: Operation, ex: Exception)
         abstract fun reportProgress(transferred: NumberOfBytes)
+        /**
+         * Whether [File#renameTo] should be attempted
+         *
+         * In scoped storage, this is typically false, as we may be moving between mount points
+         */
+        var attemptRename: Boolean = true
 
         /**
          * Performs an operation, reports errors and continues on failure

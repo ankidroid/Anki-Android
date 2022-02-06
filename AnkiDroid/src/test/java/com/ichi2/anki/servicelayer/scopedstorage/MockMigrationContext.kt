@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-@Suppress("unused", "MemberVisibilityCanBePrivate")
 class MockMigrationContext : MigrateUserData.MigrationContext() {
     /** set [logExceptions] to populate this property */
     val exceptions = mutableListOf<Exception>()
