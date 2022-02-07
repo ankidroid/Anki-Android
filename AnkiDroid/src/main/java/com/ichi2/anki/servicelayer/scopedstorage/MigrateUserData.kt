@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import timber.log.Timber
 import java.io.File
@@ -56,6 +57,11 @@ class MigrateUserData {
      * This implies that the file move should be cancelled
      */
     class EquivalentFileException(val source: File, val destination: File) : RuntimeException("Source and destination path are the same")
+
+    /**
+     * If a directory could not be deleted as it still contained files
+     */
+    class DirectoryNotEmptyException(val directory: Directory) : RuntimeException("directory was not empty: $directory")
 
     /**
      * Context for an [Operation], allowing a change of execution behavior and
