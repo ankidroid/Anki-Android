@@ -87,11 +87,13 @@ class CardHtml(
         val style = getStyle()
         val script = getScripts(requiresMathjax)
         val cardClass = getCardClass(requiresMathjax)
+        val addonContent = getAddonContent()
 
         Timber.v("content card = \n %s", content)
         Timber.v("::style:: / %s", style)
+        Timber.v("addon content / %s", addonContent)
 
-        return context.cardTemplate.render(content, style, script, cardClass)
+        return context.cardTemplate.render(content, style, script, cardClass, addonContent)
     }
 
     private fun getContent(): String {
@@ -123,6 +125,10 @@ class CardHtml(
                 """        <script src="file:///android_asset/mathjax/conf.js"> </script>
         <script src="file:///android_asset/mathjax/tex-chtml.js"> </script>"""
         }
+    }
+
+    private fun getAddonContent(): String {
+        return context.addonContent
     }
 
     companion object {

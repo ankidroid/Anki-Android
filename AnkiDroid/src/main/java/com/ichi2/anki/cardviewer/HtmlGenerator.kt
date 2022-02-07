@@ -20,6 +20,8 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.CheckResult
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.jsaddons.NpmUtils
+import com.ichi2.anki.jsaddons.getEnabledAddonsContent
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
@@ -34,7 +36,8 @@ class HtmlGenerator(
     val cardTemplate: CardTemplate,
     val currentTheme: Int,
     val resources: Resources,
-    private val baseUrl: String
+    private val baseUrl: String,
+    val addonContent: String
 ) {
 
     @CheckResult
@@ -60,8 +63,9 @@ class HtmlGenerator(
             val currentTheme = Themes.getCurrentTheme(context)
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)
             val cardHtmlTemplate = loadCardTemplate(context)
+            val addonContent = NpmUtils.getEnabledAddonsContent(context)
 
-            return HtmlGenerator(typeAnswer, cardAppearance, cardHtmlTemplate, currentTheme, context.resources, baseUrl)
+            return HtmlGenerator(typeAnswer, cardAppearance, cardHtmlTemplate, currentTheme, context.resources, baseUrl, addonContent)
         }
 
         /**

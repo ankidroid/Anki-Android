@@ -23,10 +23,11 @@ class CardTemplate(template: String) {
     private var mPreScript: String? = null
     private var mPreClass: String? = null
     private var mPreContent: String? = null
-    private var mPostContent: String? = null
+    private var mPreAddonContent: String? = null
+    private var mPostAddonContent: String? = null
     @CheckResult
-    fun render(content: String, style: String, script: String, cardClass: String): String {
-        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPostContent
+    fun render(content: String, style: String, script: String, cardClass: String, addonContent: String): String {
+        return mPreStyle + style + mPreScript + script + mPreClass + cardClass + mPreContent + content + mPreAddonContent + addonContent + mPostAddonContent
     }
 
     init {
@@ -36,16 +37,19 @@ class CardTemplate(template: String) {
         val styleDelim = "::style::"
         val scriptDelim = "::script::"
         val contentDelim = "::content::"
+        val addonContentDelim = "::addon::"
         val styleIndex = template.indexOf(styleDelim)
         val scriptIndex = template.indexOf(scriptDelim)
         val classIndex = template.indexOf(classDelim)
         val contentIndex = template.indexOf(contentDelim)
+        val addonContentIndex = template.indexOf(addonContentDelim)
         try {
             mPreStyle = template.substring(0, styleIndex)
             mPreScript = template.substring(styleIndex + styleDelim.length, scriptIndex)
             mPreClass = template.substring(scriptIndex + scriptDelim.length, classIndex)
             mPreContent = template.substring(classIndex + classDelim.length, contentIndex)
-            mPostContent = template.substring(contentIndex + contentDelim.length)
+            mPreAddonContent = template.substring(contentIndex + contentDelim.length, addonContentIndex)
+            mPostAddonContent = template.substring(addonContentIndex + addonContentDelim.length)
         } catch (ex: StringIndexOutOfBoundsException) {
             throw IllegalStateException("The card template had replacement string order, or content changed", ex)
         }

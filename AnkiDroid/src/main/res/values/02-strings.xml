@@ -459,4 +459,8 @@
     <string name="is_not_valid_js_addon">%s is not a valid js addon package for AnkiDroid</string>
     <string name="addon_details">Details</string>
     <string name="no_addons_found">No Addons found, Get addons from options menu</string>
+
+    <!-- javascript addons support -->
+    <string name="javascript_addons_support">JavaScript Addons Support</string>
+    <string name="javascript_addons_support_summ">Add JavaScript addons to Note Editor and Reviewer</string>
 </resources>

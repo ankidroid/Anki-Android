@@ -174,6 +174,11 @@
                 android:id="@+id/anki_card_external_context_menu"
                 android:defaultValue="true"
                 android:key="anki_card_enable_external_context_menu"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="javascript_addons_support_prefs"
+                android:summary="@string/javascript_addons_support_summ"
+                android:title="@string/javascript_addons_support"/>
         </PreferenceCategory>
 
 
