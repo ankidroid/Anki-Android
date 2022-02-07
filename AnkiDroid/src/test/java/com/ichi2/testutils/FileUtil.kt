@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import org.acra.util.IOUtils
 import java.io.File
@@ -61,5 +62,11 @@ fun File.withTempFile(fileName: String, content: String = "default content"): Fi
         IOUtils.writeStringToFile(it, content)
         it.deleteOnExit()
     }
+    return this
+}
+
+/** Adds a file to the directory with the provided name and content */
+fun Directory.withTempFile(fileName: String, content: String = "default content"): Directory {
+    this.directory.withTempFile(fileName, content)
     return this
 }
