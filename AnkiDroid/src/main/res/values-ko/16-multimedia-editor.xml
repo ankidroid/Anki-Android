@@ -35,11 +35,11 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">이미지 추가</string>
-    <string name="multimedia_editor_popup_audio_clip">오디오 클립 추가</string>
-    <string name="multimedia_editor_popup_audio">오디오 녹음</string>
-    <string name="multimedia_editor_popup_text">고급 편집기</string>
-    <string name="multimedia_editor_popup_cloze">빈칸 만들기</string>
-    <string name="multimedia_editor_popup_clear_field">필드 지우기</string>
+    <string name="multimedia_editor_popup_audio_clip">소리클립 추가</string>
+    <string name="multimedia_editor_popup_audio">소리녹음</string>
+    <string name="multimedia_editor_popup_text">고급편집기</string>
+    <string name="multimedia_editor_popup_cloze">빈칸만들기</string>
+    <string name="multimedia_editor_popup_clear_field">빈터지우기</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com 주관</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -48,14 +48,14 @@
     <!-- imperative for the button title -->
     <string name="multimedia_editor_trans_translate">번역하기</string>
     <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">온라인 번역</string>
+    <string name="multimedia_editor_trans_translating_online">온라인번역</string>
     <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">번역 선택</string>
+    <string name="multimedia_editor_trans_pick_translation">번역찍기</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">사전 선택</string>
+    <string name="multimedia_editor_trans_pick_translation_source">사전뽑기</string>
     <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">ColorDict를 먼저 설치</string>
+    <string name="multimedia_editor_trans_install_color_dict">컬러딕트를 먼저 깔기</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">불러오기</string>
     <string name="multimedia_editor_pron_looking_up">발음 찾는 중</string>
@@ -67,14 +67,14 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">텍스트</string>
     <string name="multimedia_editor_field_editing_image">이미지</string>
-    <string name="multimedia_editor_field_editing_audio">오디오 녹음</string>
-    <string name="multimedia_editor_field_editing_audio_clip">오디오 클립</string>
+    <string name="multimedia_editor_field_editing_audio">소리녹음</string>
+    <string name="multimedia_editor_field_editing_audio_clip">소리클립</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">완료</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">검색:</string>
     <string name="multimedia_editor_text_field_editing_say">발음</string>
-    <string name="multimedia_editor_text_field_editing_clear">지우기</string>
+    <string name="multimedia_editor_text_field_editing_clear">비우기</string>
     <string name="multimedia_editor_text_field_editing_clone">다음에서 복제</string>
     <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">번역</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
@@ -104,25 +104,25 @@
     <string name="multimedia_editor_progress_wait_title">대기</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVG는 미리보기로 볼수 없습니다.</string>
+    <string name="multimedia_editor_png_paste_error">포착한 모습을 png로 변환하는데 오류: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s 영역에 멀티미디어 항목 첨부</string>
     <string name="multimedia_editor_attach_media">미디어 첨부</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">녹음 실패</string>
     <string name="multimedia_editor_audio_view_playing_failed">재생 실패</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">록화기도구막대가 생길수 없습니다. </string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">편집 필드</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">번역</string>
     <!-- Network failure -->
     <string name="network_no_connection">연결이 되어있지 않습니다</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
+    <string name="crop_image">이 그림을 자르시겠습니까?</string>
     <string name="crop_button">이미지 자르기</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="save_dialog_content">지금, 그림크기는 %s메가입니다. 기본그림크기제한은 1메가입니다. 잘라내시겠습니까?</string>
+    <string name="select_image_failed">"그림고르기에 실패했습니다. 다시 해보세요. "</string>
+    <string name="activity_result_unexpected">어플이 예상치않은 값을 되돌렸습니다. 다른 어플로 써야될듯합니다. </string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">빈터속내용</string>
 </resources>

@@ -413,8 +413,8 @@
     <string name="scoped_storage_term_1">I have backed up my data</string>
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">Nie odinstaluję aplikacji podczas przenoszenia danych</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_select_all_terms">Proszę zaakceptować wszystkie elementy, aby kontynuować</string>
+    <string name="scoped_storage_learn_more">Dowiedz się więcej</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
 </resources>
