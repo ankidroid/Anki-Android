@@ -28,11 +28,11 @@ if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
-if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/manual.asc ]; then
+if ! [ -f ../ankidroiddocs/manual.asc ]; then
   echo "Could not find ../ankidroiddocs/manual.asc?"
   exit 1
 fi
-if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/help.asc ]; then
+if ! [ -f ../ankidroiddocs/help.asc ]; then
   echo "Could not find ../ankidroiddocs/help.asc?"
   exit 1
 fi
