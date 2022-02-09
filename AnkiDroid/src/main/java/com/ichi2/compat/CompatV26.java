@@ -97,6 +97,11 @@ public class CompatV26 extends CompatV23 implements Compat {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
     }
 
+    @Override
+    public void deleteFile(@NonNull File file) throws IOException {
+        Files.delete(file.toPath());
+    }
+
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
     @Override
     public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {

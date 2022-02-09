@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">Gebaren</string>
     <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
     <string name="pref_cat_actions" maxLength="41">Acties</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">Besturing</string>
+    <string name="pref_cat_controls_summ">Stel toetsenborden en andere apparaten in</string>
     <string name="pref_cat_advanced" maxLength="41">Geavanceerd</string>
     <string name="pref_cat_advanced_summ">Optimalisatie en experimentele functies</string>
     <string name="pref_cat_performance" maxLength="41">Prestaties</string>
@@ -96,14 +96,14 @@
     <string name="gestures_allow_links_summary">Aanraakgebaren worden niet verwerkt als een link/hint wordt ingedrukt.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punts aanraakscherm</string>
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">Omhoog vegen</string>
     <string name="gestures_swipe_down" maxLength="41">Omlaag vegen</string>
     <string name="gestures_swipe_left" maxLength="41">Naar links vegen</string>
     <string name="gestures_swipe_right" maxLength="41">Naar rechts vegen</string>
     <string name="gestures_double_tap" maxLength="41">Dubbele tik</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Lange aanraking</string>
     <string name="gestures_tap_top" maxLength="41">Druk bovenaan</string>
     <string name="gestures_tap_left" maxLength="41">Druk links</string>
     <string name="gestures_tap_right" maxLength="41">Druk rechts</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Time-out antwoord</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tijd om het antwoord te tonen</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -167,12 +167,12 @@
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
     <string name="pref_backup_max" maxLength="41">Maximum aantal back-ups</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
+    <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
+    <string name="show_large_answer_buttons_summ">Laat antwoordknop in 2 rijen zien</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
     <string name="show_top_bar_summ">Toon aantal kaarten, vlag en markering in de bovenste balk</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
@@ -187,10 +187,10 @@
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <string name="day_offset_summ">XXX uur na middernacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">Middernacht</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="sched_v2" maxLength="41">V2 planner</string>
+    <string name="sched_v2_summ">Schakel de experimentele planner in. Dwingt veranderingen in een één richting bij de volgende synchronisatie</string>
     <string name="sched_ver_toggle_title">Bevestigen</string>
     <string name="sched_ver_1to2">De experimentele planner kan leiden tot een verkeerde planning. Zorg ervoor dat u eerst de documentatie hebt gelezen. Verdergaan?</string>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
@@ -210,13 +210,13 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>
     <string name="html_javascript_debugging_summ">Schakel externe WebView-verbindingen in en sla de kaart HTML op in de AnkiDroid-folder</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
+    <string name="paste_as_png_summary">Anki plakt standaard afbeeldingen op het klembord als JPG-bestanden om schijfruimte te besparen. U kunt deze optie gebruiken om in plaats daarvan als PNG-afbeeldingen te plakken.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Druk twee keer op terug om terug te gaan</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
+    <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Geavanceerde statistieken</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Geavanceerde statistieken inschakelen</string>
@@ -300,7 +300,7 @@
     <string name="deck_conf_cram_order" maxLength="41">kaarten geselecteerd door</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Opnieuw inplannen</string>
     <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Tweede filter inschakelen</string>
     <string name="deck_conf_cram_steps" maxLength="41">Aangepaste stappen (in minuten)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Aangepaste stapgroottes definiëren</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Herinnering meldingen voor sets in deze setgroep inschakelen</string>
@@ -317,18 +317,18 @@
     <string name="type_in_answer_focus_summ">Automatisch focussen op het ‘type in antwoord’ veld in de beoordelaar</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Wijzigingslogboek openen</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">Gebaar toevoegen</string>
     <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="key_picker_default_press_key">Druk op een toets</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_selection_title">Selecteer kaart zijde</string>
+    <string name="card_side_question">Vraag</string>
+    <string name="card_side_answer">Antwoord</string>
+    <string name="card_side_both">Vraag &amp; antwoord</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Verwijder ‘%s’</string>
+    <string name="bindings_already_bound">Reeds gekoppeld aan %s</string>
 </resources>

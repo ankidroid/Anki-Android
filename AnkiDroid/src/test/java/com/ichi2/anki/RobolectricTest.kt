@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 import android.os.Looper
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
@@ -55,7 +56,6 @@ import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
 import timber.log.Timber
-import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
@@ -266,6 +266,10 @@ open class RobolectricTest : CollectionGetter {
             }
         }
 
+    /**
+     * Returns an instance of [SharedPreferences] using the test context
+     * @see [editPreferences] for editing
+     */
     protected fun getPreferences(): SharedPreferences {
         return AnkiDroidApp.getSharedPrefs(targetContext)
     }
@@ -505,4 +509,14 @@ open class RobolectricTest : CollectionGetter {
             advanceRobolectricLooperWithSleep()
             return card
         }
+
+    /**
+     * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
+     *
+     * ```
+     * editPreferences { putString("key", value) }
+     * ```
+     */
+    fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
+        getPreferences().edit(action = action)
 }

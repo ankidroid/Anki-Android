@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IntDef
+import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.MaterialDialog.ListCallback
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -27,20 +28,31 @@ import com.ichi2.anki.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.BundleUtils.requireLong
+import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
-import com.ichi2.utils.HashUtil.HashMapInit
 import timber.log.Timber
-import java.util.*
+import java.util.function.Supplier
 
-class DeckPickerContextMenu : AnalyticsDialogFragment() {
+class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(CONTEXT_MENU_RENAME_DECK, CONTEXT_MENU_DECK_OPTIONS, CONTEXT_MENU_CUSTOM_STUDY, CONTEXT_MENU_DELETE_DECK, CONTEXT_MENU_EXPORT_DECK, CONTEXT_MENU_UNBURY, CONTEXT_MENU_CUSTOM_STUDY_REBUILD, CONTEXT_MENU_CUSTOM_STUDY_EMPTY, CONTEXT_MENU_CREATE_SUBDECK, CONTEXT_MENU_CREATE_SHORTCUT, CONTEXT_MENU_BROWSE_CARDS)
     annotation class DECK_PICKER_CONTEXT_MENU
 
+    fun withArguments(did: Long): DeckPickerContextMenu {
+        val args = this.arguments ?: Bundle()
+        args.putLong("did", did)
+        this.arguments = args
+        return this
+    }
+
+    /** The selected deck for the context menu */
+    val deckId get() = requireArguments().requireLong("did")
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val did = requireArguments().getLong("did")
-        val title = CollectionHelper.getInstance().getCol(context).decks.name(did)
+        val title = collection.decks.name(deckId)
         val itemIds = listIds
         return MaterialDialog.Builder(requireActivity())
             .title(title)
@@ -52,23 +64,28 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             .build()
     }
 
+    /**
+     * A map from an ID of a menu item to its name
+     *
+     * note: ordering of menu items is performed in [listIds]
+     * */
     private val keyValueMap: HashMap<Int, String>
         get() {
             val res = resources
-            val keyValueMap = HashMapInit<Int, String>(9)
-            keyValueMap[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.rename_deck)
-            keyValueMap[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.menu__deck_options)
-            keyValueMap[CONTEXT_MENU_CUSTOM_STUDY] = res.getString(R.string.custom_study)
-            keyValueMap[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck)
-            keyValueMap[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export_deck)
-            keyValueMap[CONTEXT_MENU_UNBURY] = res.getString(R.string.unbury)
-            keyValueMap[CONTEXT_MENU_CUSTOM_STUDY_REBUILD] = res.getString(R.string.rebuild_cram_label)
-            keyValueMap[CONTEXT_MENU_CUSTOM_STUDY_EMPTY] = res.getString(R.string.empty_cram_label)
-            keyValueMap[CONTEXT_MENU_CREATE_SUBDECK] = res.getString(R.string.create_subdeck)
-            keyValueMap[CONTEXT_MENU_CREATE_SHORTCUT] = res.getString(R.string.create_shortcut)
-            keyValueMap[CONTEXT_MENU_BROWSE_CARDS] = res.getString(R.string.browse_cards)
-            return keyValueMap
-        } // init with our fixed list size for performance
+            return hashMapOf(
+                CONTEXT_MENU_RENAME_DECK to res.getString(R.string.rename_deck),
+                CONTEXT_MENU_DECK_OPTIONS to res.getString(R.string.menu__deck_options),
+                CONTEXT_MENU_CUSTOM_STUDY to res.getString(R.string.custom_study),
+                CONTEXT_MENU_DELETE_DECK to res.getString(R.string.contextmenu_deckpicker_delete_deck),
+                CONTEXT_MENU_EXPORT_DECK to res.getString(R.string.export_deck),
+                CONTEXT_MENU_UNBURY to res.getString(R.string.unbury),
+                CONTEXT_MENU_CUSTOM_STUDY_REBUILD to res.getString(R.string.rebuild_cram_label),
+                CONTEXT_MENU_CUSTOM_STUDY_EMPTY to res.getString(R.string.empty_cram_label),
+                CONTEXT_MENU_CREATE_SUBDECK to res.getString(R.string.create_subdeck),
+                CONTEXT_MENU_CREATE_SHORTCUT to res.getString(R.string.create_shortcut),
+                CONTEXT_MENU_BROWSE_CARDS to res.getString(R.string.browse_cards),
+            )
+        }
 
     /**
      * Retrieve the list of ids to put in the context menu list
@@ -77,10 +94,9 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
     @get:DECK_PICKER_CONTEXT_MENU
     private val listIds: IntArray
         get() {
-            val col = CollectionHelper.getInstance().getCol(context)
-            val did = requireArguments().getLong("did")
-            val dyn = col.decks.isDyn(did)
-            val itemIds = ArrayList<Int>(10) // init with our fixed list size for performance
+            val did = deckId
+            val dyn = collection.decks.isDyn(did)
+            val itemIds = ArrayList<Int>(11) // init with our fixed list size for performance
             itemIds.add(CONTEXT_MENU_BROWSE_CARDS)
             if (dyn) {
                 itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD)
@@ -94,12 +110,12 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             if (!dyn) {
                 itemIds.add(CONTEXT_MENU_CUSTOM_STUDY)
             }
-            itemIds.add(CONTEXT_MENU_DELETE_DECK)
             itemIds.add(CONTEXT_MENU_EXPORT_DECK)
-            if (col.sched.haveBuried(did)) {
+            if (collection.sched.haveBuried(did)) {
                 itemIds.add(CONTEXT_MENU_UNBURY)
             }
             itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT)
+            itemIds.add(CONTEXT_MENU_DELETE_DECK)
             return ContextMenuHelper.integerListToArray(itemIds)
         }
 
@@ -108,57 +124,54 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         when (view.id) {
             CONTEXT_MENU_DELETE_DECK -> {
                 Timber.i("Delete deck selected")
-                (activity as DeckPicker?)!!.confirmDeckDeletion()
+                (activity as DeckPicker?)!!.confirmDeckDeletion(deckId)
             }
             CONTEXT_MENU_DECK_OPTIONS -> {
                 Timber.i("Open deck options selected")
-                (activity as DeckPicker?)!!.showContextMenuDeckOptions()
+                (activity as DeckPicker?)!!.showContextMenuDeckOptions(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CUSTOM_STUDY -> {
                 Timber.i("Custom study option selected")
-                val did = requireArguments().getLong("did")
                 val ankiActivity = requireActivity() as AnkiActivity
                 val d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog::class.java)
-                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, did)
+                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, deckId)
                 ankiActivity.showDialogFragment(d)
             }
             CONTEXT_MENU_CREATE_SHORTCUT -> {
                 Timber.i("Create icon for a deck")
-                (activity as DeckPicker?)!!.createIcon(context)
+                (activity as DeckPicker?)!!.createIcon(context, deckId)
             }
             CONTEXT_MENU_RENAME_DECK -> {
                 Timber.i("Rename deck selected")
-                (activity as DeckPicker?)!!.renameDeckDialog()
+                (activity as DeckPicker?)!!.renameDeckDialog(deckId)
             }
             CONTEXT_MENU_EXPORT_DECK -> {
                 Timber.i("Export deck selected")
-                (activity as DeckPicker?)!!.showContextMenuExportDialog()
+                (activity as DeckPicker?)!!.exportDeck(deckId)
             }
             CONTEXT_MENU_UNBURY -> {
                 Timber.i("Unbury deck selected")
-                val col = CollectionHelper.getInstance().getCol(context)
-                col.sched.unburyCardsForDeck(requireArguments().getLong("did"))
+                collection.sched.unburyCardsForDeck(deckId)
                 (activity as StudyOptionsListener?)!!.onRequireDeckListUpdate()
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CUSTOM_STUDY_REBUILD -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker?)!!.rebuildFiltered()
+                (activity as DeckPicker?)!!.rebuildFiltered(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CUSTOM_STUDY_EMPTY -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker?)!!.emptyFiltered()
+                (activity as DeckPicker?)!!.emptyFiltered(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             CONTEXT_MENU_CREATE_SUBDECK -> {
                 Timber.i("Create Subdeck selected")
-                (activity as DeckPicker?)!!.createSubdeckDialog()
+                (activity as DeckPicker?)!!.createSubDeckDialog(deckId)
             }
             CONTEXT_MENU_BROWSE_CARDS -> {
-                val did = requireArguments().getLong("did")
-                (activity as DeckPicker?)!!.col?.decks?.select(did)
+                collection.decks?.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
@@ -180,13 +193,20 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         private const val CONTEXT_MENU_CREATE_SUBDECK = 8
         private const val CONTEXT_MENU_CREATE_SHORTCUT = 9
         private const val CONTEXT_MENU_BROWSE_CARDS = 10
-        @JvmStatic
-        fun newInstance(did: Long): DeckPickerContextMenu {
-            val f = DeckPickerContextMenu()
-            val args = Bundle()
-            args.putLong("did", did)
-            f.arguments = args
-            return f
+    }
+
+    class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {
+        override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+            val cls = loadFragmentClass(classLoader, className)
+            return if (cls == DeckPickerContextMenu::class.java) {
+                newDeckPickerContextMenu()
+            } else super.instantiate(classLoader, className)
         }
+
+        private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
+            DeckPickerContextMenu(collectionSupplier.get())
+
+        fun newDeckPickerContextMenu(deckId: Long): DeckPickerContextMenu =
+            DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
     }
 }
