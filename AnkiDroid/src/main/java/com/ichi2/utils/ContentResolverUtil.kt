@@ -75,10 +75,17 @@ object ContentResolverUtil {
     private fun getFilenameViaDisplayName(contentResolver: ContentResolver, uri: Uri): String? {
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try {
-            contentResolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null).use { c ->
+            contentResolver.query(uri, null, null, null, null).use { c ->
                 if (c != null) {
                     c.moveToNext()
-                    return c.getString(0)
+                    val mediaIndex = c.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                    if (mediaIndex == -1) {
+                        // uri is content uri not media uri
+                        val dataIndex = c.getColumnIndex("_data")
+                        val path = c.getString(dataIndex)
+                        return path.substring(path.lastIndexOf('/') + 1)
+                    }
+                    return c.getString(mediaIndex)
                 }
             }
         } catch (e: SQLiteException) {
