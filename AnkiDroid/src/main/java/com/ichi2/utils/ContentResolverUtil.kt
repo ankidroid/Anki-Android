@@ -81,7 +81,7 @@ object ContentResolverUtil {
                     val mediaIndex = c.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
                     if (mediaIndex == -1) {
                         // uri is content uri not media uri
-                        val dataIndex = c.getColumnIndex("_data")
+                        val dataIndex = c.getColumnIndexOrThrow("_data")
                         val path = c.getString(dataIndex)
                         return path.substring(path.lastIndexOf('/') + 1)
                     }
