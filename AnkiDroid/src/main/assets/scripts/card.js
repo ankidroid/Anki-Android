@@ -245,6 +245,7 @@ function ankiSearchCard(result) {
         return;
     }
 
+    result = JSON.parse(result);
     for (var i = 0; i < searchCardHook.length; i++) {
         searchCardHook[i](result);
     }

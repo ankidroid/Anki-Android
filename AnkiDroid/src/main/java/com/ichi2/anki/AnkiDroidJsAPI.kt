@@ -40,7 +40,6 @@ import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
-import com.ichi2.libanki.utils.toJsonArray
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
@@ -498,7 +497,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             }
 
             // quote result to prevent JSON injection attack
-            val jsonEncodedString = org.json.JSONObject.quote(searchResult.toJsonArray().toString())
+            val jsonEncodedString = org.json.JSONObject.quote(searchResult.toString())
             webView.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
         }
     }
