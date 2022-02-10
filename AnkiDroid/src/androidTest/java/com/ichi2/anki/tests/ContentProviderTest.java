@@ -137,7 +137,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Before
     public void setUp() throws Exception {
-        Log.i(AnkiDroidApp.TAG, "setUp()");
+        Timber.i("setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = getCol();
 
@@ -208,7 +208,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @After
     public void tearDown() throws Exception {
-        Log.i(AnkiDroidApp.TAG, "tearDown()");
+        Timber.i("tearDown()");
         if (!tearDown) {
             return;
         }
