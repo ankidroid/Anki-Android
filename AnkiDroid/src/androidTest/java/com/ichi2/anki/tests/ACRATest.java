@@ -65,7 +65,7 @@ public class ACRATest extends InstrumentedTest {
 
     private AnkiDroidApp mApp = null;
 
-    private final String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
+    private final String[] mDebugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
     //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
 
 
@@ -112,7 +112,7 @@ public class ACRATest extends InstrumentedTest {
         setAcraConfig("Debug");
         assertArrayEquals("Debug logcat arguments not set correctly",
                 mApp.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
-                new ImmutableList<>(debugLogcatArguments).toArray());
+                new ImmutableList<>(mDebugLogcatArguments).toArray());
         verifyDebugACRAPreferences();
     }
 

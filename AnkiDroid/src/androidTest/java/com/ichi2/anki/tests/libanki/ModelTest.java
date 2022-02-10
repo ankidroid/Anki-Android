@@ -39,22 +39,22 @@ import static org.junit.Assume.assumeTrue;
 @RunWith(AndroidJUnit4.class)
 public class ModelTest extends InstrumentedTest {
 
-    private Collection testCol;
+    private Collection mTestCol;
 
     @Before
     public void setUp() throws IOException {
-        testCol = getEmptyCol();
+        mTestCol = getEmptyCol();
     }
 
     @After
     public void tearDown() {
-        testCol.close();
+        mTestCol.close();
     }
 
     @Test
     public void bigQuery() {
         assumeTrue("This test is flaky on API29, ignoring", Build.VERSION.SDK_INT != Build.VERSION_CODES.Q);
-        ModelManager models = testCol.getModels();
+        ModelManager models = mTestCol.getModels();
         Model model = models.all().get(0);
         final String testString = "test";
         final int size = testString.length() * 1024 * 1024;
@@ -67,7 +67,7 @@ public class ModelTest extends InstrumentedTest {
         // Buf should be more than 4MB, so at least two chunks from database.
         models.flush();
         // Reload models
-        testCol.load();
+        mTestCol.load();
         Model newModel = models.all().get(0);
         assertEquals(newModel, model);
     }
