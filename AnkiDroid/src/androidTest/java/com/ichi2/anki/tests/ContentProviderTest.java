@@ -212,7 +212,7 @@ public class ContentProviderTest extends InstrumentedTest {
         final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
-        if (remnantNotes.size() > 0) {
+        if (!remnantNotes.isEmpty()) {
             long[] noteIds = Utils.collection2Array(remnantNotes);
             col.remNotes(noteIds);
             col.save();
