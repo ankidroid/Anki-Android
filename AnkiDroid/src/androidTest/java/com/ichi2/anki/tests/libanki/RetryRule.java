@@ -32,7 +32,7 @@ public final class RetryRule implements TestRule {
     /**
      * How many times to try a test
      */
-    private int maxTries = 3;
+    private int mMaxTries = 3;
 
 
     /**
@@ -43,7 +43,7 @@ public final class RetryRule implements TestRule {
         if (i < 1) {
             throw new IllegalArgumentException("iterations < 1: " + i);
         }
-        this.maxTries = i;
+        this.mMaxTries = i;
     }
 
 
@@ -69,7 +69,7 @@ public final class RetryRule implements TestRule {
                 Throwable caughtThrowable = null;
 
                 // implement retry logic here
-                for (int i = 0; i < maxTries; i++) {
+                for (int i = 0; i < mMaxTries; i++) {
                     try {
                         base.evaluate();
                         return;
@@ -79,7 +79,7 @@ public final class RetryRule implements TestRule {
                         t.printStackTrace(System.err);
                     }
                 }
-                System.err.println(description.getDisplayName() + ": giving up after " + maxTries + " failures");
+                System.err.println(description.getDisplayName() + ": giving up after " + mMaxTries + " failures");
                 throw caughtThrowable;
             }
         };

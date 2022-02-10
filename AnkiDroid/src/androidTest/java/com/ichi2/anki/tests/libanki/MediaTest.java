@@ -55,7 +55,7 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class MediaTest extends InstrumentedTest {
 
-    private Collection testCol;
+    private Collection mTestCol;
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -63,12 +63,12 @@ public class MediaTest extends InstrumentedTest {
 
     @Before
     public void setUp() throws IOException {
-        testCol = getEmptyCol();
+        mTestCol = getEmptyCol();
     }
 
     @After
     public void tearDown() {
-        testCol.close();
+        mTestCol.close();
     }
 
     @Test
@@ -82,15 +82,15 @@ public class MediaTest extends InstrumentedTest {
         os.write("hello".getBytes());
         os.close();
         // new file, should preserve name
-        String r = testCol.getMedia().addFile(path);
+        String r = mTestCol.getMedia().addFile(path);
         assertEquals("foo.jpg", r);
         // adding the same file again should not create a duplicate
-        assertEquals("foo.jpg", testCol.getMedia().addFile(path));
+        assertEquals("foo.jpg", mTestCol.getMedia().addFile(path));
         // but if it has a different md5, it should
         os = new FileOutputStream(path, false);
         os.write("world".getBytes());
         os.close();
-        assertEquals("foo (1).jpg", testCol.getMedia().addFile(path));
+        assertEquals("foo (1).jpg", mTestCol.getMedia().addFile(path));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class MediaTest extends InstrumentedTest {
 
         // new file, should preserve name
         try {
-            testCol.getMedia().addFile(path);
+            mTestCol.getMedia().addFile(path);
             fail("exception should be thrown");
         } catch (EmptyMediaException mediaException) {
             // all good
@@ -114,51 +114,51 @@ public class MediaTest extends InstrumentedTest {
 
     @Test
     public void testStrings() {
-        Long mid = testCol.getModels().getModels().entrySet().iterator().next().getKey();
+        Long mid = mTestCol.getModels().getModels().entrySet().iterator().next().getKey();
 
         List<String> expected = Collections.emptyList();
-        List<String> actual = testCol.getMedia().filesInStr(mid, "aoeu");
+        List<String> actual = mTestCol.getMedia().filesInStr(mid, "aoeu");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Collections.singletonList("foo.jpg");
-        actual = testCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao");
+        actual = mTestCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Arrays.asList("foo.jpg", "bar.jpg");
-        actual = testCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao");
+        actual = mTestCol.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Collections.singletonList("foo.jpg");
-        actual = testCol.getMedia().filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao");
+        actual = mTestCol.getMedia().filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Arrays.asList("one", "two");
-        actual = testCol.getMedia().filesInStr(mid, "<img src=one><img src=two>");
+        actual = mTestCol.getMedia().filesInStr(mid, "<img src=one><img src=two>");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Collections.singletonList("foo.jpg");
-        actual = testCol.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao");
+        actual = mTestCol.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Arrays.asList("foo.jpg", "fo");
-        actual = testCol.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao");
+        actual = mTestCol.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
         expected = Collections.singletonList("foo.mp3");
-        actual = testCol.getMedia().filesInStr(mid, "aou[sound:foo.mp3]aou");
+        actual = mTestCol.getMedia().filesInStr(mid, "aou[sound:foo.mp3]aou");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
-        assertEquals("aoeu", testCol.getMedia().strip("aoeu"));
-        assertEquals("aoeuaoeu", testCol.getMedia().strip("aoeu[sound:foo.mp3]aoeu"));
-        assertEquals("aoeu", testCol.getMedia().strip("a<img src=yo>oeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("aoeu"));
+        assertEquals("aoeuaoeu", mTestCol.getMedia().strip("aoeu[sound:foo.mp3]aoeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<img src=yo>oeu"));
         assertEquals("aoeu", Media.escapeImages("aoeu"));
         assertEquals("<img src='http://foo.com'>", Media.escapeImages("<img src='http://foo.com'>"));
         assertEquals("<img src=\"foo%20bar.jpg\">", Media.escapeImages("<img src=\"foo bar.jpg\">"));
@@ -167,26 +167,26 @@ public class MediaTest extends InstrumentedTest {
     @Test
     public void testDeckIntegration() throws IOException, EmptyMediaException {
         // create a media dir
-        testCol.getMedia().dir();
+        mTestCol.getMedia().dir();
         // Put a file into it
         File file = createNonEmptyFile("fake.png");
-        testCol.getMedia().addFile(file);
+        mTestCol.getMedia().addFile(file);
         // add a note which references it
-        Note f = testCol.newNote();
+        Note f = mTestCol.newNote();
         f.setField(0, "one");
         f.setField(1, "<img src='fake.png'>");
-        testCol.addNote(f);
+        mTestCol.addNote(f);
         // and one which references a non-existent file
-        f = testCol.newNote();
+        f = mTestCol.newNote();
         f.setField(0, "one");
         f.setField(1, "<img src='fake2.png'>");
-        testCol.addNote(f);
+        mTestCol.addNote(f);
         // and add another file which isn't used
-        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.jpg"), false);
+        FileOutputStream os = new FileOutputStream(new File(mTestCol.getMedia().dir(), "foo.jpg"), false);
         os.write("test".getBytes());
         os.close();
         // check media
-        List<List<String>> ret = testCol.getMedia().check();
+        List<List<String>> ret = mTestCol.getMedia().check();
         List<String> expected = Collections.singletonList("fake2.png");
         List<String> actual = ret.get(0);
         actual.retainAll(expected);
@@ -207,39 +207,39 @@ public class MediaTest extends InstrumentedTest {
 
     @Test
     public void testChanges() throws IOException, EmptyMediaException {
-        assertNotNull(testCol.getMedia()._changed());
-        assertEquals(0, added(testCol).size());
-        assertEquals(0, removed(testCol).size());
+        assertNotNull(mTestCol.getMedia()._changed());
+        assertEquals(0, added(mTestCol).size());
+        assertEquals(0, removed(mTestCol).size());
         // add a file
         File dir = getTestDir();
         File path = new File(dir, "foo.jpg");
         FileOutputStream os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
         os.close();
-        path = new File(testCol.getMedia().dir(), testCol.getMedia().addFile(path));
+        path = new File(mTestCol.getMedia().dir(), mTestCol.getMedia().addFile(path));
         // should have been logged
-        testCol.getMedia().findChanges();
-        assertThat(added(testCol).size(), is(greaterThan(0)));
-        assertEquals(0, removed(testCol).size());
+        mTestCol.getMedia().findChanges();
+        assertThat(added(mTestCol).size(), is(greaterThan(0)));
+        assertEquals(0, removed(mTestCol).size());
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);
         os.write("world".getBytes());
         os.close();
-        assertEquals(1, added(testCol).size());
-        assertEquals(0, removed(testCol).size());
+        assertEquals(1, added(mTestCol).size());
+        assertEquals(0, removed(mTestCol).size());
         // but if we add another file, it will
         path = new File(path.getAbsolutePath()+"2");
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();
-        testCol.getMedia().findChanges(true);
-        assertEquals(2, added(testCol).size());
-        assertEquals(0, removed(testCol).size());
+        mTestCol.getMedia().findChanges(true);
+        assertEquals(2, added(mTestCol).size());
+        assertEquals(0, removed(mTestCol).size());
         // deletions should get noticed too
         assertTrue(path.delete());
-        testCol.getMedia().findChanges(true);
-        assertEquals(1, added(testCol).size());
-        assertEquals(1, removed(testCol).size());
+        mTestCol.getMedia().findChanges(true);
+        assertEquals(1, added(mTestCol).size());
+        assertEquals(1, removed(mTestCol).size());
     }
 
 
@@ -247,10 +247,10 @@ public class MediaTest extends InstrumentedTest {
     public void testIllegal() {
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
-        assertEquals(good, testCol.getMedia().stripIllegal(aString));
+        assertEquals(good, mTestCol.getMedia().stripIllegal(aString));
         for (int i = 0; i < aString.length(); i++) {
             char c = aString.charAt(i);
-            boolean bad = testCol.getMedia().hasIllegal("something" + c + "morestring");
+            boolean bad = mTestCol.getMedia().hasIllegal("something" + c + "morestring");
             if (bad) {
                 assertEquals(-1, good.indexOf(c));
             } else {
