@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.anki.testutil.ThreadUtils;
@@ -49,6 +50,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
+@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 public class DeckPickerTest {
     @Rule
     public ActivityScenarioRule<DeckPicker> mActivityRule = new ActivityScenarioRule<>(DeckPicker.class);

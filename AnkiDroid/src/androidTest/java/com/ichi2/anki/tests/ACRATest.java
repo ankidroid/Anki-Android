@@ -18,6 +18,7 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import androidx.annotation.StringRes;
@@ -56,6 +57,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
+@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 public class ACRATest extends InstrumentedTest {
 
     @Rule public GrantPermissionRule mRuntimePermissionRule =
