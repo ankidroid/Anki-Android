@@ -82,7 +82,6 @@
             />
         <activity
             android:name="com.ichi2.anki.IntentHandler"
-            android:label="@string/app_name"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
@@ -159,8 +158,8 @@
                 <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/x-colpkg"/>
-                <data android:mimeType="application/octet-stream" android:scheme="content"/>
-                <data android:mimeType="application/zip" android:scheme="content"/>
+                <data android:mimeType="application/octet-stream"/>
+                <data android:mimeType="application/zip"/>
             </intent-filter>
 
             <!-- Tasker DO_SYNC intent -->
@@ -171,7 +170,6 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.DeckPicker"
-            android:label="@string/app_name"
             android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"

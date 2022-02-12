@@ -30,10 +30,10 @@ import com.ichi2.anki.R
 
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?) : super(context)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context) : super(context)
 
     class IncrementerNumberRangeDialogFragmentCompat : NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat() {
         private var mLastValidEntry = 0
@@ -41,7 +41,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
         /**
          * Sets [.mEditText] width and gravity.
          */
-        override fun onBindDialogView(view: View?) {
+        override fun onBindDialogView(view: View) {
             super.onBindDialogView(view)
 
             // Layout parameters for mEditText
@@ -67,12 +67,13 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat {
          *
          * Sets orientation for layout
          */
-        override fun onCreateDialogView(context: Context?): View {
+        override fun onCreateDialogView(context: Context): View {
             val linearLayout = LinearLayout(context)
 
             val incrementButton = Button(context)
             val decrementButton = Button(context)
-            val editText: EditText = super.onCreateDialogView(context).findViewById(android.R.id.edit)
+            val dialogView = super.onCreateDialogView(context)!!
+            val editText: EditText = dialogView.findViewById(android.R.id.edit)
             (editText.parent as ViewGroup).removeView(editText)
 
             // Layout parameters for incrementButton and decrementButton

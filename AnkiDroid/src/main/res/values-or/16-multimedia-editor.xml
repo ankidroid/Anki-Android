@@ -65,7 +65,7 @@
     <string name="multimedia_editor_poweredbeolingus">Beolingus ଦ୍ୱାରା ଚାଳିତ</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ଲେଖା</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ପାଠ୍ୟ</string>
     <string name="multimedia_editor_field_editing_image">ପ୍ରତିଛବି</string>
     <string name="multimedia_editor_field_editing_audio">ଅଡ଼ିଓ ରେକର୍ଡିଂ</string>
     <string name="multimedia_editor_field_editing_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍</string>
@@ -103,7 +103,7 @@
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">ଅପେକ୍ଷା କର</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">କିଛି ଭୁଲ ହେଲା</string>
+    <string name="multimedia_editor_something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି</string>
     <string name="multimedia_editor_svg_preview">ପୂର୍ବାବଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="multimedia_editor_png_paste_error">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିକୁ png ରେ ରୂପାନ୍ତର କରିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s କ୍ଷେତ୍ରରେ ମଲ୍ଟିମିଡ଼ିଆ ବିଷୟବସ୍ତୁ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
@@ -120,7 +120,7 @@
     <string name="network_no_connection">କୌଣସି ସଂଯୋଗ ନାହିଁ</string>
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_button">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>
     <string name="save_dialog_content">ବର୍ତ୍ତମାନର ପ୍ରତିଛବି ଆକାର ହେଉଛି %sMB। Default ପ୍ରତିଛବି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ crop କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
     <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼଼ିପାରେ</string>

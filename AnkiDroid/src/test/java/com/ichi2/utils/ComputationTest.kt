@@ -33,7 +33,7 @@ class ComputationTest {
     fun errorIsFailure() {
         val asNull = Computation.err<Int>()
         assertThat(asNull.succeeded(), equalTo(false))
-        assertThrows(IllegalStateException::class.java) {
+        assertThrows<IllegalStateException> {
             asNull.value
         }
     }

@@ -268,9 +268,9 @@
     <string name="choose_an_image">Bild auswählen</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Dies ist eine {{%1$s::sample}} cloze deletion.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Beispiel</string>
+    <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Bitte schalten Sie den Vollbildmodus ein, um »Seitenleiste anzeigen« mit JavaScript zu verwenden.</string>

@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600139
-        versionName="2.16alpha39"
+        versionCode=21600142
+        versionName="2.16alpha42"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -242,6 +242,12 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.allWarningsAsErrors = true
 }
 
+//Workaround for: https://github.com/pinterest/ktlint/issues/1216
+//To be removed when upstream gets patched
+tasks.withType(org.jlleitschuh.gradle.ktlint.worker.KtLintWorkAction) {
+    workerMaxHeapSize = "2048m"
+}
+
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
@@ -250,7 +256,6 @@ dependencies {
     configurations.all {
         resolutionStrategy {
             force 'org.jetbrains:annotations:23.0.0'
-            force 'androidx.test:core:1.4.0' // Pending fix here: https://issuetracker.google.com/issues/189353863
         }
     }
 
@@ -267,9 +272,9 @@ dependencies {
     implementation 'androidx.browser:browser:1.4.0'
     implementation "androidx.core:core-ktx:1.7.0"
     implementation 'androidx.exifinterface:exifinterface:1.3.3'
-    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-    implementation "androidx.preference:preference-ktx:1.1.1"
+    implementation "androidx.preference:preference-ktx:1.2.0"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.sqlite:sqlite-framework:2.2.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -288,7 +293,7 @@ dependencies {
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.19.3' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.19.4' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
@@ -327,7 +332,7 @@ dependencies {
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
-    testImplementation 'org.mockito:mockito-inline:4.2.0'
+    testImplementation 'org.mockito:mockito-inline:4.3.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
@@ -337,7 +342,7 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.3'
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

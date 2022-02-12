@@ -38,7 +38,7 @@
     <string name="multimedia_editor_popup_audio_clip">Lägg till ljudklipp</string>
     <string name="multimedia_editor_popup_audio">Spela in ljud</string>
     <string name="multimedia_editor_popup_text">Avancerad redigering</string>
-    <string name="multimedia_editor_popup_cloze">Lucktest</string>
+    <string name="multimedia_editor_popup_cloze">Textlucka</string>
     <string name="multimedia_editor_popup_clear_field">Rensa fält</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Använder glosbe.com</string>
@@ -104,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Vänta</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Någonting gick fel</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
+    <string name="multimedia_editor_svg_preview">SVG:er är inte tillgängliga för förhandsgranskning</string>
     <string name="multimedia_editor_png_paste_error">Fel vid konvertering av urklippsbild till PNG: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Lägg till multimedia-innehåll till fältet %1$s</string>
     <string name="multimedia_editor_attach_media">Bifoga media</string>
@@ -112,7 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Inspelning misslyckades</string>
     <string name="multimedia_editor_audio_view_playing_failed">Uppspelning misslyckades</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Kan inte skapa verktygsfältet för inspelaren</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redigeringsfält</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Översättning</string>
@@ -123,6 +123,6 @@
     <string name="crop_button">Beskär bild</string>
     <string name="save_dialog_content">Nuvarande bildstorlek är %sMB. Standardgränsen för bildstorlek är 1MB. Vill du beskära den?</string>
     <string name="select_image_failed">"Det gick inte att välja bild. Försök igen"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="activity_result_unexpected">Appen returnerade ett oväntat värde. Du kan behöva använda en annan app</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Fältinnehåll</string>
 </resources>

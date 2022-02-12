@@ -55,7 +55,7 @@
     <string name="card_browser_show_marked">Filtrera markerade</string>
     <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
     <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Filtrera efter flagga</string>
     <string name="card_browser_list_my_searches">Mina sökningar</string>
     <string name="card_browser_list_my_searches_save">Spara sökning</string>
     <string name="card_browser_list_my_searches_title">Välj en sparad sökning</string>
@@ -72,8 +72,8 @@
         <item>Ingen sortering (snabbare)</item>
         <item>Efter sorteringsfält</item>
         <item>Efter tid skapad</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Efter ändringstid för anteckning</item>
+        <item>Efter kortets ändringstid</item>
         <item>Efter kötid</item>
         <item>Efter intervall</item>
         <item>Efter lätthet</item>
@@ -83,10 +83,10 @@
     <string name="card_browser_select_all">Markera alla</string>
     <string name="card_browser_select_none">Avmarkera alla</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ny)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_due_filtered_card">(filtrerad)</string>
     <string name="card_browser_interval_learning_card">(lärande)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_no_cards_in_deck">Inga kort hittades i kortleken ‘%s’</string>
+    <string name="card_browser_search_all_decks">Sök i alla kortlekar</string>
     <string name="card_browser_unknown_deck_name">Okänd</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kort raderat</item>
@@ -97,9 +97,9 @@
     <string name="card_info_first_review">Första repetitionen</string>
     <string name="card_info_latest_review">Senaste repetitionen</string>
     <string name="card_info_interval">Intervall</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_ease">Lätthet</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Repetitioner</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Bortglömt</string>
     <string name="card_info_average_time">Genomsnittlig tid</string>
     <string name="card_info_total_time">Total tid</string>
     <string name="card_info_card_type">Korttyp</string>
@@ -112,8 +112,8 @@
     <string name="card_info_revlog_rating">Betyg</string>
     <string name="card_info_revlog_type">Typ</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Lärs</string>
-    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_review">Repetera</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Lärs om</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
+    <string name="card_info_revlog_filtered">Filtrerad</string>
     <string name="card_info_ease_not_applicable">N/A</string>
 </resources>
