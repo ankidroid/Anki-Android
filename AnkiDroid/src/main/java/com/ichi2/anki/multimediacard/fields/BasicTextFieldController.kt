@@ -40,7 +40,6 @@ import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
-import java.util.*
 
 /**
  * One of the most powerful controllers - creates UI and works with the field of textual type.
@@ -53,7 +52,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // This is used to copy from another field value to this field
     private var mPossibleClones: ArrayList<String>? = null
-    override fun createUI(context: Context?, layout: LinearLayout?) {
+    override fun createUI(context: Context, layout: LinearLayout?) {
         mEditText = FixedEditText(mActivity)
         mEditText!!.minLines = 3
         mEditText!!.setText(mField.text)
