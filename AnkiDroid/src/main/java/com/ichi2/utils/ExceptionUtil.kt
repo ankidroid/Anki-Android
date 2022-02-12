@@ -15,10 +15,13 @@
  */
 package com.ichi2.utils
 
+import android.content.Context
 import androidx.annotation.CheckResult
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.lang.StringBuilder
 
 object ExceptionUtil {
     @JvmStatic
@@ -70,5 +73,17 @@ object ExceptionUtil {
         val sw = StringWriter()
         ex.printStackTrace(PrintWriter(sw))
         return sw.toString()
+    }
+
+    /** Executes a function, and logs the exception to ACRA and shows a toast if an issue occurs */
+    fun executeSafe(context: Context, origin: String, runnable: (() -> Unit)) {
+        try {
+            runnable.invoke()
+        } catch (e: Exception) {
+            AnkiDroidApp.sendExceptionReport(e, origin)
+            UIUtils.showThemedToast(
+                context, context.getString(R.string.multimedia_editor_something_wrong), true
+            )
+        }
     }
 }

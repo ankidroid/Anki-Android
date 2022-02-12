@@ -33,6 +33,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.ExceptionUtil.executeSafe
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
@@ -90,14 +91,8 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
     @KotlinCleanup("make data non-null")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
-            try {
+            executeSafe(mActivity, "handleAudioSelection:unhandled") {
                 handleAudioSelection(data!!)
-            } catch (e: Exception) {
-                AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled")
-                showThemedToast(
-                    AnkiDroidApp.getInstance().applicationContext,
-                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
-                )
             }
         }
     }
