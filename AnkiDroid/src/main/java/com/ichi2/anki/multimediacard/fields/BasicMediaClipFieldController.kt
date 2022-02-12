@@ -130,7 +130,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             cursor.moveToFirst()
             var mediaClipFullName = cursor.getString(0)
             mediaClipFullName = checkFileName(mediaClipFullName)
-            mediaClipFullNameParts = mediaClipFullName.split("\\.").toTypedArray()
+            mediaClipFullNameParts = mediaClipFullName.split(".").toTypedArray()
             if (mediaClipFullNameParts.size < 2) {
                 mediaClipFullNameParts = try {
                     Timber.i("Media clip name does not have extension, using second half of mime type")
