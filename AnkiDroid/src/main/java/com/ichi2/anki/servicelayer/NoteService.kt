@@ -77,7 +77,7 @@ object NoteService {
             } else if (value.startsWith("[sound:") && value.contains("rec")) {
                 AudioRecordingField()
             } else if (value.startsWith("[sound:")) {
-                AudioClipField()
+                MediaClipField()
             } else {
                 TextField()
             }
@@ -153,7 +153,7 @@ object NoteService {
     private fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
-            EFieldType.AUDIO_RECORDING, EFieldType.AUDIO_CLIP -> tmpMediaPath = field.audioPath
+            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
             EFieldType.IMAGE -> tmpMediaPath = field.imagePath
             EFieldType.TEXT -> {
             }
@@ -171,7 +171,7 @@ object NoteService {
                         inFile.delete()
                     }
                     when (field.type) {
-                        EFieldType.AUDIO_RECORDING, EFieldType.AUDIO_CLIP -> field.audioPath = outFile.absolutePath
+                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> field.audioPath = outFile.absolutePath
                         EFieldType.IMAGE -> field.imagePath = outFile.absolutePath
                         else -> {
                         }

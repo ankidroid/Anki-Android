@@ -38,7 +38,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 
-class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
+class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     private var storingDirectory: File? = null
 
     @KotlinCleanup("Convert to FixedTextView and make lateinit")

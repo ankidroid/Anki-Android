@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
  * Test which requires an activity
  */
 @RunWith(AndroidJUnit4::class)
-class BasicAudioClipFieldControllerComplexTest : MultimediaEditFieldActivityTestBase() {
+class BasicMediaClipFieldControllerComplexTest : MultimediaEditFieldActivityTestBase() {
 
     @Test
     fun testControllerInit() {
