@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
@@ -48,23 +49,15 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
         storingDirectory = File(col.media.dir())
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
-        val allowAllFiles = AnkiDroidApp.getSharedPrefs(context).getBoolean("mediaImportAllowAllFiles", false)
         val btnLibrary = Button(mActivity)
         btnLibrary.text = mActivity.getText(R.string.multimedia_editor_image_field_editing_library)
         btnLibrary.setOnClickListener {
-            val i = Intent()
-            i.type = if (allowAllFiles) "*/*" else "audio/*"
-            if (!allowAllFiles) {
-                // application/ogg takes precedence over "*/*" for application/octet-stream
-                // so don't add it if we're want */*
-                val extraMimeTypes = arrayOf("audio/*", "application/ogg") // #9226 allows ogg on Android 8
-                i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes)
-            }
-            i.action = Intent.ACTION_GET_CONTENT
-            // Only get openable files, to avoid virtual files issues with Android 7+
-            i.addCategory(Intent.CATEGORY_OPENABLE)
-            val chooserPrompt = mActivity.resources.getString(R.string.multimedia_editor_popup_audio_clip)
-            mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), ACTIVITY_SELECT_AUDIO_CLIP)
+            openChooserPrompt(
+                "audio/*",
+                arrayOf("audio/*", "application/ogg"), // #9226: allows ogg on Android 8
+                R.string.multimedia_editor_popup_audio_clip,
+                ACTIVITY_SELECT_AUDIO_CLIP
+            )
         }
         layout!!.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(mActivity)
@@ -75,6 +68,23 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
             (tvAudioClip as FixedTextView).setVisibility(View.VISIBLE)
         }
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int, resultCode: Int) {
+        val allowAllFiles = AnkiDroidApp.getSharedPrefs(this.mActivity).getBoolean("mediaImportAllowAllFiles", false)
+        val i = Intent()
+        i.type = if (allowAllFiles) "*/*" else initialMimeType
+        if (!allowAllFiles) {
+            // application/ogg takes precedence over "*/*" for application/octet-stream
+            // so don't add it if we're want */*
+            val extraMimeTypes = extraMimeTypes // #9226 allows ogg on Android 8
+            i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes)
+        }
+        i.action = Intent.ACTION_GET_CONTENT
+        // Only get openable files, to avoid virtual files issues with Android 7+
+        i.addCategory(Intent.CATEGORY_OPENABLE)
+        val chooserPrompt = mActivity.resources.getString(prompt)
+        mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), resultCode)
     }
 
     @KotlinCleanup("make data non-null")
