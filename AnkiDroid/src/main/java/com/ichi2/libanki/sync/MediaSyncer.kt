@@ -59,6 +59,14 @@ class MediaSyncer(
     private val con: Connection
 ) {
     private var mDownloadCount = 0
+    private var mUploadCount = 0
+
+    fun getDownloadCount(): Int {
+        return mDownloadCount
+    }
+    fun getUploadCount(): Int {
+        return mUploadCount
+    }
 
     // Returned string may be null. ConnectionResultType and Pair are not null
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
@@ -160,6 +168,7 @@ class MediaSyncer(
         // at this point, we're all up to date with the server's changes,
         // and we need to send our own
         var updateConflict = false
+        mUploadCount = 0
         var toSend = col.media.dirtyCount()
         while (true) {
             val changesZip = col.media.mediaChangesZip()
@@ -176,6 +185,7 @@ class MediaSyncer(
                 )
                 val changes = server.uploadChanges(zip)
                 val processedCnt = changes.getInt(0)
+                mUploadCount += processedCnt
                 val serverLastUsn = changes.getInt(1)
                 col.media.markClean(fnames.subList(0, processedCnt))
                 col.log(
