@@ -18,11 +18,11 @@ package com.ichi2.anki.multimediacard.fields;
 
 import org.junit.Test;
 
-import static com.ichi2.anki.multimediacard.fields.BasicAudioClipFieldController.checkFileName;
+import static com.ichi2.anki.multimediacard.fields.BasicMediaClipFieldController.checkFileName;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BasicAudioClipFieldControllerTest {
+public class BasicMediaClipFieldControllerTest {
 
 
     @Test

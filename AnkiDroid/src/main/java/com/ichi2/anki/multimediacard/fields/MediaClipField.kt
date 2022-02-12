@@ -3,11 +3,11 @@
 package com.ichi2.anki.multimediacard.fields
 
 /**
- * Implementation of Audio Clip field type
+ * Implementation of Media Clip field type
  */
-class AudioClipField : AudioField() {
+class MediaClipField : AudioField() {
     override fun getType(): EFieldType {
-        return EFieldType.AUDIO_CLIP
+        return EFieldType.MEDIA_CLIP
     }
 
     override fun isModified(): Boolean {

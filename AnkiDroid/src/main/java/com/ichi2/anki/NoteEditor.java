@@ -75,7 +75,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
-import com.ichi2.anki.multimediacard.fields.AudioClipField;
+import com.ichi2.anki.multimediacard.fields.MediaClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
 import com.ichi2.anki.multimediacard.fields.EFieldType;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -1557,7 +1557,7 @@ public class NoteEditor extends AnkiActivity implements
                         return true;
                     } else if (itemId == R.id.menu_multimedia_audio_clip) {
                         Timber.i("NoteEditor:: Add audio clip button pressed");
-                        startMultimediaFieldEditorForField(index, new AudioClipField());
+                        startMultimediaFieldEditorForField(index, new MediaClipField());
                         return true;
                     } else if (itemId == R.id.menu_multimedia_photo) {
                         Timber.i("NoteEditor:: Add image button pressed");
