@@ -51,7 +51,7 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
         val btnLibrary = Button(mActivity)
-        btnLibrary.text = mActivity.getText(R.string.multimedia_editor_image_field_editing_library)
+        btnLibrary.text = mActivity.getText(R.string.multimedia_editor_import_audio)
         btnLibrary.setOnClickListener {
             openChooserPrompt(
                 "audio/*",
@@ -61,6 +61,18 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
             )
         }
         layout!!.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
+        val btnVideo = Button(mActivity).apply {
+            text = mActivity.getText(R.string.multimedia_editor_import_video)
+            setOnClickListener {
+                openChooserPrompt(
+                    "video/*",
+                    emptyArray(),
+                    R.string.multimedia_editor_popup_video_clip,
+                    ACTIVITY_SELECT_VIDEO_CLIP
+                )
+            }
+        }
+        layout.addView(btnVideo, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(mActivity)
         if (mField.audioPath == null) {
             (tvAudioClip as FixedTextView).setVisibility(View.GONE)
@@ -75,10 +87,9 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
         val allowAllFiles = AnkiDroidApp.getSharedPrefs(this.mActivity).getBoolean("mediaImportAllowAllFiles", false)
         val i = Intent()
         i.type = if (allowAllFiles) "*/*" else initialMimeType
-        if (!allowAllFiles) {
+        if (!allowAllFiles && extraMimeTypes.any()) {
             // application/ogg takes precedence over "*/*" for application/octet-stream
             // so don't add it if we're want */*
-            val extraMimeTypes = extraMimeTypes // #9226 allows ogg on Android 8
             i.putExtra(Intent.EXTRA_MIME_TYPES, extraMimeTypes)
         }
         i.action = Intent.ACTION_GET_CONTENT
@@ -93,6 +104,11 @@ class BasicAudioClipFieldController : FieldControllerBase(), IFieldController {
         if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
             executeSafe(mActivity, "handleMediaSelection:unhandled") {
                 handleMediaSelection(data!!, "ankidroid_audioclip_")
+            }
+        }
+        if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_VIDEO_CLIP) {
+            executeSafe(mActivity, "handleMediaSelection:unhandled") {
+                handleMediaSelection(data!!, "ankidroid_videoclip_")
             }
         }
     }
