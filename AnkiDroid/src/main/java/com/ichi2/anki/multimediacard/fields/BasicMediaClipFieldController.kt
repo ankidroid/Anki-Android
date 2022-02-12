@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
@@ -41,11 +40,9 @@ import java.io.File
 class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     private var storingDirectory: File? = null
 
-    @KotlinCleanup("Convert to FixedTextView and make lateinit")
-    private var tvAudioClip: TextView? = null
+    private lateinit var tvAudioClip: FixedTextView
 
-    @KotlinCleanup("make context non-null")
-    override fun createUI(context: Context?, layout: LinearLayout?) {
+    override fun createUI(context: Context, layout: LinearLayout?) {
         val col = CollectionHelper.getInstance().getCol(context)
         storingDirectory = File(col.media.dir())
         // #9639: .opus is application/octet-stream in API 26,
@@ -75,10 +72,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         layout.addView(btnVideo, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(mActivity)
         if (mField.audioPath == null) {
-            (tvAudioClip as FixedTextView).setVisibility(View.GONE)
+            tvAudioClip.visibility = View.GONE
         } else {
-            (tvAudioClip as FixedTextView).setText(mField.audioPath)
-            (tvAudioClip as FixedTextView).setVisibility(View.VISIBLE)
+            tvAudioClip.text = mField.audioPath
+            tvAudioClip.visibility = View.VISIBLE
         }
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
     }
@@ -177,8 +174,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 // If everything worked, hand off the information
                 mField.setHasTemporaryMedia(true)
                 mField.audioPath = clipCopy.absolutePath
-                tvAudioClip!!.text = mField.formattedValue
-                tvAudioClip!!.visibility = View.VISIBLE
+                tvAudioClip.text = mField.formattedValue
+                tvAudioClip.visibility = View.VISIBLE
             }
         } catch (e: Exception) {
             Timber.e(e, "Unable to copy media file from ContentProvider")
