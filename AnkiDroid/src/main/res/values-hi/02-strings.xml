@@ -190,7 +190,7 @@
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
     <string name="export_email_text_new"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].<br/>
+        This is an Anki flashcards deck sent from AnkiDroid[1]. 
         Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
