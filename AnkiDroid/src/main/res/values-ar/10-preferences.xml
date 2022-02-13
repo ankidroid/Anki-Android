@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_center">النقر في أسفل الوسط</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
-    <string name="gestures_volume_up" maxLength="41">رفع مستوى الصوت</string>
-    <string name="gestures_volume_down" maxLength="41">خفض مستوى الصوت</string>
     <string name="more_scrolling_buttons" maxLength="41">القارئ الإلكتروني</string>
     <string name="more_scrolling_buttons_summ">استخدم أيضًا أزرار كانجي/كاتاكانا، الرموز التعبيرية/كاو - موجي للتمرير</string>
     <string name="card_browser_enable_external_context_menu">قائمة \'%s\'</string>

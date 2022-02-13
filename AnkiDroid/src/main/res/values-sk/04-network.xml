@@ -97,6 +97,7 @@
     <string name="sync_media_find">Hľadajú sa zmenené multimédiá&#8230;</string>
     <string name="sync_media_no_changes">Žiadne zmeny multimediálnych súborov</string>
     <string name="sync_media_success">Multimédia synchronizované</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d multimediálnych zmien pre nahratie</string>
     <string name="sync_media_downloaded_count">%d multimediálnych súborov stiahnutých</string>
     <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>

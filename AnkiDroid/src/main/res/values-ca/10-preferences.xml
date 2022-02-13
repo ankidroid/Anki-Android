@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar a baix a l\'esquerra</string>
     <string name="gestures_corner_tap_bottom_center">Tocar a baix al centre</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar a baix a la dreta</string>
-    <string name="gestures_volume_up" maxLength="41">Pujar el volum</string>
-    <string name="gestures_volume_down" maxLength="41">Baixar el volum</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>

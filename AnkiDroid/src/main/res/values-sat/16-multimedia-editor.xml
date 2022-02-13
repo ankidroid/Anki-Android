@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">ᱪᱤᱛᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="multimedia_editor_popup_audio_clip">ᱥᱟᱰᱮ ᱠᱞᱤᱯ ᱫᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">ᱥᱟᱰᱮ ᱨᱮᱠᱚᱰ  ᱢᱮ</string>
     <string name="multimedia_editor_popup_text">ᱮᱰᱵᱷᱟᱱᱥ  ᱥᱟᱯᱰᱟᱣᱼᱟᱜ</string>
     <string name="multimedia_editor_popup_cloze">ᱠᱞᱚᱡ ᱜᱮᱫ  ᱜᱤᱰᱤᱫ</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">ᱜᱮᱞᱮᱨᱤ</string>
     <string name="multimedia_editor_image_field_editing_photo">ᱠᱭᱟᱢᱮᱨᱟ</string>
-    <string name="multimedia_editor_image_field_editing_library">ᱯᱩᱛᱷᱤ  ᱚᱲᱟᱜ</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ</string>

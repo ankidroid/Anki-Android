@@ -97,6 +97,7 @@
     <string name="sync_media_find">یافتن رسانه تغییر یافته...</string>
     <string name="sync_media_no_changes">فایل رسانه تغییری نکرده است.</string>
     <string name="sync_media_success">رسانه با موفقیت همگام سازی شد.</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d تغییر در رسانه برای ارسال به سرور</string>
     <string name="sync_media_downloaded_count">%d فایل رسانه دانلود شده است</string>
     <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>

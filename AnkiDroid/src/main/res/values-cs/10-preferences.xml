@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_center">Klepnutí dole uprostřed</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
-    <string name="gestures_volume_up" maxLength="41">Hlasitost nahoru</string>
-    <string name="gestures_volume_down" maxLength="41">Hlasitost dolů</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Použít také kanji/katakana, emoji/kao-moji tlačítka pro posouvání</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s“</string>

@@ -97,6 +97,7 @@
     <string name="sync_media_find">Hinahanap ang nabagong media&#8230;</string>
     <string name="sync_media_no_changes">Walang nagbago sa mga media file</string>
     <string name="sync_media_success">Nai-singkronisa ang media</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d mga pagbabago sa media na i-uupload</string>
     <string name="sync_media_downloaded_count">%d mga nai-download na media file</string>
     <string name="sync_sanity_failed">Matapos ang pag-sisingkronisa, ang koleksyon ay nasa pabago-bagong estado. Upang ayusin ang ito, pipilitin ng AnkiDroid ang isang buong pag-sisingkronisa. Piliin kung alin ang nais mong panatilihin.</string>

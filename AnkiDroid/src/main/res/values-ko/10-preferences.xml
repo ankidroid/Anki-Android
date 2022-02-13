@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
     <string name="more_scrolling_buttons" maxLength="41">e리더</string>
     <string name="more_scrolling_buttons_summ">한자/가타카나, 이모지/카오모지 버튼도 스크롤링에 사용</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>

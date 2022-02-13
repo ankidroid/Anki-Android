@@ -116,7 +116,7 @@
     <string name="saving_model">Salvando tipo de nota</string>
     <string name="save">Salvar</string>
     <string name="close">Fechar</string>
-    <string name="select">Selecione</string>
+    <string name="select">Selecionar</string>
     <string name="saving_changes">Salvando alterações&#8230;</string>
     <string name="reordering_cards">Reordenando cards...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
@@ -322,14 +322,14 @@
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Tamanho da Fonte</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Funções</string>
+    <string name="menu_font_size">Tamanho da fonte</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar barra de ferramentas</string>
     <string name="format_insert_bold">Formatar em Negrito</string>
     <string name="format_insert_italic">Formatar em Itálico</string>
     <string name="format_insert_underline">Formatar como Sublinhado</string>
     <string name="insert_horizontal_line">Inserir Tachado</string>
     <string name="insert_heading">Inserir título</string>
-    <string name="format_font_size">Alterar Tamanho da Fonte</string>
+    <string name="format_font_size">Alterar tamanho da fonte</string>
     <string name="insert_mathjax">Inserir equação MathJax</string>
     <string name="insert_cloze">Ocultar</string>
     <string name="before_text">HTML antes da seleção</string>

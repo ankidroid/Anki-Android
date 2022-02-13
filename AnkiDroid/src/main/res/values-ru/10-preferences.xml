@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
     <string name="gestures_corner_tap_bottom_center">Касание внизу по центру</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
-    <string name="gestures_volume_up" maxLength="41">Увеличить громкость</string>
-    <string name="gestures_volume_down" maxLength="41">Уменьшить громкость</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Также использовать клавиши kanji/katakana, emoji/kao-moji для прокрутки</string>
     <string name="card_browser_enable_external_context_menu">Пункт «%s» в меню</string>

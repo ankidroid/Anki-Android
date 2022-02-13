@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">新增圖像</string>
     <string name="multimedia_editor_popup_audio_clip">新增音訊剪輯</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">錄音</string>
     <string name="multimedia_editor_popup_text">進階編輯器</string>
     <string name="multimedia_editor_popup_cloze">克漏字測驗</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">相簿</string>
     <string name="multimedia_editor_image_field_editing_photo">相機</string>
-    <string name="multimedia_editor_image_field_editing_library">資訊庫</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">下載中</string>
