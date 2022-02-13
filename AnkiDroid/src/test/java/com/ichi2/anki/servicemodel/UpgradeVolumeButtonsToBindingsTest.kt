@@ -85,7 +85,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
     @Test
     fun gesture_set_no_conflicts() {
         // assume that we have a preference set, and that it has no defaults
-        val command = ViewerCommand.COMMAND_LOOKUP
+        val command = ViewerCommand.COMMAND_TOGGLE_FLAG_RED
         prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
