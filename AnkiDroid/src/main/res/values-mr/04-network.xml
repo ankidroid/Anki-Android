@@ -97,6 +97,7 @@
     <string name="sync_media_find">बदललेला मीडिया शोधत आहे&#8230;</string>
     <string name="sync_media_no_changes">मीडिया फायलींमध्ये कोणतेही बदल नाहीत</string>
     <string name="sync_media_success">मीडिया समक्रमित</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d मीडिया अपलोड करण्यासाठी बदलते</string>
     <string name="sync_media_downloaded_count">%d मीडिया फायली डाउनलोड केल्या</string>
     <string name="sync_sanity_failed">समक्रमित केल्यानंतर, संग्रह विसंगत स्थितीत होता. या समस्येचे निराकरण करण्यासाठी, AnkiDroid संपूर्ण संकालनास भाग पाडेल. आपण कोणती बाजू ठेवू इच्छिता ते निवडा.</string>

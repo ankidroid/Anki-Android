@@ -97,6 +97,7 @@
     <string name="sync_media_find">חיפוש שינויים בקבצי המדיה&#8230;</string>
     <string name="sync_media_no_changes">אין שינויים בקבצי המדיה</string>
     <string name="sync_media_success">קבצי המדיה סונכרנו</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d קבצי מדיה נותרו להעלאה</string>
     <string name="sync_media_downloaded_count">%d קבצי מדיה נותרו להורדה</string>
     <string name="sync_sanity_failed">לאחר הסכנרון אוסף החפיסות נותר במצב בלתי עקבי. כדי לתקן את הבעיה, אפליקציית AnkiDroid תבצע סינכרון מלא. עליך לבחור איזה משני הצדדים תרצה לשמור.</string>

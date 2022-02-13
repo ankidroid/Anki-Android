@@ -97,6 +97,7 @@
     <string name="sync_media_find">Пошук змененых медыяфайлаў&#8230;</string>
     <string name="sync_media_no_changes">Медыяфайлы не змененыя</string>
     <string name="sync_media_success">Медыяфайлы сінхранізаваныя</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">Будуць запампаваныя %d змененых медыяфайлаў</string>
     <string name="sync_media_downloaded_count">%d медыяфайлаў спампавана</string>
     <string name="sync_sanity_failed">Пасля сінхранізацыі з\'явіліся канфлікты ў калекцыі. Праграма AnkiDroid выканае поўную сінхранізацыю, каб вырашыць гэту праблему. Выберыце, якую версію калекцыі вы хочаце пакінуць.</string>

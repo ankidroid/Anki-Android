@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_center">輕觸中下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
-    <string name="gestures_volume_up" maxLength="41">提高音量</string>
-    <string name="gestures_volume_down" maxLength="41">降低音量</string>
     <string name="more_scrolling_buttons" maxLength="41">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>

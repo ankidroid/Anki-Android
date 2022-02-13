@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ᱞᱟᱛᱟᱨ ᱞᱮᱸᱜᱟ ᱯᱟᱦᱴᱟ ᱨᱮ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_center">ᱞᱟᱛᱟᱨ ᱵᱩᱛᱟᱹᱢ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ᱞᱟᱛᱟᱨ ᱡᱟᱡᱚᱢ ᱛᱤ ᱯᱟᱦᱴᱟ ᱚᱛᱟᱭ ᱢᱮ</string>
-    <string name="gestures_volume_up" maxLength="41">ᱥᱟᱲᱮ ᱰᱷᱮᱨ</string>
-    <string name="gestures_volume_down" maxLength="41">ᱥᱟᱰᱮ ᱞᱟᱛᱟᱨ</string>
     <string name="more_scrolling_buttons" maxLength="41">ᱤᱼᱨᱤᱰᱚᱨ</string>
     <string name="more_scrolling_buttons_summ">kanji/katakana, emoji/kao-moji ᱵᱚᱴᱚᱱ ᱥᱠᱨᱚᱞ ᱨᱮ ᱵᱚᱵᱷᱟᱨ ᱢᱮ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ᱢᱚᱱᱩ</string>

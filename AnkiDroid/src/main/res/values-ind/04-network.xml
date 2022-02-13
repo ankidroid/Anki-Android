@@ -97,6 +97,7 @@
     <string name="sync_media_find">Mencari media yang berubah&#8230;</string>
     <string name="sync_media_no_changes">Tidak ada perubahan ke berkas media</string>
     <string name="sync_media_success">Media disinkronkan</string>
+    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
     <string name="sync_media_changes_count">%d perubahan media untuk diunggah</string>
     <string name="sync_media_downloaded_count">%d berkas media diunduh</string>
     <string name="sync_sanity_failed">Setelah sinkron, koleksi berada dalam keadaan tidak konsisten. Untuk memperbaiki masalah ini, AnkiDroid akan memaksa sinkronisasi penuh. Pilih bagian mana yang ingin kamu simpan.</string>

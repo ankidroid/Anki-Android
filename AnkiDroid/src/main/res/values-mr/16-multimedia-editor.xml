@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">प्रतिमा जोडा</string>
     <string name="multimedia_editor_popup_audio_clip">ऑडिओ क्लिप जोडा</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">ऑडिओ रेकॉर्ड करा</string>
     <string name="multimedia_editor_popup_text">प्रगत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज हटविणे</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">गॅलरी</string>
     <string name="multimedia_editor_image_field_editing_photo">कॅमेरा</string>
-    <string name="multimedia_editor_image_field_editing_library">ग्रंथालय</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">डाउनलोड करत आहे</string>

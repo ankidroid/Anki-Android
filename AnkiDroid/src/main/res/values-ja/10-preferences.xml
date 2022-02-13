@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">下部左側をタップ</string>
     <string name="gestures_corner_tap_bottom_center">下部中央をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">下部右側をタップ</string>
-    <string name="gestures_volume_up" maxLength="41">音量アップボタン</string>
-    <string name="gestures_volume_down" maxLength="41">音量ダウンボタン</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>

@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">이미지 추가</string>
     <string name="multimedia_editor_popup_audio_clip">소리클립 추가</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">소리녹음</string>
     <string name="multimedia_editor_popup_text">고급편집기</string>
     <string name="multimedia_editor_popup_cloze">빈칸만들기</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">갤러리</string>
     <string name="multimedia_editor_image_field_editing_photo">카메라</string>
-    <string name="multimedia_editor_image_field_editing_library">라이브러리</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">다운로드 중</string>
