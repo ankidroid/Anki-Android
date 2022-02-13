@@ -79,15 +79,12 @@ public class MetaDB {
 
         if (metaDb.getVersion() < 4) {
             metaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            metaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
             metaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
         }
 
         // Create tables if not exist
         metaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "did INTEGER NOT NULL, ord INTEGER, " + "qa INTEGER, " + "language TEXT)");
-        metaDb.execSQL("CREATE TABLE IF NOT EXISTS customDictionary (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "did INTEGER NOT NULL, " + "dictionary INTEGER)");
         metaDb.execSQL("CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "due INTEGER NOT NULL, eta INTEGER NOT NULL)");
         updateWidgetStatus(metaDb);
@@ -163,8 +160,6 @@ public class MetaDB {
             Timber.i("MetaDB:: Resetting all language assignment");
             mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
             Timber.i("MetaDB:: Resetting whiteboard state");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
-            Timber.i("MetaDB:: Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             Timber.i("MetaDB:: Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
@@ -396,48 +391,6 @@ public class MetaDB {
             Timber.w(e, "Error storing whiteboard color in MetaDB");
         }
     }
-
-    /**
-     * Returns a custom dictionary associated to a deck
-     * 
-     * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
-     */
-    public static int getLookupDictionary(Context context, long did) {
-        openDBIfClosed(context);
-        try (Cursor cur = mMetaDb.rawQuery("SELECT dictionary FROM customDictionary WHERE did = ?", new String[] {Long.toString(did)})) {
-            if (cur.moveToNext()) {
-                return cur.getInt(0);
-            } else {
-                return -1;
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Error retrieving custom dictionary from MetaDB ");
-            return -1;
-        }
-    }
-
-
-    /**
-     * Stores a custom dictionary for a given deck.
-     * 
-     * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
-     */
-    public static void storeLookupDictionary(Context context, long did, int dictionary) {
-        openDBIfClosed(context);
-        try (Cursor cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary WHERE did = ?", new String[] {Long.toString(did)})) {
-            if (cur.moveToNext()) {
-                mMetaDb.execSQL("UPDATE customDictionary SET did = ?, dictionary=? WHERE _id=?;", new Object[]{did, dictionary, cur.getString(0)});
-                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
-            } else {
-                mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] {did,
-                        dictionary});
-                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Error storing custom dictionary to MetaDB ");
-        }
-    }
-
 
     /**
      * Return the current status of the widget.
