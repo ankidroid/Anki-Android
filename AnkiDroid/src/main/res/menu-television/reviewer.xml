@@ -137,10 +137,6 @@
         <menu/>
     </item>
     <item
-        android:id="@+id/action_search_dictionary"
-        android:title="@string/menu_select"
-        android:visible="false"/>
-    <item
         android:id="@+id/action_open_deck_options"
         android:title="@string/menu__deck_options" />
     <item

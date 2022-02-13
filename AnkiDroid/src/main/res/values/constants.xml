@@ -25,16 +25,6 @@
     <!-- Text to be shown in preference summary -->
     <string name="preference_summary_literal">XXX</string>
     <!-- Used in deck preferences -->
-    <string-array name="dictionary_labels">
-        <item>None</item>
-        <item>Aedict</item>
-        <item>Eijiro (Web)</item>
-        <item>Leo.org (Web)</item>
-        <item>Leo.org (App)</item>
-        <item>ColorDict/GoldenDict</item>
-        <item>Fora</item>
-        <item>Nciku (Web)</item>
-    </string-array>
     <string-array name="custom_button_labels">
         <item>@string/custom_buttons_setting_always_show</item>
         <item>@string/custom_buttons_setting_if_room</item>
@@ -44,16 +34,6 @@
     <string-array name="custom_button_labels_menu_and_disabled">
         <item>@string/custom_buttons_setting_menu_only</item>
         <item>@string/disabled</item>
-    </string-array>
-    <string-array name="dictionary_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
     </string-array>
     <string-array name="error_reporting_choice_values">
         <item>0</item>
@@ -99,7 +79,6 @@
         <item>@string/card_info_title</item>
         <item>@string/gesture_tag_note</item>
         <item>@string/menu_mark_note</item>
-        <item>@string/gesture_lookup</item>
         <item>@string/menu_bury_card</item>
         <item>@string/menu_suspend_card</item>
         <item>@string/menu_delete_note</item>
@@ -136,7 +115,7 @@
         <item>33</item> <!-- Card Info -->
         <item>32</item> <!-- Tag Note -->
         <item>10</item>
-        <item>11</item>
+        <!--11 was deleted-->
         <item>12</item>
         <item>13</item>
         <item>14</item>
