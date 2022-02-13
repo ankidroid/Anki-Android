@@ -285,7 +285,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     private GestureDetector mGestureDetector;
     private MyGestureDetector mGestureDetectorImpl;
-    private boolean mLinkOverridesTouchGesture;
 
     private boolean mIsXScrolling = false;
     private boolean mIsYScrolling = false;
@@ -1231,7 +1230,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardFrame.removeAllViews();
 
         // Initialize swipe
-        mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
+        mGestureDetectorImpl = new LinkDetectingGestureDetector();
         mGestureDetector = new GestureDetector(this, mGestureDetectorImpl);
 
         mEaseButtonsLayout = findViewById(R.id.ease_buttons);
@@ -1548,7 +1547,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false);
 
         mGesturesEnabled = preferences.getBoolean("gestures", false);
-        mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
         }
