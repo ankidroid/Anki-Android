@@ -35,13 +35,6 @@
         android:defaultValue="false"
         android:dependency="gestures"
         android:disableDependentsState="false"
-        android:key="linkOverridesTouchGesture"
-        android:summary="@string/gestures_allow_links_summary"
-        android:title="@string/gestures_allow_links" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:dependency="gestures"
-        android:disableDependentsState="false"
         android:key="gestureCornerTouch"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
