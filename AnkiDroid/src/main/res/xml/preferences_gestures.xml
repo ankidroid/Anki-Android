@@ -162,19 +162,5 @@
             android:entryValues="@array/gestures_values"
             android:key="gestureTapBottomRight"
             android:title="@string/gestures_corner_tap_bottom_right" />
-        <ListPreference
-            android:defaultValue="0"
-            android:dependency="gestures"
-            android:entries="@array/gestures_labels"
-            android:entryValues="@array/gestures_values"
-            android:key="gestureVolumeUp"
-            android:title="@string/gestures_volume_up" />
-        <ListPreference
-            android:defaultValue="0"
-            android:dependency="gestures"
-            android:entries="@array/gestures_labels"
-            android:entryValues="@array/gestures_values"
-            android:key="gestureVolumeDown"
-            android:title="@string/gestures_volume_down" />
     </PreferenceCategory>
 </PreferenceScreen>
