@@ -116,7 +116,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             .setType("application/apkg")
             .setStream(uri)
             .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
-            .setHtmlText(activity.getString(R.string.export_email_text_new, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
+            .setHtmlText(activity.getString(R.string.export_email_text, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
             .intent
         if (shareIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivityWithoutAnimation(shareIntent)
