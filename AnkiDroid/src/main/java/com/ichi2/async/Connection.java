@@ -507,7 +507,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.resultType = USER_ABORTED_SYNC;
                         data.result = new Object[]{e};
                     }
-                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
+                    int downloadedCount = mediaClient.getDownloadCount();
+                    int uploadedCount = mediaClient.getUploadCount();
+                    if (downloadedCount == 0 && uploadedCount == 0) {
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
+                    } else {
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_partial, downloadedCount, uploadedCount) + "\n\n" + e.getLocalizedMessage();
+                    }
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {

@@ -171,7 +171,7 @@
     <string name="studyoptions_congrats_custom">Por lerni ekster la normo lernada plano, premu la butonon “propra lernado”.</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
-    <string name="empty_cloze_warning">Redakti tiun noton kaj aldoni kelkajn malplenejojn. (%1$s)</string>
+    <string name="empty_cloze_warning">Redaktu tiun ĉi noton kaj aldonu kelkajn malplenejojn. (%1$s)</string>
     <string name="button_sync">Samtempigi</string>
     <string name="cancel_sync_confirm">Ĉu vi volas ĉesigi samtempigadon?</string>
     <string name="continue_sync">Pluigi samtempigadon</string>

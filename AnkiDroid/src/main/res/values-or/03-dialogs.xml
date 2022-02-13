@@ -62,12 +62,12 @@
         <item><![CDATA[AnkiDroid <a href=\"%1$s\">GNU-GPL v3 ଲାଇସେନ୍ସ</a> ଅଧୀନରେ ପ୍ରକାଶିତ ହୋଇଛି ଏବଂ source code <a href=\"%2$s\">GitHub ରେ</a> ଉପଲବ୍ଧ।]]></item>
     </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
-    <string name="reposition_card_dialog_title">ନୂତନ ପତ୍ରର ପୁନଃଅବସ୍ଥାନ</string>
-    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ସ୍ଥିତି:</string>
-    <string name="reposition_card_not_new_error">କେବଳ ନୂତନ ପତ୍ରଗୁଡ଼ିକ ପୁନଃଅବସ୍ଥାପିତ କରାଯାଇପାରିବ</string>
+    <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
+    <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
+    <string name="reposition_card_not_new_error">କେବଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ରିପୋଜିସନ୍ କରାଯାଇପାରିବ</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃଅବସ୍ଥିତ</item>
-        <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅବସ୍ଥିତ</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ରିପୋଜିସନ୍ କରାଗଲା</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
     <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
@@ -89,7 +89,7 @@
         <item quantity="one">%d ପତ୍ର reschedule ହୋଇଛି</item>
         <item quantity="other">%dଟି ପତ୍ର reschedule ହୋଇଛି</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ସ୍ଥିତି ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ର ପୁନଃଅବସ୍ଥାନ’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
@@ -234,9 +234,9 @@
     <string name="help_title_privacy">ଗୋପନୀୟତା</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid ଗୋପନୀୟତା ନୀତି</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb ଗୋପନୀୟତା ନୀତି</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତି ଏବଂ ସର୍ତ୍ତାବଳୀ</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାବଳୀ</string>
     <string name="help_title_send_exception">ତ୍ରୁଟି ନିବାରଣ ରିପୋର୍ଟ ପଠାନ୍ତୁ</string>
-    <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ପୂର୍ବରୁ ଦାଖଲ ହୋଇଛି</string>
+    <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
