@@ -186,10 +186,12 @@
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>

@@ -97,7 +97,7 @@
     <string name="sync_media_find">Finding changed media&#8230;</string>
     <string name="sync_media_no_changes">No changes to media files</string>
     <string name="sync_media_success">Media synced</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d medja inmaidida du iupalaþan</string>
     <string name="sync_media_downloaded_count">%d medja feilos dalahlaþanos</string>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>

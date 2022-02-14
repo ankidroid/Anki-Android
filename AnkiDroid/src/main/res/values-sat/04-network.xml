@@ -97,7 +97,7 @@
     <string name="sync_media_find">ᱵᱚᱫᱚᱞ ᱠᱚᱜ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱯᱟᱱᱛᱮ&#8230;</string>
     <string name="sync_media_no_changes">ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱨᱮ ᱪᱮᱫ ᱵᱚᱫᱚᱞ ᱵᱟᱝᱟ</string>
     <string name="sync_media_success">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱮᱱᱟ</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d ᱞᱟᱫᱮ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱵᱚᱫᱚᱞᱮᱱᱟ</string>
     <string name="sync_media_downloaded_count">%d ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱮᱟ</string>
     <string name="sync_sanity_failed">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱯᱚᱨᱮ, ᱴᱩᱢᱟᱹᱞ ᱴᱷᱤᱠ ᱚᱵᱚᱥᱛᱷᱟ ᱨᱮ ᱵᱟᱱᱤᱜᱜᱽᱟ ᱾ ᱰᱤᱜᱟᱹᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ, AnkiDroid ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱟᱭ ᱾ ᱚᱠᱟ ᱟᱦᱴᱟ ᱫᱦᱚ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱪᱚᱭᱟᱱ ᱢᱮ ᱾</string>

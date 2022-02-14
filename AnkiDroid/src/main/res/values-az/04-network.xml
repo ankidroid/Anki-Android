@@ -97,7 +97,7 @@
     <string name="sync_media_find">Dəyişən medyanı tapmaq...</string>
     <string name="sync_media_no_changes">Medya fayllarında dəyişiklik yoxdur</string>
     <string name="sync_media_success">Sinxronlaşdırılmış medya</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d medya yükləmək üçün dəyişikliklər</string>
     <string name="sync_media_downloaded_count">%d medya fayllar endirilir</string>
     <string name="sync_sanity_failed">Sinxronlaşdırıldıqdan sonra,kolleksiya qeyri-sabit vəziyyətdə idi.Bu problemi həll etmək üçün AnkiDroid tam bir senkronizasiya edəcək. Saxlamaq istəyən tərəfi seçin.</string>

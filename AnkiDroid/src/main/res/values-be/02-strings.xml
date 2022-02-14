@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Вітаем!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Гэта калода картак была адпраўленая з праграмы <a href="%1$s">AnkiDroid</a>.
-        Вы можаце адкрыць яе з дапамогай праграмы <a href="%2$s">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>

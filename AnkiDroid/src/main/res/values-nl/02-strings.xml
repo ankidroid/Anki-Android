@@ -188,12 +188,13 @@
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
     <string name="export_successful">Bestand \"%s\" is geëxporteerd. Wilt u het met een andere app versturen?</string>
     <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hallo!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Dit is een Anki leerset verzonden vam <a href="%1$s">AnkiDroid</a>.
-        Probeer het te openen met een van de beschikbare Anki distributies <a href="%2$s">Anki distributions</a> en geniet van makkelijk en efficiënt leren!
-        ]]>;
-    </string>
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
+        ]]></string>
     <string name="export_unsuccessful">Er is een fout opgetreden met het exporteren van de apkg file.</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>

@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
-    <string name="export_email_text_new"><![CDATA[        ନମସ୍କାର!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        ଏହା <a href="%1$s">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ତାସଖଣ୍ଡ।
-        ଉପଲବ୍ଧ <a href="%2$s">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଓ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
