@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_popup_menu_item_image"
             android:title="@string/multimedia_editor_popup_image" />
         <item
+            android:id="@+id/menu_multimedia_video_clip"
+            android:icon="@drawable/ic_popup_menu_item_video"
+            android:title="@string/multimedia_editor_popup_video_clip" />
+        <item
             android:id="@+id/menu_multimedia_audio_clip"
             android:icon="@drawable/ic_popup_menu_item_audio"
             android:title="@string/multimedia_editor_popup_audio_clip" />
