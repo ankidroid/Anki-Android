@@ -1555,7 +1555,7 @@ public class NoteEditor extends AnkiActivity implements
                         Timber.i("NoteEditor:: Record audio button pressed");
                         startMultimediaFieldEditorForField(index, new AudioRecordingField());
                         return true;
-                    } else if (itemId == R.id.menu_multimedia_audio_clip) {
+                    } else if (itemId == R.id.menu_multimedia_audio_clip || itemId == R.id.menu_multimedia_video_clip) {
                         Timber.i("NoteEditor:: Add audio clip button pressed");
                         startMultimediaFieldEditorForField(index, new MediaClipField());
                         return true;
