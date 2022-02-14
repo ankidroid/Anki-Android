@@ -97,7 +97,7 @@
     <string name="sync_media_find">Buscando archivos multimedia modificados&#8230;</string>
     <string name="sync_media_no_changes">Sin cambios en los archivos multimedia</string>
     <string name="sync_media_success">Archivos multimedia sincronizados</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d cambios para cargar</string>
     <string name="sync_media_downloaded_count">%d archivos multimedia descargados</string>
     <string name="sync_sanity_failed">Tras la sincronización, la colección quedó en un estado inconsistente. Para solucionar este problema, AnkiDroid forzará una sincronización completa. Por favor, elige qué lado deseas conservar, o cancela si prefieres sincronizar más tarde.</string>

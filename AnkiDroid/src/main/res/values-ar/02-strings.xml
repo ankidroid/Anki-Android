@@ -200,10 +200,12 @@
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
     <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
-    <string name="export_email_text_new"><![CDATA[        مرحبًا!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        هذه رزمة بطاقات أنكي مرسلة من <a href="%1$s">أنكيدرويد</a>.
-        حاول فتحها باستخدام توزيعة من <a href="%2$s">توزيعات أنكي</a> المتوفرة واستمتع بتعلم سهل وفعال!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>

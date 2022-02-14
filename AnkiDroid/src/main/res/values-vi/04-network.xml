@@ -97,7 +97,7 @@
     <string name="sync_media_find">Đang tìm tệp đa phương tiện đã đổi&#8230;</string>
     <string name="sync_media_no_changes">Tệp đa phương tiện không có thay đổi</string>
     <string name="sync_media_success">Đã đồng bộ tệp đa phương tiện</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">có %d thay đổi đa phương tiện phải tải lên</string>
     <string name="sync_media_downloaded_count">có %d tệp đa phương tiện phải tải về</string>
     <string name="sync_sanity_failed">Sau khi đồng bộ, bộ sưu tập ở trong tình trạng bất ổn. Để khắc phục vấn đề này, AnkiDroid sẽ thực hiện đồng bộ đầy đủ. Lựa chọn phía mà bạn muốn giữ.</string>

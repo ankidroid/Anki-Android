@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Cześć!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        To jest talia fiszek Anki przesłana przez  <a href="%1$s">AnkiDroid</a>.
-        Spróbuj otworzyć ją, używając jednej z dostępnych <a href="%2$s">wersji Anki</a> i ciesz się przyjemną i skuteczną nauką!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>

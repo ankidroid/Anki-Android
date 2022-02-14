@@ -99,7 +99,7 @@
     <string name="sync_media_find">Chirchende mèdios modificados&#8230;</string>
     <string name="sync_media_no_changes">Peruna modìfica a sos documentos multimediales</string>
     <string name="sync_media_success">Mèdios sincronizados</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d modìficas multimediales de carrigare</string>
     <string name="sync_media_downloaded_count">%d documentos multimediales iscarrigados</string>
     <string name="sync_sanity_failed">A pustis de sa sincronizatzione sa colletzione fiat in un\'istadu inconsistente. Pro acontzare custu problema AnkiDroid at a fortzare una sincronizatzione totale. Issèbera sos datos de mantènnere.</string>

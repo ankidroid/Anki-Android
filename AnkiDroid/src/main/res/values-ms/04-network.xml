@@ -97,7 +97,7 @@
     <string name="sync_media_find">Finding changed media&#8230;</string>
     <string name="sync_media_no_changes">No changes to media files</string>
     <string name="sync_media_success">Media synced</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d media changes to upload</string>
     <string name="sync_media_downloaded_count">%d media files downloaded</string>
     <string name="sync_sanity_failed">Selepas pelarasan, pengumpulan adalah dalam keadaan tidak konsisten. Untuk menyelesaikan masalah ini, apa yang anda perlu lakukan akan memaksa penuh sync. Pilih yang sebelah anda ingin menyimpan.</string>

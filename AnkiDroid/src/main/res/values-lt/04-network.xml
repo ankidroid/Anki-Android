@@ -97,7 +97,7 @@
     <string name="sync_media_find">Iškoma pasikeitusių laikmenų&#8230;</string>
     <string name="sync_media_no_changes">Nerasta jokių pasikeitusių failų</string>
     <string name="sync_media_success">Laikmenos susinchronizuotos</string>
-    <string name="sync_media_partial">Media sync partially completed:\n%d media files downloaded.\n%d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">Įkėlimui paruošta laikmenų: %d</string>
     <string name="sync_media_downloaded_count">Parsiųsta laikmenų: %d</string>
     <string name="sync_sanity_failed">Susinchronizavus paaiškėjo, kad kolekcija skiriasi. Norėdama šią problemą išspręsti, „AnkiDroid“ programa atliks išsamų sinchronizavimą. Prašome pasirinkti, kurią versiją norėtumėte pasilikti.</string>
