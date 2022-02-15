@@ -17,8 +17,11 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
+import org.acra.util.IOUtils
 import timber.log.Timber
 import java.io.File
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.pathString
 
 /** Utilities which assist testing changes to files/directories */
 @Suppress("unused")
@@ -92,3 +95,23 @@ object FileSystemUtils {
         return sb.toString()
     }
 }
+
+/**
+ * Returns a new directory in the OS's default temp directory, using the given [prefix] to generate its name.
+ * This directory is deleted on exit
+ */
+@Suppress("unused")
+fun createTransientDirectory(prefix: String? = null): File =
+    createTempDirectory(prefix = prefix).let {
+        val file = File(it.pathString)
+        file.deleteOnExit()
+        return@let file
+    }
+
+/** Returns a temp file with [content]. The file is deleted on exit. */
+@Suppress("unused")
+fun createTransientFile(content: String = ""): File =
+    File(kotlin.io.path.createTempFile().pathString).also {
+        it.deleteOnExit()
+        IOUtils.writeStringToFile(it, content)
+    }
