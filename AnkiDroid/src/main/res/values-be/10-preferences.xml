@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотык ніжняга левага вугла</string>
     <string name="gestures_corner_tap_bottom_center">Дотык знізу па цэнтры</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотык ніжняга правага вугла</string>
-    <string name="gestures_volume_up" maxLength="41">Павялічыць гук</string>
-    <string name="gestures_volume_down" maxLength="41">Паменшыць гук</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Таксама выкарыстоўваць кнопкі kanji/katakana, emoji/kao-moji для прагорткі</string>
     <string name="card_browser_enable_external_context_menu">Меню “%s”</string>

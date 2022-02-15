@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотик лівого нижнього кута</string>
     <string name="gestures_corner_tap_bottom_center">Дотик знизу по центрі</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотик правого нижнього кута</string>
-    <string name="gestures_volume_up" maxLength="41">Кнопка «Гучніше»</string>
-    <string name="gestures_volume_down" maxLength="41">Кнопка «Тихіше»</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Також використовувати клавіші kanji/katakana, emoji/kao-moji для прокручування</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Меню</string>

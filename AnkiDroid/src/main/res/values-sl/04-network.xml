@@ -97,6 +97,7 @@
     <string name="sync_media_find">Iskanje spremenjene predstavnosti &#8230;</string>
     <string name="sync_media_no_changes">Ni sprememb v datotekah predstavnosti</string>
     <string name="sync_media_success">Predstavnost sinhronizirana</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d sprememb predstavnosti za pošiljanje</string>
     <string name="sync_media_downloaded_count">Prejetih %d sprememb predstavnosti</string>
     <string name="sync_sanity_failed">Po sinhronizaciji je zbirka v nedoslednem stanju. Za popravilo te težave bo AnkiDroid vsilil polno sinhronizacijo. Izberite stran, ki jo želite ohraniti.</string>

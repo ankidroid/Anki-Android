@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar abajo a la izquierda</string>
     <string name="gestures_corner_tap_bottom_center">Tocar centro inferior</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar abajo a la derecha</string>
-    <string name="gestures_volume_up" maxLength="41">Subir volumen</string>
-    <string name="gestures_volume_down" maxLength="41">Bajar volumen</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">También puede usar botones kanji/katakana, emoji/kao-moji como desplazamiento</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>

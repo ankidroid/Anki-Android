@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bagian bawah kiri</string>
     <string name="gestures_corner_tap_bottom_center">Sentuh bagian bawah tengah</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bagian bawah kanan</string>
-    <string name="gestures_volume_up" maxLength="41">Volume naik</string>
-    <string name="gestures_volume_down" maxLength="41">Volume turun</string>
     <string name="more_scrolling_buttons" maxLength="41">Pembaca elektronik</string>
     <string name="more_scrolling_buttons_summ">Gunakan kanji/katakana juga, tombol emoji/kao-moji untuk menggulir</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>

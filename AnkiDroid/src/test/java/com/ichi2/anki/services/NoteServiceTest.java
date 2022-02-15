@@ -18,7 +18,7 @@ package com.ichi2.anki.services;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.AudioClipField;
+import com.ichi2.anki.multimediacard.fields.MediaClipField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.servicelayer.NoteService;
@@ -101,7 +101,7 @@ public class NoteServiceTest extends RobolectricTest {
         MultimediaEditableNote testAudioClip = new MultimediaEditableNote();
         testAudioClip.setNumFields(1);
 
-        AudioClipField audioField = new AudioClipField();
+        MediaClipField audioField = new MediaClipField();
         audioField.setAudioPath(fileAudio.getAbsolutePath());
         testAudioClip.setField(0, audioField);
 

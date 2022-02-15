@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Unten links antippen</string>
     <string name="gestures_corner_tap_bottom_center">Berührung unten mittig</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Unten rechts antippen</string>
-    <string name="gestures_volume_up" maxLength="41">Lautstärke erhöhen</string>
-    <string name="gestures_volume_down" maxLength="41">Lautstärke veringern</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
     <string name="card_browser_enable_external_context_menu">»%s«-Menü</string>

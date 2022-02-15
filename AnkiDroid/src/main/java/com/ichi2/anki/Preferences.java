@@ -65,6 +65,7 @@ import com.ichi2.preferences.NumberRangePreferenceCompat;
 import com.ichi2.preferences.ResetLanguageDialogPreference;
 import com.ichi2.preferences.SeekBarPreferenceCompat;
 import com.ichi2.preferences.ControlPreference;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -201,6 +202,7 @@ public class Preferences extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences);
+        Themes.setThemeLegacy(this);
 
         enableToolbar();
 

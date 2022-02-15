@@ -97,6 +97,7 @@
     <string name="sync_media_find">尋找變更的媒體檔&#8230;</string>
     <string name="sync_media_no_changes">媒體檔無變更</string>
     <string name="sync_media_success">成功同步媒體檔</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">將上傳 %d 個媒體檔變更</string>
     <string name="sync_media_downloaded_count">已下載 %d 個媒體檔案</string>
     <string name="sync_sanity_failed">你的集合狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果你想要稍後進行同步，請選擇取消。</string>

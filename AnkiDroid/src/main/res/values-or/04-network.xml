@@ -97,6 +97,7 @@
     <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
     <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
     <string name="sync_media_success">ମିଡ଼ିଆ ସିଙ୍କ୍ ହୋଇଛି</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%dଟି ମିଡ଼ିଆ ପରିବର୍ତ୍ତନ ଅପଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
     <string name="sync_media_downloaded_count">%dଟି ମିଡ଼ିଆ ଫାଇଲ ଡାଉନଲୋଡ୍ କରିବା ବାକି ଅଛି</string>
     <string name="sync_sanity_failed">ସିଙ୍କ୍ କରିବା ପରେ, ସଂଗ୍ରହ ଏକ ଅସଙ୍ଗତ ଅବସ୍ଥାରେ ଥିଲା। ଏହି ସମସ୍ୟାର ସମାଧାନ ପାଇଁ, AnkiDroid ଏକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ କରିବାକୁ ବାଧ୍ୟ କରିବ। ଆପଣ କେଉଁ ପାର୍ଶ୍ୱକୁ ରଖିବାକୁ ଚାହୁଁଛନ୍ତି ବାଛନ୍ତୁ।</string>

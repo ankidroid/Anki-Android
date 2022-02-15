@@ -97,6 +97,7 @@
     <string name="sync_media_find">Hinahanap ang mga pagbabago sa media&#8230;</string>
     <string name="sync_media_no_changes">Walang nakitang pagbabago sa mga media file</string>
     <string name="sync_media_success">Nai-sync na ang media</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d na mga pagbabago sa media ang i-upload</string>
     <string name="sync_media_downloaded_count">%d na mga media files ang nai-download</string>
     <string name="sync_sanity_failed">Pagkatapos ng pag-sync, ang koleksyon ay nasa isang hindi pantay na estado. Upang ayusin ang problemang ito, pipilitin ng AnkiDroid ang isang buong pag-sync. Piliin kung aling bahagi ang nais mong panatilihin.</string>

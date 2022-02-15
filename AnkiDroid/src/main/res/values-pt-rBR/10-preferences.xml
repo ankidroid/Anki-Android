@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_center">Toque Baixo Centro</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
-    <string name="gestures_volume_up" maxLength="41">Aumentar Volume</string>
-    <string name="gestures_volume_down" maxLength="41">Diminuir Volume</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>

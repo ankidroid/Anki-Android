@@ -117,8 +117,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ചുവടെ ഇടത് സ്പർശിക്കുക</string>
     <string name="gestures_corner_tap_bottom_center">ചുവടെയുള്ള മധ്യത്തിൽ സ്‌പർശിക്കുക</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ചുവടെ വലതുവശത്ത് സ്‌പർശിക്കുക</string>
-    <string name="gestures_volume_up" maxLength="41">വോളിയം ഉയർത്തുക</string>
-    <string name="gestures_volume_down" maxLength="41">വോളിയം കുറയ്ക്കുക</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">സ്ക്രോളിംഗിനായി കാഞ്ചി / കറ്റക്കാന, ഇമോജി / കാവോ-മോജി ബട്ടണുകളും ഉപയോഗിക്കുക</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ മെനു</string>
