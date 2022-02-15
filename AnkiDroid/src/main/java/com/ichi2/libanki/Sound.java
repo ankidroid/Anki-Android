@@ -247,12 +247,13 @@ public class Sound {
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
             // and then appending the html code to add the play button
-            String button = "<svg viewBox=\"0 0 32 32\"><polygon points=\"11,25 25,16 11,7\"/>Replay</svg>";
+            String button = "<svg viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"32\" r=\"29\" fill = \"grey\"/><path d=\"M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z\" fill = \"" +
+                    "black\"/>Replay</svg>";
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
-            stringBuilder.append("<a class='replaybutton' href=\"playsound:").append(soundPath).append("\">")
+            stringBuilder.append("<a class='replay-button' href=\"playsound:").append(soundPath).append("\">")
                     .append("<span>").append(button)
                     .append("</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
