@@ -67,10 +67,9 @@ body.ankidroid_dark_mode {
   background-color: #303030;
 }
 
-.replaybutton {
+.replay-button {
   text-decoration: none;
 }
-
 
 /*
 Use hard-coded max dimensions if using Chrome back-end. Chrome is able to
@@ -97,13 +96,13 @@ preferred over using JavaScript.
 changed. Use some fancy CSS to make the button align vertically, and
 scale up, but not down.  */
 
-.replaybutton span {
+.replay-button span {
   display: inline-block;
   vertical-align: middle;
   padding: 5px;
 }
 
-.replaybutton span svg {
+.replay-button span svg {
   stroke: none;
   fill: black;
   display: inline;
@@ -113,13 +112,13 @@ scale up, but not down.  */
   min-height: 32px;
 }
 
-.replaybutton span img {
+.replay-button span img {
   display: inline;
   height: 1em;
   width: 1em;
   min-width: 32px;
   min-height: 32px;
 }
-.night_mode .replaybutton svg {
+.night_mode .replay-button svg {
   fill: white;
 }
