@@ -67,7 +67,17 @@ body.ankidroid_dark_mode {
   background-color: #303030;
 }
 
+/*
+The replay button has two classes, the old one (replaybutton) and the new one (replay-button).
+The new class is compatible with Anki desktop, while the old class is what AnkiDroid used.
+Both are present here so that old code doesn't break
+*/
+
 .replay-button {
+  text-decoration: none;
+}
+
+.replaybutton{
   text-decoration: none;
 }
 
@@ -122,4 +132,30 @@ scale up, but not down.  */
 }
 .night_mode .replay-button svg {
   fill: white;
+}
+
+/*Old replay button class*/
+
+replaybutton span {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.replaybutton span svg{
+  stroke: none;
+  fill: black;
+  display: inline;
+  height: 1em;
+  width: 1em;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.replaybutton span img {
+  display: inline;
+  height: 1em;
+  width: 1em;
+  min-width: 32px;
+  min-height: 32px;
 }
