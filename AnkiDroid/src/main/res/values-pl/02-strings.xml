@@ -360,6 +360,7 @@
     <string name="format_font_size">Zmień rozmiar czcionki</string>
     <string name="insert_mathjax">Wstaw równanie MathJax</string>
     <string name="insert_cloze">Luka do wypełnienia</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML po zaznaczonym tekście</string>
     <string name="after_text">HTML przed zaznaczonym tekstem</string>
     <string name="add_toolbar_item">Utwórz element paska narzędzi</string>

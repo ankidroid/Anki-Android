@@ -321,6 +321,7 @@
     <string name="format_font_size">變更字型大小</string>
     <string name="insert_mathjax">插入 MathJax 方程式</string>
     <string name="insert_cloze">插入克漏字空格</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">選取內容前的 HTML</string>
     <string name="after_text">選取內容後的 HTML</string>
     <string name="add_toolbar_item">建立工具列項目</string>

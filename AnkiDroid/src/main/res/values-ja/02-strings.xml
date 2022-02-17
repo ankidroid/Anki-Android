@@ -321,6 +321,7 @@
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax 式を挿入</string>
     <string name="insert_cloze">穴埋め部分の挿入</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">選択部分の前のHTML</string>
     <string name="after_text">選択部分の後ろのHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>

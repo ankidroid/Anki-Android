@@ -334,6 +334,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">चयन से पहले का HTML</string>
     <string name="after_text">चयन के बाद का HTML</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

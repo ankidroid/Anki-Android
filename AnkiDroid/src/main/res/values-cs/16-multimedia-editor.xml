@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Přidat obrázek</string>
     <string name="multimedia_editor_popup_audio_clip">Přidat zvukový klip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Přidat video klip</string>
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
@@ -90,7 +90,7 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galerie</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotoaparát</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_audio">Zvuk</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->

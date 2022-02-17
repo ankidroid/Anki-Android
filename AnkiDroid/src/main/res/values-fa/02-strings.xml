@@ -334,6 +334,7 @@
     <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">افزودن معادله MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

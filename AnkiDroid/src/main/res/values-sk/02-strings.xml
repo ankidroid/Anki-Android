@@ -360,6 +360,7 @@
     <string name="format_font_size">Zmeniť veľkosť fontu</string>
     <string name="insert_mathjax">Vložiť rovnicu MathJax</string>
     <string name="insert_cloze">Vložiť doplňovačku</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML pred výberom</string>
     <string name="after_text">HTML po výbere</string>
     <string name="add_toolbar_item">Vytvoriť položku nástrojovej lišty</string>

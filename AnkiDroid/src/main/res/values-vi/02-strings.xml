@@ -321,6 +321,7 @@
     <string name="format_font_size">Thay đổi cỡ chữ</string>
     <string name="insert_mathjax">Chèn công thức toán</string>
     <string name="insert_cloze">Chèn Đánh dấu Cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML trước vùng chọn</string>
     <string name="after_text">HTML Sau Vùng chọn</string>
     <string name="add_toolbar_item">Tạo mục trên Thanh công cụ</string>

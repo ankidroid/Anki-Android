@@ -334,6 +334,7 @@
     <string name="format_font_size">Canvia la mida de la lletra</string>
     <string name="insert_mathjax">Insereix equació MathJax</string>
     <string name="insert_cloze">Insertar supressió parcial</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML abans de la selecció</string>
     <string name="after_text">HTML després de la selecció</string>
     <string name="add_toolbar_item">Crear element de la barra d\'eines</string>

@@ -360,6 +360,7 @@
     <string name="format_font_size">שינוי גודל הגופן</string>
     <string name="insert_mathjax">הוספת משוואת MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML לפני הבחירה</string>
     <string name="after_text">HTML אחרי הבחירה</string>
     <string name="add_toolbar_item">יצירת פריט סרגל כלים</string>

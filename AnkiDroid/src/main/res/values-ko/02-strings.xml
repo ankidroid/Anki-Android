@@ -322,6 +322,7 @@
     <string name="format_font_size">글꼴 크기 변경</string>
     <string name="insert_mathjax">MathJax 수식 삽입</string>
     <string name="insert_cloze">빈칸 삽입</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">선택 전 HTML</string>
     <string name="after_text">선택 후 HTML</string>
     <string name="add_toolbar_item">도구 모음 항목 만들기</string>

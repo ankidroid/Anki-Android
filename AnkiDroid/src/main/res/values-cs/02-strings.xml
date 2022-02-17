@@ -194,10 +194,10 @@
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
     <string name="export_successful">Soubor „%s“ byl exportován. Chcete jej poslat pomocí jiné aplikace?</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Ahoj!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Tohle je balíček kartiček Anki poslaný z AnkiDroid[1].
+        Zkus ho otevřít pomocí jedné z dostupných distribucí Anki[2] a užij si jednoduché a účinné učení!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -360,6 +360,7 @@
     <string name="format_font_size">Změnit velikost písma</string>
     <string name="insert_mathjax">Vložit rovnici MathJax</string>
     <string name="insert_cloze">Vložit doplňovačku</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML před výběrem</string>
     <string name="after_text">HTML za výběrem</string>
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
