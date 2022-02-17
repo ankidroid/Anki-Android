@@ -17,6 +17,7 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.model.DiskFile
+import org.acra.util.IOUtils
 import java.io.File
 import java.util.*
 
@@ -53,3 +54,12 @@ object FileUtil {
 }
 
 fun DiskFile.length(): Long = this.file.length()
+
+/** Adds a file to the directory with the provided name and content */
+fun File.withTempFile(fileName: String, content: String = "default content"): File {
+    File(this, fileName).also {
+        IOUtils.writeStringToFile(it, content)
+        it.deleteOnExit()
+    }
+    return this
+}

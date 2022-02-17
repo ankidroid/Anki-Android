@@ -151,6 +151,12 @@ public interface Compat {
      */
     void moveDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask) throws IOException;
 
+    /**
+     * Returns whether the directory has one or more file
+     * @return false if the directory is not a directory, does not exist, or has no files
+     */
+    boolean hasFiles(@NonNull File directory) throws IOException;
+
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);

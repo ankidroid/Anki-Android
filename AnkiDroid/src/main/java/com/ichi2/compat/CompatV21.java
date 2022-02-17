@@ -204,6 +204,16 @@ public class CompatV21 implements Compat {
         }
     }
 
+    @Override
+    public boolean hasFiles(@NonNull File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return false;
+        }
+        return files.length > 0;
+    }
+
+
     // Until API 23 the methods have "current" in the name
     @Override
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
