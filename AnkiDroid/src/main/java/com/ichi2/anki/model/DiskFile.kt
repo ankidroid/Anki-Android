@@ -46,7 +46,7 @@ class DiskFile private constructor(val file: File) {
             return DiskFile(file)
         }
 
-        /** Creates an instance when the preconditions are known to be true */
+        /** Creates an instance. It must only be called when the preconditions are known to be true */
         @VisibleForTesting
         fun createInstanceUnsafe(file: File) = DiskFile(file)
     }
