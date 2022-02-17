@@ -85,14 +85,23 @@ class MigrateUserData {
         }
     }
 
+    /**
+     * Represents an arbitrary operation that we may want to execute.
+     *
+     * This operation should be doable as a sequence of atomic steps. In a single-threaded context,
+     * it allows the thread and its resources to be preempted with minimal delay.
+     *
+     * For example, if an image is requested by the reviewer, I/O is guaranteed to rapidly get access to the image.
+     */
     abstract class Operation {
         /**
-         * Executes an operation, returning a list of sub-operations, or an empty list ([operationCompleted])
-         * on failure.
+         * Starts to execute the current operation. Only do as little non-trivial work as possible to start the operation, such as listing a directory content or moving a single file.
+         * Returns the list of operations remaining to end this operation.
          *
-         * This allows an operation to be preempted in a single-threaded context with minimal delay
-         * For example, if an image is requested by the reviewer, we don't want it to be stuck
-         * behind copying a large folder
+         * E.g. for "move a folder", this method would simply compute the folder content and then retuns the following list of operations:
+         * * creating the destination folder
+         * * moving each file and subfolder individually
+         * * deleting the original folder.
          */
         abstract fun execute(context: MigrationContext): List<Operation>
     }
