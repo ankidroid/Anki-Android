@@ -37,8 +37,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
@@ -147,6 +150,16 @@ public class CompatV26 extends CompatV23 implements Compat {
             }
         });
     }
+
+    @Override
+    public boolean hasFiles(@NonNull File directory) throws IOException {
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(directory.toPath())) {
+            return paths.iterator().hasNext();
+        } catch (NotDirectoryException | NoSuchFileException ex) {
+            return false;
+        }
+    }
+
 
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
