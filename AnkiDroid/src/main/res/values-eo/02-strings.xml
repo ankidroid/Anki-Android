@@ -334,6 +334,7 @@
     <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
     <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
     <string name="insert_cloze">Enmeti trutekstan malplenon</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>

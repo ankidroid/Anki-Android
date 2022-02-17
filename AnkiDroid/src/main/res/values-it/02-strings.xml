@@ -334,6 +334,7 @@
     <string name="format_font_size">Cambia Dimensione Carattere</string>
     <string name="insert_mathjax">Inserisci l\'Equazione MathJax</string>
     <string name="insert_cloze">Inserisci Eliminazione di Cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Prima della Selezione</string>
     <string name="after_text">HTML Dopo la Selezione</string>
     <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>

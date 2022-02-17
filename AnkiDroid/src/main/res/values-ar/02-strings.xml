@@ -386,6 +386,7 @@
     <string name="format_font_size">تغيير لون الخط</string>
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
     <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML قبل المحدد</string>
     <string name="after_text">HTML بعد المحدد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>

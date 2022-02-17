@@ -360,6 +360,7 @@
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
     <string name="insert_cloze">Вставить задание с пропусками</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>
     <string name="add_toolbar_item">Создать элемент панели инструментов</string>

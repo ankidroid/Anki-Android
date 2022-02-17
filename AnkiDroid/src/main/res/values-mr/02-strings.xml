@@ -334,6 +334,7 @@
     <string name="format_font_size">फॉन्ट आकार बदला</string>
     <string name="insert_mathjax">मॅथजॅक्स समीकरण घाला</string>
     <string name="insert_cloze">क्लोज डिलीशन घाला</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">निवड करण्यापूर्वी एचटीएमएल</string>
     <string name="after_text">निवडानंतर एचटीएमएल</string>
     <string name="add_toolbar_item">टूलबार आयटम तयार करा</string>

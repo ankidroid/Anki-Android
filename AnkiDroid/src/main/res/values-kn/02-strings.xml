@@ -334,6 +334,7 @@
     <string name="format_font_size">ಫಾಂಟ್ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="insert_mathjax">ಮ್ಯಾಥ್‌ಜಾಕ್ಸ್ ಸಮೀಕರಣವನ್ನು ಸೇರಿಸಿ</string>
     <string name="insert_cloze">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಯನ್ನು ಸೇರಿಸಿ</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">ಆಯ್ಕೆಗೆ ಮೊದಲು HTML</string>
     <string name="after_text">ಆಯ್ಕೆಯ ನಂತರ HTML</string>
     <string name="add_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ರಚಿಸಿ</string>

@@ -334,6 +334,7 @@
     <string name="format_font_size">Lettergrootte wijzigen</string>
     <string name="insert_mathjax">MathJax-vergelijking invoegen</string>
     <string name="insert_cloze">Invuloefening invoegen</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML voor de selectie</string>
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>

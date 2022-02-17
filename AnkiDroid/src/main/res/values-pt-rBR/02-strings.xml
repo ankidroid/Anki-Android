@@ -334,6 +334,7 @@
     <string name="format_font_size">Alterar tamanho da fonte</string>
     <string name="insert_mathjax">Inserir equação MathJax</string>
     <string name="insert_cloze">Ocultar</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML antes da seleção</string>
     <string name="after_text">HTML depois da seleção</string>
     <string name="add_toolbar_item">Criar Item na Barra de Funções</string>

@@ -360,6 +360,7 @@
     <string name="format_font_size">Змінити розмір шрифту</string>
     <string name="insert_mathjax">Вставити рівняння MathJax</string>
     <string name="insert_cloze">Вставити місце для доповнення</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>

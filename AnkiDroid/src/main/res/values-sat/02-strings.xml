@@ -334,6 +334,7 @@
     <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
     <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>

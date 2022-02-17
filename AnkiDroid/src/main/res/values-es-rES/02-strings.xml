@@ -334,6 +334,7 @@
     <string name="format_font_size">Cambia tamaño de letra</string>
     <string name="insert_mathjax">Insertar ecuación MathJax</string>
     <string name="insert_cloze">Insertar Pregunta Anidada</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML antes de la selección</string>
     <string name="after_text">HTML después de la selección</string>
     <string name="add_toolbar_item">Crear Elemento de Barra de Herramientas</string>

@@ -342,6 +342,7 @@
     <string name="format_font_size">Muda sa mannària de sos caràteres</string>
     <string name="insert_mathjax">Inserta un\'ecuatzione MathJax</string>
     <string name="insert_cloze">Inserta un\'iscantzellamentu cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML in antis de s\'ischerta</string>
     <string name="after_text">HTML a pustis de s\'ischerta</string>
     <string name="add_toolbar_item">Crea un\'elementu de sa barra de trastes</string>
