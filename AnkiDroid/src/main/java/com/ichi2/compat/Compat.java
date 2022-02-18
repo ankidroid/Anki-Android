@@ -88,9 +88,11 @@ public interface Compat {
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
-     * @throws IOException If the file failed to be deleted
      * @see File#delete()
      * @see java.nio.file.Files#delete(Path)
+     *
+     * @throws FileNotFoundException If the file does not exist
+     * @throws IOException If the file failed to be deleted
      */
     void deleteFile(@NonNull File file) throws IOException;
 
