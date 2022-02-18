@@ -33,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,7 +103,11 @@ public class CompatV26 extends CompatV23 implements Compat {
 
     @Override
     public void deleteFile(@NonNull File file) throws IOException {
-        Files.delete(file.toPath());
+        try {
+            Files.delete(file.toPath());
+        } catch (NoSuchFileException ex) {
+            throw new FileNotFoundException(file.getCanonicalPath());
+        }
     }
 
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
