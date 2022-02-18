@@ -55,6 +55,7 @@ object FileUtil {
 }
 
 fun DiskFile.length(): Long = this.file.length()
+fun Directory.exists(): Boolean = this.directory.exists()
 
 /** Adds a file to the directory with the provided name and content */
 fun File.withTempFile(fileName: String, content: String = "default content"): File {
