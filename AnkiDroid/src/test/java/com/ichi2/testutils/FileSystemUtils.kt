@@ -17,7 +17,10 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
+import com.ichi2.anki.model.Directory
 import org.acra.util.IOUtils
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
 import timber.log.Timber
 import java.io.File
 import kotlin.io.path.createTempDirectory
@@ -113,3 +116,13 @@ fun createTransientFile(content: String = ""): File =
         it.deleteOnExit()
         IOUtils.writeStringToFile(it, content)
     }
+
+/** Creates a sub-directory with the given name which is deleted on exit */
+fun Directory.createTransientDirectory(name: String): Directory {
+    File(this.directory, name).also { directory ->
+        directory.deleteOnExit()
+        Timber.d("test: creating $directory")
+        MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
+        return Directory.createInstance(directory)!!
+    }
+}
