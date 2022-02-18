@@ -82,11 +82,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     }
 
     companion object {
-        /** Constant for class attribute signaling answer  */
-        const val ANSWER_CLASS = "\"answer\""
-
-        /** Constant for class attribute signaling question  */
-        const val QUESTION_CLASS = "\"question\""
         @JvmStatic
         fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
