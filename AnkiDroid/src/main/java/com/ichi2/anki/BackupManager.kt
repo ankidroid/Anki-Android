@@ -59,9 +59,9 @@ open class BackupManager {
 
     @KotlinCleanup("make colPath non-null")
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String?, interval: Int, force: Boolean, time: Time): Boolean {
+    fun performBackupInBackground(colPath: String?, interval: Int, time: Time): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
-        if (hasDisabledBackups(prefs) && !force) {
+        if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
             return false
         }
@@ -76,7 +76,7 @@ open class BackupManager {
 
         // Abort backup if one was already made less than 5 hours ago
         val lastBackupDate = getLastBackupDate(deckBackups, df)
-        if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS() && !force) {
+        if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
         }
@@ -241,12 +241,7 @@ open class BackupManager {
 
         @JvmStatic
         fun performBackupInBackground(path: String?, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, false, time)
-        }
-
-        @JvmStatic
-        fun performBackupInBackground(path: String?, force: Boolean, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, force, time)
+            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
         }
 
         /**

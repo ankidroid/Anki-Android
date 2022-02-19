@@ -30,7 +30,6 @@ import static com.ichi2.utils.StrictMock.strictMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -44,7 +43,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class BackupManagerTest {
 
     @Test
-    public void failsIfNoBackupsAllowedAndForceIsDisabled() {
+    public void failsIfNoBackupsAllowed() {
         // arrange
 
         BackupManager bm = getPassingBackupManagerSpy();
@@ -53,40 +52,16 @@ public class BackupManagerTest {
 
 
         // act
-        boolean force = false;
-
-        boolean performBackupResult = performBackup(bm, force);
+        boolean performBackupResult = performBackup(bm);
 
         // assert
 
         assertThat("should fail if backups are disabled", performBackupResult, is(false));
 
-        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), anyBoolean(), any());
+        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any());
         verify(bm, times(1)).hasDisabledBackups(any());
 
         verifyNoMoreInteractions(bm);
-    }
-
-    @Test
-    public void passesIfNoBackupsAllowedAndForceIsEnabled() {
-        // arrange
-
-        BackupManager bm = getPassingBackupManagerSpy();
-
-        doReturn(true).when(bm).hasDisabledBackups(any());
-
-
-        // act
-        boolean force = true;
-
-        boolean performBackupResult = performBackup(bm, force);
-
-        // assert
-
-        assertThat("should pass if backups are disabled and force is enabled", performBackupResult, is(true));
-
-        verify(bm, times(1)).hasDisabledBackups(any());
-        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), anyBoolean(), any());
     }
 
     /** Meta test: ensuring passingBackupManagerSpy passes */
@@ -140,17 +115,9 @@ public class BackupManagerTest {
         return performBackup(bm, new MockTime(100000000));
     }
 
-    protected boolean performBackup(BackupManager bm, Time time) {
-        return performBackup(bm, time, false);
-    }
 
-    protected boolean performBackup(BackupManager bm, boolean force) {
-        return performBackup(bm, new MockTime(100000000), force);
-    }
-
-
-    private boolean performBackup(BackupManager bm, Time time, boolean force) {
-        return bm.performBackupInBackground("", 100, force, time);
+    private boolean performBackup(BackupManager bm, Time time) {
+        return bm.performBackupInBackground("", 100, time);
     }
 
     /** Returns a spy of BackupManager which would pass */
