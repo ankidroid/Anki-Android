@@ -1188,11 +1188,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
             try {
                 CollectionHelper.getInstance().getCol(context);
-                // unload collection and trigger a backup
-                Time time = CollectionHelper.getInstance().getTimeSafe(context);
+                // unload collection
                 CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
                 CollectionHelper.getInstance().lockCollection();
-                BackupManager.performBackupInBackground(colPath, true, time);
             } catch (Exception e) {
                 Timber.w(e);
             }
