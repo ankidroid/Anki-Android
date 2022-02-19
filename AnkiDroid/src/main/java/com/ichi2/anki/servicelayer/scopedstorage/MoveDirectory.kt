@@ -45,21 +45,32 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
             context.attemptRename = false
         }
 
-        Timber.d("creating folder '$destination'")
-        if (!createDirectory(destination)) {
-            context.reportError(this, IllegalStateException("Could not create '$destination'"))
-            return operationCompleted()
-        }
-
-        val destinationDirectory = Directory.createInstance(destination)
-        if (destinationDirectory == null) {
-            context.reportError(this, IllegalStateException("Directory instantiation failed: '$destination'"))
+        if (!createDirectory(context)) {
             return operationCompleted()
         }
 
         val moveOperations = source.listFiles().map(::toMoveOperation)
         val deleteOperation = DeleteEmptyDirectory(source)
         return moveOperations + deleteOperation
+    }
+
+    /**
+     * Create an empty directory at destination.
+     * Return whether it was successful.
+     */
+    internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
+        Timber.d("creating folder '$destination'")
+        if (!createDirectory(destination)) {
+            context.reportError(this, IllegalStateException("Could not create '$destination'"))
+            return false
+        }
+
+        val destinationDirectory = Directory.createInstance(destination)
+        if (destinationDirectory == null) {
+            context.reportError(this, IllegalStateException("Directory instantiation failed: '$destination'"))
+            return false
+        }
+        return true
     }
 
     /**
