@@ -257,7 +257,14 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
        if (id == android.R.id.paste && ClipboardUtil.hasImage(mClipboard)) {
            return onImagePaste(ClipboardUtil.getImageUri(mClipboard));
        }
-
+        //Converts pasted text to plain text
+        if (id == android.R.id.paste) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                id = android.R.id.pasteAsPlainText;
+            } else {
+                //TODO: Add code to convert to plain text for version < M
+            }
+        }
         return super.onTextContextMenuItem(id);
     }
 
