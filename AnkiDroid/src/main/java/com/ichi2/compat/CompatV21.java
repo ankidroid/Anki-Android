@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -272,5 +273,35 @@ public class CompatV21 implements Compat {
         File imageFile = new File(ankiDroidFolder, baseFileName + "." + extension);
         bitmap.compress(format, quality, new FileOutputStream(imageFile));
         return Uri.fromFile(imageFile);
+    }
+
+    /* This method actually read the full content of the directory.
+    * It is linear in time and space in the number of file and folder in the directory.
+    * However, hasNext and next should be constant in time and space. */
+    @Override
+    public @Nullable FileStream contentOfDirectory(@NonNull File directory) {
+        File[] paths = directory.listFiles();
+        if (paths == null) {
+            return null;
+        }
+        int length = paths.length;
+        return new FileStream() {
+            @Override
+            public void close() {
+                // No op. Nothing to close here.
+            }
+
+
+            private int mOrd = 0;
+            @Override
+            public boolean hasNext() {
+                return mOrd < length;
+            }
+
+            @Override
+            public File next() {
+                return paths[mOrd++];
+            }
+        };
     }
 }
