@@ -45,6 +45,5 @@ Takoboto is an offline Japanese-English, English-Japanese dictionary and Japanes
 ### [LanLe](https://play.google.com/store/apps/details?id=lanle.ru.lanle)
 Learn foreign languages by movies with subtitles. For all of the detected unknown words and phrases, LanLe will create cards for memorizing in AnkiDroid. The application available for Android, Windows and Linux [Read More](https://lanle.ru)
 
-### [Wakari-chan]
-(https://play.google.com/store/apps/details?id=org.furidamu.wakari_chan)
+### [Wakari-chan](https://play.google.com/store/apps/details?id=org.furidamu.wakari_chan)
 A Japanese dictionary that shows translations as an overlay over the current screen. To translate a word, tap and hold it to select, then open Wakari-chan from the context menu. Results will include the word that was selected, as well as any prefixes of that word. Dictionary entries can be exported directly to Anki as cards for further study.
