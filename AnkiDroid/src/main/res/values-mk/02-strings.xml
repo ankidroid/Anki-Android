@@ -211,7 +211,6 @@
     <string name="sched_has_buried">Некои поврзани или закопани картички се одложени до утре</string>
     <string name="tag_editor_add_feedback">Допрете \"%2$s\" за да потврдите додавање \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Избрана е постоечка ознака \"%1$s\"</string>
-    <string name="lookup_hint">По копирањето на текстот, допрете било каде на флеш-картичката за да ја прикажете иконата за пребарување</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>

@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Javasolt válasz (zöld)</string>
     <string name="gesture_answer_better_recommended">Jobb válasz, mint a javasolt</string>
     <string name="gesture_tag_note">Jegyzet címkézése</string>
-    <string name="gesture_lookup">Kifejezés keresése</string>
     <string name="gesture_play">Média lejátszása</string>
     <string name="gesture_abort_learning">Tanulás befejezése</string>
     <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>

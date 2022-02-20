@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Kelkaj rilataj kaj kaŝitaj kartoj atendos ĝis morgaŭ</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
-    <string name="lookup_hint">Post kopii la tekston, frapetu ie sur la karto por montri la piktogramon de serĉo</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekundo</item>

@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Bandera porpra</string>
     <string name="menu_edit_tags">Edita etiquetes</string>
     <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>
-    <string name="menu_select">Selecciona text</string>
-    <string name="menu_lookup">Cercar text</string>
     <string name="menu_search">Cerca-ho a %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar</string>

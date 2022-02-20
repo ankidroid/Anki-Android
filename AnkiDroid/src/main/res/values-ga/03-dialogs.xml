@@ -153,7 +153,6 @@ Scrios gach carta as %1$s? Tá cartaí %2$d aige.</item>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_positive_restore">Restore</string>
     <string name="dialog_positive_set">Set</string>
-    <string name="lookup_button_content">Look up</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>

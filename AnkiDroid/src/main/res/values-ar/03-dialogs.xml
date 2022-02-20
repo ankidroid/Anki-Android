@@ -157,7 +157,6 @@
     <string name="dialog_positive_replace">استبدال</string>
     <string name="dialog_positive_restore">استعادة</string>
     <string name="dialog_positive_set">ضبط</string>
-    <string name="lookup_button_content">بحث</string>
     <string name="dialog_collection_path_not_dir">المسار المحدد ليس مجلدًا صالحًا</string>
     <!-- Media checking -->
     <string name="check_media_title">هل تريد فحص الوسائط؟</string>

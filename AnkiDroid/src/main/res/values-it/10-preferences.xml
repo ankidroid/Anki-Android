@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Spessore tratto</string>
     <string name="use_input_tag" maxLength="41">Digita la risposta nella carta</string>
     <string name="use_input_tag_summ">Utilizza una casella di inserimento testo nella carta per digitare la risposta</string>
-    <string name="dictionary" maxLength="41">Ricerca nel dizionario</string>
     <string name="reset_languages" maxLength="41">Reimposta le lingue</string>
     <string name="reset_languages_summ">Reimposta le assegnazioni di lingua (per text to speech e dizionari) per tutti i mazzi</string>
     <string name="reset_languages_question">Reimpostare tutte le assegnazioni di lingua?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Attiva i gesti</string>
     <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignora i gesti sui collegamenti</string>
-    <string name="gestures_allow_links_summary">I gesti non verranno elaborati se viene premuto un collegamento/suggerimento.</string>
     <string name="gestures_corner_touch" maxLength="41">tocco a 9 punti</string>
     <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannello di navigazione a schermo intero</string>

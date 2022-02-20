@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ടാഗുകൾ എഡിറ്റുചെയ്യുക</string>
     <string name="delete_note_message">ഈ കുറിപ്പും അതിന്റെ എല്ലാ കാർഡുകളും ശരിക്കും ഇല്ലാതാക്കുക?\n%s</string>
-    <string name="menu_select">വാചകം തിരഞ്ഞെടുക്കുക</string>
-    <string name="menu_lookup">വാചകം തിരയുക</string>
     <string name="menu_search">%1$s ൽ തിരയുക</string>
     <string name="menu_mark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
     <string name="menu_unmark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>

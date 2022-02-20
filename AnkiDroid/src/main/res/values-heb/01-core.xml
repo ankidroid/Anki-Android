@@ -131,8 +131,6 @@
     <string name="menu_flag_card_seven">דגל סגול</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
-    <string name="menu_select">בחירת טקסט</string>
-    <string name="menu_lookup">חיפוש טקסט</string>
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן הערה</string>
     <string name="menu_unmark_note">הסר סימון הערה</string>

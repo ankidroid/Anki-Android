@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Kai kurios susijusios arba paslėptos kortelės buvo nukeltos rytdienai</string>
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
-    <string name="lookup_hint">Nukopijavę tekstą, paspauskite ant bet kurios kortelės vietos, kad išvystumėte paieškos piktogramą</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekundė</item>

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
     <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
     <string name="use_input_tag_summ">Додає на картку поле введення для відповіді</string>
-    <string name="dictionary" maxLength="41">Подивитися у словнику</string>
     <string name="reset_languages" maxLength="41">Скинути мови</string>
     <string name="reset_languages_summ">Скинути присвоєння мов (для озвучування текстів і словників) для всіх колод</string>
     <string name="reset_languages_question">Скинути всі мовні налаштування?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Увімкнути жести</string>
     <string name="gestures_summ">Використовувати жести для таких дій, як відповідь і редагування карток.</string>
-    <string name="gestures_allow_links" maxLength="41">Ігнорувати жести на посиланнях</string>
-    <string name="gestures_allow_links_summary">Жести не враховуватимуться, якщо натиснуто на посилання чи підказку.</string>
     <string name="gestures_corner_touch" maxLength="41">9-точковий дотик</string>
     <string name="gestures_corner_touch_summary">Дозволити сенсорні жести в кутах екрану</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Повноекранна панель навігації</string>

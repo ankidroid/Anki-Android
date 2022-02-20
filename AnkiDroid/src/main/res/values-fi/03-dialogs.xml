@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">Korvaa</string>
     <string name="dialog_positive_restore">Palauta</string>
     <string name="dialog_positive_set">Aseta</string>
-    <string name="lookup_button_content">Etsi</string>
     <string name="dialog_collection_path_not_dir">Annettu hakemistopolku ei ole pätevä</string>
     <!-- Media checking -->
     <string name="check_media_title">Tarkista media?</string>

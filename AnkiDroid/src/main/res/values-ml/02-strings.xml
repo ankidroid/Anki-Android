@@ -210,7 +210,6 @@
     <string name="sched_has_buried">ബന്ധപ്പെട്ടതോ കുഴിച്ചിട്ടതോ ആയ ചില കാർഡുകൾ നാളെ വരെ വൈകി</string>
     <string name="tag_editor_add_feedback">“%1$s” ചേർക്കുന്നത് സ്ഥിരീകരിക്കുന്നതിന് “%2$s” സ്‌പർശിക്കുക.</string>
     <string name="tag_editor_add_feedback_existing">നിലവിലുള്ള ടാഗ് “%1$s” തിരഞ്ഞെടുത്തു</string>
-    <string name="lookup_hint">വാചകം പകർത്തിയ ശേഷം, തിരയൽ ഐക്കൺ കാണിക്കുന്നതിന് ഫ്ലാഷ് കാർഡിൽ എവിടെയെങ്കിലും ടാപ്പുചെയ്യുക</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s സെക്കൻഡ്</item>

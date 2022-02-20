@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Nekatere povezane ali skrite kartice so bile odložene do jutri</string>
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
-    <string name="lookup_hint">Po kopiranju besedila tapnite kamorkoli na pomnilno kartico, da prikažete iskalno ikono</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunda</item>

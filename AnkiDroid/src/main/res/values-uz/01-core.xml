@@ -121,8 +121,6 @@
     <string name="menu_flag_card_seven">Siyohrang bayroq</string>
     <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
-    <string name="menu_select">Matnni tanlash</string>
-    <string name="menu_lookup">Matnni qidirish</string>
     <string name="menu_search">%1$s dan izlab k\'ring</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>

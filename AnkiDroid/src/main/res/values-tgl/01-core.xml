@@ -130,8 +130,6 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Burahin tagala ang paalalang ito at lahat ng baraha nito?\n%s</string>
-    <string name="menu_select">Pumili ng text</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Hanapin sa %1$s</string>
     <string name="menu_mark_note">Markahan ang paalala</string>
     <string name="menu_unmark_note">Tangalin ang marka ng paalala</string>

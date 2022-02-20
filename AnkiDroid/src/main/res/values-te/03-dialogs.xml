@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">పునఃస్థాపించుము</string>
     <string name="dialog_positive_restore">తిరిగి పొందండి</string>
     <string name="dialog_positive_set">సెట్</string>
-    <string name="lookup_button_content">శోధన</string>
     <string name="dialog_collection_path_not_dir">పేర్కొన్న మార్గం చెల్లుబాటు అయ్యే డైరెక్టరీ కాదు</string>
     <!-- Media checking -->
     <string name="check_media_title">మీడియా తనిఖీ చేయాలా?</string>

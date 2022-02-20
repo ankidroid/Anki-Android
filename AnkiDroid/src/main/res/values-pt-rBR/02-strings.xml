@@ -176,7 +176,7 @@
     <string name="import_replacing">Substituindo coleção&#8230;</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_include_schedule">Incluir agendamento</string>
-    <string name="export_include_media">Incluir a média</string>
+    <string name="export_include_media">Incluir mídia</string>
     <string name="confirm_apkg_export">Exportar a coleção como arquivo Anki (.apkg)?</string>
     <string name="confirm_apkg_export_deck">Exportar \"%s\" como arquivo apkg?</string>
     <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>
@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
     <string name="export_successful">Arquivo \"%s\" foi exportado. Deseja enviá-lo com um outro app?</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Olá!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Esse é um baralho de flashcards do Anki, enviado do AnkiDroid[1].
+        Tente abrir usando uma das versões disponíveis do Anki[2] e aproveite aprender de forma simples e eficiente!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Alguns cards relacionados ou Ocultados foram adiados.</string>
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
-    <string name="lookup_hint">Após copiar o texto, toque em qualquer lugar sobre o flashcard para mostrar o ícone de pesquisa</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s segundo</item>
@@ -270,8 +269,8 @@
     <string name="choose_an_image">Escolha uma imagem</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restaurar Padrões</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="cloze_sample_text">Esse é um {{%1$s::exemplo}} ocultado.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ezemplo</string>
     <string name="basic_answer_sample_text">um exemplo</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vazio</string>
     <!-- in options menu & Navigation Drawer -->
@@ -316,7 +315,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
-    <string name="card_viewer_media_relative_protocol">Erro de Conteúdo do Card: Atualização de Mídia necessária</string>
+    <string name="card_viewer_media_relative_protocol">Erro de conteúdo do card: Atualização de mídia necessária</string>
     <string name="cannot_load_http_resource">Http não está disponível no momento</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
@@ -334,7 +333,7 @@
     <string name="format_font_size">Alterar tamanho da fonte</string>
     <string name="insert_mathjax">Inserir equação MathJax</string>
     <string name="insert_cloze">Ocultar</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Texto do botão</string>
     <string name="before_text">HTML antes da seleção</string>
     <string name="after_text">HTML depois da seleção</string>
     <string name="add_toolbar_item">Criar Item na Barra de Funções</string>

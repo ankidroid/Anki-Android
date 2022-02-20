@@ -216,7 +216,6 @@
     <string name="sched_has_buried">חלק מהכרטסיות הקשורות או הקבורות נדחו למחר</string>
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">תגית קיימת \"%1$s\" נבחרה</string>
-    <string name="lookup_hint">לאחר העתקת הטקסט, יש ללחוץ על הקלף איפשהו כדי להציג את סמל החיפוש</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s שניה</item>

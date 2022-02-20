@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Sinalização roxa</string>
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
-    <string name="menu_select">Selecionar texto</string>
-    <string name="menu_lookup">question</string>
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>

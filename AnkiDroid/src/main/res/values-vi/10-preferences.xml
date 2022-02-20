@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Chiều rộng không cố định</string>
     <string name="use_input_tag" maxLength="41">Nhập câu trả lời vào thẻ</string>
     <string name="use_input_tag_summ">Sử dụng hộp nhập văn bản bên trong thẻ để nhập câu trả lời</string>
-    <string name="dictionary" maxLength="41">Tra cứu từ điển</string>
     <string name="reset_languages" maxLength="41">Đặt lại ngôn ngữ</string>
     <string name="reset_languages_summ">Đặt lại chỉ định ngôn ngữ (cho văn bản thành giọng nói và từ điển) cho tất cả các bộ thẻ</string>
     <string name="reset_languages_question">Đặt lại tất cả các thiết lập ngôn ngữ ?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Kích hoạt Cử chỉ</string>
     <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>
-    <string name="gestures_allow_links" maxLength="41">Bỏ qua các thao tác chạm trên các liên kết</string>
-    <string name="gestures_allow_links_summary">Các thao tác chạm sẽ không được xử lý nếu nhấn một liên kết / gợi ý.</string>
     <string name="gestures_corner_touch" maxLength="41">Chạm 9 điểm</string>
     <string name="gestures_corner_touch_summary">Cho phép cử chỉ chạm ở các góc màn hình</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

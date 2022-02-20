@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Jawaban yang disarankan (hijau)</string>
     <string name="gesture_answer_better_recommended">Jawaban yang lebih baik dari yang disarankan</string>
     <string name="gesture_tag_note">Beri catatan tag</string>
-    <string name="gesture_lookup">Ekspresi pencarian</string>
     <string name="gesture_play">Putar media</string>
     <string name="gesture_abort_learning">Batalkan belajar</string>
     <string name="gesture_flag_red">Setel Panji Merah</string>

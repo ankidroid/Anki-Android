@@ -121,8 +121,6 @@ mga natitirang minuto</item>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
-    <string name="menu_select">Pumili ng teksto</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Hanapin sa %1$s</string>
     <string name="menu_mark_note">Markahan ang tala</string>
     <string name="menu_unmark_note">Alisin ang marka ng tala</string>

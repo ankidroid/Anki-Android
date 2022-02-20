@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Шырыня штрыха</string>
     <string name="use_input_tag" maxLength="41">Уводзіць адказ на картцы</string>
     <string name="use_input_tag_summ">Дадае на картку поле ўводу для адказу</string>
-    <string name="dictionary" maxLength="41">Паглядзець у слоўніку</string>
     <string name="reset_languages" maxLength="41">Скінуць мовы</string>
     <string name="reset_languages_summ">Скінуць прызначэнне моў (для агучвання тэкстаў і слоўнікаў) для ўсіх калод</string>
     <string name="reset_languages_question">Скінуць усе моўныя прызначэнні?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Уключыць жэсты</string>
     <string name="gestures_summ">Прызначыць жэсты для такіх дзеянняў, як адказ і рэдагаванне картак.</string>
-    <string name="gestures_allow_links" maxLength="41">Ігнараваць сэнсарныя жэсты на спасылках</string>
-    <string name="gestures_allow_links_summary">Сэнсарныя жэсты не будуць успрымацца, калі націснута спасылка або падказка.</string>
     <string name="gestures_corner_touch" maxLength="41">9-пунктавы дотык</string>
     <string name="gestures_corner_touch_summary">Дазволіць сэнсарныя жэсты ў вуглах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Поўнаэкранная панэль навігацыі</string>

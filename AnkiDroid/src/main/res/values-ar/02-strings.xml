@@ -222,7 +222,6 @@
     <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
-    <string name="lookup_hint">بعد نسخ النص، انقر في أي مكان على البطاقة لعرض أيقونة البحث</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="zero">%s ثانية</item>

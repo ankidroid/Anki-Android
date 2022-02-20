@@ -145,7 +145,6 @@
     <string name="dialog_positive_replace">Zastąp</string>
     <string name="dialog_positive_restore">Przywróć</string>
     <string name="dialog_positive_set">Ustaw</string>
-    <string name="lookup_button_content">Wyszukaj</string>
     <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
     <!-- Media checking -->
     <string name="check_media_title">Sprawdzić media?</string>

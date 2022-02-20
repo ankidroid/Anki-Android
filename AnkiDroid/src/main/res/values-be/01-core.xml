@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Фіялетавы сцяжок</string>
     <string name="menu_edit_tags">Змяніць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
-    <string name="menu_select">Выбраць тэкст</string>
-    <string name="menu_lookup">Шукаць у тэксце</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць запіс</string>
     <string name="menu_unmark_note">Зняць пазнаку з запісу</string>

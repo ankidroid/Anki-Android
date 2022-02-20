@@ -218,7 +218,6 @@
     <string name="sched_has_buried">Unas cantas cartas curreladas o interradas sunt istadas rimbiadas a cras</string>
     <string name="tag_editor_add_feedback">Toca “%2$s” pro cunfirmare s\'annanta de “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Eticheta chi esistit “%1$s” seletzionada</string>
-    <string name="lookup_hint">A pustis de àere copiadu su testu toca in cale si siat tretu de sa carta pro ammustrare s\'icona de chirca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s segundu</item>

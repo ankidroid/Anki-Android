@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
-    <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карточке, чтобы показать иконку поиска</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>

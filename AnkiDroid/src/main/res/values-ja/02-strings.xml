@@ -207,7 +207,6 @@
     <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
     <string name="tag_editor_add_feedback">このまま「%2$s」ボタンをタップすると、タグ「%1$s」の追加が確定します</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
-    <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s秒</item>

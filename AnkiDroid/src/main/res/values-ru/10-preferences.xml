@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Толщина линии</string>
     <string name="use_input_tag" maxLength="41">Ввод ответа на карточке</string>
     <string name="use_input_tag_summ">Добавляет на карточку поле ввода для ответа</string>
-    <string name="dictionary" maxLength="41">Посмотреть в словаре</string>
     <string name="reset_languages" maxLength="41">Сбросить языки</string>
     <string name="reset_languages_summ">Сбросит сопоставленные всем колодам языки</string>
     <string name="reset_languages_question">Сбросить все языковые соответствия?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Включить жесты</string>
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>
-    <string name="gestures_allow_links" maxLength="41">Игнорировать жесты на ссылках</string>
-    <string name="gestures_allow_links_summary">Жесты не будут учитываться, если нажата ссылка или подсказка.</string>
     <string name="gestures_corner_touch" maxLength="41">9 зон касания</string>
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Панель навигации при полном экране</string>

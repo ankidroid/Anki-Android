@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">پرچم بنفش</string>
     <string name="menu_edit_tags">ویرایش تگ‌ها</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
-    <string name="menu_select">انتخاب متن</string>
-    <string name="menu_lookup">جستجوی متن</string>
     <string name="menu_search">جستجو در %1$s</string>
     <string name="menu_mark_note">نشانه‌گذاری یادداشت</string>
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
