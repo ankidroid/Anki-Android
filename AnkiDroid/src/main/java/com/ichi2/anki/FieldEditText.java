@@ -262,7 +262,7 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
         * The following code replaces the instruction "paste with formatting" with "paste as plan text"
         * Since AnkiDroid does not know how to use formatted text and strips the formatting when saving the note,
         * it ensures that the user sees the exact plain text which is actually being saved, not the formatted text.
-        * */
+        */
 
         if (id == android.R.id.paste) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
