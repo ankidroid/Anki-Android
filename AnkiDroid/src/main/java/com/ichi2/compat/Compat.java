@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>                              *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -254,5 +255,13 @@ public interface Compat {
      * WRITE_EXTERNAL_STORAGE permission
      */
     Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
+
+    /**
+     *
+     * @param directory A directory.
+     * @return a FileStream over file and folder of this directory.
+     *         null in case of trouble. This stream must be closed explicitly when done with it.
+     */
+    @Nullable FileStream contentOfDirectory(File directory);
 }
 
