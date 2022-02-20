@@ -25,7 +25,6 @@ Adicione material através da aplicação Anki para Pc ou diretamente através d
 • navegador de fichas
 • layout para tablet
 • importar ficheiros de coleção existentes (via Anki Desktop)
-• integração de dicionário (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários da web)
 • adicionar fichas a partir de outras aplicações, tal como dicionários
 • suporte a tipo de letra personalizado
 • sistema completo de cópia de segurança

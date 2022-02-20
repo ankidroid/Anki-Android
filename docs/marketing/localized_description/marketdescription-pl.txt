@@ -25,7 +25,6 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • przeglądarka kart
 • widok dla tabletów
 • importowanie gotowych plików z kolekcjami (poprzez Anki Desktop)
-• integracja ze słownikami (ColorDict, GodenDict, Leo.org, Aedict, różne słowniki online)
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • obsługa czcionek użytkownika
 • system kopii zapasowych

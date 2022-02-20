@@ -223,8 +223,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mLargeAnswerButtons;
     private int mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL;
     // Android WebView
-    protected boolean mDisableClipboard = false;
-
     @NonNull protected AutomaticAnswer mAutomaticAnswer = AutomaticAnswer.defaultInstance(this);
 
     protected TypeAnswer mTypeAnswer;
@@ -247,7 +245,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
-    private View mLookUpIcon;
     private WebView mCardWebView;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
@@ -339,11 +336,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void run() {
             Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick");
-            // Show hint about lookup function if dictionary available
-            if (!mDisableClipboard && Lookup.isAvailable()) {
-                String lookupHint = getResources().getString(R.string.lookup_hint);
-                UIUtils.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
-            }
             CompatHelper.getCompat().vibrate(AnkiDroidApp.getInstance().getApplicationContext(), 50);
             mLongClickHandler.postDelayed(mStartLongClickAction, 300);
         }
@@ -461,25 +453,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public boolean onTouch(View v, MotionEvent event) {
             if (mGestureDetector.onTouchEvent(event)) {
                 return true;
-            }
-            if (!mDisableClipboard) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mTouchStarted = true;
-                        mLongClickHandler.postDelayed(mLongClickTestRunnable, 800);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_MOVE:
-                        if (mTouchStarted) {
-                            mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
-                            mTouchStarted = false;
-                        }
-                        break;
-                    default:
-                        mLongClickHandler.removeCallbacks(mLongClickTestRunnable);
-                        mTouchStarted = false;
-                        break;
-                }
             }
 
             if (!mGestureDetectorImpl.eventCanBeSentToWebView(event)) {
@@ -764,17 +737,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         setTitle();
 
-        if (!mDisableClipboard) {
-            clearClipboard();
-        }
-
         mHtmlGenerator = HtmlGenerator.createInstance(this, this.mTypeAnswer, mBaseUrl);
 
         // Initialize text-to-speech. This is an asynchronous operation.
         mTTS.initialize(this, new ReadTextListener());
-
-        // Initialize dictionary lookup feature
-        Lookup.initialize(this);
 
         updateActionBar();
         supportInvalidateOptionsMenu();
@@ -922,39 +888,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return !TextUtils.isEmpty(ClipboardUtil.getText(mClipboard));
     }
 
-    /** We use the clipboard here for the lookup dictionary functionality
-     * If the clipboard has data and we're using the functionality, then */
-    private void clearClipboard() {
-        if (mClipboard == null) {
-            return;
-        }
-
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                mClipboard.clearPrimaryClip();
-            } else {
-                if (!mClipboard.hasPrimaryClip()) {
-                    return;
-                }
-
-                CharSequence descriptionLabel = ClipboardUtil.getDescriptionLabel(mClipboard.getPrimaryClip());
-                if (!"Cleared".contentEquals(descriptionLabel)) {
-                    mClipboard.setPrimaryClip(ClipData.newPlainText("Cleared", ""));
-                }
-            }
-        } catch (Exception e) {
-            // TODO: This may no longer be relevant
-
-            // https://code.google.com/p/ankidroid/issues/detail?id=1746
-            // https://code.google.com/p/ankidroid/issues/detail?id=1820
-            // Some devices or external applications make the clipboard throw exceptions. If this happens, we
-            // must disable it or AnkiDroid will crash if it tries to use it.
-            Timber.e("Clipboard error. Disabling text selection setting.");
-            mDisableClipboard = true;
-        }
-    }
-
-
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
      * cannot be convered to text.
@@ -1000,9 +933,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             performReload();
-        }
-        if (!mDisableClipboard) {
-            clearClipboard();
         }
     }
 
@@ -1110,47 +1040,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void lookUpOrSelectText() {
-        if (clipboardHasText()) {
-            Timber.d("Clipboard has text = %b", clipboardHasText());
-            lookUp();
-        } else {
-            selectAndCopyText();
-        }
-    }
-
-
-    private void lookUp() {
-        mLookUpIcon.setVisibility(View.GONE);
-        mIsSelecting = false;
-        if (Lookup.lookUp(clipboardGetText().toString())) {
-            clearClipboard();
-        }
-    }
-
-
-    private void showLookupButtonIfNeeded() {
-        if (!mDisableClipboard && mClipboard != null) {
-            if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
-                mLookUpIcon.setVisibility(View.VISIBLE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
-            } else if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-                mLookUpIcon.setVisibility(View.GONE);
-                enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            }
-        }
-    }
-
-
-    private void hideLookupButton() {
-        if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
-            mLookUpIcon.setVisibility(View.GONE);
-            enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            clearClipboard();
-        }
-    }
-
-
     protected void showDeleteNoteDialog() {
         Resources res = getResources();
         new MaterialDialog.Builder(this)
@@ -1199,7 +1088,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
         mIsSelecting = false;
-        hideLookupButton();
         int buttonNumber = getCol().getSched().answerButtons(mCurrentCard);
         // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
         if (buttonNumber < ease) {
@@ -1224,9 +1112,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardFrameParent = (ViewGroup) mCardFrame.getParent();
         mTouchLayer = findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
-        if (!mDisableClipboard) {
-            mClipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        }
+
         mCardFrame.removeAllViews();
 
         // Initialize swipe
@@ -1277,14 +1163,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mAnswerField = findViewById(R.id.answer_field);
 
-        mLookUpIcon = findViewById(R.id.lookup_button);
-        mLookUpIcon.setVisibility(View.GONE);
-        mLookUpIcon.setOnClickListener(arg0 -> {
-            Timber.i("AbstractFlashcardViewer:: Lookup button pressed");
-            if (clipboardHasText()) {
-                lookUp();
-            }
-        });
         initControls();
 
         // Position answer buttons
@@ -1533,8 +1411,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         mTypeAnswer = TypeAnswer.createInstance(preferences);
-        // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
-        mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
         // mDeckFilename = preferences.getString("deckFilename", "");
         mPrefFullscreenReview = FullScreenMode.fromPreference(preferences);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
@@ -2054,9 +1930,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_TAG:
                 showTagsDialog();
                 return true;
-            case COMMAND_LOOKUP:
-                lookUpOrSelectText();
-                return true;
             case COMMAND_BURY_CARD:
                 return buryCard();
             case COMMAND_BURY_NOTE:
@@ -2384,7 +2257,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mGestureProcessor.onTap(height, width, posX, posY);
             }
             mIsSelecting = false;
-            showLookupButtonIfNeeded();
         }
 
 

@@ -25,7 +25,6 @@ Ajoutez des cartes par le biais de l’application Anki pour ordinateur ou direc
 • navigateur de cartes
 • présentation pour tablettes
 • import des collections existantes (via Anki Desktop)
-• intégration des dictionnaires (ColorDict, GoldenDict, Leo.org, Aedict, divers dictionnaires web)
 • ajout de cartes par l’icône de partage depuis d’autres applications comme des dictionnaires
 • prise en charge de polices personnalisées
 • système de sauvegarde 
