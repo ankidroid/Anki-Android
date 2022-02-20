@@ -1,1 +1,1 @@
-For now, see [[Google Summer of Code 2021]] and join us on [Discord](https://discord.gg/qjzcRTx) (#ankidroid-gsoc)
+For now, see [[Google Summer of Code 2021]], our [[Development Guide]] and join us on [Discord](https://discord.gg/qjzcRTx) (#ankidroid-gsoc)
