@@ -2,11 +2,14 @@
 
 We always welcome any contributors, and you can start contributing immediately if you desire so. Feel free to join our Discord: [#dev-ankidroid](https://discord.gg/qjzcRTx) to join the community, or if you need help with the below.  We are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process). 
 
-This page contains information on how you can contribute back to the AnkiDroid project. You do not have to read all of it, just come back when you need an answer to a commonly asked question. You can start by looking at our [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%21%22). If you work on an open issue, write down that you are working on it so that nobody else starts doing the same work as you. If you can't work on it anymore, please post another message to let us know. If you want to create your own feature, please post a feature request first so that the core contributors can confirm whether it would be accepted. 
-
-There are a few tasks that will surely lead to accepted PR, assuming they are done correctly. Adding javadoc to class, members, and methods that are not yet properly documented, annotations such as `@Nullable`, `@NotNull`, and `@CheckResult` annotation. Of course, those annotations should be relevant. Also, increasing [coverage](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#code-coverage) is extremely welcomed, as it will considerably improve the future of the codebase.
+This page contains information on how you can contribute back to the AnkiDroid project. You do not have to read all of it, just come back when you need an answer to a commonly asked question. 
 
 ### Table of Contents
+* [**Getting Started**](#getting-started)
+  - [Community](#community)
+  - [Issues to get started with](#issues-to-get-started-with)
+  - [Common tasks leading to accepted Pull Requests](#common-tasks-to-get-started)
+  - [Submitting feature requests](#submitting-feature-requests)
 * [**Source code**](#Source-code)
   - [Android Studio](#Android-Studio)
   - [AnkiDroid source code overview: Where to find what](#ankidroid-source-code-overview-where-to-find-what)
@@ -36,6 +39,43 @@ There are a few tasks that will surely lead to accepted PR, assuming they are do
   - [Download localized strings](#download-localized-strings)
   - [Alternative markets](#download-localized-strings)
 ---
+
+# Getting Started
+
+## Community
+
+Feel free to join our Discord Server: [Anki](https://discord.gg/qjzcRTx) to join our community. This is shared between the Anki Desktop app and Mobile apps
+
+A few relevant channels are:
+* `#mobile-apps` - Help for using AnkiDroid and AnkiMobile
+* `#dev-ankidroid` - General AnkiDroid Development discussions
+* `#ankidroid-gsoc` - Discussions/introductions related to onboarding and the Google Summer of Code program
+* `#help` - General Anki help
+
+If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help, ensuring that you skim our guides beforehand to see if your question has already been asked.
+
+## Issues to get started with
+If you are a new developer looking to contribute something to AnkiDroid, please take a look and see if there's anything that you'd like to work on in the [issue tracker](https://github.com/ankidroid/Anki-Android/issues). 
+
+[The "Good First Issue" label](https://github.com/ankidroid/Anki-Android/labels/Good%20First%20Issue%21) has been added to any tasks that seem like a good way to get started working with the codebase.
+
+If you are looking to make a lasting impact on the project from the get-go, [issues with the label "Help Wanted"](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+label%3A%22Help+Wanted%22) are tasks that we'd really like to have done but don't yet have time to do ourselves. 
+
+Please let us know that you're working on an open issue and let us assign it to you, this ensures that two people aren't working on the same issue, and ensures that all effort is valuable to the project. If an issue hasn't seen activity in a couple of weeks, feel free to ping the assignee to see if they're working on it, or ask a maintainer to reassign the issue to you.
+
+If you can't work on an issue any more, please post another message to let us know. 
+
+If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help!
+
+## Common tasks to get started
+
+Adding code documentation is helpful, and easy to get started with. This includes adding Javadocs to classes, members, and methods, and adding annotations such as `@Nullable` and `@NotNull` to Java, or `@CheckResult` to both Kotlin or Java code.
+
+Increasing [test coverage](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#code-coverage) is extremely welcomed, as it will considerably improve the future of the codebase.
+
+## Submitting feature requests
+
+If you want to create your own feature, please post a feature request [via an issue](https://github.com/ankidroid/Anki-Android/issues/new?assignees=&labels=&template=feature_request.md&title=) so that the core contributors can confirm whether it would be accepted. 
 
 # Source code
 First, register here on GitHub, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on GitHub on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
@@ -78,11 +118,6 @@ An apk file signed with a standard "debug" key will be generated named `"AnkiDro
  * `%root/res/values/` contains app strings, whiteboard colors, and a basic HTML template for flashcards.
  * `%root/res/layout/` contains the GUI layouts for most screens.
  * `%root/res/drawable-****/` contains the icons used throughout the app at [various resolutions](https://www.google.com/design/spec/style/icons.html).
-
-## Issues to get started with
-If you are a new developer looking to contribute something to AnkiDroid, but you don't know what work to get started with, please take a look and see if there's anything that you'd like to work on in the issue tracker. In particular, [issues with the label "Help Wanted"](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aopen+label%3A%22Help+Wanted%22) or are tasks that have been specially highlighted as work that we'd really like to have done, but don't have time to do ourselves. [The similar "Good First Issue" label](https://github.com/ankidroid/Anki-Android/labels/Good%20First%20Issue%21) has been added to any tasks that seem like a good way to get started working with the codebase.
-
-If it's unclear exactly what needs to be done, or how to do it, please don't hesitate to ask for clarification or help!
 
 ## Submit improvements
 
