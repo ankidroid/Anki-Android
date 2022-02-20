@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Amplada del traç</string>
     <string name="use_input_tag" maxLength="41">Tipus de resposta a la targeta</string>
     <string name="use_input_tag_summ">Utilitzar un quadre d\'entrada de text dins de la targeta per escriure la resposta</string>
-    <string name="dictionary" maxLength="41">Diccionari de cerca</string>
     <string name="reset_languages" maxLength="41">Reinicialització de llengües</string>
     <string name="reset_languages_summ">Restablir les assignacions de llengua (per text a discurs i diccionaris) per tots els malls</string>
     <string name="reset_languages_question">Voleu reiniciar les assignacions de tots el idiomes?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Activa gestos</string>
     <string name="gestures_summ">Assignar gestos a accions com cartes de resposta i d\'edició.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignoreu els gestos tàctils als enllaços</string>
-    <string name="gestures_allow_links_summary">Els gestos tàctils no es processaran si es prem un enllaç/suggeriment.</string>
     <string name="gestures_corner_touch" maxLength="41">Tacte de 9 punts</string>
     <string name="gestures_corner_touch_summary">Permet gestos tàctils a les cantonades de la pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Carpeta de navegació a pantalla completa</string>

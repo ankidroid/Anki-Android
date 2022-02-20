@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">Sostituisci</string>
     <string name="dialog_positive_restore">Ripristina</string>
     <string name="dialog_positive_set">Imposta</string>
-    <string name="lookup_button_content">Cerca</string>
     <string name="dialog_collection_path_not_dir">Il percorso specificato non era una cartella valida</string>
     <!-- Media checking -->
     <string name="check_media_title">Controllare i media?</string>

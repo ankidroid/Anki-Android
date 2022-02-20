@@ -210,7 +210,6 @@
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
-    <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ, ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ସେକେଣ୍ଡ</item>
@@ -334,7 +333,7 @@
     <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="insert_cloze">କ୍ଲୋଜ୍ ବିଲୋପ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
     <string name="after_text">ଚୟନ ପରେ HTML</string>
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>

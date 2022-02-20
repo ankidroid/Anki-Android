@@ -60,7 +60,7 @@
     <string name="alert_logging_message">Đang đăng nhập&#8230;</string>
     <string name="invalid_username_password">Địa chỉ email hoặc mật khẩu không hợp lệ</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
-    <string name="lost_mail_instructions">Long anhcnt</string>
+    <string name="lost_mail_instructions">Quên Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Tuỳ chỉnh</string>
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
@@ -97,7 +97,7 @@
     <string name="sync_media_find">Đang tìm tệp đa phương tiện đã đổi&#8230;</string>
     <string name="sync_media_no_changes">Tệp đa phương tiện không có thay đổi</string>
     <string name="sync_media_success">Đã đồng bộ tệp đa phương tiện</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Đồng bộ hóa phương tiện xong một phần:\n%1$d Tệp phương tiện tải xong.\n%2$d  Tệp phương tiện đã được tải lên</string>
     <string name="sync_media_changes_count">có %d thay đổi đa phương tiện phải tải lên</string>
     <string name="sync_media_downloaded_count">có %d tệp đa phương tiện phải tải về</string>
     <string name="sync_sanity_failed">Sau khi đồng bộ, bộ sưu tập ở trong tình trạng bất ổn. Để khắc phục vấn đề này, AnkiDroid sẽ thực hiện đồng bộ đầy đủ. Lựa chọn phía mà bạn muốn giữ.</string>
@@ -119,7 +119,7 @@
     <string name="sync_error_500_unknown">AnkiWeb đã gặp lỗi. Vui lòng thử lại sau vài phút và nếu sự cố vẫn tiếp diễn, vui lòng gửi báo cáo lỗi.</string>
     <string name="sync_error_501_upgrade_required">Xin nâng cấp lên phiên bản AnkiDroid mới nhất</string>
     <string name="sync_error_502_maintenance">AnkiWeb đang được bảo trì. Vui lòng thử lại trong vài phút.</string>
-    <string name="sync_error_504_gateway_timeout">Đã nhận được lỗi hết thời gian chờ cổng 504.</string>
+    <string name="sync_error_504_gateway_timeout">Lỗi 504 gateway timeout</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Đồng bộ hóa (đầy đủ)</string>
     <string name="sync_menu_title_no_account">Đồng bộ hóa (đăng nhập)</string>

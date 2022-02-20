@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">筆跡寬度</string>
     <string name="use_input_tag" maxLength="41">在卡片中輸入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一個文本框裡輸入答案</string>
-    <string name="dictionary" maxLength="41">查找字典</string>
     <string name="reset_languages" maxLength="41">重設語言</string>
     <string name="reset_languages_summ">重置指定牌組語言（TTS和字典）</string>
     <string name="reset_languages_question">重設所有的語言？</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">開啟手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
-    <string name="gestures_allow_links" maxLength="41">忽略連結上的點擊手勢</string>
-    <string name="gestures_allow_links_summary">如果一個連結/提示被點擊，手勢將不被處理</string>
     <string name="gestures_corner_touch" maxLength="41">九點邊角觸控</string>
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>

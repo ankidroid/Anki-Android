@@ -208,7 +208,6 @@
     <string name="sched_has_buried">연관되거나 나중에 볼 카드가 내일까지 연기되었습니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
-    <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s초</item>

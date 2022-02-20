@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Kontur genişliği</string>
     <string name="use_input_tag" maxLength="41">Cevabı karta yaz</string>
     <string name="use_input_tag_summ">Cevabı yazmak için kartın içinde bir metin giriş kutusu kullan</string>
-    <string name="dictionary" maxLength="41">Sözlüğe bak</string>
     <string name="reset_languages" maxLength="41">Dilleri sıfırla</string>
     <string name="reset_languages_summ">Bütün desteler için dil atamalarını sıfırla (metin okuma ve sözlükler için)</string>
     <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">El hareketlerini etkinleştir</string>
     <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>
-    <string name="gestures_allow_links" maxLength="41">Linklerde el hareketlerini görmezden gel</string>
-    <string name="gestures_allow_links_summary">Bir linke/ipucuna basılırsa el hareketleri işlenmez.</string>
     <string name="gestures_corner_touch" maxLength="41">9 noktadan dokunma</string>
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>

@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
-    <string name="lookup_hint">Après avoir copié le texte, appuyez n’importe où sur la carte pour afficher l’icône de recherche</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s seconde</item>

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">സ്ട്രോക്ക് വീതി</string>
     <string name="use_input_tag" maxLength="41">കാർഡിൽ ഉത്തരം ടൈപ്പുചെയ്യുക</string>
     <string name="use_input_tag_summ">ഉത്തരം ടൈപ്പുചെയ്യുന്നതിന് കാർഡിനുള്ളിലെ ഒരു വാചക ഇൻപുട്ട് ബോക്സ് ഉപയോഗിക്കുക</string>
-    <string name="dictionary" maxLength="41">ലുക്കപ്പ് നിഘണ്ടു</string>
     <string name="reset_languages" maxLength="41">ഭാഷകൾ പുന  സജ്ജമാക്കുക</string>
     <string name="reset_languages_summ">എല്ലാ ഡെക്കുകൾക്കുമായി ഭാഷാ അസൈൻമെന്റുകൾ പുന text സജ്ജമാക്കുക (വാചകം മുതൽ സംഭാഷണം, നിഘണ്ടുക്കൾ വരെ)</string>
     <string name="reset_languages_question">എല്ലാ ഭാഷാ അസൈൻമെന്റുകളും പുന സജ്ജമാക്കണോ?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">ആംഗ്യങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="gestures_summ">കാർഡുകൾക്ക് ഉത്തരം നൽകൽ, എഡിറ്റുചെയ്യൽ എന്നിവ പോലുള്ള പ്രവർത്തനങ്ങൾക്ക് ആംഗ്യങ്ങൾ നൽകുക.</string>
-    <string name="gestures_allow_links" maxLength="41">ലിങ്കുകളിലെ ടച്ച് സവിശേഷതകൾ അവഗണിക്കുക</string>
-    <string name="gestures_allow_links_summary">ഒരു ലിങ്ക് / സൂചന അമർത്തിയാൽ ടച്ച് സവിശേഷതകൾ പ്രോസസ്സ് ചെയ്യില്ല.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">സ്‌ക്രീൻ കോണുകളിൽ ടച്ച് സവിശേഷതകൾ അനുവദിക്കുക</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

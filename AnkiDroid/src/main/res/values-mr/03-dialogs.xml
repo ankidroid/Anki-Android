@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">पुनर्स्थित करा</string>
     <string name="dialog_positive_restore">पुनर्संचयित करा</string>
     <string name="dialog_positive_set">सेट</string>
-    <string name="lookup_button_content">वर बघ</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ वैध निर्देशिका नाही</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया तपासा?</string>

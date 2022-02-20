@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
     <string name="tag_editor_add_feedback">Paina ”%2$s” vahvistaaksesi ”%1$s”:n lisääminen</string>
     <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste ”%1$s” valittu</string>
-    <string name="lookup_hint">Kun olet kopioinut tekstin, napauta korttia nähdäksesi hakuikonin</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunti</item>

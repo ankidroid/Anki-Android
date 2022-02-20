@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">보라깃발</string>
     <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
-    <string name="menu_select">텍스트 선택</string>
-    <string name="menu_lookup">문구찾기</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>

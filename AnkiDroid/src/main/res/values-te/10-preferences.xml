@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">స్ట్రోక్ వెడల్పు</string>
     <string name="use_input_tag" maxLength="41">కార్డుకు సమాధానం టైప్ చేయండి</string>
     <string name="use_input_tag_summ">సమాధానం టైప్ చేయడానికి కార్డు లోపల టెక్స్ట్ ఇన్పుట్ బాక్స్ ఉపయోగించండి</string>
-    <string name="dictionary" maxLength="41">నిఘంటువును చూడండి</string>
     <string name="reset_languages" maxLength="41">భాషలను రీసెట్ చేయండి</string>
     <string name="reset_languages_summ">అన్ని డెక్స్ కోసం భాషా కేటాయింపులను రీసెట్ చేయండి (టెక్స్ట్ మరియు ప్రసంగాలకు టెక్స్ట్)</string>
     <string name="reset_languages_question">అన్ని భాషల కేటాయింపులను రీసెట్ చేయాలా?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

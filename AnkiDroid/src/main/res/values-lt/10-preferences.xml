@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Linijos plotis</string>
     <string name="use_input_tag" maxLength="41">Įvesti atsakymą į kortelę</string>
     <string name="use_input_tag_summ">Norėdami įvesti atsakymą į kortelę naudokite teksto įvesties laukelį</string>
-    <string name="dictionary" maxLength="41">Ieškoti žodyne</string>
     <string name="reset_languages" maxLength="41">Iš naujo nustatyti kalbas</string>
     <string name="reset_languages_summ">Atkurti kalbų nustatymus (teksto vertimui kalba ir žodynams) visuose rinkiniuose</string>
     <string name="reset_languages_question">Ar norite atkurti visus kalbų nustatymus?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Įjungti gestus</string>
     <string name="gestures_summ">Nustatykite kokiais gestais atsakinėsite į klausimus ir redaguosite korteles.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

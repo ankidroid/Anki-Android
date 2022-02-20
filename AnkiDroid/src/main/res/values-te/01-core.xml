@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ఈ గమనికను మరియు దాని అన్ని కార్డ్లను నిజంగా తొలగించాలా?\n%s</string>
-    <string name="menu_select">వచనాన్ని ఎంచుకోండి</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">లో చూడండి%1$s</string>
     <string name="menu_mark_note">గమనికను గుర్తు పెట్టుకోండి</string>
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>

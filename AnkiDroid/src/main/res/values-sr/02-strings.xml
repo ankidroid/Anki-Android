@@ -213,7 +213,6 @@
     <string name="sched_has_buried">Неке повезане или закопане картице су одложене до следеће сесије.</string>
     <string name="tag_editor_add_feedback">Притисните “%2$s” да бисте потврдили додавање “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Постојећа ознака “%1$s” је изабрана</string>
-    <string name="lookup_hint">Након копирање текста, тапните било где на картице да прикажете иконицу за претраживање.</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>

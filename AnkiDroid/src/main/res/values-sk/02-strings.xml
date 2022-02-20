@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Niektoré súvisiace alebo skryté kartičky boli odložené až na zajtra</string>
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
-    <string name="lookup_hint">Po skopírovaní textu, ťuknite kdekoľvek na kartičku, aby sa vám zobrazila ikona hľadania</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunda</item>

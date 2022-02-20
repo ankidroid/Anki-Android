@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Деякі пов\'язані або відкладені картки були перенесені на завтра</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
-    <string name="lookup_hint">Після копіювання тексту, торкніться будь-де на картці, аби показати піктограму пошуку</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>

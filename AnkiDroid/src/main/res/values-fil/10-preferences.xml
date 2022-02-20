@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Lapad ng stroke</string>
     <string name="use_input_tag" maxLength="41">I-type ang sagot sa card</string>
     <string name="use_input_tag_summ">Gumamit ng isang kahon ng pag-input ng teksto sa loob ng card upang i-type ang sagot</string>
-    <string name="dictionary" maxLength="41">Paghahanap sa diksyunaryo</string>
     <string name="reset_languages" maxLength="41">I-reset ang mga wika</string>
     <string name="reset_languages_summ">I-reset ang mga tugmang wika (para sa teksto sa pagsasalita at mga diksyunaryo) para sa lahat ng mga deck</string>
     <string name="reset_languages_question">I-reset ang lahat ng mga takdang wika?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Paganahin ang mga galaw</string>
     <string name="gestures_summ">Magtalaga ng mga kilos sa mga pagkilos tulad ng pagsagot at pag-edit ng mga card.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

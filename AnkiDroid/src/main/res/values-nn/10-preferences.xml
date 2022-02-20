@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="dictionary" maxLength="41">Lookup dictionary</string>
     <string name="reset_languages" maxLength="41">Tilbakestill språk</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Tilbakestill alle språkinnstillinger?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Enable gestures</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

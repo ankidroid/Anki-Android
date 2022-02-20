@@ -210,7 +210,6 @@
     <string name="sched_has_buried">ಕೆಲವು ಸಂಬಂಧಿತ ಅಥವಾ ಸಮಾಧಿ ಮಾಡಿದ ಕಾರ್ಡ್‌ಗಳು ನಾಳೆಯವರೆಗೆ ವಿಳಂಬವಾಗಿದ್ದವು</string>
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
-    <string name="lookup_hint">ಪಠ್ಯವನ್ನು ನಕಲಿಸಿದ ನಂತರ, ಹುಡುಕಾಟ ಐಕಾನ್ ತೋರಿಸಲು ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ನಲ್ಲಿ ಎಲ್ಲಿಯಾದರೂ ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ಸೆಕೆಂಡು</item>

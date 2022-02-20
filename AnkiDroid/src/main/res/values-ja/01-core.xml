@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">紫のフラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
-    <string name="menu_select">テキストを選択</string>
-    <string name="menu_lookup">ルックアップリスト</string>
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>

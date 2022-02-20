@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">عرض الخط</string>
     <string name="use_input_tag" maxLength="41">إدخال الجواب في البطاقة</string>
     <string name="use_input_tag_summ">استخدام مربع إدخال نصي داخل البطاقة لكتابة الجواب</string>
-    <string name="dictionary" maxLength="41">قاموس البحث</string>
     <string name="reset_languages" maxLength="41">إعادة تعيين اللغات</string>
     <string name="reset_languages_summ">إعادة ضبط إعدادات اللغة (من أجل تحويل النص إلى كلام والقواميس) لجميع الرزم</string>
     <string name="reset_languages_question">إعادة تعيين كافة تعيينات اللغة؟</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">تفعيل الإيماءات</string>
     <string name="gestures_summ">تعيين إيماءات إلى إجراءات مثل إجابة البطاقات وتحريرها.</string>
-    <string name="gestures_allow_links" maxLength="41">تجاهل إيماءات اللمس على الروابط</string>
-    <string name="gestures_allow_links_summary">لن تُعالَج إيماءات اللمس إذا ضُغِط على رابط/تلميح.</string>
     <string name="gestures_corner_touch" maxLength="41">لمس بحجم 9 نقاط</string>
     <string name="gestures_corner_touch_summary">السماح بإيماءات اللمس في حواف الشاشة</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">قائمة تجول ملء الشاشة</string>

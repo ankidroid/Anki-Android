@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">紫色标志</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
-    <string name="menu_select">选择文本</string>
-    <string name="menu_lookup">查找文本</string>
     <string name="menu_search">在%1$s中查找</string>
     <string name="menu_mark_note">标记笔记</string>
     <string name="menu_unmark_note">取消标记</string>

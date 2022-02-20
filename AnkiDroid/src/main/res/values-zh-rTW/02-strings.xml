@@ -207,7 +207,6 @@
     <string name="sched_has_buried">相關或是被暫時隱藏的卡片會被延遲到明天。</string>
     <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
-    <string name="lookup_hint">在複製文字後，點擊 flashcard 之任意處來顯示搜尋圖示</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s 秒</item>

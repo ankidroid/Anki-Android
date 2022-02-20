@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Responder recomendada (verde)</string>
     <string name="gesture_answer_better_recommended">Resposta melhor que recomendada</string>
     <string name="gesture_tag_note">Colocar tag no cartão</string>
-    <string name="gesture_lookup">Procurar expressão</string>
     <string name="gesture_play">Reproduzir mídia</string>
     <string name="gesture_abort_learning">Interromper a aprendizagem</string>
     <string name="gesture_flag_red">Sinalizar como Vermelha</string>

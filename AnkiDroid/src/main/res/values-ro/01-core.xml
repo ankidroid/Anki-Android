@@ -125,8 +125,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Editează etichete </string>
     <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
-    <string name="menu_select">Selectaţi text</string>
-    <string name="menu_lookup">Căutare text </string>
     <string name="menu_search">Căutare în %1$s</string>
     <string name="menu_mark_note">Marcheaza nota</string>
     <string name="menu_unmark_note">Demarcheaza nota </string>
