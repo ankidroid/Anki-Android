@@ -25,7 +25,6 @@ Lägg till material genom skrivbordsprogrammet Anki eller direkt via AnkiDroid. 
 • kortutforskare
 • layout för surfplattor
 • importera befintliga kortlekar (via Anki Desktop)
-• Ordboksintegration (ColorDict, GoldenDict, Leo.org, Aedict, andra webbordböcker)
 • lägga till kort från andra program som t.ex. ordlistor
 • stöd för anpassade teckensnitt
 • fullständigt säkerhetskopieringssystem

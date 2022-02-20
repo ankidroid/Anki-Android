@@ -25,7 +25,6 @@ Naują medžiagą galite suvesti naudodami kompiuterinę „Anki“ versiją arb
 • kortelių naršyklė
 • planšetėms pritaikytas išdėstymas
 • turimos kolekcijos failų importavimas (naudojant kompiuterinę „Anki“ versiją)
-• integruoti žodynai („ColorDict“, „GoldenDict“, „Leo.org“, „Aedict“  ir kiti internetiniai žodynai)
 • kortelių pridėjimas iš kitų programų, pavyzdžiui, žodynų
 • palaikomi individualūs šriftai
 • išsami atsarginių kopijų sistema

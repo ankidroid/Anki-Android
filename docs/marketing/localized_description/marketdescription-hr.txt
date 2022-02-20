@@ -25,7 +25,6 @@ Dodajte materijal pomoću Anki aplikacije za računala ili direktno u AnkiDroid.
 • preglednik kartica
 • prilagođeno tabletima
 • uvoz postojećih datoteka skupina (pomoću Anki Desktopa)
-• integracija rječnika (ColorDict, GoldenDict, Leo.org, Aedict, razni internetski rječnici)
 • dodajte kartice iz drugih aplikacija kao što su rječnici
 • podrška za prilagođene fontove
 • puni sustav sigurnosnog kopiranja
