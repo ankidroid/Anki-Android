@@ -93,12 +93,9 @@ CREATE TABLE cards (
     data            text not null
       -- currently unused
 );
-
 ```
-
-
+## Collection
 ```sql
-
 -- col contains a single row that holds various information about the collection
 CREATE TABLE col (
     id              integer primary key,
@@ -136,7 +133,9 @@ CREATE TABLE col (
     tags            text not null
       -- a cache of tags used in the collection (This list is displayed in the browser. Potentially at other place)
 );
-
+```
+## Graves
+```sql
 -- Contains deleted cards, notes, and decks that need to be synced. 
 -- usn should be set to -1, 
 -- oid is the original id.
@@ -146,7 +145,9 @@ CREATE TABLE graves (
     oid             integer not null,
     type            integer not null
 );
-
+```
+## Notes
+```sql
 -- Notes contain the raw information that is formatted into a number of cards
 -- according to the models
 CREATE TABLE notes (
@@ -176,7 +177,9 @@ CREATE TABLE notes (
     data            text not null
       -- unused
 );
-
+```
+## Review Log
+```sql
 -- revlog is a review history; it has a row for every review you've ever done!
 CREATE TABLE revlog (
     id              integer primary key,
@@ -201,8 +204,9 @@ CREATE TABLE revlog (
     type            integer not null
        --  0=learn, 1=review, 2=relearn, 3=cram
 );
-
-
+```
+## Indexes
+```sql
 CREATE INDEX ix_cards_nid on cards (nid);
 CREATE INDEX ix_cards_sched on cards (did, queue, due);
 CREATE INDEX ix_cards_usn on cards (usn);
