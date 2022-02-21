@@ -207,7 +207,6 @@
     <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
     <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
     <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
-    <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s秒</item>
@@ -321,6 +320,7 @@
     <string name="format_font_size">更改字体大小</string>
     <string name="insert_mathjax">插入 MathJax 方程</string>
     <string name="insert_cloze">插入完形填空</string>
+    <string name="note_editor_toolbar_icon">按钮文本</string>
     <string name="before_text">选择前的 HTML</string>
     <string name="after_text">选择后的 HTML</string>
     <string name="add_toolbar_item">创建工具栏项</string>

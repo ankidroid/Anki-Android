@@ -29,8 +29,8 @@ on:
       - 'gradle/**'
 
 jobs:
-  lintRelease:
-    name: Lint Release
+  lintDebug:
+    name: Lint Debug
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -67,10 +67,13 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compilePlayReleaseJavaWithJavac compileLint lint-rules:compileTestJava
+          command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava
 
-      - name: Run Lint Release
-        run: ./gradlew :api:lintRelease :AnkiDroid:lintPlayRelease
+      - name: Run Lint Debug
+        # "lint" is run under the 'Amazon' flavor, so slow in CI
+        # "lintPlayRelease" doesn't test androidTest
+        # "lintPlayDebug" doesn't test the API
+        run: ./gradlew lintPlayDebug :api:lintDebug
 
       - name: Test Lint Rules
         run: ./gradlew lint-rules:test

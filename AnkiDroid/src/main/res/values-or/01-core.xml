@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">ବାଇଗଣୀ ପତାକା</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏବଂ ଏହାର ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
-    <string name="menu_select">ପାଠ୍ୟ ଚୟନ କରନ୍ତୁ</string>
-    <string name="menu_lookup">ଦୃଷ୍ଟିପାତ ପାଠ୍ୟ</string>
     <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>

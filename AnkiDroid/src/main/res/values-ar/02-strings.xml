@@ -222,7 +222,6 @@
     <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
-    <string name="lookup_hint">بعد نسخ النص، انقر في أي مكان على البطاقة لعرض أيقونة البحث</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="zero">%s ثانية</item>
@@ -386,6 +385,7 @@
     <string name="format_font_size">تغيير لون الخط</string>
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
     <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML قبل المحدد</string>
     <string name="after_text">HTML بعد المحدد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>

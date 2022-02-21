@@ -140,8 +140,6 @@
     <string name="menu_flag_card_seven">علم بنفسجي</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
-    <string name="menu_select">تحديد النص</string>
-    <string name="menu_lookup">بحث عن النص</string>
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">تعليم الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>

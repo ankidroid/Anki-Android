@@ -207,7 +207,6 @@
     <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
     <string name="tag_editor_add_feedback">このまま「%2$s」ボタンをタップすると、タグ「%1$s」の追加が確定します</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
-    <string name="lookup_hint">文字列をコピーした後、カード内でタップすると、検索辞書アイコンが表示されます</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s秒</item>
@@ -321,6 +320,7 @@
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax 式を挿入</string>
     <string name="insert_cloze">穴埋め部分の挿入</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">選択部分の前のHTML</string>
     <string name="after_text">選択部分の後ろのHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>

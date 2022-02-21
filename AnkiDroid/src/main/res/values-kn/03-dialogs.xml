@@ -38,9 +38,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
+    <string name="check_db_title">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸುವುದೇ?</string>
+    <string name="check_db_warning">ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
+    <string name="check_db_acknowledge">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಲಾಗಿದೆ</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
     <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_positive_restore">Restore</string>
     <string name="dialog_positive_set">Set</string>
-    <string name="lookup_button_content">Look up</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>

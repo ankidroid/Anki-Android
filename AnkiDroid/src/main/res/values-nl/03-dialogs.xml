@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">Vervangen</string>
     <string name="dialog_positive_restore">Herstellen</string>
     <string name="dialog_positive_set">Instellen</string>
-    <string name="lookup_button_content">Naslaan</string>
     <string name="dialog_collection_path_not_dir">Het opgegeven pad was geen geldige map</string>
     <!-- Media checking -->
     <string name="check_media_title">Media controleren?</string>

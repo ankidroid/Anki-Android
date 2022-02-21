@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
-    <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s secondo</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Cambia Dimensione Carattere</string>
     <string name="insert_mathjax">Inserisci l\'Equazione MathJax</string>
     <string name="insert_cloze">Inserisci Eliminazione di Cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Prima della Selezione</string>
     <string name="after_text">HTML Dopo la Selezione</string>
     <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>

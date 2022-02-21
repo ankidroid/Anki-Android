@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Purpurový příznak</string>
     <string name="menu_edit_tags">Upravit štítky</string>
     <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
-    <string name="menu_select">Vybrat text</string>
-    <string name="menu_lookup">Vyhledat text</string>
     <string name="menu_search">Vyhledat v %1$s</string>
     <string name="menu_mark_note">Označit poznámku</string>
     <string name="menu_unmark_note">Odznačit poznámku</string>

@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">Bendera ungu</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
-    <string name="menu_select">Pilih teks</string>
-    <string name="menu_lookup">Cari teks</string>
     <string name="menu_search">Pencarian di %1$s</string>
     <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>

@@ -17,8 +17,14 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
+import com.ichi2.anki.model.Directory
+import org.acra.util.IOUtils
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
 import timber.log.Timber
 import java.io.File
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.pathString
 
 /** Utilities which assist testing changes to files/directories */
 @Suppress("unused")
@@ -90,5 +96,33 @@ object FileSystemUtils {
             sb.append("|  ")
         }
         return sb.toString()
+    }
+}
+
+/**
+ * Returns a new directory in the OS's default temp directory, using the given [prefix] to generate its name.
+ * This directory is deleted on exit
+ */
+fun createTransientDirectory(prefix: String? = null): File =
+    createTempDirectory(prefix = prefix).let {
+        val file = File(it.pathString)
+        file.deleteOnExit()
+        return@let file
+    }
+
+/** Returns a temp file with [content]. The file is deleted on exit. */
+fun createTransientFile(content: String = ""): File =
+    File(kotlin.io.path.createTempFile().pathString).also {
+        it.deleteOnExit()
+        IOUtils.writeStringToFile(it, content)
+    }
+
+/** Creates a sub-directory with the given name which is deleted on exit */
+fun Directory.createTransientDirectory(name: String): Directory {
+    File(this.directory, name).also { directory ->
+        directory.deleteOnExit()
+        Timber.d("test: creating $directory")
+        MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
+        return Directory.createInstance(directory)!!
     }
 }

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">عرض حاشیه</string>
     <string name="use_input_tag" maxLength="41">پاسخ را در کارت بنویسید</string>
     <string name="use_input_tag_summ">از یک کادر نوشتن متن درون کارت برای نوشتن پاسخ استفاده کنید</string>
-    <string name="dictionary" maxLength="41">فرهنگ لغت برای مراجعه</string>
     <string name="reset_languages" maxLength="41">بازنشانی زبان‌ها</string>
     <string name="reset_languages_summ">تنظیم مجدد زبان ( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
     <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">فعالسازی حرکات لمسی</string>
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
-    <string name="gestures_allow_links" maxLength="41">چشم‌پوشی از فرمان‌های لمسی روی لینک‌ها</string>
-    <string name="gestures_allow_links_summary">هنگام لمس لینک/یادآور فشار داده شود فرمان لمسی عمل نخواهد کرد.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

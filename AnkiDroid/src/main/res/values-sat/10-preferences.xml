@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">ᱥᱴᱨᱚᱠ ᱨᱮᱭᱟᱜ ᱚᱥᱟᱨ</string>
     <string name="use_input_tag" maxLength="41">ᱠᱟᱰ ᱨᱮ ᱛᱮᱞᱟ ᱚᱞ ᱛᱟᱢ</string>
     <string name="use_input_tag_summ">ᱛᱮᱞᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱚᱞ ᱟᱫᱮᱨ ᱵᱚᱠᱥᱟ ᱵᱮᱵᱦᱟᱨ ᱢᱮ</string>
-    <string name="dictionary" maxLength="41">ᱥᱟᱵᱟᱫ ᱢᱚᱱᱮ ᱯᱩᱛᱷᱤ ᱧᱮᱞᱢᱮ</string>
     <string name="reset_languages" maxLength="41">ᱯᱟᱹᱨᱥᱤ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ</string>
     <string name="reset_languages_summ">ᱯᱟᱹᱨᱥᱤ ᱮᱥᱭᱥᱴᱮᱸᱴ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ (ᱟᱞ ᱠᱷᱚᱱ ᱢᱮᱱ ᱛᱮ ᱟᱨ ᱯᱩᱛᱷᱤ) ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="reset_languages_question">ᱡᱷᱚᱛᱚ ᱯᱟᱹᱨᱥᱤ ᱮᱥᱭᱥᱴᱮᱸᱴ ᱫᱚᱦᱲᱟ ᱵᱚᱫᱚᱞ?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">ᱪᱤᱱᱦᱟ ᱮᱢᱚᱜᱢᱮ</string>
     <string name="gestures_summ">ᱛᱮᱞᱟ ᱮᱢ ᱟᱨ ᱠᱟᱰᱥ ᱥᱟᱯᱰᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱜᱮᱥᱪᱚᱨ ᱠᱚ ᱴᱷᱤᱠ ᱢᱮ ᱾</string>
-    <string name="gestures_allow_links" maxLength="41">ᱞᱤᱝᱠ ᱨᱮ ᱴᱤᱰᱟᱹᱜ ᱪᱤᱱᱦᱟ ᱮᱨᱮᱲ ᱢᱮ</string>
-    <string name="gestures_allow_links_summary">ᱴᱤᱰᱹᱟᱜ ᱪᱤᱱᱦᱟᱹ ᱵᱟᱭ ᱠᱟᱹᱢᱤᱟᱭ ᱡᱚᱫᱤ ᱞᱤᱝᱠ/ᱦᱤᱸᱴ ᱨᱮ ᱚᱛᱟᱭᱟ ᱾</string>
     <string name="gestures_corner_touch" maxLength="41">᱙ᱼᱤᱸᱪ ᱚᱛᱟ</string>
     <string name="gestures_corner_touch_summary">ᱥᱠᱨᱤᱱ ᱠᱩᱱᱟᱹ ᱠᱚᱨᱮ  ᱚᱛᱟ ᱜᱮᱥᱪᱚᱨᱠᱚ ᱮᱢ ᱪᱷᱚ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ᱯᱷᱩᱞᱥᱨᱤᱱ ᱱᱮᱵᱷᱤᱜᱮᱥᱚᱱ ᱰᱟᱨᱣᱮᱨ</string>

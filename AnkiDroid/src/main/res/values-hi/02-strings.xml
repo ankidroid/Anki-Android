@@ -210,7 +210,6 @@
     <string name="sched_has_buried">कुछ संबंधित या स्थगित पत्ते को कल तक विलंबित किया गया</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
-    <string name="lookup_hint">पाठ की प्रतिलिपि बनाने के बाद, खोज चिह्न दिखाने के लिए स्पैनिश पर कहीं भी टैप करें</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s सेकंड</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">चयन से पहले का HTML</string>
     <string name="after_text">चयन के बाद का HTML</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

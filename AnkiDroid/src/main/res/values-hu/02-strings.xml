@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Néhány kapcsolódó vagy félretett kártya halasztásra került a következő gyakorlásig.</string>
     <string name="tag_editor_add_feedback">Érintsd meg a(z) “%2$s” elemet a “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">“%1$s” címke kiválasztva</string>
-    <string name="lookup_hint">A szöveg másolása után, kattints bárhova a szókártyán a keresés mutatásához</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s másodperc</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Betűméret módosítása</string>
     <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Eszköztár Elem létrehozása</string>

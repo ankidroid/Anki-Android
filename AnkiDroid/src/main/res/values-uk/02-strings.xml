@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Деякі пов\'язані або відкладені картки були перенесені на завтра</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
-    <string name="lookup_hint">Після копіювання тексту, торкніться будь-де на картці, аби показати піктограму пошуку</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -360,6 +359,7 @@
     <string name="format_font_size">Змінити розмір шрифту</string>
     <string name="insert_mathjax">Вставити рівняння MathJax</string>
     <string name="insert_cloze">Вставити місце для доповнення</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>

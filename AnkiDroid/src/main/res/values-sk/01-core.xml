@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Purpurová vlajočka</string>
     <string name="menu_edit_tags">Upraviť štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
-    <string name="menu_select">Zvoliť text</string>
-    <string name="menu_lookup">Vyhľadať text</string>
     <string name="menu_search">Vyhľadať v %1$s</string>
     <string name="menu_mark_note">Označiť poznámku</string>
     <string name="menu_unmark_note">Odznačiť poznámku</string>

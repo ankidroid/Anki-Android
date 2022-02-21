@@ -210,7 +210,6 @@
     <string name="sched_has_buried">కొన్ని సంబంధిత లేదా ఖననం చేసిన కార్డులు రేపు వరకు ఆలస్యం అయ్యాయి</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
-    <string name="lookup_hint">వచనాన్ని కాపీ చేసిన తర్వాత, శోధన చిహ్నాన్ని చూపించడానికి ఫ్లాష్కార్డులో ఎక్కడైనా నొక్కండి</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s second</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

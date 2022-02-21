@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>
-    <string name="menu_select">টেক্সট নির্বাচন করুন</string>
-    <string name="menu_lookup">খুঁজে দেখো টেক্সট</string>
     <string name="menu_search">অনুসন্ধান করুন %1$s</string>
     <string name="menu_mark_note">টীকা চিহ্ন</string>
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>

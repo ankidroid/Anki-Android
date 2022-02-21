@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Фіолетовий прапорець</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
-    <string name="menu_select">Виділити текст</string>
-    <string name="menu_lookup">Шукати текст</string>
     <string name="menu_search">Пошук у %1$s</string>
     <string name="menu_mark_note">Позначити запис</string>
     <string name="menu_unmark_note">Зняти позначку запису</string>

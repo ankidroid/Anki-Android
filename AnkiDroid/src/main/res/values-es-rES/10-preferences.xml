@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Ancho del trazo</string>
     <string name="use_input_tag" maxLength="41">Escribir respuesta en la tarjeta</string>
     <string name="use_input_tag_summ">Usa una caja de texto dentro de la tarjeta para escribir una respuesta</string>
-    <string name="dictionary" maxLength="41">Diccionario de búsqueda</string>
     <string name="reset_languages" maxLength="41">Restablecer idiomas</string>
     <string name="reset_languages_summ">Reajuste de asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos</string>
     <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorar gestos táctiles en los enlaces</string>
-    <string name="gestures_allow_links_summary">Los gestos de toque no se procesarán si se presiona un enlace/pista.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

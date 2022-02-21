@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">ପ୍ରତିସ୍ଥାପନ</string>
     <string name="dialog_positive_restore">ପୁନରୁଦ୍ଧାର</string>
     <string name="dialog_positive_set">ସେଟ୍</string>
-    <string name="lookup_button_content">ଦୃଷ୍ଟିପାତ</string>
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
     <!-- Media checking -->
     <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>

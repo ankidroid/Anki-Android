@@ -216,7 +216,6 @@
     <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
-    <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карточке, чтобы показать иконку поиска</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -360,6 +359,7 @@
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
     <string name="insert_cloze">Вставить задание с пропусками</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>
     <string name="add_toolbar_item">Создать элемент панели инструментов</string>

@@ -88,9 +88,11 @@ public interface Compat {
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
-     * @throws IOException If the file failed to be deleted
      * @see File#delete()
      * @see java.nio.file.Files#delete(Path)
+     *
+     * @throws FileNotFoundException If the file does not exist
+     * @throws IOException If the file failed to be deleted
      */
     void deleteFile(@NonNull File file) throws IOException;
 
@@ -150,6 +152,12 @@ public interface Compat {
      * @throws IOException if an error occurs
      */
     void moveDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask) throws IOException;
+
+    /**
+     * Returns whether the directory has one or more file
+     * @return false if the directory is not a directory, does not exist, or has no files
+     */
+    boolean hasFiles(@NonNull File directory) throws IOException;
 
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);

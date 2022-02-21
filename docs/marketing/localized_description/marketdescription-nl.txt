@@ -25,7 +25,6 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via AnkiDroid. 
 • kaartenbrowser
 • tablet lay-out
 • importeren van bestaande verzameling bestanden (via Anki Desktop)
-• Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, diverse online woordenboeken)
 • kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • ondersteuning voor aangepaste lettertypes
 • volledig backupsysteem

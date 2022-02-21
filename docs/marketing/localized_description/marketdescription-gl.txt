@@ -25,7 +25,6 @@ Engade material a través da aplicación de escritorio Anki ou directamente dend
 • explorador de cartóns
 • compatible con tabletas
 • importar ficheiros de coleccións existentes (vía Anki de escritorio)
-• integración con dicionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionarios en liña)
 • engadir cartóns a partir doutras aplicacións, como dicionarios
 • soporte para fontes personalizadas
 • sistemas completo de copia de seguranza

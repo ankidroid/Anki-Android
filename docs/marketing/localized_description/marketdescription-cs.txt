@@ -25,7 +25,6 @@ přidání/ editace karet
 • prohlížeč karet
 • rozvržení zobrazení pro tablety
 • import stávající kolekce souborů (přes Anki Desktop)
-• začlenění slovníku (ColorDict, GoldenDict, Leo.org, Aedict, webové slovníky)
 • přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • podpora vlastního fontu písma
 • kompletní záložní systém

@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Lilla flag</string>
     <string name="menu_edit_tags">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig gerne slette denne note og alle dens kort?\n%s</string>
-    <string name="menu_select">Vælg tekst</string>
-    <string name="menu_lookup">Slå tekst op</string>
     <string name="menu_search">Slå op i %1$s</string>
     <string name="menu_mark_note">Markér note</string>
     <string name="menu_unmark_note">Fjern markering fra note</string>

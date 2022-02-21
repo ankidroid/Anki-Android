@@ -17,17 +17,22 @@
 package com.ichi2.anki.servicemodel
 
 import android.content.SharedPreferences
+import android.text.TextUtils
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.libanki.Consts
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.HashUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThan
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -110,5 +115,33 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertThat("Preference of custom media sync url is set to ($syncURL).", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(syncURL))
         PreferenceUpgrade.RemoveLegacyMediaSyncUrl().performUpgrade(mPrefs)
         assertThat("Preference of custom media sync url is removed.", CustomSyncServer.getMediaSyncUrl(mPrefs).equals(null))
+    }
+
+    @Test
+    fun note_editor_toolbar_button_text() {
+        // add two example toolbar buttons
+        val buttons = HashUtil.HashSetInit<String>(2)
+
+        var values = arrayOf(0, "<h1>", "</h1>")
+        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+
+        values = arrayOf(1, "<p>", "</p>")
+        buttons.add(TextUtils.join(Consts.FIELD_SEPARATOR, values))
+
+        mPrefs.edit {
+            putStringSet("note_editor_custom_buttons", buttons)
+        }
+
+        // now update it and check it
+        PreferenceUpgrade.UpdateNoteEditorToolbarPrefs().performUpgrade(mPrefs)
+
+        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.HashSetInit<String>(0)) as Set<String?>
+        val toolbarButtons = CustomToolbarButton.fromStringSet(set)
+
+        assertEquals("Set size", 2, set.size)
+        assertEquals("Toolbar buttons size", 2, toolbarButtons.size)
+
+        assertEquals("Button text prefs", "1", toolbarButtons[0].buttonText)
+        assertEquals("Button text prefs", "2", toolbarButtons[1].buttonText)
     }
 }

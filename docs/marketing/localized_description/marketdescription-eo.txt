@@ -25,7 +25,6 @@ Aldonu lern-enhavon per komputila programo Anki aŭ senpere per AnkiDroid. La ap
 • kart-foliumilo
 • tabulkomputila aranĝo
 • enporti ekzistajn dosierojn de kolekto (per komputila Anki)
-• kunlaboro kun vortaroj (ColorDict, GoldenDict, Leo.org, Aedict, diversaj retaj vortaroj)
 • aldoni kartojn per «intent»-oj de aliaj aplikaĵoj (ekz. vortaroj)
 • alĝustigebla tiparo
 • plena sistemo de sekurkopio

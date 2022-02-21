@@ -465,9 +465,6 @@ public class Reviewer extends AbstractFlashcardViewer {
             refreshActionBar();
         } else if (itemId == R.id.action_toggle_whiteboard) {
             toggleWhiteboard();
-        } else if (itemId == R.id.action_search_dictionary) {
-            Timber.i("Reviewer:: Search dictionary button pressed");
-            lookUpOrSelectText();
         } else if (itemId == R.id.action_open_deck_options) {
             Intent i = new Intent(this, DeckOptions.class);
             startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);

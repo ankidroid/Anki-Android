@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">Cờ tím</string>
     <string name="menu_edit_tags">Sửa tag</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
-    <string name="menu_select">Chọn văn bản</string>
-    <string name="menu_lookup">Tra cứu văn bản</string>
     <string name="menu_search">Tra cứu trong %1$s</string>
     <string name="menu_mark_note">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>

@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Einige verwandte oder aufgeschobene Karten wurden bis morgen verzögert</string>
     <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
-    <string name="lookup_hint">Tippen Sie nach Kopieren des Texts irgendwo auf die Karteikarte, um das Suchsymbol anzuzeigen</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s Sekunde</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Schriftgröße ändern</string>
     <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
     <string name="insert_cloze">Auslassung einfügen</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>

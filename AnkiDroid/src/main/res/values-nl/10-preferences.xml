@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Lijnbreedte</string>
     <string name="use_input_tag" maxLength="41">Typ het antwoord op de kaart</string>
     <string name="use_input_tag_summ">Een tekstinvoervak gebruiken op de kaart om het antwoord te typen</string>
-    <string name="dictionary" maxLength="41">Opzoeken in woordenlijst</string>
     <string name="reset_languages" maxLength="41">Reset talen</string>
     <string name="reset_languages_summ">Reset taal-toewijzingen (voor tekst-naar-spraak en woordenboeken) voor alle decks</string>
     <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Bewegingen inschakelen</string>
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
-    <string name="gestures_allow_links" maxLength="41">Negeer aanraakgebaren op links</string>
-    <string name="gestures_allow_links_summary">Aanraakgebaren worden niet verwerkt als een link/hint wordt ingedrukt.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punts aanraakscherm</string>
     <string name="gestures_corner_touch_summary">Aanraakgebaren in schermhoeken toestaan</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Volledig scherm navigatiebalk</string>

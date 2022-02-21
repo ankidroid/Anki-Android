@@ -140,6 +140,9 @@ public class CompatV21 implements Compat {
     @Override
     public void deleteFile(@NonNull File file) throws IOException {
         if (!file.delete()) {
+            if (!file.exists()) {
+                throw new FileNotFoundException(file.getCanonicalPath());
+            }
             throw new IOException("Unable to delete: " + file.getCanonicalPath());
         }
     }
@@ -203,6 +206,16 @@ public class CompatV21 implements Compat {
             copyDirectory(srcDir, destDir, ioTask, true);
         }
     }
+
+    @Override
+    public boolean hasFiles(@NonNull File directory) throws IOException {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return false;
+        }
+        return files.length > 0;
+    }
+
 
     // Until API 23 the methods have "current" in the name
     @Override

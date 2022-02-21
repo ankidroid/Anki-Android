@@ -60,7 +60,6 @@ Thêm tài liệu thông qua ứng dụng Anki trên máy tính để bàn hoặ
 • trình duyệt thẻ
 • bố cục máy tính bảng
 • nhập các tệp bộ sưu tập hiện có (thông qua Anki Desktop)
-• tích hợp từ điển (ColorDict, GoldenDict, Leo.org, Aedict, từ điển web đa dạng)
 • thêm thẻ theo ý định từ các ứng dụng khác như từ điển
 • hỗ trợ phông chữ tùy chỉnh
 • hệ thống sao lưu đầy đủ

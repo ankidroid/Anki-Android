@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Largeur des traits</string>
     <string name="use_input_tag" maxLength="41">Saisir la réponse dans la carte</string>
     <string name="use_input_tag_summ">Utiliser la saisie de la réponse directement dans la carte</string>
-    <string name="dictionary" maxLength="41">Dictionnaire de recherche</string>
     <string name="reset_languages" maxLength="41">Réinitialiser les langages</string>
     <string name="reset_languages_summ">Réinitialiser les paramètres de langue (pour le TTS et les dictionnaires) pour tous les paquets</string>
     <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Activer les gestes</string>
     <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorer les gestes sur les liens</string>
-    <string name="gestures_allow_links_summary">Les gestes tactiles ne seront pas traités si un lien/indice est pressé.  </string>
     <string name="gestures_corner_touch" maxLength="41">Écran tactile à 9 points</string>
     <string name="gestures_corner_touch_summary">Autoriser les gestes dans les coins de l\'écran</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panneau de navigation plein écran</string>

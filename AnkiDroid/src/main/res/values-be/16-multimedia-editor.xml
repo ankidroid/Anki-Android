@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Дадаць выяву</string>
     <string name="multimedia_editor_popup_audio_clip">Дадаць аўдыякліп</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Дадаць відэакліп</string>
     <string name="multimedia_editor_popup_audio">Запісаць аўдыя</string>
     <string name="multimedia_editor_popup_text">Пашыраны рэдактар</string>
     <string name="multimedia_editor_popup_cloze">Заданне з пропускамі</string>
@@ -90,8 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Галерэя</string>
     <string name="multimedia_editor_image_field_editing_photo">Камера</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Аўдыя</string>
+    <string name="multimedia_editor_import_video">Відэа</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Пампуецца</string>

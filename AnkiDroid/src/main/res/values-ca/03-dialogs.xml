@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">Reemplaça</string>
     <string name="dialog_positive_restore">Restaura</string>
     <string name="dialog_positive_set">Aplicar</string>
-    <string name="lookup_button_content">Cercar</string>
     <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
     <!-- Media checking -->
     <string name="check_media_title">Comprovar la multimèdia?</string>

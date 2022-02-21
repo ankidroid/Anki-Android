@@ -185,12 +185,12 @@
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_successful">Tệp tin \"%s\" đã được kết xuất. Bạn có muốn gửi nó đi với ứng dụng khác?</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Xin chào!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
+        Đây là bộ thẻ ghi nhớ Anki được gửi từ AnkiDroid[1].
+        Hãy thử mở nó bằng một trong những bản phát hành Anki[2] và tận hưởng việc học dễ dàng và hiệu quả!<br/><br/>
+        [1]%1$s<br/>
+        [2]%2$s
         ]]></string>
     <string name="export_unsuccessful">Lỗi kết xuất tệp tin apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
@@ -207,7 +207,6 @@
     <string name="sched_has_buried">Một số thẻ liên quan hoặc tạm ẩn đã được hoãn đến ngày mai</string>
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
-    <string name="lookup_hint">Sau khi sao chép văn bản, bấm vào bất cứ đâu trên thẻ ghi nhớ để hiện biểu tượng tìm kiếm</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s giây</item>
@@ -321,6 +320,7 @@
     <string name="format_font_size">Thay đổi cỡ chữ</string>
     <string name="insert_mathjax">Chèn công thức toán</string>
     <string name="insert_cloze">Chèn Đánh dấu Cloze</string>
+    <string name="note_editor_toolbar_icon">Chữ trên nút</string>
     <string name="before_text">HTML trước vùng chọn</string>
     <string name="after_text">HTML Sau Vùng chọn</string>
     <string name="add_toolbar_item">Tạo mục trên Thanh công cụ</string>
@@ -373,11 +373,11 @@
 \n\nIf you uninstall AnkiDroid before the migration, your data will be lost
 \n\nPlease perform the migration as soon as possible</string>
     <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_term_1">Tôi đã lưu dữ liệu</string>
+    <string name="scoped_storage_term_1_ankiweb">Tôi đã đồng bộ hóa với AnkiWeb gần đây</string>
+    <string name="scoped_storage_term_2">Tôi sẽ không xóa ứng dụng khi dữ liệu đang được luân chuyển</string>
+    <string name="scoped_storage_select_all_terms">Vui lòng chấp thuận tát cả các vật phẩm để tiếp tục.</string>
+    <string name="scoped_storage_learn_more">Tìm hiểu thêm</string>
+    <string name="scoped_storage_postpone">Trì hoãn</string>
+    <string name="scoped_storage_migrate">Di chuyển</string>
 </resources>

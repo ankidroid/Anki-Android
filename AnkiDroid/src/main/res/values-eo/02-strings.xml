@@ -210,7 +210,6 @@
     <string name="sched_has_buried">Kelkaj rilataj kaj kaŝitaj kartoj atendos ĝis morgaŭ</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
-    <string name="lookup_hint">Post kopii la tekston, frapetu ie sur la karto por montri la piktogramon de serĉo</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekundo</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
     <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
     <string name="insert_cloze">Enmeti trutekstan malplenon</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>

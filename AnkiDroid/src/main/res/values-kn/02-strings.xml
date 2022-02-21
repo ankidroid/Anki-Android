@@ -210,7 +210,6 @@
     <string name="sched_has_buried">ಕೆಲವು ಸಂಬಂಧಿತ ಅಥವಾ ಸಮಾಧಿ ಮಾಡಿದ ಕಾರ್ಡ್‌ಗಳು ನಾಳೆಯವರೆಗೆ ವಿಳಂಬವಾಗಿದ್ದವು</string>
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
-    <string name="lookup_hint">ಪಠ್ಯವನ್ನು ನಕಲಿಸಿದ ನಂತರ, ಹುಡುಕಾಟ ಐಕಾನ್ ತೋರಿಸಲು ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ನಲ್ಲಿ ಎಲ್ಲಿಯಾದರೂ ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ಸೆಕೆಂಡು</item>
@@ -334,6 +333,7 @@
     <string name="format_font_size">ಫಾಂಟ್ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="insert_mathjax">ಮ್ಯಾಥ್‌ಜಾಕ್ಸ್ ಸಮೀಕರಣವನ್ನು ಸೇರಿಸಿ</string>
     <string name="insert_cloze">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಯನ್ನು ಸೇರಿಸಿ</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">ಆಯ್ಕೆಗೆ ಮೊದಲು HTML</string>
     <string name="after_text">ಆಯ್ಕೆಯ ನಂತರ HTML</string>
     <string name="add_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ರಚಿಸಿ</string>

@@ -33,12 +33,16 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
@@ -99,7 +103,11 @@ public class CompatV26 extends CompatV23 implements Compat {
 
     @Override
     public void deleteFile(@NonNull File file) throws IOException {
-        Files.delete(file.toPath());
+        try {
+            Files.delete(file.toPath());
+        } catch (NoSuchFileException ex) {
+            throw new FileNotFoundException(file.getCanonicalPath());
+        }
     }
 
     // Explores the source directory tree recursively and copies each directory and each file inside each directory
@@ -147,6 +155,16 @@ public class CompatV26 extends CompatV23 implements Compat {
             }
         });
     }
+
+    @Override
+    public boolean hasFiles(@NonNull File directory) throws IOException {
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(directory.toPath())) {
+            return paths.iterator().hasNext();
+        } catch (NotDirectoryException | NoSuchFileException ex) {
+            return false;
+        }
+    }
+
 
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,

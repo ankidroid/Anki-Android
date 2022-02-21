@@ -16,6 +16,8 @@
 
 package com.ichi2.testutils
 
+import org.junit.Assert
+
 /** assertThrows, allowing for lambda shorthand
  *
  * ```kotlin
@@ -23,6 +25,35 @@ package com.ichi2.testutils
  *     foo()
  * }
  * ```
+ *
+ * @see TestException if a test-only exception is needed
  * */
 inline fun <reified T : Throwable> assertThrows(r: Runnable): T =
     AnkiAssert.assertThrows(r, T::class.java)
+
+/**
+ * [assertThrows], accepting subclasses of the exception type
+ *
+ * ```kotlin
+ * val exception = assertThrows<IllegalStateException> {
+ *     foo()
+ * }
+ * ```
+ *
+ * @see TestException if a test-only exception is needed
+ * */
+inline fun <reified T : Throwable> assertThrowsSubclass(r: Runnable): T {
+    try {
+        r.run()
+    } catch (t: Throwable) {
+        // got the exception we want
+        if (t is T) {
+            return t
+        }
+        // We got an exception, but not the correct one
+        throw AssertionError("Expected '" + T::class.simpleName + "' got '" + t.javaClass.simpleName + "'", t)
+    }
+
+    Assert.fail("Expected exception: " + T::class.simpleName + ". No exception thrown.")
+    throw IllegalStateException("shouldn't reach here")
+}

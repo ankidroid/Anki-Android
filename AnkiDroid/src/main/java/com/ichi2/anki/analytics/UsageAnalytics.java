@@ -429,20 +429,6 @@ public class UsageAnalytics {
         @AnalyticsConstant
         public static final String EXCEPTION_REPORT = "Exception Report";
 
-        /* Analytics actions used in Lookup Dictionary */
-        @AnalyticsConstant
-        public static final String AEDICT = "aedict";
-        @AnalyticsConstant
-        public static final String LEO = "leo";
-        @AnalyticsConstant
-        public static final String COLORDICT = "colordict";
-        @AnalyticsConstant
-        public static final String FORA = "fora";
-        @AnalyticsConstant
-        public static final String NCIKU = "nciku";
-        @AnalyticsConstant
-        public static final String EIJIRO = "eijiro";
-
         @AnalyticsConstant
         public static final String IMPORT_APKG_FILE = "Import APKG";
         @AnalyticsConstant

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">ଷ୍ଟ୍ରୋକ ଓସାର</string>
     <string name="use_input_tag" maxLength="41">ପତ୍ରରେ ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
     <string name="use_input_tag_summ">ଉତ୍ତର ଟାଇପ୍ କରିବାକୁ ପତ୍ର ଭିତରେ ଏକ ପାଠ୍ୟ ଇନପୁଟ୍ ବାକ୍ସ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="dictionary" maxLength="41">ଦୃଷ୍ଟିପାତ ଅଭିଧାନ</string>
     <string name="reset_languages" maxLength="41">ଭାଷା reset କରନ୍ତୁ</string>
     <string name="reset_languages_summ">ସମସ୍ତ ତାସଖଣ୍ଡ ପାଇଁ ଭାଷା ସ୍ଵତ୍ଵପର୍ଣ (ପାଠ୍ୟ ରୁ କଥନ ଏବଂ ଅଭିଧାନ ପାଇଁ) ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="reset_languages_question">ସମସ୍ତ ଭାଷା ସ୍ୱତ୍ୱପୁର୍ଣ ପୁନଃସେଟ କରନ୍ତୁ ?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="gestures_summ">ପତ୍ରଗୁଡ଼ିକର ଉତ୍ତର ଏବଂ ସମ୍ପାଦନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ ଅଙ୍ଗଭଙ୍ଗୀ ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="gestures_allow_links" maxLength="41">ଲିଙ୍କଗୁଡ଼ିକରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅଣଦେଖା କରନ୍ତୁ</string>
-    <string name="gestures_allow_links_summary">ଯଦି ଏକ ଲିଙ୍କ୍/ଇଙ୍ଗିତ ଦବାଯାଏ ତେବେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀ ପ୍ରକ୍ରିୟାକରଣ ହେବ ନାହିଁ।</string>
     <string name="gestures_corner_touch" maxLength="41">୯-ଅଙ୍କ ସ୍ପର୍ଶ</string>
     <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଭିଗେସନ୍ ଡ୍ରୟର୍</string>

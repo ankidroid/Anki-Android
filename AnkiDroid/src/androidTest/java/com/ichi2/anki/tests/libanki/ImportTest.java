@@ -63,7 +63,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class ImportTest extends InstrumentedTest {
 
-    private Collection testCol;
+    private Collection mTestCol;
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -85,30 +85,30 @@ public class ImportTest extends InstrumentedTest {
 
     @Before
     public void setUp() throws IOException {
-        testCol = getEmptyCol();
+        mTestCol = getEmptyCol();
     }
 
     @After
     public void tearDown() {
-        testCol.close();
+        mTestCol.close();
     }
 
     @Test
     public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
 
         // add a note that references a sound
-        Note n = testCol.newNote();
+        Note n = mTestCol.newNote();
         n.setField(0, "[sound:foo.mp3]");
         long mid = n.model().getLong("id");
-        testCol.addNote(n);
+        mTestCol.addNote(n);
         // add that sound to the media folder
-        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.mp3"), false);
+        FileOutputStream os = new FileOutputStream(new File(mTestCol.getMedia().dir(), "foo.mp3"), false);
         os.write("foo".getBytes());
         os.close();
-        testCol.close();
+        mTestCol.close();
         // it should be imported correctly into an empty deck
         Collection empty = getEmptyCol();
-        Importer imp = new Anki2Importer(empty, testCol.getPath());
+        Importer imp = new Anki2Importer(empty, mTestCol.getPath());
         imp.run();
         List<String> expected = Collections.singletonList("foo.mp3");
         List<String> actual = Arrays.asList(new File(empty.getMedia().dir()).list());
@@ -116,7 +116,7 @@ public class ImportTest extends InstrumentedTest {
         assertEquals(expected.size(), actual.size());
         // and importing again will not duplicate, as the file content matches
         empty.remCards(empty.getDb().queryLongList("select id from cards"));
-        imp = new Anki2Importer(empty, testCol.getPath());
+        imp = new Anki2Importer(empty, mTestCol.getPath());
         imp.run();
         expected = Collections.singletonList("foo.mp3");
         actual = Arrays.asList(new File(empty.getMedia().dir()).list());
@@ -129,7 +129,7 @@ public class ImportTest extends InstrumentedTest {
         os = new FileOutputStream(new File(empty.getMedia().dir(), "foo.mp3"), false);
         os.write("bar".getBytes());
         os.close();
-        imp = new Anki2Importer(empty, testCol.getPath());
+        imp = new Anki2Importer(empty, mTestCol.getPath());
         imp.run();
         expected = Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid));
         actual = Arrays.asList(new File(empty.getMedia().dir()).list());
@@ -142,7 +142,7 @@ public class ImportTest extends InstrumentedTest {
         os = new FileOutputStream(new File(empty.getMedia().dir(), "foo.mp3"));
         os.write("bar".getBytes());
         os.close();
-        imp = new Anki2Importer(empty, testCol.getPath());
+        imp = new Anki2Importer(empty, mTestCol.getPath());
         imp.run();
         expected =  Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid));
         actual = Arrays.asList(new File(empty.getMedia().dir()).list());
@@ -157,32 +157,32 @@ public class ImportTest extends InstrumentedTest {
     public void testApkg() throws IOException, ImportExportException {
 
         String apkg = Shared.getTestFilePath(getTestContext(), "media.apkg");
-        Importer imp = new AnkiPackageImporter(testCol, apkg);
+        Importer imp = new AnkiPackageImporter(mTestCol, apkg);
         List<String> expected = Collections.emptyList();
-        List<String> actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
+        List<String> actual = Arrays.asList(new File(mTestCol.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(actual.size(), expected.size());
         imp.run();
         expected = Collections.singletonList("foo.wav");
-        actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
+        actual = Arrays.asList(new File(mTestCol.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         // import again should be idempotent in terms of media
-        testCol.remCards(testCol.getDb().queryLongList("select id from cards"));
-        imp = new AnkiPackageImporter(testCol, apkg);
+        mTestCol.remCards(mTestCol.getDb().queryLongList("select id from cards"));
+        imp = new AnkiPackageImporter(mTestCol, apkg);
         imp.run();
         expected = Collections.singletonList("foo.wav");
-        actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
+        actual = Arrays.asList(new File(mTestCol.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         // but if the local file has different data, it will rename
-        testCol.remCards(testCol.getDb().queryLongList("select id from cards"));
-        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.wav"), false);
+        mTestCol.remCards(mTestCol.getDb().queryLongList("select id from cards"));
+        FileOutputStream os = new FileOutputStream(new File(mTestCol.getMedia().dir(), "foo.wav"), false);
         os.write("xyz".getBytes());
         os.close();
-        imp = new AnkiPackageImporter(testCol, apkg);
+        imp = new AnkiPackageImporter(mTestCol, apkg);
         imp.run();
-        assertEquals(2, new File(testCol.getMedia().dir()).list().length);
+        assertEquals(2, new File(mTestCol.getMedia().dir()).list().length);
     }
 
     @Test
@@ -191,54 +191,54 @@ public class ImportTest extends InstrumentedTest {
         // changed, not the number of cards/fields
         // import the first version of the model
         String tmp = Shared.getTestFilePath(getTestContext(), "diffmodeltemplates-1.apkg");
-        AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
+        AnkiPackageImporter imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
         // then the version with updated template
         tmp = Shared.getTestFilePath(getTestContext(), "diffmodeltemplates-2.apkg");
-        imp = new AnkiPackageImporter(testCol, tmp);
+        imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
         // collection should contain the note we imported
-        assertEquals(1, testCol.noteCount());
+        assertEquals(1, mTestCol.noteCount());
         // the front template should contain the text added in the 2nd package
-        Long tcid = testCol.findCards("").get(0);
-        Note tnote = testCol.getCard(tcid).note();
-        assertTrue(testCol.findTemplates(tnote).get(0).getString("qfmt").contains("Changed Front Template"));
+        Long tcid = mTestCol.findCards("").get(0);
+        Note tnote = mTestCol.getCard(tcid).note();
+        assertTrue(mTestCol.findTemplates(tnote).get(0).getString("qfmt").contains("Changed Front Template"));
     }
 
     @Test
     public void testAnki2Updates() throws IOException, ImportExportException {
         // create a new empty deck
         String tmp = Shared.getTestFilePath(getTestContext(), "update1.apkg");
-        AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
+        AnkiPackageImporter imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.run();
         assertEquals(0, imp.getDupes());
         assertEquals(1, imp.getAdded());
         assertEquals(0, imp.getUpdated());
         // importing again should be idempotent
-        imp = new AnkiPackageImporter(testCol, tmp);
+        imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.run();
         assertEquals(1, imp.getDupes());
         assertEquals(0, imp.getAdded());
         assertEquals(0, imp.getUpdated());
         // importing a newer note should update
-        assertEquals(1, testCol.noteCount());
-        assertTrue(testCol.getDb().queryString("select flds from notes").startsWith("hello"));
+        assertEquals(1, mTestCol.noteCount());
+        assertTrue(mTestCol.getDb().queryString("select flds from notes").startsWith("hello"));
         tmp = Shared.getTestFilePath(getTestContext(), "update2.apkg");
-        imp = new AnkiPackageImporter(testCol, tmp);
+        imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.run();
         assertEquals(1, imp.getDupes());
         assertEquals(0, imp.getAdded());
         assertEquals(1, imp.getUpdated());
-        assertTrue(testCol.getDb().queryString("select flds from notes").startsWith("goodbye"));
+        assertTrue(mTestCol.getDb().queryString("select flds from notes").startsWith("goodbye"));
     }
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsv() throws IOException {
         String file = Shared.getTestFilePath(getTestContext(), "text-2fields.txt");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.initMapping();
         i.run();
         if (TestEnvironment.isDisplayingDefaultEnglishStrings()) {
@@ -272,7 +272,7 @@ public class ImportTest extends InstrumentedTest {
         }
         assertEquals(5, i.getTotal());
         // but importing should not clobber tags if they're unmapped
-        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        Note n = mTestCol.getNote(mTestCol.getDb().queryLongScalar("select id from notes"));
         n.addTag("test");
         n.flush();
         i.run();
@@ -284,30 +284,30 @@ public class ImportTest extends InstrumentedTest {
         i.run();
         assertEquals(0, i.getTotal());
         // and if dupes mode, will reimport everything
-        assertEquals(5, testCol.cardCount());
+        assertEquals(5, mTestCol.cardCount());
         i.setImportMode(NoteImporter.ImportMode.ADD_MODE);
         i.run();
         // includes repeated field
         assertEquals(6, i.getTotal());
-        assertEquals(11, testCol.cardCount());
+        assertEquals(11, mTestCol.cardCount());
     }
 
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsv2() throws  IOException, ConfirmModSchemaException {
-        ModelManager mm = testCol.getModels();
+        ModelManager mm = mTestCol.getModels();
         Model m = mm.current();
         JSONObject f = mm.newField("Three");
         mm.addField(m, f);
         mm.save(m);
-        Note n = testCol.newNote();
+        Note n = mTestCol.newNote();
         n.setField(0, "1");
         n.setField(1, "2");
         n.setField(2, "3");
-        testCol.addNote(n);
+        mTestCol.addNote(n);
         // an update with unmapped fields should not clobber those fields
         String file = Shared.getTestFilePath(getTestContext(), "text-update.txt");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.initMapping();
         i.run();
         n.load();
@@ -319,10 +319,10 @@ public class ImportTest extends InstrumentedTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsvWithByteOrderMark() throws IOException {
         String file = Shared.getTestFilePath(getTestContext(), "text-utf8-bom.txt");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.initMapping();
         i.run();
-        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        Note n = mTestCol.getNote(mTestCol.getDb().queryLongScalar("select id from notes"));
         assertThat(Arrays.asList(n.getFields()), contains("Hello", "world"));
     }
 
@@ -332,10 +332,10 @@ public class ImportTest extends InstrumentedTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testUcs2CsvWithByteOrderMark() throws IOException {
         String file = Shared.getTestFilePath(getTestContext(), "text-ucs2-be-bom.txt");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.initMapping();
         i.run();
-        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        Note n = mTestCol.getNote(mTestCol.getDb().queryLongScalar("select id from notes"));
         assertThat(Arrays.asList(n.getFields()), contains("Hello", "world"));
     }
 
@@ -344,11 +344,11 @@ public class ImportTest extends InstrumentedTest {
     public void csvManualBasicExample() throws IOException, ConfirmModSchemaException {
         String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-single-line.txt");
         addFieldToCurrentModel("Third");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.setAllowHtml(true);
         i.initMapping();
         i.run();
-        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        Note n = mTestCol.getNote(mTestCol.getDb().queryLongScalar("select id from notes"));
         assertThat(Arrays.asList(n.getFields()), contains("foo bar", "bar baz", "baz quux"));
     }
 
@@ -357,11 +357,11 @@ public class ImportTest extends InstrumentedTest {
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void csvManualLineBreakExample() throws IOException {
         String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-multi-line.txt");
-        TextImporter i = new TextImporter(testCol, file);
+        TextImporter i = new TextImporter(mTestCol, file);
         i.setAllowHtml(true);
         i.initMapping();
         i.run();
-        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        Note n = mTestCol.getNote(mTestCol.getDb().queryLongScalar("select id from notes"));
         assertThat(Arrays.asList(n.getFields()), contains("hello", "this is\na two line answer"));
     }
 
@@ -373,10 +373,10 @@ public class ImportTest extends InstrumentedTest {
     public void testDupeIgnore() throws IOException, ImportExportException {
         // create a new empty deck
         String tmp = Shared.getTestFilePath(getTestContext(), "update1.apkg");
-        AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
+        AnkiPackageImporter imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.run();
         tmp = Shared.getTestFilePath(getTestContext(), "update3.apkg");
-        imp = new AnkiPackageImporter(testCol, tmp);
+        imp = new AnkiPackageImporter(mTestCol, tmp);
         imp.run();
         // there is a dupe, but it was ignored
         assertEquals(1, imp.getDupes());
@@ -386,7 +386,7 @@ public class ImportTest extends InstrumentedTest {
 
 
     private void addFieldToCurrentModel(String fieldName) throws ConfirmModSchemaException {
-        ModelManager mm = testCol.getModels();
+        ModelManager mm = mTestCol.getModels();
         Model m = mm.current();
         JSONObject f = mm.newField(fieldName);
         mm.addField(m, f);

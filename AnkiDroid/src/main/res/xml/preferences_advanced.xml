@@ -129,12 +129,6 @@
                 android:key="tts"
                 android:summary="@string/tts_summ"
                 android:title="@string/tts" />
-            <ListPreference
-                android:defaultValue="0"
-                android:entries="@array/dictionary_labels"
-                android:entryValues="@array/dictionary_values"
-                android:key="dictionary"
-                android:title="@string/dictionary" />
             <com.ichi2.preferences.ResetLanguageDialogPreference
                 android:dialogIcon="@drawable/ic_warning_black"
                 android:dialogMessage="@string/reset_languages_question"

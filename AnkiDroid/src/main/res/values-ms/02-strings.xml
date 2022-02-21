@@ -207,7 +207,6 @@
     <string name="sched_has_buried">Beberapa berkaitan atau dikubur kad telah ditangguhkan sampai besok</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-    <string name="lookup_hint">Selepas menyalin teks, ketik di mana-mana di belakang untuk menunjukkan mencari ikon</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s seconds</item>
@@ -321,6 +320,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

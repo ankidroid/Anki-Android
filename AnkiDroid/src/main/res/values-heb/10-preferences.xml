@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">עובי הקו</string>
     <string name="use_input_tag" maxLength="41">הקלדת התשובה אל הקלף</string>
     <string name="use_input_tag_summ">להשתמש בתיבת הטקסט שבתוך הקלף כדי להקליד בה את התשובה</string>
-    <string name="dictionary" maxLength="41">מילון</string>
     <string name="reset_languages" maxLength="41">איפוס שפות</string>
     <string name="reset_languages_summ">אפס משימות השפה (לטקסט לדיבור ולמילונים) לכל החפיסות</string>
     <string name="reset_languages_question">לאפס את כל מטלות השפה?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">הפעלת מחוות</string>
     <string name="gestures_summ">שיוך מחוות לפעולות כגון מענה ועריכת קלפים.</string>
-    <string name="gestures_allow_links" maxLength="41">התעלם ממחוות מגע בקישורים</string>
-    <string name="gestures_allow_links_summary">מחוות מגע לא יעובדו אם לוחצים על קישור / רמז.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">אפשר מחוות מגע בפינות המסך</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>

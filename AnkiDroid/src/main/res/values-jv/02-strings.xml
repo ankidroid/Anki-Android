@@ -207,7 +207,6 @@
     <string name="sched_has_buried">Beberapa kartu yang terkait atau dikuburkan ditunda sampai besok</string>
     <string name="tag_editor_add_feedback">Sentuh \"%2$s\" untuk mengonfirmasi menambahkan \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag yang ada \"%1$s\" dipilih</string>
-    <string name="lookup_hint">Setelah menyalin teks, sentuh di manapun di flashcard untuk menampilkan ikon pencarian</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s detik</item>
@@ -326,6 +325,7 @@ Dek itu sudah ada</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>

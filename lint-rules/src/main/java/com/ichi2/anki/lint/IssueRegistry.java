@@ -17,6 +17,7 @@ import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength;
 import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage;
 import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails;
 import com.ichi2.anki.lint.rules.KotlinMigrationFixLineBreaks;
+import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions;
 import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector;
 import com.ichi2.anki.lint.rules.PreferIsEmptyOverSizeCheck;
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage;
@@ -48,6 +49,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(KotlinMigrationFixLineBreaks.ISSUE);
         issues.add(PreferIsEmptyOverSizeCheck.ISSUE);
         issues.add(PrintStackTraceUsage.ISSUE);
+        issues.add(NonPositionalFormatSubstitutions.ISSUE);
         issues.add(NonPublicNonStaticJavaFieldDetector.ISSUE);
         issues.add(ConstantJavaFieldDetector.ISSUE);
         issues.add(FixedPreferencesTitleLength.ISSUE_MAX_LENGTH);

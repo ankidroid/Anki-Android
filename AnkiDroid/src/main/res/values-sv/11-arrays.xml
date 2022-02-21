@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Rekommenderat svar (grön)</string>
     <string name="gesture_answer_better_recommended">Svar bättre än rekommenderat</string>
     <string name="gesture_tag_note">Tagga anteckning</string>
-    <string name="gesture_lookup">Slå upp uttryck</string>
     <string name="gesture_play">Spela upp media</string>
     <string name="gesture_abort_learning">Avbryt inlärning</string>
     <string name="gesture_flag_red">Växla Röd Flagga</string>

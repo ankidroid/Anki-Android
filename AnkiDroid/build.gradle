@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600143
-        versionName="2.16alpha43"
+        versionCode=21600145
+        versionName="2.16alpha45"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -313,6 +313,7 @@ dependencies {
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
+    implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.arcao:slf4j-timber:3.1'

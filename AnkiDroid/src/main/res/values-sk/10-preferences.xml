@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Hrúbka ťahu</string>
     <string name="use_input_tag" maxLength="41">Napíšte odpoveď do kartičky</string>
     <string name="use_input_tag_summ">Odpoveď vložte do textového poľa kartičky</string>
-    <string name="dictionary" maxLength="41">Slovník</string>
     <string name="reset_languages" maxLength="41">Obnoviť jazyky</string>
     <string name="reset_languages_summ">Zrušiť pridelenie jazyka (pre prevod textu na reč a slovníky) pre všetky balíčky</string>
     <string name="reset_languages_question">Obnoviť všetky priradenia jazykov?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Povoliť gestá</string>
     <string name="gestures_summ">Prideliť gestá k akciám ako sú odpoveď či editovanie kartičiek.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorovať dotykové gesto na prepojeniach</string>
-    <string name="gestures_allow_links_summary">Dotykové gesto nebude spracované ak je stlačené prepojenie / nápoveď</string>
     <string name="gestures_corner_touch" maxLength="41">9-bodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povoliť dotykové gestá v rohoch obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigačné menu v režime celej obrazovky</string>

@@ -133,7 +133,6 @@
     <string name="dialog_positive_replace">की जगह</string>
     <string name="dialog_positive_restore">पुनर्स्थापित करें</string>
     <string name="dialog_positive_set">सेट करें</string>
-    <string name="lookup_button_content">लुक अप</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ कोई मांय निर्देशिका नहीं है</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया की जांच करें?</string>

@@ -22,11 +22,14 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.web.CustomSyncServer
+import com.ichi2.libanki.Consts
+import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 
 private typealias VersionIdentifier = Int
@@ -77,6 +80,7 @@ object PreferenceUpgradeService {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
                 yield(UpgradeVolumeButtonsToBindings())
                 yield(RemoveLegacyMediaSyncUrl())
+                yield(UpdateNoteEditorToolbarPrefs())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -228,6 +232,51 @@ object PreferenceUpgradeService {
                 if (mediaSyncUrl.startsWith("https://msync.ankiweb.net")) {
                     preferences.edit { remove(CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL) }
                 }
+            }
+        }
+
+        /**
+         * update toolbar buttons with new preferences, when button text empty or null then it adds the index as button text
+         */
+        internal class UpdateNoteEditorToolbarPrefs : PreferenceUpgrade(4) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val buttons = getNewToolbarButtons(preferences)
+
+                // update prefs
+                preferences.edit {
+                    remove("note_editor_custom_buttons")
+                    putStringSet("note_editor_custom_buttons", CustomToolbarButton.toStringSet(buttons))
+                }
+            }
+
+            private fun getNewToolbarButtons(preferences: SharedPreferences): ArrayList<CustomToolbarButton> {
+                // get old toolbar prefs
+                val set = preferences.getStringSet("note_editor_custom_buttons", HashSetInit<String>(0)) as Set<String?>
+                // new list with buttons size
+                val buttons = ArrayList<CustomToolbarButton>(set.size)
+
+                // parse fields with separator
+                for (s in set) {
+                    val fields = s!!.split(Consts.FIELD_SEPARATOR.toRegex(), CustomToolbarButton.KEEP_EMPTY_ENTRIES.coerceAtLeast(0)).toTypedArray()
+                    if (fields.size != 3) {
+                        continue
+                    }
+
+                    val index: Int = try {
+                        fields[0].toInt()
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        continue
+                    }
+
+                    // add new button with the index + 1 as button text
+                    val visualIndex: Int = index + 1
+                    val buttonText = visualIndex.toString()
+
+                    // fields 1 is prefix, fields 2 is suffix
+                    buttons.add(CustomToolbarButton(index, buttonText, fields[1], fields[2]))
+                }
+                return buttons
             }
         }
     }

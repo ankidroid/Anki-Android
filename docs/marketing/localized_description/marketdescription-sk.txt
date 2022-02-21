@@ -25,7 +25,6 @@ Materiál môžete vkladať prostredníctvom počítačového programu Anki aleb
 • prehliadač kartičiek
 • podpora pre tablet
 • import existujúcich súborov zbierok (cez počítačovú aplikáciu Anki)
-• integrované slovníky (ColorDict, GoldenDict, Leo.org, Aedict, rôzne webové slovníky)
 • pridávanie kartičiek z iných aplikácii, napr. slovníkov
 • podpora vlastného štýlu písma
 • úplné zálohovanie

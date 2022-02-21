@@ -61,7 +61,6 @@ Caracteristici suplimentare:
 • card de browser
 • aspectul tabletei
 • importă fișiere din Anki Desktop
-• integrare cu diverse dicționare web (ColorDict, GoldenDict, Leo.org, Aedict etc.)
 • adaugă carduri din alte aplicații precum dicționare
 • suport pentru font personalizat
 • sistem full backup

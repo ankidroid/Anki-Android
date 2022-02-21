@@ -116,8 +116,6 @@
     <string name="menu_flag_card_seven">紫色標記</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
-    <string name="menu_select">選取文字</string>
-    <string name="menu_lookup">尋找文字</string>
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Tebal garis</string>
     <string name="use_input_tag" maxLength="41">Ketik jawaban ke dalam kartu</string>
     <string name="use_input_tag_summ">Gunakan kotak input teks di dalam kartu untuk mengetik jawaban</string>
-    <string name="dictionary" maxLength="41">Kamus pencarian</string>
     <string name="reset_languages" maxLength="41">Reset bahasa</string>
     <string name="reset_languages_summ">Reset penempatan bahasa (untuk teks-suara dan kamus) untuk semua dek</string>
     <string name="reset_languages_question">Reset semua penempatan bahasa?</string>
@@ -92,8 +91,6 @@
     </string-array>
     <string name="gestures" maxLength="41">Aktifkan gestur</string>
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>
-    <string name="gestures_allow_links" maxLength="41">Abaikan gestur sentuhan di tautan</string>
-    <string name="gestures_allow_links_summary">Sentuhan gestur tidak akan diproses jika ada tautan ditekan.</string>
     <string name="gestures_corner_touch" maxLength="41">Mode sentuhan 9-poin</string>
     <string name="gestures_corner_touch_summary">Perbolehkan gestur sentuhan di bagian pojok layar</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigasi laci layar penuh</string>

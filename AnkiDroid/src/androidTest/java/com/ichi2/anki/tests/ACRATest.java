@@ -18,6 +18,7 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import androidx.annotation.StringRes;
@@ -56,6 +57,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
+@SuppressLint("DirectSystemCurrentTimeMillisUsage")
 public class ACRATest extends InstrumentedTest {
 
     @Rule public GrantPermissionRule mRuntimePermissionRule =
@@ -63,7 +65,7 @@ public class ACRATest extends InstrumentedTest {
 
     private AnkiDroidApp mApp = null;
 
-    private final String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
+    private final String[] mDebugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
     //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
 
 
@@ -110,7 +112,7 @@ public class ACRATest extends InstrumentedTest {
         setAcraConfig("Debug");
         assertArrayEquals("Debug logcat arguments not set correctly",
                 mApp.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
-                new ImmutableList<>(debugLogcatArguments).toArray());
+                new ImmutableList<>(mDebugLogcatArguments).toArray());
         verifyDebugACRAPreferences();
     }
 
