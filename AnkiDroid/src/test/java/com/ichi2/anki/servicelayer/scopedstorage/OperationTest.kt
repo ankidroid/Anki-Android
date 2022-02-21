@@ -18,9 +18,23 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import timber.log.Timber
 
 interface OperationTest {
     val executionContext: MockMigrationContext
+
+    /** Helper function: executes an [Operation] and all sub-operations */
+    fun executeAll(op: Operation) {
+        val ops = ArrayDeque<Operation>()
+        ops.addFirst(op)
+        while (ops.any()) {
+            val head = ops.removeFirst()
+            Timber.d("executing $head")
+            this.executionContext.execSafe(head) {
+                ops.addAll(0, head.execute())
+            }
+        }
+    }
 
     /**
      * Executes an [Operation] without executing the sub-operations
