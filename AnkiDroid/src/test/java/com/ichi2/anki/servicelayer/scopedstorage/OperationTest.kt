@@ -17,7 +17,9 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.testutils.createTransientDirectory
 import timber.log.Timber
 
 interface OperationTest {
@@ -40,5 +42,10 @@ interface OperationTest {
      * Executes an [Operation] without executing the sub-operations
      * @return the sub-operations returned from the execution of the operation
      */
+
     fun Operation.execute(): List<Operation> = this.execute(executionContext)
+
+    /** Return a new empty Directory, which will be deleted after the test. */
+    fun createDirectory(): Directory =
+        Directory.createInstance(createTransientDirectory())!!
 }

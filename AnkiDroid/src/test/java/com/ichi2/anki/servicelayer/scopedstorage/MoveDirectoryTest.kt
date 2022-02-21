@@ -233,9 +233,6 @@ class MoveDirectoryTest : OperationTest {
         CompatHelper.getCompat().deleteFile(createDirectory.directory)
         return createDirectory.directory
     }
-
-    private fun createDirectory(): Directory =
-        Directory.createInstance(createTransientDirectory())!!
 }
 
 /** A move operation which fails */
