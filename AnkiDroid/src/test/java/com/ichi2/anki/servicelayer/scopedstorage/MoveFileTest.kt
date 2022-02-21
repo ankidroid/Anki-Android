@@ -274,7 +274,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
 
     private fun MoveFile.execute() {
         executionContext.attemptRename = attemptRename
-        this.execute(executionContext)
+        val result = this.execute(executionContext)
+        assertThat("No operation left after a move file", result, hasSize(0))
     }
 
     private fun getContent(destinationFile: File) = FileUtil.readSingleLine(destinationFile)
