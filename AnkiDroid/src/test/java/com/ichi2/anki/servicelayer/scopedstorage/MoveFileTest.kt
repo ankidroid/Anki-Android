@@ -265,6 +265,22 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         assertProgressReported(size)
     }
 
+    @Test
+    fun move_file_to_dir_fail() {
+        val source = addUntrackedMediaFile("hello", listOf("hello.txt"))
+        val destination = createTransientDirectory()
+        executionContext.logExceptions = true
+        MoveFile(source, destination).execute()
+
+        assertThat("An exception should be logged", executionContext.exceptions, hasSize(1))
+        val exception = executionContext.exceptions[0]
+        assertThat("An exception should be of the correct type", exception, instanceOf(FileDirectoryConflictException::class.java))
+
+        assertThat("source file should still exist", source.file.exists(), equalTo(true))
+        assertThat("destination file should exist", destination.exists(), equalTo(true))
+        assertThat("content should not have changed", getContent(source.file), equalTo("hello"))
+    }
+
     /** Asserts that 1 element of progress of the provided size was reported */
     private fun assertProgressReported(expectedSize: Long) {
         val progress = executionContext.progress
