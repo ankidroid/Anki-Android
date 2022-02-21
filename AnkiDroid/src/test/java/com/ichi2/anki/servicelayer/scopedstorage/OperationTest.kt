@@ -17,6 +17,14 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+
 interface OperationTest {
     val executionContext: MockMigrationContext
+
+    /**
+     * Executes an [Operation] without executing the sub-operations
+     * @return the sub-operations returned from the execution of the operation
+     */
+    fun Operation.execute(): List<Operation> = this.execute(executionContext)
 }

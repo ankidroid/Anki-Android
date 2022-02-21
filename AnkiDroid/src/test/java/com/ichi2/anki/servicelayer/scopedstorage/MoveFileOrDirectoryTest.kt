@@ -63,5 +63,5 @@ class MoveFileOrDirectoryTest : OperationTest {
         assertThat("No operations should be next as file is deleted", nextOperations, hasSize(0))
     }
 
-    private fun moveFromAndExecute(file: File) = MoveFileOrDirectory(file, File(destinationDir, file.name)).execute(executionContext)
+    private fun moveFromAndExecute(file: File) = MoveFileOrDirectory(file, File(destinationDir, file.name)).execute()
 }
