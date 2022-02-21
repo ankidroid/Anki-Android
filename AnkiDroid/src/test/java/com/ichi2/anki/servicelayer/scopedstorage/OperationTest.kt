@@ -20,8 +20,10 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.createTransientDirectory
 import timber.log.Timber
+import java.io.File
 
 open class OperationTest : RobolectricTest() {
     internal val executionContext: MockMigrationContext = MockMigrationContext()
@@ -48,4 +50,12 @@ open class OperationTest : RobolectricTest() {
     /** Return a new empty Directory, which will be deleted after the test. */
     internal fun createDirectory(): Directory =
         Directory.createInstance(createTransientDirectory())!!
+
+    /** Creates an empty TMP directory to place the output files in */
+    internal fun generateDestinationDirectoryRef(): File {
+        val createDirectory = createDirectory()
+        Timber.d("test: deleting $createDirectory")
+        CompatHelper.getCompat().deleteFile(createDirectory.directory)
+        return createDirectory.directory
+    }
 }
