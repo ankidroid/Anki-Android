@@ -28,7 +28,6 @@ import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
-import timber.log.Timber
 import java.io.File
 
 /**
@@ -224,14 +223,6 @@ class MoveDirectoryTest : OperationTest {
         executeAll(MoveDirectory(source, destinationFile))
 
         assertThat("source was deleted", source.directory.exists(), equalTo(false))
-    }
-
-    /** Creates an empty TMP directory to place the output files in */
-    private fun generateDestinationDirectoryRef(): File {
-        val createDirectory = createDirectory()
-        Timber.d("test: deleting $createDirectory")
-        CompatHelper.getCompat().deleteFile(createDirectory.directory)
-        return createDirectory.directory
     }
 }
 
