@@ -30,15 +30,15 @@ import kotlin.io.path.pathString
  */
 class DeleteEmptyDirectoryTest {
 
-    val context = MockMigrationContext()
+    val executionContext = MockMigrationContext()
 
     @Test
     fun succeeds_if_directory_is_empty() {
         val toDelete = createEmptyDirectory()
 
-        val next = DeleteEmptyDirectory(toDelete).execute(context)
+        val next = DeleteEmptyDirectory(toDelete).execute(executionContext)
 
-        assertThat("no exceptions", context.exceptions, hasSize(0))
+        assertThat("no exceptions", executionContext.exceptions, hasSize(0))
         assertThat("no more operations", next, hasSize(0))
     }
 
@@ -47,11 +47,11 @@ class DeleteEmptyDirectoryTest {
         val toDelete = createEmptyDirectory()
         File(toDelete.directory, "aa.txt").createNewFile()
 
-        context.logExceptions = true
-        val next = DeleteEmptyDirectory(toDelete).execute(context)
+        executionContext.logExceptions = true
+        val next = DeleteEmptyDirectory(toDelete).execute(executionContext)
 
-        assertThat("exception expected", context.exceptions, hasSize(1))
-        assertThat(context.exceptions.single(), instanceOf(MigrateUserData.DirectoryNotEmptyException::class.java))
+        assertThat("exception expected", executionContext.exceptions, hasSize(1))
+        assertThat(executionContext.exceptions.single(), instanceOf(MigrateUserData.DirectoryNotEmptyException::class.java))
         assertThat("no more operations", next, hasSize(0))
     }
 
@@ -62,14 +62,14 @@ class DeleteEmptyDirectoryTest {
         val toDelete = Directory.createInstance(dir)!!
         dir.delete()
 
-        val next = DeleteEmptyDirectory(toDelete).execute(context)
+        val next = DeleteEmptyDirectory(toDelete).execute(executionContext)
 
-        assertThat("no exceptions", context.exceptions, hasSize(0))
+        assertThat("no exceptions", executionContext.exceptions, hasSize(0))
         assertThat("no more operations", next, hasSize(0))
     }
 
     private fun createEmptyDirectory() =
         Directory.createInstance(File(createTempDirectory().pathString))!!
 
-    fun MigrateUserData.Operation.execute() = this.execute(context)
+    fun MigrateUserData.Operation.execute() = this.execute(executionContext)
 }
