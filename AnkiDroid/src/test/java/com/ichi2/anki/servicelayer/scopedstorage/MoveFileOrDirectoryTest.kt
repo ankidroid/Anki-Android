@@ -18,6 +18,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.createTransientFile
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
@@ -35,7 +36,11 @@ class MoveFileOrDirectoryTest {
         val file = createTransientFile()
         val nextOperations = execute(file)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
-        assertThat("A file as input should return a file operation", nextOperations.single(), instanceOf(MoveFile::class.java))
+        val nextOperation = nextOperations[0]
+        assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveFile::class.java))
+        val moveFile = nextOperation as MoveFile
+        assertThat("Move file source should be file", moveFile.sourceFile.file, equalTo(file))
+        assertThat("Destination file source should be file", moveFile.destinationFile, equalTo(File(destinationDir, file.name)))
     }
 
     @Test
@@ -43,7 +48,11 @@ class MoveFileOrDirectoryTest {
         val directory = createTransientDirectory()
         val nextOperations = execute(directory)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
-        assertThat("A file as input should return a file operation", nextOperations.single(), instanceOf(MoveDirectory::class.java))
+        val nextOperation = nextOperations[0]
+        assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveDirectory::class.java))
+        val moveDirectory = nextOperation as MoveDirectory
+        assertThat("Move file source should be file", moveDirectory.source.directory, equalTo(directory))
+        assertThat("Destination file source should be file", moveDirectory.destination, equalTo(File(destinationDir, directory.name)))
     }
 
     @Test
@@ -54,5 +63,5 @@ class MoveFileOrDirectoryTest {
         assertThat("No operations should be next as file is deleted", nextOperations, hasSize(0))
     }
 
-    private fun execute(file: File) = MoveFileOrDirectory(file, File(destinationDir, file.name)).execute(executionContext)
+    private fun execute(file: File) = MoveFileOrDirectory(file, destinationDir).execute(executionContext)
 }
