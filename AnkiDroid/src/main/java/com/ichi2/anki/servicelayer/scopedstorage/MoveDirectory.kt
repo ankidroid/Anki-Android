@@ -24,7 +24,7 @@ import java.io.File
 
 /**
  * [Operation] which safely moves a directory at path `source` to path `destination`.
- * `destination is the new path of the directory.
+ * `destination` is the new path of the directory.
  *
  * Note: thrown exceptions are passed to the context via [MigrateUserData.MigrationContext.reportError]
  *
