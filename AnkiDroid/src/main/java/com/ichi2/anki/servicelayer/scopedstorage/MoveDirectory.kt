@@ -18,8 +18,17 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import timber.log.Timber
 import java.io.File
+
+/**
+ * [Operation] which safely moves a directory at path `source` to path `destination`.
+ * `destination` is the new path of the directory.
+ *
+ * Note: thrown exceptions are passed to the context via [MigrateUserData.MigrationContext.reportError]
+ *
+ */
 
 data class MoveDirectory(val source: Directory, val destination: File) : MigrateUserData.Operation() {
     override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
@@ -57,8 +66,8 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
      * @returns An operation to move file or directory [sourceFile] to [destination]
      */
     @VisibleForTesting
-    internal fun toMoveOperation(sourceFile: File): MigrateUserData.Operation {
-        return MoveFileOrDirectory(sourceFile, destination)
+    internal fun toMoveOperation(sourceFile: File): Operation {
+        return MoveFileOrDirectory(sourceFile, File(destination, sourceFile.name))
     }
 
     /** Creates a directory if it doesn't already exist */

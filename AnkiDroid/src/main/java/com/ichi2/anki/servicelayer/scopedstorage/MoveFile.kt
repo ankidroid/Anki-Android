@@ -25,7 +25,7 @@ import timber.log.Timber
 import java.io.File
 
 /**
- * [Operation] which safely moves a file from one location to another
+ * [Operation] which safely moves a file at path `sourceFile` to path `destinationFile`.
  *
  * Note: thrown exceptions are passed to the context via [MigrateUserData.MigrationContext.reportError]
  *
