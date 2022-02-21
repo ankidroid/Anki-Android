@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.TestException
@@ -178,9 +177,6 @@ class MoveDirectoryTest : OperationTest() {
         CompatHelper.getCompat().deleteFile(createDirectory.directory)
         return createDirectory.directory
     }
-
-    private fun createDirectory(): Directory =
-        Directory.createInstance(createTransientDirectory())!!
 }
 
 /** A move operation which fails */

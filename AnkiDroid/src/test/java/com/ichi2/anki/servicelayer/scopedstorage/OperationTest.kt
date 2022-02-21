@@ -15,11 +15,12 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.testutils.createTransientDirectory
 import timber.log.Timber
 
 open class OperationTest : RobolectricTest() {
@@ -43,4 +44,8 @@ open class OperationTest : RobolectricTest() {
      * @return the sub-operations returned from the execution of the operation
      */
     internal fun Operation.execute(): List<Operation> = this.execute(executionContext)
+
+    /** Return a new empty Directory, which will be deleted after the test. */
+    internal fun createDirectory(): Directory =
+        Directory.createInstance(createTransientDirectory())!!
 }
