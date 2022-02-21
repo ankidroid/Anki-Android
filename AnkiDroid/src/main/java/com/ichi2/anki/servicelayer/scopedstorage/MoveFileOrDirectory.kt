@@ -30,6 +30,9 @@ import java.io.File
  *  Checking whether a `File` object is a file/directory requires an I/O operation, which means that
  *  it should not be done in a loop, as this would block preemption.
  *
+ *  @param sourceFile is the file or directory to move
+ *  @param destination the new path of the file or directory (not the directory containing it)
+ *
  * @see [MoveDirectory]
  * @see [MoveFile]
  */
@@ -44,7 +47,7 @@ data class MoveFileOrDirectory(
         when {
             sourceFile.isFile -> {
                 val fileToCreate = DiskFile.createInstanceUnsafe(sourceFile)
-                return listOf(MoveFile(fileToCreate, File(destination, sourceFile.name)))
+                return listOf(MoveFile(fileToCreate, destination))
             }
             sourceFile.isDirectory -> {
                 if (isSymlink(sourceFile)) {
@@ -52,7 +55,7 @@ data class MoveFileOrDirectory(
                     return operationCompleted()
                 }
                 val directory = Directory.createInstanceUnsafe(sourceFile)
-                return listOf(MoveDirectory(directory, File(destination, sourceFile.name)))
+                return listOf(MoveDirectory(directory, destination))
             }
             else -> {
                 if (!sourceFile.exists()) {
