@@ -42,6 +42,11 @@ class MigrateUserData {
     class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException()
 
     /**
+     * If [destination] is a folder. In this case, move `source/filename` to `source/conflict/filename`.
+     */
+    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : RuntimeException()
+
+    /**
      * If one or more required directories were missing
      */
     class MissingDirectoryException(val directories: List<File>) : RuntimeException() {
