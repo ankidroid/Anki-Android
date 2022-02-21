@@ -171,19 +171,6 @@ class MoveDirectoryTest : OperationTest() {
         assertThat("source was deleted", source.directory.exists(), equalTo(false))
     }
 
-    /** Helper function: executes an [Operation] and all sub-operations */
-    private fun executeAll(op: MoveDirectory) {
-        val l = ArrayDeque<Operation>()
-        l.addFirst(op)
-        while (l.any()) {
-            val head = l.removeFirst()
-            Timber.d("executing $head")
-            this.executionContext.execSafe(head) {
-                l.addAll(0, head.execute())
-            }
-        }
-    }
-
     /** Creates an empty TMP directory to place the output files in */
     private fun generateDestinationDirectoryRef(): File {
         val createDirectory = createDirectory()

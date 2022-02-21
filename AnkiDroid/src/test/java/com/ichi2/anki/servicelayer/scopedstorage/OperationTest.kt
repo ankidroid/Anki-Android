@@ -25,6 +25,19 @@ import timber.log.Timber
 open class OperationTest : RobolectricTest() {
     internal val executionContext: MockMigrationContext = MockMigrationContext()
 
+    /** Helper function: executes an [Operation] and all sub-operations */
+    internal fun executeAll(op: MoveDirectory) {
+        val ops = ArrayDeque<MigrateUserData.Operation>()
+        ops.addFirst(op)
+        while (ops.any()) {
+            val head = ops.removeFirst()
+            Timber.d("executing $head")
+            this.executionContext.execSafe(head) {
+                ops.addAll(0, head.execute())
+            }
+        }
+    }
+
     /**
      * Executes an [Operation] without executing the sub-operations
      * @return the sub-operations returned from the execution of the operation
