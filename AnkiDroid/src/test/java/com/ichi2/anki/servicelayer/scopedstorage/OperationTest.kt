@@ -19,7 +19,15 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import timber.log.Timber
 
 open class OperationTest : RobolectricTest() {
     internal val executionContext: MockMigrationContext = MockMigrationContext()
+
+    /**
+     * Executes an [Operation] without executing the sub-operations
+     * @return the sub-operations returned from the execution of the operation
+     */
+    internal fun Operation.execute(): List<Operation> = this.execute(executionContext)
 }

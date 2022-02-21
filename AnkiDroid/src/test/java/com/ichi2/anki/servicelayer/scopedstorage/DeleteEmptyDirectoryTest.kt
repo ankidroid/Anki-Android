@@ -68,6 +68,4 @@ class DeleteEmptyDirectoryTest : OperationTest() {
 
     private fun createEmptyDirectory() =
         Directory.createInstance(File(createTempDirectory().pathString))!!
-
-    fun MigrateUserData.Operation.execute() = this.execute(executionContext)
 }

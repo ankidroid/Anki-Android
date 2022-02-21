@@ -194,12 +194,6 @@ class MoveDirectoryTest : OperationTest() {
 
     private fun createDirectory(): Directory =
         Directory.createInstance(createTransientDirectory())!!
-
-    /**
-     * Executes an [Operation] without executing the sub-operations
-     * @return the sub-operations returned from the execution of the operation
-     */
-    private fun Operation.execute(): List<Operation> = this.execute(executionContext)
 }
 
 /** A move operation which fails */
