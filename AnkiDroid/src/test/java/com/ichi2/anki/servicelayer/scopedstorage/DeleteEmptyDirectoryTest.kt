@@ -28,9 +28,7 @@ import kotlin.io.path.pathString
 /**
  * Tests for [DeleteEmptyDirectory]
  */
-class DeleteEmptyDirectoryTest {
-
-    val executionContext = MockMigrationContext()
+class DeleteEmptyDirectoryTest : OperationTest() {
 
     @Test
     fun succeeds_if_directory_is_empty() {

@@ -25,9 +25,8 @@ import org.junit.Test
 import java.io.File
 
 /** Tests for [MoveFileOrDirectory] */
-class MoveFileOrDirectoryTest {
+class MoveFileOrDirectoryTest : OperationTest() {
 
-    private val executionContext = MockMigrationContext()
     private val destinationDir = createTransientDirectory()
 
     @Test

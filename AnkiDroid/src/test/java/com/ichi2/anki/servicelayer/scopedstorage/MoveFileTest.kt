@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
 import com.ichi2.testutils.*
@@ -35,7 +34,7 @@ import timber.log.Timber
 import java.io.File
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
+class MoveFileTest(private val attemptRename: Boolean) : OperationTest() {
     companion object {
         @Suppress("unused")
         @Parameters(name = "attemptRename = {0}")
@@ -44,8 +43,6 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
             return listOf(arrayOf(true), arrayOf(false))
         }
     }
-
-    private val executionContext: MockMigrationContext = MockMigrationContext()
 
     @Test
     fun move_file_is_success() {
