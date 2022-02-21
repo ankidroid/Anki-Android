@@ -39,12 +39,12 @@ class MigrateUserData {
      *
      * If a file named `filename` exists in [destination] and in [source] with different content, move `source/filename` to `source/conflict/filename`.
      */
-    class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException()
+    class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException("File $source can not be copied to $destination, destination exists and differs.")
 
     /**
      * If [destination] is a folder. In this case, move `source/filename` to `source/conflict/filename`.
      */
-    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : RuntimeException()
+    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : RuntimeException("File $source can not be copied to $destination, as destination is a directory.")
 
     /**
      * If one or more required directories were missing
