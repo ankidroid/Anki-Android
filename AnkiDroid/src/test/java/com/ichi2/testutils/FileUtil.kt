@@ -59,11 +59,16 @@ fun Directory.exists(): Boolean = this.directory.exists()
 
 /** Adds a file to the directory with the provided name and content */
 fun File.withTempFile(fileName: String, content: String = "default content"): File {
-    File(this, fileName).also {
+    this.addTempFile(fileName, content)
+    return this
+}
+
+/** Adds a file to the directory with the provided name and content. Return the new file. */
+fun File.addTempFile(fileName: String, content: String = "default content"): File {
+    return File(this, fileName).also {
         IOUtils.writeStringToFile(it, content)
         it.deleteOnExit()
     }
-    return this
 }
 
 /** Adds a file to the directory with the provided name and content */
