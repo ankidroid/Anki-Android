@@ -19,10 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
-import com.ichi2.testutils.TestException
-import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.exists
-import com.ichi2.testutils.withTempFile
+import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
@@ -108,7 +105,7 @@ class MoveDirectoryTest {
             .withTempFile("bar.txt")
             .withTempFile("baz.txt")
 
-        val destinationFile = generateDestinationDirectoryRef()
+        val destinationDirectory = generateDestinationDirectoryRef()
 
         // Use variables as we don't know which file will be returned in the middle from listFiles()
         var beforeFile: File? = null
@@ -117,7 +114,7 @@ class MoveDirectoryTest {
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val operation = spy(MoveDirectory(source, destinationFile)) {
+        val operation = spy(MoveDirectory(source, destinationDirectory)) {
             doAnswer { op ->
                 val sourceFile = op.arguments[0] as File
                 when (movesProcessed++) {
@@ -147,6 +144,63 @@ class MoveDirectoryTest {
         assertThat("fail was not copied", failedFile!!.exists(), equalTo(true))
         assertThat("file before failure was copied", beforeFile!!.exists(), equalTo(false))
         assertThat("file after failure was copied", afterFile!!.exists(), equalTo(false))
+    }
+
+    @Test
+    fun adding_file_during_move_is_not_fatal() {
+        adding_during_move_helper() {
+            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+        }
+    }
+
+    @Test
+    fun adding_directory_during_move_is_not_fatal() {
+        adding_during_move_helper() {
+            val new_directory = File(it.directory, "subdirectory")
+            assertThat("Subdirectory is created", new_directory.mkdir())
+            new_directory.deleteOnExit()
+            return@adding_during_move_helper new_directory
+        }
+    }
+
+    /**
+     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
+     * This new file/directory must be present in source or destination.
+     *
+     */
+    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File) {
+        val source = createDirectory()
+            .withTempFile("foo.txt")
+            .withTempFile("bar.txt")
+
+        val destinationDirectory = generateDestinationDirectoryRef()
+        var new_file_name: String? = null
+
+        executionContext.attemptRename = false
+        executionContext.logExceptions = true
+        var movesProcessed = 0
+        val operation = spy(MoveDirectory(source, destinationDirectory)) {
+            doAnswer { op ->
+                val operation = op.callRealMethod() as Operation
+                if (movesProcessed++ == 1) {
+                    return@doAnswer object : Operation() {
+                        // Create a file in `source` and then execute the original operation.
+                        // It ensures a file is added after some files where already copied.
+                        override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+                            new_file_name = toDoBetweenTwoFilesMove(source).name
+                            return operation.execute()
+                        }
+                    }
+                }
+                return@doAnswer operation
+            }.`when`(it).toMoveOperation(any())
+        }
+        executeAll(operation)
+
+        assertThat(
+            "new_file should be present in source or directory",
+            File(source.directory, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
+        )
     }
 
     @Test
