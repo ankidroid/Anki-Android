@@ -141,7 +141,7 @@ class DeckSpinnerSelection(
     fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
-                displayDeckOverrideDialog(collection)
+                displayDeckSelectionDialog(collection)
             }
             true
         }
@@ -222,7 +222,10 @@ class DeckSpinnerSelection(
         return true
     }
 
-    fun displayDeckOverrideDialog(col: Collection?) {
+    /**
+     * Displays a [DeckSelectionDialog]
+     */
+    fun displayDeckSelectionDialog(col: Collection?) {
         val nonDynamic = FunctionalInterfaces.Filter { d: Deck? -> !Decks.isDynamic(d) }
         val decks = fromCollection(col!!, nonDynamic).toMutableList()
         if (showAllDecks) {
