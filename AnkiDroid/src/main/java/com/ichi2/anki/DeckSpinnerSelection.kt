@@ -24,7 +24,6 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
@@ -232,7 +231,7 @@ class DeckSpinnerSelection(
         if (shouldHideDefaultDeck()) {
             decks.removeIf { x: SelectableDeck -> x.deckId == Consts.DEFAULT_DECK_ID }
         }
-        val dialog = newInstance(context.getString(R.string.search_deck), null, false, decks)
+        val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
     }
 
