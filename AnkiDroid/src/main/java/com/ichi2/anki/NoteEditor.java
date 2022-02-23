@@ -701,8 +701,8 @@ public class NoteEditor extends AnkiActivity implements
 
             case KeyEvent.KEYCODE_D:
                 //null check in case Spinner is moved into options menu in the future
-                if (event.isCtrlPressed() && (mDeckSpinnerSelection.hasSpinner())) {
-                    mDeckSpinnerSelection.displayDeckOverrideDialog(getCol());
+                if (event.isCtrlPressed()) {
+                    mDeckSpinnerSelection.displayDeckSelectionDialog(getCol());
                 }
                 break;
 

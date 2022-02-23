@@ -17,6 +17,7 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.EquivalentFileException
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
@@ -25,7 +26,7 @@ import timber.log.Timber
 import java.io.File
 
 /**
- * [Operation] which safely moves a file from one location to another
+ * [Operation] which safely moves a file at path `sourceFile` to path `destinationFile`.
  *
  * Note: thrown exceptions are passed to the context via [MigrateUserData.MigrationContext.reportError]
  *
@@ -38,6 +39,11 @@ import java.io.File
 internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File) : Operation() {
     override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
         val destinationExists = destinationFile.exists()
+
+        if (destinationExists && destinationFile.isDirectory) {
+            context.reportError(this, MigrateUserData.FileDirectoryConflictException(sourceFile, Directory.createInstanceUnsafe(destinationFile)))
+            return operationCompleted()
+        }
 
         if (handledEquivalentFileContent(destinationExists, context)) {
             return operationCompleted()
