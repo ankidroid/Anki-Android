@@ -24,6 +24,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
@@ -35,8 +36,17 @@ import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.WithFragmentManager
 import com.ichi2.utils.toFragmentManager
 import timber.log.Timber
-import java.util.*
 
+/**
+ * Handles expansion of a [Spinner], allowing a press to display a [DeckSelectionDialog]
+ * Responsible for filtering the decks to display in the [DeckSelectionDialog]
+ *
+ * Populates the spinner with data, and handles display of the selected deck within the spinner control
+ *
+ * @param spinner Currently empty Spinner. Used to access the Android view.
+ * @param showAllDecks Whether the deck selection should allow "All Decks" as an option
+ * @param alwaysShowDefault If true, never hide the default deck. If false, match [DeckPicker]'s logic
+ */
 class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinner: Spinner, showAllDecks: Boolean, alwaysShowDefault: Boolean) {
     private val mDeckId: Long = 0
 
@@ -244,9 +254,6 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
         private const val ALL_DECKS_ID = 0L
     }
 
-    /**
-     * @param spinner Currently empty Spinner. Used to access the Android view.
-     */
     init {
         mContext = context
         mCollection = collection
