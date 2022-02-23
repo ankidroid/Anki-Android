@@ -239,7 +239,7 @@ class DeckSpinnerSelection(
     /**
      * @return Whether default deck should appear in the list of deck
      */
-    protected fun shouldHideDefaultDeck(): Boolean {
+    private fun shouldHideDefaultDeck(): Boolean {
         return !alwaysShowDefault && !shouldShowDefaultDeck(collection)
     }
 
