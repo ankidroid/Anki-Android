@@ -64,7 +64,7 @@ class DeckSpinnerSelection(
 
     private val mWithFragmentManager: WithFragmentManager = context.toFragmentManager()
 
-    lateinit var dropDownDecks: List<Deck?>
+    lateinit var dropDownDecks: List<Deck>
         private set
     private var mDeckDropDownAdapter: DeckDropDownAdapter? = null
 
@@ -75,7 +75,7 @@ class DeckSpinnerSelection(
         dropDownDecks = computeDropDownDecks()
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
-            val thisDid = d!!.getLong("id")
+            val thisDid = d.getLong("id")
             mAllDeckIds.add(thisDid)
         }
         mDeckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
@@ -90,7 +90,7 @@ class DeckSpinnerSelection(
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
             // add current deck and all other non-filtered decks to deck list
-            val thisDid = d!!.getLong("id")
+            val thisDid = d.getLong("id")
             val currentName = d.getString("name")
             val lineContent: String = if (d.isStd) {
                 currentName
@@ -131,10 +131,10 @@ class DeckSpinnerSelection(
     /**
      * @return All decks, except maybe default if it should be hidden.
      */
-    protected fun computeDropDownDecks(): List<Deck?> {
+    private fun computeDropDownDecks(): List<Deck> {
         val decks = collection.decks.allSorted().toMutableList()
         if (shouldHideDefaultDeck()) {
-            decks.removeIf { x: Deck? -> x?.getLong("id") == Consts.DEFAULT_DECK_ID }
+            decks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
         }
         return decks
     }
