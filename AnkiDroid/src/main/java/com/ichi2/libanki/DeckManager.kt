@@ -213,8 +213,8 @@ abstract class DeckManager {
      * interface components that display a deck list to ensure the ordering is consistent.
      */
     /** {@inheritDoc}  */
-    fun allSorted(): List<Deck?> {
-        val decks: List<Deck?> = all()
+    fun allSorted(): List<Deck> {
+        val decks: List<Deck> = all()
         Collections.sort(decks, DeckComparator.INSTANCE)
         return decks
     }
