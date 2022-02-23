@@ -48,8 +48,6 @@ import timber.log.Timber
  * @param alwaysShowDefault If true, never hide the default deck. If false, match [DeckPicker]'s logic
  */
 class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinner: Spinner, showAllDecks: Boolean, alwaysShowDefault: Boolean) {
-    private val mDeckId: Long = 0
-
     /**
      * All of the decks shown to the user.
      */
@@ -154,15 +152,16 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
     }
 
     /**
-     * Move the selected deck in the spinner to mDeckId.
-     * Timber if mDeckId is not an id of a known deck.
+     * Move the selected deck in the spinner to [deckId].
+     * Timber if [deckId] is not an id of a known deck.
+     * @param deckId The ID of the deck to select
      */
     fun updateDeckPosition(deckId: Long) {
         val position = mAllDeckIds!!.indexOf(deckId)
         if (position != -1) {
             mSpinner.setSelection(position)
         } else {
-            Timber.e("updateDeckPosition() error :: mCurrentDid=%d, position=%d", mDeckId, position)
+            Timber.w("updateDeckPosition() error :: deckId=%d, position=%d", deckId, position)
         }
     }
 
