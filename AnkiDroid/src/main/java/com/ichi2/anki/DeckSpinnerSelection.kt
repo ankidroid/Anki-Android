@@ -63,7 +63,7 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
     private val mWithFragmentManager: WithFragmentManager
     private val mContext: Context
     private val mCollection: Collection
-    var dropDownDecks: List<Deck?>? = null
+    lateinit var dropDownDecks: List<Deck?>
         private set
     private var mDeckDropDownAdapter: DeckDropDownAdapter? = null
     private val mShowAllDecks: Boolean
@@ -75,8 +75,8 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
 
         // Add drop-down menu to select deck to action bar.
         dropDownDecks = computeDropDownDecks()
-        mAllDeckIds = ArrayList(dropDownDecks!!.size)
-        for (d in dropDownDecks!!) {
+        mAllDeckIds = ArrayList(dropDownDecks.size)
+        for (d in dropDownDecks) {
             val thisDid = d!!.getLong("id")
             mAllDeckIds!!.add(thisDid)
         }
@@ -88,9 +88,9 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
     fun initializeNoteEditorDeckSpinner(currentEditedCard: Card?, addNote: Boolean) {
         val col = mCollection
         dropDownDecks = computeDropDownDecks()
-        val deckNames = ArrayList<String>(dropDownDecks!!.size)
-        mAllDeckIds = ArrayList(dropDownDecks!!.size)
-        for (d in dropDownDecks!!) {
+        val deckNames = ArrayList<String>(dropDownDecks.size)
+        mAllDeckIds = ArrayList(dropDownDecks.size)
+        for (d in dropDownDecks) {
             // add current deck and all other non-filtered decks to deck list
             val thisDid = d!!.getLong("id")
             val currentName = d.getString("name")
