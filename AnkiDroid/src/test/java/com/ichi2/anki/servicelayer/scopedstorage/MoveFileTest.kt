@@ -35,7 +35,7 @@ import timber.log.Timber
 import java.io.File
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
+class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), OperationTest {
     companion object {
         @Suppress("unused")
         @Parameters(name = "attemptRename = {0}")
@@ -45,7 +45,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         }
     }
 
-    private val executionContext: MockMigrationContext = MockMigrationContext()
+    override val executionContext: MockMigrationContext = MockMigrationContext()
 
     @Test
     fun move_file_is_success() {

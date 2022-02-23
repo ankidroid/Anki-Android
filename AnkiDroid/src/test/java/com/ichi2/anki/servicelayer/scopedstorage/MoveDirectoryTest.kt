@@ -34,9 +34,8 @@ import java.io.File
 /**
  * Test for [MoveDirectory]
  */
-class MoveDirectoryTest {
-
-    private val executionContext: MockMigrationContext = MockMigrationContext()
+class MoveDirectoryTest : OperationTest {
+    override val executionContext: MockMigrationContext = MockMigrationContext()
 
     @Test
     fun test_success_integration_test_recursive() {
