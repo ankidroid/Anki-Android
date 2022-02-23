@@ -36,6 +36,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.Deck
@@ -51,8 +53,15 @@ import java.util.*
 import java.util.Objects.requireNonNull
 
 /**
- * The dialog which allow to select a deck. It is opened when the user click on a deck name in stats, browser or note editor.
- * It allows to filter decks by typing part of its name.
+ * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
+ *
+ * * Allows filtering of visible decks based on name (searching): [DecksFilter]
+ * * Allows adding a new deck: [showDeckDialog]
+ * * Allows adding a subdeck via long-pressing a deck: [showSubDeckDialog]
+ *
+ * It is opened when the user wants a deck in stats, browser or note editor.
+ *
+ * @see SelectableDeck The data that is displayed
  */
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private var mDialog: MaterialDialog? = null
