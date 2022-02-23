@@ -175,10 +175,6 @@ class DeckSpinnerSelection(
         spinner.visibility = view
     }
 
-    fun hasSpinner(): Boolean {
-        return true // Condition 'spinner != null' is always 'true'
-    }
-
     /**
      * Iterates the drop down decks, and selects the one matching the given id.
      * @param deckId The deck id to be selected.
