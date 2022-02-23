@@ -31,9 +31,9 @@ import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.FragmentManagerSupplier
 import com.ichi2.utils.FunctionalInterfaces
-import com.ichi2.utils.WithFragmentManager
-import com.ichi2.utils.toFragmentManager
+import com.ichi2.utils.asFragmentManagerSupplier
 import timber.log.Timber
 
 /**
@@ -62,7 +62,7 @@ class DeckSpinnerSelection(
      */
     private lateinit var mAllDeckIds: ArrayList<Long>
 
-    private val mWithFragmentManager: WithFragmentManager = context.toFragmentManager()
+    private val mFragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
     lateinit var dropDownDecks: List<Deck>
         private set
@@ -233,7 +233,7 @@ class DeckSpinnerSelection(
             decks.removeIf { x: SelectableDeck -> x.deckId == Consts.DEFAULT_DECK_ID }
         }
         val dialog = newInstance(context.getString(R.string.search_deck), null, false, decks)
-        AnkiActivity.showDialogFragment(mWithFragmentManager.getFragmentManager(), dialog)
+        AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
     }
 
     /**
