@@ -51,13 +51,13 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
     /**
      * All of the decks shown to the user.
      */
-    private var mAllDeckIds: ArrayList<Long>? = null
+    private lateinit var mAllDeckIds: ArrayList<Long>
 
     /**
      * The spinner displayed in the activity.
      * Empty at construction. After initialization, it contains in this order:
      * * "All decks" if mShowAllDecks is true
-     * * then it contains all decks from mAllDeckIds.
+     * * then it contains all decks from [mAllDeckIds].
      */
     private val mSpinner: Spinner
     private val mWithFragmentManager: WithFragmentManager
@@ -78,7 +78,7 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
             val thisDid = d!!.getLong("id")
-            mAllDeckIds!!.add(thisDid)
+            mAllDeckIds.add(thisDid)
         }
         mDeckDropDownAdapter = DeckDropDownAdapter(mContext, dropDownDecks)
         mSpinner.adapter = mDeckDropDownAdapter
@@ -107,7 +107,7 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
                     continue
                 }
             }
-            mAllDeckIds!!.add(thisDid)
+            mAllDeckIds.add(thisDid)
             deckNames.add(lineContent)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(mContext, R.layout.multiline_spinner_item, deckNames as List<String?>) {
@@ -157,7 +157,7 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
      * @param deckId The ID of the deck to select
      */
     fun updateDeckPosition(deckId: Long) {
-        val position = mAllDeckIds!!.indexOf(deckId)
+        val position = mAllDeckIds.indexOf(deckId)
         if (position != -1) {
             mSpinner.setSelection(position)
         } else {
@@ -203,8 +203,8 @@ class DeckSpinnerSelection(context: AnkiActivity, collection: Collection, spinne
      * @return whether it was found
      */
     private fun selectDeck(deckId: Long, setAsCurrentDeck: Boolean): Boolean {
-        for (dropDownDeckIdx in mAllDeckIds!!.indices) {
-            if (mAllDeckIds!![dropDownDeckIdx] == deckId) {
+        for (dropDownDeckIdx in mAllDeckIds.indices) {
+            if (mAllDeckIds[dropDownDeckIdx] == deckId) {
                 val position = if (mShowAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
                 mSpinner.setSelection(position)
                 if (setAsCurrentDeck) {
