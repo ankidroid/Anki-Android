@@ -20,11 +20,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.AnkiActivity
 
+/**
+ * A function which returns a [FragmentManager].
+ * This is an adapter, accepting either be a [Fragment] or an [AnkiActivity], even though they share
+ * no interfaces in common for fragment managers
+ */
 @FunctionalInterface
-fun interface WithFragmentManager {
+fun interface FragmentManagerSupplier {
     fun getFragmentManager(): FragmentManager
 }
 
-fun Fragment.toFragmentManager() = WithFragmentManager { this.childFragmentManager }
+fun Fragment.asFragmentManagerSupplier() = FragmentManagerSupplier { this.childFragmentManager }
 
-fun AnkiActivity.toFragmentManager() = WithFragmentManager { this.supportFragmentManager }
+fun AnkiActivity.asFragmentManagerSupplier() = FragmentManagerSupplier { this.supportFragmentManager }
