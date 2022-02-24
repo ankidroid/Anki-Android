@@ -16,16 +16,17 @@
 
 package com.ichi2.compat
 
+import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.createTransientFile
-import com.ichi2.testutils.withTempFile
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.not
+import com.ichi2.testutils.*
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import java.io.IOException
+import java.nio.file.NoSuchFileException
+import java.nio.file.NotDirectoryException
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [21, 26])
@@ -33,7 +34,7 @@ class DirectoryContentTest {
     @Test
     fun empty_dir_test() {
         val directory = createTransientDirectory()
-        CompatHelper.getCompat().contentOfDirectory(directory)!!.use {
+        CompatHelper.getCompat().contentOfDirectory(directory).use {
             assertThat("Iterator should not have next", it.hasNext(), equalTo(false))
         }
     }
@@ -43,7 +44,7 @@ class DirectoryContentTest {
         // Relative paths caused me hours of debugging. Never again.
         val directory = createTransientDirectory()
             .withTempFile("zero")
-        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)!!
+        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)
         val file = iterator.next()
         assertThat("Paths should be canonical", file.path, equalTo(file.canonicalPath))
     }
@@ -54,7 +55,7 @@ class DirectoryContentTest {
             .withTempFile("zero")
             .withTempFile("one")
             .withTempFile("two")
-        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)!!
+        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)
         val found = Array(3) { false }
         for (i in 1..3) {
             assertThat("Iterator should have a $i-th element", iterator.hasNext(), equalTo(true))
@@ -77,19 +78,24 @@ class DirectoryContentTest {
     fun non_existent_dir_test() {
         val directory = createTransientDirectory()
         directory.delete()
-        assertThat(
-            "for non existent file, we expect nul",
-            CompatHelper.getCompat().contentOfDirectory(directory), equalTo(null)
+        val exception = assertThrowsSubclass<IOException>({
+            CompatHelper.getCompat().contentOfDirectory(directory)
+        }
         )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NoSuchFileException::class.java))
+        }
     }
 
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
-        file.delete()
-        assertThat(
-            "for file which is not a folder, we expect null",
-            CompatHelper.getCompat().contentOfDirectory(file), equalTo(null)
+        val exception = assertThrowsSubclass<IOException>({
+            CompatHelper.getCompat().contentOfDirectory(file)
+        }
         )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
+        }
     }
 }

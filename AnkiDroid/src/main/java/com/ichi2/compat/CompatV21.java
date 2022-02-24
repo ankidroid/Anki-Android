@@ -279,10 +279,10 @@ public class CompatV21 implements Compat {
     * It is linear in time and space in the number of file and folder in the directory.
     * However, hasNext and next should be constant in time and space. */
     @Override
-    public @Nullable FileStream contentOfDirectory(@NonNull File directory) {
+    public @NonNull FileStream contentOfDirectory(@NonNull File directory) throws IOException {
         File[] paths = directory.listFiles();
         if (paths == null) {
-            return null;
+            throw new IOException("Directory " + directory.getPath() + "'s file can not be listed. Probable cause are that it's not a directory (which violate the method's assumption) or a permission issue.");
         }
         int length = paths.length;
         return new FileStream() {
