@@ -104,30 +104,15 @@ class MoveDirectoryTest : OperationTest {
 
         val destinationDirectory = generateDestinationDirectoryRef()
 
-        // Use variables as we don't know which file will be returned in the middle from listFiles()
-        var beforeFile: File? = null
-        var failedFile: File? = null // ensure the second file fails
-        var afterFile: File? = null
         executionContext.attemptRename = false
         executionContext.logExceptions = true
-        var movesProcessed = 0
-        val operation = spy(MoveDirectory(source, destinationDirectory)) {
-            doAnswer { op ->
-                val sourceFile = op.arguments[0] as File
-                when (movesProcessed++) {
-                    0 -> beforeFile = sourceFile
-                    1 -> {
-                        failedFile = sourceFile
-                        return@doAnswer FailMove()
-                    }
-                    2 -> afterFile = sourceFile
-                    else -> throw IllegalStateException("only 3 files expected")
-                }
-
-                return@doAnswer op.callRealMethod() as Operation
-            }.`when`(it).toMoveOperation(any())
-        }
-        executeAll(operation)
+        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val subOperations = moveDirectory.execute()
+        val moveDirectoryContent = subOperations[0] as MoveDirectoryContent
+        val deleteDirectory = subOperations[1]
+        val spyMoveDirectoryContent = OperationTest.SpyMoveDirectoryContent(moveDirectoryContent)
+        val moveDirectoryContentSpied = spyMoveDirectoryContent.spy
+        executeAll(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(executionContext.exceptions, hasSize(2))
         executionContext.exceptions[0].run {
@@ -138,9 +123,9 @@ class MoveDirectoryTest : OperationTest {
         }
 
         assertThat("source directory should not be deleted", source.exists(), equalTo(true))
-        assertThat("fail was not copied", failedFile!!.exists(), equalTo(true))
-        assertThat("file before failure was copied", beforeFile!!.exists(), equalTo(false))
-        assertThat("file after failure was copied", afterFile!!.exists(), equalTo(false))
+        assertThat("fail was not copied", spyMoveDirectoryContent.failedFile!!.exists(), equalTo(true))
+        assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
+        assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
     }
 
     @Test
@@ -176,7 +161,11 @@ class MoveDirectoryTest : OperationTest {
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val operation = spy(MoveDirectory(source, destinationDirectory)) {
+        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val suboperations = moveDirectory.execute()
+        val moveDirectoryContent = suboperations[0] as MoveDirectoryContent
+        val deleteDirectory = suboperations[1]
+        val moveDirectoryContentSpied = spy(moveDirectoryContent) {
             doAnswer { op ->
                 val operation = op.callRealMethod() as Operation
                 if (movesProcessed++ == 1) {
@@ -192,7 +181,8 @@ class MoveDirectoryTest : OperationTest {
                 return@doAnswer operation
             }.`when`(it).toMoveOperation(any())
         }
-        executeAll(operation)
+
+        executeAll(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(
             "new_file should be present in source or directory",
@@ -222,12 +212,5 @@ class MoveDirectoryTest : OperationTest {
         executeAll(MoveDirectory(source, destinationFile))
 
         assertThat("source was deleted", source.directory.exists(), equalTo(false))
-    }
-}
-
-/** A move operation which fails */
-class FailMove : Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
-        throw TestException("should fail but not crash")
     }
 }

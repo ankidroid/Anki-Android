@@ -49,9 +49,9 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
             return operationCompleted()
         }
 
-        val moveOperations = source.listFiles().map(::toMoveOperation)
+        val moveContentOperations = MoveDirectoryContent.createInstance(source, destination)
         val deleteOperation = DeleteEmptyDirectory(source)
-        return moveOperations + deleteOperation
+        return listOf(moveContentOperations, deleteOperation)
     }
 
     /**
@@ -71,14 +71,6 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
             return false
         }
         return true
-    }
-
-    /**
-     * @returns An operation to move file or directory [sourceFile] to [destination]
-     */
-    @VisibleForTesting
-    internal fun toMoveOperation(sourceFile: File): Operation {
-        return MoveFileOrDirectory(sourceFile, File(destination, sourceFile.name))
     }
 
     /** Creates a directory if it doesn't already exist */
