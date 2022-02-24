@@ -219,17 +219,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
         inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
+            var deckName: String = ""
+
             fun setDeck(deck: SelectableDeck) {
-                deckTextView.text = deck.name
+                deckName = deck.name
+                deckTextView.text = deck.displayName
             }
+
+            /*
+            deckName and deckTextView.text are different, so that
+            even though the displayName will be used for display in
+            the recyclerView, the deckName(which is the entire deck path)
+            will be used in the below init functions (which require the path)
+             */
 
             init {
                 deckTextView.setOnClickListener {
-                    val deckName = deckTextView.text.toString()
                     selectDeckByNameAndClose(deckName)
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
-                    showSubDeckDialog(deckTextView.text.toString())
+                    showSubDeckDialog(deckName)
                     true
                 }
             }
@@ -312,15 +321,38 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          */
         val name: String
 
+        var displayName: String = ""
+        // The name to be displayed in the Recycler View
+        // contains only subdeck name, not "deck::subdeck"
+
         constructor(deckId: Long, name: String) {
             this.deckId = deckId
             this.name = name
+            this.displayName = getDisplayName(name)
         }
 
         protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
         protected constructor(`in`: Parcel) {
             deckId = `in`.readLong()
             name = `in`.readString()!!
+        }
+
+        /*
+        The getDisplayName function takes the entire deck path as input,
+        and returns only the name of the deck/subdeck
+         */
+
+        private fun getDisplayName(name: String): String {
+            var displayName = name
+            var subDeckLevel: Int = name.count { "::".contains(it) } / 2
+
+            while (subDeckLevel > 0) {
+                displayName = displayName.slice(displayName.indexOf("::") + 2 until displayName.length)
+                subDeckLevel--
+            }
+            displayName = "\t\t".repeat(name.count { "::".contains(it) } / 2) + displayName
+
+            return displayName
         }
 
         /** "All decks" comes first. Then usual deck name order.  */
