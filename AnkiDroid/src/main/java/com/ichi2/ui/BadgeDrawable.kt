@@ -13,124 +13,100 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
-
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableWrapper;
-import android.os.Build;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.DrawableWrapper
+import android.os.Build
+import androidx.annotation.RequiresApi
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class BadgeDrawable extends DrawableWrapper {
+class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
+    private val mPaint: Paint = Paint()
+    private var mBadge: Drawable? = null
+    private var mText: String? = null
+    private var mTextX = 0f
+    private var mTextY = 0f
+    fun setBadgeDrawable(view: Drawable) {
+        mBadge = view
+        invalidateSize()
+    }
 
-    public static final double ICON_SCALE_TEXT = 0.70;
-    public static final double ICON_SCALE_BARE = 0.40;
-    private final Paint mPaint;
+    private fun invalidateSize() {
+        // This goes out of bounds - it seems to be fine
+        val size = (intrinsicWidth * iconScale).toInt()
+        mPaint.textSize = (size * 0.8).toFloat()
+        val left = left.toInt()
+        val bottom = bottom.toInt()
+        val right = left + size
+        val top = bottom - size
+        if (mBadge != null) {
+            mBadge!!.setBounds(left, top, right, bottom)
+        }
+        val vcenter = (top + bottom) / 2.0f
+        mTextX = (left + right) / 2.0f
+        mTextY = vcenter - (mPaint.descent() + mPaint.ascent()) / 2
+    }
 
-    private Drawable mBadge;
-    private String mText;
-    private float mTextX;
-    private float mTextY;
+    private val bottom: Double
+        get() {
+            val h = intrinsicHeight
+            return if (isShowingText) {
+                h * 0.45
+            } else {
+                h * iconScale
+            }
+        }
+    private val left: Double
+        get() {
+            val w = intrinsicWidth
+            return if (isShowingText) {
+                w * 0.55
+            } else {
+                w - w * iconScale
+            }
+        }
+    private val iconScale: Double
+        get() = if (isShowingText) {
+            ICON_SCALE_TEXT
+        } else {
+            ICON_SCALE_BARE
+        }
+    private val isShowingText: Boolean
+        get() = mText != null && mText!!.isNotEmpty()
 
+    fun setText(c: Char) {
+        mText = String(charArrayOf(c))
+        invalidateSize()
+    }
+
+    override fun draw(canvas: Canvas) {
+        super.draw(canvas)
+        if (mBadge != null) {
+            mBadge!!.draw(canvas)
+            if (mText != null) {
+                canvas.drawText(mText!!, mTextX, mTextY, mPaint)
+            }
+        }
+    }
+
+    companion object {
+        const val ICON_SCALE_TEXT = 0.70
+        const val ICON_SCALE_BARE = 0.40
+    }
 
     /**
      * Creates a new wrapper around the specified drawable.
      *
      * @param dr the drawable to wrap
      */
-    public BadgeDrawable(@Nullable Drawable dr) {
-        super(dr);
-        mPaint = new Paint();
-        mPaint.setTypeface(Typeface.DEFAULT_BOLD);
-        mPaint.setTextAlign(Paint.Align.CENTER);
-        mPaint.setColor(Color.WHITE);
-    }
-
-    public void setBadgeDrawable(@NonNull Drawable view) {
-        mBadge = view;
-        invalidateSize();
-
-    }
-
-
-    private void invalidateSize() {
-        // This goes out of bounds - it seems to be fine
-        int size = (int) (getIntrinsicWidth() * getIconScale());
-
-        mPaint.setTextSize((float) (size * 0.8));
-
-        int left = (int) getLeft();
-        int bottom = (int) getBottom();
-
-        int right = left + size;
-        int top = bottom - size;
-        if (mBadge != null) {
-            mBadge.setBounds(left, top, right, bottom);
-        }
-
-        float vcenter = (top + bottom) / 2.0f;
-
-        mTextX = (left + right) / 2.0f;
-        mTextY = vcenter - (mPaint.descent() + mPaint.ascent()) / 2;
-    }
-
-
-    private double getBottom() {
-        int h = getIntrinsicHeight();
-        if (isShowingText()) {
-            return h * 0.45;
-        } else {
-            return (h * getIconScale());
-        }
-    }
-
-
-    private double getLeft() {
-        int w = getIntrinsicWidth();
-        if (isShowingText()) {
-            return w * 0.55;
-        } else {
-            return w - (w * getIconScale());
-        }
-    }
-
-
-    private double getIconScale() {
-        if (isShowingText()) {
-            return ICON_SCALE_TEXT;
-        } else {
-            return ICON_SCALE_BARE;
-        }
-    }
-
-
-    private boolean isShowingText() {
-        return mText != null && mText.length() > 0;
-    }
-
-
-    public void setText(char c) {
-        this.mText = new String(new char[] {c});
-        invalidateSize();
-    }
-
-    @Override
-    public void draw(@NonNull Canvas canvas) {
-        super.draw(canvas);
-        if (mBadge != null) {
-            mBadge.draw(canvas);
-
-            if (mText != null) {
-                canvas.drawText(mText, mTextX, mTextY, mPaint);
-            }
-        }
+    init {
+        mPaint.typeface = Typeface.DEFAULT_BOLD
+        mPaint.textAlign = Paint.Align.CENTER
+        mPaint.color = Color.WHITE
     }
 }
