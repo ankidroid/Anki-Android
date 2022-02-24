@@ -192,14 +192,8 @@ public class CompatV26 extends CompatV23 implements Compat {
      * Hence this method, hasNext and next should be constant in time and space.
      */
     @Override
-    public @Nullable FileStream contentOfDirectory(File directory) {
-        DirectoryStream<Path> paths_stream;
-        try {
-            paths_stream = Files.newDirectoryStream(directory.toPath());
-        } catch (IOException e) {
-            Timber.w(e);
-            return null;
-        }
+    public @NonNull FileStream contentOfDirectory(File directory) throws IOException {
+        DirectoryStream<Path> paths_stream = Files.newDirectoryStream(directory.toPath());
         Iterator<Path> paths = paths_stream.iterator();
         return new FileStream() {
             @Override
