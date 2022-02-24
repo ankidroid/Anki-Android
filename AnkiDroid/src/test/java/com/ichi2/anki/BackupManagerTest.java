@@ -23,10 +23,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.StrictMock.strictMock;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,6 +48,68 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
 public class BackupManagerTest {
+
+    @Test
+    public void getNewBackupNameTest() throws ParseException {
+        BackupManager bm = BackupManager.createInstance();
+        // Using a timestamp number directly as MockTime parameter may
+        // have different results on other computers and GitHub CI
+        long timestamp = bm.getDf().parse("1970-01-02-00-46").getTime();
+        String backupName = bm.getNewBackupName(new MockTime(timestamp));
+
+        assertEquals("Backup name doesn't match naming scheme","collection-1970-01-02-00-46.colpkg", backupName);
+    }
+
+    @Test
+    public void getBackupTimeStringsTest() {
+        List<String> ts = BackupManager.getBackupTimeStrings("collection-1999-12-31-23-59.colpkg");
+        List<String> expected = Arrays.asList(
+                "1999-12-31-23-59", // dateformat
+                "1999", // year
+                "12", // month
+                "31", // day
+                "23", // hours
+                "59" // minutes
+        );
+        assertEquals(expected, ts);
+    }
+
+    @Test
+    public void newBackupNameCanBeParsed() {
+        BackupManager bm = BackupManager.createInstance();
+        String backupName = bm.getNewBackupName(new MockTime(100000000));
+        assertNotNull(backupName);
+
+        List<String> ts = BackupManager.getBackupTimeStrings(backupName);
+        assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts);
+    }
+
+    /** Should get date of item at last position on list */
+    @Test
+    public void getLastBackupDateTest() throws ParseException {
+        BackupManager bm = BackupManager.createInstance();
+        File[] backups = {
+                new File ("collection-2000-12-31-23-04.colpkg"),
+                new File ("collection-2010-01-02-03-04.colpkg"),
+                new File ("collection-1999-12-31-23-59.colpkg"),
+        };
+        File[] backups2 = {
+                new File ("collection-2000-12-31-23-04.colpkg"),
+                new File ("foo.colpkg"),
+        };
+        File[] backups3 = {
+                new File ("foo.colpkg"),
+                new File ("bar.colpkg"),
+        };
+
+        Date expected = bm.getDf().parse("1999-12-31-23-59");
+        Date expected2 = bm.getDf().parse("2000-12-31-23-04");
+
+        assertNull(bm.getLastBackupDate(new File[]{}));
+        assertEquals(expected, bm.getLastBackupDate(backups));
+        assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2));
+        assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3));
+    }
 
     @Test
     public void failsIfNoBackupsAllowed() {
@@ -131,7 +200,7 @@ public class BackupManagerTest {
         doReturn(true).when(spy).hasFreeDiscSpace(any());
         doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
         doNothing().when(spy).performBackupInNewThread(any(), any());
-        doReturn(null).when(spy).getLastBackupDate(any(), any());
+        doReturn(null).when(spy).getLastBackupDate(any());
 
         File f = backupFileMock != null ? backupFileMock : getBackupFileMock();
         doReturn(f).when(spy).getBackupFile(any(), any());
