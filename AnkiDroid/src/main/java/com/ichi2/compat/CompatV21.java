@@ -42,6 +42,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.NoSuchFileException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -282,6 +283,9 @@ public class CompatV21 implements Compat {
     public @NonNull FileStream contentOfDirectory(@NonNull File directory) throws IOException {
         File[] paths = directory.listFiles();
         if (paths == null) {
+            if (!directory.exists()) {
+                throw new FileNotFoundException(directory.getPath());
+            }
             throw new IOException("Directory " + directory.getPath() + "'s file can not be listed. Probable cause are that it's not a directory (which violate the method's assumption) or a permission issue.");
         }
         int length = paths.length;

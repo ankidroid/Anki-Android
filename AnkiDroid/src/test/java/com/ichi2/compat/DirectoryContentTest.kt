@@ -24,6 +24,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NoSuchFileException
 import java.nio.file.NotDirectoryException
@@ -82,9 +83,8 @@ class DirectoryContentTest {
             CompatHelper.getCompat().contentOfDirectory(directory)
         }
         )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NoSuchFileException::class.java))
-        }
+        val expectedException = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NoSuchFileException::class else FileNotFoundException::class
+        assertThat("this should be a FileNotFound or NoSuchFile exception depending on API", exception, instanceOf(expectedException.java))
     }
 
     @Test
