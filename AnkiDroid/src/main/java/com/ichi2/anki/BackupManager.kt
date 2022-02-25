@@ -31,7 +31,6 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Collections.sort
@@ -145,18 +144,11 @@ open class BackupManager {
      * In order to get the latest date, the given files array must be sorted
      */
     fun getLastBackupDate(files: Array<File>): Date? {
-        if (files.isEmpty()) {
-            return null
-        }
-        for (file in files.reversed()) {
-            val ts = getBackupTimeStrings(file.name)
-            if (ts != null) {
-                try {
-                    return df.parse(ts[0])
-                } catch (e: ParseException) {}
-            }
-        }
-        return null
+        return files
+            .reversed()
+            .mapNotNull { getBackupTimeStrings(it.name) }
+            .mapNotNull { df.parse(it[0]) }
+            .firstOrNull()
     }
 
     @KotlinCleanup("make backupFilename non-null")
