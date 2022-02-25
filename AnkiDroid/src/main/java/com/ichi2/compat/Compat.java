@@ -36,6 +36,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 
 import androidx.annotation.IntDef;
@@ -261,8 +263,9 @@ public interface Compat {
      * @param directory A directory.
      * @return a FileStream over file and folder of this directory.
      *         null in case of trouble. This stream must be closed explicitly when done with it.
-     * @throws java.nio.file.NoSuchFileException if the file do not exists (starting at API 26)
-     * @throws java.nio.file.NotDirectoryException if the file exists and is not a directory (starting at API 26)
+     * @throws NoSuchFileException if the file do not exists (starting at API 26)
+     * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
+     * @throws FileNotFoundException if the file do not exists (up to API 25)
      * @throws IOException if files can not be listed. On non existing or non-directory file up to API 25. This also occurred on an existing directory because of permission issue
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
