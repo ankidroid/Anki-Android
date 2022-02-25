@@ -156,10 +156,20 @@ public interface Compat {
     void moveDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask) throws IOException;
 
     /**
-     * Returns whether the directory has one or more file
-     * @return false if the directory is not a directory, does not exist, or has no files
+     * Whether a directory has at least one files
+     * @return Whether the directory has file.
+     * @throws [SecurityException] If a security manager exists and its SecurityManager.checkRead(String)
+     * method denies read access to the directory
+     * @throws [FileNotFoundException] if the file do not exists
+     * @throws [NotDirectoryException] if the file could not otherwise be opened because it is not
+     * a directory (optional specific exception), (starting at API 26)
+     * @throws [IOException] – if an I/O error occurs
      */
-    boolean hasFiles(@NonNull File directory) throws IOException;
+    default boolean hasFiles(@NonNull File directory) throws IOException {
+        try(FileStream stream = contentOfDirectory(directory)) {
+            return stream.hasNext();
+        }
+    }
 
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
@@ -263,7 +273,7 @@ public interface Compat {
      * @return a FileStream over file and folder of this directory.
      *         null in case of trouble. This stream must be closed explicitly when done with it.
      * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
-     * @throws FileNotFoundException if the file do not exists (up to API 25)
+     * @throws FileNotFoundException if the file do not exists
      * @throws IOException if files can not be listed. On non existing or non-directory file up to API 25. This also occurred on an existing directory because of permission issue
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory

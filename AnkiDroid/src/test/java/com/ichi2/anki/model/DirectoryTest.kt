@@ -17,12 +17,15 @@
 package com.ichi2.anki.model
 
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
+import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.File
+import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 
@@ -87,14 +90,10 @@ class DirectoryTest {
     }
 
     @Test
-    fun has_files_is_false_if_no_longer_exists() {
+    fun has_files_throws_if_file_no_longer_exists() {
         val dir = createValidTempDir()
         dir.directory.delete()
-        MatcherAssert.assertThat(
-            "deleted directory should not have files",
-            dir.hasFiles(),
-            equalTo(false)
-        )
+        assertThrows<FileNotFoundException> { dir.hasFiles() }
     }
 
     @Test

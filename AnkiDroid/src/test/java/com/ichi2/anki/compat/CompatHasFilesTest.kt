@@ -16,17 +16,23 @@
 
 package com.ichi2.anki.compat
 
+import android.os.Build
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatV21
 import com.ichi2.compat.CompatV26
+import com.ichi2.testutils.*
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.withTempFile
+import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
@@ -61,7 +67,18 @@ class CompatHasFilesTest(
     fun has_files_not_exists() {
         val dir = createTransientDirectory()
         dir.delete()
-        assertThat("deleted directory has no files", hasFiles(dir), equalTo(false))
+
+        assertThrows<FileNotFoundException> { hasFiles(dir) }
+    }
+
+    @Test
+    fun has_files_on_file() {
+        val file = createTransientFile("hello")
+
+        val exception = assertThrowsSubclass<IOException> { hasFiles(file) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, CoreMatchers.instanceOf(NotDirectoryException::class.java))
+        }
     }
 
     private fun hasFiles(dir: File) = compat.hasFiles(dir)
