@@ -194,7 +194,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         }
                 } else {
                     val dates = mutableListOf<String>()
-                    /** Backups name pattern is defined at [BackupManager.getNewBackupName] */
+                    /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
                     for (backup in mBackups) {
                         val ts = BackupManager.getBackupTimeStrings(backup.name)
                         if (ts != null) {

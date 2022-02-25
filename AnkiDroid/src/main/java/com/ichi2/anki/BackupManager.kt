@@ -80,7 +80,7 @@ open class BackupManager {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
         }
-        val backupFilename = getNewBackupName(time) ?: return false
+        val backupFilename = getNameForNewBackup(time) ?: return false
 
         // Abort backup if destination already exists (extremely unlikely)
         val backupFile = getBackupFile(colFile, backupFilename)
@@ -126,7 +126,7 @@ open class BackupManager {
     /**
      * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
      */
-    fun getNewBackupName(time: Time): String? {
+    fun getNameForNewBackup(time: Time): String? {
         /** Changes in the file name pattern should be updated as well in
          * [getBackupTimeStrings] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
         val cal: Calendar = time.gregorianCalendar()

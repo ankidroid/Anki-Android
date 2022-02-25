@@ -50,12 +50,12 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class BackupManagerTest {
 
     @Test
-    public void getNewBackupNameTest() throws ParseException {
+    public void getNameForNewBackupTest() throws ParseException {
         BackupManager bm = BackupManager.createInstance();
         // Using a timestamp number directly as MockTime parameter may
         // have different results on other computers and GitHub CI
         long timestamp = bm.getDf().parse("1970-01-02-00-46").getTime();
-        String backupName = bm.getNewBackupName(new MockTime(timestamp));
+        String backupName = bm.getNameForNewBackup(new MockTime(timestamp));
 
         assertEquals("Backup name doesn't match naming scheme","collection-1970-01-02-00-46.colpkg", backupName);
     }
@@ -75,9 +75,9 @@ public class BackupManagerTest {
     }
 
     @Test
-    public void newBackupNameCanBeParsed() {
+    public void nameOfNewBackupsCanBeParsed() {
         BackupManager bm = BackupManager.createInstance();
-        String backupName = bm.getNewBackupName(new MockTime(100000000));
+        String backupName = bm.getNameForNewBackup(new MockTime(100000000));
         assertNotNull(backupName);
 
         List<String> ts = BackupManager.getBackupTimeStrings(backupName);
