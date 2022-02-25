@@ -212,6 +212,7 @@ open class BackupManager {
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
         private const val BACKUP_SUFFIX = "backup"
         const val BROKEN_DECKS_SUFFIX = "broken"
+        private val backupNameRegex = Regex("collection-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})-(\\d{2})).colpkg")
 
         /** Number of hours after which a backup new backup is created  */
         private const val BACKUP_INTERVAL = 5
@@ -357,9 +358,7 @@ open class BackupManager {
          */
         @JvmStatic
         fun getBackupTimeStrings(fileName: String): List<String>? {
-            val m = "collection-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})-(\\d{2})).colpkg"
-                .toRegex()
-                .matchEntire(fileName)
+            val m = backupNameRegex.matchEntire(fileName)
             return m?.groupValues?.subList(1, 7)
         }
 
