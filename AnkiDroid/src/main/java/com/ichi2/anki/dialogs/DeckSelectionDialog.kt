@@ -226,13 +226,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 deckTextView.text = deck.displayName
             }
 
-            /*
-            deckName and deckTextView.text are different, so that
-            even though the displayName will be used for display in
-            the recyclerView, the deckName(which is the entire deck path)
-            will be used in the below init functions (which require the path)
-             */
-
             init {
                 deckTextView.setOnClickListener {
                     selectDeckByNameAndClose(deckName)
@@ -321,14 +314,20 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          */
         val name: String
 
-        var displayName: String = ""
-        // The name to be displayed in the Recycler View
-        // contains only subdeck name, not "deck::subdeck"
+        /**
+         * The name to be displayed to the user. Contains
+         * only the sub-deck name with proper indentation
+         * rather than the entire deck name.
+         * Eg: foo::bar -> \t\tbar
+         */
+        val displayName: String // TODO should be a lazy value
+            get() {
+                return getDisplayName(name)
+            }
 
         constructor(deckId: Long, name: String) {
             this.deckId = deckId
             this.name = name
-            this.displayName = getDisplayName(name)
         }
 
         protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
@@ -337,20 +336,14 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             name = `in`.readString()!!
         }
 
-        /*
-        The getDisplayName function takes the entire deck path as input,
-        and returns only the name of the deck/subdeck
+        /**
+         * @param name the entire name(path) of the deck
+         * @return the deck/subdeck name to be displayed to the user
          */
-
         private fun getDisplayName(name: String): String {
-            var displayName = name
-            var subDeckLevel: Int = name.count { "::".contains(it) } / 2
-
-            while (subDeckLevel > 0) {
-                displayName = displayName.slice(displayName.indexOf("::") + 2 until displayName.length)
-                subDeckLevel--
-            }
-            displayName = "\t\t".repeat(name.count { "::".contains(it) } / 2) + displayName
+            var nameArr = name.split("::")
+            var displayName = nameArr[nameArr.size - 1]
+            displayName = "\t\t".repeat(nameArr.size - 1) + displayName
 
             return displayName
         }
