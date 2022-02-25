@@ -400,9 +400,9 @@ open class BackupManager {
         private fun deleteDeckBackups(backups: Array<File>, keepNumber: Int): Boolean {
             for (i in 0 until backups.size - keepNumber) {
                 if (!backups[i].delete()) {
-                    Timber.e("deleteBackups() failed to delete %s", backups[i].absolutePath)
+                    Timber.e("deleteDeckBackups() failed to delete %s", backups[i].absolutePath)
                 } else {
-                    Timber.i("deleteBackups: backup file %s deleted.", backups[i].absolutePath)
+                    Timber.i("deleteDeckBackups: backup file %s deleted.", backups[i].absolutePath)
                 }
             }
             return true
