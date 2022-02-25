@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -50,14 +49,23 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class BackupManagerTest {
 
     @Test
-    public void getNameForNewBackupTest() throws ParseException {
+    public void getBackupDateTest() {
+        BackupManager bm = BackupManager.createInstance();
+        assertNotNull(bm.getBackupDate("1970-01-02-00-46"));
+        assertNull(bm.getBackupDate("123456"));
+    }
+
+    @Test
+    public void getNameForNewBackupTest() {
         BackupManager bm = BackupManager.createInstance();
         // Using a timestamp number directly as MockTime parameter may
         // have different results on other computers and GitHub CI
-        long timestamp = bm.getDf().parse("1970-01-02-00-46").getTime();
+        Date date = bm.getBackupDate("1970-01-02-00-46");
+        assertNotNull(date);
+        long timestamp = date.getTime();
         String backupName = bm.getNameForNewBackup(new MockTime(timestamp));
 
-        assertEquals("Backup name doesn't match naming scheme","collection-1970-01-02-00-46.colpkg", backupName);
+        assertEquals("Backup name doesn't match naming pattern","collection-1970-01-02-00-46.colpkg", backupName);
     }
 
     @Test
@@ -84,9 +92,8 @@ public class BackupManagerTest {
         assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts);
     }
 
-    /** Should get date of item at last position on list */
     @Test
-    public void getLastBackupDateTest() throws ParseException {
+    public void getLastBackupDateTest() {
         BackupManager bm = BackupManager.createInstance();
         File[] backups = {
                 new File ("collection-2000-12-31-23-04.colpkg"),
@@ -102,8 +109,8 @@ public class BackupManagerTest {
                 new File ("bar.colpkg"),
         };
 
-        Date expected = bm.getDf().parse("1999-12-31-23-59");
-        Date expected2 = bm.getDf().parse("2000-12-31-23-04");
+        Date expected = bm.getBackupDate("2010-01-02-03-04");
+        Date expected2 = bm.getBackupDate("2000-12-31-23-04");
 
         assertNull(bm.getLastBackupDate(new File[]{}));
         assertEquals(expected, bm.getLastBackupDate(backups));

@@ -181,9 +181,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(activity)
                 mBackups = BackupManager.getBackups(File(path))
-                // Since backups are sorted ascendingly at getBackups(),
-                // revert it to show latest backups at top
-                mBackups.reverse()
                 if (mBackups.isEmpty()) {
                     builder.title(res.getString(R.string.backup_restore))
                         .contentNullable(message)
@@ -193,6 +190,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                         }
                 } else {
+                    // Show backups sorted with latest on top
+                    mBackups.sortDescending()
                     val dates = mutableListOf<String>()
                     /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
                     for (backup in mBackups) {

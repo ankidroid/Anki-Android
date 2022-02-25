@@ -31,9 +31,9 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Collections.sort
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -73,7 +73,6 @@ open class BackupManager {
         }
 
         // Abort backup if one was already made less than 5 hours ago
-        // In order to work, lastBackupDate assumes backups are sorted
         val lastBackupDate = getLastBackupDate(deckBackups)
         if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
@@ -139,15 +138,24 @@ open class BackupManager {
     }
 
     /**
-     * @return date of the last file with parseable backup name
-     * It doesn't intend to return the *latest* date.
-     * In order to get the latest date, the given files array must be sorted
+     * @return date in fileName if it matches backup naming pattern or null if not
+     */
+    fun getBackupDate(fileName: String): Date? {
+        return try {
+            df.parse(fileName)
+        } catch (e: ParseException) {
+            null
+        }
+    }
+
+    /**
+     * @return last date in parseable file names or null if all file names can't be parsed
      */
     fun getLastBackupDate(files: Array<File>): Date? {
         return files
-            .reversed()
+            .sortedDescending()
             .mapNotNull { getBackupTimeStrings(it.name) }
-            .mapNotNull { df.parse(it[0]) }
+            .mapNotNull { getBackupDate(it[0]) }
             .firstOrNull()
     }
 
@@ -352,9 +360,9 @@ open class BackupManager {
         }
 
         /**
-         * Parses a string with backup naming scheme
+         * Parses a string with backup naming pattern
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
-         * @return List with {dateformat, year, month, day, hours, minutes} or null if doesn't match naming scheme
+         * @return List with {dateformat, year, month, day, hours, minutes} or null if it doesn't match naming pattern
          */
         @JvmStatic
         fun getBackupTimeStrings(fileName: String): List<String>? {
@@ -364,7 +372,7 @@ open class BackupManager {
 
         @JvmStatic
         /**
-         * @return array of files with valid backup names, sorted ascendingly by date
+         * @return Array of files with names which matches the backup name pattern
          */
         fun getBackups(colFile: File): Array<File> {
             var files = getBackupDirectory(colFile.parentFile).listFiles()
@@ -377,20 +385,18 @@ open class BackupManager {
                     backups.add(aktFile)
                 }
             }
-            sort(backups)
             return backups.toTypedArray()
         }
 
         /**
          * Deletes the first files until only the given number of files remain
-         * It assumes [getBackups] sorts backups ascendingly in order to work properly
+         * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
-        private fun deleteDeckBackups(colFile: String, keepNumber: Int): Boolean {
-            return deleteDeckBackups(getBackups(File(colFile)), keepNumber)
+        private fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
+            return deleteDeckBackups(getBackups(File(colPath)).sortedArray(), keepNumber)
         }
 
-        @KotlinCleanup("make backups Array<File>?")
         private fun deleteDeckBackups(backups: Array<File>, keepNumber: Int): Boolean {
             for (i in 0 until backups.size - keepNumber) {
                 if (!backups[i].delete()) {
