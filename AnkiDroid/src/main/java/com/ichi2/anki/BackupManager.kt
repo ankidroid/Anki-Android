@@ -149,14 +149,13 @@ open class BackupManager {
     }
 
     /**
-     * @return last date in parseable file names or null if all file names can't be parsed
+     * @return last date in parseable file names or null if all names can't be parsed
      */
     fun getLastBackupDate(files: Array<File>): Date? {
-        return files
-            .sortedDescending()
-            .mapNotNull { getBackupTimeStrings(it.name) }
-            .mapNotNull { getBackupDate(it[0]) }
-            .firstOrNull()
+        for (file in files.sortedDescending()) {
+            getBackupTimeStrings(file.name)?.let { return getBackupDate(it[0]) }
+        }
+        return null
     }
 
     @KotlinCleanup("make backupFilename non-null")

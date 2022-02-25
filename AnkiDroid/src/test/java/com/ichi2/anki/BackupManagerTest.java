@@ -113,6 +113,7 @@ public class BackupManagerTest {
         Date expected2 = bm.getBackupDate("2000-12-31-23-04");
 
         assertNull(bm.getLastBackupDate(new File[]{}));
+        assertNotNull(bm.getLastBackupDate(backups));
         assertEquals(expected, bm.getLastBackupDate(backups));
         assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2));
         assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3));
