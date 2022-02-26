@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,9 @@ import java.util.List;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.StrictMock.strictMock;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -46,7 +50,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
-public class BackupManagerTest {
+public class BackupManagerTest extends RobolectricTest {
 
     @Test
     public void getBackupDateTest() {
@@ -117,6 +121,48 @@ public class BackupManagerTest {
         assertEquals(expected, bm.getLastBackupDate(backups));
         assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2));
         assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3));
+    }
+
+
+    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void getBackupsTest() throws IOException {
+        File colFile = new File(getCol().getPath());
+        assertEquals(0, BackupManager.getBackups(colFile).length);
+
+        File backupDir = BackupManager.getBackupDirectory(colFile.getParentFile());
+        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
+        File f2 = new File (backupDir, "foo");
+        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
+        f1.createNewFile();
+        f2.createNewFile();
+        f3.createNewFile();
+        File[] backups = BackupManager.getBackups(colFile);
+
+        assertNotNull(backups);
+        assertArrayEquals("Only the valid backup names should have been kept", new File[] {f1, f3}, backups);
+    }
+
+    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void deleteDeckBackupsTest() throws IOException {
+        File colFile = new File(getCol().getPath());
+        File backupDir = BackupManager.getBackupDirectory(colFile.getParentFile());
+
+        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
+        File f2 = new File (backupDir, "collection-1990-08-31-45-04.colpkg");
+        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
+        File f4 = new File (backupDir, "collection-1980-01-12-11-04.colpkg");
+        f1.createNewFile();
+        f2.createNewFile();
+        f3.createNewFile();
+        f4.createNewFile();
+
+        BackupManager.deleteDeckBackups(colFile.getPath(), 2);
+        assertFalse("Older backups should have been deleted", f2.exists());
+        assertFalse("Older backups should have been deleted", f4.exists());
+        assertTrue("Newer backups should have been kept", f1.exists());
+        assertTrue("Newer backups should have been kept", f3.exists());
     }
 
     @Test

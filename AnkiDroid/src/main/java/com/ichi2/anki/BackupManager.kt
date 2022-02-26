@@ -227,7 +227,8 @@ open class BackupManager {
             get() = true
 
         @KotlinCleanup("make non-null - requires fixing unit tests - they accidentally use empty string as the path")
-        private fun getBackupDirectory(ankidroidDir: File?): File {
+        @JvmStatic
+        fun getBackupDirectory(ankidroidDir: File?): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
@@ -392,7 +393,8 @@ open class BackupManager {
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep
          */
-        private fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
+        @JvmStatic
+        fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
             return deleteDeckBackups(getBackups(File(colPath)).sortedArray(), keepNumber)
         }
 
