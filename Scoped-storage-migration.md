@@ -1,0 +1,1 @@
+This page is not used right now. It is reserved for messages related to scoped-storage migration.
