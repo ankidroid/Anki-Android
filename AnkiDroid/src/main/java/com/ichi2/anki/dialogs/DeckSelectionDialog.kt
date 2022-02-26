@@ -321,9 +321,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          * Eg: foo::bar -> \t\tbar
          */
         val displayName: String // TODO should be a lazy value
-            get() {
-                return getDisplayName(name)
-            }
+            get() = getDisplayName(name)
 
         constructor(deckId: Long, name: String) {
             this.deckId = deckId
@@ -342,10 +340,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          */
         private fun getDisplayName(name: String): String {
             var nameArr = name.split("::")
-            var displayName = nameArr[nameArr.size - 1]
-            displayName = "\t\t".repeat(nameArr.size - 1) + displayName
-
-            return displayName
+            return "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
         /** "All decks" comes first. Then usual deck name order.  */
