@@ -381,7 +381,7 @@ open class BackupManager {
             }
             val backups = mutableListOf<File>()
             for (aktFile in files) {
-                if (getBackupTimeStrings(aktFile.name) != null) {
+                if (backupNameRegex.matchEntire(aktFile.name) != null) {
                     backups.add(aktFile)
                 }
             }
