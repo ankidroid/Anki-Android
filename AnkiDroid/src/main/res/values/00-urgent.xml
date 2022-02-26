@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+~ Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="migration_link" comment="the value is a link to a help page." tools:ignore="UnusedResources">
+    Go to %1$s to learn more.
+  </string>
+  <string name="migration_email" comment="the value is our email address" tools:ignore="UnusedResources">
+    Please contact us at %1$s to get help.
+  </string>
+  <string name="migration_media_fail" tools:ignore="UnusedResources">
+    AnkiDroid cannot access your images, video and sounds anymore.
+  </string>
+  <string name="migration_collection_fail" tools:ignore="UnusedResources">
+    AnkiDroid cannot access your collection anymore.
+  </string>
+  <string name="migration_warning_uninstall_sync_possible"
+          comment="general warning for a normal usage" tools:ignore="UnusedResources">
+    If you uninstall the app without synchronizing first, you risk losing all
+    data (all notes, reviews, media).
+  </string>
+  <string name="migration_warning_uninstall_sync_impossible"
+          comment="warning for failed migration, when sync is impossible." tools:ignore="UnusedResources">
+    If you uninstall the app you risk losing all data (all notes, reviews, media).
+  </string>
+  <string name="migration_slow" tools:ignore="UnusedResources">
+    An update may slow down AnkiDroid during a few minutes.
+  </string>
+  <string name="migration_done" tools:ignore="UnusedResources">
+    Update is done.
+  </string>
+  <string name="migration_no_sync" tools:ignore="UnusedResources">
+    You can not sync your data during AnkiDroid update. Please retry in a few minutes.
+  </string>
+</resources>

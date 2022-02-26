@@ -31,6 +31,7 @@ PROJECT_IDENTIFIER="ankidroid"
 I18N_FILE_BASE="./AnkiDroid/src/main/res/values/"
 
 declare -a I18N_FILES=(
+  '00-urgent'
   '01-core'
   '02-strings'
   '03-dialogs'
