@@ -19,7 +19,9 @@ package com.ichi2.anki;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import java.io.File;
@@ -48,7 +50,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
-public class BackupManagerTest extends RobolectricTest {
+public class BackupManagerTest {
+
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
     public void getBackupTimeStringTest() {
@@ -120,10 +125,12 @@ public class BackupManagerTest extends RobolectricTest {
     @Test
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void getBackupsTest() throws IOException {
-        File colFile = new File(getCol().getPath());
+        // getBackups() doesn't require a proper collection file
+        // because it is only used to get its parent
+        File colFile = tempFolder.newFile();
         assertEquals(0, BackupManager.getBackups(colFile).length);
 
-        File backupDir = BackupManager.getBackupDirectory(colFile.getParentFile());
+        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
         File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
         File f2 = new File (backupDir, "foo");
         File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
@@ -139,8 +146,8 @@ public class BackupManagerTest extends RobolectricTest {
     @Test
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void deleteDeckBackupsTest() throws IOException {
-        File colFile = new File(getCol().getPath());
-        File backupDir = BackupManager.getBackupDirectory(colFile.getParentFile());
+        File colFile = tempFolder.newFile();
+        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
 
         File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
         File f2 = new File (backupDir, "collection-1990-08-31-45-04.colpkg");
