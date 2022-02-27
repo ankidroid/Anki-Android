@@ -24,9 +24,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -53,46 +51,41 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class BackupManagerTest extends RobolectricTest {
 
     @Test
+    public void getBackupTimeStringTest() {
+        String ts = BackupManager.getBackupTimeString("collection-1999-12-31-23-59.colpkg");
+        assertEquals("1999-12-31-23-59", ts);
+    }
+    
+    @Test
+    public void parseBackupTimeStringTest() {
+        assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00-46"));
+        assertNull(BackupManager.parseBackupTimeString("123456"));
+    }
+
+    @Test
     public void getBackupDateTest() {
-        BackupManager bm = BackupManager.createInstance();
-        assertNotNull(bm.getBackupDate("1970-01-02-00-46"));
-        assertNull(bm.getBackupDate("123456"));
+        assertNotNull(BackupManager.getBackupDate("collection-1970-01-02-00-46.colpkg"));
+        assertNull(BackupManager.getBackupDate("foo"));
     }
 
     @Test
     public void getNameForNewBackupTest() {
-        BackupManager bm = BackupManager.createInstance();
         // Using a timestamp number directly as MockTime parameter may
         // have different results on other computers and GitHub CI
-        Date date = bm.getBackupDate("1970-01-02-00-46");
+        Date date = BackupManager.parseBackupTimeString("1970-01-02-00-46");
         assertNotNull(date);
         long timestamp = date.getTime();
-        String backupName = bm.getNameForNewBackup(new MockTime(timestamp));
+        String backupName = BackupManager.getNameForNewBackup(new MockTime(timestamp));
 
         assertEquals("Backup name doesn't match naming pattern","collection-1970-01-02-00-46.colpkg", backupName);
     }
 
     @Test
-    public void getBackupTimeStringsTest() {
-        List<String> ts = BackupManager.getBackupTimeStrings("collection-1999-12-31-23-59.colpkg");
-        List<String> expected = Arrays.asList(
-                "1999-12-31-23-59", // dateformat
-                "1999", // year
-                "12", // month
-                "31", // day
-                "23", // hours
-                "59" // minutes
-        );
-        assertEquals(expected, ts);
-    }
-
-    @Test
     public void nameOfNewBackupsCanBeParsed() {
-        BackupManager bm = BackupManager.createInstance();
-        String backupName = bm.getNameForNewBackup(new MockTime(100000000));
+        String backupName = BackupManager.getNameForNewBackup(new MockTime(100000000));
         assertNotNull(backupName);
 
-        List<String> ts = BackupManager.getBackupTimeStrings(backupName);
+        Date ts = BackupManager.getBackupDate(backupName);
         assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts);
     }
 
@@ -113,8 +106,8 @@ public class BackupManagerTest extends RobolectricTest {
                 new File ("bar.colpkg"),
         };
 
-        Date expected = bm.getBackupDate("2010-01-02-03-04");
-        Date expected2 = bm.getBackupDate("2000-12-31-23-04");
+        Date expected = BackupManager.parseBackupTimeString("2010-01-02-03-04");
+        Date expected2 = BackupManager.parseBackupTimeString("2000-12-31-23-04");
 
         assertNull(bm.getLastBackupDate(new File[]{}));
         assertNotNull(bm.getLastBackupDate(backups));

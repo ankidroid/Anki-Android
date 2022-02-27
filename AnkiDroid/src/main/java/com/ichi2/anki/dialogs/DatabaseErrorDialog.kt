@@ -196,13 +196,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     mBackups.sortDescending()
                     val localDf = SimpleDateFormat(getBestDateTimePattern(Locale.getDefault(), "yyyy-MM-dd HH:mm:ss"))
                     val dates = mutableListOf<String>()
-                    val bm = BackupManager()
                     /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
                     for (backup in mBackups) {
-                        val ts = BackupManager.getBackupTimeStrings(backup.name)
-                        if (ts != null) {
-                            val date = bm.getBackupDate(ts[0])
-                            dates.add(localDf.format(date!!))
+                        val date = BackupManager.getBackupDate(backup.name)
+                        if (date != null) {
+                            dates.add(localDf.format(date))
                         } else {
                             Timber.w("backup name '%s' couldn't be parsed", backup.name)
                         }

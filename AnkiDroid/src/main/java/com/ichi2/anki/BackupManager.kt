@@ -38,7 +38,6 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 open class BackupManager {
-    val df = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
     @KotlinCleanup("make path non-null")
     @Throws(OutOfSpaceException::class)
     fun performDowngradeBackupInForeground(path: String?): Boolean {
@@ -122,38 +121,11 @@ open class BackupManager {
     }
 
     /**
-     * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
-     */
-    fun getNameForNewBackup(time: Time): String? {
-        /** Changes in the file name pattern should be updated as well in
-         * [getBackupTimeStrings] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
-        val cal: Calendar = time.gregorianCalendar()
-        val backupFilename: String = try {
-            String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
-        } catch (e: UnknownFormatConversionException) {
-            Timber.w(e, "performBackup: error on creating backup filename")
-            return null
-        }
-        return backupFilename
-    }
-
-    /**
-     * @return date in fileName if it matches backup naming pattern or null if not
-     */
-    fun getBackupDate(fileName: String): Date? {
-        return try {
-            df.parse(fileName)
-        } catch (e: ParseException) {
-            null
-        }
-    }
-
-    /**
      * @return last date in parseable file names or null if all names can't be parsed
      */
     fun getLastBackupDate(files: Array<File>): Date? {
         for (file in files.sortedDescending()) {
-            getBackupTimeStrings(file.name)?.let { return getBackupDate(it[0]) }
+            getBackupDate(file.name)?.let { return it }
         }
         return null
     }
@@ -223,6 +195,7 @@ open class BackupManager {
 
         /** Number of hours after which a backup new backup is created  */
         private const val BACKUP_INTERVAL = 5
+        val df = SimpleDateFormat("yyyy-MM-dd-HH-mm")
         val isActivated: Boolean
             get() = true
 
@@ -362,12 +335,48 @@ open class BackupManager {
         /**
          * Parses a string with backup naming pattern
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
-         * @return List with {dateformat, year, month, day, hours, minutes} or null if it doesn't match naming pattern
+         * @return Its dateformat parseable string or null if it doesn't match naming pattern
          */
         @JvmStatic
-        fun getBackupTimeStrings(fileName: String): List<String>? {
-            val m = backupNameRegex.matchEntire(fileName)
-            return m?.groupValues?.subList(1, 7)
+        fun getBackupTimeString(fileName: String): String? {
+            return backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
+        }
+
+        /**
+         * @return date in string if it matches mackup naming pattern or null if not
+         */
+        @JvmStatic
+        fun parseBackupTimeString(timeString: String): Date? {
+            return try {
+                df.parse(timeString)
+            } catch (e: ParseException) {
+                null
+            }
+        }
+
+        /**
+         * @return date in fileName if it matches backup naming pattern or null if not
+         */
+        @JvmStatic
+        fun getBackupDate(fileName: String): Date? {
+            return getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
+        }
+
+        /**
+         * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
+         */
+        @JvmStatic
+        fun getNameForNewBackup(time: Time): String? {
+            /** Changes in the file name pattern should be updated as well in
+             * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
+            val cal: Calendar = time.gregorianCalendar()
+            val backupFilename: String = try {
+                String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
+            } catch (e: UnknownFormatConversionException) {
+                Timber.w(e, "performBackup: error on creating backup filename")
+                return null
+            }
+            return backupFilename
         }
 
         @JvmStatic
