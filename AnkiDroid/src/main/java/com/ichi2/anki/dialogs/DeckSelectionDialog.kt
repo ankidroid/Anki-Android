@@ -219,17 +219,19 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
         inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
+            var deckName: String = ""
+
             fun setDeck(deck: SelectableDeck) {
-                deckTextView.text = deck.name
+                deckName = deck.name
+                deckTextView.text = deck.displayName
             }
 
             init {
                 deckTextView.setOnClickListener {
-                    val deckName = deckTextView.text.toString()
                     selectDeckByNameAndClose(deckName)
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
-                    showSubDeckDialog(deckTextView.text.toString())
+                    showSubDeckDialog(deckName)
                     true
                 }
             }
@@ -312,6 +314,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          */
         val name: String
 
+        /**
+         * The name to be displayed to the user. Contains
+         * only the sub-deck name with proper indentation
+         * rather than the entire deck name.
+         * Eg: foo::bar -> \t\tbar
+         */
+        val displayName: String // TODO should be a lazy value
+            get() = getDisplayName(name)
+
         constructor(deckId: Long, name: String) {
             this.deckId = deckId
             this.name = name
@@ -321,6 +332,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         protected constructor(`in`: Parcel) {
             deckId = `in`.readLong()
             name = `in`.readString()!!
+        }
+
+        /**
+         * @param name the entire name(path) of the deck
+         * @return the deck/subdeck name to be displayed to the user
+         */
+        private fun getDisplayName(name: String): String {
+            var nameArr = name.split("::")
+            return "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
         /** "All decks" comes first. Then usual deck name order.  */
