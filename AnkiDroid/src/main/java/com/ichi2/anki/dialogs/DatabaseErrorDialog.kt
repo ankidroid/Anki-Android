@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
+import android.text.format.DateFormat.getBestDateTimePattern
 import android.view.KeyEvent
 import android.view.View
 import com.afollestad.materialdialogs.DialogAction
@@ -31,6 +32,7 @@ import com.ichi2.utils.contentNullable
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
@@ -192,14 +194,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 } else {
                     // Show backups sorted with latest on top
                     mBackups.sortDescending()
+                    val localDf = SimpleDateFormat(getBestDateTimePattern(Locale.getDefault(), "yyyy-MM-dd HH:mm:ss"))
                     val dates = mutableListOf<String>()
+                    val bm = BackupManager()
                     /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
                     for (backup in mBackups) {
                         val ts = BackupManager.getBackupTimeStrings(backup.name)
                         if (ts != null) {
-                            // "00" seconds member is hardcoded until #10388 is fixed
-                            // and backup naming scheme is updated to be compatible with Anki Desktop
-                            dates.add(res.getString(R.string.restore_backup_date_pattern, ts[1], ts[2], ts[3], ts[4], ts[5], "00"))
+                            val date = bm.getBackupDate(ts[0])
+                            dates.add(localDf.format(date!!))
                         } else {
                             Timber.w("backup name '%s' couldn't be parsed", backup.name)
                         }

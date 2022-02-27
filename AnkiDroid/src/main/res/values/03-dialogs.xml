@@ -106,7 +106,6 @@
 
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_date_pattern">%2$s-%3$s-%1$s, %4$s:%5$s:%6$s</string>
     <string name="restore_backup_choose_another">Choose another</string>
 
     <string name="dialog_cancel">Cancel</string>
