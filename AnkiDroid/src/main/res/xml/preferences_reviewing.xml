@@ -117,7 +117,7 @@
             android:text=" %"
             android:title="@string/button_size"
             app:interval="10"
-            app:min="100" />
+            app:min="10" />
         <ListPreference
             android:defaultValue="bottom"
             android:entries="@array/answer_buttons_position_labels"
