@@ -16,8 +16,10 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.content.SharedPreferences
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
 import timber.log.Timber
 import java.io.File
 
@@ -33,7 +35,48 @@ typealias NumberOfBytes = Long
  * This also handles preemption, allowing media files to skip the queue
  * (if they're required for review)
  */
-class MigrateUserData {
+class MigrateUserData private constructor(val source: Directory, val destination: Directory) {
+    companion object {
+        /**
+         * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
+         * @return null if a migration is not taking place, otherwise a valid [MigrateUserData] instance
+         *
+         * @throws IllegalStateException If preferences are in an invalid state (should be logically impossible - currently unrecoverable)
+         * @throws MissingDirectoryException If either or both the source/destination do not exist
+         */
+        fun createInstance(preferences: SharedPreferences): MigrateUserData? {
+            val migrationPreferences = UserDataMigrationPreferences.createInstance(preferences)
+            if (!migrationPreferences.migrationInProgress) {
+                return null
+            }
+
+            return createInstance(migrationPreferences)
+        }
+
+        /**
+         * Creates an instance of a [MigrateUserData]
+         *
+         * Assumes the paths come from preferences
+         *
+         * @throws MissingDirectoryException If either directory defined in [preferences] does not exist
+         */
+        private fun createInstance(preferences: UserDataMigrationPreferences): MigrateUserData {
+            val directoryValidator = DirectoryValidator()
+
+            val sourceDirectory = directoryValidator.tryCreate("source", preferences.sourceFile)
+            val destinationDirectory = directoryValidator.tryCreate("destination", preferences.destinationFile)
+
+            if (sourceDirectory == null || destinationDirectory == null) {
+                throw directoryValidator.exceptionOnNullResult
+            }
+
+            return MigrateUserData(
+                source = sourceDirectory,
+                destination = destinationDirectory
+            )
+        }
+    }
+
     /**
      * If a file exists in [destination] with different content than [source]
      *
