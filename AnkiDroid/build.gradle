@@ -238,8 +238,21 @@ task installGitHook(type: Copy) {
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
+/**
+Kotlin allows concrete function implementations inside interfaces.
+For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
+'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
+
+https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
+
+    and we used "all" because we don't have downstream consumers
+    https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+ */
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions {
+        allWarningsAsErrors = true
+        freeCompilerArgs = ['-Xjvm-default=all'] 
+    }
 }
 
 //Workaround for: https://github.com/pinterest/ktlint/issues/1216
