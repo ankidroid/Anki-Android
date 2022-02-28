@@ -18,9 +18,9 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
+import java.io.File
 
 /** A path to the AnkiDroid folder, named "AnkiDroid" by default */
 typealias AnkiDroidDirectory = String
@@ -69,8 +69,7 @@ object ScopedStorageService {
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
      */
-    @VisibleForTesting
-    internal fun userMigrationIsInProgress(preferences: SharedPreferences) =
+    fun userMigrationIsInProgress(preferences: SharedPreferences) =
         UserDataMigrationPreferences.createInstance(preferences).migrationInProgress
 
     /**
@@ -83,6 +82,8 @@ object ScopedStorageService {
     class UserDataMigrationPreferences private constructor(val source: String, val destination: String) {
         /**  Whether a scoped storage migration is in progress */
         val migrationInProgress = source.isNotEmpty()
+        val sourceFile get() = File(source)
+        val destinationFile get() = File(destination)
         companion object {
             /**
              * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
