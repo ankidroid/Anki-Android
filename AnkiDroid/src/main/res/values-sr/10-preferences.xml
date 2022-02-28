@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Top</item>
         <item>Bottom</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Омогући гестове</string>
     <string name="gestures_summ">Додели гестове за дејства као одговарње и уређивање картица.</string>

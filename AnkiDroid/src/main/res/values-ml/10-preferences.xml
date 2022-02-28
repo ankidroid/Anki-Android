@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>മുകളിൽ</item>
         <item>ചുവടെ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">ആംഗ്യങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="gestures_summ">കാർഡുകൾക്ക് ഉത്തരം നൽകൽ, എഡിറ്റുചെയ്യൽ എന്നിവ പോലുള്ള പ്രവർത്തനങ്ങൾക്ക് ആംഗ്യങ്ങൾ നൽകുക.</string>

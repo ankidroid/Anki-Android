@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>
         <item>カードの下側</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">ジェスチャーを有効にする</string>
     <string name="gestures_summ">解答やカード編集などの操作にジェスチャーを割り当てます</string>

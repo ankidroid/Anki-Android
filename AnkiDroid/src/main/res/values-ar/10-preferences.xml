@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>في الأعلى</item>
         <item>في الأسفل</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">تفعيل الإيماءات</string>
     <string name="gestures_summ">تعيين إيماءات إلى إجراءات مثل إجابة البطاقات وتحريرها.</string>

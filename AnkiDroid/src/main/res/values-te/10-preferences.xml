@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>టాప్</item>
         <item>దిగువ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>

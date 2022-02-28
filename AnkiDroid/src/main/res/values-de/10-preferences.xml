@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Oben</item>
         <item>Unten</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Gesten aktivieren</string>
     <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>

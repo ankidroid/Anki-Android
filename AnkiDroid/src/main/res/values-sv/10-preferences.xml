@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Högst upp</item>
         <item>Längst ned</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktivera gester</string>
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>

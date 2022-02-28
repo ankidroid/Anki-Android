@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Bovenaan</item>
         <item>Onderaan</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Bewegingen inschakelen</string>
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>

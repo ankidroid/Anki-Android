@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Сверху</item>
         <item>Снизу</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Включить жесты</string>
     <string name="gestures_summ">Назначает жесты действиям вроде ответа и правки</string>

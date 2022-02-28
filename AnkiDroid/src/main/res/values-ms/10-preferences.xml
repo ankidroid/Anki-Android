@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Teratas</item>
         <item>Bawah</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktifkan isyarat</string>
     <string name="gestures_summ">Berikan isyarat untuk tindakan seperti menjawab dan editing kad.</string>

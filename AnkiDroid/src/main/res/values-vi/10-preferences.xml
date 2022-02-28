@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Trên cùng</item>
         <item>Dưới cùng</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Kích hoạt Cử chỉ</string>
     <string name="gestures_summ">Chỉ định các cử chỉ để hành động như trả lời và chỉnh sửa thẻ.</string>

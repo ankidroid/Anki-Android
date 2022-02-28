@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Góra</item>
         <item>Dół</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Włącz obsługę gestów</string>
     <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>

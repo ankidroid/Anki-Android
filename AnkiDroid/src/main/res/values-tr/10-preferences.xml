@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Yukarıda</item>
         <item>Aşağıda</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">El hareketlerini etkinleştir</string>
     <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>

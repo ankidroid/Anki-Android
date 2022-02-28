@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>सर्वोच्च</item>
         <item>तल</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">जेस्चर सक्षम करें</string>
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>

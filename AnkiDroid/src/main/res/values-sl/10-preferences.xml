@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Zgoraj</item>
         <item>Spodaj</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Omogoči poteze</string>
     <string name="gestures_summ">Dodeli poteze dejanjem, kot sta odgovarjanje in urejanje kartic.</string>

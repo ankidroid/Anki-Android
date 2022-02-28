@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Arriba</item>
         <item>Abajo</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>

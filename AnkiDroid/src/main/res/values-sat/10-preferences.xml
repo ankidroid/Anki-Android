@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>ᱪᱚᱴ</item>
         <item>ᱞᱟᱛᱟᱨ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">ᱪᱤᱱᱦᱟ ᱮᱢᱚᱜᱢᱮ</string>
     <string name="gestures_summ">ᱛᱮᱞᱟ ᱮᱢ ᱟᱨ ᱠᱟᱰᱥ ᱥᱟᱯᱰᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱜᱮᱥᱪᱚᱨ ᱠᱚ ᱴᱷᱤᱠ ᱢᱮ ᱾</string>
