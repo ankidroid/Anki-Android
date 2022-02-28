@@ -239,12 +239,11 @@ task installGitHook(type: Copy) {
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
 /**
-    The Kotlin compilation task names in Android projects contain the build variant names (those are combined from build type, product flavor and other settings and look like debug or releaseUnitTest -- the tasks are compileDebugKotlin and compileReleaseUnitTestKotlin respectively).
-    In kotlinOptions freeCompilerArgs(list of additional compiler arguments) is a attribute,
-    https://kotlinlang.org/docs/gradle.html#attributes-common-to-jvm-js-and-js-dce
+Kotlin allows concrete function implementations inside interfaces.
+For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
+'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
 
-    There's no freeCompilerArgs in our kotlinCompile, we want to configure and to do that, we used freeCompilerArgs = ['-Xjvm-default=all'],
-    https://kotlinlang.org/docs/gradle.html#compiler-options
+https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
 
     and we used "all" because we don't have downstream consumers
     https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
