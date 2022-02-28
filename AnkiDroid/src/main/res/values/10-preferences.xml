@@ -69,6 +69,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Top</item>
         <item>Bottom</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Enable gestures</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>

@@ -43,6 +43,7 @@ import android.webkit.URLUtil;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.analytics.Acra;
+import com.ichi2.anki.cardviewer.GestureProcessor;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
@@ -933,10 +934,22 @@ public class Preferences extends AnkiActivity {
         protected void initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing);
             // Show error toast if the user tries to disable answer button without gestures on
+            Preference buttonsPreference = requirePreference(getString(R.string.answer_buttons_position_preference));
+            buttonsPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(requireContext());
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || !newValue.equals("none")) {
+                    return true;
+                } else {
+                    UIUtils.showThemedToast(requireContext(),
+                            R.string.full_screen_error_gestures, false);
+                    return false;
+                }
+            });
+
             ListPreference fullscreenPreference = requirePreference(FullScreenMode.PREF_KEY);
             fullscreenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(requireContext());
-                if (prefs.getBoolean("gestures", false) || !FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue().equals(newValue)) {
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || !FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue().equals(newValue)) {
                     return true;
                 } else {
                     UIUtils.showThemedToast(requireContext(),
