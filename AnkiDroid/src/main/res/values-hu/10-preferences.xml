@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Oldal teteje</item>
         <item>Oldal alján</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>

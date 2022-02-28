@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Вгорі</item>
         <item>Внизу</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Увімкнути жести</string>
     <string name="gestures_summ">Використовувати жести для таких дій, як відповідь і редагування карток.</string>

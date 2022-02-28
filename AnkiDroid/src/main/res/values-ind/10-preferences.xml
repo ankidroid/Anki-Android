@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Atas</item>
         <item>Bawah</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktifkan gestur</string>
     <string name="gestures_summ">Menerapkan gestur sebagai tindakan untuk menjawab dan mengedit kartu.</string>

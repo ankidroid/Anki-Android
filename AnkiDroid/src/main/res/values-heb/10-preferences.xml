@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>למעלה</item>
         <item>למטה</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">הפעלת מחוות</string>
     <string name="gestures_summ">שיוך מחוות לפעולות כגון מענה ועריכת קלפים.</string>

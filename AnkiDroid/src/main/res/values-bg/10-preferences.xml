@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Отгоре</item>
         <item>Отдолу</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Разреши жестове</string>
     <string name="gestures_summ">Използване на жестове за такива действия като отговор и редактиране на карти.</string>

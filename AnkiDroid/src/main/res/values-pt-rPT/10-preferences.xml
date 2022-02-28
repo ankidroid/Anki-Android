@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Em cima</item>
         <item>Em baixo</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Ativar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>

@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
         <item>Sube</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Enŝalti gestojn</string>
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>

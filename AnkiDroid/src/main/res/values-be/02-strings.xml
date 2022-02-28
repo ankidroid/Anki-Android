@@ -359,7 +359,7 @@
     <string name="format_font_size">Змяніць памер шрыфту</string>
     <string name="insert_mathjax">Уставіць ураўненне MathJax</string>
     <string name="insert_cloze">Уставіць заданне з пропускамі</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Тэкст кнопкі</string>
     <string name="before_text">HTML перад вылучэннем</string>
     <string name="after_text">HTML пасля вылучэння</string>
     <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>

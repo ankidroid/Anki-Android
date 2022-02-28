@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>In alto</item>
         <item>In basso</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Attiva i gesti</string>
     <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>

@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Ylhäällä</item>
         <item>Alhaalla</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Ota eleet käyttöön</string>
     <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>

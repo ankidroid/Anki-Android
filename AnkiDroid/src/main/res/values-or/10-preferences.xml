@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>ଶୀର୍ଷ</item>
         <item>ତଳ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="gestures_summ">ପତ୍ରଗୁଡ଼ିକର ଉତ୍ତର ଏବଂ ସମ୍ପାଦନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ ଅଙ୍ଗଭଙ୍ଗୀ ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
@@ -95,25 +96,25 @@
     <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଭିଗେସନ୍ ଡ୍ରୟର୍</string>
     <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରିନର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଭିଗେସନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
-    <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ୱାଇପ୍</string>
-    <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ୱାଇପ୍</string>
-    <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ୱାଇପ୍</string>
-    <string name="gestures_swipe_right" maxLength="41">ଡାହାଣକୁ ସ୍ୱାଇପ୍</string>
-    <string name="gestures_double_tap" maxLength="41">ଦୁଇଥର ସ୍ପର୍ଶ</string>
-    <string name="gestures_long_tap" maxLength="41">ଲମ୍ବା ଟ୍ୟାପ୍</string>
-    <string name="gestures_tap_top" maxLength="41">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_tap_left" maxLength="41">ବାମକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_tap_right" maxLength="41">ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_tap_bottom" maxLength="41">ତଳକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">ଉପର ବାମକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_top_center">ଉପର ମଝିକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">ଉପର ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_middle_left">ମଝି ବାମକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_middle_right">ମଝି ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_bottom_center">ତଳ ମଝିକୁ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ</string>
+    <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ଵାଇପ୍ କଲେ</string>
+    <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ଵାଇପ୍ କଲେ</string>
+    <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ଵାଇପ୍ କଲେ</string>
+    <string name="gestures_swipe_right" maxLength="41">ଡାହାଣକୁ ସ୍ଵାଇପ୍ କଲେ</string>
+    <string name="gestures_double_tap" maxLength="41">ଦୁଇଥର ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_long_tap" maxLength="41">ଦୀର୍ଘ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_tap_top" maxLength="41">ଶୀର୍ଷକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_tap_left" maxLength="41">ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_tap_right" maxLength="41">ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_tap_bottom" maxLength="41">ତଳକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">ଉପର ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_top_center">ଉପର ମଝିକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">ଉପର ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_middle_left">ମଝି ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">ମଝି କେନ୍ଦ୍ରକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_middle_right">ମଝି ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_bottom_center">ତଳ ମଝିକୁ ସ୍ପର୍ଶ କଲେ</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲ୍ ପାଇଁ kanji/katakana, emoji/kao-moji ବଟନ୍ ଗୁଡ଼ିକୁ ମଧ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>

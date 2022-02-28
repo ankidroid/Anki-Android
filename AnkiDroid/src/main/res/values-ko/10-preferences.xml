@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
         <item>하단</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">제스처 사용</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>

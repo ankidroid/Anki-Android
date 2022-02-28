@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Tuktok</item>
         <item>Ibaba</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Paganahin ang mga galaw</string>
     <string name="gestures_summ">Magtalaga ng mga kilos sa mga pagkilos tulad ng pagsagot at pag-edit ng mga card.</string>

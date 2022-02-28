@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>In bassu</item>
         <item>In artu</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Abìlita sos gestos</string>
     <string name="gestures_summ">Assigna gestos a atziones che a sas rispostas e a sas modìficas de sas cartas.</string>

@@ -23,7 +23,7 @@
     <string name="front_field_name">正面</string>
     <string name="back_field_name">背面</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">文字</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">背面附加內容</string>
     <string name="field_to_ask_front_name">新增反向</string>
     <!--Card type-->
     <string name="card_n_name">卡片 %d</string>

@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>بالا</item>
         <item>پایین</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">فعالسازی حرکات لمسی</string>
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>

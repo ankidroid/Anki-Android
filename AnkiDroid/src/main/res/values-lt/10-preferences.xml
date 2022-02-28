@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Viršuje</item>
         <item>Apačioje</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Įjungti gestus</string>
     <string name="gestures_summ">Nustatykite kokiais gestais atsakinėsite į klausimus ir redaguosite korteles.</string>
