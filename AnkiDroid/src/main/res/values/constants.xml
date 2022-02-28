@@ -268,6 +268,7 @@
     <string-array name="answer_buttons_position" translatable="false">
         <item>top</item>
         <item>bottom</item>
+        <item>none</item>
     </string-array>
     <string-array name="html_size_codes">
         <item>xx-small</item>
