@@ -26,12 +26,12 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.StrictMock.strictMock;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
@@ -140,7 +140,10 @@ public class BackupManagerTest {
         File[] backups = BackupManager.getBackups(colFile);
 
         assertNotNull(backups);
-        assertArrayEquals("Only the valid backup names should have been kept", new File[] {f1, f3}, backups);
+        assertEquals("Only the valid backup names should have been kept", 2, backups.length);
+        Arrays.sort(backups);
+        assertEquals("collection-2000-12-31-23-04.colpkg", backups[0].getName());
+        assertEquals("collection-2010-12-06-13-04.colpkg", backups[1].getName());
     }
 
     @Test
