@@ -278,15 +278,8 @@ public class Media {
             if (Utils.fileChecksum(path).equals(csum)) {
                 return fname;
             }
-            // otherwise, increment the index in the filename
-            Pattern reg = Pattern.compile(" \\((\\d+)\\)$");
-            Matcher m = reg.matcher(root);
-            if (!m.find()) {
-                root = root + " (1)";
-            } else {
-                int n = Integer.parseInt(m.group(1));
-                root = String.format(Locale.US, " (%d)", n + 1);
-            }
+            // otherwise, increment the checksum in the filename
+            root = root + "-" + csum;
         }
     }
 
