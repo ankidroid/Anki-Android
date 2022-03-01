@@ -39,6 +39,7 @@ import java.io.IOException;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 
 @RunWith(AndroidJUnit4.class)
@@ -53,6 +54,8 @@ public class NoteServiceTest extends RobolectricTest {
     //temporary folder to test importMediaToDirectory function
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder2 = new TemporaryFolder();
 
     //tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
@@ -138,5 +141,48 @@ public class NoteServiceTest extends RobolectricTest {
         assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), imgField.getImagePath());
     }
 
+    @Test
+    public void importImageWithSameNameTest() throws IOException {
+        File f1 = folder.newFile("img.png");
+        File f2 = folder2.newFile("img.png");
+
+        // write a line in the file so the file's length isn't 0
+        try (FileWriter fileWriter = new FileWriter(f1)) {
+            fileWriter.write("1");
+        }
+        // do the same to the second file, but with different data
+        try (FileWriter fileWriter = new FileWriter(f2)) {
+            fileWriter.write("2");
+        }
+
+        MultimediaEditableNote testImage = new MultimediaEditableNote();
+        testImage.setNumFields(3);
+
+        ImageField fld1 = new ImageField();
+        fld1.setImagePath(f1.getAbsolutePath());
+        testImage.setField(0, fld1);
+
+        ImageField fld2 = new ImageField();
+        fld2.setImagePath(f2.getAbsolutePath());
+        testImage.setField(1, fld2);
+
+        // third field to test if name is kept after reimporting the same file
+        ImageField fld3 = new ImageField();
+        fld3.setImagePath(f1.getAbsolutePath());
+        testImage.setField(0, fld3);
+
+        NoteService.importMediaToDirectory(mTestCol, fld1);
+        File o1 = new File(mTestCol.getMedia().dir(), f1.getName());
+
+        NoteService.importMediaToDirectory(mTestCol, fld2);
+        File o2 = new File(mTestCol.getMedia().dir(), f2.getName());
+
+        NoteService.importMediaToDirectory(mTestCol, fld3);
+        // creating a third outfile isn't necessary because it should be equal to the first one
+
+        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld1.getImagePath());
+        assertNotEquals("path should be different to the new file made in NoteService.importMediaToDirectory", o2.getAbsolutePath(), fld2.getImagePath());
+        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld3.getImagePath());
+    }
 
 }
