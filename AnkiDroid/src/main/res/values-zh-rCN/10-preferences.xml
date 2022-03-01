@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
         <item>底部</item>
-        <item>None</item>
+        <item>无</item>
     </string-array>
     <string name="gestures" maxLength="41">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>

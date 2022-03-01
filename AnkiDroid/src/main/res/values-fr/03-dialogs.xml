@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
     <string name="restore_backup">Votre collection sera remplacée par une copie plus ancienne. Tout progrès non enregistré sera perdu.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Non</string>

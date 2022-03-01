@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
     <string name="dialog_no">아니요</string>

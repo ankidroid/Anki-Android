@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Нет</string>

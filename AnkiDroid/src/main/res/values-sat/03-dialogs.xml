@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid ᱡᱟᱹ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ %s ᱠᱷᱟᱞᱤ ᱟᱨᱡᱟᱣ ᱴᱷᱟᱶ ᱞᱟᱹᱠᱛᱤ । ᱫᱟᱭᱟᱠᱟᱛᱮ ᱴᱷᱟᱶ ᱥᱟᱯᱷᱟ</string>
     <string name="restore_backup_title">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱫᱚᱦᱰᱟᱭᱟ ᱥᱮ?</string>
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>

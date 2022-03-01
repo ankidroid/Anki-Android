@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Obnovi varnostno kopijo?</string>
     <string name="restore_backup">Vaša zbirka bo nadomeščena s starejšo kopijo. Vse neshranjene spremembe bodo izgubljene.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Prekliči</string>
     <string name="dialog_ok">V redu</string>
     <string name="dialog_no">No</string>
