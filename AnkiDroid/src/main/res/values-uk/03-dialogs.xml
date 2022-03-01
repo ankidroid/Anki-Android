@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
     <string name="restore_backup">Вашу колекцію замінить стара копія. Будь-який незбережений прогрес буде втрачено.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Гаразд</string>
     <string name="dialog_no">Ні</string>

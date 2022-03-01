@@ -143,6 +143,7 @@
     <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
     <string name="dialog_no">لا</string>

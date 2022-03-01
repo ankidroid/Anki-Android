@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">బ్యాకప్ను పునరుద్ధరించాలా?</string>
     <string name="restore_backup">మీ సేకరణ పాత కాపీతో భర్తీ చేయబడుతుంది. ఏదైనా సేవ్ చేయని ప్రగతిని కోల్పోతారు.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">రద్దు చేయు</string>
     <string name="dialog_ok">సరే</string>
     <string name="dialog_no">No</string>

@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
     <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">いいえ</string>

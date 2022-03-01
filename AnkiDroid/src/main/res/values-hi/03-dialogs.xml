@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid को जारी रखने के लिए %s मुफ्त संग्रहण स्थान की आवश्यकता है। कृपया कुछ जगह खाली करें</string>
     <string name="restore_backup_title">बैकअप रिस्टोर करें</string>
     <string name="restore_backup">आपका संग्रह किसी पुरानी प्रतिलिपि से बदल दिया जाएगा । कोई भी न सहेजा गया प्रगति खो जाएगी ।</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">रद्द करें</string>
     <string name="dialog_ok">ठीक है</string>
     <string name="dialog_no">नहीं</string>

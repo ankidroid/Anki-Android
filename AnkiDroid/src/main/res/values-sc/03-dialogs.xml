@@ -127,6 +127,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
     <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
     <string name="restore_backup">Sa colletzione tua s\'at a remplasare cun una còpia prus betza. Cale si siat progressu non sarvadu s\'at a pèrdere.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">AB</string>
     <string name="dialog_no">Nono</string>

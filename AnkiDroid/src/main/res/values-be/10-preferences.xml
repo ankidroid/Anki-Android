@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Зверху</item>
         <item>Знізу</item>
-        <item>None</item>
+        <item>Няма</item>
     </string-array>
     <string name="gestures" maxLength="41">Уключыць жэсты</string>
     <string name="gestures_summ">Прызначыць жэсты для такіх дзеянняў, як адказ і рэдагаванне картак.</string>

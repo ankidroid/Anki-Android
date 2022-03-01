@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného úložiště. Abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
     <string name="dialog_no">Ne</string>

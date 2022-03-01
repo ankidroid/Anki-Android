@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Възстановяване от архив?</string>
     <string name="restore_backup">Вашата колекция ще бъде заменена с по-старо копие. Всякакъв незаписан напредък, ще бъде загубен.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Отказ</string>
     <string name="dialog_ok">Да</string>
     <string name="dialog_no">Не</string>

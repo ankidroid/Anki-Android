@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
     <string name="restore_backup_title">回復備份嗎？</string>
     <string name="restore_backup">你的集合將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
     <string name="dialog_no">否</string>
