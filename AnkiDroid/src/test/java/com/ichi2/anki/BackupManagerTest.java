@@ -19,14 +19,24 @@ package com.ichi2.anki;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.StrictMock.strictMock;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,6 +51,122 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
 public class BackupManagerTest {
+
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
+    @Test
+    public void getBackupTimeStringTest() {
+        String ts = BackupManager.getBackupTimeString("collection-1999-12-31-23-59.colpkg");
+        assertEquals("1999-12-31-23-59", ts);
+    }
+    
+    @Test
+    public void parseBackupTimeStringTest() {
+        assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00-46"));
+        assertNull(BackupManager.parseBackupTimeString("123456"));
+    }
+
+    @Test
+    public void getBackupDateTest() {
+        assertNotNull(BackupManager.getBackupDate("collection-1970-01-02-00-46.colpkg"));
+        assertNull(BackupManager.getBackupDate("foo"));
+    }
+
+    @Test
+    public void getNameForNewBackupTest() {
+        // Using a timestamp number directly as MockTime parameter may
+        // have different results on other computers and GitHub CI
+        Date date = BackupManager.parseBackupTimeString("1970-01-02-00-46");
+        assertNotNull(date);
+        long timestamp = date.getTime();
+        String backupName = BackupManager.getNameForNewBackup(new MockTime(timestamp));
+
+        assertEquals("Backup name doesn't match naming pattern","collection-1970-01-02-00-46.colpkg", backupName);
+    }
+
+    @Test
+    public void nameOfNewBackupsCanBeParsed() {
+        String backupName = BackupManager.getNameForNewBackup(new MockTime(100000000));
+        assertNotNull(backupName);
+
+        Date ts = BackupManager.getBackupDate(backupName);
+        assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts);
+    }
+
+    @Test
+    public void getLastBackupDateTest() {
+        BackupManager bm = BackupManager.createInstance();
+        File[] backups = {
+                new File ("collection-2000-12-31-23-04.colpkg"),
+                new File ("collection-2010-01-02-03-04.colpkg"),
+                new File ("collection-1999-12-31-23-59.colpkg"),
+        };
+        File[] backups2 = {
+                new File ("collection-2000-12-31-23-04.colpkg"),
+                new File ("foo.colpkg"),
+        };
+        File[] backups3 = {
+                new File ("foo.colpkg"),
+                new File ("bar.colpkg"),
+        };
+
+        Date expected = BackupManager.parseBackupTimeString("2010-01-02-03-04");
+        Date expected2 = BackupManager.parseBackupTimeString("2000-12-31-23-04");
+
+        assertNull(bm.getLastBackupDate(new File[]{}));
+        assertNotNull(bm.getLastBackupDate(backups));
+        assertEquals(expected, bm.getLastBackupDate(backups));
+        assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2));
+        assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3));
+    }
+
+
+    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void getBackupsTest() throws IOException {
+        // getBackups() doesn't require a proper collection file
+        // because it is only used to get its parent
+        File colFile = tempFolder.newFile();
+        assertEquals(0, BackupManager.getBackups(colFile).length);
+
+        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
+        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
+        File f2 = new File (backupDir, "foo");
+        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
+        f1.createNewFile();
+        f2.createNewFile();
+        f3.createNewFile();
+        File[] backups = BackupManager.getBackups(colFile);
+
+        assertNotNull(backups);
+        assertEquals("Only the valid backup names should have been kept", 2, backups.length);
+        Arrays.sort(backups);
+        assertEquals("collection-2000-12-31-23-04.colpkg", backups[0].getName());
+        assertEquals("collection-2010-12-06-13-04.colpkg", backups[1].getName());
+    }
+
+    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public void deleteDeckBackupsTest() throws IOException {
+        File colFile = tempFolder.newFile();
+        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
+
+        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
+        File f2 = new File (backupDir, "collection-1990-08-31-45-04.colpkg");
+        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
+        File f4 = new File (backupDir, "collection-1980-01-12-11-04.colpkg");
+        f1.createNewFile();
+        f2.createNewFile();
+        f3.createNewFile();
+        f4.createNewFile();
+
+        BackupManager.deleteDeckBackups(colFile.getPath(), 2);
+        assertFalse("Older backups should have been deleted", f2.exists());
+        assertFalse("Older backups should have been deleted", f4.exists());
+        assertTrue("Newer backups should have been kept", f1.exists());
+        assertTrue("Newer backups should have been kept", f3.exists());
+    }
 
     @Test
     public void failsIfNoBackupsAllowed() {
@@ -131,7 +257,7 @@ public class BackupManagerTest {
         doReturn(true).when(spy).hasFreeDiscSpace(any());
         doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
         doNothing().when(spy).performBackupInNewThread(any(), any());
-        doReturn(null).when(spy).getLastBackupDate(any(), any());
+        doReturn(null).when(spy).getLastBackupDate(any());
 
         File f = backupFileMock != null ? backupFileMock : getBackupFileMock();
         doReturn(f).when(spy).getBackupFile(any(), any());

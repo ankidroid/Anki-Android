@@ -34,7 +34,6 @@ import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Collections.sort
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -71,26 +70,14 @@ open class BackupManager {
             Timber.d("performBackup: No backup necessary due to no collection changes")
             return false
         }
-        val df = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
-        val cal: Calendar = time.gregorianCalendar()
 
         // Abort backup if one was already made less than 5 hours ago
-        val lastBackupDate = getLastBackupDate(deckBackups, df)
+        val lastBackupDate = getLastBackupDate(deckBackups)
         if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
         }
-        val backupFilename: String = try {
-            String.format(
-                Utils.ENGLISH_LOCALE,
-                colFile.name.replace(".anki2", "") +
-                    "-%s.colpkg",
-                df.format(cal.time)
-            )
-        } catch (e: UnknownFormatConversionException) {
-            Timber.e(e, "performBackup: error on creating backup filename")
-            return false
-        }
+        val backupFilename = getNameForNewBackup(time) ?: return false
 
         // Abort backup if destination already exists (extremely unlikely)
         val backupFile = getBackupFile(colFile, backupFilename)
@@ -122,37 +109,25 @@ open class BackupManager {
         return true
     }
 
-    fun isBackupUnnecessary(colFile: File, deckBackups: Array<File?>): Boolean {
+    fun isBackupUnnecessary(colFile: File, deckBackups: Array<File>): Boolean {
         val len = deckBackups.size
 
         // If have no backups, then a backup is necessary
         return if (len <= 0) {
             false
-        } else deckBackups[len - 1]!!.lastModified() == colFile.lastModified()
+        } else deckBackups[len - 1].lastModified() == colFile.lastModified()
 
         // no collection changes means we don't need a backup
     }
 
-    /** Returns the last date of a backup, or null if none  */
-    fun getLastBackupDate(deckBackups: Array<File?>, df: SimpleDateFormat): Date? {
-        // TODO: It appears that we can just use a loop here
-        // TODO: This doesn't seem to work properly - we don't use a min()
-        var len = deckBackups.size
-        var lastBackupDate: Date? = null
-        while (lastBackupDate == null && len > 0) {
-            lastBackupDate = try {
-                len--
-                df.parse(
-                    deckBackups[len]!!.name.replace(
-                        "^.*-(\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}).colpkg$".toRegex(), "$1"
-                    )
-                )
-            } catch (e: ParseException) {
-                Timber.w(e)
-                null
-            }
+    /**
+     * @return last date in parseable file names or null if all names can't be parsed
+     */
+    fun getLastBackupDate(files: Array<File>): Date? {
+        for (file in files.sortedDescending()) {
+            getBackupDate(file.name)?.let { return it }
         }
-        return lastBackupDate
+        return null
     }
 
     @KotlinCleanup("make backupFilename non-null")
@@ -216,14 +191,17 @@ open class BackupManager {
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
         private const val BACKUP_SUFFIX = "backup"
         const val BROKEN_DECKS_SUFFIX = "broken"
+        private val backupNameRegex = Regex("collection-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})-(\\d{2})).colpkg")
 
         /** Number of hours after which a backup new backup is created  */
         private const val BACKUP_INTERVAL = 5
+        val df = SimpleDateFormat("yyyy-MM-dd-HH-mm")
         val isActivated: Boolean
             get() = true
 
         @KotlinCleanup("make non-null - requires fixing unit tests - they accidentally use empty string as the path")
-        private fun getBackupDirectory(ankidroidDir: File?): File {
+        @JvmStatic
+        fun getBackupDirectory(ankidroidDir: File?): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
@@ -354,40 +332,87 @@ open class BackupManager {
             return true
         }
 
+        /**
+         * Parses a string with backup naming pattern
+         * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
+         * @return Its dateformat parseable string or null if it doesn't match naming pattern
+         */
         @JvmStatic
-        fun getBackups(colFile: File): Array<File?> {
+        fun getBackupTimeString(fileName: String): String? {
+            return backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
+        }
+
+        /**
+         * @return date in string if it matches mackup naming pattern or null if not
+         */
+        @JvmStatic
+        fun parseBackupTimeString(timeString: String): Date? {
+            return try {
+                df.parse(timeString)
+            } catch (e: ParseException) {
+                null
+            }
+        }
+
+        /**
+         * @return date in fileName if it matches backup naming pattern or null if not
+         */
+        @JvmStatic
+        fun getBackupDate(fileName: String): Date? {
+            return getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
+        }
+
+        /**
+         * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
+         */
+        @JvmStatic
+        fun getNameForNewBackup(time: Time): String? {
+            /** Changes in the file name pattern should be updated as well in
+             * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
+            val cal: Calendar = time.gregorianCalendar()
+            val backupFilename: String = try {
+                String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
+            } catch (e: UnknownFormatConversionException) {
+                Timber.w(e, "performBackup: error on creating backup filename")
+                return null
+            }
+            return backupFilename
+        }
+
+        @JvmStatic
+        /**
+         * @return Array of files with names which matches the backup name pattern
+         */
+        fun getBackups(colFile: File): Array<File> {
             var files = getBackupDirectory(colFile.parentFile).listFiles()
             if (files == null) {
-                files = arrayOfNulls(0)
+                files = arrayOf<File>()
             }
-            val deckBackups = ArrayList<File?>(files.size)
+            val backups = mutableListOf<File>()
             for (aktFile in files) {
-                if (aktFile!!.name.replace("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$".toRegex(), "$1")
-                    == colFile.name.replace(".anki2", "")
-                ) {
-                    deckBackups.add(aktFile)
+                if (backupNameRegex.matchEntire(aktFile.name) != null) {
+                    backups.add(aktFile)
                 }
             }
-            sort(deckBackups)
-            val fileList = arrayOfNulls<File>(deckBackups.size)
-            deckBackups.toArray(fileList)
-            return fileList
+            return backups.toTypedArray()
         }
 
-        private fun deleteDeckBackups(colFile: String, keepNumber: Int): Boolean {
-            return deleteDeckBackups(getBackups(File(colFile)), keepNumber)
+        /**
+         * Deletes the first files until only the given number of files remain
+         * @param colPath Path of collection file whose backups should be deleted
+         * @param keepNumber How many files to keep
+         */
+        @JvmStatic
+        fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
+            return deleteDeckBackups(getBackups(File(colPath)).sortedArray(), keepNumber)
         }
 
-        @KotlinCleanup("make backups Array<File>?")
-        private fun deleteDeckBackups(backups: Array<File?>?, keepNumber: Int): Boolean {
-            if (backups == null) {
-                return false
-            }
+        private fun deleteDeckBackups(backups: Array<File>, keepNumber: Int): Boolean {
             for (i in 0 until backups.size - keepNumber) {
-                if (!backups[i]!!.delete()) {
-                    Timber.e("deleteDeckBackups() failed to delete %s", backups[i]!!.absolutePath)
+                if (!backups[i].delete()) {
+                    Timber.e("deleteDeckBackups() failed to delete %s", backups[i].absolutePath)
                 } else {
-                    Timber.i("deleteDeckBackups: backup file %s deleted.", backups[i]!!.absolutePath)
+                    Timber.i("deleteDeckBackups: backup file %s deleted.", backups[i].absolutePath)
                 }
             }
             return true
