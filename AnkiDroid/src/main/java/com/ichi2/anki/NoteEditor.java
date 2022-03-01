@@ -1352,6 +1352,10 @@ public class NoteEditor extends AnkiActivity implements
                     MultimediaEditableNote note = getCurrentMultimediaEditableNote(col);
                     note.setField(index, field);
                     FieldEditText fieldEditText = mEditFields.get(index);
+                    // Import field media
+                    // This goes before setting formattedValue to update
+                    // media paths with the checksum when they have the same name
+                    NoteService.importMediaToDirectory(col, field);
                     // Completely replace text for text fields (because current text was passed in)
                     String formattedValue = field.getFormattedValue();
                     if (field.getType() == EFieldType.TEXT) {
@@ -1361,8 +1365,6 @@ public class NoteEditor extends AnkiActivity implements
                     else if (fieldEditText.getText() != null) {
                         insertStringInField(fieldEditText, formattedValue);
                     }
-                    //DA - I think we only want to save the field here, not the note.
-                    NoteService.saveMedia(col, note);
                     mChanged = true;
                 }
                 break;

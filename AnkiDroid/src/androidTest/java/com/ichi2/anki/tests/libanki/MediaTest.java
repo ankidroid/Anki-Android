@@ -90,7 +90,7 @@ public class MediaTest extends InstrumentedTest {
         os = new FileOutputStream(path, false);
         os.write("world".getBytes());
         os.close();
-        assertEquals("foo (1).jpg", mTestCol.getMedia().addFile(path));
+        assertNotEquals("foo.jpg", mTestCol.getMedia().addFile(path));
     }
 
     @Test

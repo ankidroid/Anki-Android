@@ -150,7 +150,8 @@ object NoteService {
      *
      * @param field
      */
-    private fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
+    @JvmStatic
+    fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -166,6 +167,8 @@ object NoteService {
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir(), fname)
+                    // Update imagePath in case the file name wasn't unique
+                    field.imagePath = fname
                     if (field.hasTemporaryMedia() && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
