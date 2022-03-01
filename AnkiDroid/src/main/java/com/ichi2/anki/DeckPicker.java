@@ -1369,11 +1369,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     NotificationChannels.Channel.SYNC);
         } else {
             if (syncMessage == null || syncMessage.length() == 0) {
-                if (messageResource == R.string.youre_offline && !Connection.getAllowSyncOnNoConnection()) {
+                if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
                     //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     View root = this.findViewById(R.id.root_layout);
                     UIUtils.showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, (v) -> {
-                        Connection.setAllowSyncOnNoConnection(true);
+                        Connection.setAllowLoginSyncOnNoConnection(true);
                         sync();
                     }, null);
                 } else {
