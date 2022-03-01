@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
+import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
 import timber.log.Timber
@@ -41,6 +42,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val type = requireArguments().getInt("dialogType")
         val res = resources
         val builder = MaterialDialog.Builder(requireActivity())
+        val isLoggedIn = SyncStatus.isLoggedIn
         builder.cancelable(true)
             .title(title)
         var sqliteInstalled = false
@@ -115,9 +117,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore))
                 values.add(3)
-                // delete old collection and build new one
-                options.add(res.getString(R.string.backup_full_sync_from_server))
-                values.add(4)
+                // full sync from server
+                if (isLoggedIn) {
+                    options.add(res.getString(R.string.backup_full_sync_from_server))
+                    values.add(4)
+                }
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(5)
@@ -307,9 +311,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             INCOMPATIBLE_DB_VERSION -> {
                 val values: MutableList<Int> = ArrayList(2)
-                val options = arrayOf<CharSequence>(makeBold(res.getString(R.string.backup_restore)), makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                val options = mutableListOf<CharSequence>()
+                options.add(makeBold(res.getString(R.string.backup_restore)))
                 values.add(0)
-                values.add(1)
+                if (isLoggedIn) {
+                    options.add(makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                    values.add(1)
+                }
                 builder
                     .cancelable(false)
                     .contentNullable(message)
@@ -319,7 +327,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         _: DialogAction? ->
                         exit()
                     }
-                    .items(*options) // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
+                    .items(options) // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
                     .itemsCallback { _: MaterialDialog?, _: View?, position: Int, _: CharSequence? ->
                         when (values[position]) {
                             0 -> (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
