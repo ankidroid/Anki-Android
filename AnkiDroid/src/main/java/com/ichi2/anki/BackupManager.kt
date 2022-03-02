@@ -56,6 +56,22 @@ open class BackupManager {
         }
     }
 
+    /**
+     * Attempts to create a backup in a background thread. Returns `true` if the process is started.
+     *
+     * Returns false:
+     * * If backups are disabled
+     * * If [interval] hours have not elapsed since the last backup
+     * * If the filename creation failed
+     * * If [interval] is 0, and the backup already exists
+     * * If the user has insufficient space
+     * * If the collection is too small to be valid
+     *
+     * @param colPath The path of the collection file
+     * @param interval If this amount of hours has not elapsed since last backup, return false and do not create backup. See: [BACKUP_INTERVAL]
+     *
+     * @return Whether a thread was started to create a backup
+     */
     @KotlinCleanup("make colPath non-null")
     @Suppress("PMD.NPathComplexity")
     fun performBackupInBackground(colPath: String?, interval: Int, time: Time): Boolean {
@@ -71,7 +87,7 @@ open class BackupManager {
             return false
         }
 
-        // Abort backup if one was already made less than 5 hours ago
+        // Abort backup if one was already made less than [interval] hours ago (default: 5 hours - BACKUP_INTERVAL)
         val lastBackupDate = getLastBackupDate(deckBackups)
         if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
