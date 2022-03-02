@@ -128,7 +128,20 @@ public class Statistics extends NavigationDrawerActivity implements
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
-        mStatsDeckId = getCol().getDecks().selected();
+
+        String defaultDeck = AnkiDroidApp.getSharedPrefs(this).getString("stats_default_deck", "current");
+        switch (defaultDeck) {
+            case "current":
+                mStatsDeckId = getCol().getDecks().selected();
+                break;
+            case "all":
+                mStatsDeckId = Stats.ALL_DECKS_ID;
+                break;
+            default:
+                Timber.w("Unknown defaultDeck: %s", defaultDeck);
+                break;
+        }
+
         mDeckSpinnerSelection = new DeckSpinnerSelection(this, col, this.findViewById(R.id.toolbar_spinner), true, true);
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.getSupportActionBar());
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false);
