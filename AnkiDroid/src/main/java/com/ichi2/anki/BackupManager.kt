@@ -72,15 +72,14 @@ open class BackupManager {
      *
      * @return Whether a thread was started to create a backup
      */
-    @KotlinCleanup("make colPath non-null")
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String?, interval: Int, time: Time): Boolean {
+    fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
             return false
         }
-        val colFile = File(colPath!!)
+        val colFile = File(colPath)
         val deckBackups = getBackups(colFile)
         if (isBackupUnnecessary(colFile, deckBackups)) {
             Timber.d("performBackup: No backup necessary due to no collection changes")
@@ -234,7 +233,7 @@ open class BackupManager {
         }
 
         @JvmStatic
-        fun performBackupInBackground(path: String?, time: Time): Boolean {
+        fun performBackupInBackground(path: String, time: Time): Boolean {
             return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
         }
 
