@@ -18,21 +18,9 @@ package com.ichi2.anki.multimediacard.fields;
 
 import org.junit.Test;
 
-import static com.ichi2.anki.multimediacard.fields.BasicMediaClipFieldController.checkFileName;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class BasicMediaClipFieldControllerTest {
-
-
-    @Test
-    public void test_bad_chars_stripped() {
-        assertThat(checkFileName("There's a good film on the day <b>after</b> tomorrow.mp3"), is("There_s_a_good_film_on_the_day_b_after_b_tomorrow.mp3"));
-    }
-
-    @Test
-    public void test_extension_is_not_stripped() {
-        assertThat(checkFileName("file_example_MP3_700KB.mp3"), is("file_example_MP3_700KB.mp3"));
-    }
 
 }

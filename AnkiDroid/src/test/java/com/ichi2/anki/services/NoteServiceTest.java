@@ -20,7 +20,6 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.MediaClipField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
-import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
@@ -98,49 +97,41 @@ public class NoteServiceTest extends RobolectricTest {
 
         File fileAudio = folder.newFile("testaudio.wav");
 
-        //writes a line in the file so the file's length isn't 0
-        try(FileWriter fileWriter = new FileWriter(fileAudio)) {
+        // writes a line in the file so the file's length isn't 0
+        try (FileWriter fileWriter = new FileWriter(fileAudio)) {
             fileWriter.write("line1");
         }
 
-        MultimediaEditableNote testAudioClip = new MultimediaEditableNote();
-        testAudioClip.setNumFields(1);
-
         MediaClipField audioField = new MediaClipField();
         audioField.setAudioPath(fileAudio.getAbsolutePath());
-        testAudioClip.setField(0, audioField);
 
-        NoteService.saveMedia(mTestCol, testAudioClip);
+        NoteService.importMediaToDirectory(mTestCol, audioField);
 
         File outFile = new File(mTestCol.getMedia().dir(), fileAudio.getName());
 
-        assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), audioField.getAudioPath());
+        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", outFile.getAbsolutePath(), audioField.getAudioPath());
 
     }
 
-    //similar test like above, but with an imagefield instead of an audioclipfield
+    // Similar test like above, but with an ImageField instead of a MediaClipField
     @Test
     public void importImageToDirectoryTest() throws IOException {
 
         File fileImage = folder.newFile("testimage.png");
 
-        //writes a line in the file so the file's length isn't 0
-        try(FileWriter fileWriter = new FileWriter(fileImage)) {
+        // writes a line in the file so the file's length isn't 0
+        try (FileWriter fileWriter = new FileWriter(fileImage)) {
             fileWriter.write("line1");
         }
 
-        MultimediaEditableNote testImage = new MultimediaEditableNote();
-        testImage.setNumFields(1);
-
         ImageField imgField = new ImageField();
         imgField.setImagePath(fileImage.getAbsolutePath());
-        testImage.setField(0, imgField);
 
-        NoteService.saveMedia(mTestCol, testImage);
+        NoteService.importMediaToDirectory(mTestCol, imgField);
 
         File outFile = new File(mTestCol.getMedia().dir(), fileImage.getName());
 
-        assertEquals("path should be equal to the new file made in NoteService.saveMedia", outFile.getAbsolutePath(), imgField.getImagePath());
+        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", outFile.getAbsolutePath(), imgField.getImagePath());
     }
 
 
@@ -206,21 +197,15 @@ public class NoteServiceTest extends RobolectricTest {
             fileWriter.write("2");
         }
 
-        MultimediaEditableNote testImage = new MultimediaEditableNote();
-        testImage.setNumFields(3);
-
         ImageField fld1 = new ImageField();
         fld1.setImagePath(f1.getAbsolutePath());
-        testImage.setField(0, fld1);
 
         ImageField fld2 = new ImageField();
         fld2.setImagePath(f2.getAbsolutePath());
-        testImage.setField(1, fld2);
 
         // third field to test if name is kept after reimporting the same file
         ImageField fld3 = new ImageField();
         fld3.setImagePath(f1.getAbsolutePath());
-        testImage.setField(0, fld3);
 
         NoteService.importMediaToDirectory(mTestCol, fld1);
         File o1 = new File(mTestCol.getMedia().dir(), f1.getName());
