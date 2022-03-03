@@ -245,8 +245,8 @@ public class MediaTest extends InstrumentedTest {
 
     @Test
     public void testIllegal() {
-        String aString = "a:b|cd\\e/f\0g*h";
-        String good = "abcdefgh";
+        String aString = "a:b|cd\\e/f\0g*h\\[i\\]j";
+        String good = "abcdefghij";
         assertEquals(good, mTestCol.getMedia().stripIllegal(aString));
         for (int i = 0; i < aString.length(); i++) {
             char c = aString.charAt(i);

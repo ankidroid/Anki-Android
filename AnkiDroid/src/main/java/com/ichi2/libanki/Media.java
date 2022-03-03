@@ -83,7 +83,9 @@ import static java.lang.Math.min;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Media {
 
-    private static final Pattern fIllegalCharReg = Pattern.compile("[><:\"/?*^\\\\|\\x00\\r\\n]");
+    // Upstream illegal chars defined on disallowed_char()
+    // in https://github.com/ankitects/anki/blob/main/rslib/src/media/files.rs
+    private static final Pattern fIllegalCharReg = Pattern.compile("[\\[\\]><:\"/?*^\\\\|\\x00\\r\\n]");
     private static final Pattern fRemotePattern  = Pattern.compile("(https?|ftp)://");
 
     /*
