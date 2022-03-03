@@ -24,9 +24,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -58,9 +57,8 @@ class NpmPackageDownloader {
 
         fun getJson(url: URL): MutableList<AddonModel>? {
             try {
-                val mapper = ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                return mapper.readValue(url, object : TypeReference<MutableList<AddonModel>>() {})
+                val mapper = AnkiSerialization.objectMapper
+                return mapper?.readValue(url, object : TypeReference<MutableList<AddonModel>>() {})
             } catch (e: UnknownHostException) {
                 // user not connected to internet
                 Timber.w(e.localizedMessage)
