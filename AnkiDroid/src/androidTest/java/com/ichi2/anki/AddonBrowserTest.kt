@@ -35,7 +35,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
-import java.nio.file.Files
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.pathString
 
 @RunWith(AndroidJUnit4::class)
 open class AddonBrowserTest : InstrumentedTest() {
@@ -60,7 +61,7 @@ open class AddonBrowserTest : InstrumentedTest() {
     @Test
     @Throws(IOException::class, ArchiveException::class)
     fun isValidAnkiDroidAddonTest() {
-        val tempAddonDir = File(Files.createTempDirectory("AnkiDroid-addons").toString())
+        val tempAddonDir = File(createTempDirectory("AnkiDroid-addons").pathString)
         val tgzPath = Shared.getTestFilePath(testContext, NPM_ADDON_TGZ_PACKAGE_NAME)
 
         // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
@@ -106,7 +107,7 @@ open class AddonBrowserTest : InstrumentedTest() {
     @Test
     @Throws(IOException::class, ArchiveException::class)
     fun notValidAnkiDroidAddonTest() {
-        val tempAddonDir = File(Files.createTempDirectory("AnkiDroid-addons").toString())
+        val tempAddonDir = File(createTempDirectory("AnkiDroid-addons").pathString)
         val tgzPath = Shared.getTestFilePath(testContext, NOT_VALID_NPM_ADDON_TGZ_PACKAGE_NAME)
 
         // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file

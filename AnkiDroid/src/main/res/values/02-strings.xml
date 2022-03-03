@@ -455,7 +455,7 @@
     <string name="addon_disabled">%s addon disabled</string>
     <string name="confirm_remove_addon">Do you want to remove %s ?</string>
     <string name="failed_to_remove_addon">Failed to remove addon. Try again or remove it manually</string>
-    <string name="addon_type_and_version">Type: %s  Version: %s</string>
+    <string name="addon_type_and_version">Type: %1$s  Version: %2$s</string>
     <string name="is_not_valid_js_addon">%s is not a valid js addon package for AnkiDroid</string>
     <string name="addon_details">Details</string>
     <string name="no_addons_found">No Addons found, Get addons from options menu</string>
