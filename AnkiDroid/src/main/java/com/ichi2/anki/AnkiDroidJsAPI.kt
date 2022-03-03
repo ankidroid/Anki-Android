@@ -482,7 +482,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             val searchResult: MutableList<String> = ArrayList()
 
             if (result.result == null) {
-                webView.evaluateJavascript("console.log('${context.getString(R.string.search_card_js_api_null)}')", null)
+                webView.evaluateJavascript("console.log('${context.getString(R.string.search_card_js_api_no_results)}')", null)
             }
 
             for (s in result.result!!) {

@@ -229,10 +229,9 @@ var onPageFinished = function() {
         .then(_runHook(onShownHook))
 }
 
-
-/**
-* Add function 2 hook to function 1
-*/
+/* Add function 2 hook to function 1.
+ * Function 2 should be `(arg: Object) => void`;  `arg` will be an Object returned from `JSON.parse`
+ */
 function addHook(fn1, fn2) {
     if (fn1 === "ankiSearchCard") {
         searchCardHook.push(fn2);
