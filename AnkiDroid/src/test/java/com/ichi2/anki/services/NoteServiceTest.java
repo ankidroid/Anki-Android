@@ -41,6 +41,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertFalse;
+import static com.ichi2.testutils.FileSystemUtilsKt.createTransientFile;
 
 @RunWith(AndroidJUnit4.class)
 public class NoteServiceTest extends RobolectricTest {
@@ -232,6 +234,38 @@ public class NoteServiceTest extends RobolectricTest {
         assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld1.getImagePath());
         assertNotEquals("path should be different to the new file made in NoteService.importMediaToDirectory", o2.getAbsolutePath(), fld2.getImagePath());
         assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld3.getImagePath());
+    }
+
+    /**
+     * Sometimes media files cannot be imported directly to the media directory,
+     * so they are copied to cache then imported and deleted.
+     * This tests if cached media are properly deleted after import.
+     */
+    @Test
+    public void tempAudioIsDeletedAfterImport() {
+        File file = createTransientFile("foo");
+
+        MediaClipField field = new MediaClipField();
+        field.setAudioPath(file.getAbsolutePath());
+        field.setHasTemporaryMedia(true);
+
+        NoteService.importMediaToDirectory(mTestCol, field);
+
+        assertFalse("Audio temporary file should have been deleted after importing", file.exists());
+    }
+
+    // Similar test like above, but with an ImageField instead of a MediaClipField
+    @Test
+    public void tempImageIsDeletedAfterImport() {
+        File file = createTransientFile("foo");
+
+        ImageField field = new ImageField();
+        field.setImagePath(file.getAbsolutePath());
+        field.setHasTemporaryMedia(true);
+
+        NoteService.importMediaToDirectory(mTestCol, field);
+
+        assertFalse("Image temporary file should have been deleted after importing", file.exists());
     }
 
 }
