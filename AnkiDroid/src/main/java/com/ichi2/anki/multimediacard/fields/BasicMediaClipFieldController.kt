@@ -27,7 +27,6 @@ import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
@@ -38,13 +37,12 @@ import timber.log.Timber
 import java.io.File
 
 class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
-    private var storingDirectory: File? = null
+    private var ankiCacheDirectory: String? = null
 
     private lateinit var tvAudioClip: FixedTextView
 
     override fun createUI(context: Context, layout: LinearLayout?) {
-        val col = CollectionHelper.getInstance().getCol(context)
-        storingDirectory = File(col.media.dir())
+        ankiCacheDirectory = context.externalCacheDir?.absolutePath
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
         val btnLibrary = Button(mActivity)
@@ -100,17 +98,17 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_AUDIO_CLIP) {
             executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!, "ankidroid_audioclip_")
+                handleMediaSelection(data!!)
             }
         }
         if (resultCode != Activity.RESULT_CANCELED && requestCode == ACTIVITY_SELECT_VIDEO_CLIP) {
             executeSafe(mActivity, "handleMediaSelection:unhandled") {
-                handleMediaSelection(data!!, "ankidroid_videoclip_")
+                handleMediaSelection(data!!)
             }
         }
     }
 
-    private fun handleMediaSelection(data: Intent, clipNamePrefix: String) {
+    private fun handleMediaSelection(data: Intent) {
         val selectedClip = data.data
 
         // Get information about the selected document
@@ -125,8 +123,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 return
             }
             cursor.moveToFirst()
-            var mediaClipFullName = cursor.getString(0)
-            mediaClipFullName = checkFileName(mediaClipFullName)
+            val mediaClipFullName = cursor.getString(0)
             mediaClipFullNameParts = mediaClipFullName.split(".").toTypedArray()
             if (mediaClipFullNameParts.size < 2) {
                 mediaClipFullNameParts = try {
@@ -150,11 +147,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         // We may receive documents we can't access directly, we have to copy to a temp file
         val clipCopy: File
         try {
-            clipCopy = File.createTempFile(
-                clipNamePrefix + mediaClipFullNameParts[0],
-                "." + mediaClipFullNameParts[1],
-                storingDirectory
-            )
+            clipCopy = createCachedFile(mediaClipFullNameParts[0] + "." + mediaClipFullNameParts[1])
             Timber.d("media clip picker file path is: %s", clipCopy.absolutePath)
         } catch (e: Exception) {
             Timber.e(e, "Could not create temporary media file. ")
@@ -185,6 +178,12 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
             )
         }
+    }
+
+    private fun createCachedFile(filename: String): File {
+        val file = File(ankiCacheDirectory, filename)
+        file.deleteOnExit()
+        return file
     }
 
     override fun onDone() {
