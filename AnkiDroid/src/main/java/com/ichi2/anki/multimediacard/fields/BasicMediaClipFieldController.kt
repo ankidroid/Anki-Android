@@ -167,7 +167,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 // If everything worked, hand off the information
                 mField.setHasTemporaryMedia(true)
                 mField.audioPath = clipCopy.absolutePath
-                tvAudioClip.text = mField.formattedValue
+                tvAudioClip.text = clipCopy.name
                 tvAudioClip.visibility = View.VISIBLE
             }
         } catch (e: Exception) {
