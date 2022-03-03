@@ -26,16 +26,17 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.nio.file.NoSuchFileException
 import java.nio.file.NotDirectoryException
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [21, 26])
 class DirectoryContentTest {
+    val compat = CompatHelper.getCompat()
+
     @Test
     fun empty_dir_test() {
         val directory = createTransientDirectory()
-        CompatHelper.getCompat().contentOfDirectory(directory).use {
+        compat.contentOfDirectory(directory).use {
             assertThat("Iterator should not have next", it.hasNext(), equalTo(false))
         }
     }
@@ -45,7 +46,7 @@ class DirectoryContentTest {
         // Relative paths caused me hours of debugging. Never again.
         val directory = createTransientDirectory()
             .withTempFile("zero")
-        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)
+        val iterator = compat.contentOfDirectory(directory)
         val file = iterator.next()
         assertThat("Paths should be canonical", file.path, equalTo(file.canonicalPath))
     }
@@ -56,7 +57,7 @@ class DirectoryContentTest {
             .withTempFile("zero")
             .withTempFile("one")
             .withTempFile("two")
-        val iterator = CompatHelper.getCompat().contentOfDirectory(directory)
+        val iterator = compat.contentOfDirectory(directory)
         val found = Array(3) { false }
         for (i in 1..3) {
             assertThat("Iterator should have a $i-th element", iterator.hasNext(), equalTo(true))
@@ -79,19 +80,17 @@ class DirectoryContentTest {
     fun non_existent_dir_test() {
         val directory = createTransientDirectory()
         directory.delete()
-        val exception = assertThrowsSubclass<IOException>({
-            CompatHelper.getCompat().contentOfDirectory(directory)
+        assertThrows<FileNotFoundException>({
+            compat.contentOfDirectory(directory)
         }
         )
-        val expectedException = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NoSuchFileException::class else FileNotFoundException::class
-        assertThat("this should be a FileNotFound or NoSuchFile exception depending on API", exception, instanceOf(expectedException.java))
     }
 
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
         val exception = assertThrowsSubclass<IOException>({
-            CompatHelper.getCompat().contentOfDirectory(file)
+            compat.contentOfDirectory(file)
         }
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

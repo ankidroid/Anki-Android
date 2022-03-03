@@ -193,7 +193,16 @@ public class CompatV26 extends CompatV23 implements Compat {
      */
     @Override
     public @NonNull FileStream contentOfDirectory(File directory) throws IOException {
-        DirectoryStream<Path> paths_stream = Files.newDirectoryStream(directory.toPath());
+        final DirectoryStream<Path> paths_stream;
+        try {
+            paths_stream = Files.newDirectoryStream(directory.toPath());
+        } catch (IOException e) {
+            if (e instanceof NoSuchFileException) {
+                NoSuchFileException nsfe = (NoSuchFileException) e;
+                throw new FileNotFoundException(nsfe.getFile() + "\n" + nsfe.getCause() + "\n" + nsfe.getStackTrace());
+            }
+            throw e;
+        }
         Iterator<Path> paths = paths_stream.iterator();
         return new FileStream() {
             @Override
