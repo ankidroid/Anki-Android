@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -201,17 +200,5 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     companion object {
         private const val ACTIVITY_SELECT_AUDIO_CLIP = 1
         private const val ACTIVITY_SELECT_VIDEO_CLIP = 2
-
-        /**
-         * This method replaces any character that isn't a number, letter or underscore with underscore in file name.
-         * This method doesn't check that file name is valid or not it simply operates on all file name.
-         * @param mediaClipFullName name of the file.
-         * @return file name which is valid.
-         */
-        @JvmStatic
-        @VisibleForTesting
-        fun checkFileName(mediaClipFullName: String): String {
-            return mediaClipFullName.replace("[^\\w.]+".toRegex(), "_")
-        }
     }
 }

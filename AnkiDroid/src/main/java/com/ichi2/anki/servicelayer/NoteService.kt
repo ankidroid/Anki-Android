@@ -111,41 +111,6 @@ object NoteService {
     }
 
     /**
-     * Saves the multimedia associated with this card to proper path inside anki folder. For each field associated with
-     * the note it checks for the following condition a. The field content should have changed b. The field content does
-     * not already point to a media inside anki media path If both condition satisfies then it copies the file inside
-     * the media path and deletes the file referenced by the note
-     *
-     * @param noteNew
-     */
-    @JvmStatic
-    fun saveMedia(col: com.ichi2.libanki.Collection, noteNew: MultimediaEditableNote) {
-        // if (noteNew.getModelId() == noteOld.getModelId())
-        // {
-        // int fieldCount = noteNew.getNumberOfFields();
-        // for (int i = 0; i < fieldCount; i++)
-        // {
-        // IField newField = noteNew.getField(i);
-        // IField oldField = noteOld.getField(i);
-        // if
-        // (newField.getFormattedValue().equals(oldField.getFormattedValue()))
-        // {
-        // continue;
-        // }
-        // importMediaToDirectory(newField);
-        // }
-        // }
-        // else
-        // {
-        val fieldCount: Int = noteNew.numberOfFields
-        for (i in 0 until fieldCount) {
-            val newField = noteNew.getField(i)
-            importMediaToDirectory(col, newField)
-        }
-        // }
-    }
-
-    /**
      * Considering the field is new, if it has media handle it
      *
      * @param field
@@ -167,8 +132,6 @@ object NoteService {
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir(), fname)
-                    // Update imagePath in case the file name wasn't unique
-                    field.imagePath = fname
                     if (field.hasTemporaryMedia() && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
