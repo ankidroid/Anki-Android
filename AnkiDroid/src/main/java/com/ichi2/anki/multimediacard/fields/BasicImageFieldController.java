@@ -298,7 +298,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
     private File createCachedFile(@NonNull String filename) throws IOException {
-        return new File(mAnkiCacheDirectory, filename);
+        File file = new File(mAnkiCacheDirectory, filename);
+        file.deleteOnExit();
+        return file;
     }
 
 
