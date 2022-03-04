@@ -11,6 +11,7 @@ import com.ichi2.anki.lint.rules.DirectSystemCurrentTimeMillisUsage;
 import com.ichi2.anki.lint.rules.DirectDateInstantiation;
 import com.ichi2.anki.lint.rules.DirectGregorianInstantiation;
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage;
+import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector;
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings;
 import com.ichi2.anki.lint.rules.DuplicateTextInPreferencesXml;
 import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength;
@@ -45,6 +46,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(DuplicateCrowdInStrings.ISSUE);
         issues.add(DuplicateTextInPreferencesXml.ISSUE);
         issues.add(InconsistentAnnotationUsage.ISSUE);
+        issues.add(JUnitNullAssertionDetector.ISSUE);
         issues.add(KotlinMigrationBrokenEmails.ISSUE);
         issues.add(KotlinMigrationFixLineBreaks.ISSUE);
         issues.add(PreferIsEmptyOverSizeCheck.ISSUE);
