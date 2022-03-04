@@ -21,13 +21,14 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.JSONObject
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItemInArray
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CardTest : RobolectricTest() {
@@ -134,7 +135,7 @@ class CardTest : RobolectricTest() {
         val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameField(model!!, model.getJSONArray("flds").getJSONObject(0), "A")
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B")
         val fld2 = models.newField("C")
         fld2.put("ord", JSONObject.NULL)
@@ -184,7 +185,7 @@ class CardTest : RobolectricTest() {
         val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model!!.getJSONArray("tmpls")
+        val tmpls = model.getJSONArray("tmpls")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front")
         val fld2 = models.newField("AddIfEmpty")
