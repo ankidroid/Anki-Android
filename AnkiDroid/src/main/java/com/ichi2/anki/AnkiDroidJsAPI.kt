@@ -490,9 +490,17 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 val fieldsData = s.card.note().fields
                 val fieldsName = s.card.model().fieldsNames
 
+                val noteId = s.card.note().id
+                val cardId = s.card.id
+                jsonObject.put("cardId", cardId)
+                jsonObject.put("noteId", noteId)
+
+                val jsonFieldObject = JSONObject()
                 fieldsName.zip(fieldsData).forEach { pair ->
-                    jsonObject.put(pair.component1(), pair.component2())
+                    jsonFieldObject.put(pair.component1(), pair.component2())
                 }
+                jsonObject.put("fieldsData", jsonFieldObject)
+
                 searchResult.add(jsonObject.toString())
             }
 
