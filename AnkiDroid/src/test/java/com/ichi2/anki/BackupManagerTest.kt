@@ -13,262 +13,233 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.libanki.utils.Time
+import com.ichi2.testutils.MockTime
+import com.ichi2.testutils.assertFalse
+import com.ichi2.utils.StrictMock.Companion.strictMock
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import org.mockito.Mockito.*
+import org.mockito.kotlin.any
+import java.io.File
+import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.junit.JUnitAsserter.assertEquals
+import kotlin.test.junit.JUnitAsserter.assertNotNull
+import kotlin.test.junit.JUnitAsserter.assertNull
+import kotlin.test.junit.JUnitAsserter.assertTrue
 
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.testutils.MockTime;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.utils.StrictMock.strictMock;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
-@RunWith(AndroidJUnit4.class)
-public class BackupManagerTest {
-
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+@RunWith(AndroidJUnit4::class)
+open class BackupManagerTest {
+    @get:Rule
+    var tempFolder = TemporaryFolder()
 
     @Test
-    public void getBackupTimeStringTest() {
-        String ts = BackupManager.getBackupTimeString("collection-1999-12-31-23-59.colpkg");
-        assertEquals("1999-12-31-23-59", ts);
-    }
-    
-    @Test
-    public void parseBackupTimeStringTest() {
-        assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00-46"));
-        assertNull(BackupManager.parseBackupTimeString("123456"));
+    fun getBackupTimeStringTest() {
+        val ts = BackupManager.getBackupTimeString("collection-1999-12-31-23-59.colpkg")
+        assertEquals("1999-12-31-23-59", ts)
     }
 
     @Test
-    public void getBackupDateTest() {
-        assertNotNull(BackupManager.getBackupDate("collection-1970-01-02-00-46.colpkg"));
-        assertNull(BackupManager.getBackupDate("foo"));
+    fun parseBackupTimeStringTest() {
+        assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00-46"))
+        assertNull(BackupManager.parseBackupTimeString("123456"))
     }
 
     @Test
-    public void getNameForNewBackupTest() {
+    fun getBackupDateTest() {
+        assertNotNull(BackupManager.getBackupDate("collection-1970-01-02-00-46.colpkg"))
+        assertNull(BackupManager.getBackupDate("foo"))
+    }
+
+    @Test
+    fun getNameForNewBackupTest() {
         // Using a timestamp number directly as MockTime parameter may
         // have different results on other computers and GitHub CI
-        Date date = BackupManager.parseBackupTimeString("1970-01-02-00-46");
-        assertNotNull(date);
-        long timestamp = date.getTime();
-        String backupName = BackupManager.getNameForNewBackup(new MockTime(timestamp));
+        val date = BackupManager.parseBackupTimeString("1970-01-02-00-46")
+        assertNotNull(date)
+        val timestamp = date.time
+        val backupName = BackupManager.getNameForNewBackup(MockTime(timestamp))
 
-        assertEquals("Backup name doesn't match naming pattern","collection-1970-01-02-00-46.colpkg", backupName);
+        assertEquals("Backup name doesn't match naming pattern", "collection-1970-01-02-00-46.colpkg", backupName)
     }
 
     @Test
-    public void nameOfNewBackupsCanBeParsed() {
-        String backupName = BackupManager.getNameForNewBackup(new MockTime(100000000));
-        assertNotNull(backupName);
+    fun nameOfNewBackupsCanBeParsed() {
+        val backupName = BackupManager.getNameForNewBackup(MockTime(100000000))
+        assertNotNull(backupName)
 
-        Date ts = BackupManager.getBackupDate(backupName);
-        assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts);
+        val ts = BackupManager.getBackupDate(backupName)
+        assertNotNull("New backup name couldn't be parsed by getBackupTimeStrings()", ts)
     }
 
     @Test
-    public void getLastBackupDateTest() {
-        BackupManager bm = BackupManager.createInstance();
-        File[] backups = {
-                new File ("collection-2000-12-31-23-04.colpkg"),
-                new File ("collection-2010-01-02-03-04.colpkg"),
-                new File ("collection-1999-12-31-23-59.colpkg"),
-        };
-        File[] backups2 = {
-                new File ("collection-2000-12-31-23-04.colpkg"),
-                new File ("foo.colpkg"),
-        };
-        File[] backups3 = {
-                new File ("foo.colpkg"),
-                new File ("bar.colpkg"),
-        };
+    fun getLastBackupDateTest() {
+        val bm = BackupManager.createInstance()
+        val backups = arrayOf(
+            File("collection-2000-12-31-23-04.colpkg"),
+            File("collection-2010-01-02-03-04.colpkg"),
+            File("collection-1999-12-31-23-59.colpkg")
+        )
+        val backups2 = arrayOf(
+            File("collection-2000-12-31-23-04.colpkg"),
+            File("foo.colpkg")
+        )
+        val backups3 = arrayOf(
+            File("foo.colpkg"),
+            File("bar.colpkg")
+        )
+        val expected = BackupManager.parseBackupTimeString("2010-01-02-03-04")
+        val expected2 = BackupManager.parseBackupTimeString("2000-12-31-23-04")
 
-        Date expected = BackupManager.parseBackupTimeString("2010-01-02-03-04");
-        Date expected2 = BackupManager.parseBackupTimeString("2000-12-31-23-04");
-
-        assertNull(bm.getLastBackupDate(new File[]{}));
-        assertNotNull(bm.getLastBackupDate(backups));
-        assertEquals(expected, bm.getLastBackupDate(backups));
-        assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2));
-        assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3));
+        assertNull(bm.getLastBackupDate(arrayOf()))
+        assertNotNull(bm.getLastBackupDate(backups))
+        assertEquals(expected, bm.getLastBackupDate(backups))
+        assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2))
+        assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3))
     }
 
-
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void getBackupsTest() throws IOException {
+    fun getBackupsTest() {
         // getBackups() doesn't require a proper collection file
         // because it is only used to get its parent
-        File colFile = tempFolder.newFile();
-        assertEquals(0, BackupManager.getBackups(colFile).length);
+        val colFile = tempFolder.newFile()
+        assertEquals(0, BackupManager.getBackups(colFile).size)
+        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        val f1 = File(backupDir, "collection-2000-12-31-23-04.colpkg")
+        val f2 = File(backupDir, "foo")
+        val f3 = File(backupDir, "collection-2010-12-06-13-04.colpkg")
+        f1.createNewFile()
+        f2.createNewFile()
+        f3.createNewFile()
+        val backups = BackupManager.getBackups(colFile)
 
-        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
-        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
-        File f2 = new File (backupDir, "foo");
-        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
-        f1.createNewFile();
-        f2.createNewFile();
-        f3.createNewFile();
-        File[] backups = BackupManager.getBackups(colFile);
-
-        assertNotNull(backups);
-        assertEquals("Only the valid backup names should have been kept", 2, backups.length);
-        Arrays.sort(backups);
-        assertEquals("collection-2000-12-31-23-04.colpkg", backups[0].getName());
-        assertEquals("collection-2010-12-06-13-04.colpkg", backups[1].getName());
+        assertNotNull(backups)
+        assertEquals("Only the valid backup names should have been kept", 2, backups.size)
+        Arrays.sort(backups)
+        assertEquals("collection-2000-12-31-23-04.colpkg", backups[0].name)
+        assertEquals("collection-2010-12-06-13-04.colpkg", backups[1].name)
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void deleteDeckBackupsTest() throws IOException {
-        File colFile = tempFolder.newFile();
-        File backupDir = BackupManager.getBackupDirectory(tempFolder.getRoot());
+    fun deleteDeckBackupsTest() {
+        val colFile = tempFolder.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
 
-        File f1 = new File (backupDir, "collection-2000-12-31-23-04.colpkg");
-        File f2 = new File (backupDir, "collection-1990-08-31-45-04.colpkg");
-        File f3 = new File (backupDir, "collection-2010-12-06-13-04.colpkg");
-        File f4 = new File (backupDir, "collection-1980-01-12-11-04.colpkg");
-        f1.createNewFile();
-        f2.createNewFile();
-        f3.createNewFile();
-        f4.createNewFile();
+        val f1 = File(backupDir, "collection-2000-12-31-23-04.colpkg")
+        val f2 = File(backupDir, "collection-1990-08-31-45-04.colpkg")
+        val f3 = File(backupDir, "collection-2010-12-06-13-04.colpkg")
+        val f4 = File(backupDir, "collection-1980-01-12-11-04.colpkg")
+        f1.createNewFile()
+        f2.createNewFile()
+        f3.createNewFile()
+        f4.createNewFile()
 
-        BackupManager.deleteDeckBackups(colFile.getPath(), 2);
-        assertFalse("Older backups should have been deleted", f2.exists());
-        assertFalse("Older backups should have been deleted", f4.exists());
-        assertTrue("Newer backups should have been kept", f1.exists());
-        assertTrue("Newer backups should have been kept", f3.exists());
+        BackupManager.deleteDeckBackups(colFile.path, 2)
+        assertFalse("Older backups should have been deleted", f2.exists())
+        assertFalse("Older backups should have been deleted", f4.exists())
+        assertTrue("Newer backups should have been kept", f1.exists())
+        assertTrue("Newer backups should have been kept", f3.exists())
     }
 
     @Test
-    public void failsIfNoBackupsAllowed() {
+    fun failsIfNoBackupsAllowed() {
         // arrange
-
-        BackupManager bm = getPassingBackupManagerSpy();
-
-        doReturn(true).when(bm).hasDisabledBackups(any());
-
+        val bm = passingBackupManagerSpy
+        doReturn(true).`when`(bm).hasDisabledBackups(any())
 
         // act
-        boolean performBackupResult = performBackup(bm);
+        val performBackupResult = performBackup(bm)
 
         // assert
-
-        assertThat("should fail if backups are disabled", performBackupResult, is(false));
-
-        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any());
-        verify(bm, times(1)).hasDisabledBackups(any());
-
-        verifyNoMoreInteractions(bm);
+        assertThat("should fail if backups are disabled", performBackupResult, equalTo(false))
+        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any())
+        verify(bm, times(1)).hasDisabledBackups(any())
+        verifyNoMoreInteractions(bm)
     }
 
-    /** Meta test: ensuring passingBackupManagerSpy passes */
+    /** Meta test: ensuring passingBackupManagerSpy passes  */
     @Test
-    public void testPassingSpy() {
-        BackupManager bm = getPassingBackupManagerSpy();
+    fun testPassingSpy() {
+        val bm = passingBackupManagerSpy
 
-        boolean result = performBackup(bm);
+        val result = performBackup(bm)
 
-        verify(bm, times(1)).performBackupInNewThread(any(), any());
-        assertThat("PerformBackup should pass", result, is(true));
+        verify(bm, times(1)).performBackupInNewThread(any(), any())
+        assertThat("PerformBackup should pass", result, equalTo(true))
     }
 
     @Test
-    public void noBackupPerformedIfNoBackupNecessary() {
-        BackupManager bm = getPassingBackupManagerSpy();
+    fun noBackupPerformedIfNoBackupNecessary() {
+        val bm = passingBackupManagerSpy
 
-        doReturn(true).when(bm).isBackupUnnecessary(any(), any());
+        doReturn(true).`when`(bm).isBackupUnnecessary(any(), any())
 
-        boolean result = performBackup(bm);
+        val result = performBackup(bm)
 
-        assertThat("should fail if backups not necessary", result, is(false));
+        assertThat("should fail if backups not necessary", result, equalTo(false))
 
-        verify(bm, times(1)).isBackupUnnecessary(any(), any());
+        verify(bm, times(1)).isBackupUnnecessary(any(), any())
     }
 
     @Test
-    public void noBackupPerformedIfBackupAlreadyExists() {
-        File file = strictMock(File.class);
-        doReturn(true).when(file).exists();
+    fun noBackupPerformedIfBackupAlreadyExists() {
+        val file = strictMock(File::class.java)
+        doReturn(true).`when`(file).exists()
 
-        BackupManager bm = getPassingBackupManagerSpy(file);
+        val bm = getPassingBackupManagerSpy(file)
 
-        boolean result = performBackup(bm);
+        val result = performBackup(bm)
 
-        assertThat("should fail if backups exists", result, is(false));
+        assertThat("should fail if backups exists", result, equalTo(false))
     }
 
     @Test
-    public void noBackupPerformedIfCollectionTooSmall() {
-        BackupManager bm = getPassingBackupManagerSpy();
+    fun noBackupPerformedIfCollectionTooSmall() {
+        val bm = passingBackupManagerSpy
 
-        doReturn(true).when(bm).collectionIsTooSmallToBeValid(any());
+        doReturn(true).`when`(bm).collectionIsTooSmallToBeValid(any())
 
-        boolean result = performBackup(bm);
+        val result = performBackup(bm)
 
-        assertThat("should fail if collection too small", result, is(false));
+        assertThat("should fail if collection too small", result, equalTo(false))
     }
 
-    private boolean performBackup(BackupManager bm) {
-        return performBackup(bm, new MockTime(100000000));
+    private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {
+        return bm.performBackupInBackground("", 100, time)
     }
 
+    /** Returns a spy of BackupManager which would pass  */
+    private val passingBackupManagerSpy: BackupManager
+        get() = getPassingBackupManagerSpy(null)
 
-    private boolean performBackup(BackupManager bm, Time time) {
-        return bm.performBackupInBackground("", 100, time);
+    /** Returns a spy of BackupManager which would pass  */
+    private fun getPassingBackupManagerSpy(backupFileMock: File?): BackupManager {
+        val spy = spy(BackupManager.createInstance())
+        doReturn(true).`when`(spy).hasFreeDiscSpace(any())
+        doReturn(false).`when`(spy).collectionIsTooSmallToBeValid(any())
+        doNothing().`when`(spy).performBackupInNewThread(any(), any())
+        doReturn(null).`when`(spy).getLastBackupDate(any())
+
+        val f = backupFileMock ?: this.backupFileMock
+        doReturn(f).`when`(spy).getBackupFile(any(), any())
+        return spy
     }
-
-    /** Returns a spy of BackupManager which would pass */
-    protected BackupManager getPassingBackupManagerSpy() {
-        return getPassingBackupManagerSpy(null);
-    }
-
-    /** Returns a spy of BackupManager which would pass */
-    protected BackupManager getPassingBackupManagerSpy(File backupFileMock) {
-        BackupManager spy = spy(BackupManager.createInstance());
-        doReturn(true).when(spy).hasFreeDiscSpace(any());
-        doReturn(false).when(spy).collectionIsTooSmallToBeValid(any());
-        doNothing().when(spy).performBackupInNewThread(any(), any());
-        doReturn(null).when(spy).getLastBackupDate(any());
-
-        File f = backupFileMock != null ? backupFileMock : getBackupFileMock();
-        doReturn(f).when(spy).getBackupFile(any(), any());
-        return spy;
-    }
-
 
     // strict mock
-    private File getBackupFileMock() {
-        File f = strictMock(File.class);
-        doReturn(false).when(f).exists();
-        return f;
-    }
+    private val backupFileMock: File
+        get() {
+            val f = strictMock(File::class.java)
+            doReturn(false).`when`(f).exists()
+            return f
+        }
 }
