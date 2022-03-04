@@ -49,12 +49,19 @@ class MigrateUserData {
     /**
      * If one or more required directories were missing
      */
-    class MissingDirectoryException(val directories: List<File>) : RuntimeException() {
+    class MissingDirectoryException(val directories: List<MissingFile>) : RuntimeException() {
         init {
             if (directories.isNullOrEmpty()) {
                 throw IllegalArgumentException("directories should not be empty")
             }
         }
+
+        /**
+         * A file which should exist, but did not
+         * @param source The variable name/identifier of the file
+         * @param file A [File] reference to the missing file
+         */
+        data class MissingFile(val source: String, val file: File)
     }
 
     /**
@@ -92,6 +99,74 @@ class MigrateUserData {
             } catch (e: Exception) {
                 Timber.w(e, "Failed while executing %s", operation)
                 reportError(operation, e)
+            }
+        }
+    }
+
+    /**
+     * Used to validate a number of [Directory] instances and produces a [MissingDirectoryException] with all
+     * missing directories.
+     *
+     * Usage:
+     * ```kotlin
+     * val directoryValidator = DirectoryValidator()
+     *
+     * val sourceDirectory = directoryValidator.tryCreate(source)
+     * val destinationDirectory = directoryValidator.tryCreate(destination)
+     *
+     * if (sourceDirectory == null || destinationDirectory == null) {
+     *     throw directoryValidator.exceptionOnNullResult
+     * }
+     *
+     * // `sourceDirectory` and `destinationDirectory` may now be used
+     * ```
+     *
+     * Alternately (just validation without using values):
+     * ```kotlin
+     * val directoryValidator = DirectoryValidator()
+     *
+     * directoryValidator.tryCreate(source)
+     * directoryValidator.tryCreate(destination)
+     *
+     * exceptionBuilder.throwIfNecessary()
+     * ```
+     */
+    class DirectoryValidator {
+        /** Only valid if [tryCreate] returned null */
+        val exceptionOnNullResult: MissingDirectoryException
+            get() = MissingDirectoryException(failedFiles)
+
+        /**
+         * A list of files which failed to be created
+         * Only valid if [tryCreate] returned null
+         */
+        private val failedFiles = mutableListOf<MissingDirectoryException.MissingFile>()
+
+        /**
+         * Tries to create a [Directory] object.
+         *
+         * If this returns null, [exceptionOnNullResult] should be thrown by the caller.
+         * Example usages are provided in the [DirectoryValidator] documentation.
+         *
+         * @param [context] The "name" of the variable to test
+         * @param [file] A file which may not point to a valid directory
+         * @return A [Directory], or null if [file] did not point to an existing directory
+         */
+        fun tryCreate(context: String, file: File): Directory? {
+            val ret = Directory.createInstance(file)
+            if (ret == null) {
+                failedFiles.add(MissingDirectoryException.MissingFile(context, file))
+            }
+            return ret
+        }
+
+        /**
+         * If any directories were not created, throw a [MissingDirectoryException] listing the files
+         * @throws MissingDirectoryException if any input files were invalid
+         */
+        fun throwIfNecessary() {
+            if (failedFiles.any()) {
+                throw MissingDirectoryException(failedFiles)
             }
         }
     }
