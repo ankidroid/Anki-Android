@@ -19,6 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -229,8 +230,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         }
 
         assertThat("2 missing directories expected", exception.directories, hasSize(2))
-        assertThat("source was logged", exception.directories[0], equalTo(sourceDirectoryToDelete))
-        assertThat("destination was logged", exception.directories[1], equalTo(destinationDirectoryToDelete))
+        assertThat("source was logged", exception.directories[0], equalTo(MissingFile("source - parent dir", sourceDirectoryToDelete)))
+        assertThat("destination was logged", exception.directories[1], equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)))
     }
 
     @Test
