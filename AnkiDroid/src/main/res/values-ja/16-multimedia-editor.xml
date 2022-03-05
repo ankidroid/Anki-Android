@@ -106,8 +106,8 @@
     <string name="multimedia_editor_progress_wait_title">しばらくお待ちください</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">予期しないエラーが発生しました</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVG形式のファイルはプレビューできません</string>
+    <string name="multimedia_editor_png_paste_error">クリップボードの画像をPNG形式に変換中にエラーが発生しました: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ﾌｨｰﾙﾄﾞ「%1$s」にﾏﾙﾁﾒﾃﾞｨｱｺﾝﾃﾝﾂを添付</string>
     <string name="multimedia_editor_attach_media">メディアを貼付け</string>
     <!-- Audio view -->

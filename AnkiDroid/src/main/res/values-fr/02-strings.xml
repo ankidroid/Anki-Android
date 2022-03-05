@@ -391,4 +391,5 @@
     <string name="scoped_storage_learn_more">En savoir plus</string>
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

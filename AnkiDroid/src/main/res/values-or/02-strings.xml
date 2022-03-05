@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">ଅଧିକ ଜାଣନ୍ତୁ</string>
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -119,7 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid\'in devam etmesi için %s boş depolama alanına ihtiyacı var. Lütfen biraz yer açın.</string>
     <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
     <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Başka seç</string>
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
     <string name="dialog_no">Hayır</string>

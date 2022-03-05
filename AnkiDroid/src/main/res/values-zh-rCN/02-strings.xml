@@ -380,4 +380,5 @@
     <string name="scoped_storage_learn_more">了解更多</string>
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

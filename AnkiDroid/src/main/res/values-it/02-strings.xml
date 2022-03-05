@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Per saperne di più</string>
     <string name="scoped_storage_postpone">Posticipa</string>
     <string name="scoped_storage_migrate">Migra</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>
