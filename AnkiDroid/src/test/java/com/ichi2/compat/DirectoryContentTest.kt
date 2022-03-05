@@ -23,6 +23,11 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.`when`
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.spy
 import org.robolectric.annotation.Config
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -96,5 +101,33 @@ class DirectoryContentTest {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
         }
+    }
+
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val directory =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                spy(createTransientDirectory()) {
+                    on { listFiles() } doReturn null
+                }
+            } else {
+                createTransientDirectory()
+            }
+        val compat =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
+                // since this method calls toPath.
+                spy(CompatV26()) {
+                    doThrow(AccessDeniedException(directory)).`when`(it).newDirectoryStream(any())
+                }
+            } else {
+                CompatHelper.getCompat()
+            }
+        assertThrowsSubclass<IOException> { compat.contentOfDirectory(directory) }
     }
 }
