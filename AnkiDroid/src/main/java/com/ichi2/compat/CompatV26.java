@@ -31,6 +31,7 @@ import com.ichi2.utils.FileUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 
 import java.io.File;
@@ -178,6 +179,11 @@ public class CompatV26 extends CompatV23 implements Compat {
         }
     }
 
+    @VisibleForTesting
+    @NonNull DirectoryStream<Path> newDirectoryStream(Path dir) throws IOException {
+        return Files.newDirectoryStream(dir);
+    }
+
     /*
      * This method uses [Files.newDirectoryStream].
      * Hence this method, hasNext and next should be constant in time and space.
@@ -186,7 +192,7 @@ public class CompatV26 extends CompatV23 implements Compat {
     public @NonNull FileStream contentOfDirectory(File directory) throws IOException {
         final DirectoryStream<Path> paths_stream;
         try {
-            paths_stream = Files.newDirectoryStream(directory.toPath());
+            paths_stream = newDirectoryStream(directory.toPath());
         } catch (IOException e) {
             if (e instanceof NoSuchFileException) {
                 NoSuchFileException nsfe = (NoSuchFileException) e;
