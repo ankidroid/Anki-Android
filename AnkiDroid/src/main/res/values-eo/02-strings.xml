@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Pli da informoj</string>
     <string name="scoped_storage_postpone">Ne nun</string>
     <string name="scoped_storage_migrate">Movi datumojn</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

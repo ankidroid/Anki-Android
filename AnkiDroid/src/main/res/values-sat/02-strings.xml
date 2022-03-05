@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">ᱰᱷᱮᱨ ᱥᱮᱬᱟᱭ ᱢᱮ</string>
     <string name="scoped_storage_postpone">ᱵᱚᱸᱫ</string>
     <string name="scoped_storage_migrate">ᱩᱪᱟᱹᱲ</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -403,4 +403,5 @@
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

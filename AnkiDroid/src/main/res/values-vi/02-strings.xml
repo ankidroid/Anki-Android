@@ -380,4 +380,5 @@
     <string name="scoped_storage_learn_more">Tìm hiểu thêm</string>
     <string name="scoped_storage_postpone">Trì hoãn</string>
     <string name="scoped_storage_migrate">Di chuyển</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

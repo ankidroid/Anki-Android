@@ -419,4 +419,5 @@
     <string name="scoped_storage_learn_more">Dozvedieť sa viac</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrácia</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

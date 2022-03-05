@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
     <string name="scoped_storage_postpone">Aufschieben</string>
     <string name="scoped_storage_migrate">Daten verschieben</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>
