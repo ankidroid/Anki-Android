@@ -413,6 +413,14 @@ open class BackupManager {
         }
 
         /**
+         * Returns the most recent backup, or null if no backups exist matching [the backup name pattern][backupNameRegex]
+         *
+         * @return the most recent backup, or null if no backups exist
+         */
+        @JvmStatic
+        fun getLatestBackup(colFile: File): File? = getBackups(colFile).sortedArray().lastOrNull()
+
+        /**
          * Deletes the first files until only the given number of files remain
          * @param colPath Path of collection file whose backups should be deleted
          * @param keepNumber How many files to keep

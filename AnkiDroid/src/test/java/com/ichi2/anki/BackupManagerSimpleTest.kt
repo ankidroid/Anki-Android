@@ -16,8 +16,12 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.assertFalse
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -144,5 +148,31 @@ class BackupManagerSimpleTest {
         assertFalse("Older backups should have been deleted", f4.exists())
         assertTrue("Newer backups should have been kept", f1.exists())
         assertTrue("Newer backups should have been kept", f3.exists())
+    }
+
+    @Test
+    fun latest_backup_returns_null_on_no_backups() {
+        val colFile = tempFolder.newFile()
+        assertThat(getLatestBackup(colFile), nullValue())
+    }
+
+    @Test
+    fun latest_backup_returns_null_on_invalid() {
+        val colFile = tempFolder.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        File(backupDir, "blah.colpkg").createNewFile()
+        assertThat(getLatestBackup(colFile), nullValue())
+    }
+
+    @Test
+    fun latest_backup_returns_latest() {
+        val colFile = tempFolder.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        File(backupDir, "collection-1990-08-31-45-04.colpkg").createNewFile()
+        File(backupDir, "collection-2010-12-06-13-04.colpkg").createNewFile()
+        File(backupDir, "blah.colpkg").createNewFile()
+        val latestBackup = getLatestBackup(colFile)
+        assertNotNull(latestBackup)
+        assertThat(latestBackup.name, equalTo("collection-2010-12-06-13-04.colpkg"))
     }
 }
