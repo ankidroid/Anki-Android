@@ -159,15 +159,6 @@ public class CompatV26 extends CompatV23 implements Compat {
         });
     }
 
-    @Override
-    public boolean hasFiles(@NonNull File directory) throws IOException {
-        try (DirectoryStream<Path> paths = Files.newDirectoryStream(directory.toPath())) {
-            return paths.iterator().hasNext();
-        } catch (NotDirectoryException | NoSuchFileException ex) {
-            return false;
-        }
-    }
-
 
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,

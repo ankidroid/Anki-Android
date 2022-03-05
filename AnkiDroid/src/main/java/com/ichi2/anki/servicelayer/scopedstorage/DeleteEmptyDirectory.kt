@@ -20,10 +20,17 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.FileNotFoundException
+import java.io.IOException
 
 data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Operation() {
     override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
-        if (directory.hasFiles()) {
+        val directoryContainsFiles =
+            try {
+                directory.hasFiles()
+            } catch (ex: FileNotFoundException) {
+                return noFile(ex)
+            }
+        if (directoryContainsFiles) {
             context.reportError(this, MigrateUserData.DirectoryNotEmptyException(directory))
             return operationCompleted()
         }
@@ -31,10 +38,21 @@ data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Oper
         try {
             CompatHelper.getCompat().deleteFile(directory.directory)
             Timber.d("deleted $directory")
-        } catch (ex: FileNotFoundException) { // API <26
+        } catch (ex: FileNotFoundException) {
             Timber.d("$directory already deleted")
         }
 
         return operationCompleted()
+    }
+
+    private fun noFile(ex: IOException): List<MigrateUserData.Operation> {
+        if (!directory.directory.exists()) {
+            // If the directory is already deleted, the goal of the operation is reached,
+            // hence we do not have to throw.
+            // However, we could have obtained this exception during the directory deletion attempt, because the directory may have been deleted between the creation of [directory] and the execution of the operation.
+            Timber.d("$directory already deleted")
+            return operationCompleted()
+        }
+        throw ex
     }
 }

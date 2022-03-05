@@ -46,4 +46,7 @@ interface FileStream : AutoCloseable {
      */
     @Throws(IOException::class)
     fun next(): File
+
+    @Throws(IOException::class)
+    override fun close()
 }
