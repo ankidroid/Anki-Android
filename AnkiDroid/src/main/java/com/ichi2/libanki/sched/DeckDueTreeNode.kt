@@ -32,6 +32,7 @@ import kotlin.math.min
  * between a string and a list of strings throughout processing, we always use an array for
  * this field and use getNamePart(0) for those cases.
  */
+@KotlinCleanup("maybe possible to remove gettres for revCount/lrnCount")
 class DeckDueTreeNode(col: Collection?, name: String?, did: Long, private var revCount: Int, private var lrnCount: Int, private var newCount: Int) : AbstractDeckTreeNode<DeckDueTreeNode?>(col, name, did) {
     override fun toString(): String {
         return String.format(
