@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="newSpread_preference" translatable="false">newSpread</string>
+    <string name="dayOffset_preference" translatable="false">dayOffset</string>
+    <string name="learnCutoff_preference" translatable="false">learnCutoff</string>
+    <string name="timeLimit_preference" translatable="false">timeLimit</string>
+    <string name="newTimezoneHandling_preference" translatable="false">newTimezoneHandling</string>
+    <string name="doubleTapTimeInterval_preference" translatable="false">doubleTapTimeInterval</string>
+    <string name="custom_buttons_link_preference" translatable="false">custom_buttons_link</string>
+    <string name="keepScreenOn_preference" translatable="false">keepScreenOn</string>
+    <string name="fullscreenMode_preference" translatable="false">fullscreenMode</string>
+    <string name="centerVertically_preference" translatable="false">centerVertically</string>
+    <string name="showEstimates_preference" translatable="false">showEstimates</string>
+    <string name="cardZoom_preference" translatable="false">cardZoom</string>
+    <string name="imageZoom_preference" translatable="false">imageZoom</string>
+    <string name="answerButtonSize_preference" translatable="false">answerButtonSize</string>
+    <string name="showTopbar_preference" translatable="false">showTopbar</string>
+    <string name="showProgress_preference" translatable="false">showProgress</string>
+    <string name="showETA_preference" translatable="false">showETA</string>
+    <string name="showLargeAnswerButtons_preference" translatable="false">showLargeAnswerButtons</string>
+    <string name="whiteBoardStrokeWidth_preference" translatable="false">whiteBoardStrokeWidth</string>
+    <string name="timeoutAnswer_preference" translatable="false">timeoutAnswer</string>
+    <string name="automaticAnswerAction_preference" translatable="false">automaticAnswerAction</string>
+    <string name="timeoutAnswerSeconds_preference" translatable="false">timeoutAnswerSeconds</string>
+    <string name="timeoutQuestionSeconds_preference" translatable="false">timeoutQuestionSeconds</string>
+</resources>
