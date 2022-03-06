@@ -58,7 +58,7 @@ class NpmPackageDownloader {
         fun getJson(url: URL): MutableList<AddonModel>? {
             try {
                 val mapper = AnkiSerialization.objectMapper
-                return mapper?.readValue(url, object : TypeReference<MutableList<AddonModel>>() {})
+                return mapper.readValue(url, object : TypeReference<MutableList<AddonModel>>() {})
             } catch (e: UnknownHostException) {
                 // user not connected to internet
                 Timber.w(e.localizedMessage)

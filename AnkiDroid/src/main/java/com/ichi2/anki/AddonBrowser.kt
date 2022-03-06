@@ -25,8 +25,6 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.jsaddons.*
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -117,8 +115,7 @@ class AddonBrowser : NavigationDrawerActivity(), SubtitleListener {
             val files = addonsDir.listFiles()
             for (file in files!!) {
                 Timber.d("Addons: %s", file.name)
-                val mapper = ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                val mapper = AnkiSerialization.objectMapper
 
                 val addonModel = mapper.readValue(File(file, "package/package.json"), AddonModel::class.java)
 
