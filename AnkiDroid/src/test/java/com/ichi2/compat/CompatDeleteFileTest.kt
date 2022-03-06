@@ -14,16 +14,10 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.compat
+package com.ichi2.compat
 
-import android.os.Build
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatV21
-import com.ichi2.compat.CompatV26
 import com.ichi2.testutils.*
-import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.withTempFile
-import org.hamcrest.CoreMatchers
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -32,16 +26,14 @@ import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.nio.file.NotDirectoryException
 
-/** Tests for [Compat.hasFiles] */
+/** Tests for [Compat.deleteFile] */
 @RunWith(Parameterized::class)
-class CompatHasFilesTest(
+class CompatDeleteFileTest(
     val compat: Compat,
     /** Used in the "Test Results" Window */
     @Suppress("unused") private val unitTestDescription: String
 ) {
-
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{1}")
@@ -52,34 +44,32 @@ class CompatHasFilesTest(
     }
 
     @Test
-    fun has_files_with_file() {
-        val dir = createTransientDirectory().withTempFile("aa.txt")
-        assertThat("empty directory has no files", hasFiles(dir), equalTo(true))
+    fun delete_file_which_exists() {
+        val file = createTransientFile()
+        assertDoesNotThrow { deleteFile(file) }
+        assertThat("file should no longer exist", file.exists(), equalTo(false))
     }
 
     @Test
-    fun has_files_exists() {
+    fun delete_folder_which_exists() {
         val dir = createTransientDirectory()
-        assertThat("empty directory has no files", hasFiles(dir), equalTo(false))
+        assertDoesNotThrow { deleteFile(dir) }
+        assertThat("directory should no longer exist", dir.exists(), equalTo(false))
     }
 
     @Test
-    fun has_files_not_exists() {
+    fun delete_fails_if_exists_is_false() {
         val dir = createTransientDirectory()
         dir.delete()
-
-        assertThrows<FileNotFoundException> { hasFiles(dir) }
+        assertThrows<FileNotFoundException> { deleteFile(dir) }
     }
 
     @Test
-    fun has_files_on_file() {
-        val file = createTransientFile("hello")
-
-        val exception = assertThrowsSubclass<IOException> { hasFiles(file) }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, CoreMatchers.instanceOf(NotDirectoryException::class.java))
-        }
+    fun delete_fails_if_not_empty_directory() {
+        // Note: Exception is a DirectoryNotEmptyException in V26
+        val dir = createTransientDirectory().withTempFile("foo.txt")
+        assertThrowsSubclass<IOException> { deleteFile(dir) }
     }
 
-    private fun hasFiles(dir: File) = compat.hasFiles(dir)
+    private fun deleteFile(file: File) = compat.deleteFile(file)
 }
