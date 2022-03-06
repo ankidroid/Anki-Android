@@ -16,20 +16,14 @@
 package com.ichi2.anki.multimediacard
 
 import android.media.MediaRecorder
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
-class AudioRecorderTest : RobolectricTest() {
+class AudioRecorderTest {
     private lateinit var mAudioRecorder: AudioRecorder
 
     @Mock(name = "mRecorder")
@@ -50,38 +44,5 @@ class AudioRecorderTest : RobolectricTest() {
         mInjectedRecorder.release()
         verify(mMockedMediaRecorder, times(1))?.stop()
         verify(mMockedMediaRecorder, times(1))?.release()
-    }
-
-    // verify that the audio recorder is initialized in high sampling mode
-    @Test
-    @Throws(IOException::class)
-    fun testStartRecordingHighSampling() {
-        val recordingHandler = mock(Runnable::class.java)
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
-        mAudioRecorder.startRecording(targetContext, "testpath")
-        verify(recordingHandler, times(1)).run()
-    }
-
-    // verify that the audio recorder is initialized in low sampling mode
-    @Test
-    @Throws(IOException::class)
-    fun testRecordingLowSampling() {
-        class InitHandlerWithError : Runnable {
-            var timesRun = 0
-                private set
-            private var mHasThrown = false
-            override fun run() {
-                timesRun++
-                if (!mHasThrown) {
-                    mHasThrown = true
-                    throw RuntimeException()
-                }
-            }
-        }
-
-        val recordingHandler = InitHandlerWithError()
-        mAudioRecorder.setOnRecordingInitializedHandler(recordingHandler)
-        mAudioRecorder.startRecording(targetContext, "testpath")
-        assertEquals("Initialization handler should run twice", 2, recordingHandler.timesRun.toLong())
     }
 }
