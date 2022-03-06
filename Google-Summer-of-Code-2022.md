@@ -123,6 +123,8 @@ A: As early as possible. Make sure to get feedback from mentors before finally s
 
 A: Try to work on good first issues and take courses online. In the field of software development, it is common to develop experience and expertise as you take up and complete projects successfully. We do not require any formal certification of particular skills.
 
+**Q: How many people is AnkiDroid planning to mentor this year?**
 
+A: 1-2, we expect 2 maximum, we had 2 in 2021.  
 
 
