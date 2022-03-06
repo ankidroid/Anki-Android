@@ -30,6 +30,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
@@ -90,7 +91,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         executionContext.logExceptions = true
         spy(MoveFile(source, destinationFile)) {
-            Mockito.doAnswer { Timber.w("testing: do nothing on copy") }.`when`(it).copyFile(any(), any())
+            Mockito.doAnswer { Timber.w("testing: do nothing on copy") }.whenever(it).copyFile(any(), any())
         }
             .execute()
 
@@ -112,7 +113,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         executionContext.logExceptions = true
         val exception = assertThrows<TestException> {
             spy(MoveFile(source, destinationFile)) {
-                Mockito.doThrow(TestException("test-copyFile()")).`when`(it).copyFile(any(), any())
+                Mockito.doThrow(TestException("test-copyFile()")).whenever(it).copyFile(any(), any())
             }
                 .execute()
         }
@@ -167,7 +168,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
         executionContext.logExceptions = true
         spy(MoveFile(source, destinationFile)) {
-            Mockito.doThrow(TestException("test-deleteFile()")).`when`(it).deleteFile(any())
+            Mockito.doThrow(TestException("test-deleteFile()")).whenever(it).deleteFile(any())
         }
             .execute()
 
@@ -245,7 +246,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         executionContext.logExceptions = true
         assertThrows<TestException> {
             spy(MoveFile(source, destinationFile)) {
-                Mockito.doThrow(TestException("test-deleteFile()")).`when`(it).deleteFile(any())
+                Mockito.doThrow(TestException("test-deleteFile()")).whenever(it).deleteFile(any())
             }
                 .execute()
         }

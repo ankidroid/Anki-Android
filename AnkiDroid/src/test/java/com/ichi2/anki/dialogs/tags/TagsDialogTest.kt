@@ -37,6 +37,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
@@ -224,7 +225,7 @@ class TagsDialogTest {
             val owner = Mockito.mock(LifecycleOwner::class.java)
             val lifecycle = LifecycleRegistry(owner)
             lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-            Mockito.`when`(owner.lifecycle).thenReturn(lifecycle)
+            whenever(owner.lifecycle).thenReturn(lifecycle)
             return owner
         }
     }

@@ -28,6 +28,7 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import java.io.File
 import java.io.FileNotFoundException
@@ -156,7 +157,7 @@ class MoveDirectoryContentTest : OperationTest {
                     }
                 }
                 return@doAnswer operation
-            }.`when`(it).toMoveOperation(any())
+            }.whenever(it).toMoveOperation(any())
         }
         executeAll(operation)
 

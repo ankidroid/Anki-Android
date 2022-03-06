@@ -27,6 +27,7 @@ import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 
 /**
@@ -77,7 +78,7 @@ class MoveDirectoryTest : OperationTest {
         executionContext.logExceptions = true
         // don't actually move the directory, or we'd have a problem
         val moveDirectory = spy(MoveDirectory(source, destinationFile)) {
-            doAnswer { renameCalled++; return@doAnswer false }.`when`(it).rename(any(), any())
+            doAnswer { renameCalled++; return@doAnswer false }.whenever(it).rename(any(), any())
         }
 
         assertThat("rename was true", executionContext.attemptRename, equalTo(true))
@@ -179,7 +180,7 @@ class MoveDirectoryTest : OperationTest {
                     }
                 }
                 return@doAnswer operation
-            }.`when`(it).toMoveOperation(any())
+            }.whenever(it).toMoveOperation(any())
         }
 
         executeAll(moveDirectoryContentSpied, deleteDirectory)

@@ -23,7 +23,6 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
 import java.io.File
@@ -117,7 +116,7 @@ class CompatDirectoryContentTest {
                         // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
                         // since this method calls toPath.
                         spy(compat as CompatV26) {
-                            doThrow(AccessDeniedException(directory)).`when`(it).newDirectoryStream(eq(directory.toPath()))
+                            doThrow(AccessDeniedException(directory)).whenever(it).newDirectoryStream(eq(directory.toPath()))
                         }
                     } else {
                         compat
