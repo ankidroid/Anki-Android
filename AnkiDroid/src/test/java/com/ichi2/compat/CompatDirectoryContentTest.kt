@@ -24,11 +24,9 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
-import org.mockito.kotlin.any
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.doThrow
-import org.mockito.kotlin.spy
+import org.mockito.kotlin.*
 import org.robolectric.annotation.Config
+import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
@@ -104,30 +102,39 @@ class CompatDirectoryContentTest {
     }
 
     /**
+     * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
+     * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
+     */
+    data class PermissionDenied private constructor(val directory: File, val compat: Compat) {
+        companion object {
+            fun createInstance(directory: File, compat: Compat): PermissionDenied {
+                val directoryWithPermissionDenied =
+                    spy(directory) {
+                        on { listFiles() } doReturn null
+                    }
+                val compatWithPermissionDenied =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
+                        // since this method calls toPath.
+                        spy(compat as CompatV26) {
+                            doThrow(AccessDeniedException(directory)).`when`(it).newDirectoryStream(eq(directory.toPath()))
+                        }
+                    } else {
+                        compat
+                    }
+                return PermissionDenied(directoryWithPermissionDenied, compatWithPermissionDenied)
+            }
+        }
+    }
+
+    /**
      * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
      * Where for some reason, `listFiles` returned null on an existing directory and
      * newDirectoryStream returned `AccessDeniedException`.
      */
     @Test
     fun reproduce_10358() {
-        val directory =
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                spy(createTransientDirectory()) {
-                    on { listFiles() } doReturn null
-                }
-            } else {
-                createTransientDirectory()
-            }
-        val compat =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
-                // since this method calls toPath.
-                spy(CompatV26()) {
-                    doThrow(AccessDeniedException(directory)).`when`(it).newDirectoryStream(any())
-                }
-            } else {
-                CompatHelper.getCompat()
-            }
-        assertThrowsSubclass<IOException> { compat.contentOfDirectory(directory) }
+        val permissionDenied = PermissionDenied.createInstance(createTransientDirectory(), CompatHelper.getCompat())
+        assertThrowsSubclass<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory) }
     }
 }
