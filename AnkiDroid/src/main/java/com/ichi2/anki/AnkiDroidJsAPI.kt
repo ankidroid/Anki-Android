@@ -404,6 +404,13 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
+    // Know if {{tts}} is supported - issue #10443
+    // Return false for now
+    @JavascriptInterface
+    fun ankiTtsFieldModifierIsAvailable(): Boolean {
+        return false
+    }
+
     @JavascriptInterface
     fun ankiTtsSpeak(text: String?, queueMode: Int): Int {
         return mTalker.speak(text, queueMode)
