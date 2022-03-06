@@ -78,5 +78,16 @@ class CompatHasFilesTest(
         }
     }
 
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val permissionDenied = CompatDirectoryContentTest.PermissionDenied.createInstance(createTransientDirectory(), CompatHelper.getCompat())
+        assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory) }
+    }
+
     private fun hasFiles(dir: File) = compat.hasFiles(dir)
 }
