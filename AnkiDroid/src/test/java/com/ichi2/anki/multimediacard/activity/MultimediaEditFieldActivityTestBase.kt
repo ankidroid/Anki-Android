@@ -27,7 +27,7 @@ import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.utils.KotlinCleanup
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
@@ -74,7 +74,7 @@ abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
     protected fun setupActivityMock(controller: IFieldController, editFieldActivity: MultimediaEditFieldActivity): MultimediaEditFieldActivity {
         val activity = mock(MultimediaEditFieldActivity::class.java)
 
-        `when`(activity.resources).thenReturn(editFieldActivity.resources)
+        whenever(activity.resources).thenReturn(editFieldActivity.resources)
         controller.setEditingActivity(activity)
         return activity
     }

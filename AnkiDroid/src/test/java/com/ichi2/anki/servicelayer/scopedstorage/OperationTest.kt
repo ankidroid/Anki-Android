@@ -26,6 +26,7 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import timber.log.Timber
 import java.io.File
 
@@ -106,7 +107,7 @@ interface OperationTest {
          */
         val spy: MoveDirectoryContent
             get() = spy(moveDirectoryContent) {
-                doAnswer { toMoveOperation(it) }.`when`(it).toMoveOperation(any())
+                doAnswer { toMoveOperation(it) }.whenever(it).toMoveOperation(any())
             }
     }
 }
