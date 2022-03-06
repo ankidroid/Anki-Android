@@ -16,6 +16,8 @@
 
 package com.ichi2.compat;
 
+import android.os.Build;
+
 import com.ichi2.anki.TestUtils;
 
 import org.junit.Assert;
@@ -31,8 +33,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import androidx.annotation.RequiresApi;
+
 import static com.ichi2.utils.FileOperation.getFileResource;
 
+@RequiresApi(api = Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized.class)
 public class CompatCopyFileTest extends Test21And26 {
     public CompatCopyFileTest(Compat compat, String unitTestDescription) {

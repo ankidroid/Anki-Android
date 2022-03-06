@@ -16,14 +16,21 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
@@ -33,7 +40,13 @@ import java.io.File
 /**
  * Test for [MoveDirectory]
  */
-class MoveDirectoryTest : OperationTest {
+@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
+@RunWith(Parameterized::class)
+class MoveDirectoryTest(
+    override val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) : Test21And26(compat, unitTestDescription), OperationTest {
     override val executionContext: MockMigrationContext = MockMigrationContext()
 
     @Test
@@ -213,5 +226,17 @@ class MoveDirectoryTest : OperationTest {
         executeAll(MoveDirectory(source, destinationFile))
 
         assertThat("source was deleted", source.directory.exists(), equalTo(false))
+    }
+
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val sourceWithPermissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val destination = createTransientDirectory()
+        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(MoveDirectory(sourceWithPermissionDenied.directory, destination)) }
     }
 }
