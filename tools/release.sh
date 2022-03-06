@@ -10,7 +10,7 @@
 
 # Basic expectations
 # - tools needed: sed, gawk, github-release, git
-# - authority needed: ability to commit/tag/push directly to master in AnkiDroid, ability to create releases
+# - authority needed: ability to commit/tag/push directly to main branch in AnkiDroid, ability to create releases
 # - ankidroiddocs checked out in a sibling directory (that is, '../ankidroiddocs' should exist with 'upstream' remote set correctly)
 
 # Suffix configuration

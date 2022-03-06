@@ -15,7 +15,7 @@ on:
       - 'gradle/**'
   push:
     branches:
-      - master
+      - main
       - i18n_sync
       - dependency-updates
       - 'release**'
