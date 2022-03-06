@@ -60,7 +60,6 @@ open class StorageTest : RobolectricTest() {
     private val results: CollectionData
         get() {
             val results = CollectionData()
-            val col = col
             results.loadFromCollection(col)
             return results
         }

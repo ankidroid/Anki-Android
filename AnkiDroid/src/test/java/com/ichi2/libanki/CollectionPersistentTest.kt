@@ -32,7 +32,6 @@ class CollectionPersistentTest : RobolectricTest() {
 
     @Test
     fun beforeUploadDbIsV11() {
-        val col = col
         assumeThat(col.queryVer(), not(equalTo(11)))
         col.beforeUpload()
         assumeThat(Storage.getDatabaseVersion(col.path), equalTo(11))
