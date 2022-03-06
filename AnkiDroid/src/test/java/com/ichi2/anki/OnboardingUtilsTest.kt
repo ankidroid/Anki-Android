@@ -16,22 +16,18 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.isType
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.reflect.KCallable
 import kotlin.reflect.full.companionObject
 
-@RunWith(AndroidJUnit4::class)
-class OnboardingUtilsTest : RobolectricTest() {
+class OnboardingUtilsTest {
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         Onboarding.resetOnboardingForTesting() // #9597 - global needs resetting
     }
 
