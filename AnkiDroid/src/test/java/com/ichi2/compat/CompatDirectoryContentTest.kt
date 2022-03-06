@@ -35,7 +35,7 @@ import java.nio.file.NotDirectoryException
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [21, 26])
-class DirectoryContentTest {
+class CompatDirectoryContentTest {
     val compat = CompatHelper.getCompat()
 
     @Test
