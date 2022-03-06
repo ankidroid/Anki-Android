@@ -30,7 +30,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun initTest() {
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
@@ -55,7 +54,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNextTimeTest() {
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
@@ -79,7 +77,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiTestCurrentCard() {
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
@@ -138,7 +135,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiJsUiTest() {
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
@@ -168,7 +164,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiMarkAndFlagCardTest() {
         // js api test for marking and flagging card
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
@@ -236,7 +231,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // add five notes, four will be buried and suspended
         // count number of notes, if buried or suspended then
         // in scheduling the count will be less than previous scheduling
-        val col = col
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")

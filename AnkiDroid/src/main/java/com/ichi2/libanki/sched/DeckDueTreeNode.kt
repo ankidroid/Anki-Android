@@ -128,7 +128,6 @@ class DeckDueTreeNode(col: Collection?, name: String?, did: Long, private var re
     }
 
     override fun withChildren(children: MutableList<DeckDueTreeNode?>): DeckDueTreeNode {
-        val col = col
         val name = fullDeckName
         val did = did
         val node = DeckDueTreeNode(col, name, did, revCount, lrnCount, newCount)
