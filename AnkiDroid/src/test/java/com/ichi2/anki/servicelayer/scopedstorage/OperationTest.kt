@@ -20,7 +20,12 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
+import com.ichi2.testutils.TestException
 import com.ichi2.testutils.createTransientDirectory
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.spy
 import timber.log.Timber
 import java.io.File
 
@@ -56,5 +61,59 @@ interface OperationTest {
         Timber.d("test: deleting $createDirectory")
         CompatHelper.getCompat().deleteFile(createDirectory.directory)
         return createDirectory.directory
+    }
+
+    /**
+     * Allow to get a MoveDirectoryContent that works for at most three files and fail on the second one.
+     * It keeps track of which files is the failed one and which are before and after; since directory can list its file in
+     * any order, it ensure that we know which file failed. It also allows to test that move still occurs after a failure.
+     */
+    class SpyMoveDirectoryContent(private val moveDirectoryContent: MoveDirectoryContent) {
+        /**
+         * The first file moved, before the failed file. Null if no moved occurred.
+         */
+        var beforeFile: File? = null
+            private set
+        /**
+         * The second file, it moves fails. Null if no moved occurred.
+         */
+        var failedFile: File? = null // ensure the second file fails
+            private set
+        /**
+         * The last file moved, after the failed file. Null if no moved occurred.
+         */
+        var afterFile: File? = null
+            private set
+        var movesProcessed = 0
+            private set
+
+        fun toMoveOperation(op: InvocationOnMock): Operation {
+            val sourceFile = op.arguments[0] as File
+            when (movesProcessed++) {
+                0 -> beforeFile = sourceFile
+                1 -> {
+                    failedFile = sourceFile
+                    return FailMove()
+                }
+                2 -> afterFile = sourceFile
+                else -> throw IllegalStateException("only 3 files expected")
+            }
+            return op.callRealMethod() as Operation
+        }
+
+        /**
+         * The [MoveDirectoryContent] that performs the action mentioned in the class description.
+         */
+        val spy: MoveDirectoryContent
+            get() = spy(moveDirectoryContent) {
+                doAnswer { toMoveOperation(it) }.`when`(it).toMoveOperation(any())
+            }
+    }
+}
+
+/** A move operation which fails */
+class FailMove : Operation() {
+    override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
+        throw TestException("should fail but not crash")
     }
 }

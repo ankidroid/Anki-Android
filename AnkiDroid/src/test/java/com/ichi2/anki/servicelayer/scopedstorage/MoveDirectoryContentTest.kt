@@ -92,29 +92,11 @@ class MoveDirectoryContentTest : OperationTest {
         val destinationDirectory = createTransientDirectory()
 
         // Use variables as we don't know which file will be returned in the middle from listFiles()
-        var beforeFile: File? = null
-        var failedFile: File? = null // ensure the second file fails
-        var afterFile: File? = null
         executionContext.logExceptions = true
-        var movesProcessed = 0
-        val operation = spy(moveDirectoryContent(source, destinationDirectory)) {
-            doAnswer { op ->
-                val sourceFile = op.arguments[0] as File
-                when (movesProcessed++) {
-                    0 -> beforeFile = sourceFile
-                    1 -> {
-                        failedFile = sourceFile
-                        return@doAnswer FailMove()
-                    }
-                    2 -> afterFile = sourceFile
-                    else -> throw IllegalStateException("only 3 files expected")
-                }
-
-                return@doAnswer op.callRealMethod() as Operation
-            }.`when`(it).toMoveOperation(any())
-        }
-        executeAll(operation)
-        assertThat("Should have done three moves", movesProcessed, equalTo(3))
+        val spyMoveDirectoryContent = OperationTest.SpyMoveDirectoryContent(moveDirectoryContent(source, destinationDirectory))
+        val moveDirectoryContent = spyMoveDirectoryContent.spy
+        executeAll(moveDirectoryContent)
+        assertThat("Should have done three moves", spyMoveDirectoryContent.movesProcessed, equalTo(3))
 
         assertThat(executionContext.exceptions, hasSize(1))
         executionContext.exceptions[0].run {
@@ -122,9 +104,9 @@ class MoveDirectoryContentTest : OperationTest {
         }
 
         assertThat("source directory should not be deleted", source.exists(), equalTo(true))
-        assertThat("fail (${failedFile!!.absolutePath}) was not copied", failedFile!!.exists(), equalTo(true))
-        assertThat("file before failure was copied", beforeFile!!.exists(), equalTo(false))
-        assertThat("file after failure was copied", afterFile!!.exists(), equalTo(false))
+        assertThat("fail (${spyMoveDirectoryContent.failedFile!!.absolutePath}) was not copied", spyMoveDirectoryContent.failedFile!!.exists(), equalTo(true))
+        assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
+        assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
     }
 
     @Test
