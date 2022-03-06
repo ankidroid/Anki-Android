@@ -34,7 +34,7 @@ import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
-@RequiresApi(Build.VERSION_CODES.O) // ALlows code to compile, but we still test with [CompatV21]
+@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
 class CompatHasFilesTest(
     override val compat: Compat,
     /** Used in the "Test Results" Window */
@@ -78,8 +78,8 @@ class CompatHasFilesTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = CompatDirectoryContentTest.PermissionDenied.createInstance(createTransientDirectory(), CompatHelper.getCompat())
-        assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory) }
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory.directory) }
     }
 
     private fun hasFiles(dir: File) = compat.hasFiles(dir)

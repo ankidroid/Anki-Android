@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -40,7 +41,7 @@ import java.nio.file.NotDirectoryException
 /**
  * Test for [MoveDirectoryContent]
  */
-@RequiresApi(Build.VERSION_CODES.O) // ALlows code to compile, but we still test with [CompatV21]
+@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
 @RunWith(Parameterized::class)
 class MoveDirectoryContentTest(
     override val compat: Compat,
@@ -204,6 +205,17 @@ class MoveDirectoryContentTest(
         if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", ex, instanceOf(NotDirectoryException::class.java))
         }
+    }
+
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        permissionDenied.assertThrowsWhenPermissionDenied { MoveDirectoryContent.createInstance(permissionDenied.directory, createTransientFile()) }
     }
 
     private fun moveDirectoryContent(source: Directory, destinationDirectory: File): MoveDirectoryContent {

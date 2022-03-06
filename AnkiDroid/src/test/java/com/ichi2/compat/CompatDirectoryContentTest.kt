@@ -25,10 +25,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.doThrow
-import org.mockito.kotlin.spy
-import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
@@ -107,39 +103,13 @@ class CompatDirectoryContentTest(
     }
 
     /**
-     * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
-     * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
-     */
-    class PermissionDenied private constructor(val directory: File, val compat: Compat) {
-        companion object {
-            fun createInstance(directory: File, compat: Compat): PermissionDenied {
-                val directoryWithPermissionDenied =
-                    spy(directory) {
-                        on { listFiles() } doReturn null
-                    }
-                val compatWithPermissionDenied =
-                    if (compat is CompatV26) {
-                        // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
-                        // since this method calls toPath.
-                        spy(compat) {
-                            doThrow(AccessDeniedException(directory)).whenever(it).newDirectoryStream(eq(directory.toPath()))
-                        }
-                    } else {
-                        compat
-                    }
-                return PermissionDenied(directoryWithPermissionDenied, compatWithPermissionDenied)
-            }
-        }
-    }
-
-    /**
      * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
      * Where for some reason, `listFiles` returned null on an existing directory and
      * newDirectoryStream returned `AccessDeniedException`.
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = PermissionDenied.createInstance(createTransientDirectory(), CompatHelper.getCompat())
-        assertThrowsSubclass<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory) }
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        assertThrowsSubclass<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory.directory) }
     }
 }

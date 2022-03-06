@@ -16,14 +16,19 @@
 
 package com.ichi2.anki.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.Test21And26
+import com.ichi2.testutils.*
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
-import com.ichi2.testutils.assertThrows
-import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
@@ -32,7 +37,13 @@ import kotlin.io.path.pathString
 /**
  * Tests for [Directory]
  */
-class DirectoryTest {
+@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
+@RunWith(Parameterized::class)
+class DirectoryTest(
+    override val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) : Test21And26(compat, unitTestDescription) {
     @Test
     fun passes_if_existing_directory() {
         val path = createTempDirectory().pathString
@@ -105,6 +116,17 @@ class DirectoryTest {
             dir.hasFiles(),
             equalTo(true)
         )
+    }
+
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        permissionDenied.assertThrowsWhenPermissionDenied { permissionDenied.directory.hasFiles() }
     }
 
     private fun createValidTempDir(): Directory {
