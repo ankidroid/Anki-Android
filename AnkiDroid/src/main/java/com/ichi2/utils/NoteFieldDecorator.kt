@@ -16,7 +16,7 @@
 
 package com.ichi2.utils
 
-import java.util.Random
+import java.util.*
 
 object NoteFieldDecorator {
     private val random = Random()
@@ -40,7 +40,7 @@ object NoteFieldDecorator {
         "avpbynf-enbhy",
         "Neguhe-Zvypuvbe",
         "zvxruneql",
-        "qnivq-nyyvfba-1",
+        "qnivq-nyyvfba",
         "vavwh",
         "uffz",
         "syreqn",

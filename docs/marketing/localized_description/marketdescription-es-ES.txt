@@ -25,7 +25,6 @@ Añade contenido mediante la aplicación de escritorio Anki o directamente media
 • explorador de tarjetas
 • diseño para tablet
 • importar archivos de colección existentes (vía Anki Escritorio)
-• integración con diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionarios online)
 • agregar tarjetas al seleccionar contenido desde otras aplicaciones como diccionarios
 • soporte para fuentes personalizadas
 • completo sistema de copias de seguridad

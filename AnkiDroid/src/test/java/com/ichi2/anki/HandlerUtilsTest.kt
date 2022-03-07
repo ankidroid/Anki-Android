@@ -28,7 +28,7 @@ import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
 
 @RunWith(AndroidJUnit4::class)
-class HandlerUtilsTest : RobolectricTest() {
+class HandlerUtilsTest {
 
     @Test
     fun checkHandlerFunctionExecution() {

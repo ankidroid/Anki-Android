@@ -58,7 +58,7 @@ class ImportFileSelectionFragment {
 
         // needs to be static for serialization
         @JvmStatic
-        private fun openImportFilePicker(activity: AnkiActivity) {
+        fun openImportFilePicker(activity: AnkiActivity) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">अंकन की चौड़ाई</string>
     <string name="use_input_tag" maxLength="41">पत्ता में उत्तर दर्ज करें</string>
     <string name="use_input_tag_summ">जवाब में टाइप करने के लिए कार्ड के अंदर एक पाठ इनपुट बॉक्स का उपयोग करें</string>
-    <string name="dictionary" maxLength="41">शब्दकोष खोजें</string>
     <string name="reset_languages" maxLength="41">भाषाएँ रीसेट करें</string>
     <string name="reset_languages_summ">सभी डेक के लिए भाषा असाइनमेंट (पाठ के लिए वाक् और शब्दकोशों के लिए) रीसेट करें</string>
     <string name="reset_languages_question">सभी भाषा असाइनमेंट रीसेट करें?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>सर्वोच्च</item>
         <item>तल</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">जेस्चर सक्षम करें</string>
     <string name="gestures_summ">ऐसे जवाब और संपादन कार्ड के रूप में कार्रवाई करने के लिए इशारों निरुपित ।</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">९-बिंदु स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोनों में स्पर्श इशारों की अनुमति दें</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">फुल स्क्रीन नेविगेशन दराज</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
     <string name="more_scrolling_buttons" maxLength="41">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ मेन्यू</string>

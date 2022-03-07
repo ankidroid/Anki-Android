@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">筆跡寬度</string>
     <string name="use_input_tag" maxLength="41">在卡片中輸入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一個文本框裡輸入答案</string>
-    <string name="dictionary" maxLength="41">查找字典</string>
     <string name="reset_languages" maxLength="41">重設語言</string>
     <string name="reset_languages_summ">重置指定牌組語言（TTS和字典）</string>
     <string name="reset_languages_question">重設所有的語言？</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>頂部</item>
         <item>底部</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">開啟手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
-    <string name="gestures_allow_links" maxLength="41">忽略連結上的點擊手勢</string>
-    <string name="gestures_allow_links_summary">如果一個連結/提示被點擊，手勢將不被處理</string>
     <string name="gestures_corner_touch" maxLength="41">九點邊角觸控</string>
     <string name="gestures_corner_touch_summary">允許在螢幕角落進行觸控</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏的導航抽屜</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_center">輕觸中下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
-    <string name="gestures_volume_up" maxLength="41">提高音量</string>
-    <string name="gestures_volume_down" maxLength="41">降低音量</string>
     <string name="more_scrolling_buttons" maxLength="41">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>
@@ -151,7 +147,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">震動</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">提示燈</string>
     <string name="timeout_answer_text" maxLength="41">自動顯示答案</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">逾時回答</string>
     <string name="timeout_answer_summ">無需用戶輸入自動顯示答案。延遲時間包括自動播放音訊檔案的時間。</string>
     <string name="timeout_answer_seconds" maxLength="41">顯示答案的時間</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
@@ -218,8 +214,8 @@
     <string name="media_import_allow_all_files" maxLength="41">允許所有置於媒體匯入中之檔案</string>
     <string name="media_import_allow_all_files_summ">如果安卓無法辨識一份媒體檔案</string>
     <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">高級統計</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">啟用高級統計</string>
+    <string name="advanced_statistics_title" maxLength="41">進階統計</string>
+    <string name="enable_advanced_statistics_title" maxLength="41">啟用進階統計</string>
     <string name="enable_advanced_statistics_summ">顯示預測統計：基於對未來複習進行的計算或模擬（啟用）和已安排好的未來複習（禁用）。</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">計算前 n 天，從而模擬出接下來的</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">計算精度</string>

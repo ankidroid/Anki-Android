@@ -25,7 +25,6 @@ Legg til materiale med skrivebordsapplikasjonen Anki, eller rett i AnkiDroid. Ap
 • kortutforsker
 • nettbrett-utforming
 • importere eksisterende filer med samlinger (via Anki Desktop)
-• ordlisteintegrasjon (ColorDict, GoldenDict, Leo.org, Aedict, ulike nettordbøker)
 • Legg til kort fra andre programmer, for eksempel ordbøker
 • støtte for egne skrifttyper
 • fullt system for sikkerhetskopiering

@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Фиолетовый флажок</string>
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
-    <string name="menu_select">Выделить текст</string>
-    <string name="menu_lookup">Посмотреть в словаре</string>
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>

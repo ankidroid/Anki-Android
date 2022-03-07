@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Szerokość kreski</string>
     <string name="use_input_tag" maxLength="41">Wprowadź odpowiedź do karty</string>
     <string name="use_input_tag_summ">Użyj pola tekstowego na karcie do wprowadzenia odpowiedzi</string>
-    <string name="dictionary" maxLength="41">Słownik</string>
     <string name="reset_languages" maxLength="41">Zresetuj język</string>
     <string name="reset_languages_summ">Zresetuj przypisania języka (dla czytania tekstu i dla słowników) dla wszystkich talii</string>
     <string name="reset_languages_question">Reset wszystkich ustawień języków?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Góra</item>
         <item>Dół</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Włącz obsługę gestów</string>
     <string name="gestures_summ">Przydziel gesty do akcji takich jak odpowiedzi lub edycja kart.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignoruj gesty przy dotknięciu linków</string>
-    <string name="gestures_allow_links_summary">Gesty dotykowe nie będą przetwarzane jeśli naciśnięto odnośnik/wskazówkę.</string>
     <string name="gestures_corner_touch" maxLength="41">Dotyk 9-punktowy</string>
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
     <string name="gestures_corner_tap_bottom_center">Dotknij dolnej środkowej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
-    <string name="gestures_volume_up" maxLength="41">Zwiększ głośność</string>
-    <string name="gestures_volume_down" maxLength="41">Zmniejsz głośność</string>
     <string name="more_scrolling_buttons" maxLength="41">eCzytnik</string>
     <string name="more_scrolling_buttons_summ">Użyj także przycisków kanji/katakana, emoji/kao-moji do przewijania</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s”</string>

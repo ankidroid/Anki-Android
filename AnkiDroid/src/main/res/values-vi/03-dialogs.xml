@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Khôi phục sao lưu?</string>
     <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Không</string>
@@ -127,7 +128,6 @@
     <string name="dialog_positive_replace">Thay thế</string>
     <string name="dialog_positive_restore">Khôi phục</string>
     <string name="dialog_positive_set">Thiết lập</string>
-    <string name="lookup_button_content">Tìm kiếm</string>
     <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải thư mục hợp lệ</string>
     <!-- Media checking -->
     <string name="check_media_title">Kiểm tra tệp đa phương tiện?</string>

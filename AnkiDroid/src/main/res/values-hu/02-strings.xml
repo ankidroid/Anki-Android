@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Az Anki csomag mentése sikertelen</string>
     <string name="export_successful">A (z) “%s” fájl exportálása megtörtént. Szeretnéd elküldeni egy másik alkalmazással?</string>
     <string name="export_email_subject">AnkiDroid exportált index kártyák: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Beállítások</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">Néhány kapcsolódó vagy félretett kártya halasztásra került a következő gyakorlásig.</string>
     <string name="tag_editor_add_feedback">Érintsd meg a(z) “%2$s” elemet a “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">“%1$s” címke kiválasztva</string>
-    <string name="lookup_hint">A szöveg másolása után, kattints bárhova a szókártyán a keresés mutatásához</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s másodperc</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Betűméret módosítása</string>
     <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Eszköztár Elem létrehozása</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

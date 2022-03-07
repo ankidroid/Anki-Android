@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid benötigt %s freien Speicherplatz um fortzufahren. Bitte leeren Sie etwas Speicherplatz</string>
     <string name="restore_backup_title">Sicherung wiederherstellen?</string>
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nein</string>
@@ -133,7 +134,6 @@
     <string name="dialog_positive_replace">Ersetzen</string>
     <string name="dialog_positive_restore">Wiederherstellen</string>
     <string name="dialog_positive_set">Anwenden</string>
-    <string name="lookup_button_content">Nachschlagen</string>
     <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
     <!-- Media checking -->
     <string name="check_media_title">Medien überprüfen?</string>

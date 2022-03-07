@@ -258,6 +258,26 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
            return onImagePaste(ClipboardUtil.getImageUri(mClipboard));
        }
 
+        /*
+        * The following code replaces the instruction "paste with formatting" with "paste as plan text"
+        * Since AnkiDroid does not know how to use formatted text and strips the formatting when saving the note,
+        * it ensures that the user sees the exact plain text which is actually being saved, not the formatted text.
+        */
+
+        // https://stackoverflow.com/a/45319485
+        if (id == android.R.id.paste) {
+            /**
+             * Modified StackOverflow answer:
+             * Pasting as plain text for VERSION_CODES < M required modifying 
+             * the user's clipboard, and hence has not been used.
+             *
+             * During testing, older devices pasted text as plain text by default, 
+             * so there was no need for a TO-DO
+             */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                id = android.R.id.pasteAsPlainText;
+            }
+        }
         return super.onTextContextMenuItem(id);
     }
 

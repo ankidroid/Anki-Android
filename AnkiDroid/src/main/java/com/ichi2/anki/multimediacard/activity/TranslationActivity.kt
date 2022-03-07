@@ -234,7 +234,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         val objectMapper = AnkiSerialization.objectMapper
 
         val resp: Response? = try {
-            objectMapper!!.readValue(mTranslation, Response::class.java)
+            objectMapper.readValue(mTranslation, Response::class.java)
         } catch (e: JsonProcessingException) {
             Timber.w(e)
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString())

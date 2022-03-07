@@ -45,7 +45,7 @@ enum class Gesture(
     SWIPE_DOWN(R.string.gestures_swipe_down, "gestureSwipeDown", ViewerCommand.COMMAND_NOTHING),
     SWIPE_LEFT(R.string.gestures_swipe_left, "gestureSwipeLeft", ViewerCommand.COMMAND_UNDO),
     SWIPE_RIGHT(R.string.gestures_swipe_right, "gestureSwipeRight", ViewerCommand.COMMAND_EXIT),
-    LONG_TAP(R.string.gestures_long_tap, "gestureLongclick", ViewerCommand.COMMAND_LOOKUP),
+    LONG_TAP(R.string.gestures_long_tap, "gestureLongclick", ViewerCommand.COMMAND_NOTHING),
     DOUBLE_TAP(R.string.gestures_double_tap, "gestureDoubleTap", ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
     TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left, "gestureTapTopLeft", ViewerCommand.COMMAND_NOTHING),
     TAP_TOP(R.string.gestures_tap_top, "gestureTapTop", ViewerCommand.COMMAND_BURY_CARD),

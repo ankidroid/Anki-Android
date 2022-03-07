@@ -23,8 +23,8 @@
     <string name="front_field_name">Mặt trước</string>
     <string name="back_field_name">Mặt sau</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Văn bản</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Bổ sung Đảo ngược</string>
+    <string name="extra_field_name_new">Thêm mặt sau</string>
+    <string name="field_to_ask_front_name">Thêm vào thẻ đảo ngược</string>
     <!--Card type-->
     <string name="card_n_name">Thẻ %d</string>
     <!--Note type-->

@@ -25,7 +25,6 @@ Masaüstü uygulaması Anki veya doğrudan AnkiDroid yoluyla malzeme ekleyin. Uy
 • kart tarayıcı
 • tablet düzeni
 • var olan koleksiyon dosyalarını içeri aktarma (Anki Desktop aracılığıyla)
-• sözlük entegrasyonu (ColorDict, GoldenDict, Leo.org, Aedict, çeşitli web sözlükleri)
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
 • özel yazı tipi desteği
 • tam yedekleme sistemi

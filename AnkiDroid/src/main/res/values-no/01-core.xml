@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
-    <string name="menu_select">Merk tekst</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Oppslag i %1$s</string>
     <string name="menu_mark_note">Marker notat</string>
     <string name="menu_unmark_note">Fjern notatmarkering</string>

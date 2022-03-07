@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">చిత్రాన్ని జోడించండి</string>
     <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">రికార్డ్ ఆడియో</string>
     <string name="multimedia_editor_popup_text">అధునాతన ఎడిటర్</string>
     <string name="multimedia_editor_popup_cloze">క్లోజ్ తొలగింపు</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">గ్యాలరీ</string>
     <string name="multimedia_editor_image_field_editing_photo">కెమెరా</string>
-    <string name="multimedia_editor_image_field_editing_library">Library</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">దిగుమతి</string>

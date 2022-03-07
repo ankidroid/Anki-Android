@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid precisa de %s de espaço de armazenamento livre para continuar. Por favor, limpe algum espaço</string>
     <string name="restore_backup_title">Restaurar backup?</string>
     <string name="restore_backup">A sua coleção será substituída por uma cópia mais antiga. Qualquer progresso não salvo será perdido.</string>
+    <string name="restore_backup_choose_another">Procurar</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Não</string>
@@ -133,7 +134,6 @@
     <string name="dialog_positive_replace">Substituir</string>
     <string name="dialog_positive_restore">Restaurar</string>
     <string name="dialog_positive_set">Definir</string>
-    <string name="lookup_button_content">Buscar</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era um diretório válido</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificar mídia?</string>
@@ -142,8 +142,8 @@
     <string name="check_media_acknowledge">Mídia verificada</string>
     <string name="check_media_failed">A verificação de mídia falhou</string>
     <string name="check_media_invalid">Arquivos com codificação inválida: %d</string>
-    <string name="check_media_unused">Arquivos na pasta de mídia que não estão sendo utilizados por nenhum card: %d</string>
-    <string name="check_media_nohave">Arquivos utilizados por cards mas que não estão na pasta de mídia: %d</string>
+    <string name="check_media_unused">Arquivos na pasta de mídia não usados por nenhum cartão: %d</string>
+    <string name="check_media_nohave">Arquivos usados por cartões mas que não estão na pasta de mídia: %d</string>
     <string name="check_media_no_unused_missing">Não foram encontrados arquivos não utilizados ou faltantes.</string>
     <string name="check_media_db_updated">Banco de dados de mídia reconstruído.</string>
     <string name="check_media_delete_unused">Excluir não utilizados</string>

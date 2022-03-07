@@ -36,6 +36,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.Deck
@@ -51,8 +53,15 @@ import java.util.*
 import java.util.Objects.requireNonNull
 
 /**
- * The dialog which allow to select a deck. It is opened when the user click on a deck name in stats, browser or note editor.
- * It allows to filter decks by typing part of its name.
+ * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
+ *
+ * * Allows filtering of visible decks based on name (searching): [DecksFilter]
+ * * Allows adding a new deck: [showDeckDialog]
+ * * Allows adding a subdeck via long-pressing a deck: [showSubDeckDialog]
+ *
+ * It is opened when the user wants a deck in stats, browser or note editor.
+ *
+ * @see SelectableDeck The data that is displayed
  */
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private var mDialog: MaterialDialog? = null
@@ -210,17 +219,19 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
         inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
+            var deckName: String = ""
+
             fun setDeck(deck: SelectableDeck) {
-                deckTextView.text = deck.name
+                deckName = deck.name
+                deckTextView.text = deck.displayName
             }
 
             init {
                 deckTextView.setOnClickListener {
-                    val deckName = deckTextView.text.toString()
                     selectDeckByNameAndClose(deckName)
                 }
                 deckTextView.setOnLongClickListener { // creating sub deck with parent deck path
-                    showSubDeckDialog(deckTextView.text.toString())
+                    showSubDeckDialog(deckName)
                     true
                 }
             }
@@ -303,6 +314,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          */
         val name: String
 
+        /**
+         * The name to be displayed to the user. Contains
+         * only the sub-deck name with proper indentation
+         * rather than the entire deck name.
+         * Eg: foo::bar -> \t\tbar
+         */
+        val displayName: String // TODO should be a lazy value
+            get() = getDisplayName(name)
+
         constructor(deckId: Long, name: String) {
             this.deckId = deckId
             this.name = name
@@ -312,6 +332,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         protected constructor(`in`: Parcel) {
             deckId = `in`.readLong()
             name = `in`.readString()!!
+        }
+
+        /**
+         * @param name the entire name(path) of the deck
+         * @return the deck/subdeck name to be displayed to the user
+         */
+        private fun getDisplayName(name: String): String {
+            var nameArr = name.split("::")
+            return "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
         /** "All decks" comes first. Then usual deck name order.  */

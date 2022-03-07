@@ -69,7 +69,7 @@
         <item quantity="other">残り約 %d 日と %d 時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだデッキがありません</string>
-    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加して下さい</string>
+    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
@@ -110,13 +110,11 @@
     <string name="menu_flag_card_two">橙フラグ</string>
     <string name="menu_flag_card_three">緑フラグ</string>
     <string name="menu_flag_card_four">青フラグ</string>
-    <string name="menu_flag_card_five">ピンクのフラグ</string>
-    <string name="menu_flag_card_six">青緑色のフラグ</string>
-    <string name="menu_flag_card_seven">紫のフラグ</string>
+    <string name="menu_flag_card_five">ピンクフラグ</string>
+    <string name="menu_flag_card_six">青緑フラグ</string>
+    <string name="menu_flag_card_seven">紫フラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
-    <string name="menu_select">テキストを選択</string>
-    <string name="menu_lookup">ルックアップリスト</string>
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
@@ -155,7 +153,7 @@
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck">デッキ検索</string>
-    <string name="empty_deck_add_note">カードの追加</string>
+    <string name="empty_deck_add_note">カードを追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
@@ -216,7 +214,7 @@
     <string name="wrong_tag_closed">{{/%1$s}}\'が見つかりましたが、期待されていた \'{{/%2$s}}\'</string>
     <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">コレクションは結合できません。\nどのコレクションを保持しますか？</string>
+    <string name="sync_conflict_message_new">コレクションを結合できません。\nどちらのコレクションを保持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroidのコレクションをAnkiWebのコレクションに置き換えますか？</string>

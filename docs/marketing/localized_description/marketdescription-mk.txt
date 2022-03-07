@@ -25,7 +25,6 @@ AnkiDroid те овозможува да ги научиш флеш картич
 • card browser
 • tablet layout
 • import existing collection files (via Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
 • add cards by intent from other applications like dictionaries
 • custom font support
 • full backup system

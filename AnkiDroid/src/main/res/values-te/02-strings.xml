@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_successful">\"%s\" ఫైల్ ఎగుమతి చేయబడింది. మీరు మరొక అనువర్తనంతో పంపాలనుకుంటున్నారా?</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Apkg ఫైల్ను ఎగుమతి చేయడంలో లోపం</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">కొన్ని సంబంధిత లేదా ఖననం చేసిన కార్డులు రేపు వరకు ఆలస్యం అయ్యాయి</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
-    <string name="lookup_hint">వచనాన్ని కాపీ చేసిన తర్వాత, శోధన చిహ్నాన్ని చూపించడానికి ఫ్లాష్కార్డులో ఎక్కడైనా నొక్కండి</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s second</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

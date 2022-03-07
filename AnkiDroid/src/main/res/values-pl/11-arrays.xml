@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Zalecana odpowiedź (zielony)</string>
     <string name="gesture_answer_better_recommended">Odpowiedź lepsza niż zalecana</string>
     <string name="gesture_tag_note">Ustaw tagi</string>
-    <string name="gesture_lookup">Wyszukaj wyrażenie</string>
     <string name="gesture_play">Odtwarzaj</string>
     <string name="gesture_abort_learning">Przerwij naukę</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>

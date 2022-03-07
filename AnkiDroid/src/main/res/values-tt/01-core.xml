@@ -115,8 +115,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
-    <string name="menu_select">Текстны сайлау</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">%1$sдә карарга</string>
     <string name="menu_mark_note">Язуны билгеләү</string>
     <string name="menu_unmark_note">Билгеләүне бетерергә</string>

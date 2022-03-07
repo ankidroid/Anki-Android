@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Önerilen cevabı (yeşil) ver</string>
     <string name="gesture_answer_better_recommended">Önerilenden daha iyi cevap ver</string>
     <string name="gesture_tag_note">Notu etiketlendir</string>
-    <string name="gesture_lookup">İfadeyi kontrol et</string>
     <string name="gesture_play">Medyayı oynat</string>
     <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
     <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>

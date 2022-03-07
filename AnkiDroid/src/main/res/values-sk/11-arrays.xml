@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Odporúčaná odpoveď (zelená)</string>
     <string name="gesture_answer_better_recommended">Odpoveď lepšia ako odporúčaná</string>
     <string name="gesture_tag_note">Oštítkovať poznámku</string>
-    <string name="gesture_lookup">Vyhľadať výraz</string>
     <string name="gesture_play">Prehrať médium</string>
     <string name="gesture_abort_learning">Prerušiť učenie</string>
     <string name="gesture_flag_red">Označiť červenou vlajkou</string>

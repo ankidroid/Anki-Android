@@ -125,8 +125,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>
-    <string name="menu_select">Odaberi tekst</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Traži u %1$s</string>
     <string name="menu_mark_note">Označi bilješku</string>
     <string name="menu_unmark_note">Odznači bilješku</string>

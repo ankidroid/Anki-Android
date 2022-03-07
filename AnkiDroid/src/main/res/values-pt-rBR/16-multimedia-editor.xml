@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Adicionar imagem</string>
     <string name="multimedia_editor_popup_audio_clip">Adicionar clipe de áudio</string>
+    <string name="multimedia_editor_popup_video_clip">Adicionar vídeo</string>
     <string name="multimedia_editor_popup_audio">Gravar áudio</string>
     <string name="multimedia_editor_popup_text">Editor avançado</string>
     <string name="multimedia_editor_popup_cloze">Ocultar</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Câmera</string>
-    <string name="multimedia_editor_image_field_editing_library">Biblioteca</string>
+    <string name="multimedia_editor_import_audio">Áudio</string>
+    <string name="multimedia_editor_import_video">Vídeo</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Transferindo</string>

@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">לשחזר מגיבוי?</string>
     <string name="restore_backup">האוסף שלך יוחלף בעותק ישן יותר. כל תהליך שלא נשמר ילך לאיבוד.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
     <string name="dialog_no">לא</string>
@@ -145,7 +146,6 @@
     <string name="dialog_positive_replace">החלפה</string>
     <string name="dialog_positive_restore">שחזור</string>
     <string name="dialog_positive_set">הגדרה</string>
-    <string name="lookup_button_content">חיפוש</string>
     <string name="dialog_collection_path_not_dir">הנתיב שצוין אינו תיקייה תקנית</string>
     <!-- Media checking -->
     <string name="check_media_title">לבדוק את המדיה?</string>

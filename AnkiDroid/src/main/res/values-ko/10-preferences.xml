@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">획 두께</string>
     <string name="use_input_tag" maxLength="41">카드에 정답 입력</string>
     <string name="use_input_tag_summ">카드 안의 텍스트 입력 상자에다가 정답을 입력하도록 사용</string>
-    <string name="dictionary" maxLength="41">색인 사전</string>
     <string name="reset_languages" maxLength="41">언어 재설정</string>
     <string name="reset_languages_summ">모든 카드 묶음에 할당된 언어(사전과 TTS) 초기화</string>
     <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
         <item>하단</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">제스처 사용</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">아홉군데누르기</string>
     <string name="gestures_corner_touch_summary">화면모퉁이의 누르기짜임새를 허용하기</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
     <string name="more_scrolling_buttons" maxLength="41">e리더</string>
     <string name="more_scrolling_buttons_summ">한자/가타카나, 이모지/카오모지 버튼도 스크롤링에 사용</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Grussària de du tratu</string>
     <string name="use_input_tag" maxLength="41">Iscrie sa risposta in sa carta</string>
     <string name="use_input_tag_summ">I</string>
-    <string name="dictionary" maxLength="41">Ditzionàriu de chirca</string>
     <string name="reset_languages" maxLength="41">Reseta sas limbas</string>
     <string name="reset_languages_summ">Reseta sos assignamentos de sas limbas (pro su sintetizadore vocale e sos ditzionàrios) pro totu sos matzos</string>
     <string name="reset_languages_question">Resetare totu sos assignamentos de limbas?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>In bassu</item>
         <item>In artu</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Abìlita sos gestos</string>
     <string name="gestures_summ">Assigna gestos a atziones che a sas rispostas e a sas modìficas de sas cartas.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignora sos gestos tàtiles in sos ligàmenes</string>
-    <string name="gestures_allow_links_summary">Sos gestos tàtiles non s\'ant a elaborare si as a incarcare in unu ligàmene/impòsitu</string>
     <string name="gestures_corner_touch" maxLength="41">Tocu a 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permiti sos gestos tàtiles in sos àngulos de s\'ischermu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Pannellu de navigatzione a ischermu intreu</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toca in bassu a manca</string>
     <string name="gestures_corner_tap_bottom_center">Toca in bassu in su tzentru</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toca in bassu a dereta</string>
-    <string name="gestures_volume_up" maxLength="41">Àrtzia su volume</string>
-    <string name="gestures_volume_down" maxLength="41">Abbassa su volume</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Imprea fintzas sos butones kanji/katakana e emoji/kao-moji pro iscùrrere</string>
     <string name="card_browser_enable_external_context_menu">Menù ‘%s’</string>

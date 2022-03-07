@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Lila zászló</string>
     <string name="menu_edit_tags">Címkék szerkesztése</string>
     <string name="delete_note_message">Biztosan törölni akarod ezt a jegyzetet és az összes kártyáját?\n%s</string>
-    <string name="menu_select">Szöveg kijelölése</string>
-    <string name="menu_lookup">Felkeresési szöveg</string>
     <string name="menu_search">Keresés itt: %1$s</string>
     <string name="menu_mark_note">Jegyzet megjelölése</string>
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>

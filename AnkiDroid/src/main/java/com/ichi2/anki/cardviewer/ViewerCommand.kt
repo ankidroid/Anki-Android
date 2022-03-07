@@ -44,7 +44,6 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
     COMMAND_UNDO(R.string.undo, 8),
     COMMAND_EDIT(R.string.cardeditor_title_edit_card, 9),
     COMMAND_MARK(R.string.menu_mark_note, 10),
-    COMMAND_LOOKUP(R.string.lookup_button_content, 11),
     COMMAND_BURY_CARD(R.string.menu_bury, 12),
     COMMAND_SUSPEND_CARD(R.string.menu_suspend_card, 13),
     COMMAND_DELETE(R.string.menu_delete_note, 14), // 15 is unused.

@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
+import android.text.format.DateFormat.getBestDateTimePattern
 import android.view.KeyEvent
 import android.view.View
 import com.afollestad.materialdialogs.DialogAction
@@ -26,21 +27,24 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
+import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var mRepairValues: IntArray
-    private lateinit var mBackups: Array<File?>
+    private lateinit var mBackups: Array<File>
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val type = requireArguments().getInt("dialogType")
         val res = resources
         val builder = MaterialDialog.Builder(requireActivity())
+        val isLoggedIn = SyncStatus.isLoggedIn
         builder.cancelable(true)
             .title(title)
         var sqliteInstalled = false
@@ -115,9 +119,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore))
                 values.add(3)
-                // delete old collection and build new one
-                options.add(res.getString(R.string.backup_full_sync_from_server))
-                values.add(4)
+                // full sync from server
+                if (isLoggedIn) {
+                    options.add(res.getString(R.string.backup_full_sync_from_server))
+                    values.add(4)
+                }
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(5)
@@ -180,13 +186,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
                 // Allow user to restore one of the backups
                 val path = CollectionHelper.getCollectionPath(activity)
-                val files = BackupManager.getBackups(File(path))
-                mBackups = arrayOfNulls(files.size)
-                var i = 0
-                while (i < files.size) {
-                    mBackups[i] = files[files.size - 1 - i]
-                    i++
-                }
+                mBackups = BackupManager.getBackups(File(path))
                 if (mBackups.isEmpty()) {
                     builder.title(res.getString(R.string.backup_restore))
                         .contentNullable(message)
@@ -196,27 +196,33 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                         }
                 } else {
-                    val dates = arrayOfNulls<String>(mBackups.size)
-                    var j = 0
-                    while (j < mBackups.size) {
-                        dates[j] = mBackups[j]!!.name.replace(
-                            ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg".toRegex(), "$1 ($2:$3 h)"
-                        )
-                        j++
+                    // Show backups sorted with latest on top
+                    mBackups.sortDescending()
+                    val localDf = SimpleDateFormat(getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"))
+                    val dates = mutableListOf<String>()
+                    /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
+                    for (backup in mBackups) {
+                        val date = BackupManager.getBackupDate(backup.name)
+                        if (date != null) {
+                            dates.add(localDf.format(date))
+                        } else {
+                            Timber.w("backup name '%s' couldn't be parsed", backup.name)
+                        }
                     }
                     builder.title(res.getString(R.string.backup_restore_select_title))
+                        .positiveText(R.string.restore_backup_choose_another)
                         .negativeText(R.string.dialog_cancel)
-                        .items(*dates)
-                        .itemsCallbackSingleChoice(
-                            dates.size
-                        ) { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
-                            if (mBackups[which]!!.length() > 0) {
+                        .items(*dates.toTypedArray())
+                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity)
+                        }
+                        .itemsCallbackSingleChoice(-1) {
+                            _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
+                            if (mBackups[which].length() > 0) {
                                 // restore the backup if it's valid
                                 (activity as DeckPicker?)
                                     ?.restoreFromBackup(
-                                        mBackups[which]
-
-                                            ?.path
+                                        mBackups[which].path
                                     )
                                 dismissAllDialogFragments()
                             } else {
@@ -229,6 +235,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                             true
                         }
+                        .alwaysCallSingleChoiceCallback()
                 }
                 val materialDialog = builder.build()
                 materialDialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
@@ -307,9 +314,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             INCOMPATIBLE_DB_VERSION -> {
                 val values: MutableList<Int> = ArrayList(2)
-                val options = arrayOf<CharSequence>(makeBold(res.getString(R.string.backup_restore)), makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                val options = mutableListOf<CharSequence>()
+                options.add(makeBold(res.getString(R.string.backup_restore)))
                 values.add(0)
-                values.add(1)
+                if (isLoggedIn) {
+                    options.add(makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                    values.add(1)
+                }
                 builder
                     .cancelable(false)
                     .contentNullable(message)
@@ -319,7 +330,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         _: DialogAction? ->
                         exit()
                     }
-                    .items(*options) // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
+                    .items(options) // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
                     .itemsCallback { _: MaterialDialog?, _: View?, position: Int, _: CharSequence? ->
                         when (values[position]) {
                             0 -> (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)

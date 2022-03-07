@@ -29,10 +29,7 @@ import android.net.Uri;
 import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
 
-import android.util.Log;
-
 import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -121,7 +118,7 @@ public class ContentProviderTest extends InstrumentedTest {
     private static final String[] TEST_NOTE_FIELDS = {"dis is za Fr0nt", "Te$t"};
     private static final String TEST_MODEL_CSS = "styleeeee";
     // Whether tear down should be executed. I.e. if set up was not cancelled.
-    private boolean tearDown;
+    private boolean mTearDown;
 
     private int mNumDecksBeforeTest;
     /* initialCapacity set to expected value when the test is written.
@@ -137,13 +134,13 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Before
     public void setUp() throws Exception {
-        Log.i(AnkiDroidApp.TAG, "setUp()");
+        Timber.i("setUp()");
         mCreatedNotes = new ArrayList<>();
         final Collection col = getCol();
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
-        tearDown = false;
+        mTearDown = false;
         if (InstrumentedTest.isEmulator()) {
             col.changeSchedulerVer(schedVersion);
         } else {
@@ -153,7 +150,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 assumeThat(col.getSched().getName(), is("std2"));
             }
         }
-        tearDown = true;
+        mTearDown = true;
         // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
@@ -208,14 +205,14 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @After
     public void tearDown() throws Exception {
-        Log.i(AnkiDroidApp.TAG, "tearDown()");
-        if (!tearDown) {
+        Timber.i("tearDown()");
+        if (!mTearDown) {
             return;
         }
         final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
-        if (remnantNotes.size() > 0) {
+        if (!remnantNotes.isEmpty()) {
             long[] noteIds = Utils.collection2Array(remnantNotes);
             col.remNotes(noteIds);
             col.save();

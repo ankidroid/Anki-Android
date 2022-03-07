@@ -81,7 +81,7 @@
         <item>ଲାପ୍ସ ଅନୁସାରେ</item>
     </string-array>
     <string name="card_browser_select_all">ସବୁ ଚୟନ କରନ୍ତୁ</string>
-    <string name="card_browser_select_none">କିଛି ବାଛନ୍ତୁ ନାହିଁ</string>
+    <string name="card_browser_select_none">କିଛି ଚୟନ କରନ୍ତୁନି</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ନୂଆ)</string>
     <string name="card_browser_due_filtered_card">(ଶୋଧିତ)</string>
     <string name="card_browser_interval_learning_card">(ଶିଖୁଛନ୍ତି)</string>

@@ -16,7 +16,7 @@
 DEFAULT_DEVELOPER="nobnago"
 DEVELOPER=${1:-$DEFAULT_DEVELOPER}
 # Branch selection
-DEFAULT_BRANCH="master"
+DEFAULT_BRANCH="main"
 BRANCH=${2:-$DEFAULT_BRANCH}
 
 # Change to the AnkiDroid project directory

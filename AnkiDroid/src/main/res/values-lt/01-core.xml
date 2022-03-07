@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Violetinė vėliava</string>
     <string name="menu_edit_tags">Redaguoti žymes</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
-    <string name="menu_select">Žymėti tekstą</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Ieškoti: %1$s</string>
     <string name="menu_mark_note">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>

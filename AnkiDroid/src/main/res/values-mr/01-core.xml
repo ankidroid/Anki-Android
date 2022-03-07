@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
-    <string name="menu_select">मजकूर निवडा</string>
-    <string name="menu_lookup">मजकूर पहा</string>
     <string name="menu_search">%1$s मध्ये पहा</string>
     <string name="menu_mark_note">चिन्हांकित करा</string>
     <string name="menu_unmark_note">अचिन्हांची नोंद</string>

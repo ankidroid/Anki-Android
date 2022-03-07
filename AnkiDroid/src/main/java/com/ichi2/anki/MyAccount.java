@@ -19,11 +19,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.KeyEvent;
@@ -248,6 +250,26 @@ public class MyAccount extends AnkiActivity {
         }
     }
 
+    private void showLoginLogMessage(@StringRes int messageResource, String loginMessage) {
+        {
+            if (loginMessage == null || loginMessage.length() == 0) {
+                if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
+                    //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
+                    View root = this.findViewById(R.id.root_layout);
+                    UIUtils.showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, (v) -> {
+                        Connection.setAllowLoginSyncOnNoConnection(true);
+                        login();
+                    }, null);
+                } else {
+                    UIUtils.showSimpleSnackbar(this, messageResource, false);
+                }
+            } else {
+                Resources res = AnkiDroidApp.getAppResources();
+                showSimpleMessageDialog(res.getString(messageResource), loginMessage, false);
+            }
+        }
+    }
+
 
     /**
      * Listeners
@@ -308,7 +330,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onDisconnected() {
-            UIUtils.showSimpleSnackbar(MyAccount.this, R.string.youre_offline, true);
+            showLoginLogMessage(R.string.youre_offline, "");
         }
     };
 

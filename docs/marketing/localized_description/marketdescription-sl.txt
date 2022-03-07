@@ -25,7 +25,6 @@ Dodajte snov preko namiznega programa Anki ali neposredno preko AnkiDroida. Prog
 • brskalnik kartic
 • razporeditev za tabilce
 • uvoz obstoječih zbirk datotek (preko namiznega Ankija)
-• vgrajeni slovarji (ColorDict, GoldenDict, Leo.org, Aedict, razni spletni slovarji)
 • doda kartice po namenu iz drugih programov (npr. slovarji)
 • podpora za pisave po meri
 • sistem za polno varnostno kopiranje

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Largura do traço</string>
     <string name="use_input_tag" maxLength="41">Digite a resposta no card</string>
     <string name="use_input_tag_summ">Use um campo no card para digitar a resposta</string>
-    <string name="dictionary" maxLength="41">Dicionário de busca</string>
     <string name="reset_languages" maxLength="41">Redefinir línguas</string>
     <string name="reset_languages_summ">Redefinir as atribuições de linguagem (Texto para fala e dicionários) para todos os baralhos</string>
     <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Acima</item>
         <item>Abaixo</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorar gestos de toque nos links</string>
-    <string name="gestures_allow_links_summary">Gestos de toque não serão processados se um link/dica for pressionado.</string>
     <string name="gestures_corner_touch" maxLength="41">9 Ações de Toque </string>
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação em tela cheia</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque Baixo Esquerda</string>
     <string name="gestures_corner_tap_bottom_center">Toque Baixo Centro</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque Baixo Direita</string>
-    <string name="gestures_volume_up" maxLength="41">Aumentar Volume</string>
-    <string name="gestures_volume_down" maxLength="41">Diminuir Volume</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>

@@ -136,7 +136,7 @@
     <string name="card_editor_reset_card">학습 진도 재설정</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">일정 변경</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">미리보기</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 중 %1$d</string>
     <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">이름 바꾸기</string>
     <string name="default_conf_delete_error">기본 옵션 그룹은 제거할 수 없습니다.</string>
@@ -186,10 +186,12 @@
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>
@@ -206,7 +208,6 @@
     <string name="sched_has_buried">연관되거나 나중에 볼 카드가 내일까지 연기되었습니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
-    <string name="lookup_hint">텍스트 복사 후, 플래시카드의 아무 곳이나 두드려 검색 아이콘 표시</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s초</item>
@@ -320,6 +321,7 @@
     <string name="format_font_size">글꼴 크기 변경</string>
     <string name="insert_mathjax">MathJax 수식 삽입</string>
     <string name="insert_cloze">빈칸 삽입</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">선택 전 HTML</string>
     <string name="after_text">선택 후 HTML</string>
     <string name="add_toolbar_item">도구 모음 항목 만들기</string>
@@ -379,4 +381,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

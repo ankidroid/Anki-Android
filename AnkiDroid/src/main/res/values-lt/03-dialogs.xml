@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Atkurti atsarginę kopiją?</string>
     <string name="restore_backup">Jūsų rinkinys bus pakeistas senesne kopija. Bus prarasta bet kokia neišsaugota pažanga.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Atšaukti</string>
     <string name="dialog_ok">Gerai</string>
     <string name="dialog_no">Ne</string>
@@ -145,7 +146,6 @@
     <string name="dialog_positive_replace">Pakeisti</string>
     <string name="dialog_positive_restore">Atkurti</string>
     <string name="dialog_positive_set">Nustatyti</string>
-    <string name="lookup_button_content">Ieškoti</string>
     <string name="dialog_collection_path_not_dir">Nurodytas adresas negalioja</string>
     <!-- Media checking -->
     <string name="check_media_title">Tikrinti laikmenas?</string>

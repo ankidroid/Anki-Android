@@ -1,3 +1,20 @@
+/***************************************************************************************
+ *                                                                                      *
+ * Copyright (c) 2018 Mike Hardy <github@mikehardy.net>                                 *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.tests.libanki;
 
 import org.junit.rules.TestRule;
@@ -15,7 +32,7 @@ public final class RetryRule implements TestRule {
     /**
      * How many times to try a test
      */
-    private int maxTries = 3;
+    private int mMaxTries = 3;
 
 
     /**
@@ -26,7 +43,7 @@ public final class RetryRule implements TestRule {
         if (i < 1) {
             throw new IllegalArgumentException("iterations < 1: " + i);
         }
-        this.maxTries = i;
+        this.mMaxTries = i;
     }
 
 
@@ -52,7 +69,7 @@ public final class RetryRule implements TestRule {
                 Throwable caughtThrowable = null;
 
                 // implement retry logic here
-                for (int i = 0; i < maxTries; i++) {
+                for (int i = 0; i < mMaxTries; i++) {
                     try {
                         base.evaluate();
                         return;
@@ -62,7 +79,7 @@ public final class RetryRule implements TestRule {
                         t.printStackTrace(System.err);
                     }
                 }
-                System.err.println(description.getDisplayName() + ": giving up after " + maxTries + " failures");
+                System.err.println(description.getDisplayName() + ": giving up after " + mMaxTries + " failures");
                 throw caughtThrowable;
             }
         };

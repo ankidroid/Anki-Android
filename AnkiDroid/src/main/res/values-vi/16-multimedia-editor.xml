@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Thêm hình ảnh</string>
     <string name="multimedia_editor_popup_audio_clip">Thêm đoạn âm thanh</string>
+    <string name="multimedia_editor_popup_video_clip">Thêm video</string>
     <string name="multimedia_editor_popup_audio">Ghi âm</string>
     <string name="multimedia_editor_popup_text">Biên tập mở rộng</string>
     <string name="multimedia_editor_popup_cloze">Đánh dấu Cloze</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Bộ sưu tập</string>
     <string name="multimedia_editor_image_field_editing_photo">Máy ảnh</string>
-    <string name="multimedia_editor_image_field_editing_library">Thư viện</string>
+    <string name="multimedia_editor_import_audio">Âm thanh</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Đang tải xuống</string>
@@ -104,8 +106,8 @@
     <string name="multimedia_editor_progress_wait_title">Chờ đợi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Đã xảy ra lỗi</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVGs không có sẵn để xem trước</string>
+    <string name="multimedia_editor_png_paste_error">Lỗi chuyển đổi hình ảnh trong clipboard sang png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Đính kèm nội dung đa phương tiện vào trường %1$s</string>
     <string name="multimedia_editor_attach_media">Đính kèm file đa phương tiện</string>
     <!-- Audio view -->
@@ -124,5 +126,5 @@
     <string name="save_dialog_content">Kích thước hình ảnh hiện tại là %sMB. Giới hạn kích thước hình ảnh mặc định là 1MB. Bạn có muốn cắt nó?</string>
     <string name="select_image_failed">"Chọn hình ảnh không thành công, Vui lòng thử lại"</string>
     <string name="activity_result_unexpected">Ứng dụng trả về một giá trị không mong muốn. Bạn có thể cần sử dụng một ứng dụng khác</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Nội dung đoạn</string>
 </resources>

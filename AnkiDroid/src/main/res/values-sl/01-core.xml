@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ali res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
-    <string name="menu_select">Označi besedilo</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Poišči v %1$s</string>
     <string name="menu_mark_note">Označi zapisek</string>
     <string name="menu_unmark_note">Odznači zapisek</string>

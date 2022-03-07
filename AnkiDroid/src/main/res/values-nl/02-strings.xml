@@ -188,12 +188,13 @@
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
     <string name="export_successful">Bestand \"%s\" is geëxporteerd. Wilt u het met een andere app versturen?</string>
     <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hallo!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Dit is een Anki leerset verzonden vam <a href="%1$s">AnkiDroid</a>.
-        Probeer het te openen met een van de beschikbare Anki distributies <a href="%2$s">Anki distributions</a> en geniet van makkelijk en efficiënt leren!
-        ]]>;
-    </string>
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
+        ]]></string>
     <string name="export_unsuccessful">Er is een fout opgetreden met het exporteren van de apkg file.</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
@@ -209,7 +210,6 @@
     <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
     <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
     <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
-    <string name="lookup_hint">Nadat de teks is gekopieerd, tikt u waar dan ook op de flitskaart om het zoekicoon weer te geven</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s second</item>
@@ -333,6 +333,7 @@
     <string name="format_font_size">Lettergrootte wijzigen</string>
     <string name="insert_mathjax">MathJax-vergelijking invoegen</string>
     <string name="insert_cloze">Invuloefening invoegen</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML voor de selectie</string>
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>
@@ -392,4 +393,5 @@
     <string name="scoped_storage_learn_more">Meer leren</string>
     <string name="scoped_storage_postpone">Stel uit</string>
     <string name="scoped_storage_migrate">Migreren</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

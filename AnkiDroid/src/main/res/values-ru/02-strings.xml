@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Привет!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Это колода карточек Anki отправленная из <a href="%1$s">AnkiDroid</a>.
-        Её можно открыть в одной <a href="%2$s">совместимых с Anki программ</a>, чтобы учиться эффективно и с удовольствием!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Ошибка при экспорте файла apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
-    <string name="lookup_hint">Скопировав текст, нажмите где-нибудь на карточке, чтобы показать иконку поиска</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
     <string name="insert_cloze">Вставить задание с пропусками</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>
     <string name="add_toolbar_item">Создать элемент панели инструментов</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Подробнее</string>
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

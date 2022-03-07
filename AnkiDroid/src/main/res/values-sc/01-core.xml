@@ -122,8 +122,6 @@
     <string name="menu_edit_tags">Modìfica sas etichetas</string>
     <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n
                                              %s</string>
-    <string name="menu_select">Seletziona su testu</string>
-    <string name="menu_lookup">Testu de chirca</string>
     <string name="menu_search">Chirca in %1$s</string>
     <string name="menu_mark_note">Marca sa nota</string>
     <string name="menu_unmark_note">Boga sa marcadura a sa nota</string>

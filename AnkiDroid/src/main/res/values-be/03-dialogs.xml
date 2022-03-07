@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">Для працягу праграме неабходна %s свабоднага месца. Вызваліце неабходнае месца на сваёй прыладзе</string>
     <string name="restore_backup_title">Аднавіць з рэзервовай копіі?</string>
     <string name="restore_backup">Ваша калекцыя будзе заменена больш старой копіяй. Незахаваныя дасягненні будуць страчаныя.</string>
+    <string name="restore_backup_choose_another">Выбраць іншую</string>
     <string name="dialog_cancel">Адмяніць</string>
     <string name="dialog_ok">Добра</string>
     <string name="dialog_no">Не</string>
@@ -145,7 +146,6 @@
     <string name="dialog_positive_replace">Замяніць</string>
     <string name="dialog_positive_restore">Аднавіць</string>
     <string name="dialog_positive_set">Задаць</string>
-    <string name="lookup_button_content">Шукаць</string>
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
     <!-- Media checking -->
     <string name="check_media_title">Праверыць медыяфайлы?</string>

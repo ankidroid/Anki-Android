@@ -253,7 +253,7 @@ open class RobolectricTest : CollectionGetter {
         }
     }
 
-    protected val targetContext: Context
+    val targetContext: Context
         get() {
             return try {
                 ApplicationProvider.getApplicationContext()
@@ -434,6 +434,7 @@ open class RobolectricTest : CollectionGetter {
         advanceRobolectricLooper()
         if (!completed[0]) { throw IllegalStateException(String.format("Task %s didn't finish in %d ms", task.javaClass, timeoutMs)) }
     }
+
     /**
      * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
      * If not, the test halts and is ignored.

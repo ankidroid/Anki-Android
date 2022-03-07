@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
-    <string name="export_email_text_new"><![CDATA[        سلام!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        این یک دسته از فلش کارت های ankidroid هست که توسط <a href="">ankidroid برای شما ارسال شده است</a>.
-        برای استفاده از آن یکی از نسخه‌های در دسترس <a href="">anki را امتحان کنید</a> و از یادگیری کارآمد و آسان لذت ببرید.
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
     <string name="tag_editor_add_feedback">برای تایید اضافه شدن %1$s لطفا %2$s رالمس کنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
-    <string name="lookup_hint">بعد از کپی کردن متن ،با لمس هرکجا در فلش کارت نماد جستجو نمایش داده می شود</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ثانیه</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">افزودن معادله MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

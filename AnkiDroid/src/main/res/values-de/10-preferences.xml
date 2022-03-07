@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Pinselbreite</string>
     <string name="use_input_tag" maxLength="41">Antwort in Karte eintippen</string>
     <string name="use_input_tag_summ">Innerhalb der Karte ein Texteingabefeld verwenden, um die Antwort einzutippen</string>
-    <string name="dictionary" maxLength="41">Nachschlagen in Wörterbuch</string>
     <string name="reset_languages" maxLength="41">Sprachen zurücksetzen</string>
     <string name="reset_languages_summ">Festgelegte Sprachen (für Vorlesen und Wörterbücher) aller Stapel zurücksetzen</string>
     <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Oben</item>
         <item>Unten</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Gesten aktivieren</string>
     <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
-    <string name="gestures_allow_links" maxLength="41">Berührungsgesten auf Weblinks ignorieren</string>
-    <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch" maxLength="41">9-Punkt-Berührung</string>
     <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Vollbild-Navigationsleiste</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Unten links antippen</string>
     <string name="gestures_corner_tap_bottom_center">Berührung unten mittig</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Unten rechts antippen</string>
-    <string name="gestures_volume_up" maxLength="41">Lautstärke erhöhen</string>
-    <string name="gestures_volume_down" maxLength="41">Lautstärke veringern</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
     <string name="card_browser_enable_external_context_menu">»%s«-Menü</string>

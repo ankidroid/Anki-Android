@@ -130,8 +130,6 @@
     <string name="menu_flag_card_seven">Fioletowa flaga</string>
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
-    <string name="menu_select">Zaznacz tekst</string>
-    <string name="menu_lookup">Tekst do wyszukania</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>

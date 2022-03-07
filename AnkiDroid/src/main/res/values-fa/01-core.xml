@@ -47,7 +47,7 @@
     <string name="help">راهنما</string>
     <string name="drawing">i drawied on yesterday</string>
     <string name="send_feedback">ارسال بازخورد</string>
-    <string name="studyoptions_due_today">موعد مقرر امروز:</string>
+    <string name="studyoptions_due_today">سر رسید امروز:</string>
     <string name="studyoptions_new_total">کل کارت های جدید:</string>
     <string name="studyoptions_total_cards">کل کارتها:</string>
     <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">پرچم بنفش</string>
     <string name="menu_edit_tags">ویرایش تگ‌ها</string>
     <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
-    <string name="menu_select">انتخاب متن</string>
-    <string name="menu_lookup">جستجوی متن</string>
     <string name="menu_search">جستجو در %1$s</string>
     <string name="menu_mark_note">نشانه‌گذاری یادداشت</string>
     <string name="menu_unmark_note">برداشتن علامتگذاری یادداشت</string>
@@ -192,8 +190,8 @@
     <string name="card_template_editor_select_field">انتخاب فیلد</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">%1$d کارت ایجاد می‌شود. ادامه می‌دهید؟</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">تعداد %1$d کارت ایجاد خواهد شد. ادامه می‌دهید؟</item>
+        <item quantity="other">تعداد %1$d کارت ایجاد خواهد شد. ادامه می‌دهید؟</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>

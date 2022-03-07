@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">അങ്കി പാക്കേജ് സംരക്ഷിക്കുന്നത് പരാജയപ്പെട്ടു</string>
     <string name="export_successful">“%s” ഫയൽ എക്‌സ്‌പോർട്ടുചെയ്‌തു. മറ്റൊരു അപ്ലിക്കേഷൻ ഉപയോഗിച്ച് ഇത് അയയ്‌ക്കാൻ നിങ്ങൾ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
     <string name="export_email_subject">AnkiDroid എക്‌സ്‌പോർട്ടുചെയ്‌ത ഫ്ലാഷ് കാർഡുകൾ:%s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">apkg ഫയൽ എക്‌സ്‌പോർട്ടുചെയ്യുന്നതിൽ പിശക്</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ഓപ്ഷനുകൾ</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">ബന്ധപ്പെട്ടതോ കുഴിച്ചിട്ടതോ ആയ ചില കാർഡുകൾ നാളെ വരെ വൈകി</string>
     <string name="tag_editor_add_feedback">“%1$s” ചേർക്കുന്നത് സ്ഥിരീകരിക്കുന്നതിന് “%2$s” സ്‌പർശിക്കുക.</string>
     <string name="tag_editor_add_feedback_existing">നിലവിലുള്ള ടാഗ് “%1$s” തിരഞ്ഞെടുത്തു</string>
-    <string name="lookup_hint">വാചകം പകർത്തിയ ശേഷം, തിരയൽ ഐക്കൺ കാണിക്കുന്നതിന് ഫ്ലാഷ് കാർഡിൽ എവിടെയെങ്കിലും ടാപ്പുചെയ്യുക</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s സെക്കൻഡ്</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

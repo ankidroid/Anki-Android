@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Dizze memo en al syn kaarten fuortsmite?\n%s</string>
-    <string name="menu_select">Tekst selektearje</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Opsykje yn %1$s</string>
     <string name="menu_mark_note">Mark note</string>
     <string name="menu_unmark_note">Unmark note</string>

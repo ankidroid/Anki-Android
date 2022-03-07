@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du fichier Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes mémoire</string>
-    <string name="export_email_text_new"><![CDATA[        Bonjour !
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Ceci est un paquet de cartes Anki envoyé depuis <a href="%1$s">AnkiDroid</a>.
-        Essayez de l\'ouvrir en utilisant l\'une des <a href="%2$s">distributions Anki disponibles</a> et profitez d\'un apprentissage facile et efficace !
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Erreur lors de l\'exportation du fichier apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
-    <string name="lookup_hint">Après avoir copié le texte, appuyez n’importe où sur la carte pour afficher l’icône de recherche</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s seconde</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Changer la taille de la police</string>
     <string name="insert_mathjax">Insérer une équation MathJax</string>
     <string name="insert_cloze">Insérer un texte à trous</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML avant sélection</string>
     <string name="after_text">HTML après sélection</string>
     <string name="add_toolbar_item">Créer un élément de la barre d\'outils</string>
@@ -389,4 +391,5 @@
     <string name="scoped_storage_learn_more">En savoir plus</string>
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

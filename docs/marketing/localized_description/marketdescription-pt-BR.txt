@@ -25,7 +25,6 @@ Adicione cards pelo Anki de PC ou diretamente pelo AnkiDroid. O aplicativo ainda
 • navegador de cards
 • layout para tablet
 • importa arquivos de coleções existentes (via Anki Desktop)
-• integração com dicionários (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários on-line)
 • adiciona cards pela interação com outros aplicativos, como dicionários
 • suporte a fonte personalizada
 • sistema de backup completo
