@@ -14,7 +14,7 @@ AnkiDroid has applied to participate in [Google Summer Of Code](https://summerof
 
 In order to receive updates about GSoC at Ankidroid, please subscribe to the AnkiDroid GSoC Announce mailing list and join the [Discord](https://discord.com/invite/qjzcRTx),
 
-Also, please note that acceptance into GSoC isn't a prerequisite for becoming an AnkiDroid contributor. The AnkiDroid project is run by the community for the community, and We welcome any contributors, you can start contributing immediately if you desire so. For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it does not guarantee, even implicitly, that you will be selected for GSoC.
+Also, please note that acceptance into GSoC isn't a prerequisite for becoming an AnkiDroid contributor. The AnkiDroid project is run by the community for the community, and we welcome any contributors, you can start contributing immediately if you desire so. For the sake of transparency, we are all [volunteers](https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process) here and if you participate now, it's as a volunteer, it does not guarantee, even implicitly, that you will be selected for GSoC.
 
 <a name="what_is_gsoc"/>
 
