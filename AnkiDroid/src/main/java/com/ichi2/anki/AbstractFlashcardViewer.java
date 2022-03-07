@@ -1011,7 +1011,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            new UndoService.Undo().runWithHandler(answerCardHandler(false));
+            Resources res = getResources();
+            String undoName = getCol().undoName(res);
+
+            new UndoService.Undo().runWithHandler(
+                    answerCardHandler(false)
+                    .alsoExecuteAfter(computation -> UIUtils.showThemedToast(
+                            AbstractFlashcardViewer.this,
+                            res.getString(R.string.undo_succeeded, undoName),
+                            false)
+                )
+            );
         }
     }
 
