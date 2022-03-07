@@ -82,10 +82,9 @@ object ContentResolverUtil {
                     if (mediaIndex == -1) {
                         // uri is content uri not media uri
                         val dataIndex = c.getColumnIndexOrThrow("_data")
-                        val path = c.getString(dataIndex)
-                        return path.substring(path.lastIndexOf('/') + 1)
+                        val fileUri = Uri.parse(c.getString(dataIndex))
+                        return fileUri.lastPathSegment
                     }
-                    return c.getString(mediaIndex)
                 }
             }
         } catch (e: SQLiteException) {
