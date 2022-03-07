@@ -72,7 +72,7 @@ You can also <a href='https://ankidroid.org/docs/manual.html#betaTesting'>access
 
 # Release Compatibility
 
-* 2.15+ will require Android 12 or greater (Lollipop, API21)
+* 2.15+ will require Android 5.0 or greater (Lollipop, API21)
 * 2.9-alpha releases are forwards and backwards compatible with 2.8.4
 * 2.9+ will require Android 4.0.3 or greater (Ice Cream Sandwich, API15)
 * 2.8.4 requires Android 2.3.7 or greater (Gingerbread, API10)
