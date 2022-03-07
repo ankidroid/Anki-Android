@@ -85,6 +85,7 @@ object ContentResolverUtil {
                         val fileUri = Uri.parse(c.getString(dataIndex))
                         return fileUri.lastPathSegment
                     }
+                    return c.getString(mediaIndex)
                 }
             }
         } catch (e: SQLiteException) {
