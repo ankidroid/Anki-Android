@@ -80,6 +80,11 @@ public class Model extends JSONObject {
         return getJSONArray("flds").getJSONObject(pos);
     }
 
+    /**
+     * @return model did or default deck id (1) if null
+     */
+    public Long getDid() { return isNull("did") ? 1L : getLong("did"); }
+
     public List<String> getTemplatesNames() {
         return getJSONArray("tmpls").toStringList("name");
     }

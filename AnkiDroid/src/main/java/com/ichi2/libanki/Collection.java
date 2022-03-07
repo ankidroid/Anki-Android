@@ -870,7 +870,7 @@ public class Collection implements CollectionGetter {
                     due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
-                    did = model.getLong("did");
+                    did = model.getDid();
                 }
                 // add any missing cards
                 ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
