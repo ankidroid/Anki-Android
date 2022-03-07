@@ -17,10 +17,12 @@
 package com.ichi2.compat;
 
 import com.ichi2.anki.TestUtils;
+import com.ichi2.testutils.Test21And26;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
@@ -35,9 +37,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.FileOperation.getFileResource;
 
-@RunWith(AndroidJUnit4.class)
-@Config(sdk = { 21, 26 })
-public class CompatCopyFileTest {
+@RunWith(Parameterized.class)
+public class CompatCopyFileTest extends Test21And26 {
+    public CompatCopyFileTest(Compat compat, String unitTestDescription) {
+        super(compat, unitTestDescription);
+    }
 
     @Test
     public void testCopyFileToStream() throws Exception {
