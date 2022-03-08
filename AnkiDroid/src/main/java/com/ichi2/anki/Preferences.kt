@@ -298,7 +298,7 @@ class Preferences : AnkiActivity() {
         }
 
         // Get summary text
-        val oldSummary = mOriginalSummaries[pref.key]
+        val oldSummary = mOriginalSummaries[pref.key] ?: ""
         // Replace summary text with value according to some rules
         pref.summary = when {
             oldSummary == "" -> value
@@ -308,18 +308,28 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    @KotlinCleanup("str & value: non-null")
-    private fun replaceString(str: String?, value: String?): String {
-        return if (str!!.contains("XXX")) {
-            str.replace("XXX", value!!)
+    /**
+     * Replace "XXX" in [str] with [value]
+     *
+     * This exists to enable formatting the summary of a preference with data
+     * As summary is set via XML, this cannot have format strings, so we use "XXX" later on.
+     */
+    private fun replaceString(str: String, value: String): String {
+        return if (str.contains("XXX")) {
+            str.replace("XXX", value)
         } else {
             str
         }
     }
 
-    private fun replaceStringIfNumeric(str: String?, value: String?): String? {
+    /**
+     * If [value] is convertible to a double, replace "XXX" in [str] with the value
+     * @param str A string which may have "XXX", if so, this may be replaced
+     * @param value If this is a double, the "XXX" string in [str] is replaced with [value]
+     */
+    private fun replaceStringIfNumeric(str: String, value: String): String? {
         return try {
-            value!!.toDouble()
+            value.toDouble()
             replaceString(str, value)
         } catch (e: NumberFormatException) {
             Timber.w(e)
