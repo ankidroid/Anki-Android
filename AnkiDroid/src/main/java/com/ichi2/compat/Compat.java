@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>                              *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 
 import androidx.annotation.IntDef;
@@ -88,9 +90,11 @@ public interface Compat {
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
-     * @throws IOException If the file failed to be deleted
      * @see File#delete()
      * @see java.nio.file.Files#delete(Path)
+     *
+     * @throws FileNotFoundException If the file does not exist
+     * @throws IOException If the file failed to be deleted
      */
     void deleteFile(@NonNull File file) throws IOException;
 
@@ -150,6 +154,22 @@ public interface Compat {
      * @throws IOException if an error occurs
      */
     void moveDirectory(File srcDir, File destDir, ProgressSenderAndCancelListener<Integer> ioTask) throws IOException;
+
+    /**
+     * Whether a directory has at least one files
+     * @return Whether the directory has file.
+     * @throws [SecurityException] If a security manager exists and its SecurityManager.checkRead(String)
+     * method denies read access to the directory
+     * @throws [FileNotFoundException] if the file do not exists
+     * @throws [NotDirectoryException] if the file could not otherwise be opened because it is not
+     * a directory (optional specific exception), (starting at API 26)
+     * @throws [IOException] – if an I/O error occurs
+     */
+    default boolean hasFiles(@NonNull File directory) throws IOException {
+        try(FileStream stream = contentOfDirectory(directory)) {
+            return stream.hasNext();
+        }
+    }
 
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
@@ -246,5 +266,18 @@ public interface Compat {
      * WRITE_EXTERNAL_STORAGE permission
      */
     Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
+
+    /**
+     *
+     * @param directory A directory.
+     * @return a FileStream over file and folder of this directory.
+     *         null in case of trouble. This stream must be closed explicitly when done with it.
+     * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
+     * @throws FileNotFoundException if the file do not exists
+     * @throws IOException if files can not be listed. On non existing or non-directory file up to API 25. This also occurred on an existing directory because of permission issue
+     * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
+     * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
+     */
+    @NonNull FileStream contentOfDirectory(File directory) throws IOException  ;
 }
 

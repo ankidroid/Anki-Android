@@ -97,6 +97,7 @@
     <string name="sync_media_find">Médiaváltozás keresése&#8230;</string>
     <string name="sync_media_no_changes">Nincs változás a média fájlokban.</string>
     <string name="sync_media_success">Média szinkronizál sikeresen.</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d médiaváltozás feltöltése</string>
     <string name="sync_media_downloaded_count">%d médiafájl letöltve</string>
     <string name="sync_sanity_failed">Szinkronizálás után a gyűjtemény hibába ütközött. A probléma megoldásához az AnkiDroid teljes szinkronizálást hajt végre. Kérjük, válaszd ki azt a lapot, amelyet meg szeretnél tartani.</string>

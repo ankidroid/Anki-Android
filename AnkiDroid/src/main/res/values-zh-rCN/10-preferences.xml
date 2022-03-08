@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
     <string name="use_input_tag_summ">在卡片中使用一个文本框里输入答案</string>
-    <string name="dictionary" maxLength="41">查找字典</string>
     <string name="reset_languages" maxLength="41">重设语言</string>
     <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
     <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
         <item>底部</item>
+        <item>无</item>
     </string-array>
     <string name="gestures" maxLength="41">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
-    <string name="gestures_allow_links" maxLength="41">忽略链接上的触摸手势</string>
-    <string name="gestures_allow_links_summary">如果按下链接/提示，触摸手势将不会被处理。</string>
     <string name="gestures_corner_touch" maxLength="41">9 点触摸</string>
     <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全屏导航抽屉</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">触摸左下方</string>
     <string name="gestures_corner_tap_bottom_center">触摸底部中心</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">触摸右下方</string>
-    <string name="gestures_volume_up" maxLength="41">调高音量</string>
-    <string name="gestures_volume_down" maxLength="41">调低音量</string>
     <string name="more_scrolling_buttons" maxLength="41">电子书阅读器</string>
     <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
     <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
@@ -268,9 +264,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">最大时间间隔</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
     <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
-    <string name="deck_conf_leech_thres" maxLength="41">记忆难点阈值</string>
+    <string name="deck_conf_leech_thres" maxLength="41">“水蛭”阈值</string>
     <string name="deck_conf_fails">XXX 失败</string>
-    <string name="deck_conf_leech_action" maxLength="41">记忆难点动作</string>
+    <string name="deck_conf_leech_action" maxLength="41">“水蛭”处置</string>
     <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">显示计时器</string>

@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
     <string name="export_successful">Plik \"%s\" został wyeksportowany. Czy nadal chcesz wysłać go przez inną aplikację?</string>
     <string name="export_email_subject">AnkiDroid wyeksportował fiszki: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Cześć!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        To jest talia fiszek Anki przesłana przez  <a href="%1$s">AnkiDroid</a>.
-        Spróbuj otworzyć ją, używając jednej z dostępnych <a href="%2$s">wersji Anki</a> i ciesz się przyjemną i skuteczną nauką!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
     <string name="tag_editor_add_feedback">Dotknij “%2$s” aby potwierdzić dodanie “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Wybrano istniejący tag “%1$s”</string>
-    <string name="lookup_hint">Po skopiowaniu tekstu, stuknięcie dowolnego miejsca na karcie pokazuje ikonę szukania</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunda</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Zmień rozmiar czcionki</string>
     <string name="insert_mathjax">Wstaw równanie MathJax</string>
     <string name="insert_cloze">Luka do wypełnienia</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML po zaznaczonym tekście</string>
     <string name="after_text">HTML przed zaznaczonym tekstem</string>
     <string name="add_toolbar_item">Utwórz element paska narzędzi</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Dowiedz się więcej</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

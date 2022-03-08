@@ -188,10 +188,13 @@
     <string name="export_save_apkg_unsuccessful">Savi la Anki-pakaĵon malsukcesis</string>
     <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
-    <string name="export_email_text_new"><![CDATA[Saluton!
-<br/><br/>
-Tio ĉi estas Anki-kartaro sendita per la aplikaĵo <a href="%1$s">AnkiDroid</a>.
-Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj efikan lernadon!]]></string>
+    <string name="export_email_text"><![CDATA[        Hi!
+        <br/><br/>
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
+        ]]></string>
     <string name="export_unsuccessful">Eraro dum elportado de apkg-dosiero</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Agordoj</string>
     <string name="menu__deck_options">Agordoj pri kartaro</string>
@@ -207,7 +210,6 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="sched_has_buried">Kelkaj rilataj kaj kaŝitaj kartoj atendos ĝis morgaŭ</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
-    <string name="lookup_hint">Post kopii la tekston, frapetu ie sur la karto por montri la piktogramon de serĉo</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekundo</item>
@@ -331,6 +333,7 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
     <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
     <string name="insert_cloze">Enmeti trutekstan malplenon</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
@@ -390,4 +393,5 @@ Malfermu ĝin per iu el la <a href="%2$s">Anki-programo</a> por ĝuu facilan kaj
     <string name="scoped_storage_learn_more">Pli da informoj</string>
     <string name="scoped_storage_postpone">Ne nun</string>
     <string name="scoped_storage_migrate">Movi datumojn</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -1782,7 +1782,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         public ListenerWithProgressBarCloseOnFalse(CardBrowser browser) {
             this(null, browser);
-		}
+        }
 
         public void actualOnPostExecute(@NonNull CardBrowser browser, Result result) {
             if (mTimber != null) {

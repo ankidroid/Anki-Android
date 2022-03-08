@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">स्ट्रोक रून्दी</string>
     <string name="use_input_tag" maxLength="41">कार्डमध्ये उत्तर टाइप करा</string>
     <string name="use_input_tag_summ">उत्तर टाइप करण्यासाठी कार्डमध्ये मजकूर इनपुट बॉक्स वापरा</string>
-    <string name="dictionary" maxLength="41">लुकअप डिक्शनरी</string>
     <string name="reset_languages" maxLength="41">भाषा रीसेट करा</string>
     <string name="reset_languages_summ">सर्व डेकसाठी भाषा असाइनमेंट (मजकूर ते भाषण आणि शब्दकोषांसाठी) रीसेट करा</string>
     <string name="reset_languages_question">सर्व भाषा असाइनमेंट रीसेट करायच्या?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>शीर्ष</item>
         <item>तळ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">जेश्चर सक्षम करा</string>
     <string name="gestures_summ">उत्तर देणे आणि संपादन कार्ड यासारख्या क्रियांना जेश्चर नियुक्त करा.</string>
-    <string name="gestures_allow_links" maxLength="41">दुव्यांवरील स्पर्श जेश्चरकडे दुर्लक्ष करा</string>
-    <string name="gestures_allow_links_summary">दुवा / इशारा दाबल्यास स्पर्श जेश्चरवर प्रक्रिया केली जाणार नाही.</string>
     <string name="gestures_corner_touch" maxLength="41">9-बिंदू स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोपर्यात स्पर्श जेश्चरला अनुमती द्या</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">डावीकडे तळाशी स्पर्श करा</string>
     <string name="gestures_corner_tap_bottom_center">तळाशी मध्यभागी स्पर्श करा</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">उजवीकडे तळाशी स्पर्श करा</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
     <string name="more_scrolling_buttons" maxLength="41">eवाचक</string>
     <string name="more_scrolling_buttons_summ">स्क्रोलिंगसाठी कांजी / कटाकाना, इमोजी / काओ-मोजी बटणे देखील वापरा</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ मेनू</string>

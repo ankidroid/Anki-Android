@@ -162,7 +162,7 @@
     <string name="import_log_failed_unzip">Decompressione dell\'apkg fallita: %s</string>
     <string name="import_log_failed_copy_to">Impossibile copiare l\'apkg in %s</string>
     <string name="import_log_failed_validate">convalida dell\'apkg fallita</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Non c\'è abbastanza spazio per importare il pacchetto.\nNecessario - %1$s \nDisponibile - %2$s.\n\nHai Problemi? Prova a liberare spazio sul tuo telefono, se possibile. In alternativa, la sincronizzazione utilizza meno spazio dell\'importazione. Si può provare a importare il pacchetto con un dispositivo con più spazio (ad esempio Anki Desktop) e quindi sincronizzarlo con questo dispositivo.</string>
     <string name="import_log_file_cache_cleared">Errore nell\'importazione del file, probabilmente una cache pulita durante l\'elaborazione.\nSi prega di riprovare</string>
     <string name="import_succeeded_but_check_database">L\'importazione dei dati ha riuscito ma la pulizia postimportazione no. Esegui il controllo di banca dati più tardi. Causa: %s</string>
     <string name="import_error_unhandled_request">Impossibile elaborare la richiesta di importazione</string>
@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Salvataggio pacchetto di Anki fallito</string>
     <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Ciao!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Questo è un mazzo di carte Anki inviato da <a href="%1$s">AnkiDroid</a>.
-        Prova ad aprirlo usando una delle distribuzioni <a href="%2$s">Anki</a> disponibili e goditi un apprendimento semplice ed efficiente!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opzioni</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
-    <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s secondo</item>
@@ -268,9 +269,9 @@
     <string name="choose_an_image">Scegli un\'immagine</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Ripristina predefiniti</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Questa è una {{%1$s::sample}} eliminazione cloze.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">esampio</string>
+    <string name="basic_answer_sample_text">un esempio</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Vuoto</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Si prega di abilitare lo schermo intero per utilizzare Mostra Barra di navigazione utilizzando JavaScript.</string>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Cambia Dimensione Carattere</string>
     <string name="insert_mathjax">Inserisci l\'Equazione MathJax</string>
     <string name="insert_cloze">Inserisci Eliminazione di Cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Prima della Selezione</string>
     <string name="after_text">HTML Dopo la Selezione</string>
     <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>
@@ -379,16 +381,17 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_title">Migrazione dei dati</string>
+    <string name="scoped_storage_initial_message">AnkiDroid deve spostare i suoi dati per soddisfare le nuove regole sulla privacy di Android
+\n\nSe disinstalli AnkiDroid prima della migrazione, i tuoi dati verranno persi
+\n\nPer favore esegui la migrazione il prima possibile</string>
+    <string name="scoped_storage_terms_message">La migrazione avverrà in background. Non sarai in grado di eseguire la sincronizzazione durante la migrazione\n\nDurata stimata: %s</string>
+    <string name="scoped_storage_term_1">Ho eseguito il backup dei miei dati</string>
+    <string name="scoped_storage_term_1_ankiweb">Ho sincronizzato con AnkiWeb di recente</string>
+    <string name="scoped_storage_term_2">Non disinstallerò l\'applicazione mentre i dati vengono spostati</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_learn_more">Per saperne di più</string>
+    <string name="scoped_storage_postpone">Posticipa</string>
+    <string name="scoped_storage_migrate">Migra</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

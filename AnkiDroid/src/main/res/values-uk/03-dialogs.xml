@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
     <string name="restore_backup">Вашу колекцію замінить стара копія. Будь-який незбережений прогрес буде втрачено.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Гаразд</string>
     <string name="dialog_no">Ні</string>
@@ -145,7 +146,6 @@
     <string name="dialog_positive_replace">Замінити</string>
     <string name="dialog_positive_restore">Відновити</string>
     <string name="dialog_positive_set">Встановлення</string>
-    <string name="lookup_button_content">Шукати в словнику</string>
     <string name="dialog_collection_path_not_dir">Вказаний шлях не є дійсним</string>
     <!-- Media checking -->
     <string name="check_media_title">Перевірити медіафайли?</string>

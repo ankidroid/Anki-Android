@@ -121,6 +121,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
     <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
     <string name="dialog_no">خیر</string>
@@ -135,7 +136,6 @@
     <string name="dialog_positive_replace">جایگزین کردن</string>
     <string name="dialog_positive_restore">بازگرداني</string>
     <string name="dialog_positive_set">تنظیم</string>
-    <string name="lookup_button_content">جستجوی اطلاعات بیشتر</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
     <!-- Media checking -->
     <string name="check_media_title">رسانه بررسی شود؟</string>

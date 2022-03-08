@@ -25,7 +25,6 @@ Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. 
 • penelusur kartu
 • tata letak tablet
 • impor berkas koleksi yang ada (lewat Anki Desktop)
-• integrasi kamus (ColorDict, GoldenDict, Leo.org, Aedict, bermacam kamus web)
 • tambahkan kartu dengan intent dari aplikasi lain seperti kamus
 • dukungan fon kustom
 • cadangan sistem penuh

@@ -25,7 +25,6 @@ Magdagdag ng materyal sa pamamagitan ng Anki desktop application o direkta sa pa
 • browser ng card
 • tablet layout
 • mag-import ng mga umiiral na mga file ng koleksyon (sa pamamagitan ng Anki Desktop)
-• dictionary integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse web dictionaries)
 • magdagdag ng mga card sa pamamagitan ng layunin mula sa iba pang mga application tulad ng mga diksyunaryo
 • pasadyang suporta font
 • buong backup na sistema

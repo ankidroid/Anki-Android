@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
-    <string name="menu_select">Valitse teksti</string>
-    <string name="menu_lookup">Hae tekstiä</string>
     <string name="menu_search">Haku %1$s</string>
     <string name="menu_mark_note">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>

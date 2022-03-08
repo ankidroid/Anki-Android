@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
-    <string name="menu_select">ಪಠ್ಯ ಆಯ್ದುಕೊಳ್ಳಿ</string>
-    <string name="menu_lookup">ಲುಕಪ್ ಪಠ್ಯ</string>
     <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
     <string name="menu_mark_note">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
     <string name="menu_unmark_note">ಟಿಪ್ಪಣಿ ಗುರುತು</string>

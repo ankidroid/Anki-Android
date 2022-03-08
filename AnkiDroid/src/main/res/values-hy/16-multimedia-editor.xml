@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Ավելացնել պատկեր</string>
     <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">Ձայնագրել ձայնը</string>
     <string name="multimedia_editor_popup_text">Ընդլայնված խմբագրիչ</string>
     <string name="multimedia_editor_popup_cloze">Բացթողումների ջնջում</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Սրահ</string>
     <string name="multimedia_editor_image_field_editing_photo">Տեսախցիկ</string>
-    <string name="multimedia_editor_image_field_editing_library">Գրադարան</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Ներբեռնվում է</string>

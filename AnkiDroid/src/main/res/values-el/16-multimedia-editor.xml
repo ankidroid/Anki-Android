@@ -36,6 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Προσθήκη εικόνας</string>
     <string name="multimedia_editor_popup_audio_clip">Προσθήκη κλιπ ήχου</string>
+    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">Ηχογράφηση</string>
     <string name="multimedia_editor_popup_text">Advanced editor</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
@@ -89,7 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Συλλογή</string>
     <string name="multimedia_editor_image_field_editing_photo">Κάμερα</string>
-    <string name="multimedia_editor_image_field_editing_library">Βιβλιοθήκη</string>
+    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Downloading</string>

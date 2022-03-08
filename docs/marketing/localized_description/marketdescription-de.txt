@@ -25,7 +25,6 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Kartenübersicht
 • Tablet-Layout
 • Importieren von bestehenden Sammlungen (über Anki Desktop)
-• Wörterbuch-Integration (ColorDict, GoldenDict, Leo.org, Aedict, diverse Web-Wörterbücher)
 • Fügen Sie Karten von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
 • Ausgebautes Sicherungssystem

@@ -512,7 +512,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
         // and media
         prepareMedia();
-    	JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
+        JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
         // tidy up intermediate files
         SQLiteDatabase.deleteDatabase(new File(colfile));
         SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));

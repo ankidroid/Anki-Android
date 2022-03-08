@@ -185,10 +185,12 @@
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
     <string name="export_successful">Berkas \"%s\" diekspor. Apakah kamu ingin mengirimnya dengan aplikasi lain?</string>
     <string name="export_email_subject">Flashcard AnkiDroid terekspor: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
@@ -205,7 +207,6 @@
     <string name="sched_has_buried">Beberapa kartu yang terkait atau dipendam ditunda sampai besok</string>
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” dipilih</string>
-    <string name="lookup_hint">Setelah menyalin teks, tekan di mana saja di kartu flash untuk menampilkan ikon pencarian</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s detik</item>
@@ -319,6 +320,7 @@
     <string name="format_font_size">Ubah Ukuran Font</string>
     <string name="insert_mathjax">Masukkan rumus MathJax</string>
     <string name="insert_cloze">Masukkan Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Sebelum Pilihan</string>
     <string name="after_text">HTML Sesudah Pilihan</string>
     <string name="add_toolbar_item">Buat Item Toolbar</string>
@@ -378,4 +380,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -75,9 +75,9 @@ public class NoteEditorTabOrderTest extends NoteEditorTest {
 
 
     protected void sendKeyDownUp(Activity activity, int keyCode) {
-        BaseInputConnection mInputConnection = new BaseInputConnection(activity.getCurrentFocus(), true);
-        mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
-        mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
+        BaseInputConnection inputConnection = new BaseInputConnection(activity.getCurrentFocus(), true);
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
+        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     }
 
 

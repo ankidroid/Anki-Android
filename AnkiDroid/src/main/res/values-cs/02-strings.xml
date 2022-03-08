@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
     <string name="export_successful">Soubor „%s“ byl exportován. Chcete jej poslat pomocí jiné aplikace?</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Ahoj!
+    <string name="export_email_text"><![CDATA[        Ahoj!
         <br/><br/>
-        Tohle je balíček Anki kartiček zaslaný z <a href="%1$s">AnkiDroid</a>.
-        Zkus ho otevřít jednou z dostupných <a href="%2$s">distribucí Anki</a> a užij si jednoduché a efektivní učení!
+        Tohle je balíček kartiček Anki poslaný z AnkiDroid[1].
+        Zkus ho otevřít pomocí jedné z dostupných distribucí Anki[2] a užij si jednoduché a účinné učení!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Některé související nebo přeskočené karty byly přesunuty na zítra.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán štítek “%1$s”</string>
-    <string name="lookup_hint">Po zkopírování textu, klepněte kdekoli na kartičku pro zobrazení ikony hledání</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekunda</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Změnit velikost písma</string>
     <string name="insert_mathjax">Vložit rovnici MathJax</string>
     <string name="insert_cloze">Vložit doplňovačku</string>
+    <string name="note_editor_toolbar_icon">Text tlačítka</string>
     <string name="before_text">HTML před výběrem</string>
     <string name="after_text">HTML za výběrem</string>
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Zjistit více</string>
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Migrovat</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -63,7 +63,7 @@ enum class SyncStatus {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
-        private val isLoggedIn: Boolean
+        val isLoggedIn: Boolean
             get() {
                 val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
                 val hkey = preferences.getString("hkey", "")

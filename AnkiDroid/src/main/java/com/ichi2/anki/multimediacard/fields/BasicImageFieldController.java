@@ -297,6 +297,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return File.createTempFile("img", "." + extension, storageDir);
     }
 
+    private File createCachedFile(@NonNull String filename) throws IOException {
+        File file = new File(mAnkiCacheDirectory, filename);
+        file.deleteOnExit();
+        return file;
+    }
+
 
     private void drawUIComponents(Context context) {
         DisplayMetrics metrics = getDisplayMetrics();
@@ -494,11 +500,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             showSomethingWentWrong();
             return null;
         }
-        String uriFileExtension = uriFileName.substring(uriFileName.lastIndexOf('.') + 1);
         try {
-            internalFile = createNewCacheImageFile(uriFileExtension);
+            internalFile = createCachedFile(uriFileName);
         } catch (IOException e) {
-            Timber.w(e, "internalizeUri() failed to create new file with extension %s", uriFileExtension);
+            Timber.w(e, "internalizeUri() failed to create new file with name %s", uriFileName);
             showSomethingWentWrong();
             return null;
         }

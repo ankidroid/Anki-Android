@@ -33,7 +33,7 @@ class KotlinMigrationBrokenEmails : Detector(), SourceCodeScanner {
 
     override fun afterCheckFile(context: Context) {
         val contents = context.getContents()
-        if (contents == null || !BAD_KOLTIN_MIGRATION_PATTERN.matcher(contents).find()) {
+        if (contents == null || !BAD_KOTLIN_MIGRATION_PATTERN.matcher(contents).find()) {
             return
         }
 
@@ -56,7 +56,7 @@ class KotlinMigrationBrokenEmails : Detector(), SourceCodeScanner {
 
     companion object {
         /** Java -> Kotlin converts <http:// to <http:></http:>// */
-        private val BAD_KOLTIN_MIGRATION_PATTERN = Pattern.compile(Pattern.quote("<http:></http:>"))
+        private val BAD_KOTLIN_MIGRATION_PATTERN = Pattern.compile(Pattern.quote("<http:></http:>"))
 
         @VisibleForTesting
         val ID = "KotlinMigrationBrokenEmails"

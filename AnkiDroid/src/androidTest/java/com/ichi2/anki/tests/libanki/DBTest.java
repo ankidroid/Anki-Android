@@ -1,15 +1,28 @@
+/***************************************************************************************
+ *                                                                                      *
+ * Copyright (c) 2018 Mike Hardy <github@mikehardy.net>                                 *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import android.app.Application;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
-import android.os.Build;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.tests.InstrumentedTest;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.DB;
 
 import org.junit.Assert;
@@ -22,9 +35,7 @@ import java.io.FileOutputStream;
 import java.util.Random;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 @RunWith(AndroidJUnit4.class)
@@ -45,7 +56,7 @@ public class DBTest extends InstrumentedTest {
         Assert.assertFalse("database exists already", illFatedDBFile.exists());
 
         TestDB illFatedDB = new TestDB(illFatedDBFile.getCanonicalPath());
-        Assert.assertFalse("database should not be corrupt yet", illFatedDB.databaseIsCorrupt);
+        Assert.assertFalse("database should not be corrupt yet", illFatedDB.mDatabaseIsCorrupt);
 
         // Scribble in it
         byte[] b = new byte[1024];
@@ -64,7 +75,7 @@ public class DBTest extends InstrumentedTest {
             // do nothing, it is expected
         }
 
-        Assert.assertTrue("database corruption not detected", illFatedDB.databaseIsCorrupt);
+        Assert.assertTrue("database corruption not detected", illFatedDB.mDatabaseIsCorrupt);
 
         // our handler avoids deleting databases, in contrast with default handler
         Assert.assertTrue("database incorrectly deleted on corruption", illFatedDBFile.exists());
@@ -78,7 +89,7 @@ public class DBTest extends InstrumentedTest {
     // Test fixture that lets us inspect corruption handler status
     public static class TestDB extends DB {
 
-        private boolean databaseIsCorrupt = false;
+        private boolean mDatabaseIsCorrupt = false;
 
         private TestDB(String ankiFilename) {
             super(ankiFilename);
@@ -96,7 +107,7 @@ public class DBTest extends InstrumentedTest {
 
             @Override
             public void onCorruption(SupportSQLiteDatabase db) {
-                databaseIsCorrupt = true;
+                mDatabaseIsCorrupt = true;
                 super.onCorruption(db);
             }
         }

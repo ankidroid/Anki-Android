@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Anki-paketet kunde inte sparas</string>
     <string name="export_successful">Filen ”%s” har exporterats. Vill du skicka den med en annan app?</string>
     <string name="export_email_subject">AnkiDroid exporterade flashcards: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hej!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Detta är en kortlek med Anki-flashcards som skickats från <a href="">AnkiDroid</a>.
-        Testa att öppna den med någon av de tillgängliga <a href="">Anki-distributionerna</a> och njut av ett enkelt och effektivt lärande!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
     <string name="tag_editor_add_feedback">Tryck på “%2$s” för att bekräfta att lägga till “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Befintlig etikett “%1$s” vald</string>
-    <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekund</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Ändra teckenstorlek</string>
     <string name="insert_mathjax">Infoga MathJax ekvation</string>
     <string name="insert_cloze">Infoga textlucka</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML före markering</string>
     <string name="after_text">HTML efter markering</string>
     <string name="add_toolbar_item">Skapa objekt i verktygsfältet</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Läs mer</string>
     <string name="scoped_storage_postpone">Senarelägg</string>
     <string name="scoped_storage_migrate">Migrera</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

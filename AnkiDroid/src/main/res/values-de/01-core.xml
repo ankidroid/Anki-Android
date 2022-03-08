@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Violette Flagge</string>
     <string name="menu_edit_tags">Schlagwörter bearbeiten</string>
     <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
-    <string name="menu_select">Text auswählen</string>
-    <string name="menu_lookup">Text nachschlagen</string>
     <string name="menu_search">In %1$s nachschlagen</string>
     <string name="menu_mark_note">Notiz markieren</string>
     <string name="menu_unmark_note">Markierung entfernen</string>

@@ -22,19 +22,21 @@ import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 import java.util.*
 
-class CustomToolbarButton(var index: Int, private val prefix: String, private val suffix: String) {
+typealias ButtonText = String
+
+class CustomToolbarButton(var index: Int, var buttonText: ButtonText, private val prefix: String, private val suffix: String) {
     fun toFormatter(): Toolbar.TextFormatter {
         return TextWrapper(prefix, suffix)
     }
 
     companion object {
-        private const val KEEP_EMPTY_ENTRIES = -1
+        const val KEEP_EMPTY_ENTRIES = -1
         fun fromString(s: String?): CustomToolbarButton? {
             if (s == null || s.isEmpty()) {
                 return null
             }
             val fields = s.split(Consts.FIELD_SEPARATOR.toRegex(), KEEP_EMPTY_ENTRIES.coerceAtLeast(0)).toTypedArray()
-            if (fields.size != 3) {
+            if (fields.size != 4) {
                 return null
             }
             val index: Int = try {
@@ -43,7 +45,7 @@ class CustomToolbarButton(var index: Int, private val prefix: String, private va
                 Timber.w(e)
                 return null
             }
-            return CustomToolbarButton(index, fields[1], fields[2])
+            return CustomToolbarButton(index, fields[1], fields[2], fields[3])
         }
 
         @JvmStatic
@@ -66,7 +68,7 @@ class CustomToolbarButton(var index: Int, private val prefix: String, private va
         fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
             val ret = HashSetInit<String>(buttons.size)
             for (b in buttons) {
-                val values = arrayOf(b.index.toString(), b.prefix, b.suffix)
+                val values = arrayOf(b.index.toString(), b.buttonText, b.prefix, b.suffix)
                 for (i in values.indices) {
                     values[i] = values[i].replace(Consts.FIELD_SEPARATOR, "")
                 }

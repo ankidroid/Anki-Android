@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hallo!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Dies ist ein Anki-Karten-Stapel gesendet von <a href="%1$s">AnkiDroid</a>.
-        Versuchen Sie, es mit einer der verfügbaren <a href="%2$s">Anki-Distributionen</a> zu öffnen und ein einfaches und effizientes Lernen zu genießen!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Fehler beim Exportieren der APKG-Datei</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">Einige verwandte oder aufgeschobene Karten wurden bis morgen verzögert</string>
     <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
-    <string name="lookup_hint">Tippen Sie nach Kopieren des Texts irgendwo auf die Karteikarte, um das Suchsymbol anzuzeigen</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s Sekunde</item>
@@ -269,7 +270,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
     <string name="cloze_sample_text">Dies ist eine {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Beispiel</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- in options menu & Navigation Drawer -->
@@ -332,6 +333,7 @@
     <string name="format_font_size">Schriftgröße ändern</string>
     <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
     <string name="insert_cloze">Auslassung einfügen</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
     <string name="scoped_storage_postpone">Aufschieben</string>
     <string name="scoped_storage_migrate">Daten verschieben</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

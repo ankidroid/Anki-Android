@@ -97,6 +97,7 @@
     <string name="sync_media_find">Söker efter ändrade media...</string>
     <string name="sync_media_no_changes">Inga ändringar i mediafiler</string>
     <string name="sync_media_success">Media har synkroniserats</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d mediaförändringar att ladda upp</string>
     <string name="sync_media_downloaded_count">%d mediafiler nedladdade</string>
     <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>

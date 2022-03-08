@@ -97,6 +97,7 @@
     <string name="sync_media_find">Trovado de ŝanĝitaj aŭdvidaĵoj&#8230;</string>
     <string name="sync_media_no_changes">Neniuj ŝanĝoj al aŭdvidaĵaj dosieroj</string>
     <string name="sync_media_success">Aŭdvidaĵoj estas samtempigitaj</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">%d aŭdvidaĵaj ŝanĝoj por alŝuti</string>
     <string name="sync_media_downloaded_count">%d aŭdvidaĵaj dosieroj elŝutitaj</string>
     <string name="sync_sanity_failed">Post samtempigado, la kolekto estis nekonsekvenca stato. Por ripari la problemon, AnkiDroid devigos plenan samtempigadon. Elektu, kiun version vi volas teni.</string>

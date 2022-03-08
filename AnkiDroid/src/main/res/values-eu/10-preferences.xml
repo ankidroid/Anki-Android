@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
-    <string name="dictionary" maxLength="41">Lookup dictionary</string>
     <string name="reset_languages" maxLength="41">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Goia</item>
         <item>Behea</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Gaitu keinuak</string>
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="gestures_volume_up" maxLength="41">Volume up</string>
-    <string name="gestures_volume_down" maxLength="41">Volume down</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>

@@ -32,6 +32,8 @@ import com.ichi2.utils.UiUtil;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
+
 public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
 
     /**
@@ -42,7 +44,7 @@ public class BasicAudioRecordingFieldController extends FieldControllerBase impl
 
 
     @Override
-    public void createUI(Context context, LinearLayout layout) {
+    public void createUI(@NonNull Context context, LinearLayout layout) {
         String origAudioPath = mField.getAudioPath();
 
         boolean bExist = false;

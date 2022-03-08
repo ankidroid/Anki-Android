@@ -119,17 +119,15 @@
     <string name="menu_flag_card_five">Pushti bayroq</string>
     <string name="menu_flag_card_six">Feruza bayroq</string>
     <string name="menu_flag_card_seven">Siyohrang bayroq</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
-    <string name="menu_select">Matnni tanlash</string>
-    <string name="menu_lookup">Matnni qidirish</string>
     <string name="menu_search">%1$s dan izlab k\'ring</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
     <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
-    <string name="new_deck">Create deck</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="night_mode">Night mode</string>
+    <string name="new_deck">Paluba yaratish</string>
+    <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
+    <string name="night_mode">Tungi rejim</string>
     <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,10 +150,10 @@
     <string name="time_quantity_months">%.1f oy</string>
     <string name="time_quantity_years">%.1f y</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Siljiydigan palubani qayta qurish</string>
     <string name="rebuild_cram_label">Qayta qurish</string>
     <string name="empty_cram_label">Bo\'sh</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>

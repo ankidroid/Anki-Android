@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Šířka tahu</string>
     <string name="use_input_tag" maxLength="41">Napište odpověď do karty</string>
     <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
-    <string name="dictionary" maxLength="41">Slovník</string>
     <string name="reset_languages" maxLength="41">Obnovit jazyky</string>
     <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro převod textu na řeč a slovníky) pro všechny balíčky</string>
     <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>
         <item>Dole</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Povolit gesta</string>
     <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorovat dotyková gesta na odkazech</string>
-    <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Klepnutí vlevo dole</string>
     <string name="gestures_corner_tap_bottom_center">Klepnutí dole uprostřed</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Klepnutí vpravo dole</string>
-    <string name="gestures_volume_up" maxLength="41">Hlasitost nahoru</string>
-    <string name="gestures_volume_down" maxLength="41">Hlasitost dolů</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Použít také kanji/katakana, emoji/kao-moji tlačítka pro posouvání</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s“</string>

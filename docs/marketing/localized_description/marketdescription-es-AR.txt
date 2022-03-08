@@ -25,7 +25,6 @@ Añada material a través de la aplicación de escritorio Anki o directamente a 
 • explorador de tarjetas
 • disposición para tablet
 • importación de archivos de colecciones existentes (vía Anki Desktop)
-• integración de diccionarios (ColorDict, GoldenDict, Leo.org, Aedict, y otros muchos diccionarios en línea)
 • añadir tarjetas desde otras aplicaciones como diccionarios
 • soporte de fuentes personalizadas
 • sistema de copia de seguridad completa

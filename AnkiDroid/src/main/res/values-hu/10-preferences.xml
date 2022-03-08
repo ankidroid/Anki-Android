@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Ceruza vastagsága</string>
     <string name="use_input_tag" maxLength="41">Válasz begépelése</string>
     <string name="use_input_tag_summ">A kártyán megjelenő beviteli mezőbe kell begépelni a választ</string>
-    <string name="dictionary" maxLength="41">Szótár keresés</string>
     <string name="reset_languages" maxLength="41">Nyelvek visszaállítása</string>
     <string name="reset_languages_summ">Nyelvek visszaállítása (hangos olvasáshoz és szótárakhoz) az összes paklihoz</string>
     <string name="reset_languages_question">Állítsa vissza az összes nyelvi beállítást?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Oldal teteje</item>
         <item>Oldal alján</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Gesztusvezérlés engedélyezése</string>
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
-    <string name="gestures_allow_links" maxLength="41">Érintő gesztusok figyelmen kívül hagyása a linkeken</string>
-    <string name="gestures_allow_links_summary">Az érintő gesztusok nem lesznek feldolgozva ha egy link/segítség le van nyomva.</string>
     <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Érintés bal alul</string>
     <string name="gestures_corner_tap_bottom_center">Érintés alul középen</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Érintés jobb alul</string>
-    <string name="gestures_volume_up" maxLength="41">Hangerő fel</string>
-    <string name="gestures_volume_down" maxLength="41">Hangerő le</string>
     <string name="more_scrolling_buttons" maxLength="41">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Menü</string>

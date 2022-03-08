@@ -196,10 +196,12 @@
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
     <string name="export_successful">Su documentu “%s” est istadu esportadu. Lu cheres imbiare cun un\'àtera aplicatzione?</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Salude!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Custu est unu matzu de cartas mnemònicas de Anki imbiadu dae <a href="%1$s">AnkiDroid</a>.
-        Proa a l\'abèrrere impreende una de sas <a href="%2$s">distributziones de Anki</a> a disponimentu e gosa·ti un\'imparòngiu fàtzile e efitziente!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Faddina in s\'esportatzione de su documentu apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optziones</string>
@@ -216,7 +218,6 @@
     <string name="sched_has_buried">Unas cantas cartas curreladas o interradas sunt istadas rimbiadas a cras</string>
     <string name="tag_editor_add_feedback">Toca “%2$s” pro cunfirmare s\'annanta de “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Eticheta chi esistit “%1$s” seletzionada</string>
-    <string name="lookup_hint">A pustis de àere copiadu su testu toca in cale si siat tretu de sa carta pro ammustrare s\'icona de chirca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s segundu</item>
@@ -340,6 +341,7 @@
     <string name="format_font_size">Muda sa mannària de sos caràteres</string>
     <string name="insert_mathjax">Inserta un\'ecuatzione MathJax</string>
     <string name="insert_cloze">Inserta un\'iscantzellamentu cloze</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML in antis de s\'ischerta</string>
     <string name="after_text">HTML a pustis de s\'ischerta</string>
     <string name="add_toolbar_item">Crea un\'elementu de sa barra de trastes</string>
@@ -401,4 +403,5 @@
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

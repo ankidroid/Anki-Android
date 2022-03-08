@@ -55,8 +55,8 @@
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_gestures_summ">よく行う操作を、タップやスワイプをするだけで手軽に行えるようになります</string>
     <string name="pref_cat_actions" maxLength="41">アクション</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
+    <string name="pref_cat_controls" maxLength="41">コント ローラー</string>
+    <string name="pref_cat_controls_summ">外部デバイス（キーボードやゲームパッド）のキーやボタンに操作を割り当てます</string>
     <string name="pref_cat_advanced" maxLength="41">その他</string>
     <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
     <string name="pref_cat_performance" maxLength="41">パフォーマンス</string>
@@ -68,14 +68,13 @@
     <string name="whiteboard_stroke_width" maxLength="41">線の太さ</string>
     <string name="use_input_tag" maxLength="41">カード内にキーボード入力で解答する</string>
     <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
-    <string name="dictionary" maxLength="41">検索辞書</string>
     <string name="reset_languages" maxLength="41">言語設定をリセット</string>
     <string name="reset_languages_summ">全てのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
     <string name="reset_languages_question">言語の割り当てをリセットしますか？</string>
     <string name="reset_confirmation">全ての状態をリセット</string>
     <string name="card_zoom" maxLength="41">カードの拡大・縮小</string>
     <string name="image_zoom" maxLength="41">画像の拡大・縮小</string>
-    <string name="button_size" maxLength="41">解答表示ボタン・解答ボタンのサイズ</string>
+    <string name="button_size" maxLength="41">解答表示ボタン・回答ボタンのサイズ</string>
     <string name="card_browser_font_size" maxLength="41">ブラウザ用フォントサイズ</string>
     <string name="card_browser_hide_media" maxLength="41">ブラウザでファイル名も表示</string>
     <string name="card_browser_hide_media_summary">ブラウザのカード一覧画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示する</string>
@@ -89,15 +88,14 @@
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>
         <item>カードの下側</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">ジェスチャーを有効にする</string>
     <string name="gestures_summ">解答やカード編集などの操作にジェスチャーを割り当てます</string>
-    <string name="gestures_allow_links" maxLength="41">リンク上ではタップジェスチャー無効</string>
-    <string name="gestures_allow_links_summary">リンク用やヒント表示用の文字列・画像をタップした場合は、タップジェスチャーに割り当てたアクションを実行せず、単にリンク先やヒントを表示します</string>
     <string name="gestures_corner_touch" maxLength="41">タップを９種類にする</string>
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">全画面ナビゲーションドロワー</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">画面上の任意の場所から右にスワイプしたときにナビゲーションドロワーを開きます</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">下部左側をタップ</string>
     <string name="gestures_corner_tap_bottom_center">下部中央をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">下部右側をタップ</string>
-    <string name="gestures_volume_up" maxLength="41">音量アップボタン</string>
-    <string name="gestures_volume_down" maxLength="41">音量ダウンボタン</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>
@@ -151,11 +147,11 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振動でも通知</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LEDランプ点滅でも通知</string>
     <string name="timeout_answer_text" maxLength="41">解答を自動的に表示</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">表示時間経過後の自動回答</string>
     <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します。</string>
     <string name="timeout_answer_seconds" maxLength="41">解答を表示するまでの時間</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
-    <string name="timeout_question_seconds" maxLength="41">次の質問までの時間</string>
+    <string name="timeout_question_seconds" maxLength="41">解答を表示する時間</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
@@ -168,11 +164,11 @@
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップ時間間隔 (ミリ秒)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、回答ボタンの誤タップを防ぎます</string>
     <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons" maxLength="41">大きな回答ボタンを表示</string>
+    <string name="show_large_answer_buttons_summ">回答ボタンを２行２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
@@ -187,8 +183,8 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">真夜中</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">午後 11:00</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">午前 0 時</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">午後11時</string>
     <string name="sched_v2" maxLength="41">V2 scheduler</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">確認</string>
@@ -210,8 +206,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
     <string name="html_javascript_debugging_summ">リモートの WebView 接続を有効にし、カードの HTML を AnkiDroid ディレクトリに保存します</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">PNG形式でクリップボード画像を貼り付け</string>
+    <string name="paste_as_png_summary">デフォルトでは、AnkiはJPGファイルとしてクリップボードに画像を貼り付けてディスク領域を節約します。 このオプションを使用すると、代わりに PNGファイルとして画像を貼り付けることができます。</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
@@ -233,7 +229,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
     <string name="custom_sync_server_media_url_invalid">メディア同期のためのURLが無効です</string>
     <!-- Key Bindings -->
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="controls_main_category" maxLength="41">操作の割り当て</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">オプショングループの設定内容を変更すると、同じオプショングループを使用している他のデッキにも影響が及びます。現在のデッキについてのみオプショングループの設定内容を変更したい場合は、まず新規のオプショングループを追加してください（[オプショングループの管理]＞[追加]）。</string>
     <string name="studyoptions_limit_select_tags">タグを選択</string>

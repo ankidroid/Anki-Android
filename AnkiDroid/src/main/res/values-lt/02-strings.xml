@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Išsaugoti „Anki“ paketo nepavyko</string>
     <string name="export_successful">Failas „%s“ buvo eksportuotas. Ar norite jį siųsti kita programa?</string>
     <string name="export_email_subject">Eksportuota „AnkiDroid“ kortelių: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Eksportuoti apkg failo nepavyko</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Parinktys</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Kai kurios susijusios arba paslėptos kortelės buvo nukeltos rytdienai</string>
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
-    <string name="lookup_hint">Nukopijavę tekstą, paspauskite ant bet kurios kortelės vietos, kad išvystumėte paieškos piktogramą</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s sekundė</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

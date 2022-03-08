@@ -45,7 +45,7 @@ import static org.hamcrest.Matchers.is;
  * ... pp(dialect.lineterminator)     #'\r\n'
  * ... iter = csv.reader([input], dialect = dialect)
  * ... for r in iter:
- * ... 	pp(r)
+ * ...     pp(r)
  * ['John "Da Man"', 'Rep', '120 Fake St.', 'Falsey', ' NJ', '00000']
  */
 @KotlinCleanup("fix the dependency to work under any Java version")

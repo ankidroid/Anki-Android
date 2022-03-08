@@ -25,7 +25,6 @@ Lisää materiaalia työpöytäsovelluksen (Anki) kautta tai suoraan AnkiDroidis
 • korttiselain
 • tablet näkymä
 • olemassa olevien kokoelmien tuominen (Anki-työpöytäsovelluksesta)
-• sanakirjatuki (ColorDict, GoldenDict, Leo.org, Aedict, diverse)
 • lisää kortteja (Intent) muista sovelluksissa kuten sanakirjoista
 • tuki omien kirjasinten käyttöön
 • tuki varmuuskopioille

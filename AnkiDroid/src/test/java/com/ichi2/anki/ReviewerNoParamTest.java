@@ -288,7 +288,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
     private void setGestureSetting(boolean value) {
         Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
-        settings.putBoolean("gestures", value);
+        settings.putBoolean(GestureProcessor.PREF_KEY, value);
         settings.apply();
     }
 

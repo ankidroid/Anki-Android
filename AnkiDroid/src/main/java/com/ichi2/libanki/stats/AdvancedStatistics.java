@@ -580,11 +580,11 @@ public class AdvancedStatistics {
 
         public void current(Card card) {
             card.setAll(mCur.getLong(0),                                             //Id
-                    mCur.getInt(5) == 0 ? 0 : mCur.getInt(2),  		                //reps = 0 ? 0 : card interval
-                    mCur.getInt(3) > 0 ? mCur.getInt(3) :  mDeck.getInitialFactor(),   //factor
-                    Math.max(mCur.getInt(1) - mToday, 0),                             //due
-                    1,                                                              //correct
-                    -1                                                              //lastreview
+                    mCur.getInt(5) == 0 ? 0 : mCur.getInt(2),                        //reps = 0 ? 0 : card interval
+                    mCur.getInt(3) > 0 ? mCur.getInt(3) :  mDeck.getInitialFactor(), //factor
+                    Math.max(mCur.getInt(1) - mToday, 0),                            //due
+                    1,                                                               //correct
+                    -1                                                               //lastreview
                     );
         }
 
@@ -614,9 +614,9 @@ public class AdvancedStatistics {
         private double[][] mProbabilitiesCumulative;
 
         //# Prior that half of new cards are answered correctly
-        private final int[] mPriorNew = {5, 0, 5, 0};		//half of new cards are answered correctly
-        private final int[] mPriorYoung = {1, 0, 9, 0};	//90% of young cards get "good" response
-        private final int[] mPriorMature = {1, 0, 9, 0};	//90% of mature cards get "good" response
+        private final int[] mPriorNew = {5, 0, 5, 0};        //half of new cards are answered correctly
+        private final int[] mPriorYoung = {1, 0, 9, 0};    //90% of young cards get "good" response
+        private final int[] mPriorMature = {1, 0, 9, 0};    //90% of mature cards get "good" response
 
 
         //TODO: should we determine these per deck or over decks?
@@ -626,18 +626,18 @@ public class AdvancedStatistics {
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
-                        +   "0 as hard, "	//Doesn't occur in query_new
-                        +	  "sum(case when ease=2 then 1 else 0 end) as good, "
-                        +	  "sum(case when ease=3 then 1 else 0 end) as easy "
+                        +   "0 as hard, "    //Doesn't occur in query_new
+                        +      "sum(case when ease=2 then 1 else 0 end) as good, "
+                        +      "sum(case when ease=3 then 1 else 0 end) as easy "
                         + "from revlog ";
 
         private static final String queryBaseYoungMature =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
-                        +   "sum(case when ease=2 then 1 else 0 end) as hard, "	//Doesn't occur in query_new
-                        +	  "sum(case when ease=3 then 1 else 0 end) as good, "
-                        +	  "sum(case when ease=4 then 1 else 0 end) as easy "
+                        +   "sum(case when ease=2 then 1 else 0 end) as hard, "    //Doesn't occur in query_new
+                        +      "sum(case when ease=3 then 1 else 0 end) as good, "
+                        +      "sum(case when ease=4 then 1 else 0 end) as easy "
                         + "from revlog ";
 
         private static final String queryNew =
@@ -858,7 +858,7 @@ public class AdvancedStatistics {
 
         public int simulateNewCard(Deck deck) {
             mNAddedToday++;
-            int tElapsed = mTAdd;	//differs from online
+            int tElapsed = mTAdd;    //differs from online
             if (mNAddedToday >= deck.getNewPerDay()) {
                 mTAdd++;
                 mNAddedToday = 0;

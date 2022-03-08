@@ -25,7 +25,6 @@ lavagna
 • navigadore de cartas
 • dispositzione pro tauleddas
 • importa documentos de colletziones chi esistint giai (pro mèdiu de Anki Desktop)
-• integratzione cun sos ditzionàrios (ColorDict, GoldenDict, Leo.org, Aedict, ditzionàrios web diferentes)
 • annanghe cartas partende dae àteras aplicatziones che a sos ditzionàrios
 • suportu pro caràteres personalizados
 sistema cumpletu de còpia de seguresa

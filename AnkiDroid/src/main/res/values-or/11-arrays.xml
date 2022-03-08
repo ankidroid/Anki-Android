@@ -92,7 +92,7 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">କିଛି କର ନାହିଁ</string>
+    <string name="gesture_no_action">କିଛି କରନ୍ତୁନି</string>
     <string name="gesture_answer_1">ଉତ୍ତର ବଟନ୍ ୧</string>
     <string name="gesture_answer_2">ଉତ୍ତର ବଟନ୍ ୨</string>
     <string name="gesture_answer_3">ଉତ୍ତର ବଟନ୍ ୩</string>
@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">ସୁପାରିଶିତ ଉତ୍ତର (ସବୁଜ)</string>
     <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
     <string name="gesture_tag_note">ନୋଟ୍ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
-    <string name="gesture_lookup">ଅଭିବ୍ୟକ୍ତି ଦୃଷ୍ଟିପାତ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
@@ -113,7 +112,7 @@
     <string name="gesture_flag_remove">ପତାକା ହଟାନ୍ତୁ</string>
     <string name="gesture_page_up">ଉପର ପୃଷ୍ଠା</string>
     <string name="gesture_page_down">ତଳ ପୃଷ୍ଠା</string>
-    <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ ଏବଂ ସିଙ୍କ୍ କରନ୍ତୁ</string>
+    <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରି ସିଙ୍କ୍ କରନ୍ତୁ</string>
     <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରନ୍ତୁ</string>
     <string name="record_voice">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>
     <string name="replay_voice">ସ୍ୱର ପୁନର୍ବାର ଚଲାନ୍ତୁ</string>

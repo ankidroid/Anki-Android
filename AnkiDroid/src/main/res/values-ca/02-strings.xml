@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
     <string name="export_successful">L\'arxiu \"%s\" ha estat importat. Vols enviar-lo amb una altra applicació?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Error en exportar l\'arxiu apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">Algunes cartes relacionades o enterrades es van retardar fins demà.</string>
     <string name="tag_editor_add_feedback">Prem \"%2$s\" per confirmar afegir \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
-    <string name="lookup_hint">Després de copiar el text, prem a qualsevol lloc en la carta per mostrar la icona de cerca</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s segon</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">Canvia la mida de la lletra</string>
     <string name="insert_mathjax">Insereix equació MathJax</string>
     <string name="insert_cloze">Insertar supressió parcial</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML abans de la selecció</string>
     <string name="after_text">HTML després de la selecció</string>
     <string name="add_toolbar_item">Crear element de la barra d\'eines</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

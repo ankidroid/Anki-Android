@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Larĝo de streko</string>
     <string name="use_input_tag" maxLength="41">Enigi respondon al karto</string>
     <string name="use_input_tag_summ">Uzi tekstan enigan kampon en la karto por enigi respondon</string>
-    <string name="dictionary" maxLength="41">Vortaro</string>
     <string name="reset_languages" maxLength="41">Restarigi lingvojn</string>
     <string name="reset_languages_summ">Restarigi lingvajn alĝustigojn (por parolsinteziloj kaj vortaroj) por ĉiuj kartaroj</string>
     <string name="reset_languages_question">Ĉu forviŝi ĉiujn lingvajn alĝustigojn?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
         <item>Sube</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Enŝalti gestojn</string>
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignori gestojn sur ligiloj</string>
-    <string name="gestures_allow_links_summary">Tuŝaj gestoj ne funkcios kiam ligilo ĉeestos.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punkta frapeto</string>
     <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Naviga tirmenuo sur plenekrano</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_center">Frapeti suban mezon</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
-    <string name="gestures_volume_up" maxLength="41">Pliigi sonfortecon</string>
-    <string name="gestures_volume_down" maxLength="41">Malpliigi sonfortecon</string>
     <string name="more_scrolling_buttons" maxLength="41">Elektronika legilo</string>
     <string name="more_scrolling_buttons_summ">Ankaŭ uzi butonojn de kanji/katakana aŭ emoĝioj por rulumi</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>

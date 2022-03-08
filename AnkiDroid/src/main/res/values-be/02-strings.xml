@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_successful">Файл \"%s\" быў экспартаваны. Адправіць яго з дапамогай іншай праграмы?</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Вітаем!
+    <string name="export_email_text"><![CDATA[        Добры дзень!
         <br/><br/>
-        Гэта калода картак была адпраўленая з праграмы <a href="%1$s">AnkiDroid</a>.
-        Вы можаце адкрыць яе з дапамогай праграмы <a href="%2$s">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
+        Гэта калода картак Anki была адпраўлена з праграмы AnkiDroid[1].
+        Паспрабуйце адкрыць яе з дапамогай адной з версій праграмы Anki[2] і атрымаць асалоду ад лёгкага і эфектыўнага навучання!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Памылка экспарту файла apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Некаторыя звязаныя або адкладзеныя карткі былі перанесеныя на заўтра</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
-    <string name="lookup_hint">Пасля капіявання тэксту, націсніце ў любым месцы карткі, каб паказаць значок пошуку</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Змяніць памер шрыфту</string>
     <string name="insert_mathjax">Уставіць ураўненне MathJax</string>
     <string name="insert_cloze">Уставіць заданне з пропускамі</string>
+    <string name="note_editor_toolbar_icon">Тэкст кнопкі</string>
     <string name="before_text">HTML перад вылучэннем</string>
     <string name="after_text">HTML пасля вылучэння</string>
     <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Падрабязней</string>
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

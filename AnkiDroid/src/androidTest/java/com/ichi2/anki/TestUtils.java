@@ -24,7 +24,6 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 
 import androidx.test.espresso.UiController;
@@ -41,7 +40,7 @@ public class TestUtils {
      */
     public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         return new TypeSafeMatcher<View>() {
-            int currentIndex = 0;
+            int mCurrentIndex = 0;
 
 
             @Override
@@ -54,7 +53,7 @@ public class TestUtils {
 
             @Override
             public boolean matchesSafely(View view) {
-                return matcher.matches(view) && currentIndex++ == index;
+                return matcher.matches(view) && mCurrentIndex++ == index;
             }
         };
     }

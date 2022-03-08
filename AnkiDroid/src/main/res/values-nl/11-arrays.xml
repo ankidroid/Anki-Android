@@ -100,7 +100,6 @@
     <string name="gesture_answer_green">Aanbevolen antwoord (groen)</string>
     <string name="gesture_answer_better_recommended">Antwoord beter dan aangeraden</string>
     <string name="gesture_tag_note">Tagnaam</string>
-    <string name="gesture_lookup">Uitdrukking opzoeken</string>
     <string name="gesture_play">Media afspelen</string>
     <string name="gesture_abort_learning">Leren afbreken</string>
     <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>

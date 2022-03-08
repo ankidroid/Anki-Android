@@ -188,10 +188,12 @@
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
     <string name="export_successful">“%s” ଫାଇଲ୍ ରପ୍ତାନି ହୋଇଥିଲା। ଆପଣ ଏହାକୁ ଅନ୍ୟ ଏକ ଆପ୍ ସହିତ ପଠାଇବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
-    <string name="export_email_text_new"><![CDATA[        ନମସ୍କାର!
+    <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
         <br/><br/>
-        ଏହା <a href="%1$s">AnkiDroid</a> ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ତାସଖଣ୍ଡ।
-        ଉପଲବ୍ଧ <a href="%2$s">Anki distributions</a> ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଓ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!
+        ଏହା AnkiDroid[1] ରୁ ପଠାଯାଇଥିବା ଏକ Anki flashcards ଡେକ୍।
+        ଉପଲବ୍ଧ Anki distributions[2] ମଧ୍ୟରୁ ଗୋଟିଏ ବ୍ୟବହାର କରି ଏହାକୁ ଖୋଲିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ ସହଜ ଓ ଦକ୍ଷ ଶିକ୍ଷା ଉପଭୋଗ କରନ୍ତୁ!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">apkg ଫାଇଲ୍ ରପ୍ତାନି କରିବାରେ ତ୍ରୁଟି</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ବିକଳ୍ପଗୁଡ଼ିକ</string>
@@ -208,7 +210,6 @@
     <string name="sched_has_buried">କିଛି ସମ୍ପୃକ୍ତ କିମ୍ବା ସ୍ଥଗିତ ପତ୍ରଗୁଡ଼ିକୁ ଆସନ୍ତାକାଲି ପର୍ଯ୍ୟନ୍ତ ବିଳମ୍ବ କରାହେଇଛି</string>
     <string name="tag_editor_add_feedback"> “%1$s” କୁ ଯୋଡ଼ିବା ପାଇଁ “%2$s” ଦବାନ୍ତୁ</string>
     <string name="tag_editor_add_feedback_existing">ସାମ୍ପ୍ରତିକ ଟ୍ୟାଗ “%1$s” ବଛାହେଲା</string>
-    <string name="lookup_hint">ଲେଖାକୁ କପି କଲା ପରେ, ସନ୍ଧାନ-ଚିହ୍ନ ଦେଖିବାକୁ ଫ୍ଲାସକାର୍ଡର ଯେକୌଣସି ଜାଗା ଟିପନ୍ତୁ</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s ସେକେଣ୍ଡ</item>
@@ -332,6 +333,7 @@
     <string name="format_font_size">ଫଣ୍ଟ ଆକାର ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="insert_mathjax">MathJax ସମୀକରଣ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="insert_cloze">କ୍ଲୋଜ୍ ବିଲୋପ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
     <string name="after_text">ଚୟନ ପରେ HTML</string>
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
@@ -391,4 +393,5 @@
     <string name="scoped_storage_learn_more">ଅଧିକ ଜାଣନ୍ତୁ</string>
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -68,7 +68,6 @@
     <string name="whiteboard_stroke_width" maxLength="41">Streckbredd</string>
     <string name="use_input_tag" maxLength="41">Skriv svar i kortet</string>
     <string name="use_input_tag_summ">Använd en textinmatningsruta i kortet för att skriva in svaret</string>
-    <string name="dictionary" maxLength="41">Ordbok</string>
     <string name="reset_languages" maxLength="41">Nollställ språk</string>
     <string name="reset_languages_summ">Återställ språk inställningar (för text till tal och orböcker) för alla kortlekar</string>
     <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
@@ -89,11 +88,10 @@
     <string-array name="answer_buttons_position_labels">
         <item>Högst upp</item>
         <item>Längst ned</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktivera gester</string>
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
-    <string name="gestures_allow_links" maxLength="41">Ignorera tryckgester på länkar</string>
-    <string name="gestures_allow_links_summary">Tryckgester kommer inte att bearbetas om en länk/ledtråd trycks in.</string>
     <string name="gestures_corner_touch" maxLength="41">9-punkters pekning</string>
     <string name="gestures_corner_touch_summary">Tillåt tryckgester i skärmhörnen</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Fullskärm navigationsmeny</string>
@@ -117,8 +115,6 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tryck längst ner till vänster</string>
     <string name="gestures_corner_tap_bottom_center">Tryck längst ned i mitten</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tryck längst ner till höger</string>
-    <string name="gestures_volume_up" maxLength="41">Höj volymen</string>
-    <string name="gestures_volume_down" maxLength="41">Sänk volymen</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Använd även Kanji/Katakana, Emoji/Kao-moji-knapparna för att scrolla</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Meny</string>

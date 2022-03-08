@@ -50,7 +50,7 @@
     <string name="studyoptions_due_today">今天到期:</string>
     <string name="studyoptions_new_total">新卡片數量:</string>
     <string name="studyoptions_total_cards">卡片總數:</string>
-    <string name="studyoptions_eta">估計時間(分鐘):</string>
+    <string name="studyoptions_eta">預計時間 (分鐘):</string>
     <string name="studyoptions_start">開始學習</string>
     <!-- DeckPicker.java -->
     <string name="expand">展開</string>
@@ -116,8 +116,6 @@
     <string name="menu_flag_card_seven">紫色標記</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
-    <string name="menu_select">選取文字</string>
-    <string name="menu_lookup">尋找文字</string>
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>

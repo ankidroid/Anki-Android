@@ -159,7 +159,7 @@
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
     <string name="import_log_failed_validate">Apkg 驗證失敗</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">無足夠空間用於匯入套件包。\n需求 - %1$s\n可用 - %2$s\n\n存在問題？請嘗試清除手機儲存空間。備選方案是利用同步功能，其使用空間量小於匯入。你也許可以在擁有更多空間的裝置上匯入套件包 (比如說 Anki 桌面版) 然後同步至此裝置。</string>
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
     <string name="import_error_unhandled_request">無法執行匯入請求</string>
@@ -185,10 +185,12 @@
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_successful">檔案 “%s” 匯出完畢，您想用其它應用程式發送它嗎？</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
-    <string name="export_email_text_new"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        你好！
         <br/><br/>
-        This is an Anki flashcards deck sent from <a href="%1$s">AnkiDroid</a>.
-        Try to open it using one of the available <a href="%2$s">Anki distributions</a> and enjoy easy and efficient learning!
+        這是從 AnkiDroid[1] 發送的 Anki 單字卡牌組。
+        使用任一 Anki 用戶端[2] 開啟，享受輕鬆高效的學習吧！<br/><br/>
+        [1]%1$s<br/>
+        [2]%2$s
         ]]></string>
     <string name="export_unsuccessful">匯出 Apkg 檔案時出錯</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
@@ -205,7 +207,6 @@
     <string name="sched_has_buried">相關或是被暫時隱藏的卡片會被延遲到明天。</string>
     <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
-    <string name="lookup_hint">在複製文字後，點擊 flashcard 之任意處來顯示搜尋圖示</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s 秒</item>
@@ -258,9 +259,9 @@
     <string name="choose_an_image">選擇圖像</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢復預設值</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="cloze_sample_text">這是一個 {{%1$s::演示}} 克漏字測驗。</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text">一個演示</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">請啟用全螢幕以進行用 JavaScript 展示導覽列的功能。</string>
@@ -319,6 +320,7 @@
     <string name="format_font_size">變更字型大小</string>
     <string name="insert_mathjax">插入 MathJax 方程式</string>
     <string name="insert_cloze">插入克漏字空格</string>
+    <string name="note_editor_toolbar_icon">按鈕文字</string>
     <string name="before_text">選取內容前的 HTML</string>
     <string name="after_text">選取內容後的 HTML</string>
     <string name="add_toolbar_item">建立工具列項目</string>
@@ -330,7 +332,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主畫面不允許 AnkiDroid 新增捷徑</string>
     <string name="create_shortcut_error">新增捷徑時發生錯誤：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">大寫句子</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">滾動工具列</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -364,18 +366,19 @@
     <string name="suspended_card">擱置之卡片</string>
     <string name="suspended_note">擱置之註記</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">固定欄位 %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
+    <string name="scoped_storage_title">儲存空間遷移</string>
+    <string name="scoped_storage_initial_message">AnkiDroid 必須移動其資料以滿足新的 Android 隱私規則
+ \n\n如果您在遷移前解除安裝 AnkiDroid，您的資料將會丟失
+ \n\n請盡快完成遷移</string>
+    <string name="scoped_storage_terms_message">遷移作業將在背景運作。 遷移時您將無法同步\n\n預計持續時間: %s</string>
+    <string name="scoped_storage_term_1">我已備份我的資料</string>
+    <string name="scoped_storage_term_1_ankiweb">我已在最近與 AnkiWeb 進行了同步</string>
+    <string name="scoped_storage_term_2">我將不會在資料移動時解除安裝應用程式</string>
+    <string name="scoped_storage_select_all_terms">請同意全部項目以繼續</string>
     <string name="scoped_storage_learn_more">瞭解更多</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_postpone">延後</string>
+    <string name="scoped_storage_migrate">遷移</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -120,8 +120,6 @@
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
-    <string name="menu_select">Ընտրել գրվածքը</string>
-    <string name="menu_lookup">Lookup text</string>
     <string name="menu_search">Որոնում %1$s-ում</string>
     <string name="menu_mark_note">Նշել գրառումը</string>
     <string name="menu_unmark_note">Ապանշել գրառումը</string>

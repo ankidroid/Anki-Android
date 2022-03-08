@@ -20,7 +20,9 @@ import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.test.annotation.UiThreadTest;
 import androidx.test.rule.GrantPermissionRule;
 
@@ -41,6 +43,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
+@RequiresApi(Build.VERSION_CODES.O) // getNotificationChannels, NotificationChannel.getId
 public class NotificationChannelTest extends InstrumentedTest {
 
     @Rule

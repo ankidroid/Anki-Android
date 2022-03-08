@@ -100,6 +100,7 @@
 сравниваются&#8230;</string>
     <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
     <string name="sync_media_success">Медиафайлы сихронизированы</string>
+    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">Будут выгружены %d изменённых медиафайлов</string>
     <string name="sync_media_downloaded_count">%d медиафайлов загружено</string>
     <string name="sync_sanity_failed">После синхронизации коллекция в несогласованном состоянии. Будет запущена полная синхронизации. Выберите версию коллекции, которая останется.</string>

@@ -194,10 +194,12 @@
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_successful">Файл “%s” було експортовано. Ви хочете відправити його до іншої програми?</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
-    <string name="export_email_text_new"><![CDATA[        Привіт!
+    <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        Ця колода карток надіслана з <a href="%1$s">AnkiDroid</a>.
-        Спробуйте відкрити в одній зсумісних <a href="%2$s">Anki програм</a>, щоб легко та із задоволенням вчити!
+        This is an Anki flashcards deck sent from AnkiDroid[1].
+        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
@@ -214,7 +216,6 @@
     <string name="sched_has_buried">Деякі пов\'язані або відкладені картки були перенесені на завтра</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
-    <string name="lookup_hint">Після копіювання тексту, торкніться будь-де на картці, аби показати піктограму пошуку</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -358,6 +359,7 @@
     <string name="format_font_size">Змінити розмір шрифту</string>
     <string name="insert_mathjax">Вставити рівняння MathJax</string>
     <string name="insert_cloze">Вставити місце для доповнення</string>
+    <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>
@@ -417,4 +419,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600142
-        versionName="2.16alpha42"
+        versionCode=21600148
+        versionName="2.16alpha48"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -238,8 +238,21 @@ task installGitHook(type: Copy) {
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
+/**
+Kotlin allows concrete function implementations inside interfaces.
+For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
+'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
+
+https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
+
+    and we used "all" because we don't have downstream consumers
+    https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+ */
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions {
+        allWarningsAsErrors = true
+        freeCompilerArgs = ['-Xjvm-default=all'] 
+    }
 }
 
 //Workaround for: https://github.com/pinterest/ktlint/issues/1216
@@ -313,6 +326,7 @@ dependencies {
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
+    implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.arcao:slf4j-timber:3.1'
@@ -341,6 +355,8 @@ dependencies {
     testImplementation 'androidx.test:core:1.4.0'
     testImplementation 'androidx.test.ext:junit:1.1.3'
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
     debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 

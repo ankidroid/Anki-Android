@@ -25,7 +25,6 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 • kártya böngésző
 • tabletre optimalizált elrendezés
 • importáld már meglévő gyűjteményed (Anki Desktoppal)
-• szótár-integráció (ColorDict, GoldenDict, Leo.org, Aedict, különböző webes szótárak)
 • kártyák hozzáadása más programokból (pl. szótárak)
 • egyéni betűtípus támogatás
 • teljes mentési rendszer

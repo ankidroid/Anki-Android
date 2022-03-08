@@ -64,8 +64,8 @@
     <string name="hide_whiteboard">隐藏白板</string>
     <string name="clear_whiteboard">清空白板</string>
     <string name="replay_audio">重新播放</string>
-    <string name="leech_suspend_notification">卡片被标记为记忆难点并暂停复习</string>
-    <string name="leech_notification">卡片被标记为记忆难点</string>
+    <string name="leech_suspend_notification">卡片被标记为“水蛭”并暂停复习</string>
+    <string name="leech_notification">卡片被标记为“水蛭”</string>
     <string name="corrupt_font">字体文件 %s 已损坏</string>
     <string name="webview_crash_unknown">未知错误</string>
     <string name="webview_crash_unknwon_detailed">这是由 WebView 内部错误导致的</string>
@@ -185,10 +185,12 @@
     <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
     <string name="export_successful">文件 “%s” 导出完毕，您想用其他 app 发送它吗？</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
-    <string name="export_email_text_new"><![CDATA[        你好！        
+    <string name="export_email_text"><![CDATA[        嗨！
         <br/><br/>
-        这是一个从 <a href="%1$s"><a href="%1$s"><a href="%1$s">AnkiDroid</a>发来的 Anki 记忆牌组。
-        试着用可用的<a href="%2$s">Anki 发行版</a>打开它，享受轻松高效的学习！
+        这是从 <br/>AnkiDroid [1]发送的 Anki 记忆牌组。
+        使用任一 Anki 客户端 [2]打开它，享受轻松高效的学习吧！<br/><br/>
+        [1] %1$s<br/>
+        [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
@@ -205,7 +207,6 @@
     <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
     <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
     <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
-    <string name="lookup_hint">复制文字后，点击卡片任意处以显示搜索图标</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="other">%s秒</item>
@@ -319,6 +320,7 @@
     <string name="format_font_size">更改字体大小</string>
     <string name="insert_mathjax">插入 MathJax 方程</string>
     <string name="insert_cloze">插入完形填空</string>
+    <string name="note_editor_toolbar_icon">按钮文本</string>
     <string name="before_text">选择前的 HTML</string>
     <string name="after_text">选择后的 HTML</string>
     <string name="add_toolbar_item">创建工具栏项</string>
@@ -378,4 +380,5 @@
     <string name="scoped_storage_learn_more">了解更多</string>
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

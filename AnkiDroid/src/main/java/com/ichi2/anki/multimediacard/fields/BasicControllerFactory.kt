@@ -25,7 +25,7 @@ class BasicControllerFactory private constructor() : IControllerFactory {
             EFieldType.TEXT -> BasicTextFieldController()
             EFieldType.IMAGE -> BasicImageFieldController()
             EFieldType.AUDIO_RECORDING -> BasicAudioRecordingFieldController()
-            EFieldType.AUDIO_CLIP -> BasicAudioClipFieldController()
+            EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
             else -> null
         }
     }
