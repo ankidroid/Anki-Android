@@ -178,6 +178,7 @@
     <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Lỗi giải mã dữ liệu từ thẻ</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Không xử lý được các tùy chọn bộ thẻ: %s</string>
     <!-- Database Errors-->

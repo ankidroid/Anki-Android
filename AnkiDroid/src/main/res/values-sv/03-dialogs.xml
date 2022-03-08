@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Kunde inte ändra kortlek</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fel vid avkodning av data från kortet</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Misslyckades med att bearbeta kortleksalternativ: %s</string>
     <!-- Database Errors-->

@@ -42,8 +42,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Çekmeceyi Aç</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Çekmeceyi Kapat</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Çekmeceyi aç</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Çekmeceyi kapat</string>
     <string name="CardEditorCardDeck">Kart destesi:</string>
     <string name="CardEditorNoteDeck">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
@@ -93,7 +93,7 @@
         <item>Kolaylık</item>
         <item>Vade</item>
         <item>Kart Değiştirildi</item>
-        <item>Oluşturuldu</item>
+        <item>Oluşturulma</item>
         <item>Değiştirilmiş notlar</item>
     </string-array>
     <!-- Custom study options -->
@@ -150,7 +150,7 @@
     <string name="empty_cards">Boş kartlar</string>
     <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
     <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
-    <string name="unknown_type_field_warning">Yanıtı yazın: bilinmeyen alan %s</string>
+    <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
     <string name="show_hint">%s göster</string>
     <string name="info_rate">AnkiDroid\'e Oy Ver</string>
@@ -393,5 +393,5 @@
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
     <string name="scoped_storage_postpone">Ertele</string>
     <string name="scoped_storage_migrate">Taşı</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
 </resources>

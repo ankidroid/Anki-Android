@@ -208,6 +208,7 @@ Scrios gach carta as %1$s? Tá cartaí %2$d aige.</item>
     <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->

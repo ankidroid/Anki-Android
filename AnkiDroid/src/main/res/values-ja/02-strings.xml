@@ -155,7 +155,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
-    <string name="import_log_no_apkg">これは読み込み可能なAnkiパーッケージファイル（*.apkg）ではありません</string>
+    <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
@@ -174,7 +174,7 @@
     <string name="import_interrupted">インポートが中断されました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
     <string name="export_include_media">メディアファイルを含める</string>
-    <string name="confirm_apkg_export">全デッキのデータの控え（Ankiパッケージ）を作成します。よろしいですか？</string>
+    <string name="confirm_apkg_export">コレクション（全デッキ）のデータの控え（Ankiパッケージ）を作成しますか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
     <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
@@ -348,11 +348,11 @@
     <string name="cancel_download">ダウンロードをキャンセル</string>
     <string name="cancel_download_question_title">ダウンロードをキャンセルしますか？</string>
     <string name="downloading_file">%s をダウンロード中</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="import_deck">デッキをインポート</string>
+    <string name="something_wrong">問題が発生しました。もう一度やり直してください。</string>
     <string name="download_failed">ダウンロードに失敗しました</string>
     <string name="deck_download_progress_message">ダウンロード中は他のアプリを使用できます</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
     <!-- Importing -->

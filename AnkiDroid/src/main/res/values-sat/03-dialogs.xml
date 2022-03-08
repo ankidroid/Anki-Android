@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">ᱰᱮᱠ ᱵᱟᱭ ᱵᱚᱫᱚᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ᱠᱟᱰ ᱠᱷᱚᱱ ᱰᱟᱴᱟ ᱰᱤᱠᱚᱰᱤᱝ ᱦᱩᱰᱟᱜ</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">ᱰᱮᱠ ᱚᱯᱥᱚᱱ ᱰᱤᱜᱟᱹᱣ: %s</string>
     <!-- Database Errors-->

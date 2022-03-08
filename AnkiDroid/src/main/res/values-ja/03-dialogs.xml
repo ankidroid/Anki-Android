@@ -178,6 +178,7 @@
     <string name="card_browser_deck_change_error">デッキを変更できませんでした</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">カードからのデータのデコードエラー</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">デッキオプションの処理に失敗しました: %s</string>
     <!-- Database Errors-->
@@ -241,6 +242,6 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">デッキパッケージ (.apkg)</string>
+    <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
 </resources>

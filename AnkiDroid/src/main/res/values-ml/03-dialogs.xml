@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">ഡെക്ക് മാറ്റാൻ കഴിഞ്ഞില്ല</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">കാർഡിൽ നിന്ന് ഡാറ്റ ഡീകോഡ് ചെയ്യുന്നതിൽ പിശക്</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">ഡെക്ക് ഓപ്ഷനുകൾ പ്രോസസ്സ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:%s</string>
     <!-- Database Errors-->

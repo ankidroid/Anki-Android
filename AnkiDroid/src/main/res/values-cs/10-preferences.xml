@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>
         <item>Dole</item>
-        <item>None</item>
+        <item>Žádné</item>
     </string-array>
     <string name="gestures" maxLength="41">Povolit gesta</string>
     <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet.</string>

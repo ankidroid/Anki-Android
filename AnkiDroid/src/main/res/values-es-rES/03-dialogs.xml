@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">No se pudo cambiar el mazo</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error al decodificar datos de la tarjeta</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Error al procesar las opciones del mazo: %s</string>
     <!-- Database Errors-->

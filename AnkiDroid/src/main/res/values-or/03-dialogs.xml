@@ -121,7 +121,7 @@
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
-    <string name="dialog_ok">ଠିକ୍‌ ଅଛି</string>
+    <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
+    <string name="undo_succeeded">\"%s\" ପୂର୍ବବତ୍ କରାଗଲା</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
     <!-- Database Errors-->

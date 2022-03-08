@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Fiaskis pritrakti agordojn de kartaro: %s</string>
     <!-- Database Errors-->

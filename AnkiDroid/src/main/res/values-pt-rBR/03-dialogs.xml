@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Não foi possível mudar o baralho</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erro ao decodificar dados do card</string>
+    <string name="undo_succeeded">Desfeito \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Falha ao processar as opções do baralho: %s</string>
     <!-- Database Errors-->

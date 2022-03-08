@@ -178,6 +178,7 @@
     <string name="card_browser_deck_change_error">Tidak dapat mengubah dek</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Galat pendekodean data dari kartu</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Gagal memproses opsi dek: %s</string>
     <!-- Database Errors-->
