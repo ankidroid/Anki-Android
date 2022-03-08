@@ -37,7 +37,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
@@ -84,7 +83,6 @@ import java.util.*
 /**
  * Preferences dialog.
  */
-@KotlinCleanup("many auto-fixes suggested")
 class Preferences : AnkiActivity() {
     // Other variables
     @KotlinCleanup("we use string? as some keys were null")
@@ -150,7 +148,7 @@ class Preferences : AnkiActivity() {
     }
 
     @Suppress("deprecation") // startActivity
-    protected fun restartWithNewDeckPicker() {
+    fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
         CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed")
         val deckPicker = Intent(this, DeckPicker::class.java)
@@ -179,16 +177,14 @@ class Preferences : AnkiActivity() {
         for (i in 0 until screen.preferenceCount) {
             val preference = screen.getPreference(i)
             if (preference is PreferenceGroup) {
-                val preferenceGroup = preference
-                for (j in 0 until preferenceGroup.preferenceCount) {
-                    val nestedPreference = preferenceGroup.getPreference(j)
+                for (j in 0 until preference.preferenceCount) {
+                    val nestedPreference = preference.getPreference(j)
                     if (nestedPreference is PreferenceGroup) {
-                        val nestedPreferenceGroup = nestedPreference
-                        for (k in 0 until nestedPreferenceGroup.preferenceCount) {
-                            initPreference(nestedPreferenceGroup.getPreference(k))
+                        for (k in 0 until nestedPreference.preferenceCount) {
+                            initPreference(nestedPreference.getPreference(k))
                         }
                     } else {
-                        initPreference(preferenceGroup.getPreference(j))
+                        initPreference(preference.getPreference(j))
                     }
                 }
             } else {
@@ -199,7 +195,7 @@ class Preferences : AnkiActivity() {
 
     private fun initPreference(pref: Preference) {
         // Load stored values from Preferences which are stored in the Collection
-        if (Arrays.asList(*sCollectionPreferences).contains(pref.key)) {
+        if (sCollectionPreferences.contains(pref.key)) {
             val col = col
             if (col != null) {
                 try {
@@ -270,7 +266,7 @@ class Preferences : AnkiActivity() {
         listpref.summary = listpref.entry.toString()
     }
 
-    @KotlinCleanup("use when blocks; make value non-null")
+    @KotlinCleanup("make value non-null")
     private fun updateSummary(pref: Preference?) {
         if (pref == null || pref.key == null) {
             return
@@ -293,21 +289,14 @@ class Preferences : AnkiActivity() {
             }
         }
         // Get value text
-        val value: String?
-        value = try {
-            if (pref is ControlPreference) {
-                return
-            }
-            if (pref is NumberRangePreferenceCompat) {
-                Integer.toString(pref.getValue())
-            } else if (pref is SeekBarPreferenceCompat) {
-                Integer.toString(pref.value)
-            } else if (pref is ListPreference) {
-                pref.entry.toString()
-            } else if (pref is EditTextPreference) {
-                pref.text
-            } else {
-                return
+        val value: String? = try {
+            when (pref) {
+                is NumberRangePreferenceCompat -> pref.getValue().toString()
+                is SeekBarPreferenceCompat -> pref.value.toString()
+                is ListPreference -> pref.entry.toString()
+                is EditTextPreference -> pref.text
+                is ControlPreference -> return
+                else -> return
             }
         } catch (e: NullPointerException) {
             Timber.w(e)
@@ -316,19 +305,16 @@ class Preferences : AnkiActivity() {
         // Get summary text
         val oldSummary = mOriginalSummaries[pref.key]
         // Replace summary text with value according to some rules
-        if ("" == oldSummary) {
-            pref.summary = value
-        } else if ("" == value) {
-            pref.summary = oldSummary
-        } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
-            pref.summary = replaceStringIfNumeric(oldSummary, value)
-        } else {
-            pref.summary = replaceString(oldSummary, value)
+        pref.summary = when {
+            oldSummary == "" -> value
+            value == "" -> oldSummary
+            MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key -> replaceStringIfNumeric(oldSummary, value)
+            else -> replaceString(oldSummary, value)
         }
     }
 
     @KotlinCleanup("str & value: non-null")
-    private fun replaceString(str: String?, value: String?): String? {
+    private fun replaceString(str: String?, value: String?): String {
         return if (str!!.contains("XXX")) {
             str.replace("XXX", value!!)
         } else {
@@ -421,19 +407,14 @@ class Preferences : AnkiActivity() {
         @Suppress("deprecation") // setTargetFragment
         @KotlinCleanup("use when")
         override fun onDisplayPreferenceDialog(preference: Preference) {
-            var dialogFragment: DialogFragment? = null
-            if (preference is IncrementerNumberRangePreferenceCompat) {
-                dialogFragment = IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-            } else if (preference is NumberRangePreferenceCompat) {
-                dialogFragment = NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-            } else if (preference is ResetLanguageDialogPreference) {
-                dialogFragment = ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey())
-            } else if (preference is ConfirmationPreferenceCompat) {
-                dialogFragment = ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey())
-            } else if (preference is SeekBarPreferenceCompat) {
-                dialogFragment = SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
-            } else if (preference is ControlPreference) {
-                dialogFragment = ControlPreference.View.newInstance(preference.getKey())
+            val dialogFragment = when (preference) {
+                is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
+                is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
+                is ResetLanguageDialogPreference -> ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey())
+                is ConfirmationPreferenceCompat -> ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey())
+                is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
+                is ControlPreference -> ControlPreference.View.newInstance(preference.getKey())
+                else -> null
             }
 
             if (dialogFragment != null) {
@@ -550,10 +531,10 @@ class Preferences : AnkiActivity() {
                     NEW_TIMEZONE_HANDLING -> {
                         if (preferencesActivity!!.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
                             val sched = preferencesActivity.col.sched
-                            val was_enabled = sched._new_timezone_enabled()
-                            val is_enabled = (pref as CheckBoxPreference).isChecked
-                            if (was_enabled != is_enabled) {
-                                if (is_enabled) {
+                            val wasEnabled = sched._new_timezone_enabled()
+                            val isEnabled = (pref as CheckBoxPreference).isChecked
+                            if (wasEnabled != isEnabled) {
+                                if (isEnabled) {
                                     try {
                                         sched.set_creation_offset()
                                     } catch (e: BackendNotSupportedException) {
@@ -666,11 +647,11 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_general)
             val screen = preferenceScreen
             if (isRestrictedLearningDevice) {
-                val checkBoxPref_Vibrate = requirePreference<CheckBoxPreference>("widgetVibrate")
-                val checkBoxPref_Blink = requirePreference<CheckBoxPreference>("widgetBlink")
+                val checkBoxPrefVibrate = requirePreference<CheckBoxPreference>("widgetVibrate")
+                val checkBoxPrefBlink = requirePreference<CheckBoxPreference>("widgetBlink")
                 val category = requirePreference<PreferenceCategory>("category_general_notification_pref")
-                category.removePreference(checkBoxPref_Vibrate)
-                category.removePreference(checkBoxPref_Blink)
+                category.removePreference(checkBoxPrefVibrate)
+                category.removePreference(checkBoxPrefBlink)
             }
             // Build languages
             initializeLanguageDialog(screen)
@@ -1145,8 +1126,8 @@ class Preferences : AnkiActivity() {
             setTitle(R.string.custom_buttons)
             addPreferencesFromResource(R.xml.preferences_custom_buttons)
             // Reset toolbar button customizations
-            val reset_custom_buttons = requirePreference<Preference>("reset_custom_buttons")
-            reset_custom_buttons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
+            resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit()
                 edit.remove("customButtonUndo")
                 edit.remove("customButtonScheduleCard")
@@ -1361,7 +1342,7 @@ class Preferences : AnkiActivity() {
             }
         }
 
-        protected fun getSchedVer(col: Collection): Int {
+        fun getSchedVer(col: Collection): Int {
             val ver = col.schedVer()
             if (ver < 1 || ver > 2) {
                 Timber.w("Unknown scheduler version: %d", ver)
