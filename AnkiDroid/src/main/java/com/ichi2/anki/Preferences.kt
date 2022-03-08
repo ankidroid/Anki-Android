@@ -39,6 +39,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -93,6 +94,8 @@ class Preferences : AnkiActivity() {
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
 
+    private lateinit var mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener
+
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -116,6 +119,27 @@ class Preferences : AnkiActivity() {
             .beginTransaction()
             .replace(R.id.settings_container, fragment)
             .commit()
+
+        mOnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
+            updateActionBarTitle(supportFragmentManager, supportActionBar)
+        }
+        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager.removeOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
+        val fragment = fragmentManager.findFragmentById(R.id.settings_container)
+
+        when (fragment) {
+            is AdvancedStatisticsSettingsFragment -> actionBar?.title = resources.getString(R.string.advanced_statistics_title)
+            is CustomSyncServerSettingsFragment -> actionBar?.title = resources.getString(R.string.custom_sync_server_title)
+            is CustomButtonsSettingsFragment -> actionBar?.title = resources.getString(R.string.custom_buttons)
+            else -> actionBar?.title = resources.getString(R.string.preferences_title)
+        }
     }
 
     private fun getInitialFragment(intent: Intent?): Fragment {
