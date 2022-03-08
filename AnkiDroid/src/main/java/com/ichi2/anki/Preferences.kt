@@ -1348,9 +1348,7 @@ class Preferences : AnkiActivity() {
         }
 
         /** Whether the user is logged on to AnkiWeb  */
-        fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean {
-            val userName = preferences.getString("username", "")
-            return !TextUtils.isEmpty(userName)
-        }
+        fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
+            preferences.getString("username", "")!!.isNotEmpty()
     }
 }
