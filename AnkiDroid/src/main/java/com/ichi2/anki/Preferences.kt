@@ -266,7 +266,6 @@ class Preferences : AnkiActivity() {
         listpref.summary = listpref.entry.toString()
     }
 
-    @KotlinCleanup("make value non-null")
     private fun updateSummary(pref: Preference?) {
         if (pref == null || pref.key == null) {
             return
@@ -289,19 +288,15 @@ class Preferences : AnkiActivity() {
             }
         }
         // Get value text
-        val value: String? = try {
-            when (pref) {
-                is NumberRangePreferenceCompat -> pref.getValue().toString()
-                is SeekBarPreferenceCompat -> pref.value.toString()
-                is ListPreference -> pref.entry.toString()
-                is EditTextPreference -> pref.text
-                is ControlPreference -> return
-                else -> return
-            }
-        } catch (e: NullPointerException) {
-            Timber.w(e)
-            ""
+        val value: String = when (pref) {
+            is NumberRangePreferenceCompat -> pref.getValue().toString()
+            is SeekBarPreferenceCompat -> pref.value.toString()
+            is ListPreference -> pref.entry?.toString() ?: ""
+            is EditTextPreference -> pref.text ?: ""
+            is ControlPreference -> return
+            else -> return
         }
+
         // Get summary text
         val oldSummary = mOriginalSummaries[pref.key]
         // Replace summary text with value according to some rules
