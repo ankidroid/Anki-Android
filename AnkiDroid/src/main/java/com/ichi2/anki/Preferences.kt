@@ -1333,15 +1333,9 @@ class Preferences : AnkiActivity() {
         @JvmStatic
         fun getDayOffset(col: Collection): Int {
             return when (col.schedVer()) {
-                1 -> {
-                    val calendar: Calendar = col.crtGregorianCalendar()
-                    calendar[Calendar.HOUR_OF_DAY]
-                }
                 2 -> col.get_config("rollover", 4.toInt())!!
-                else -> {
-                    val calendar: Calendar = col.crtGregorianCalendar()
-                    calendar[Calendar.HOUR_OF_DAY]
-                }
+                // 1, or otherwise:
+                else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
             }
         }
 
