@@ -1284,8 +1284,6 @@ class Preferences : AnkiActivity() {
         /**
          * Represents in Android preferences the collections configuration "newSpread": i.e.
          * whether the new cards are added at the end of the queue or randomly in it.
-         * It seems not to be implemented in Ankidroid and only used in anki.
-         * TODO: port sched v2 from upstream
          */
         private const val NEW_SPREAD = "newSpread"
 
