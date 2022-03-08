@@ -94,8 +94,9 @@ class Preferences : AnkiActivity() {
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
 
-    private lateinit var mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener
-
+    private val mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
+        updateActionBarTitle(supportFragmentManager, supportActionBar)
+    }
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -120,9 +121,6 @@ class Preferences : AnkiActivity() {
             .replace(R.id.settings_container, fragment)
             .commit()
 
-        mOnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
-            updateActionBarTitle(supportFragmentManager, supportActionBar)
-        }
         supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
@@ -134,11 +132,14 @@ class Preferences : AnkiActivity() {
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
-        when (fragment) {
-            is AdvancedStatisticsSettingsFragment -> actionBar?.title = resources.getString(R.string.advanced_statistics_title)
-            is CustomSyncServerSettingsFragment -> actionBar?.title = resources.getString(R.string.custom_sync_server_title)
-            is CustomButtonsSettingsFragment -> actionBar?.title = resources.getString(R.string.custom_buttons)
-            else -> actionBar?.title = resources.getString(R.string.preferences_title)
+        if (actionBar == null)
+            return
+
+        actionBar.title = when (fragment) {
+            is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
+            is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
+            is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
+            else -> resources.getString(R.string.preferences_title)
         }
     }
 
