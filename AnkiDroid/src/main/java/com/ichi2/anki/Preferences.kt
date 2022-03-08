@@ -38,6 +38,7 @@ import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -91,6 +92,9 @@ class Preferences : AnkiActivity() {
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
 
+    private val mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
+        updateActionBarTitle(supportFragmentManager, supportActionBar)
+    }
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -114,6 +118,27 @@ class Preferences : AnkiActivity() {
             .beginTransaction()
             .replace(R.id.settings_container, fragment)
             .commit()
+
+        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager.removeOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
+        val fragment = fragmentManager.findFragmentById(R.id.settings_container)
+
+        if (actionBar == null)
+            return
+
+        actionBar.title = when (fragment) {
+            is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
+            is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
+            is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
+            else -> resources.getString(R.string.preferences_title)
+        }
     }
 
     private fun getInitialFragment(intent: Intent?): Fragment {
