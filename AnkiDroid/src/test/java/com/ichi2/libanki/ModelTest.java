@@ -673,4 +673,24 @@ public class ModelTest extends RobolectricTest {
         assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}, Models.AllowEmpty.TRUE));
         assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}, Models.AllowEmpty.TRUE));
     }
+
+    /**
+     * tests if Model.getDid() returns model did
+     * or default deck id (1) if null
+     */
+    @Test
+    public void getDid_test() {
+        Collection col = getCol();
+        ModelManager mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        basic.put("did", 999L);
+
+        Long expected = 999L;
+        assertEquals("getDid() should return the model did", expected, basic.getDid());
+
+        // Check if returns default deck id (1) when did is null
+        basic.put("did", null);
+        Long expected2 = 1L;
+        assertEquals("getDid() should return 1 (default deck id) if model did is null", expected2, basic.getDid());
+    }
 }

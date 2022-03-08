@@ -17,24 +17,32 @@
 package com.ichi2.compat
 
 import android.os.Build
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.`when`
+import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
-import org.robolectric.annotation.Config
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
-@RunWith(AndroidJUnit4::class)
-@Config(sdk = [21, 26])
-class CompatDirectoryContentTest {
-    val compat = CompatHelper.getCompat()
+@RunWith(Parameterized::class)
+class CompatDirectoryContentTest(
+    val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) {
+    companion object {
+        @JvmStatic
+        @Parameterized.Parameters(name = "{1}")
+        fun data(): Iterable<Array<Any>> = sequence {
+            yield(arrayOf(CompatV21(), "CompatV21"))
+            yield(arrayOf(CompatV26(), "CompatV26"))
+        }.asIterable()
+    }
 
     @Test
     fun empty_dir_test() {
@@ -117,7 +125,7 @@ class CompatDirectoryContentTest {
                         // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
                         // since this method calls toPath.
                         spy(compat as CompatV26) {
-                            doThrow(AccessDeniedException(directory)).`when`(it).newDirectoryStream(eq(directory.toPath()))
+                            doThrow(AccessDeniedException(directory)).whenever(it).newDirectoryStream(eq(directory.toPath()))
                         }
                     } else {
                         compat

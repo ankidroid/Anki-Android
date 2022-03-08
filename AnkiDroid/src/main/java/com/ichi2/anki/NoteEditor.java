@@ -1819,7 +1819,7 @@ public class NoteEditor extends AnkiActivity implements
             return;
         }
         if (note == null || mAddNote || mCurrentEditedCard == null) {
-            JSONObject model = getCol().getModels().current();
+            Model model = getCol().getModels().current();
             if (getCol().get_config("addToCur", true)) {
                 mCurrentDid = getCol().get_config_long(CURRENT_DECK);
                 if (getCol().getDecks().isDyn(mCurrentDid)) {
@@ -1831,7 +1831,7 @@ public class NoteEditor extends AnkiActivity implements
                     mCurrentDid = 1;
                 }
             } else {
-                mCurrentDid = model.getLong("did");
+                mCurrentDid = model.getDid();
             }
         } else {
             mCurrentDid = mCurrentEditedCard.getDid();

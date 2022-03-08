@@ -27,7 +27,7 @@ import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowToast
 import java.io.File
@@ -52,7 +52,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         val controller = validControllerNoImage
         assertThat(controller.isShowingPreview, `is`(false))
         val f = mock(File::class.java)
-        `when`(f.exists()).thenReturn(false)
+        whenever(f.exists()).thenReturn(false)
         controller.setImagePreview(f, 100)
         assertThat(
             "A non existing file should not display a preview",
@@ -66,7 +66,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         val controller = validControllerNoImage
         assertThat(controller.isShowingPreview, `is`(false))
         val f = mock(File::class.java)
-        `when`(f.exists()).thenReturn(true) // true, but it'll throw due to being a mock.
+        whenever(f.exists()).thenReturn(true) // true, but it'll throw due to being a mock.
         controller.setImagePreview(f, 100)
         assertThat(
             "A broken existing file should not display a preview",
@@ -92,7 +92,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         val controller = validControllerNoImage
         val activity = setupActivityMock(controller, controller.mActivity)
         val mock = MockContentResolver.returningEmptyCursor()
-        `when`(activity.contentResolver).thenReturn(mock)
+        whenever(activity.contentResolver).thenReturn(mock)
 
         // Act & Assert
         AnkiAssert.assertDoesNotThrow { performImageResult(controller, Intent()) }

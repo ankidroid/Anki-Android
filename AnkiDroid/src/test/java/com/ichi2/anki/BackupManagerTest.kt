@@ -25,6 +25,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
@@ -33,7 +34,7 @@ open class BackupManagerTest {
     fun failsIfNoBackupsAllowed() {
         // arrange
         val bm = passingBackupManagerSpy
-        doReturn(true).`when`(bm).hasDisabledBackups(any())
+        doReturn(true).whenever(bm).hasDisabledBackups(any())
 
         // act
         val performBackupResult = performBackup(bm)
@@ -60,7 +61,7 @@ open class BackupManagerTest {
     fun noBackupPerformedIfNoBackupNecessary() {
         val bm = passingBackupManagerSpy
 
-        doReturn(true).`when`(bm).isBackupUnnecessary(any(), any())
+        doReturn(true).whenever(bm).isBackupUnnecessary(any(), any())
 
         val result = performBackup(bm)
 
@@ -72,7 +73,7 @@ open class BackupManagerTest {
     @Test
     fun noBackupPerformedIfBackupAlreadyExists() {
         val file = strictMock(File::class.java)
-        doReturn(true).`when`(file).exists()
+        doReturn(true).whenever(file).exists()
 
         val bm = getPassingBackupManagerSpy(file)
 
@@ -85,7 +86,7 @@ open class BackupManagerTest {
     fun noBackupPerformedIfCollectionTooSmall() {
         val bm = passingBackupManagerSpy
 
-        doReturn(true).`when`(bm).collectionIsTooSmallToBeValid(any())
+        doReturn(true).whenever(bm).collectionIsTooSmallToBeValid(any())
 
         val result = performBackup(bm)
 
@@ -103,13 +104,13 @@ open class BackupManagerTest {
     /** Returns a spy of BackupManager which would pass  */
     private fun getPassingBackupManagerSpy(backupFileMock: File?): BackupManager {
         val spy = spy(BackupManager.createInstance())
-        doReturn(true).`when`(spy).hasFreeDiscSpace(any())
-        doReturn(false).`when`(spy).collectionIsTooSmallToBeValid(any())
-        doNothing().`when`(spy).performBackupInNewThread(any(), any())
-        doReturn(null).`when`(spy).getLastBackupDate(any())
+        doReturn(true).whenever(spy).hasFreeDiscSpace(any())
+        doReturn(false).whenever(spy).collectionIsTooSmallToBeValid(any())
+        doNothing().whenever(spy).performBackupInNewThread(any(), any())
+        doReturn(null).whenever(spy).getLastBackupDate(any())
 
         val f = backupFileMock ?: this.backupFileMock
-        doReturn(f).`when`(spy).getBackupFile(any(), any())
+        doReturn(f).whenever(spy).getBackupFile(any(), any())
         return spy
     }
 
@@ -117,7 +118,7 @@ open class BackupManagerTest {
     private val backupFileMock: File
         get() {
             val f = strictMock(File::class.java)
-            doReturn(false).`when`(f).exists()
+            doReturn(false).whenever(f).exists()
             return f
         }
 }
