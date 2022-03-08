@@ -106,9 +106,9 @@
     <string name="gesture_flag_orange">Oranje vlag in-/uitschakelen</string>
     <string name="gesture_flag_green">Groene vlag in-/uitschakelen</string>
     <string name="gesture_flag_blue">Blauwe vlag in-/uitschakelen</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Roze vlag in-/uitschakelen</string>
+    <string name="gesture_flag_turquoise">Turquoise vlag in-/uitschakelen</string>
+    <string name="gesture_flag_purple">Paarse vlag in-/uitschakelen</string>
     <string name="gesture_flag_remove">Vlag verwijderen</string>
     <string name="gesture_page_up">Pagina omhoog</string>
     <string name="gesture_page_down">Pagina omlaag</string>

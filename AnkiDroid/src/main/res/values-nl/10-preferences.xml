@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Bovenaan</item>
         <item>Onderaan</item>
-        <item>None</item>
+        <item>Geen</item>
     </string-array>
     <string name="gestures" maxLength="41">Bewegingen inschakelen</string>
     <string name="gestures_summ">Bewegingen toewijzen aan acties zoals het beantwoorden en bewerken van kaarten.</string>
@@ -321,7 +321,7 @@
     <string name="card_side_question">Vraag</string>
     <string name="card_side_answer">Antwoord</string>
     <string name="card_side_both">Vraag &amp; antwoord</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">V: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->

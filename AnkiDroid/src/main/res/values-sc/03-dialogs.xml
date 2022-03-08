@@ -200,6 +200,7 @@
     <string name="card_browser_deck_change_error">Cambiamentu de su matzu fallidu</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore decodifichende sos datos dae sa carta</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Elaboratzione de sas optziones de su matzu fallida: %s</string>
     <!-- Database Errors-->

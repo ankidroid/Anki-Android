@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Stapel konnte nicht geändert werden</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Decodieren der Daten von Karte</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Stapeloptionen konnten nicht verarbeitet werden: %s</string>
     <!-- Database Errors-->

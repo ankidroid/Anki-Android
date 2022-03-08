@@ -119,7 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid vereist %s vrije ruimte om door te gaan.  Gelieve ruimte vrij maken</string>
     <string name="restore_backup_title">Back-up herstellen?</string>
     <string name="restore_backup">Uw collectie zal worden vervangen door een oudere kopie. Alle niet-opgeslagen vooruitgang zal verloren gaan.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Kies een ander</string>
     <string name="dialog_cancel">Annuleren</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nee</string>
@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Kon de set niet wijzigen</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fout bij decoderen van gegevens uit de kaart</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Verwerken van de setopties mislukt: %s</string>
     <!-- Database Errors-->

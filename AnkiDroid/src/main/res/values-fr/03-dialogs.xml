@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Impossible de traiter les options du paquet : %s</string>
     <!-- Database Errors-->

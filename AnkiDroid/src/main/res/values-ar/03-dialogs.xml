@@ -213,6 +213,7 @@
     <string name="card_browser_deck_change_error">تعذر تغيير الرزمة</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">تعذر فك ترميز البيانات من البطاقة</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">تعذرت معالجة خيارات الرزمة: %s</string>
     <!-- Database Errors-->

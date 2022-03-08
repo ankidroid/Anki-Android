@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
     <string name="export_successful">Bestand \"%s\" is geëxporteerd. Wilt u het met een andere app versturen?</string>
     <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hallo!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Dot is een Anki flashcards deck verzonden van AnkiDroid[1].
+        Probeer het te openen met een van de beschikbare Anki distributies Anki distributions[2] en geniet van makkelijk en efficiënt leren!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Lettergrootte wijzigen</string>
     <string name="insert_mathjax">MathJax-vergelijking invoegen</string>
     <string name="insert_cloze">Invuloefening invoegen</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Knoptekst</string>
     <string name="before_text">HTML voor de selectie</string>
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>
@@ -393,5 +393,5 @@
     <string name="scoped_storage_learn_more">Meer leren</string>
     <string name="scoped_storage_postpone">Stel uit</string>
     <string name="scoped_storage_migrate">Migreren</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
 </resources>

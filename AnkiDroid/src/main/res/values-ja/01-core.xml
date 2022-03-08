@@ -91,7 +91,7 @@
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
-    <string name="browse_cards">カードをブラウズ</string>
+    <string name="browse_cards">カードをブラウザで表示</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -171,7 +171,7 @@
     <string name="sync_cancelled">同期がキャンセルされました</string>
     <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="export">エクスポート</string>
-    <string name="export_collection">エクスポート（全デッキ）</string>
+    <string name="export_collection">エクスポート（コレクション）</string>
     <string name="export_deck">このデッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->

@@ -419,5 +419,5 @@
     <string name="scoped_storage_learn_more">Падрабязней</string>
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
 </resources>

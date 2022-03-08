@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->

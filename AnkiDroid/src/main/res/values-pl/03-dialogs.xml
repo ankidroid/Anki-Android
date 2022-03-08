@@ -199,6 +199,7 @@
     <string name="card_browser_deck_change_error">Nie udało się zmienić talii</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Błąd dekodowania danych z karty</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Nie udało się przetworzyć opcji talii: %s</string>
     <!-- Database Errors-->

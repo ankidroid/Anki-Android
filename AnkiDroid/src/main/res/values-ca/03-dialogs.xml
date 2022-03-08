@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">No s\'ha pogut canviar el paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Error al processar les opcions del paquet: %s</string>
     <!-- Database Errors-->

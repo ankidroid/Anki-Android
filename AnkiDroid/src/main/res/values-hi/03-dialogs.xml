@@ -185,6 +185,7 @@
     <string name="card_browser_deck_change_error">डेक नहीं बदल सका</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड से डेटा डिकोड करने में त्रुटि</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">डेक विकल्पों को संसाधित करने में विफल: %s</string>
     <!-- Database Errors-->

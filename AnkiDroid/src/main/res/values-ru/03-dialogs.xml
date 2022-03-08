@@ -200,6 +200,7 @@
     <string name="card_browser_deck_change_error">Не удалось сменить колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ошибка при декодировании данных карточки</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не удалось обработать параметры колоды: %s</string>
     <!-- Database Errors-->
