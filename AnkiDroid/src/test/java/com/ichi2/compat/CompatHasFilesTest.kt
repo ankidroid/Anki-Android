@@ -17,6 +17,7 @@
 package com.ichi2.compat
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ichi2.testutils.*
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.withTempFile
@@ -33,20 +34,12 @@ import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
+@RequiresApi(Build.VERSION_CODES.O) // ALlows code to compile, but we still test with [CompatV21]
 class CompatHasFilesTest(
-    val compat: Compat,
+    override val compat: Compat,
     /** Used in the "Test Results" Window */
     @Suppress("unused") private val unitTestDescription: String
-) {
-
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV21(), "CompatV21"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
-    }
+) : Test21And26(compat, unitTestDescription) {
 
     @Test
     fun has_files_with_file() {

@@ -17,19 +17,20 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import android.os.Build
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.compat.Compat
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
-import org.robolectric.annotation.Config
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -38,9 +39,13 @@ import java.nio.file.NotDirectoryException
 /**
  * Test for [MoveDirectoryContent]
  */
-@RunWith(AndroidJUnit4::class)
-@Config(sdk = [21, 26])
-class MoveDirectoryContentTest : OperationTest {
+@RequiresApi(Build.VERSION_CODES.O) // ALlows code to compile, but we still test with [CompatV21]
+@RunWith(Parameterized::class)
+class MoveDirectoryContentTest(
+    override val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) : Test21And26(compat, unitTestDescription), OperationTest {
 
     override val executionContext = MockMigrationContext()
 
@@ -195,7 +200,7 @@ class MoveDirectoryContentTest : OperationTest {
         val dir = Directory.createInstanceUnsafe(source_file)
         val destinationDirectory = generateDestinationDirectoryRef()
         val ex = assertThrowsSubclass<IOException> { moveDirectoryContent(dir, destinationDirectory) }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", ex, instanceOf(NotDirectoryException::class.java))
         }
     }

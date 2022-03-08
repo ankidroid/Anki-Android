@@ -17,6 +17,7 @@
 package com.ichi2.compat
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -24,25 +25,21 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.spy
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
+@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized::class)
 class CompatDirectoryContentTest(
-    val compat: Compat,
+    override val compat: Compat,
     /** Used in the "Test Results" Window */
     @Suppress("unused") private val unitTestDescription: String
-) {
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV21(), "CompatV21"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
-    }
+) : Test21And26(compat, unitTestDescription) {
 
     @Test
     fun empty_dir_test() {
@@ -104,7 +101,7 @@ class CompatDirectoryContentTest(
             compat.contentOfDirectory(file)
         }
         )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (isV26) {
             assertThat("Starting at API 26, this should be a NotDirectoryException", exception, instanceOf(NotDirectoryException::class.java))
         }
     }
@@ -113,7 +110,7 @@ class CompatDirectoryContentTest(
      * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
      * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
      */
-    data class PermissionDenied private constructor(val directory: File, val compat: Compat) {
+    class PermissionDenied private constructor(val directory: File, val compat: Compat) {
         companion object {
             fun createInstance(directory: File, compat: Compat): PermissionDenied {
                 val directoryWithPermissionDenied =
@@ -121,10 +118,10 @@ class CompatDirectoryContentTest(
                         on { listFiles() } doReturn null
                     }
                 val compatWithPermissionDenied =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (compat is CompatV26) {
                         // Closest to simulate [newDirectoryStream] throwing [AccessDeniedException]
                         // since this method calls toPath.
-                        spy(compat as CompatV26) {
+                        spy(compat) {
                             doThrow(AccessDeniedException(directory)).whenever(it).newDirectoryStream(eq(directory.toPath()))
                         }
                     } else {
