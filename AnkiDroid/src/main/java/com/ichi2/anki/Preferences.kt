@@ -88,7 +88,7 @@ import java.util.*
 class Preferences : AnkiActivity() {
     // Other variables
     @KotlinCleanup("we use string? as some keys were null")
-    private val mOriginalSumarries = HashMap<String?, String>()
+    private val mOriginalSummaries = HashMap<String?, String>()
 
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
@@ -234,7 +234,7 @@ class Preferences : AnkiActivity() {
         }
         // Set the value from the summary cache
         val s = pref.summary
-        mOriginalSumarries[pref.key] = s?.toString() ?: ""
+        mOriginalSummaries[pref.key] = s?.toString() ?: ""
         // Update summary
         updateSummary(pref)
     }
@@ -314,7 +314,7 @@ class Preferences : AnkiActivity() {
             ""
         }
         // Get summary text
-        val oldSummary = mOriginalSumarries[pref.key]
+        val oldSummary = mOriginalSummaries[pref.key]
         // Replace summary text with value according to some rules
         if ("" == oldSummary) {
             pref.summary = value
@@ -358,7 +358,7 @@ class Preferences : AnkiActivity() {
     /** This is not fit for purpose (other than testing a single screen)  */
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val loadedPreferenceKeys: Set<String>
-        get() = mOriginalSumarries.keys.filterNotNull().toSet()
+        get() = mOriginalSummaries.keys.filterNotNull().toSet()
 
     // ----------------------------------------------------------------------------
     // Inner classes
