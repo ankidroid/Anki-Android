@@ -101,6 +101,7 @@
         <item>@string/replay_voice</item>
         <item>@string/gesture_toggle_whiteboard</item>
         <item>@string/gesture_show_hint</item>
+        <item>@string/gesture_show_all_hints</item>
     </string-array>
     <string-array name="gestures_values">
         <item>0</item>
@@ -140,6 +141,7 @@
         <item>36</item> <!-- Replay voice -->
         <item>37</item> <!-- Toggle whiteboard -->
         <item>41</item> <!-- Show hint -->
+        <item>42</item> <!-- Show all hints -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>

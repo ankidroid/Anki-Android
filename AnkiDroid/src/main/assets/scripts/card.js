@@ -259,3 +259,9 @@ function showHint() {
         }
     }
 }
+
+function showAllHints() {
+    document.querySelectorAll('a.hint').forEach(el => {
+        el.click()
+    });
+}
