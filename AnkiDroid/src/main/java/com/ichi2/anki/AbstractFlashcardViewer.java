@@ -1980,6 +1980,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_SHOW_HINT:
                 loadUrlInViewer("javascript: showHint();");
                 return true;
+            case COMMAND_SHOW_ALL_HINTS:
+                loadUrlInViewer("javascript: showAllHints();");
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;

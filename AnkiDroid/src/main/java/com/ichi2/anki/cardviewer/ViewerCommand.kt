@@ -67,7 +67,8 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
     COMMAND_RECORD_VOICE(R.string.record_voice, 35),
     COMMAND_REPLAY_VOICE(R.string.replay_voice, 36),
     COMMAND_TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard, 37),
-    COMMAND_SHOW_HINT(R.string.gesture_show_hint, 41);
+    COMMAND_SHOW_HINT(R.string.gesture_show_hint, 41),
+    COMMAND_SHOW_ALL_HINTS(R.string.gesture_show_all_hints, 42);
 
     companion object {
         fun fromString(value: String): ViewerCommand? {
@@ -167,6 +168,7 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
                 COMMAND_TOGGLE_FLAG_TURQUOISE -> from(keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl()))
                 COMMAND_TOGGLE_FLAG_PURPLE -> from(keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl()))
                 COMMAND_SHOW_HINT -> from(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
+                COMMAND_SHOW_ALL_HINTS -> from(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 else -> ArrayList()
             }
 
