@@ -121,7 +121,7 @@ A: As early as possible. Make sure to get feedback from mentors before finally s
 
 **Q: I do not have any experience in skill XYZ. Is some certification required?**
 
-A: Try to work on good first issues and take courses online. In the field of software development, it is common to develop experience and expertise as you take up and complete projects successfully. We do not require any formal certification of particular skills.
+A: Try to work on [good first issues](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Issue%21%22) and take courses online. In the field of software development, it is common to develop experience and expertise as you take up and complete projects successfully. We do not require any formal certification of particular skills.
 
 **Q: How many people is AnkiDroid planning to mentor this year?**
 
