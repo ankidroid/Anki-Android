@@ -1966,6 +1966,21 @@ public class NoteEditor extends AnkiActivity implements
         updateToolbar();
     }
 
+    private void editToolbarButton(String buttonText, String prefix, String suffix, CustomToolbarButton currentButton) {
+
+        buttonText = TextUtils.isEmpty(buttonText)? currentButton.getButtonText() : buttonText;
+        prefix = TextUtils.isEmpty(prefix)? currentButton.getPrefix() : prefix;
+        suffix = TextUtils.isEmpty(suffix)? currentButton.getSuffix() : suffix;
+
+        ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
+
+        int index = currentButton.getIndex();
+
+        toolbarButtons.set(index, new CustomToolbarButton(index, buttonText, prefix, suffix));
+        saveToolbarButtons(toolbarButtons);
+
+        updateToolbar();
+    }
 
     private void suggestRemoveButton(CustomToolbarButton button) {
         new MaterialDialog.Builder(this)
@@ -2013,15 +2028,14 @@ public class NoteEditor extends AnkiActivity implements
     private void displayEditToolbarDialog(CustomToolbarButton currentButton) {
         getToolbarDialogBuilder()
                 .title(R.string.edit_toolbar_item)
-                .positiveText(R.string.dialog_positive_save)
+                .positiveText(R.string.save)
                 .onPositive((m, v) -> {
                     View view = m.getView();
                     EditText etIcon =  view.findViewById(R.id.note_editor_toolbar_item_icon);
                     EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
                     EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
 
-                    removeButton(currentButton);
-                    addToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString());
+                    editToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString(), currentButton);
                 })
                 .show();
     }

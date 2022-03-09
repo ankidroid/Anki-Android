@@ -24,7 +24,7 @@ import java.util.*
 
 typealias ButtonText = String
 
-class CustomToolbarButton(var index: Int, var buttonText: ButtonText, private val prefix: String, private val suffix: String) {
+class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix: String, val suffix: String) {
     fun toFormatter(): Toolbar.TextFormatter {
         return TextWrapper(prefix, suffix)
     }
