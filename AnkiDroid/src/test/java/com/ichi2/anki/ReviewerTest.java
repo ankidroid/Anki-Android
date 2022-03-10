@@ -56,7 +56,7 @@ import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -146,7 +146,7 @@ public class ReviewerTest extends RobolectricTest {
         assertThat("4 buttons should be displayed", reviewer.getAnswerButtonCount(), is(4));
 
         String nextTime = javaScriptFunction.ankiGetNextTime4();
-        assertThat(nextTime, not(isEmptyString()));
+        assertThat(nextTime, not(emptyString()));
 
         // Display the next answer
         reviewer.answerCard(Consts.BUTTON_FOUR);
@@ -156,7 +156,7 @@ public class ReviewerTest extends RobolectricTest {
         if (schedVersion == 1) {
             assertThat("The 4th button should not be visible", reviewer.getAnswerButtonCount(), is(3));
             String learnTime = javaScriptFunction.ankiGetNextTime4();
-            assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, isEmptyString());
+            assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, emptyString());
         }
     }
 

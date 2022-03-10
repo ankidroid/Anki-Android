@@ -81,7 +81,7 @@ public class TemplateTest extends RobolectricTest {
 
         HashMap<String, String> context = new HashMap<>();
 
-        assertThat(render(maybeBad, context), Matchers.isEmptyString());
+        assertThat(render(maybeBad, context), Matchers.emptyString());
     }
 
     @Test
