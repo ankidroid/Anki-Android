@@ -14,12 +14,8 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.testutils
+package com.ichi2.compat
 
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatV21
-import com.ichi2.compat.CompatV26
 import org.junit.After
 import org.junit.Before
 import org.junit.runners.Parameterized
