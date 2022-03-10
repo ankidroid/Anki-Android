@@ -111,7 +111,7 @@
             app:min="50" />
         <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="100"
-            android:key="answerButtonSize"
+            android:key="@string/answerButtonSize_preference"
             android:max="200"
             android:summary="@string/preference_summary_percentage"
             android:text=" %"
@@ -125,7 +125,7 @@
             android:key="@string/answer_buttons_position_preference"
             android:title="@string/answer_buttons_position" />
         <CheckBoxPreference
-            android:key="showTopbar"
+            android:key="@string/showTopbar_preference"
             android:defaultValue="true"
             android:summary="@string/show_top_bar_summ"
             android:title="@string/show_top_bar" />
