@@ -50,6 +50,7 @@ import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -58,6 +59,7 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -1929,7 +1931,7 @@ public class NoteEditor extends AnkiActivity implements
             v.setTag(Integer.toString(visualIndex % 10));
 
             v.setOnLongClickListener(discard -> {
-                suggestRemoveButton(b);
+                displayEditToolbarDialog(b);
                 return true;
             });
         }
@@ -1982,14 +1984,15 @@ public class NoteEditor extends AnkiActivity implements
         updateToolbar();
     }
 
-    private void suggestRemoveButton(CustomToolbarButton button) {
+    private void suggestRemoveButton(CustomToolbarButton button, MaterialDialog editToolbarItemDialog) {
         new MaterialDialog.Builder(this)
-                .title(R.string.remove_or_edit_toolbar_item)
+                .title(R.string.remove_toolbar_item)
                 .positiveText(R.string.dialog_positive_delete)
                 .negativeText(R.string.dialog_cancel)
-                .neutralText(R.string.dialog_neutral_edit)
-                .onPositive((dialog, action) -> removeButton(button))
-                .onNeutral((m, v) -> displayEditToolbarDialog(button))
+                .onPositive((dialog, action) -> {
+                    editToolbarItemDialog.dismiss();
+                    removeButton(button);
+                })
                 .show();
     }
 
@@ -2004,7 +2007,6 @@ public class NoteEditor extends AnkiActivity implements
 
     private MaterialDialog.Builder getToolbarDialogBuilder() {
         return new MaterialDialog.Builder(this)
-                .customView(R.layout.note_editor_toolbar_add_custom_item, true)
                 .neutralText(R.string.help)
                 .negativeText(R.string.dialog_cancel)
                 .onNeutral((m, v) -> openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar))));
@@ -2013,6 +2015,7 @@ public class NoteEditor extends AnkiActivity implements
     private void displayAddToolbarDialog() {
         getToolbarDialogBuilder()
                 .title(R.string.add_toolbar_item)
+                .customView(R.layout.note_editor_toolbar_add_custom_item, true)
                 .positiveText(R.string.dialog_positive_create)
                 .onPositive((m, v) -> {
                     View view = m.getView();
@@ -2026,18 +2029,26 @@ public class NoteEditor extends AnkiActivity implements
     }
 
     private void displayEditToolbarDialog(CustomToolbarButton currentButton) {
-        getToolbarDialogBuilder()
-                .title(R.string.edit_toolbar_item)
-                .positiveText(R.string.save)
-                .onPositive((m, v) -> {
-                    View view = m.getView();
-                    EditText etIcon =  view.findViewById(R.id.note_editor_toolbar_item_icon);
-                    EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
-                    EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
 
-                    editToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString(), currentButton);
-                })
-                .show();
+        View view = getLayoutInflater().inflate(R.layout.note_editor_toolbar_edit_custom_item, null);
+        final EditText etIcon =  view.findViewById(R.id.note_editor_toolbar_item_icon);
+        final EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
+        final EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
+        final Button btnDelete = view.findViewById(R.id.note_editor_toolbar_btn_delete);
+
+        etIcon.setText(currentButton.getButtonText());
+        et.setText(currentButton.getPrefix());
+        et2.setText(currentButton.getSuffix());
+
+        MaterialDialog toolbarDialog = getToolbarDialogBuilder()
+                .title(R.string.edit_toolbar_item)
+                .customView(view, true)
+                .positiveText(R.string.save)
+                .onPositive((m, v) -> editToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString(), currentButton)).build();
+
+        btnDelete.setOnClickListener(view1 -> suggestRemoveButton(currentButton, toolbarDialog));
+
+        toolbarDialog.show();
     }
 
 
