@@ -22,7 +22,7 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
 
-    override fun reportError(context: MigrateUserData.Operation, ex: Exception) {
+    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
         if (!logExceptions) {
             throw ex
         }
@@ -43,8 +43,8 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
 class RetryMigrationContext(val retry: (List<MigrateUserData.Operation>) -> Unit) : MockMigrationContext() {
     var retryCount = 0
 
-    override fun reportError(context: MigrateUserData.Operation, ex: Exception) {
-        val opsForRetry = context.retryOperations
+    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
+        val opsForRetry = throwingOperation.retryOperations
         if (!opsForRetry.any()) {
             throw ex
         }
