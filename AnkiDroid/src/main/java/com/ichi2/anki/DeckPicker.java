@@ -690,10 +690,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
                 menu.findItem(R.id.action_undo).setTitle(undo);
             }
-
-            // Remove the filter - not necessary and search has other implications for new users.
-            menu.findItem(R.id.deck_picker_action_filter).setVisible(getCol().getDecks().count() >= 10);
         }
+        // Remove the filter - not necessary and search has other implications for new users.
+        menu.findItem(R.id.deck_picker_action_filter).setVisible(getCol().getDecks().count() >= 10);
 
 
         return super.onCreateOptionsMenu(menu);
