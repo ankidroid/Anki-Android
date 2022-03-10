@@ -72,10 +72,10 @@ Your proposal must be original (see section 2.4 of the [Contributor Participatio
 
 ## Selection Criteria
 
-In order to select contributors for GSoC, we will mainly be looking at three things:
+In order to select contributors for GSoC, we will mainly be looking at:
 * The quality of the submitted proposal
 * The quality of the applicant's previously-submitted PRs (in order to assess their ability to code, debug, break down complex tasks, etc.). Note that quantity isn't a prerequisite in itself, though contributors who've submitted multiple PRs are likely to have had more opportunities to demonstrate the abilities needed to succeed in GSoC.
-* Clear, unambiguous communication. (This is important; your proposal will be read by many mentors!)
+* Clear, unambiguous communication. We expect you to comment at least one PR you did not create to show your interaction with other contributors. (This is important; your proposal will be read by many mentors!)
 * A proposed solution approach that is sufficiently concrete and which demonstrates that the applicant has a good understanding of both the scope of the problem and the existing codebase.
 
 View [Student Eligibility](https://developers.google.com/open-source/gsoc/faq#what_are_the_eligibility_requirements_for_participation) and we created a document explaining our [selection process](https://docs.google.com/document/d/15JH_3YtfTatdA4V3tZ_lwBibRRyTSFbpeCjpzhX3-y0/edit). 
