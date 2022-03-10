@@ -63,7 +63,7 @@ If you're interested in applying to work with AnkiDroid for GSoC, please follow 
 <a name="template"/>
 
 ## GSoC 2022 proposal template
-Please fill this [proposal template](https://docs.google.com/document/d/1wfbNhWL-SoDVIzTeJ-QhuCd5yBy4hF-3P6wENOU8a_w) and contact us for feedback, 
+Please fill this [proposal template](https://docs.google.com/document/d/1rWII1J-lKdfPJmYiKl-ugQOIOVziZeOAtqePXgHGTQA/edit?usp=sharing) and contact us for feedback, 
 Your proposal should be shared as "anyone with the link can leave comments", Mentors have been instructed not to respond to proposals that are not shared publicly, and we take a negative view on restricting access to proposals after feedback is provided. This is because, in the spirit of open-source, we would like to keep the discussions open, so it is intentional that everyone (including non-mentors) should be able to see your proposal and leave comments and suggestions on it.
 
 Your proposal must be original (see section 2.4 of the [Contributor Participation Agreement](https://summerofcode.withgoogle.com/terms/contributor)). During the selection process, proposals that are found to have plagiarized others' work will automatically be disqualified. If you include any text in your proposal that is copied from the Internet or other sources, you should make it clear that you are doing so, and provide a link or reference back to the source.
