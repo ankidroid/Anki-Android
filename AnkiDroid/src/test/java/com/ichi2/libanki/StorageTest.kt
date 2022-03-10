@@ -109,7 +109,7 @@ open class StorageTest : RobolectricTest() {
                 c.moveToFirst()
                 for (i in 0 until c.columnCount) {
                     if (M_V_11_ONLY_COLUMNS.contains(i)) {
-                        MatcherAssert.assertThat(c.getString(i), Matchers.isEmptyOrNullString())
+                        MatcherAssert.assertThat(c.getString(i), Matchers.emptyOrNullString())
                         continue
                     }
                     loadV11(i, c.getString(i))
