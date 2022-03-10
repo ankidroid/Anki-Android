@@ -126,7 +126,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * a large mutable queue of tasks
      */
     abstract class MigrationContext {
-        abstract fun reportError(context: Operation, ex: Exception)
+        abstract fun reportError(throwingOperation: Operation, ex: Exception)
         abstract fun reportProgress(transferred: NumberOfBytes)
         /**
          * Whether [File#renameTo] should be attempted
