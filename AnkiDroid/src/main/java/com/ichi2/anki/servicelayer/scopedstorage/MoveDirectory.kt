@@ -50,7 +50,8 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
         }
 
         val moveContentOperations = MoveDirectoryContent.createInstance(source, destination)
-        val deleteOperation = DeleteEmptyDirectory(source)
+        // If DeleteEmptyDirectory fails, retrying is executing the MoveDirectory that spawned it
+        val deleteOperation = DeleteEmptyDirectory(source).onRetryExecute(this)
         return listOf(moveContentOperations, deleteOperation)
     }
 

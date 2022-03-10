@@ -28,6 +28,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -47,7 +48,13 @@ class MoveDirectoryTest(
     /** Used in the "Test Results" Window */
     @Suppress("unused") private val unitTestDescription: String
 ) : Test21And26(compat, unitTestDescription), OperationTest {
-    override val executionContext: MockMigrationContext = MockMigrationContext()
+    override lateinit var executionContext: MockMigrationContext
+    private val executor = MockExecutor { executionContext }
+
+    @Before
+    fun setUp() {
+        executionContext = MockMigrationContext()
+    }
 
     @Test
     fun test_success_integration_test_recursive() {
@@ -144,27 +151,61 @@ class MoveDirectoryTest(
 
     @Test
     fun adding_file_during_move_is_not_fatal() {
-        adding_during_move_helper() {
+        val operation = adding_during_move_helper {
             return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
         }
+
+        assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
+        assertThat("additional file was not moved", File(operation.destination, "new_file.txt").exists(), equalTo(false))
     }
 
     @Test
     fun adding_directory_during_move_is_not_fatal() {
-        adding_during_move_helper() {
+        val operation = adding_during_move_helper {
             val new_directory = File(it.directory, "subdirectory")
             assertThat("Subdirectory is created", new_directory.mkdir())
             new_directory.deleteOnExit()
             return@adding_during_move_helper new_directory
         }
+
+        assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
+        assertThat("additional directory was not moved", File(operation.destination, "subdirectory").exists(), equalTo(false))
+    }
+
+    @Test
+    fun succeeds_on_retry_after_adding_file_during_process() {
+        executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
+
+        val operation = adding_during_move_helper {
+            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+        }
+
+        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertThat("additional file was moved", File(operation.destination, "new_file.txt").exists(), equalTo(true))
+    }
+
+    @Test
+    fun succeeds_on_retry_after_adding_directory_during_process() {
+        executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
+
+        val operation = adding_during_move_helper {
+            val newDirectory = File(it.directory, "subdirectory")
+            assertThat("Subdirectory is created", newDirectory.mkdir())
+            newDirectory.deleteOnExit()
+            return@adding_during_move_helper newDirectory
+        }
+
+        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertThat("additional directory was moved", File(operation.destination, "subdirectory").exists(), equalTo(true))
     }
 
     /**
      * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
      * This new file/directory must be present in source or destination.
      *
+     * @return The [MoveDirectory] which was executed
      */
-    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File) {
+    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File): MoveDirectory {
         val source = createDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
@@ -196,12 +237,13 @@ class MoveDirectoryTest(
             }.whenever(it).toMoveOperation(any())
         }
 
-        executeAll(moveDirectoryContentSpied, deleteDirectory)
+        executor.execute(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(
             "new_file should be present in source or directory",
             File(source.directory, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
         )
+        return moveDirectory
     }
 
     @Test
