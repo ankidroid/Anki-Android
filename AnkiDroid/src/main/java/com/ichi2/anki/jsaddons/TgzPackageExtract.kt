@@ -34,6 +34,10 @@
 
 package com.ichi2.anki.jsaddons
 
+import android.content.Context
+import android.text.format.Formatter
+import com.ichi2.anki.R
+import com.ichi2.libanki.Utils
 import org.apache.commons.compress.archivers.ArchiveException
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry
@@ -44,17 +48,17 @@ import java.io.*
 import java.util.zip.GZIPInputStream
 
 /**
-* In JS Addons the addon packages are downloaded from npm registry.
-* The file format of downloaded file is tgz, so I created this class to extract tgz file to provided directory.
-*
-* This file in kotlin is used for extracting tgz file.
-* https://android.googlesource.com/platform/tools/tradefederation/+/master/src/com/android/tradefed/util/TarUtil.java
-*
-* Also added zip slip safety
-* https://snyk.io/research/zip-slip-vulnerability
-*/
+ * In JS Addons the addon packages are downloaded from npm registry.
+ * The file format of downloaded file is tgz, so I created this class to extract tgz file to provided directory.
+ *
+ * This file in kotlin is used for extracting tgz file.
+ * https://android.googlesource.com/platform/tools/tradefederation/+/master/src/com/android/tradefed/util/TarUtil.java
+ *
+ * Also added zip slip safety
+ * https://snyk.io/research/zip-slip-vulnerability
+ */
 
-object TgzPackageExtract {
+class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
 
     /**
@@ -86,13 +90,34 @@ object TgzPackageExtract {
      */
     @Throws(Exception::class)
     fun extractTarGzipToAddonFolder(tarballFile: File, addonsDir: File) {
-        require(isGzip(tarballFile)) { String.format("%s is not a valid .tgz file.", tarballFile.absolutePath) }
+
+        require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
+
         if (!addonsDir.exists()) {
-            check(addonsDir.mkdirs()) { String.format("Couldn't create directory %s.", addonsDir.absolutePath) }
+            context.getString(R.string.could_not_create_dir, addonsDir.absolutePath)
         }
+
+        // Make sure we have sufficient free space (twice)
+        val requiredMinSpace = tarballFile.length() * 2
+        val availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
+        if (requiredMinSpace > availableSpace) {
+            Timber.e("Not enough space to extract file, need %d, available %d", requiredMinSpace, availableSpace)
+            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace)))
+        }
+
+        // If space available then unGZip it
         val tarTempFile = unGzip(tarballFile, addonsDir)
+
+        // Make sure we have sufficient free space
+        val unTarSize = calculateUnTarSize(tarTempFile)
+        if (unTarSize > availableSpace) {
+            Timber.e("Not enough space to untar, need %d, available %d", unTarSize, availableSpace)
+            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, unTarSize), Formatter.formatFileSize(context, availableSpace)))
+        }
+
+        // If space available then unTar it
         unTar(tarTempFile, addonsDir)
-        tarTempFile.delete()
+        tarTempFile.deleteOnExit()
     }
 
     /**
@@ -110,12 +135,13 @@ object TgzPackageExtract {
 
         // rename '-4' to remove the '.tgz' extension and add .tar extension
         val outputFile = File(outputDir, inputFile.name.substring(0, inputFile.name.length - 4) + ".tar")
-        val inputStream = GZIPInputStream(FileInputStream(inputFile))
-        val outputStream = FileOutputStream(outputFile)
 
-        IOUtils.copy(inputStream, outputStream)
-        inputStream.close()
-        outputStream.close()
+        GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
+            FileOutputStream(outputFile).use { outputStream ->
+                IOUtils.copy(inputStream, outputStream)
+            }
+        }
+
         return outputFile
     }
 
@@ -169,13 +195,13 @@ object TgzPackageExtract {
 
         if (parent != null && !parent.exists()) {
             if (!parent.mkdirs()) {
-                throw IOException(String.format("Couldn't create directory %s.", parent.absolutePath))
+                throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
             }
         }
 
-        val outputFileStream: OutputStream = FileOutputStream(outputFile)
-        IOUtils.copy(tarInputStream, outputFileStream)
-        outputFileStream.close()
+        FileOutputStream(outputFile).use { outputFileStream ->
+            IOUtils.copy(tarInputStream, outputFileStream)
+        }
     }
 
     /**
@@ -188,7 +214,7 @@ object TgzPackageExtract {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
         if (!outputFile.exists()) {
             Timber.i("Attempting to create output directory %s.", outputFile.absolutePath)
-            check(outputFile.mkdirs()) { String.format("Couldn't create directory %s.", outputFile.absolutePath) }
+            check(outputFile.mkdirs()) { context.getString(R.string.could_not_create_dir, outputFile.absolutePath) }
         }
     }
 
@@ -199,7 +225,32 @@ object TgzPackageExtract {
         val outputFileCanonicalPath = outputFile.canonicalPath
 
         if (!outputFileCanonicalPath.startsWith(destDirCanonicalPath)) {
-            throw ArchiveException(String.format("Entry is outside of the target dir: %s", outputFileCanonicalPath))
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, outputFileCanonicalPath))
         }
+    }
+
+    /**
+     * Given a tar file, iterate through the entries to determine the total untar size
+     * TODO warning: vulnerable to resource exhaustion attack if entries contain spoofed sizes
+     *
+     * @param tarFile File of unknown total uncompressed size
+     * @return total untar size of tar file
+     */
+    private fun calculateUnTarSize(tarFile: File): Long {
+        var unTarSize: Long = 0
+
+        FileInputStream(tarFile).use { inputStream ->
+            ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
+                val tarInputStream1 = tarInputStream as TarArchiveInputStream
+                var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
+
+                while (entry != null) {
+                    unTarSize += entry.size
+                    entry = tarInputStream.nextEntry as? TarArchiveEntry?
+                }
+            }
+        }
+
+        return unTarSize
     }
 }

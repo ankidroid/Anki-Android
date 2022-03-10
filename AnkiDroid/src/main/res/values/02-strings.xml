@@ -429,4 +429,9 @@
     <string name="scoped_storage_migrate">Migrate</string>
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
+
+    <!--  JS Addons  -->
+    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
 </resources>

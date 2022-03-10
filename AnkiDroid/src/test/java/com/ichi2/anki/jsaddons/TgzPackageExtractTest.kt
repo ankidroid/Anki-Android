@@ -25,18 +25,25 @@ import org.apache.commons.compress.archivers.ArchiveException
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowStatFs
 import java.io.File
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class TgzPackageExtractTest : RobolectricTest() {
     private lateinit var tarballPath: String
-    private lateinit var currentAnkiDroidDirectory: String
     private lateinit var addonDir: File
+    private lateinit var addonPackage: TgzPackageExtract
 
     @Before
     override fun setUp() {
         super.setUp()
+
+        var currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
+        val path = File(currentAnkiDroidDirectory, "addons").parentFile?.path
+        ShadowStatFs.registerStats(path, 100, 20, 10000)
+
+        addonPackage = TgzPackageExtract(targetContext)
         tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
         currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
         addonDir = File(currentAnkiDroidDirectory, "addons")
@@ -53,7 +60,7 @@ class TgzPackageExtractTest : RobolectricTest() {
     @Throws(IOException::class)
     fun isGzipTest() {
         // test if file is tar gzip
-        assertTrue(TgzPackageExtract.isGzip(File(tarballPath)))
+        assertTrue(addonPackage.isGzip(File(tarballPath)))
     }
 
     /**
@@ -72,7 +79,7 @@ class TgzPackageExtractTest : RobolectricTest() {
     @Throws(IOException::class, ArchiveException::class)
     fun extractTarGzipToAddonFolderTest() {
         // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
-        TgzPackageExtract.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
+        addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
 
         // test if package folder exists
         val packagePath = File(addonDir, "package")
@@ -102,10 +109,10 @@ class TgzPackageExtractTest : RobolectricTest() {
     fun unTarTest() {
 
         // first unGzip .tgz file to .tar
-        val unGzipFile = TgzPackageExtract.unGzip(File(tarballPath), addonDir)
+        val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
 
         // unTar .tar file to temp folder, it is same as extract of files to tempAddonDir
-        TgzPackageExtract.unTar(unGzipFile, addonDir)
+        addonPackage.unTar(unGzipFile, addonDir)
 
         // test if package folder exists
         val packagePath = File(addonDir, "package")
@@ -133,7 +140,7 @@ class TgzPackageExtractTest : RobolectricTest() {
     @Test
     @Throws(IOException::class)
     fun unGzipTest() {
-        val unGzipFile = TgzPackageExtract.unGzip(File(tarballPath), addonDir)
+        val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
 
         // test if unGzip successfully return tar file
         assertTrue(File(unGzipFile.toString()).exists())
