@@ -17,13 +17,11 @@
 package com.ichi2.compat;
 
 import com.ichi2.anki.TestUtils;
-import com.ichi2.testutils.Test21And26;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,8 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.utils.FileOperation.getFileResource;
 
