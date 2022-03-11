@@ -34,16 +34,9 @@ interface OperationTest {
     val executionContext: MockMigrationContext
 
     /** Helper function: executes an [Operation] and all sub-operations */
-    fun executeAll(vararg ops: Operation) {
-        val opsTodo = ArrayDeque(ops.toList())
-        while (opsTodo.any()) {
-            val head = opsTodo.removeFirst()
-            Timber.d("executing $head")
-            this.executionContext.execSafe(head) {
-                opsTodo.addAll(0, head.execute())
-            }
-        }
-    }
+    fun executeAll(vararg ops: Operation) =
+        MockExecutor(ArrayDeque(ops.toList())) { executionContext }
+            .execute()
 
     /**
      * Executes an [Operation] without executing the sub-operations
