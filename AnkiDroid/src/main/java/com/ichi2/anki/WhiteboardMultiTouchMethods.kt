@@ -13,25 +13,22 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.ichi2.anki;
+package com.ichi2.anki
 
 /**
  * Provides callbacks for multi touch handling on a whiteboard
  */
-public interface WhiteboardMultiTouchMethods {
-
+interface WhiteboardMultiTouchMethods {
     /** Tap onto the currently shown flashcard at position x and y
      *
      * @param x horizontal position of the event
      * @param y vertical position of the event
      */
-    void tapOnCurrentCard(int x, int y);
+    fun tapOnCurrentCard(x: Int, y: Int)
 
     /** Scroll the currently shown flashcard vertically
      *
      * @param dy amount to be scrolled
      */
-    void scrollCurrentCardBy(int dy);
-
+    fun scrollCurrentCardBy(dy: Int)
 }
