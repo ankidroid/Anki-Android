@@ -19,7 +19,8 @@ package com.ichi2.utils
 /** Use when code can be changed after further conversion to Kotlin */
 @Target(
     AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION, AnnotationTarget.FIELD
+    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION, AnnotationTarget.FIELD,
+    AnnotationTarget.CONSTRUCTOR
 )
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
