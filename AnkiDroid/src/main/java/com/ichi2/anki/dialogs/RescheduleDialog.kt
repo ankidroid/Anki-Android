@@ -33,10 +33,10 @@ object RescheduleDialog : IntegerDialog() {
         val rescheduleDialog = RescheduleDialog
         val content = getContentString(resources, currentCard)
         rescheduleDialog.setArgs(
-            resources.getQuantityString(R.plurals.reschedule_cards_dialog_title_new, 1, 1),
-            resources.getString(R.string.reschedule_card_dialog_message),
-            4,
-            content
+            title = resources.getQuantityString(R.plurals.reschedule_cards_dialog_title_new, 1, 1),
+            prompt = resources.getString(R.string.reschedule_card_dialog_message),
+            digits = 4,
+            content = content
         )
         if (consumer != null) {
             rescheduleDialog.setCallbackRunnable(consumer)
