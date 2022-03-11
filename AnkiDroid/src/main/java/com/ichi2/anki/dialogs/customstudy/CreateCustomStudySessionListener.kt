@@ -18,19 +18,19 @@ package com.ichi2.anki.dialogs.customstudy
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
 import com.ichi2.async.TaskListenerWithContext
 
-class CreateCustomStudySessionListener(callback: Callback?) : TaskListenerWithContext<CreateCustomStudySessionListener.Callback?, Void?, DeckStudyData?>(callback) {
+class CreateCustomStudySessionListener(callback: Callback?) : TaskListenerWithContext<CreateCustomStudySessionListener.Callback, Void?, DeckStudyData?>(callback) {
     interface Callback {
         fun hideProgressBar()
         fun onCreateCustomStudySession()
         fun showProgressBar()
     }
 
-    override fun actualOnPreExecute(callback: Callback) {
-        callback.showProgressBar()
+    override fun actualOnPreExecute(context: Callback) {
+        context.showProgressBar()
     }
 
-    override fun actualOnPostExecute(callback: Callback, result: DeckStudyData?) {
-        callback.hideProgressBar()
-        callback.onCreateCustomStudySession()
+    override fun actualOnPostExecute(context: Callback, result: DeckStudyData?) {
+        context.hideProgressBar()
+        context.onCreateCustomStudySession()
     }
 }
