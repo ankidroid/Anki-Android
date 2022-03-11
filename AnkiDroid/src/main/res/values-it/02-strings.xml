@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Salvataggio pacchetto di Anki fallito</string>
     <string name="export_successful">Il file \"%s\" è stato esportato. Vuoi inviarlo con un\'altra app?</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Ciao!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Questo è un mazzo di carte di studio Anki inviato da AnkiDroid[1].
+        Prova ad aprirlo usando una delle distribuzioni di Anki[2] e goditi un apprendimento semplice ed efficiente!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Cambia Dimensione Carattere</string>
     <string name="insert_mathjax">Inserisci l\'Equazione MathJax</string>
     <string name="insert_cloze">Inserisci Eliminazione di Cloze</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Testo del pulsante</string>
     <string name="before_text">HTML Prima della Selezione</string>
     <string name="after_text">HTML Dopo la Selezione</string>
     <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>
@@ -379,7 +379,7 @@
     <string name="suspended_card">Carta sospesa</string>
     <string name="suspended_note">Nota sospesa</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Appunta il campo %s</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Migrazione dei dati</string>
     <string name="scoped_storage_initial_message">AnkiDroid deve spostare i suoi dati per soddisfare le nuove regole sulla privacy di Android
@@ -389,9 +389,9 @@
     <string name="scoped_storage_term_1">Ho eseguito il backup dei miei dati</string>
     <string name="scoped_storage_term_1_ankiweb">Ho sincronizzato con AnkiWeb di recente</string>
     <string name="scoped_storage_term_2">Non disinstallerò l\'applicazione mentre i dati vengono spostati</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
+    <string name="scoped_storage_select_all_terms">Si prega di accettare tutti gli elementi per continuare</string>
     <string name="scoped_storage_learn_more">Per saperne di più</string>
     <string name="scoped_storage_postpone">Posticipa</string>
     <string name="scoped_storage_migrate">Migra</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">La ricerca non ha restituito nessun risultato</string>
 </resources>

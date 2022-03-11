@@ -119,7 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid ha bisogno di %s di archiviazione, libera dello spazio per continuare</string>
     <string name="restore_backup_title">Ripristinare il backup?</string>
     <string name="restore_backup">La tua collezione verrà sostituita con una copia meno recente. I cambiamenti non salvati verranno persi.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Scegli un altro</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
@@ -185,7 +185,7 @@
     <string name="card_browser_deck_change_error">Impossibile cambiare mazzo</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore nella decodifica dei dati dalla carta</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded"> «%s» annullato</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Elaborazione delle opzioni del mazzo non riuscita: %s</string>
     <!-- Database Errors-->
