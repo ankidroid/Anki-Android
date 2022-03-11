@@ -1,4 +1,5 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -22,7 +23,8 @@
             <RelativeLayout
                 android:id="@+id/front_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                tools:ignore="UselessParent">
                 <include layout="@layout/toolbar"/>
                 <include layout="@layout/reviewer_topbar"
                     android:layout_width="match_parent"
