@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-    <!-- INFORMATION ABOUT USAGE
+<?xml version="1.0" encoding="UTF-8"?><!-- INFORMATION ABOUT USAGE
     We use this file bacause we want to enable for the release build various checks from the
     Android SDK(initially just NewApi and InlinedApi) plus our own custom Anki time usage related
     checks. Using the check() method on lintOptions in the lint.gradle file would be nice but it
@@ -51,6 +50,9 @@
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
 
+    <issue id="RedundantNamespace" severity="fatal" />
+
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
@@ -71,7 +73,6 @@
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
-    <issue id="RedundantNamespace" severity="ignore" />
     <issue id="Autofill" severity="ignore" />
     <issue id="ContentDescription" severity="ignore" />
     <issue id="AddJavascriptInterface" severity="ignore" />
