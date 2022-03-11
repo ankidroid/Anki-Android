@@ -213,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Разрешить все медиафайлы при импорте</string>
     <string name="media_import_allow_all_files_summ">Используйте, если Android не распознаёт файлы</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Расширенная статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Включить расширенную статистику</string>

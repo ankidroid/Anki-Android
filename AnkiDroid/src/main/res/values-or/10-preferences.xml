@@ -156,7 +156,7 @@
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ ଏବଂ କାର୍ଡ ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଉପକରଣଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି।</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଭାଇସଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
@@ -213,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -306,7 +310,7 @@
     <string name="analytics_title" maxLength="41">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
     <string name="analytics_summ">ଲୋକମାନେ କେଉଁ ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର କରନ୍ତି ତାହା ଦେଖିବାରେ ଉନ୍ନୟନ ଦଳକୁ ସାହାଯ୍ୟ କରି ଆପଣ AnkiDroidରେ ଯୋଗଦାନ କରିପାରିବେ</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML ସହିତ ନୂତନ ଲାଇନ୍ ବଦଳାନ୍ତୁ</string>
-    <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, କାର୍ଡ ସମ୍ପାଦନ କରିବା ସମୟରେ &lt;br&gt; କୁ ନୂତନ ଲାଇନରେ ରୂପାନ୍ତର କରନ୍ତୁ।</string>
+    <string name="note_editor_replace_newlines_summ">ନୋଟ୍ ସମ୍ପାଦକରେ, ଏକ ପତ୍ର ସମ୍ପାଦନ କଲାବେଳେ ଯେଉଁଠି ବି &lt;br&gt; ଦେଖାଯାଏ ଏଇଟାକୁ ନୂଆ ଧାଡ଼ିରେ ପରିଣତ କରନ୍ତୁ।</string>
     <string name="no_code_formatting" maxLength="41">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
@@ -317,7 +321,7 @@
     <string name="binding_add_key">Key ଯୋଡ଼ନ୍ତୁ</string>
     <string name="key_picker_default_press_key">ଏକ key ଦବାନ୍ତୁ</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">କାର୍ଡ୍ ପାର୍ଶ୍ୱ ଚୟନ କରନ୍ତୁ</string>
+    <string name="card_side_selection_title">ପତ୍ର ପାର୍ଶ୍ୱ ଚୟନ କରନ୍ତୁ</string>
     <string name="card_side_question">ପ୍ରଶ୍ନ</string>
     <string name="card_side_answer">ଉତ୍ତର</string>
     <string name="card_side_both">ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର</string>

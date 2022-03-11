@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
     <string name="multimedia_editor_popup_audio_clip">Audioclip hinzufügen</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Video hinzufügen</string>
     <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
     <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
     <string name="multimedia_editor_popup_cloze">Auslassung erzeugen</string>

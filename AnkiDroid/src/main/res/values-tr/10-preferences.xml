@@ -213,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Yüklenmiş medyaların tümüne izin verin</string>
     <string name="media_import_allow_all_files_summ">Bir medya dosyasını Android tanımazsa</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">İleri düzey istatistikler</string>
     <string name="enable_advanced_statistics_title" maxLength="41">İleri düzey istatistikleri etkinleştir</string>
