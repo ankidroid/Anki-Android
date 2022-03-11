@@ -76,21 +76,22 @@ object ContentResolverUtil {
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try {
             contentResolver.query(uri, null, null, null, null).use { c ->
-                if (c != null) {
-                    c.moveToNext()
-                    val mediaIndex = c.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
-                    if (mediaIndex != -1) {
-                        return c.getString(mediaIndex)
-                    }
-
-                    // use `_data` column label directly, MediaStore.MediaColumns.DATA is deprecated in API29+ but
-                    // the recommended MediaStore.MediaColumns.RELATIVE_PATH does not appear to be available
-                    // content uri contains only id and _data columns in samsung clipboard and not media columns
-                    // gboard contains media columns and works with MediaStore.MediaColumns.DISPLAY_NAME
-                    val dataIndex = c.getColumnIndexOrThrow("_data")
-                    val fileUri = Uri.parse(c.getString(dataIndex))
-                    return fileUri.lastPathSegment
+                if (c == null) {
+                    return null
                 }
+                c.moveToNext()
+                val mediaIndex = c.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                if (mediaIndex != -1) {
+                    return c.getString(mediaIndex)
+                }
+
+                // use `_data` column label directly, MediaStore.MediaColumns.DATA is deprecated in API29+ but
+                // the recommended MediaStore.MediaColumns.RELATIVE_PATH does not appear to be available
+                // content uri contains only id and _data columns in samsung clipboard and not media columns
+                // gboard contains media columns and works with MediaStore.MediaColumns.DISPLAY_NAME
+                val dataIndex = c.getColumnIndexOrThrow("_data")
+                val fileUri = Uri.parse(c.getString(dataIndex))
+                return fileUri.lastPathSegment
             }
         } catch (e: SQLiteException) {
             Timber.w(e, "getFilenameViaDisplayName ContentResolver query failed.")
