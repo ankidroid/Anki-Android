@@ -16,28 +16,25 @@
 
         <include layout="@layout/reviewer_flashcard_fullscreen_noanswers" />
         <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
-        <FrameLayout
+        <RelativeLayout
+            android:id="@+id/front_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
-            <RelativeLayout
-                android:id="@+id/front_frame"
+
+            <include layout="@layout/toolbar"/>
+            <include layout="@layout/reviewer_topbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="UselessParent">
-                <include layout="@layout/toolbar"/>
-                <include layout="@layout/reviewer_topbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/toolbar"/>
-                <include
-                    layout="@layout/reviewer_whiteboard_editor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bottom_area_layout"/>
-                <include layout="@layout/reviewer_answer_buttons"/>
-            </RelativeLayout>
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar"/>
+            <include
+                layout="@layout/reviewer_whiteboard_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/bottom_area_layout"/>
+            <include layout="@layout/reviewer_answer_buttons"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
