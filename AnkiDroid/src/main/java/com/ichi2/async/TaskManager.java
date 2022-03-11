@@ -110,10 +110,10 @@ public abstract class TaskManager {
      * @param timeoutSeconds timeout in seconds
      * @return whether or not the previous task was successful or not
      */
-    public static boolean waitToFinish(Integer timeoutSeconds) {
+    public static boolean waitToFinish(@Nullable Integer timeoutSeconds) {
         return sTaskManager.waitToFinishConcrete(timeoutSeconds);
     };
-    public abstract boolean waitToFinishConcrete(Integer timeoutSeconds);
+    public abstract boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds);
 
 
     /** Cancel the current task only if it's of type taskType */
