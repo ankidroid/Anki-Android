@@ -82,12 +82,6 @@
         <item quantity="other">Скінутыя %d карткі</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Перапланаваць картку</item>
-        <item quantity="few">Перапланаваць карткі</item>
-        <item quantity="many">Перапланаваць карткі</item>
-        <item quantity="other">Перапланаваць карткі</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Бягучы інтэрвал: %d дзень</item>
         <item quantity="few">Бягучы інтэрвал: %d дні</item>

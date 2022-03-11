@@ -76,10 +76,6 @@
         <item quantity="other">%d carte resettate</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Riprogramma la carta</item>
-        <item quantity="other">Riprogramma le carte</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Intervallo attuale: %d giorno</item>
         <item quantity="other">Intervallo attuale: %d giorni</item>

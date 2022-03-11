@@ -76,10 +76,6 @@
         <item quantity="other">%d kart sıfırlandı</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Kartın zamanını değiştir</item>
-        <item quantity="other">Kartın zamanını değiştir</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Şu anki aralık: %d gün</item>
         <item quantity="other">Şu anki aralık: %d gün</item>
