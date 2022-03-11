@@ -60,6 +60,8 @@ import java.util.zip.GZIPInputStream
 
 class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
+    private var requiredMinSpace: Long = 0
+    private var availableSpace: Long = 0
 
     /**
      * Determine whether a file is a gzip.
@@ -97,9 +99,9 @@ class TgzPackageExtract(private val context: Context) {
             context.getString(R.string.could_not_create_dir, addonsDir.absolutePath)
         }
 
-        // Make sure we have sufficient free space (twice)
-        val requiredMinSpace = tarballFile.length() * 2
-        val availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
+        // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
+        requiredMinSpace = tarballFile.length() * 2
+        availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
         if (requiredMinSpace > availableSpace) {
             Timber.e("Not enough space to extract file, need %d, available %d", requiredMinSpace, availableSpace)
             throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace)))
@@ -115,9 +117,18 @@ class TgzPackageExtract(private val context: Context) {
             throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, unTarSize), Formatter.formatFileSize(context, availableSpace)))
         }
 
-        // If space available then unTar it
-        unTar(tarTempFile, addonsDir)
-        tarTempFile.deleteOnExit()
+        try {
+            // If space available then unTar it
+            unTar(tarTempFile, addonsDir)
+        } catch (e: IOException) {
+            // directory where tar archive extracted
+            addonsDir.deleteRecursively()
+            Timber.w("Failed to unTar file")
+        } finally {
+            // remove unused files
+            tarballFile.deleteOnExit()
+            tarTempFile.deleteOnExit()
+        }
     }
 
     /**
@@ -156,6 +167,7 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(Exception::class)
     fun unTar(inputFile: File, outputDir: File) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
+        var newAvailableSpace: Long
 
         FileInputStream(inputFile).use { inputStream ->
             ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
@@ -164,6 +176,12 @@ class TgzPackageExtract(private val context: Context) {
 
                 while (entry != null) {
                     val outputFile = File(outputDir, entry.name)
+
+                    // check if space increased to 50% of total space
+                    newAvailableSpace = Utils.determineBytesAvailable(outputDir.canonicalPath)
+                    if (newAvailableSpace <= availableSpace / 2) {
+                        throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+                    }
 
                     // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
                     zipPathSafety(outputFile, outputDir)
