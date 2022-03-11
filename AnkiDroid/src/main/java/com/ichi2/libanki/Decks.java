@@ -23,6 +23,7 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -61,15 +62,23 @@ import static com.ichi2.utils.CollectionUtils.addAll;
 // fixmes:
 // - make sure users can't set grad interval < 1
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
-        "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
+
+
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes",
+        "PMD.MethodNamingConventions", "PMD.AvoidReassigningParameters", "PMD.SimplifyBooleanReturns"})
 public class Decks extends DeckManager {
 
-    /** Invalid id, represents an id on an unfound deck */
+    /**
+     * Invalid id, represents an id on an unfound deck
+     */
     public static final long NOT_FOUND_DECK_ID = -1L;
-    /** Configuration saving the current deck */
+    /**
+     * Configuration saving the current deck
+     */
     public static final String CURRENT_DECK = "curDeck";
-    /** Configuration saving the set of active decks (i.e. current decks and its descendants) */
+    /**
+     * Configuration saving the set of active decks (i.e. current decks and its descendants)
+     */
     public static final String ACTIVE_DECKS = "activeDecks";
 
 
@@ -79,81 +88,82 @@ public class Decks extends DeckManager {
 
     public static final String DEFAULT_DECK = ""
             + "{"
-                + "\"newToday\": [0, 0]," // currentDay, count
-                + "\"revToday\": [0, 0],"
-                + "\"lrnToday\": [0, 0],"
-                + "\"timeToday\": [0, 0]," // time in ms
-                + "\"conf\": 1,"
-                + "\"usn\": 0,"
-                + "\"desc\": \"\","
-                + "\"dyn\": 0," // anki uses int/bool interchangably here
-                + "\"collapsed\": false,"
-                + "\"browserCollapsed\": false,"
-                // added in beta11
-                + "\"extendNew\": 0,"
-                + "\"extendRev\": 0"
+            + "\"newToday\": [0, 0]," // currentDay, count
+            + "\"revToday\": [0, 0],"
+            + "\"lrnToday\": [0, 0],"
+            + "\"timeToday\": [0, 0]," // time in ms
+            + "\"conf\": 1,"
+            + "\"usn\": 0,"
+            + "\"desc\": \"\","
+            + "\"dyn\": 0," // anki uses int/bool interchangably here
+            + "\"collapsed\": false,"
+            + "\"browserCollapsed\": false,"
+            // added in beta11
+            + "\"extendNew\": 0,"
+            + "\"extendRev\": 0"
             + "}";
 
     private static final String defaultDynamicDeck = ""
             + "{"
-                + "\"newToday\": [0, 0],"
-                + "\"revToday\": [0, 0],"
-                + "\"lrnToday\": [0, 0],"
-                + "\"timeToday\": [0, 0],"
-                + "\"collapsed\": false,"
-                + "\"dyn\": 1,"
-                + "\"desc\": \"\","
-                + "\"usn\": 0,"
-                + "\"delays\": null,"
-                + "\"separate\": true,"
-                // list of (search, limit, order); we only use first element for now
-                + "\"terms\": [[\"\", 100, 0]],"
-                + "\"resched\": true,"
-                + "\"previewDelay\": 10,"
-                + "\"browserCollapsed\": false"
+            + "\"newToday\": [0, 0],"
+            + "\"revToday\": [0, 0],"
+            + "\"lrnToday\": [0, 0],"
+            + "\"timeToday\": [0, 0],"
+            + "\"collapsed\": false,"
+            + "\"dyn\": 1,"
+            + "\"desc\": \"\","
+            + "\"usn\": 0,"
+            + "\"delays\": null,"
+            + "\"separate\": true,"
+            // list of (search, limit, order); we only use first element for now
+            + "\"terms\": [[\"\", 100, 0]],"
+            + "\"resched\": true,"
+            + "\"previewDelay\": 10,"
+            + "\"browserCollapsed\": false"
             + "}";
 
     public static final String DEFAULT_CONF = ""
             + "{"
-                + "\"name\": \"Default\","
-                + "\"dyn\": false," // previously optional. Default was false
-                + "\"new\": {"
-                    + "\"delays\": [1, 10],"
-                    + "\"ints\": [1, 4, 7]," // 7 is not currently used
-                    + "\"initialFactor\": "+Consts.STARTING_FACTOR+","
-                    + "\"order\": " + Consts.NEW_CARDS_DUE + ","
-                    + "\"perDay\": 20,"
-                    // may not be set on old decks
-                    + "\"bury\": false"
-                + "},"
-                + "\"lapse\": {"
-                    + "\"delays\": [10],"
-                    + "\"mult\": 0,"
-                    + "\"minInt\": 1,"
-                    + "\"leechFails\": 8,"
-                    // type 0=suspend, 1=tagonly
-                    + "\"leechAction\": " + Consts.LEECH_TAGONLY
-                + "},"
-                + "\"rev\": {"
-                    + "\"perDay\": 200,"
-                    + "\"ease4\": 1.3,"
-                    + "\"hardFactor\": 1.2,"
-                    + "\"ivlFct\": 1,"
-                    + "\"maxIvl\": 36500,"
-                    // may not be set on old decks
-                    + "\"bury\": false"
-                + "},"
-                + "\"maxTaken\": 60,"
-                + "\"timer\": 0,"
-                + "\"autoplay\": true,"
-                + "\"replayq\": true,"
-                + "\"mod\": 0,"
-                + "\"usn\": 0"
-            +"}";
+            + "\"name\": \"Default\","
+            + "\"dyn\": false," // previously optional. Default was false
+            + "\"new\": {"
+            + "\"delays\": [1, 10],"
+            + "\"ints\": [1, 4, 7]," // 7 is not currently used
+            + "\"initialFactor\": " + Consts.STARTING_FACTOR + ","
+            + "\"order\": " + Consts.NEW_CARDS_DUE + ","
+            + "\"perDay\": 20,"
+            // may not be set on old decks
+            + "\"bury\": false"
+            + "},"
+            + "\"lapse\": {"
+            + "\"delays\": [10],"
+            + "\"mult\": 0,"
+            + "\"minInt\": 1,"
+            + "\"leechFails\": 8,"
+            // type 0=suspend, 1=tagonly
+            + "\"leechAction\": " + Consts.LEECH_TAGONLY
+            + "},"
+            + "\"rev\": {"
+            + "\"perDay\": 200,"
+            + "\"ease4\": 1.3,"
+            + "\"hardFactor\": 1.2,"
+            + "\"ivlFct\": 1,"
+            + "\"maxIvl\": 36500,"
+            // may not be set on old decks
+            + "\"bury\": false"
+            + "},"
+            + "\"maxTaken\": 60,"
+            + "\"timer\": 0,"
+            + "\"autoplay\": true,"
+            + "\"replayq\": true,"
+            + "\"mod\": 0,"
+            + "\"usn\": 0"
+            + "}";
 
 
     private final Collection mCol;
     private HashMap<Long, Deck> mDecks;
+    private Deck expanded;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
@@ -183,7 +193,7 @@ public class Decks extends DeckManager {
          */
         public static NameMap constructor(java.util.Collection<Deck> decks) {
             NameMap map = new NameMap(2 * decks.size());
-            for (Deck deck: decks) {
+            for (Deck deck : decks) {
                 map.add(deck);
             }
             return map;
@@ -221,19 +231,19 @@ public class Decks extends DeckManager {
 
 
         /**
-           Remove name from nameMap if it is equal to expectedDeck.
-
-           It is possible that another deck has been given name `name`,
-           in which case we don't want to remove it from nameMap.
-
-           E.g. if A is renamed to A::B and A::B already existed and get
-           renamed to A::B::B, then we don't want to remove A::B from
-           nameMap when A::B is renamed to A::B::B, since A::B is
-           potentially the correct value.
-        */
+         * Remove name from nameMap if it is equal to expectedDeck.
+         * <p>
+         * It is possible that another deck has been given name `name`,
+         * in which case we don't want to remove it from nameMap.
+         * <p>
+         * E.g. if A is renamed to A::B and A::B already existed and get
+         * renamed to A::B::B, then we don't want to remove A::B from
+         * nameMap when A::B is renamed to A::B::B, since A::B is
+         * potentially the correct value.
+         */
         public synchronized void remove(String name, JSONObject expectedDeck) {
             String[] names = new String[] {name, normalizeName(name)};
-            for (String name_: names) {
+            for (String name_ : names) {
                 JSONObject currentDeck = mNameMap.get(name_);
                 if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
                     /* Remove name from mapping only if it still maps to
@@ -245,6 +255,7 @@ public class Decks extends DeckManager {
         }
 
     }
+
 
     /**
      * Registry save/load
@@ -281,23 +292,32 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save() {
         save((JSONObject) null);
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(@NonNull Deck g) {
         save((JSONObject) g);
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(@NonNull DeckConfig g) {
         save((JSONObject) g);
     }
+
 
     private void save(JSONObject g) {
         if (g != null) {
@@ -344,10 +364,12 @@ public class Decks extends DeckManager {
         return null;
     }
 
+
     @Override
     public long id(@NonNull String name) throws DeckRenameException {
         return id(name, DEFAULT_DECK);
     }
+
 
     private String usable_name(@NonNull String name) {
         name = strip(name);
@@ -355,6 +377,7 @@ public class Decks extends DeckManager {
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
         return name;
     }
+
 
     /**
      * Add a deck with NAME. Reuse deck if already exists. Return id as int.
@@ -395,9 +418,11 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public long id_safe(@NonNull String name, @NonNull String type)  {
+    public long id_safe(@NonNull String name, @NonNull String type) {
         name = usable_name(name);
         Long id = id_for_name(name);
         if (id != null) {
@@ -410,7 +435,10 @@ public class Decks extends DeckManager {
         return id_create_name_valid(name, type);
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rem(long did, boolean cardsToo, boolean childrenToo) {
         Deck deck = get(did, false);
@@ -424,7 +452,7 @@ public class Decks extends DeckManager {
             return;
         }
         // log the removal regardless of whether we have the deck or not
-        mCol._logRem(new long[] { did }, Consts.REM_DECK);
+        mCol._logRem(new long[] {did}, Consts.REM_DECK);
         // do nothing else if doesn't exist
         if (deck == null) {
             return;
@@ -463,7 +491,10 @@ public class Decks extends DeckManager {
         save();
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public List<String> allNames(boolean dyn) {
@@ -483,7 +514,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public List<Deck> all() {
@@ -499,11 +532,25 @@ public class Decks extends DeckManager {
 
 
     @Override
-    public void collapse(long did) {
+    public void collapse(long did, boolean isChild) {
         Deck deck = get(did);
-        deck.put("collapsed", !deck.getBoolean("collapsed"));
-        save(deck);
+        if(expanded==deck) {
+            deck.put("collapsed",true);
+            save(deck);
+            expanded=null;
+        }  else {
+            if (expanded != null && !isChild) {
+                expanded.put("collapsed", true);
+                save(expanded);
+            }
+            boolean isCollapsed = deck.getBoolean("collapsed");
+            expanded = isCollapsed ? deck : null;
+            deck.put("collapsed", !deck.getBoolean("collapsed"));
+            save(deck);
+        }
+
     }
+
 
 
     public void collapseBrowser(long did) {
@@ -514,11 +561,14 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int count() {
         return mDecks.size();
     }
+
 
     @Override
     @CheckResult
@@ -533,15 +583,20 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @CheckResult
-    public @Nullable Deck byName(String name) {
+    public @Nullable
+    Deck byName(String name) {
         return mNameMap.get(name);
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(@NonNull Deck g) {
         long id = g.getLong("id");
@@ -558,7 +613,10 @@ public class Decks extends DeckManager {
         save();
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rename(@NonNull Deck g, @NonNull String newName) throws DeckRenameException {
         newName = strip(newName);
@@ -641,7 +699,7 @@ public class Decks extends DeckManager {
         }
 
         for (int i = 0; i < parentDeckPath.length; i++) {
-            if (! parentDeckPath[i].equals(childDeckPath[i])) {
+            if (!parentDeckPath[i].equals(childDeckPath[i])) {
                 return false;
             }
         }
@@ -657,7 +715,7 @@ public class Decks extends DeckManager {
         }
 
         for (int i = 0; i < ancestorDeckPath.length; i++) {
-            if (! Utils.equals(ancestorDeckPath[i], descendantDeckPath[i])) {
+            if (!Utils.equals(ancestorDeckPath[i], descendantDeckPath[i])) {
                 return false;
             }
         }
@@ -666,12 +724,15 @@ public class Decks extends DeckManager {
 
 
     private static final HashMap<String, String[]> pathCache = new HashMap<>();
+
+
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
         }
         return pathCache.get(name);
     }
+
 
     public static String basename(String name) {
         String[] path = path(name);
@@ -680,7 +741,6 @@ public class Decks extends DeckManager {
 
 
     /**
-     *
      * @param name The name whose parents should exists
      * @return The name, with potentially change in capitalization and unicode normalization, so that the parent's name corresponds to an existing deck.
      * @throws DeckRenameException if a parent is filtered
@@ -693,7 +753,7 @@ public class Decks extends DeckManager {
         if (path.length < 2) {
             return name;
         }
-        for(int i = 0; i < path.length - 1; i++) {
+        for (int i = 0; i < path.length - 1; i++) {
             String p = path[i];
             if (TextUtils.isEmpty(s)) {
                 s += p;
@@ -714,7 +774,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @VisibleForTesting
     protected String _ensureParentsNotFiltered(String name) {
@@ -723,7 +785,7 @@ public class Decks extends DeckManager {
         if (path.length < 2) {
             return name;
         }
-        for(int i = 0; i < path.length - 1; i++) {
+        for (int i = 0; i < path.length - 1; i++) {
             String p = path[i];
             if (TextUtils.isEmpty(s)) {
                 s += p;
@@ -754,7 +816,9 @@ public class Decks extends DeckManager {
      */
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public List<DeckConfig> allConf() {
@@ -793,7 +857,10 @@ public class Decks extends DeckManager {
         save();
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long confId(@NonNull String name, @NonNull String cloneFrom) {
         long id;
@@ -809,7 +876,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void remConf(long id) throws ConfirmModSchemaException {
         assert id != 1;
@@ -839,7 +908,7 @@ public class Decks extends DeckManager {
     @Override
     public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
-        for(Deck deck : mDecks.values()) {
+        for (Deck deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
                 dids.add(deck.getLong("id"));
             }
@@ -879,7 +948,7 @@ public class Decks extends DeckManager {
 
 
     public String nameOrNone(long did) {
-        Deck deck= get(did, false);
+        Deck deck = get(did, false);
         if (deck != null) {
             return deck.getString("name");
         }
@@ -915,6 +984,8 @@ public class Decks extends DeckManager {
 
 
     private static final Pattern spaceAroundSeparator = Pattern.compile("\\s*::\\s*");
+
+
     @VisibleForTesting
     static String strip(@NonNull String deckName) {
         //Ends of components are either the ends of the deck name, or near the ::.
@@ -925,17 +996,19 @@ public class Decks extends DeckManager {
         return deckName;
     }
 
+
     private void _recoverOrphans() {
         boolean mod = mCol.getDb().getMod();
         SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(allIds())));
         mCol.getDb().setMod(mod);
     }
 
+
     private void _checkDeckTree() {
         List<Deck> decks = allSorted();
         Map<String, Deck> names = HashUtil.HashMapInit(decks.size());
 
-        for (Deck deck: decks) {
+        for (Deck deck : decks) {
             String deckName = deck.getString("name");
 
             /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
@@ -998,6 +1071,7 @@ public class Decks extends DeckManager {
         }
     }
 
+
     @Override
     public void checkIntegrity() {
         _recoverOrphans();
@@ -1011,7 +1085,9 @@ public class Decks extends DeckManager {
      */
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public LinkedList<Long> active() {
@@ -1022,7 +1098,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long selected() {
         return mCol.get_config_long(CURRENT_DECK);
@@ -1039,7 +1117,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void select(long did) {
         String name = mDecks.get(did).getString("name");
@@ -1058,7 +1138,9 @@ public class Decks extends DeckManager {
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public TreeMap<String, Long> children(long did) {
@@ -1072,7 +1154,10 @@ public class Decks extends DeckManager {
         return actv;
     }
 
-    public static class Node extends HashMap<Long, Node> {}
+
+    public static class Node extends HashMap<Long, Node> {
+    }
+
 
     private void gather(Node node, List<Long> arr) {
         for (Map.Entry<Long, Node> entry : node.entrySet()) {
@@ -1081,6 +1166,7 @@ public class Decks extends DeckManager {
             gather(child, arr);
         }
     }
+
 
     @NonNull
     @Override
@@ -1117,6 +1203,7 @@ public class Decks extends DeckManager {
         return childMap;
     }
 
+
     /**
      * @return Names of ancestors of parents of name.
      */
@@ -1134,7 +1221,10 @@ public class Decks extends DeckManager {
         return parentsNames;
     }
 
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public List<Deck> parents(long did) {
@@ -1175,7 +1265,9 @@ public class Decks extends DeckManager {
      */
 
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long newDyn(String name) throws DeckRenameException {
         long did = id(name, defaultDynamicDeck);
@@ -1195,12 +1287,15 @@ public class Decks extends DeckManager {
         // intentionally blank
     }
 
+
     /*
      * ******************************
      * utils methods
      * **************************************
      */
     private static final HashMap<String, String> normalized = new HashMap<>();
+
+
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
             normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase(Locale.ROOT));
@@ -1208,15 +1303,17 @@ public class Decks extends DeckManager {
         return normalized.get(name);
     }
 
+
     public static boolean equalName(String name1, String name2) {
         return normalizeName(name1).equals(normalizeName(name2));
     }
 
     /*
-    * ***********************************************************
-    * The methods below are not in LibAnki.
-    * ***********************************************************
-    */
+     * ***********************************************************
+     * The methods below are not in LibAnki.
+     * ***********************************************************
+     */
+
 
     public static boolean isValidDeckName(@Nullable String deckName) {
         return deckName != null && !deckName.trim().isEmpty();
@@ -1224,6 +1321,8 @@ public class Decks extends DeckManager {
 
 
     private static final HashMap<String, String> sParentCache = new HashMap<>();
+
+
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {
@@ -1239,15 +1338,18 @@ public class Decks extends DeckManager {
         return sParentCache.get(deckName);
     }
 
+
     @VisibleForTesting
     @RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
 
+
     public static boolean isDynamic(Collection col, long deckId) {
         return Decks.isDynamic(col.getDecks().get(deckId));
     }
+
 
     public static boolean isDynamic(Deck deck) {
         return deck.isDyn();

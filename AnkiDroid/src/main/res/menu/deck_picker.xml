@@ -14,6 +14,7 @@
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_white"
         android:title="@string/button_sync"
+        android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"

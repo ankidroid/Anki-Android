@@ -221,8 +221,10 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         if (node.hasChildren()) {
             holder.deckExpander.setTag(node.getDid());
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
+            holder.deckLayout.setOnClickListener(mDeckExpanderClickListener);
         } else {
             holder.deckExpander.setClickable(false);
+            holder.deckLayout.setOnClickListener(mDeckClickListener);
         }
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
@@ -261,7 +263,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
         holder.countsLayout.setTag(node.getDid());
 
         // Set click listeners
-        holder.deckLayout.setOnClickListener(mDeckClickListener);
+        // holder.deckLayout.setOnClickListener(mDeckClickListener); // setting action to expand if deck hasChildren
         holder.deckLayout.setOnLongClickListener(mDeckLongClickListener);
         holder.countsLayout.setOnClickListener(mCountsClickListener);
     }

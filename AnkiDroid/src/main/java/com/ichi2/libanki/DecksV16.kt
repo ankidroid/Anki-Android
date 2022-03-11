@@ -316,7 +316,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         }.toMutableList()
     }
 
-    override fun collapse(did: did) {
+    override fun collapse(did: did, isChild: Boolean) {
         val deck = this.get(did).toV16()
         deck.collapsed = !deck.collapsed
         this.save(deck)

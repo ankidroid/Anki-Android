@@ -62,6 +62,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -119,6 +120,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
@@ -143,6 +145,7 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -253,6 +256,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private CustomStudyDialogFactory mCustomStudyDialogFactory;
     private DeckPickerContextMenu.Factory mContextMenuFactory;
 
+    private Long expandedDeckKey = null;
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -260,7 +264,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final OnClickListener mDeckExpanderClickListener = view -> {
         Long did = (Long) view.getTag();
         if (!getCol().getDecks().children(did).isEmpty()) {
-            getCol().getDecks().collapse(did);
+            List<Deck> decks = getCol().getDecks().parents(did);
+            getCol().getDecks().collapse(did,!decks.isEmpty());
             __renderPage();
             dismissAllDialogFragments();
         }
@@ -488,7 +493,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mPullToSyncWrapper.setOnRefreshListener(() -> {
             Timber.i("Pull to Sync: Syncing");
             mPullToSyncWrapper.setRefreshing(false);
-            sync();
+            // sync();  // TODO: Add a custom action to swipe refresh
         });
         mPullToSyncWrapper.getViewTreeObserver().addOnScrollChangedListener(() ->
                 mPullToSyncWrapper.setEnabled(mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));

@@ -71,7 +71,7 @@ abstract class DeckManager {
     abstract fun all(): List<Deck>
     abstract fun allIds(): Set<Long>
 
-    abstract fun collapse(did: Long)
+    abstract fun collapse(did: Long, isChild: Boolean)
 
     /** Return the number of decks. */
     @RustCleanup("This is a long in V16 - shouldn't make a difference, but needs investigation")
