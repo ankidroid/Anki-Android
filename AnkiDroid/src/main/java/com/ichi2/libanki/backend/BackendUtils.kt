@@ -33,7 +33,7 @@ object BackendUtils {
 
     fun jsonToArray(json: Backend.Json): JSONArray {
         val str = jsonToString(json)
-        return JSONArray(str)
+        return JSONArray(str as String?)
     }
 
     fun jsonToString(json: Backend.Json): String {

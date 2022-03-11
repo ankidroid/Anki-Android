@@ -25,6 +25,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder.contains
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.collections.Collection
 
 @RunWith(AndroidJUnit4::class)
 class PythonExtensionsTest {
@@ -34,7 +35,7 @@ class PythonExtensionsTest {
         val initial = JSONObject(mapOf("a" to "b"))
         val added = JSONObject(mapOf("b" to "c"))
 
-        val arr = JSONArray(listOf(initial))
+        val arr = JSONArray(listOf(initial) as Collection<*>?)
         arr.insert(1, added)
 
         assertThat(arr.length(), equalTo(2))
@@ -47,7 +48,7 @@ class PythonExtensionsTest {
         val initial = JSONObject(mapOf("a" to "b"))
         val added = JSONObject(mapOf("b" to "c"))
 
-        val arr = JSONArray(listOf(initial))
+        val arr = JSONArray(listOf(initial) as Collection<*>?)
         arr.insert(0, added)
 
         assertThat(arr.length(), equalTo(2))
@@ -61,7 +62,7 @@ class PythonExtensionsTest {
         val initial = JSONObject(mapOf("a" to "b"))
         val added = JSONObject(mapOf("b" to "c"))
 
-        val arr = JSONArray(listOf(initial))
+        val arr = JSONArray(listOf(initial) as Collection<*>?)
         arr.insert(2, added)
 
         assertThat(arr.length(), equalTo(2))
@@ -72,7 +73,7 @@ class PythonExtensionsTest {
     @Test
     fun middle_test() {
         val initial = arrayOf("a", "e", "i", "u").map { x -> JSONObject(mapOf(x to x)) }
-        val arr = JSONArray(initial)
+        val arr = JSONArray(initial as Collection<*>?)
         arr.insert(3, JSONObject(mapOf("o" to "o")))
 
         assertThat(arr.jsonObjectIterable().flatMap { x -> listOf(x.keys()).map { xx -> xx.next() } }, contains("a", "e", "i", "o", "u"))

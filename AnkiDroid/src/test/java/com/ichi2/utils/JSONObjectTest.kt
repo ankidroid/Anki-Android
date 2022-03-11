@@ -835,7 +835,7 @@ class JSONObjectTest {
     @Test
     fun testToStringWithIndentFactor() {
         val `object` = JSONObject()
-        `object`.put("foo", JSONArray(Arrays.asList(5, 6)))
+        `object`.put("foo", JSONArray(Arrays.asList(5, 6) as Collection<*>?))
         `object`.put("bar", JSONObject())
         val foobar = """{
      "foo": [

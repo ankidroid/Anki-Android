@@ -75,7 +75,7 @@ object JsonUtils {
     private fun toOrderedString(value: Any): Any {
         return when (value) {
             is JSONObject -> { JSONObject(value.toOrderedString()) }
-            is JSONArray -> { JSONArray(value.toOrderedString()) }
+            is JSONArray -> { JSONArray(value.toOrderedString() as String?) }
             else -> { value }
         }
     }

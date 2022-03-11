@@ -19,6 +19,11 @@
  * * the package, and hence the class actually tested, are com.ichi2.utils.
  * * the class don't inherit TestCase
  * * the equality of double uses explicitly a delta of 0
+ * * testJoinWithNull was removed due to Kotlin not accepting null
+ * * * join(null) is unreasonable to support.
+ * * testNulls has been reduced due to Kotlin not accepting null
+ * * * put(null) has already caused bugs and should not be supported.
+ * * * The null class defined by the library should be used instead
  */
 package com.ichi2.utils;
 
@@ -133,39 +138,15 @@ public class JSONArrayTest {
     @Test
     public void testNulls() {
         JSONArray array = new JSONArray();
-        array.put(3, null);
         array.put(0, JSONObject.NULL);
-        assertEquals(4, array.length());
-        assertEquals("[null,null,null,null]", array.toString());
+        assertEquals(1, array.length());
+        assertEquals("[null]", array.toString());
         // there's 2 ways to represent null; each behaves differently!
         assertEquals(JSONObject.NULL, array.get(0));
-        try {
-            array.get(1);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.get(2);
-            fail();
-        } catch (JSONException e) {
-        }
-        try {
-            array.get(3);
-            fail();
-        } catch (JSONException e) {
-        }
+
         assertEquals(JSONObject.NULL, array.opt(0));
-        assertEquals(null, array.opt(1));
-        assertEquals(null, array.opt(2));
-        assertEquals(null, array.opt(3));
         assertTrue(array.isNull(0));
-        assertTrue(array.isNull(1));
-        assertTrue(array.isNull(2));
-        assertTrue(array.isNull(3));
         assertEquals("null", array.optString(0));
-        assertEquals("", array.optString(1));
-        assertEquals("", array.optString(2));
-        assertEquals("", array.optString(3));
     }
     /**
      * Our behaviour is questioned by this bug:
@@ -295,11 +276,6 @@ public class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5 & true & [true,false]", array.join(" & "));
         array.put(new JSONObject(Collections.singletonMap("x", 6)));
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "));
-    }
-    @Test
-    public void testJoinWithNull() {
-        JSONArray array = new JSONArray(Arrays.asList(5, 6));
-        assertEquals("5null6", array.join(null));
     }
     @Test
     public void testJoinWithSpecialCharacters() {
