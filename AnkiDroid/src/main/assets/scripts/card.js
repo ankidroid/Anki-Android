@@ -135,7 +135,7 @@ function ankiToggleFlag(flag) {
         window.location.href = 'signal:flag_green';
         break;
       case 4:
-        window.location.href = 'signal:flag_blue';
+        window.location.href = "signal:flag_blue";
         break;
       default:
         console.log('No Flag Found');
