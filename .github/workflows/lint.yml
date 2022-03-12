@@ -80,3 +80,6 @@ jobs:
 
       - name: Ktlint Check
         run: ./gradlew ktlintCheck
+
+      - name: Prettier Check
+        run: npm_config_yes=true npx prettier --check AnkiDroid/**/*.js
