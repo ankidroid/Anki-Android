@@ -1,10 +1,10 @@
 window.MathJax = {
   tex: {
-    displayMath: [['\\[', '\\]']],
+    displayMath: [["\\[", "\\]"]],
     processRefs: false,
     processEnvironments: false,
     packages: {
-      '[+]': ['noerrors', 'mhchem'],
+      "[+]": ["noerrors", "mhchem"],
     },
   },
   startup: {
@@ -18,10 +18,10 @@ window.MathJax = {
       addMenu: [],
       checkLoading: [],
     },
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process',
+    ignoreHtmlClass: "tex2jax_ignore",
+    processHtmlClass: "tex2jax_process",
   },
   loader: {
-    load: ['[tex]/noerrors', '[tex]/mhchem'],
+    load: ["[tex]/noerrors", "[tex]/mhchem"],
   },
 };
