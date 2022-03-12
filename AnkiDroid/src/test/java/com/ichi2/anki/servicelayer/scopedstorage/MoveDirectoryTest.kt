@@ -150,8 +150,8 @@ class MoveDirectoryTest(
 
     @Test
     fun adding_file_during_move_is_not_fatal() {
-        val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
+        val operation = adding_during_move_helper() {
+            return@adding_during_move_helper it.addTempFile("new_file.txt")
         }
 
         assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
@@ -176,7 +176,7 @@ class MoveDirectoryTest(
         executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
 
         val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
+            return@adding_during_move_helper it.addTempFile("new_file.txt")
         }
 
         assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))

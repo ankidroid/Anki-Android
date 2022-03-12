@@ -119,7 +119,7 @@ class MoveDirectoryContentTest(
     @Test
     fun adding_file_during_move_is_not_fatal() {
         adding_during_move_helper {
-            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
+            return@adding_during_move_helper it.addTempFile("new_file.txt")
         }
     }
 
