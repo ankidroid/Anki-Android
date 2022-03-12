@@ -210,7 +210,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mFragmented) {
             studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
         }
-        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckinformation)
+        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
         mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
         mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
