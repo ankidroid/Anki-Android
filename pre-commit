@@ -1,15 +1,15 @@
 #!/bin/sh
 set -e
 
-CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')"
+CHANGED_KT_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')"
 
-if [ -z "$CHANGED_FILES" ]; then
+if [ -z "$CHANGED_KT_FILES" ]; then
     echo "No Kotlin staged files. Hence, skipping pre-commit Ktlint run."
     exit 0
 fi;
 
 echo "Running Ktlint over these files:"
-echo "$CHANGED_FILES"
+echo "$CHANGED_KT_FILES"
 
 
 # -q removes noise from the output if it fails.
@@ -24,7 +24,28 @@ if ! ./gradlew -q ktlintFormat ; then
 fi;
 
 echo "Completed ./gradlew ktlintFormat run."
-echo "$CHANGED_FILES" | while read -r file; do
+echo "$CHANGED_KT_FILES" | while read -r file; do
+    if [ -f "$file" ]; then
+        git add "$file"
+    fi
+done
+
+CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
+
+if [ -z "$CHANGED_JS_FILES" ]; then
+    echo "No Javascript staged files. Hence, skipping pre-commit Prettier run."
+    exit 0
+fi;
+
+echo "Running Prettier over these files:"
+echo "$CHANGED_JS_FILES"
+
+# Prettify all selected files
+echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --check
+
+
+echo "Completed npx prettier run."
+echo "$CHANGED_JS_FILES" | while read -r file; do
     if [ -f "$file" ]; then
         git add "$file"
     fi
