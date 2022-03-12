@@ -118,6 +118,7 @@ class TgzPackageExtract(private val context: Context) {
 
         // If space available then unGZip it
         val tarTempFile = unGzip(tarballFile, addonsDir)
+        tarTempFile.deleteOnExit()
 
         // Make sure we have sufficient free space
         val unTarSize = calculateUnTarSize(tarTempFile)
@@ -130,11 +131,7 @@ class TgzPackageExtract(private val context: Context) {
             // If space available then unTar it
             unTar(tarTempFile, addonsDir)
         } catch (e: IOException) {
-            // directory where tar archive extracted
-            addonsDir.deleteRecursively()
             Timber.w("Failed to unTar file")
-        } finally {
-            tarTempFile.delete()
         }
     }
 
@@ -158,24 +155,28 @@ class TgzPackageExtract(private val context: Context) {
         total = 0
         data = ByteArray(BUFFER)
 
-        // file being unGzipped must not be greater than 100MB
-        GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
-            FileOutputStream(outputFile).use { outputStream ->
-                BufferedOutputStream(outputStream, BUFFER).use { bufferOutput ->
+        try {
+            // file being unGzipped must not be greater than 100MB
+            GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
+                FileOutputStream(outputFile).use { outputStream ->
+                    BufferedOutputStream(outputStream, BUFFER).use { bufferOutput ->
 
-                    while (total + BUFFER <= TOO_BIG_SIZE &&
-                        inputStream.read(data, 0, BUFFER).also { count = it } != -1
-                    ) {
+                        while (total + BUFFER <= TOO_BIG_SIZE &&
+                            inputStream.read(data, 0, BUFFER).also { count = it } != -1
+                        ) {
+                            bufferOutput.write(data, 0, count)
+                            total += count
+                        }
 
-                        bufferOutput.write(data, 0, count)
-                        total += count
-                    }
-
-                    if (total + BUFFER > TOO_BIG_SIZE) {
-                        throw IllegalStateException("File being unGzip is too big")
+                        if (total + BUFFER > TOO_BIG_SIZE) {
+                            throw IllegalStateException("File being unGzip is too big")
+                        }
                     }
                 }
             }
+        } catch (e: IOException) {
+            outputFile.delete()
+            throw IllegalStateException("File being unGzip is too big")
         }
 
         return outputFile
@@ -197,32 +198,41 @@ class TgzPackageExtract(private val context: Context) {
         count = 0
         total = 0
         data = ByteArray(BUFFER)
+        var addonName = ""
 
-        FileInputStream(inputFile).use { inputStream ->
-            ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
-                val tarInputStream1 = tarInputStream as TarArchiveInputStream
-                var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
+        try {
+            FileInputStream(inputFile).use { inputStream ->
+                ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
+                    val tarInputStream1 = tarInputStream as TarArchiveInputStream
+                    var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
 
-                while (entry != null) {
-                    val outputFile = File(outputDir, entry.name)
+                    // first entry will be addon name
+                    addonName = entry!!.name
 
-                    // check if space increased to 50% of total space
-                    newAvailableSpace = Utils.determineBytesAvailable(outputDir.canonicalPath)
-                    if (newAvailableSpace <= availableSpace / 2) {
-                        throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+                    while (entry != null) {
+                        val outputFile = File(outputDir, entry.name)
+
+                        // check if space increased to 50% of total space
+                        newAvailableSpace = Utils.determineBytesAvailable(outputDir.canonicalPath)
+                        if (newAvailableSpace <= availableSpace / 2) {
+                            throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+                        }
+
+                        // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
+                        zipPathSafety(outputFile, outputDir)
+                        if (entry.isDirectory) {
+                            unTarDir(inputFile, outputDir, outputFile)
+                        } else {
+                            unTarFile(tarInputStream, entry, outputDir, outputFile)
+                        }
+
+                        entry = tarInputStream.nextEntry as? TarArchiveEntry?
                     }
-
-                    // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
-                    zipPathSafety(outputFile, outputDir)
-                    if (entry.isDirectory) {
-                        unTarDir(inputFile, outputDir, outputFile)
-                    } else {
-                        unTarFile(tarInputStream, entry, outputDir, outputFile)
-                    }
-
-                    entry = tarInputStream.nextEntry as? TarArchiveEntry?
                 }
             }
+        } catch (e: IOException) {
+            File(addonName).deleteRecursively()
+            throw ArchiveException(context.getString(R.string.malicious_archive_exceeds_limit, addonName))
         }
     }
 
