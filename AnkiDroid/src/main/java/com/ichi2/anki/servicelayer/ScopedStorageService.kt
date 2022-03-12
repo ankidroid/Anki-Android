@@ -1,5 +1,6 @@
 /*
  *  Copyright (c) 2022 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -19,11 +20,24 @@ package com.ichi2.anki.servicelayer
 import android.content.Context
 import android.content.SharedPreferences
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.model.Directory
+import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
 import java.io.File
 
 /** A path to the AnkiDroid directory, named "AnkiDroid" by default */
-typealias AnkiDroidDirectory = String
+typealias AnkiDroidDirectory = Directory
+
+/**
+ * Returns the relative file path from a given [AnkiDroidDirectory]
+ * @return null if the file was not inside the directory, or referred to the root directory
+ */
+fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
+    RelativeFilePath.fromPaths(
+        baseDir = this,
+        file = file
+    )
 
 object ScopedStorageService {
     /**
