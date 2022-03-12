@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Atkurti atsarginę kopiją?</string>
     <string name="restore_backup">Jūsų rinkinys bus pakeistas senesne kopija. Bus prarasta bet kokia neišsaugota pažanga.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Atšaukti</string>
     <string name="dialog_ok">Gerai</string>
     <string name="dialog_no">Ne</string>
@@ -198,6 +199,7 @@
     <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->

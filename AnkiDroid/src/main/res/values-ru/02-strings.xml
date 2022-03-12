@@ -419,4 +419,5 @@
     <string name="scoped_storage_learn_more">Подробнее</string>
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

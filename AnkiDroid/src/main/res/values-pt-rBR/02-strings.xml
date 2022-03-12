@@ -59,7 +59,7 @@
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Salvar quadro.</string>
     <string name="enable_whiteboard">Habilitar quadro</string>
-    <string name="disable_whiteboard">Desativar quadro</string>
+    <string name="disable_whiteboard">Desabilitar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
     <string name="hide_whiteboard">Ocultar quadro</string>
     <string name="clear_whiteboard">Limpar quadro</string>
@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Saiba mais</string>
     <string name="scoped_storage_postpone">Adiar</string>
     <string name="scoped_storage_migrate">Migrar</string>
+    <string name="search_card_js_api_no_results">Nenhum resultado para a busca</string>
 </resources>

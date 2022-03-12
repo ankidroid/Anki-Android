@@ -42,8 +42,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Çekmeceyi Aç</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Çekmeceyi Kapat</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Çekmeceyi aç</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Çekmeceyi kapat</string>
     <string name="CardEditorCardDeck">Kart destesi:</string>
     <string name="CardEditorNoteDeck">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
@@ -93,7 +93,7 @@
         <item>Kolaylık</item>
         <item>Vade</item>
         <item>Kart Değiştirildi</item>
-        <item>Oluşturuldu</item>
+        <item>Oluşturulma</item>
         <item>Değiştirilmiş notlar</item>
     </string-array>
     <!-- Custom study options -->
@@ -150,7 +150,7 @@
     <string name="empty_cards">Boş kartlar</string>
     <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
     <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
-    <string name="unknown_type_field_warning">Yanıtı yazın: bilinmeyen alan %s</string>
+    <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
     <string name="show_hint">%s göster</string>
     <string name="info_rate">AnkiDroid\'e Oy Ver</string>
@@ -187,11 +187,11 @@
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_successful">Dosya \"%s\" dışarı çıkartıldı. Başka bir uygulama ile göndermek istiyor musunuz?</string>
-    <string name="export_email_subject">AnkiDroid hafızakartlarına çıkartıldı: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
+    <string name="export_email_text"><![CDATA[        Selam!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Bu, AnkiDroid\'den[1] gönderilmiş bir Anki bilgi kartı destesi.
+        Mevcut Anki dağıtımlarından[2] biriyle açmayı deneyin ve kolay ve verimli öğrenmenin tadını çıkarın!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
     <string name="insert_mathjax">MathJax denklemi ekle</string>
     <string name="insert_cloze">Boşluk doldurma ekle</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Düğme yazısı</string>
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
     <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
     <string name="scoped_storage_postpone">Ertele</string>
     <string name="scoped_storage_migrate">Taşı</string>
+    <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
 </resources>

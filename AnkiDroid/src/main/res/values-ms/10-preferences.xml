@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Teratas</item>
         <item>Bawah</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktifkan isyarat</string>
     <string name="gestures_summ">Berikan isyarat untuk tindakan seperti menjawab dan editing kad.</string>
@@ -213,6 +214,10 @@ minit yang lalu.</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>

@@ -14,36 +14,32 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.compat
+package com.ichi2.compat
 
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatV21
-import com.ichi2.compat.CompatV26
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.ichi2.testutils.*
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.withTempFile
+import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
+@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
 class CompatHasFilesTest(
-    val compat: Compat,
+    override val compat: Compat,
     /** Used in the "Test Results" Window */
     @Suppress("unused") private val unitTestDescription: String
-) {
-
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV21(), "CompatV21"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
-    }
+) : Test21And26(compat, unitTestDescription) {
 
     @Test
     fun has_files_with_file() {
@@ -61,7 +57,29 @@ class CompatHasFilesTest(
     fun has_files_not_exists() {
         val dir = createTransientDirectory()
         dir.delete()
-        assertThat("deleted directory has no files", hasFiles(dir), equalTo(false))
+
+        assertThrows<FileNotFoundException> { hasFiles(dir) }
+    }
+
+    @Test
+    fun has_files_on_file() {
+        val file = createTransientFile("hello")
+
+        val exception = assertThrowsSubclass<IOException> { hasFiles(file) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertThat("Starting at API 26, this should be a NotDirectoryException", exception, CoreMatchers.instanceOf(NotDirectoryException::class.java))
+        }
+    }
+
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory.directory) }
     }
 
     private fun hasFiles(dir: File) = compat.hasFiles(dir)

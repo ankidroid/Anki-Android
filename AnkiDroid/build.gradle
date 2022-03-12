@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600145
-        versionName="2.16alpha45"
+        versionCode=21600150
+        versionName="2.16alpha50"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -238,8 +238,21 @@ task installGitHook(type: Copy) {
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
 
+/**
+Kotlin allows concrete function implementations inside interfaces.
+For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
+'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
+
+https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
+
+    and we used "all" because we don't have downstream consumers
+    https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
+ */
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions {
+        allWarningsAsErrors = true
+        freeCompilerArgs = ['-Xjvm-default=all'] 
+    }
 }
 
 //Workaround for: https://github.com/pinterest/ktlint/issues/1216
@@ -284,7 +297,7 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.4.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
     implementation 'com.github.CanHub:Android-Image-Cropper:3.1.3'
 
 
@@ -333,15 +346,17 @@ dependencies {
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
-    testImplementation 'org.mockito:mockito-inline:4.3.1'
+    testImplementation 'org.mockito:mockito-inline:4.4.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
-    testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation "org.robolectric:robolectric:4.7.3"
     testImplementation 'androidx.test:core:1.4.0'
     testImplementation 'androidx.test.ext:junit:1.1.3'
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
     debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 

@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>顶部</item>
         <item>底部</item>
+        <item>无</item>
     </string-array>
     <string name="gestures" maxLength="41">启用手势</string>
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
@@ -212,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">允许媒体导入中的所有文件</string>
     <string name="media_import_allow_all_files_summ">如果安卓系统不识别媒体文件</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
@@ -263,9 +268,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">最大时间间隔</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
     <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
-    <string name="deck_conf_leech_thres" maxLength="41">记忆难点阈值</string>
+    <string name="deck_conf_leech_thres" maxLength="41">“水蛭”阈值</string>
     <string name="deck_conf_fails">XXX 失败</string>
-    <string name="deck_conf_leech_action" maxLength="41">记忆难点动作</string>
+    <string name="deck_conf_leech_action" maxLength="41">“水蛭”处置</string>
     <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">显示计时器</string>

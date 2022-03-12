@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid benötigt %s freien Speicherplatz um fortzufahren. Bitte leeren Sie etwas Speicherplatz</string>
     <string name="restore_backup_title">Sicherung wiederherstellen?</string>
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
+    <string name="restore_backup_choose_another">Eine andere auswählen</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nein</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">Stapel konnte nicht geändert werden</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Decodieren der Daten von Karte</string>
+    <string name="undo_succeeded">\"%s\" rückgängig gemacht</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Stapeloptionen konnten nicht verarbeitet werden: %s</string>
     <!-- Database Errors-->

@@ -121,7 +121,7 @@
     <string name="reordering_cards">カードを並べ替えています...</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除され、同じノートタイプに１つもカードが残っていない場合は、そのノートタイプも同時に失われます。それでも処理を続行しますか。</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">タイムボックスの時間です</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d枚のカードを%2$sで学習しました</item>
     </plurals>
@@ -155,7 +155,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
-    <string name="import_log_no_apkg">これは読み込み可能なAnkiパーッケージファイル（*.apkg）ではありません</string>
+    <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
@@ -174,7 +174,7 @@
     <string name="import_interrupted">インポートが中断されました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
     <string name="export_include_media">メディアファイルを含める</string>
-    <string name="confirm_apkg_export">全デッキのデータの控え（Ankiパッケージ）を作成します。よろしいですか？</string>
+    <string name="confirm_apkg_export">コレクション（全デッキ）のデータの控え（Ankiパッケージ）を作成しますか？</string>
     <string name="confirm_apkg_export_deck">デッキ \"%s\" のデータが入ったAnki用ファイル（*.apkg）を作成します。よろしいですか？</string>
     <string name="export_in_progress">Ankiパッケージを作成しています...</string>
     <string name="export_successful_title">Ankiパッケージを送信しますか？</string>
@@ -320,7 +320,7 @@
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax 式を挿入</string>
     <string name="insert_cloze">穴埋め部分の挿入</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">ボタンに表示する文字</string>
     <string name="before_text">選択部分の前のHTML</string>
     <string name="after_text">選択部分の後ろのHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
@@ -332,36 +332,36 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面にAnkiDroidのショートカットを追加することはできません。</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文章を大文字にする</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ツールバーをスクロール表示</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">メールアドレスが必要です。</string>
-    <string name="password_empty">パスワードが必要</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="email_id_empty">メールアドレスが必要です</string>
+    <string name="password_empty">パスワードが必要です</string>
+    <string name="back_pressed_once">もう一度押すと終了します</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="download_deck">デッキをダウンロード</string>
+    <string name="try_again">再試行</string>
+    <string name="cancel_download">ダウンロードをキャンセル</string>
+    <string name="cancel_download_question_title">ダウンロードをキャンセルしますか？</string>
+    <string name="downloading_file">%s をダウンロード中</string>
+    <string name="import_deck">デッキをインポート</string>
+    <string name="something_wrong">問題が発生しました。もう一度やり直してください。</string>
+    <string name="download_failed">ダウンロードに失敗しました</string>
+    <string name="deck_download_progress_message">ダウンロード中は他のアプリを使用できます</string>
+    <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="home">ホーム</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>
     <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
+    <string name="buried_card">カードを延期しました</string>
+    <string name="buried_note">ノートを延期しました</string>
     <string name="deleted_note">Deleted note</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
@@ -380,4 +380,5 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
+    <string name="search_card_js_api_no_results">Search returned no results</string>
 </resources>

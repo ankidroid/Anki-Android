@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_successful">Datei \"%s\" wurde exportiert. Möchten Sie sie mit einer anderen App senden?</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Hallo!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Dies ist ein Stapel von Anki Lernkarten gesendet von AnkiDroid[1].
+        Versuche ihn mit einer der verfügbaren Anki Distributionen[2] zu öffnen und genieße ein einfaches und effizientes Lernen!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -270,7 +270,7 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
     <string name="cloze_sample_text">Dies ist eine {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Baispiel</string>
     <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- in options menu & Navigation Drawer -->
@@ -333,7 +333,7 @@
     <string name="format_font_size">Schriftgröße ändern</string>
     <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
     <string name="insert_cloze">Auslassung einfügen</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Schaltflächentext</string>
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
@@ -393,4 +393,5 @@
     <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
     <string name="scoped_storage_postpone">Aufschieben</string>
     <string name="scoped_storage_migrate">Daten verschieben</string>
+    <string name="search_card_js_api_no_results">Suche lieferte keine Ergebnisse</string>
 </resources>

@@ -37,12 +37,22 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Ensures that a GPLv3-compatible copyright header exists in all files.
+ *
+ * Provides instructions and documentation for a long-term fix if this is triggered.
+ *
+ * @see #EXPLANATION
+ */
 @SuppressWarnings("UnstableApiUsage")
 @Beta
 public class CopyrightHeaderExists extends Detector implements SourceCodeScanner {
-    // This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines
+    /** This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines */
     private static final Pattern COPYRIGHT_PATTERN = Pattern.compile("version 3 of the License, or \\(at");
-    // Suppressing this lint doesn't seem to work as it's the first statement, so allow a
+    /**
+     * &#64;SuppressWarnings doesn't work as it's the first statement, so allow suppression via:
+     * <pre>//noinspection MissingCopyrightHeader &lt;reason&gt;</pre>
+     */
     private static final Pattern IGNORE_CHECK_PATTERN = Pattern.compile("MissingCopyrightHeader");
 
     @VisibleForTesting

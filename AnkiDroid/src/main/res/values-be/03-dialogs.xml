@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">Для працягу праграме неабходна %s свабоднага месца. Вызваліце неабходнае месца на сваёй прыладзе</string>
     <string name="restore_backup_title">Аднавіць з рэзервовай копіі?</string>
     <string name="restore_backup">Ваша калекцыя будзе заменена больш старой копіяй. Незахаваныя дасягненні будуць страчаныя.</string>
+    <string name="restore_backup_choose_another">Выбраць іншую</string>
     <string name="dialog_cancel">Адмяніць</string>
     <string name="dialog_ok">Добра</string>
     <string name="dialog_no">Не</string>
@@ -198,6 +199,7 @@
     <string name="card_browser_deck_change_error">Не атрымалася змяніць калоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Памылка дэкадавання даных карткі</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не атрымалася апрацаваць параметры калоды: %s</string>
     <!-- Database Errors-->

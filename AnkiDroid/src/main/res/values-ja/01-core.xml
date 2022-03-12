@@ -69,7 +69,7 @@
         <item quantity="other">残り約 %d 日と %d 時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだデッキがありません</string>
-    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加して下さい</string>
+    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
@@ -91,7 +91,7 @@
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
-    <string name="browse_cards">カードをブラウズ</string>
+    <string name="browse_cards">カードをブラウザで表示</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -110,9 +110,9 @@
     <string name="menu_flag_card_two">橙フラグ</string>
     <string name="menu_flag_card_three">緑フラグ</string>
     <string name="menu_flag_card_four">青フラグ</string>
-    <string name="menu_flag_card_five">ピンクのフラグ</string>
-    <string name="menu_flag_card_six">青緑色のフラグ</string>
-    <string name="menu_flag_card_seven">紫のフラグ</string>
+    <string name="menu_flag_card_five">ピンクフラグ</string>
+    <string name="menu_flag_card_six">青緑フラグ</string>
+    <string name="menu_flag_card_seven">紫フラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
     <string name="menu_search">%1$s で検索</string>
@@ -153,12 +153,12 @@
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck">デッキ検索</string>
-    <string name="empty_deck_add_note">カードの追加</string>
+    <string name="empty_deck_add_note">カードを追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
     <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
-    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの今日の課題を全て達成しました！</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題を全て達成しました！</string>
     <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。</string>
     <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。（上限を上げると短期的に学習の負担が増えますのでご注意ください。）</string>
     <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
@@ -171,7 +171,7 @@
     <string name="sync_cancelled">同期がキャンセルされました</string>
     <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="export">エクスポート</string>
-    <string name="export_collection">エクスポート（全デッキ）</string>
+    <string name="export_collection">エクスポート（コレクション）</string>
     <string name="export_deck">このデッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
@@ -214,13 +214,13 @@
     <string name="wrong_tag_closed">{{/%1$s}}\'が見つかりましたが、期待されていた \'{{/%2$s}}\'</string>
     <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">コレクションは結合できません。\nどのコレクションを保持しますか？</string>
+    <string name="sync_conflict_message_new">コレクションを結合できません。\nどちらのコレクションを保持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroidのコレクションをAnkiWebのコレクションに置き換えますか？</string>
-    <string name="sync_conflict_local_confirm_new">AnkiDroidのコレクションとAnkiWeb上のコレクションを置き換えてください。</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWebのコレクションをAnkiDroidのコレクションに置き換えますか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
-    <string name="sync_conflict_replace_title">コレクションを置き換える</string>
+    <string name="sync_conflict_replace_title">コレクションを置換</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>

@@ -121,6 +121,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
     <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
     <string name="dialog_no">خیر</string>
@@ -186,6 +187,7 @@
     <string name="card_browser_deck_change_error">تغییر دسته انجام نشد</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">خطا در دریافت اطلاعات از کارت</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">پردازش اختیارات دسته انجام نشد: %s</string>
     <!-- Database Errors-->

@@ -106,6 +106,7 @@
 
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
 
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
 
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>

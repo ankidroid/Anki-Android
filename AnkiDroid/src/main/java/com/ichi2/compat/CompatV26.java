@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2018 Mike Hardy <github@mikehardy.net>                                 *
+ * Copyright (c) 2022 Arthur Milchior <arthur@milchior.fr>                              *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -30,6 +31,7 @@ import com.ichi2.utils.FileUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 
 import java.io.File;
@@ -38,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -48,6 +51,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Iterator;
 
 import timber.log.Timber;
 
@@ -156,15 +160,6 @@ public class CompatV26 extends CompatV23 implements Compat {
         });
     }
 
-    @Override
-    public boolean hasFiles(@NonNull File directory) throws IOException {
-        try (DirectoryStream<Path> paths = Files.newDirectoryStream(directory.toPath())) {
-            return paths.iterator().hasNext();
-        } catch (NotDirectoryException | NoSuchFileException ex) {
-            return false;
-        }
-    }
-
 
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
@@ -182,5 +177,57 @@ public class CompatV26 extends CompatV23 implements Compat {
         if (audioFocusRequest != null) {
             audioManager.abandonAudioFocusRequest(audioFocusRequest);
         }
+    }
+
+    @VisibleForTesting
+    @NonNull DirectoryStream<Path> newDirectoryStream(Path dir) throws IOException {
+        return Files.newDirectoryStream(dir);
+    }
+
+    /*
+     * This method uses [Files.newDirectoryStream].
+     * Hence this method, hasNext and next should be constant in time and space.
+     */
+    @Override
+    public @NonNull FileStream contentOfDirectory(File directory) throws IOException {
+        final DirectoryStream<Path> paths_stream;
+        try {
+            paths_stream = newDirectoryStream(directory.toPath());
+        } catch (IOException e) {
+            if (e instanceof NoSuchFileException) {
+                NoSuchFileException nsfe = (NoSuchFileException) e;
+                throw new FileNotFoundException(nsfe.getFile() + "\n" + nsfe.getCause() + "\n" + nsfe.getStackTrace());
+            }
+            throw e;
+        }
+        Iterator<Path> paths = paths_stream.iterator();
+        return new FileStream() {
+            @Override
+            public void close() throws IOException {
+                paths_stream.close();
+            }
+
+
+            @Override
+            public boolean hasNext() throws IOException {
+                try {
+                    return paths.hasNext();
+                } catch (DirectoryIteratorException e) {
+                    // According to the documentation, it's the only exception it can throws.
+                    throw e.getCause();
+                }
+            }
+
+
+            @Override
+            public File next() throws IOException {
+                // According to the documentation, if [hasNext] returned true, [next] is guaranteed to succeed.
+                try {
+                    return paths.next().toFile();
+                } catch (DirectoryIteratorException e) {
+                    throw e.getCause();
+                }
+            }
+        };
     }
 }

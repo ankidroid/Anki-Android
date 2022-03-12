@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Khôi phục sao lưu?</string>
     <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Không</string>
@@ -177,6 +178,7 @@
     <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Lỗi giải mã dữ liệu từ thẻ</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Không xử lý được các tùy chọn bộ thẻ: %s</string>
     <!-- Database Errors-->

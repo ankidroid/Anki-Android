@@ -103,11 +103,11 @@ publishing {
             pom {
                 name = 'AnkiDroid API'
                 description = 'A programmatic API exported by AnkiDroid'
-                url = 'https://github.com/ankidroid/Anki-Android/tree/master/api'
+                url = 'https://github.com/ankidroid/Anki-Android/tree/main/api'
                 licenses {
                     license {
                         name = 'GNU LESSER GENERAL PUBLIC LICENSE, v3'
-                        url = 'https://github.com/ankidroid/Anki-Android/blob/master/api/COPYING.LESSER'
+                        url = 'https://github.com/ankidroid/Anki-Android/blob/main/api/COPYING.LESSER'
                     }
                 }
                 scm {

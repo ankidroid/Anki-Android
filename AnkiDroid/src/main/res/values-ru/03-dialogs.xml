@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Нет</string>
@@ -199,6 +200,7 @@
     <string name="card_browser_deck_change_error">Не удалось сменить колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ошибка при декодировании данных карточки</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не удалось обработать параметры колоды: %s</string>
     <!-- Database Errors-->

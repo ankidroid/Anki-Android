@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid potřebuje %s volného úložiště. Abyste mohli pokračovat. Uvolněte prosím nějaké místo</string>
     <string name="restore_backup_title">Obnovit zálohu?</string>
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
+    <string name="restore_backup_choose_another">Vybrat jinou</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
     <string name="dialog_no">Ne</string>
@@ -198,6 +199,7 @@
     <string name="card_browser_deck_change_error">Nelze změnit balíček</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Chyba při dekódování dat z karty</string>
+    <string name="undo_succeeded">Vráceno zpět „%s“</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Nepodařilo se zpracovat možnosti balíčku: %s</string>
     <!-- Database Errors-->

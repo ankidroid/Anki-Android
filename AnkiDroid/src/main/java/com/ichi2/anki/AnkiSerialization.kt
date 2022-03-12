@@ -27,20 +27,14 @@ object AnkiSerialization {
      * @return singleton of {@link ObjectMapper} used to bind json to java classes
      */
     @JvmStatic
-    var objectMapper: ObjectMapper? = null
-        get() {
-            if (field == null) {
-                field = ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            }
-            return field
-        }
-        private set
+    val objectMapper: ObjectMapper by lazy {
+        ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    }
 
     /**
      * @return singleton of {@link JsonFactory} used for json stream processing
      */
     @JvmStatic
     val factory: JsonFactory
-        get() = objectMapper!!.factory
+        get() = objectMapper.factory
 }

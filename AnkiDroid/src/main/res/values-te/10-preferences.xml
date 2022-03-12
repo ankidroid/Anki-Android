@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>టాప్</item>
         <item>దిగువ</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">సంజ్ఞలను ప్రారంభించండి</string>
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
@@ -213,6 +214,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు</string>
     <string name="enable_advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు ప్రారంభించు</string>

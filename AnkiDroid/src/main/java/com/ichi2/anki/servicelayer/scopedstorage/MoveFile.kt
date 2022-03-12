@@ -133,12 +133,10 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
      * @throws MigrateUserData.MissingDirectoryException if source or destination's directory is missing
      */
     private fun ensureParentDirectoriesExist() {
-        val deletedDirectories = listOf(sourceFile.file, destinationFile)
-            .map { it.parentFile!! }
-            .filter { !it.exists() }
-        if (deletedDirectories.any()) {
-            throw MigrateUserData.MissingDirectoryException(deletedDirectories)
-        }
+        val exceptionBuilder = MigrateUserData.DirectoryValidator()
+        exceptionBuilder.tryCreate("source - parent dir", sourceFile.file.parentFile!!)
+        exceptionBuilder.tryCreate("destination - parent dir", destinationFile.parentFile!!)
+        exceptionBuilder.throwIfNecessary()
     }
 
     @VisibleForTesting

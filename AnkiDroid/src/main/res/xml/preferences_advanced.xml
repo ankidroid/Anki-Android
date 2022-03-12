@@ -155,6 +155,12 @@
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
                 android:title="@string/double_scrolling_gap" />
+            <ListPreference
+                android:entries="@array/stats_default_deck_labels"
+                android:entryValues="@array/stats_default_deck_values"
+                android:key="stats_default_deck"
+                android:title="@string/stats_default_deck_title"
+                android:defaultValue="current" />
             <Preference
                 android:key="advanced_statistics_link"
                 android:title="@string/advanced_statistics_title"

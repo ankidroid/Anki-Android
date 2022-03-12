@@ -69,7 +69,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private static boolean sIsCancelled;
     private static boolean sIsCancellable;
 
-    private static boolean sAllowSyncOnNoConnection;
+    private static boolean sAllowLoginSyncOnNoConnection;
 
     /**
      * Before syncing, we acquire a wake lock and then release it once the sync is complete.
@@ -116,13 +116,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public static boolean getAllowSyncOnNoConnection() {
-        return sAllowSyncOnNoConnection;
+    public static boolean getAllowLoginSyncOnNoConnection() {
+        return sAllowLoginSyncOnNoConnection;
     }
 
 
-    public static void setAllowSyncOnNoConnection(boolean value) {
-        sAllowSyncOnNoConnection = value;
+    public static void setAllowLoginSyncOnNoConnection(boolean value) {
+        sAllowLoginSyncOnNoConnection = value;
     }
 
 
@@ -588,7 +588,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     @SuppressWarnings("deprecation")
     public static boolean isOnline() {
-        if (sAllowSyncOnNoConnection) {
+        if (sAllowLoginSyncOnNoConnection) {
             return true;
         }
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()

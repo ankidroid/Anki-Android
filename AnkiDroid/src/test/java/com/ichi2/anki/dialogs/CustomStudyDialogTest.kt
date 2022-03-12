@@ -38,6 +38,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
@@ -108,8 +109,8 @@ class CustomStudyDialogTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val mockCollection = Mockito.mock(Collection::class.java, Mockito.RETURNS_DEEP_STUBS)
         val mockSched = Mockito.mock(AbstractSched::class.java)
-        Mockito.`when`(mockCollection.sched).thenReturn(mockSched)
-        Mockito.`when`(mockSched.newCount()).thenReturn(0)
+        whenever(mockCollection.sched).thenReturn(mockSched)
+        whenever(mockSched.newCount()).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mMockListener)
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)

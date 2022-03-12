@@ -24,16 +24,16 @@ import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
 import timber.log.Timber
 
-internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity?, Void?, Pair<Boolean?, String?>?>(activity) {
+internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void?, Pair<Boolean?, String?>?>(activity) {
     private var mProgressDialog: MaterialDialog? = null
-    override fun actualOnPreExecute(activity: AnkiActivity) {
+    override fun actualOnPreExecute(context: AnkiActivity) {
         mProgressDialog = StyledProgressDialog.show(
-            activity, "",
-            activity.resources.getString(R.string.export_in_progress), false
+            context, "",
+            context.resources.getString(R.string.export_in_progress), false
         )
     }
 
-    override fun actualOnPostExecute(activity: AnkiActivity, result: Pair<Boolean?, String?>?) {
+    override fun actualOnPostExecute(context: AnkiActivity, result: Pair<Boolean?, String?>?) {
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             mProgressDialog!!.dismiss()
         }
@@ -45,15 +45,15 @@ internal class ExportListener(activity: AnkiActivity?, private val dialogsFactor
         // instead of a successful result.
         if (result.first == true && result.second != null) {
             Timber.w("Export Failed: %s", result.second)
-            activity.showSimpleMessageDialog(result.second)
+            context.showSimpleMessageDialog(result.second)
         } else {
             Timber.i("Export successful")
             val exportPath = result.second
             if (exportPath != null) {
                 val dialog = dialogsFactory.newExportCompleteDialog().withArguments(exportPath)
-                activity.showAsyncDialogFragment(dialog)
+                context.showAsyncDialogFragment(dialog)
             } else {
-                showThemedToast(activity, activity.resources.getString(R.string.export_unsuccessful), true)
+                showThemedToast(context, context.resources.getString(R.string.export_unsuccessful), true)
             }
         }
     }

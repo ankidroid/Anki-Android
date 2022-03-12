@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2022 Akshit Sinha <akshitsinha3@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,10 +14,23 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.exception;
+package com.ichi2.anki.dialogs
 
-public class UnknownDatabaseVersionException extends Exception {
-    public UnknownDatabaseVersionException(Exception exception) {
-        super(exception);
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers
+import org.junit.Test
+
+class DeckSelectionDialogTest {
+
+    @Test
+    fun verifyDeckDisplayName() {
+        val input = "deck::sub-deck::sub-deck2::sub-deck3"
+        val expected = "\t\t\t\t\t\tsub-deck3"
+
+        val deck = SelectableDeck(1234, input)
+        val actual: String = deck.displayName
+
+        assertThat(actual, Matchers.equalTo(expected))
     }
 }

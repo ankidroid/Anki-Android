@@ -97,7 +97,7 @@
     <string name="sync_media_find">Bezig met het opsporen van wijzigingen aan de media...</string>
     <string name="sync_media_no_changes">Mediabestanden bleven ongewijzigd.</string>
     <string name="sync_media_success">Media met succes gesynchroniseerd.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Media-synchronisatie gedeeltelijk voltooid:\n%1$d mediabestanden gedownload.\n%2$d mediabestanden geüpload.</string>
     <string name="sync_media_changes_count">%d mediawijzigingen te uploaden</string>
     <string name="sync_media_downloaded_count">%d mediabestanden gedownload</string>
     <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>

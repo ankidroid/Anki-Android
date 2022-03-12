@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid precisa de %s de espaço de armazenamento livre para continuar. Por favor, limpe algum espaço</string>
     <string name="restore_backup_title">Restaurar backup?</string>
     <string name="restore_backup">A sua coleção será substituída por uma cópia mais antiga. Qualquer progresso não salvo será perdido.</string>
+    <string name="restore_backup_choose_another">Procurar</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Não</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">Não foi possível mudar o baralho</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erro ao decodificar dados do card</string>
+    <string name="undo_succeeded">Desfeito \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Falha ao processar as opções do baralho: %s</string>
     <!-- Database Errors-->

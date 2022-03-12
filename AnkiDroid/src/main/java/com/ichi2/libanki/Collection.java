@@ -756,9 +756,9 @@ public class Collection implements CollectionGetter {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
-	    return genCards(Utils.collection2Array(nids), model);
-	}
+    public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
+        return genCards(Utils.collection2Array(nids), model);
+    }
 
     public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), model, task);
@@ -870,7 +870,7 @@ public class Collection implements CollectionGetter {
                     due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
-                    did = model.getLong("did");
+                    did = model.getDid();
                 }
                 // add any missing cards
                 ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
@@ -1031,7 +1031,7 @@ public class Collection implements CollectionGetter {
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
         // then notes
         if (!notes) {
-        	return;
+            return;
         }
         nids = mDb.queryLongList("SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
                         + " AND id NOT IN (SELECT nid FROM cards)");
@@ -1217,13 +1217,13 @@ public class Collection implements CollectionGetter {
         return data;
     }
 
-	public String _flagNameFromCardFlags(int flags){
-		int flag = flags & 0b111;
-		if (flag == 0) {
-			return "";
-		}
-		return "flag"+flag;
-	}
+    public String _flagNameFromCardFlags(int flags){
+        int flag = flags & 0b111;
+        if (flag == 0) {
+            return "";
+        }
+        return "flag"+flag;
+    }
 
     /*
       Finding cards ************************************************************ ***********************************
@@ -2132,8 +2132,8 @@ public class Collection implements CollectionGetter {
     /** Check if this collection is valid. */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean validCollection() {
-    	//TODO: more validation code
-    	return getModels().validateModel();
+        //TODO: more validation code
+        return getModels().validateModel();
     }
 
     public JSONObject getConf() {

@@ -83,7 +83,9 @@ import static java.lang.Math.min;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Media {
 
-    private static final Pattern fIllegalCharReg = Pattern.compile("[><:\"/?*^\\\\|\\x00\\r\\n]");
+    // Upstream illegal chars defined on disallowed_char()
+    // in https://github.com/ankitects/anki/blob/main/rslib/src/media/files.rs
+    private static final Pattern fIllegalCharReg = Pattern.compile("[\\[\\]><:\"/?*^\\\\|\\x00\\r\\n]");
     private static final Pattern fRemotePattern  = Pattern.compile("(https?|ftp)://");
 
     /*
@@ -278,15 +280,8 @@ public class Media {
             if (Utils.fileChecksum(path).equals(csum)) {
                 return fname;
             }
-            // otherwise, increment the index in the filename
-            Pattern reg = Pattern.compile(" \\((\\d+)\\)$");
-            Matcher m = reg.matcher(root);
-            if (!m.find()) {
-                root = root + " (1)";
-            } else {
-                int n = Integer.parseInt(m.group(1));
-                root = String.format(Locale.US, " (%d)", n + 1);
-            }
+            // otherwise, increment the checksum in the filename
+            root = root + "-" + csum;
         }
     }
 

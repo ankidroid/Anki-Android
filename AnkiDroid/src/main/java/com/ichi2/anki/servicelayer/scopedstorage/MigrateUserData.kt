@@ -16,8 +16,12 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.content.SharedPreferences
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.SingleRetryDecorator
 import timber.log.Timber
 import java.io.File
 
@@ -33,7 +37,48 @@ typealias NumberOfBytes = Long
  * This also handles preemption, allowing media files to skip the queue
  * (if they're required for review)
  */
-class MigrateUserData {
+class MigrateUserData private constructor(val source: Directory, val destination: Directory) {
+    companion object {
+        /**
+         * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
+         * @return null if a migration is not taking place, otherwise a valid [MigrateUserData] instance
+         *
+         * @throws IllegalStateException If preferences are in an invalid state (should be logically impossible - currently unrecoverable)
+         * @throws MissingDirectoryException If either or both the source/destination do not exist
+         */
+        fun createInstance(preferences: SharedPreferences): MigrateUserData? {
+            val migrationPreferences = UserDataMigrationPreferences.createInstance(preferences)
+            if (!migrationPreferences.migrationInProgress) {
+                return null
+            }
+
+            return createInstance(migrationPreferences)
+        }
+
+        /**
+         * Creates an instance of a [MigrateUserData]
+         *
+         * Assumes the paths come from preferences
+         *
+         * @throws MissingDirectoryException If either directory defined in [preferences] does not exist
+         */
+        private fun createInstance(preferences: UserDataMigrationPreferences): MigrateUserData {
+            val directoryValidator = DirectoryValidator()
+
+            val sourceDirectory = directoryValidator.tryCreate("source", preferences.sourceFile)
+            val destinationDirectory = directoryValidator.tryCreate("destination", preferences.destinationFile)
+
+            if (sourceDirectory == null || destinationDirectory == null) {
+                throw directoryValidator.exceptionOnNullResult
+            }
+
+            return MigrateUserData(
+                source = sourceDirectory,
+                destination = destinationDirectory
+            )
+        }
+    }
+
     /**
      * If a file exists in [destination] with different content than [source]
      *
@@ -49,12 +94,19 @@ class MigrateUserData {
     /**
      * If one or more required directories were missing
      */
-    class MissingDirectoryException(val directories: List<File>) : RuntimeException() {
+    class MissingDirectoryException(val directories: List<MissingFile>) : RuntimeException() {
         init {
             if (directories.isNullOrEmpty()) {
                 throw IllegalArgumentException("directories should not be empty")
             }
         }
+
+        /**
+         * A file which should exist, but did not
+         * @param source The variable name/identifier of the file
+         * @param file A [File] reference to the missing file
+         */
+        data class MissingFile(val source: String, val file: File)
     }
 
     /**
@@ -74,7 +126,7 @@ class MigrateUserData {
      * a large mutable queue of tasks
      */
     abstract class MigrationContext {
-        abstract fun reportError(context: Operation, ex: Exception)
+        abstract fun reportError(throwingOperation: Operation, ex: Exception)
         abstract fun reportProgress(transferred: NumberOfBytes)
         /**
          * Whether [File#renameTo] should be attempted
@@ -92,6 +144,74 @@ class MigrateUserData {
             } catch (e: Exception) {
                 Timber.w(e, "Failed while executing %s", operation)
                 reportError(operation, e)
+            }
+        }
+    }
+
+    /**
+     * Used to validate a number of [Directory] instances and produces a [MissingDirectoryException] with all
+     * missing directories.
+     *
+     * Usage:
+     * ```kotlin
+     * val directoryValidator = DirectoryValidator()
+     *
+     * val sourceDirectory = directoryValidator.tryCreate(source)
+     * val destinationDirectory = directoryValidator.tryCreate(destination)
+     *
+     * if (sourceDirectory == null || destinationDirectory == null) {
+     *     throw directoryValidator.exceptionOnNullResult
+     * }
+     *
+     * // `sourceDirectory` and `destinationDirectory` may now be used
+     * ```
+     *
+     * Alternately (just validation without using values):
+     * ```kotlin
+     * val directoryValidator = DirectoryValidator()
+     *
+     * directoryValidator.tryCreate(source)
+     * directoryValidator.tryCreate(destination)
+     *
+     * exceptionBuilder.throwIfNecessary()
+     * ```
+     */
+    class DirectoryValidator {
+        /** Only valid if [tryCreate] returned null */
+        val exceptionOnNullResult: MissingDirectoryException
+            get() = MissingDirectoryException(failedFiles)
+
+        /**
+         * A list of files which failed to be created
+         * Only valid if [tryCreate] returned null
+         */
+        private val failedFiles = mutableListOf<MissingDirectoryException.MissingFile>()
+
+        /**
+         * Tries to create a [Directory] object.
+         *
+         * If this returns null, [exceptionOnNullResult] should be thrown by the caller.
+         * Example usages are provided in the [DirectoryValidator] documentation.
+         *
+         * @param [context] The "name" of the variable to test
+         * @param [file] A file which may not point to a valid directory
+         * @return A [Directory], or null if [file] did not point to an existing directory
+         */
+        fun tryCreate(context: String, file: File): Directory? {
+            val ret = Directory.createInstance(file)
+            if (ret == null) {
+                failedFiles.add(MissingDirectoryException.MissingFile(context, file))
+            }
+            return ret
+        }
+
+        /**
+         * If any directories were not created, throw a [MissingDirectoryException] listing the files
+         * @throws MissingDirectoryException if any input files were invalid
+         */
+        fun throwIfNecessary() {
+            if (failedFiles.any()) {
+                throw MissingDirectoryException(failedFiles)
             }
         }
     }
@@ -115,8 +235,42 @@ class MigrateUserData {
          * * deleting the original folder.
          */
         abstract fun execute(context: MigrationContext): List<Operation>
+
+        /** A list of operations to perform if the operation should be retried */
+        open val retryOperations get() = emptyList<Operation>()
+    }
+
+    /**
+     * A decorator for [Operation] which executes [standardOperation].
+     * When retried, executes [retryOperation].
+     * Ignores [retryOperations] defined in [standardOperation]
+     */
+    class SingleRetryDecorator(
+        private val standardOperation: Operation,
+        private val retryOperation: Operation
+    ) : Operation() {
+        override fun execute(context: MigrationContext) = standardOperation.execute(context)
+        override val retryOperations get() = listOf(retryOperation)
     }
 }
 
+/**
+ * Wraps an [Operation] with functionality to allow for retries
+ *
+ * Useful if you want to call a different operation when an operation is being retried.
+ *
+ * Example: call MoveDirectory again if DeleteEmptyDirectory fails
+ *
+ * @receiver The operation to be decorated with a retry action
+ * @param operationOnRetry The action to perform is [Operation.retryOperations] is called
+ */
+internal fun Operation.onRetryExecute(operationOnRetry: Operation): Operation {
+    val operationToBeDecorated = this
+    return SingleRetryDecorator(
+        standardOperation = operationToBeDecorated,
+        retryOperation = operationOnRetry
+    )
+}
+
 /** The operation was completed (not necessarily successfully) and no additional operations are required */
-internal fun operationCompleted() = emptyList<MigrateUserData.Operation>()
+internal fun operationCompleted() = emptyList<Operation>()

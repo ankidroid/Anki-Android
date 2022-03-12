@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">बॅकअप पुनर्संचयित?</string>
     <string name="restore_backup">आपला संग्रह जुन्या प्रतीसह पुनर्स्थित केला जाईल. कोणतीही जतन न केलेली प्रगती गमावली जाईल.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">रद्द करा</string>
     <string name="dialog_ok">ठीक आहे</string>
     <string name="dialog_no">नाही</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">डेक बदलणे शक्य झाले नाही</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड वरून डेटा डिकोड करताना त्रुटी</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">डेक पर्यायांवर प्रक्रिया करण्यात अयशस्वी:%s</string>
     <!-- Database Errors-->

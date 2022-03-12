@@ -359,7 +359,7 @@
     <string name="format_font_size">Změnit velikost písma</string>
     <string name="insert_mathjax">Vložit rovnici MathJax</string>
     <string name="insert_cloze">Vložit doplňovačku</string>
-    <string name="note_editor_toolbar_icon">Text tlačítek</string>
+    <string name="note_editor_toolbar_icon">Text tlačítka</string>
     <string name="before_text">HTML před výběrem</string>
     <string name="after_text">HTML za výběrem</string>
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
@@ -419,4 +419,5 @@
     <string name="scoped_storage_learn_more">Zjistit více</string>
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Migrovat</string>
+    <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
 </resources>

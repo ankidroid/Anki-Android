@@ -16,13 +16,13 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-class MockMigrationContext : MigrateUserData.MigrationContext() {
+open class MockMigrationContext : MigrateUserData.MigrationContext() {
     /** set [logExceptions] to populate this property */
     val exceptions = mutableListOf<Exception>()
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
 
-    override fun reportError(context: MigrateUserData.Operation, ex: Exception) {
+    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
         if (!logExceptions) {
             throw ex
         }
@@ -31,5 +31,30 @@ class MockMigrationContext : MigrateUserData.MigrationContext() {
 
     override fun reportProgress(transferred: NumberOfBytes) {
         progress.add(transferred)
+    }
+}
+
+/**
+ * A [MockMigrationContext] which will call [MigrateUserData.Operation.retryOperations] once on
+ * a failed operation, if any `retryOperations` are available.
+ *
+ * If a second failure occurs, or if no `retryOperations` are available, it will throw
+ */
+class RetryMigrationContext(val retry: (List<MigrateUserData.Operation>) -> Unit) : MockMigrationContext() {
+    var retryCount = 0
+
+    override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
+        val opsForRetry = throwingOperation.retryOperations
+        if (!opsForRetry.any()) {
+            throw ex
+        }
+        retryCount++
+        if (retryCount > 1) {
+            throw ex
+        }
+        retry(opsForRetry)
+    }
+
+    override fun reportProgress(transferred: NumberOfBytes) {
     }
 }

@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nem</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->

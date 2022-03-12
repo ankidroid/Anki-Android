@@ -60,7 +60,7 @@
     <string name="alert_logging_message">ログインしています&#8230;</string>
     <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>
     <string name="reset_password">パスワードを再設定</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">メールアドレスを忘れましたか？</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">設定</string>
     <string name="deckpreferences_title">XXX のオプション</string>
@@ -97,7 +97,7 @@
     <string name="sync_media_find">変更されたメディアを探しています...</string>
     <string name="sync_media_no_changes">メディアファイルへの変更はありません</string>
     <string name="sync_media_success">メディアの同期が完了しました</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">メディアの同期が部分的に完了しました:\n%1$d個のメディアファイルがダウンロードされました。\n%2$d個のメディアファイルがアップロードされました。</string>
     <string name="sync_media_changes_count">%d 個のメディアが変更されアップロードが必要です</string>
     <string name="sync_media_downloaded_count">%d 個のメディアをダウンロードしました</string>
     <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側（クラウド）と AnkiDroid側（ローカル）のいずれのコレクションを保持するかを選択してください。</string>

@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Högst upp</item>
         <item>Längst ned</item>
+        <item>None</item>
     </string-array>
     <string name="gestures" maxLength="41">Aktivera gester</string>
     <string name="gestures_summ">Koppla gester till handlingar, som t ex att svara på eller redigera kort.</string>
@@ -212,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Tillåt alla filer i medieimport</string>
     <string name="media_import_allow_all_files_summ">Om Android inte känner igen en mediafil</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Avancerad statistik</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Aktivera avancerad statistik</string>

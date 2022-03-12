@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid 需要 %s 可用存储空间来继续。请清除一些空间</string>
     <string name="restore_backup_title">恢复备份？</string>
     <string name="restore_backup">你的牌组集合将会被替换成一个旧的副本，任何未保存的进程都将丢失。</string>
+    <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_no">否</string>
@@ -177,6 +178,7 @@
     <string name="card_browser_deck_change_error">无法更改牌组</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">从卡片解码数据时出错</string>
+    <string name="undo_succeeded">已撤销 \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">处理牌组选项失败：%s</string>
     <!-- Database Errors-->

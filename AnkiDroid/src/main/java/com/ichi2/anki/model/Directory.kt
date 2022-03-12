@@ -18,6 +18,9 @@ package com.ichi2.anki.model
 
 import com.ichi2.compat.CompatHelper
 import java.io.File
+import java.io.IOException
+import java.nio.file.NotDirectoryException
+import kotlin.jvm.Throws
 
 /**
  * A directory which is assumed to exist (existed when class was instantiated)
@@ -32,9 +35,18 @@ class Directory private constructor(val directory: File) {
     fun listFiles(): Array<out File> = directory.listFiles() ?: emptyArray()
 
     /**
-     * Whether a directory has files
-     * @return false if supplied argument is not a directory, or has no files. True if directory has files
+     * Whether this directory has at least files
+     * @return Whether the directory has file.
+     * @throws [SecurityException] If a security manager exists and its SecurityManager.checkRead(String)
+     * method denies read access to the directory
+     * @throws [FileNotFoundException] if the file do not exists
+     * @throws [NotDirectoryException] if the file could not otherwise be opened because it is not
+     * a directory (optional specific exception), (starting at API 26)
+     * @throws [IOException] – if an I/O error occurs.
+     * This also occurred on an existing directory because of permission issue
+     * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      */
+    @Throws(IOException::class, SecurityException::class, NotDirectoryException::class)
     fun hasFiles(): Boolean = CompatHelper.getCompat().hasFiles(directory)
 
     /** The [canonical path][java.io.File.getCanonicalPath] for the file */

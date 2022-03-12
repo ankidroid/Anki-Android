@@ -19,6 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.MissingDirectoryException.MissingFile
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -29,13 +30,14 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters
 import timber.log.Timber
 import java.io.File
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
+class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), OperationTest {
     companion object {
         @Suppress("unused")
         @Parameters(name = "attemptRename = {0}")
@@ -45,7 +47,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         }
     }
 
-    private val executionContext: MockMigrationContext = MockMigrationContext()
+    override val executionContext: MockMigrationContext = MockMigrationContext()
 
     @Test
     fun move_file_is_success() {
@@ -89,7 +91,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
 
         executionContext.logExceptions = true
         spy(MoveFile(source, destinationFile)) {
-            Mockito.doAnswer { Timber.w("testing: do nothing on copy") }.`when`(it).copyFile(any(), any())
+            Mockito.doAnswer { Timber.w("testing: do nothing on copy") }.whenever(it).copyFile(any(), any())
         }
             .execute()
 
@@ -111,7 +113,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         executionContext.logExceptions = true
         val exception = assertThrows<TestException> {
             spy(MoveFile(source, destinationFile)) {
-                Mockito.doThrow(TestException("test-copyFile()")).`when`(it).copyFile(any(), any())
+                Mockito.doThrow(TestException("test-copyFile()")).whenever(it).copyFile(any(), any())
             }
                 .execute()
         }
@@ -166,7 +168,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
 
         executionContext.logExceptions = true
         spy(MoveFile(source, destinationFile)) {
-            Mockito.doThrow(TestException("test-deleteFile()")).`when`(it).deleteFile(any())
+            Mockito.doThrow(TestException("test-deleteFile()")).whenever(it).deleteFile(any())
         }
             .execute()
 
@@ -229,8 +231,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         }
 
         assertThat("2 missing directories expected", exception.directories, hasSize(2))
-        assertThat("source was logged", exception.directories[0], equalTo(sourceDirectoryToDelete))
-        assertThat("destination was logged", exception.directories[1], equalTo(destinationDirectoryToDelete))
+        assertThat("source was logged", exception.directories[0], equalTo(MissingFile("source - parent dir", sourceDirectoryToDelete)))
+        assertThat("destination was logged", exception.directories[1], equalTo(MissingFile("destination - parent dir", destinationDirectoryToDelete)))
     }
 
     @Test
@@ -244,7 +246,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest() {
         executionContext.logExceptions = true
         assertThrows<TestException> {
             spy(MoveFile(source, destinationFile)) {
-                Mockito.doThrow(TestException("test-deleteFile()")).`when`(it).deleteFile(any())
+                Mockito.doThrow(TestException("test-deleteFile()")).whenever(it).deleteFile(any())
             }
                 .execute()
         }

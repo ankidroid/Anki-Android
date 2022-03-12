@@ -20,6 +20,9 @@ import com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING
 import com.ichi2.anki.reviewer.GestureMapper
 
 class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
+    companion object {
+        const val PREF_KEY = "gestures"
+    }
     private var gestureDoubleTap: ViewerCommand? = null
     private var gestureLongclick: ViewerCommand? = null
     private var gestureSwipeUp: ViewerCommand? = null
@@ -46,7 +49,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         private set
 
     fun init(preferences: SharedPreferences) {
-        isEnabled = preferences.getBoolean("gestures", false)
+        isEnabled = preferences.getBoolean(PREF_KEY, false)
         gestureDoubleTap = Gesture.DOUBLE_TAP.fromPreference(preferences)
         gestureLongclick = Gesture.LONG_TAP.fromPreference(preferences)
         gestureSwipeUp = Gesture.SWIPE_UP.fromPreference(preferences)

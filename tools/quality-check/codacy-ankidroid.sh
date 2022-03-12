@@ -5,8 +5,8 @@
 # You need to install Docker first
 # You need to install 'codacy-analysis-cli' second
 #
-# You should run this against master frequently to generate a base for comparison
-# Then pre-checkin you run this against your branch and diff your branch vs master
+# You should run this against main frequently to generate a base for comparison
+# Then pre-checkin you run this against your branch and diff your branch vs main
 
 SOURCE_BASE=/home/$USER/work/AnkiDroid
 SOURCE=$SOURCE_BASE/Anki-Android

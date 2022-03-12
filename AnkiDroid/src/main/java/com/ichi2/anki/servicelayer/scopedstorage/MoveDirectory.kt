@@ -45,29 +45,33 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
             context.attemptRename = false
         }
 
+        if (!createDirectory(context)) {
+            return operationCompleted()
+        }
+
+        val moveContentOperations = MoveDirectoryContent.createInstance(source, destination)
+        // If DeleteEmptyDirectory fails, retrying is executing the MoveDirectory that spawned it
+        val deleteOperation = DeleteEmptyDirectory(source).onRetryExecute(this)
+        return listOf(moveContentOperations, deleteOperation)
+    }
+
+    /**
+     * Create an empty directory at destination.
+     * Return whether it was successful.
+     */
+    internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
         Timber.d("creating folder '$destination'")
         if (!createDirectory(destination)) {
             context.reportError(this, IllegalStateException("Could not create '$destination'"))
-            return operationCompleted()
+            return false
         }
 
         val destinationDirectory = Directory.createInstance(destination)
         if (destinationDirectory == null) {
             context.reportError(this, IllegalStateException("Directory instantiation failed: '$destination'"))
-            return operationCompleted()
+            return false
         }
-
-        val moveOperations = source.listFiles().map(::toMoveOperation)
-        val deleteOperation = DeleteEmptyDirectory(source)
-        return moveOperations + deleteOperation
-    }
-
-    /**
-     * @returns An operation to move file or directory [sourceFile] to [destination]
-     */
-    @VisibleForTesting
-    internal fun toMoveOperation(sourceFile: File): Operation {
-        return MoveFileOrDirectory(sourceFile, File(destination, sourceFile.name))
+        return true
     }
 
     /** Creates a directory if it doesn't already exist */

@@ -14,11 +14,8 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.compat
+package com.ichi2.compat
 
-import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatV21
-import com.ichi2.compat.CompatV26
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.CoreMatchers.equalTo

@@ -13,17 +13,13 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.utils
 
-package com.ichi2.libanki.utils;
+import java.text.SimpleDateFormat
+import java.util.*
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-
-public class TimeUtils {
-    @NonNull
-    public static String getTimestamp(@NonNull Time time) {
-        return new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.getCurrentDate());
+object TimeUtils {
+    fun getTimestamp(time: Time): String {
+        return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
     }
 }

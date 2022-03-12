@@ -113,6 +113,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid 需要%s可用儲存空間以繼續。請清除一些空間</string>
     <string name="restore_backup_title">回復備份嗎？</string>
     <string name="restore_backup">你的集合將會被較舊的版本給覆蓋。任何尚未儲存的進度都會遺失。</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
     <string name="dialog_no">否</string>
@@ -177,6 +178,7 @@
     <string name="card_browser_deck_change_error">無法變更牌組</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">解碼卡片中資料時出錯</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">無法處理牌組選項：%s</string>
     <!-- Database Errors-->
@@ -213,7 +215,7 @@
     <string name="help_item_mailing_list">郵件清單</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">回報錯誤</string>
-    <string name="help_title_support_ankidroid">支持 AnkiDroid</string>
+    <string name="help_title_support_ankidroid">支援 AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">捐贈</string>
     <string name="help_item_support_develop_ankidroid">開發</string>
     <string name="help_item_support_rate_ankidroid">評分</string>

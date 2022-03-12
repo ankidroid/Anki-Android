@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Acima</item>
         <item>Abaixo</item>
+        <item>Nenhuma</item>
     </string-array>
     <string name="gestures" maxLength="41">Habilitar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
@@ -212,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importar todos os arquivos de mídia</string>
     <string name="media_import_allow_all_files_summ">Se o Android não reconhecer um arquivo de mídia</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Habilitar estatísticas avançadas</string>
@@ -313,7 +318,7 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Abrir Changelog</string>
     <string name="binding_add_gesture">Adicionar gesto</string>
-    <string name="binding_add_key">Português</string>
+    <string name="binding_add_key">Adicionar tecla</string>
     <string name="key_picker_default_press_key">Pressione uma tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecionar lado da carta</string>

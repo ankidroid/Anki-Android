@@ -1011,7 +1011,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            new UndoService.Undo().runWithHandler(answerCardHandler(false));
+            Resources res = getResources();
+            String undoName = getCol().undoName(res);
+
+            new UndoService.Undo().runWithHandler(
+                    answerCardHandler(false)
+                    .alsoExecuteAfter(computation -> UIUtils.showThemedToast(
+                            AbstractFlashcardViewer.this,
+                            res.getString(R.string.undo_succeeded, undoName),
+                            false)
+                )
+            );
         }
     }
 
@@ -1180,11 +1190,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerArea.removeView(mAnswerField);
                 answerArea.addView(mAnswerField, 1);
+                answerArea.setVisibility(View.VISIBLE);
                 break;
             case "bottom":
                 cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout);
                 cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer);
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                answerArea.setVisibility(View.VISIBLE);
+                break;
+            case "none":
+                answerArea.setVisibility(View.GONE);
                 break;
             default:
                 Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition);
@@ -1422,7 +1437,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
         mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false);
 
-        mGesturesEnabled = preferences.getBoolean("gestures", false);
+        mGesturesEnabled = preferences.getBoolean(GestureProcessor.PREF_KEY, false);
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences);
         }
@@ -1961,6 +1976,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return true;
             case COMMAND_TOGGLE_WHITEBOARD:
                 toggleWhiteboard();
+                return true;
+            case COMMAND_SHOW_HINT:
+                loadUrlInViewer("javascript: showHint();");
+                return true;
+            case COMMAND_SHOW_ALL_HINTS:
+                loadUrlInViewer("javascript: showAllHints();");
                 return true;
             default:
                 Timber.w("Unknown command requested: %s", which);

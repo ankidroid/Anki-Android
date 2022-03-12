@@ -19,7 +19,7 @@ class MediaClipField : AudioField() {
     }
 
     override fun hasTemporaryMedia(): Boolean {
-        return false
+        return currentHasTemporaryMedia
     }
 
     override fun getName(): String? {

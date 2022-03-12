@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Aggiungi immagine</string>
     <string name="multimedia_editor_popup_audio_clip">Aggiungi clip audio</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Aggiungi un clip video</string>
     <string name="multimedia_editor_popup_audio">Registra audio</string>
     <string name="multimedia_editor_popup_text">Editor avanzato</string>
     <string name="multimedia_editor_popup_cloze">Elimina testo da completare</string>

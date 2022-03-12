@@ -46,7 +46,7 @@
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_reviewing_summ">Desteye özel olmayan çalışma ayarları</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Davranış</string>
-    <string name="pref_cat_flashcard" maxLength="41">Görüntüle</string>
+    <string name="pref_cat_flashcard" maxLength="41">Görünüm</string>
     <string name="pref_cat_whiteboard" maxLength="41">Yazı tahtası</string>
     <string name="pref_cat_appearance" maxLength="41">Görünüş</string>
     <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
@@ -88,6 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Yukarıda</item>
         <item>Aşağıda</item>
+        <item>Hiçbiri</item>
     </string-array>
     <string name="gestures" maxLength="41">El hareketlerini etkinleştir</string>
     <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>
@@ -212,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Yüklenmiş medyaların tümüne izin verin</string>
     <string name="media_import_allow_all_files_summ">Bir medya dosyasını Android tanımazsa</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">İleri düzey istatistikler</string>
     <string name="enable_advanced_statistics_title" maxLength="41">İleri düzey istatistikleri etkinleştir</string>

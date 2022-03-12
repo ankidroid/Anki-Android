@@ -21,13 +21,14 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.JSONObject
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItemInArray
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.util.*
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class CardTest : RobolectricTest() {
@@ -36,7 +37,6 @@ class CardTest : RobolectricTest() {
      ******************/
     @Test
     fun test_delete() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -54,7 +54,6 @@ class CardTest : RobolectricTest() {
 
     @Test
     fun test_misc_cards() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -66,7 +65,6 @@ class CardTest : RobolectricTest() {
 
     @Test
     fun test_genrem() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "")
@@ -97,7 +95,6 @@ class CardTest : RobolectricTest() {
 
     @Test
     fun test_gendeck() {
-        val col = col
         val cloze = col.models.byName("Cloze")
         col.models.setCurrent(cloze!!)
         val note = col.newNote()
@@ -130,11 +127,10 @@ class CardTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
-        val col = col
         val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
-        models.renameField(model!!, model.getJSONArray("flds").getJSONObject(0), "A")
+        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B")
         val fld2 = models.newField("C")
         fld2.put("ord", JSONObject.NULL)
@@ -180,11 +176,10 @@ class CardTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
-        val col = col
         val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
-        val tmpls = model!!.getJSONArray("tmpls")
+        val tmpls = model.getJSONArray("tmpls")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First")
         models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front")
         val fld2 = models.newField("AddIfEmpty")
@@ -235,7 +230,6 @@ class CardTest : RobolectricTest() {
     @Config(qualifiers = "en")
     @Throws(DeckRenameException::class)
     fun nextDueTest() {
-        val col = col
         // Test runs as the 7th of august 2020, 9h00
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()

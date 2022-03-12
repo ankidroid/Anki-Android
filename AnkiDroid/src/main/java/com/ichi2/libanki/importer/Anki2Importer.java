@@ -379,9 +379,9 @@ public class Anki2Importer extends Importer {
         if (!mNotes.containsKey(origGuid)) {
             return new Pair<>(true, dstMid);
         }
-		// schema changed; don't import
-		mIgnoredGuids.add(origGuid);
-		return new Pair<>(false, dstMid);
+        // schema changed; don't import
+        mIgnoredGuids.add(origGuid);
+        return new Pair<>(false, dstMid);
     }
 
     /*

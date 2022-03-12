@@ -447,12 +447,12 @@ public class Models extends ModelManager {
     protected void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
-		JSONArray flds = m.getJSONArray("flds");
-		flds.put(field);
-		m.put("flds", flds);
-		_updateFieldOrds(m);
-		save(m);
-		_transformFields(m, new TransformFieldAdd());
+        JSONArray flds = m.getJSONArray("flds");
+        flds.put(field);
+        m.put("flds", flds);
+        _updateFieldOrds(m);
+        save(m);
+        _transformFields(m, new TransformFieldAdd());
     }
 
     @Override

@@ -131,6 +131,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid potrzebuje %s wolnej przestrzeni dyskowej by kontynuować. Proszę zwolnij trochę miejsca</string>
     <string name="restore_backup_title">Odtworzyć kopię zapasową?</string>
     <string name="restore_backup">Kolekcja zostanie zastąpione starszą kopią. Wszelkie niezapisane postępy zostaną utracone.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Anuluj</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nie</string>
@@ -198,6 +199,7 @@
     <string name="card_browser_deck_change_error">Nie udało się zmienić talii</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Błąd dekodowania danych z karty</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Nie udało się przetworzyć opcji talii: %s</string>
     <!-- Database Errors-->

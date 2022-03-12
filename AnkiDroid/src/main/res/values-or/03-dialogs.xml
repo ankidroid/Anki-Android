@@ -50,7 +50,7 @@
         <item quantity="other">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟି ପତ୍ର ଅଛି।</item>
     </plurals>
     <string name="delete_cram_deck_message">%s ରେ ଥିବା ସମସ୍ତ ପତ୍ରକୁ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡ କୁ ପଠାଇବେ କି?</string>
-    <string name="no_tts_available_message">କୌଣସି ଲେଖା-ରୁ-କଥା ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
+    <string name="no_tts_available_message">କୌଣସି ପାଠ୍ୟ-ରୁ-କଥନ ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
@@ -102,7 +102,7 @@
     <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_rev_extend">ଆଜିର ସମୀକ୍ଷା ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
-    <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା କାର୍ଡ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
+    <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ି ହୋଇଥିବା ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରନ୍ତୁ:</string>
@@ -119,8 +119,9 @@
     <string name="no_space_to_downgrade_content">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
+    <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
     <string name="dialog_cancel">ବାତିଲ୍ କର</string>
-    <string name="dialog_ok">ଠିକ୍‌ ଅଛି</string>
+    <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
+    <string name="undo_succeeded">\"%s\" ପୂର୍ବବତ୍ କରାଗଲା</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
     <!-- Database Errors-->

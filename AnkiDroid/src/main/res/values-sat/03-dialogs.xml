@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid ᱡᱟᱹ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ %s ᱠᱷᱟᱞᱤ ᱟᱨᱡᱟᱣ ᱴᱷᱟᱶ ᱞᱟᱹᱠᱛᱤ । ᱫᱟᱭᱟᱠᱟᱛᱮ ᱴᱷᱟᱶ ᱥᱟᱯᱷᱟ</string>
     <string name="restore_backup_title">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱫᱚᱦᱰᱟᱭᱟ ᱥᱮ?</string>
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">ᱰᱮᱠ ᱵᱟᱭ ᱵᱚᱫᱚᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ᱠᱟᱰ ᱠᱷᱚᱱ ᱰᱟᱴᱟ ᱰᱤᱠᱚᱰᱤᱝ ᱦᱩᱰᱟᱜ</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">ᱰᱮᱠ ᱚᱯᱥᱚᱱ ᱰᱤᱜᱟᱹᱣ: %s</string>
     <!-- Database Errors-->

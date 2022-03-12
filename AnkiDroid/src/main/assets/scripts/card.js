@@ -228,3 +228,40 @@ var onPageFinished = function() {
         .then(() => card.classList.add("mathjax-rendered"))
         .then(_runHook(onShownHook))
 }
+
+/* Add function 2 hook to function 1.
+ * Function 2 should be `(arg: Object) => void`;  `arg` will be an Object returned from `JSON.parse`
+ */
+function addHook(fn1, fn2) {
+    if (fn1 === "ankiSearchCard") {
+        searchCardHook.push(fn2);
+    }
+}
+
+let searchCardHook = [];
+function ankiSearchCard(result) {
+    if (!searchCardHook) {
+        return;
+    }
+
+    result = JSON.parse(result);
+    for (var i = 0; i < searchCardHook.length; i++) {
+        searchCardHook[i](result);
+    }
+}
+
+function showHint() {
+    var hints = document.querySelectorAll('a.hint');
+    for (var i = 0; i < hints.length; i++) {
+        if (hints[i].style.display != 'none') {
+            hints[i].click();
+            break;
+        }
+    }
+}
+
+function showAllHints() {
+    document.querySelectorAll('a.hint').forEach(el => {
+        el.click()
+    });
+}

@@ -119,6 +119,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid necessita %s d\'espai lliure per continuar. Allibereu una mica d\'espai si us plau </string>
     <string name="restore_backup_title">Restaurar la còpia de seguretat?</string>
     <string name="restore_backup">La seva col·lecció serà replaçada per una còpia anterior. Tots els canvis fets després de desar es perdran.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Cancel·la</string>
     <string name="dialog_ok">D\'acord</string>
     <string name="dialog_no">No</string>
@@ -184,6 +185,7 @@
     <string name="card_browser_deck_change_error">No s\'ha pogut canviar el paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Error al processar les opcions del paquet: %s</string>
     <!-- Database Errors-->

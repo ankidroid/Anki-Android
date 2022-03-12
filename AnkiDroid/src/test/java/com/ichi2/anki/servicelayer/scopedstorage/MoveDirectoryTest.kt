@@ -16,27 +16,45 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
+import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
-import timber.log.Timber
+import org.mockito.kotlin.whenever
 import java.io.File
 
 /**
  * Test for [MoveDirectory]
  */
-class MoveDirectoryTest {
+@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
+@RunWith(Parameterized::class)
+class MoveDirectoryTest(
+    override val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) : Test21And26(compat, unitTestDescription), OperationTest {
+    override lateinit var executionContext: MockMigrationContext
+    private val executor = MockExecutor { executionContext }
 
-    private val executionContext: MockMigrationContext = MockMigrationContext()
+    @Before
+    fun setUp() {
+        executionContext = MockMigrationContext()
+    }
 
     @Test
     fun test_success_integration_test_recursive() {
@@ -80,7 +98,7 @@ class MoveDirectoryTest {
         executionContext.logExceptions = true
         // don't actually move the directory, or we'd have a problem
         val moveDirectory = spy(MoveDirectory(source, destinationFile)) {
-            doAnswer { renameCalled++; return@doAnswer false }.`when`(it).rename(any(), any())
+            doAnswer { renameCalled++; return@doAnswer false }.whenever(it).rename(any(), any())
         }
 
         assertThat("rename was true", executionContext.attemptRename, equalTo(true))
@@ -107,30 +125,15 @@ class MoveDirectoryTest {
 
         val destinationDirectory = generateDestinationDirectoryRef()
 
-        // Use variables as we don't know which file will be returned in the middle from listFiles()
-        var beforeFile: File? = null
-        var failedFile: File? = null // ensure the second file fails
-        var afterFile: File? = null
         executionContext.attemptRename = false
         executionContext.logExceptions = true
-        var movesProcessed = 0
-        val operation = spy(MoveDirectory(source, destinationDirectory)) {
-            doAnswer { op ->
-                val sourceFile = op.arguments[0] as File
-                when (movesProcessed++) {
-                    0 -> beforeFile = sourceFile
-                    1 -> {
-                        failedFile = sourceFile
-                        return@doAnswer FailMove()
-                    }
-                    2 -> afterFile = sourceFile
-                    else -> throw IllegalStateException("only 3 files expected")
-                }
-
-                return@doAnswer op.callRealMethod() as Operation
-            }.`when`(it).toMoveOperation(any())
-        }
-        executeAll(operation)
+        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val subOperations = moveDirectory.execute()
+        val moveDirectoryContent = subOperations[0] as MoveDirectoryContent
+        val deleteDirectory = subOperations[1]
+        val spyMoveDirectoryContent = OperationTest.SpyMoveDirectoryContent(moveDirectoryContent)
+        val moveDirectoryContentSpied = spyMoveDirectoryContent.spy
+        executeAll(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(executionContext.exceptions, hasSize(2))
         executionContext.exceptions[0].run {
@@ -141,34 +144,68 @@ class MoveDirectoryTest {
         }
 
         assertThat("source directory should not be deleted", source.exists(), equalTo(true))
-        assertThat("fail was not copied", failedFile!!.exists(), equalTo(true))
-        assertThat("file before failure was copied", beforeFile!!.exists(), equalTo(false))
-        assertThat("file after failure was copied", afterFile!!.exists(), equalTo(false))
+        assertThat("fail was not copied", spyMoveDirectoryContent.failedFile!!.exists(), equalTo(true))
+        assertThat("file before failure was copied", spyMoveDirectoryContent.beforeFile!!.exists(), equalTo(false))
+        assertThat("file after failure was copied", spyMoveDirectoryContent.afterFile!!.exists(), equalTo(false))
     }
 
     @Test
     fun adding_file_during_move_is_not_fatal() {
-        adding_during_move_helper() {
+        val operation = adding_during_move_helper {
             return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
         }
+
+        assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
+        assertThat("additional file was not moved", File(operation.destination, "new_file.txt").exists(), equalTo(false))
     }
 
     @Test
     fun adding_directory_during_move_is_not_fatal() {
-        adding_during_move_helper() {
+        val operation = adding_during_move_helper {
             val new_directory = File(it.directory, "subdirectory")
             assertThat("Subdirectory is created", new_directory.mkdir())
             new_directory.deleteOnExit()
             return@adding_during_move_helper new_directory
         }
+
+        assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
+        assertThat("additional directory was not moved", File(operation.destination, "subdirectory").exists(), equalTo(false))
+    }
+
+    @Test
+    fun succeeds_on_retry_after_adding_file_during_process() {
+        executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
+
+        val operation = adding_during_move_helper {
+            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+        }
+
+        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertThat("additional file was moved", File(operation.destination, "new_file.txt").exists(), equalTo(true))
+    }
+
+    @Test
+    fun succeeds_on_retry_after_adding_directory_during_process() {
+        executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
+
+        val operation = adding_during_move_helper {
+            val newDirectory = File(it.directory, "subdirectory")
+            assertThat("Subdirectory is created", newDirectory.mkdir())
+            newDirectory.deleteOnExit()
+            return@adding_during_move_helper newDirectory
+        }
+
+        assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
+        assertThat("additional directory was moved", File(operation.destination, "subdirectory").exists(), equalTo(true))
     }
 
     /**
      * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
      * This new file/directory must be present in source or destination.
      *
+     * @return The [MoveDirectory] which was executed
      */
-    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File) {
+    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File): MoveDirectory {
         val source = createDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
@@ -179,7 +216,11 @@ class MoveDirectoryTest {
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val operation = spy(MoveDirectory(source, destinationDirectory)) {
+        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val suboperations = moveDirectory.execute()
+        val moveDirectoryContent = suboperations[0] as MoveDirectoryContent
+        val deleteDirectory = suboperations[1]
+        val moveDirectoryContentSpied = spy(moveDirectoryContent) {
             doAnswer { op ->
                 val operation = op.callRealMethod() as Operation
                 if (movesProcessed++ == 1) {
@@ -193,14 +234,16 @@ class MoveDirectoryTest {
                     }
                 }
                 return@doAnswer operation
-            }.`when`(it).toMoveOperation(any())
+            }.whenever(it).toMoveOperation(any())
         }
-        executeAll(operation)
+
+        executor.execute(moveDirectoryContentSpied, deleteDirectory)
 
         assertThat(
             "new_file should be present in source or directory",
             File(source.directory, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
         )
+        return moveDirectory
     }
 
     @Test
@@ -227,40 +270,15 @@ class MoveDirectoryTest {
         assertThat("source was deleted", source.directory.exists(), equalTo(false))
     }
 
-    /** Helper function: executes an [Operation] and all sub-operations */
-    private fun executeAll(op: MoveDirectory) {
-        val l = ArrayDeque<Operation>()
-        l.addFirst(op)
-        while (l.any()) {
-            val head = l.removeFirst()
-            Timber.d("executing $head")
-            this.executionContext.execSafe(head) {
-                l.addAll(0, head.execute())
-            }
-        }
-    }
-
-    /** Creates an empty TMP directory to place the output files in */
-    private fun generateDestinationDirectoryRef(): File {
-        val createDirectory = createDirectory()
-        Timber.d("test: deleting $createDirectory")
-        CompatHelper.getCompat().deleteFile(createDirectory.directory)
-        return createDirectory.directory
-    }
-
-    private fun createDirectory(): Directory =
-        Directory.createInstance(createTransientDirectory())!!
-
     /**
-     * Executes an [Operation] without executing the sub-operations
-     * @return the sub-operations returned from the execution of the operation
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
      */
-    private fun Operation.execute(): List<Operation> = this.execute(executionContext)
-}
-
-/** A move operation which fails */
-class FailMove : Operation() {
-    override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
-        throw TestException("should fail but not crash")
+    @Test
+    fun reproduce_10358() {
+        val sourceWithPermissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val destination = createTransientDirectory()
+        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(MoveDirectory(sourceWithPermissionDenied.directory, destination)) }
     }
 }

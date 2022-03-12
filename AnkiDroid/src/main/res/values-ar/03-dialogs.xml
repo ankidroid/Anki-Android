@@ -143,6 +143,7 @@
     <string name="no_space_to_downgrade_content">يحتاج أنكيدرويد %s من مساحة التخزين الخالية ليُكمل. فضلًا أخلِ بعض المساحة</string>
     <string name="restore_backup_title">هل تريد استرجاع النسخة الاحتياطية؟</string>
     <string name="restore_backup">ستُستبدل مجموعتك بنسخة أقدم. ستفقد أي تغيير غير محفوظ.</string>
+    <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
     <string name="dialog_no">لا</string>
@@ -212,6 +213,7 @@
     <string name="card_browser_deck_change_error">تعذر تغيير الرزمة</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">تعذر فك ترميز البيانات من البطاقة</string>
+    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">تعذرت معالجة خيارات الرزمة: %s</string>
     <!-- Database Errors-->

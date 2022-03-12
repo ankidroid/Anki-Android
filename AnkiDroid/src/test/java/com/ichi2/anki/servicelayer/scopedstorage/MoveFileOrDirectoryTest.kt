@@ -26,15 +26,15 @@ import org.junit.Test
 import java.io.File
 
 /** Tests for [MoveFileOrDirectory] */
-class MoveFileOrDirectoryTest {
+class MoveFileOrDirectoryTest : OperationTest {
 
-    private val executionContext = MockMigrationContext()
+    override val executionContext = MockMigrationContext()
     private val destinationDir = createTransientDirectory()
 
     @Test
     fun applied_to_file_returns_file() {
         val file = createTransientFile()
-        val nextOperations = execute(file)
+        val nextOperations = moveFromAndExecute(file)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
         val nextOperation = nextOperations[0]
         assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveFile::class.java))
@@ -46,7 +46,7 @@ class MoveFileOrDirectoryTest {
     @Test
     fun applied_to_directory_returns_directory() {
         val directory = createTransientDirectory()
-        val nextOperations = execute(directory)
+        val nextOperations = moveFromAndExecute(directory)
         assertThat("Only one operation should be next", nextOperations, hasSize(1))
         val nextOperation = nextOperations[0]
         assertThat("A file as input should return a file operation", nextOperation, instanceOf(MoveDirectory::class.java))
@@ -59,9 +59,9 @@ class MoveFileOrDirectoryTest {
     fun applied_to_deleted_file_returns_nothing() {
         val file = createTransientFile()
         file.delete()
-        val nextOperations = execute(file)
+        val nextOperations = moveFromAndExecute(file)
         assertThat("No operations should be next as file is deleted", nextOperations, hasSize(0))
     }
 
-    private fun execute(file: File) = MoveFileOrDirectory(file, File(destinationDir, file.name)).execute(executionContext)
+    private fun moveFromAndExecute(file: File) = MoveFileOrDirectory(file, File(destinationDir, file.name)).execute()
 }

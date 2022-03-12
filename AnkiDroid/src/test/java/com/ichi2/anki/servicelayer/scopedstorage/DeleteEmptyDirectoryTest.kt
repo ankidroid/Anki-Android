@@ -16,11 +16,19 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
+import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.Test21And26
+import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
@@ -28,9 +36,15 @@ import kotlin.io.path.pathString
 /**
  * Tests for [DeleteEmptyDirectory]
  */
-class DeleteEmptyDirectoryTest {
+@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
+@RunWith(Parameterized::class)
+class DeleteEmptyDirectoryTest(
+    override val compat: Compat,
+    /** Used in the "Test Results" Window */
+    @Suppress("unused") private val unitTestDescription: String
+) : Test21And26(compat, unitTestDescription), OperationTest {
 
-    val executionContext = MockMigrationContext()
+    override val executionContext = MockMigrationContext()
 
     @Test
     fun succeeds_if_directory_is_empty() {
@@ -68,8 +82,17 @@ class DeleteEmptyDirectoryTest {
         assertThat("no more operations", next, hasSize(0))
     }
 
+    /**
+     * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
+     * Where for some reason, `listFiles` returned null on an existing directory and
+     * newDirectoryStream returned `AccessDeniedException`.
+     */
+    @Test
+    fun reproduce_10358() {
+        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        permissionDenied.assertThrowsWhenPermissionDenied { DeleteEmptyDirectory(permissionDenied.directory).execute(executionContext) }
+    }
+
     private fun createEmptyDirectory() =
         Directory.createInstance(File(createTempDirectory().pathString))!!
-
-    fun MigrateUserData.Operation.execute() = this.execute(executionContext)
 }
