@@ -42,7 +42,6 @@ import org.apache.commons.compress.archivers.ArchiveException
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
-import org.apache.commons.compress.utils.IOUtils
 import timber.log.Timber
 import java.io.*
 import java.util.zip.GZIPInputStream
@@ -56,12 +55,22 @@ import java.util.zip.GZIPInputStream
  *
  * Also added zip slip safety
  * https://snyk.io/research/zip-slip-vulnerability
+ *
+ * Also extracted gzip files with file size limit 100MB and number of entries in the tar file
  */
 
 class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
+
+    val BUFFER = 512
+    val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
+    val TOO_MANY_FILES = 1024 // max number of files
+
+    var count = 0
+    var total: Long = 0
+    var data = ByteArray(BUFFER)
 
     /**
      * Determine whether a file is a gzip.
@@ -125,9 +134,7 @@ class TgzPackageExtract(private val context: Context) {
             addonsDir.deleteRecursively()
             Timber.w("Failed to unTar file")
         } finally {
-            // remove unused files
-            tarballFile.deleteOnExit()
-            tarTempFile.deleteOnExit()
+            tarTempFile.delete()
         }
     }
 
@@ -147,9 +154,27 @@ class TgzPackageExtract(private val context: Context) {
         // rename '-4' to remove the '.tgz' extension and add .tar extension
         val outputFile = File(outputDir, inputFile.name.substring(0, inputFile.name.length - 4) + ".tar")
 
+        count = 0
+        total = 0
+        data = ByteArray(BUFFER)
+
+        // file being unGzipped must not be greater than 100MB
         GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
             FileOutputStream(outputFile).use { outputStream ->
-                IOUtils.copy(inputStream, outputStream)
+                BufferedOutputStream(outputStream, BUFFER).use { bufferOutput ->
+
+                    while (total + BUFFER <= TOO_BIG_SIZE &&
+                        inputStream.read(data, 0, BUFFER).also { count = it } != -1
+                    ) {
+
+                        bufferOutput.write(data, 0, count)
+                        total += count
+                    }
+
+                    if (total + BUFFER > TOO_BIG_SIZE) {
+                        throw IllegalStateException("File being unGzip is too big")
+                    }
+                }
             }
         }
 
@@ -168,6 +193,10 @@ class TgzPackageExtract(private val context: Context) {
     fun unTar(inputFile: File, outputDir: File) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
         var newAvailableSpace: Long
+
+        count = 0
+        total = 0
+        data = ByteArray(BUFFER)
 
         FileInputStream(inputFile).use { inputStream ->
             ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
@@ -217,8 +246,23 @@ class TgzPackageExtract(private val context: Context) {
             }
         }
 
+        // file being untar must not be greater than 100MB
+        // here total is global so the total will be size of all files inside tar combined
         FileOutputStream(outputFile).use { outputFileStream ->
-            IOUtils.copy(tarInputStream, outputFileStream)
+            BufferedOutputStream(outputFileStream, BUFFER).use { bufferOutput ->
+
+                while (total + BUFFER <= TOO_BIG_SIZE &&
+                    tarInputStream.read(data, 0, BUFFER).also { count = it } != -1
+                ) {
+
+                    bufferOutput.write(data, 0, count)
+                    total += count
+                }
+
+                if (total + BUFFER > TOO_BIG_SIZE) {
+                    throw IllegalStateException("File being untar is too big")
+                }
+            }
         }
     }
 
@@ -261,10 +305,16 @@ class TgzPackageExtract(private val context: Context) {
             ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
                 val tarInputStream1 = tarInputStream as TarArchiveInputStream
                 var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
+                var numOfEntries = 0
 
                 while (entry != null) {
+                    numOfEntries++
                     unTarSize += entry.size
                     entry = tarInputStream.nextEntry as? TarArchiveEntry?
+                }
+
+                if (numOfEntries > TOO_MANY_FILES) {
+                    throw IllegalStateException("Too many files to untar")
                 }
             }
         }
