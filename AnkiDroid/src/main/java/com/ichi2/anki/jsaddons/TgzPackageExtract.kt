@@ -198,16 +198,12 @@ class TgzPackageExtract(private val context: Context) {
         count = 0
         total = 0
         data = ByteArray(BUFFER)
-        var addonName = ""
 
         try {
             FileInputStream(inputFile).use { inputStream ->
                 ArchiveStreamFactory().createArchiveInputStream("tar", inputStream).use { tarInputStream ->
                     val tarInputStream1 = tarInputStream as TarArchiveInputStream
                     var entry: TarArchiveEntry? = tarInputStream1.nextEntry as TarArchiveEntry
-
-                    // first entry will be addon name
-                    addonName = entry!!.name
 
                     while (entry != null) {
                         val outputFile = File(outputDir, entry.name)
@@ -231,8 +227,8 @@ class TgzPackageExtract(private val context: Context) {
                 }
             }
         } catch (e: IOException) {
-            File(addonName).deleteRecursively()
-            throw ArchiveException(context.getString(R.string.malicious_archive_exceeds_limit, addonName))
+            outputDir.deleteRecursively()
+            throw ArchiveException(context.getString(R.string.malicious_archive_exceeds_limit))
         }
     }
 
