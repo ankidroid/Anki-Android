@@ -251,7 +251,7 @@ public interface Compat {
     PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
 
     /**
-     * Writes an image represented by bitmap to the Pictures/AnkiDroid folder under the primary
+     * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
      * external storage directory. Requires the WRITE_EXTERNAL_STORAGE permission to be obtained on devices running
      * API <= 28. If this condition isn't satisfied, this method will throw a {@link FileNotFoundException}.
      *
@@ -270,7 +270,7 @@ public interface Compat {
     /**
      *
      * @param directory A directory.
-     * @return a FileStream over file and folder of this directory.
+     * @return a FileStream over file and directory of this directory.
      *         null in case of trouble. This stream must be closed explicitly when done with it.
      * @throws NotDirectoryException if the file exists and is not a directory (starting at API 26)
      * @throws FileNotFoundException if the file do not exists

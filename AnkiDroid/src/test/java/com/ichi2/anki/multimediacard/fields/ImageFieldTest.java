@@ -94,7 +94,7 @@ public class ImageFieldTest {
     @Test
     public void testNoImagePathIsNothing() {
         String knownBadImage = "<br />";
-        Collection col = collectionWithMediaFolder("media");
+        Collection col = collectionWithMediaDirectory("media");
 
         String imageSrc = ImageField.getImageFullPath(col, knownBadImage);
 
@@ -104,7 +104,7 @@ public class ImageFieldTest {
     @Test
     public void testNoImagePathConcat() {
         String goodImage = "<img src='1.png'/>";
-        Collection col = collectionWithMediaFolder("media");
+        Collection col = collectionWithMediaDirectory("media");
 
         String imageSrc = ImageField.getImageFullPath(col, goodImage);
 
@@ -112,7 +112,7 @@ public class ImageFieldTest {
     }
 
     @CheckResult
-    protected Collection collectionWithMediaFolder(String dir) {
+    protected Collection collectionWithMediaDirectory(String dir) {
         Media media = mock(Media.class);
         when(media.dir()).thenReturn(dir);
 

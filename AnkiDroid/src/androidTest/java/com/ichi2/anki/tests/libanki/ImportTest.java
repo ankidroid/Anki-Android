@@ -101,7 +101,7 @@ public class ImportTest extends InstrumentedTest {
         n.setField(0, "[sound:foo.mp3]");
         long mid = n.model().getLong("id");
         mTestCol.addNote(n);
-        // add that sound to the media folder
+        // add that sound to the media directory
         FileOutputStream os = new FileOutputStream(new File(mTestCol.getMedia().dir(), "foo.mp3"), false);
         os.write("foo".getBytes());
         os.close();

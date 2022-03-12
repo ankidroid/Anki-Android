@@ -2719,7 +2719,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     return true;
                 /*
                  *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
-                 *  See card.js in assets/scripts folder
+                 *  See card.js in assets/scripts directory
                  */
                 case WebViewSignalParserUtils.SHOW_ANSWER:
                     // display answer when showAnswer() called from card.js

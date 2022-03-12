@@ -839,7 +839,7 @@ class Preferences : AnkiActivity() {
                         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
                         val imageName = "DeckPickerBackground.png"
                         val destFile = File(currentAnkiDroidDirectory, imageName)
-                        // Image size less than 10 MB copied to AnkiDroid folder
+                        // Image size less than 10 MB copied to AnkiDroid directory
                         if (fileLength < 10) {
                             (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream?)!!.channel.use { sourceChannel ->
                                 FileOutputStream(destFile).channel.use { destChannel ->
