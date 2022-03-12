@@ -205,7 +205,7 @@
     <issue id="TrustAllX509TrustManager" severity="ignore" />
     <issue id="InvalidImeActionId" severity="ignore" />
     <issue id="InvalidPackage" severity="ignore" />
-    <issue id="DrawAllocation" severity="ignore" />
+    <issue id="DrawAllocation" severity="fatal" />
     <issue id="UseSparseArrays" severity="ignore" />
     <issue id="UseValueOf" severity="ignore" />
     <issue id="JavascriptInterface" severity="ignore" />
