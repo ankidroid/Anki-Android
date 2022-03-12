@@ -90,3 +90,4 @@ jobs:
           # This part is also where you can pass other options, for example:
           prettier_options: --check AnkiDroid/**/*.js
           only_changed: True
+          dry: True
