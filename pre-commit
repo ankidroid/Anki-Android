@@ -37,7 +37,7 @@ if [ -z "$CHANGED_JS_FILES" ]; then
     exit 0
 fi;
 
-echo "Running Prettier over these files:"
+echo "Running Prettier check over these files:"
 echo "$CHANGED_JS_FILES"
 
 # Prettify all selected files
