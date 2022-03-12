@@ -26,7 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import java.io.File
 
-class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatter, private val collection: File?) : AnalyticsDialogFragment() {
+class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatter, private val collection: File) : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val res = resources
@@ -52,7 +52,7 @@ class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatte
 
     companion object {
         @JvmStatic
-        fun newInstance(formatter: FileSizeFormatter, collectionFile: File?): DeckPickerNoSpaceToDowngradeDialog {
+        fun newInstance(formatter: FileSizeFormatter, collectionFile: File): DeckPickerNoSpaceToDowngradeDialog {
             return DeckPickerNoSpaceToDowngradeDialog(formatter, collectionFile)
         }
     }
