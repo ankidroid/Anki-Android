@@ -67,7 +67,7 @@
 
                         <TableLayout
                                 android:id="@+id/studyoptions_deckcounts"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center_horizontal"
