@@ -43,7 +43,7 @@ class MediaRegistration(private val context: Context) {
     private val mPastedImageCache = HashMap<String, String?>()
 
     /**
-     * Loads an image into the collection.media folder and returns a HTML reference
+     * Loads an image into the collection.media directory and returns a HTML reference
      * @param uri The uri of the image to load
      * @return HTML referring to the loaded image
      */

@@ -162,7 +162,7 @@ import static timber.log.Timber.DebugTree;
 )
 public class AnkiDroidApp extends Application {
 
-    /** Running under instrumentation. a "/androidTest" folder will be created which contains a test collection */
+    /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection */
     public static boolean INSTRUMENTATION_TESTING = false;
 
     /**

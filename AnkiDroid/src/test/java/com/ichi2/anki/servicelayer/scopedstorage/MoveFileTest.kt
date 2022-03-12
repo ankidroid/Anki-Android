@@ -52,7 +52,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     @Test
     fun move_file_is_success() {
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         val size = source.length()
 
         MoveFile(source, destinationFile)
@@ -69,7 +69,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     fun move_file_twice_throws_no_exception() {
         // For example: if an operation was preempted by a file transfer for the Reviewer
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         val size = source.length()
 
         MoveFile(source, destinationFile).execute()
@@ -87,7 +87,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         if (attemptRename) return // not relevant
         // if the move doesn't work, do not delete the source file
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
 
         executionContext.logExceptions = true
         spy(MoveFile(source, destinationFile)) {
@@ -107,7 +107,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         if (attemptRename) return // not relevant
         // if the move doesn't work, do not delete the source file
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
 
         // this is correct - exception is not in a logged context
         executionContext.logExceptions = true
@@ -127,7 +127,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     fun no_op_if_both_files_deleted_but_directory_exists() {
         // if the move doesn't work, do not delete the source file
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         // we make a `DiskFile` which doesn't exist - class is in a bad state
         source.file.delete()
         assertThat("destination should not exist", destinationFile.exists(), equalTo(false))
@@ -144,7 +144,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     fun source_is_deleted_if_both_files_are_the_same() {
         // This can happen if a power off occurs between copying the file, and cleaning up the source
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         source.file.copyTo(destinationFile, overwrite = false)
 
         val size = source.length()
@@ -163,7 +163,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     @Test
     fun if_both_files_same_and_delete_throws_exception() {
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         source.file.copyTo(destinationFile, overwrite = false)
 
         executionContext.logExceptions = true
@@ -217,8 +217,8 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
     fun error_if_both_files_do_not_exist_but_no_directory() {
         val sourceDirectoryToDelete = createTransientDirectory("toDelete")
         val destinationDirectoryToDelete = createTransientDirectory("toDelete")
-        val sourceNotExist = DiskFile.createInstanceUnsafe(File(sourceDirectoryToDelete, "deletedFolder-in.txt"))
-        val destinationFileNotExist = File(destinationDirectoryToDelete, "deletedFolder-out.txt")
+        val sourceNotExist = DiskFile.createInstanceUnsafe(File(sourceDirectoryToDelete, "deletedDirectory-in.txt"))
+        val destinationFileNotExist = File(destinationDirectoryToDelete, "deletedDirectory-out.txt")
         assertThat(
             "deletion should work",
             sourceDirectoryToDelete.delete() && destinationDirectoryToDelete.delete(),
@@ -240,7 +240,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         if (attemptRename) return // not relevant
         // if a crash/"delete" fails, we want to ensure the duplicate file is cleaned up
         val source = addUntrackedMediaFile("hello-world", listOf("hello.txt"))
-        val destinationFile = File(ankiDroidFolder(), "hello.txt")
+        val destinationFile = File(ankiDroidDirectory(), "hello.txt")
         val size = source.length()
 
         executionContext.logExceptions = true

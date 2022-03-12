@@ -64,7 +64,7 @@ public class DuplicateTextInPreferencesXml extends ResourceXmlDetector {
 
 
     @Override
-    public boolean appliesTo(ResourceFolderType folderType) {
-        return folderType == ResourceFolderType.XML;
+    public boolean appliesTo(ResourceFolderType directoryType) {
+        return directoryType == ResourceFolderType.XML;
     }
 }

@@ -256,18 +256,18 @@ public class CompatV21 implements Compat {
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
     public Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File ankiDroidFolder = new File(pictures, "AnkiDroid");
-        if (!ankiDroidFolder.exists()) {
+        File ankiDroidDirectory = new File(pictures, "AnkiDroid");
+        if (!ankiDroidDirectory.exists()) {
             //noinspection ResultOfMethodCallIgnored
-            ankiDroidFolder.mkdirs();
+            ankiDroidDirectory.mkdirs();
         }
-        File imageFile = new File(ankiDroidFolder, baseFileName + "." + extension);
+        File imageFile = new File(ankiDroidDirectory, baseFileName + "." + extension);
         bitmap.compress(format, quality, new FileOutputStream(imageFile));
         return Uri.fromFile(imageFile);
     }
 
     /* This method actually read the full content of the directory.
-    * It is linear in time and space in the number of file and folder in the directory.
+    * It is linear in time and space in the number of file and directory in the directory.
     * However, hasNext and next should be constant in time and space. */
     @Override
     public @NonNull FileStream contentOfDirectory(@NonNull File directory) throws IOException {

@@ -200,7 +200,7 @@ class MoveDirectoryTest(
     }
 
     /**
-     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
+     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subdirectory).
      * This new file/directory must be present in source or destination.
      *
      * @return The [MoveDirectory] which was executed

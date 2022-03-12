@@ -127,8 +127,8 @@ public class FixedPreferencesTitleLength extends ResourceXmlDetector implements 
 
 
     @Override
-    public boolean appliesTo(ResourceFolderType folderType) {
-        return (folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES);
+    public boolean appliesTo(ResourceFolderType directoryType) {
+        return (directoryType == ResourceFolderType.XML || directoryType == ResourceFolderType.VALUES);
     }
 
 

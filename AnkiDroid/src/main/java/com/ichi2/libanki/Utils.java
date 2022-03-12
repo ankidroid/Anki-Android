@@ -700,7 +700,7 @@ public class Utils {
     /**
      * @param zipFile A zip file
      * @param targetDirectory Directory in which to unzip some of the zipped field
-     * @param zipEntries files of the zip folder to unzip
+     * @param zipEntries files of the zip directory to unzip
      * @param zipEntryToFilenameMap Renaming rules from name in zip file to name in the device
      * @throws IOException if the directory can't be created
      */

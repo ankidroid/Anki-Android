@@ -52,7 +52,7 @@ public class ImportingTest extends RobolectricTest {
       n.setItem("Front", "[sound:foo.mp3]");
       mid = n.model().getLong("id");
       col.addNote(n);
-      // add that sound to media folder
+      // add that sound to media directory
       with open(os.path.join(col.getMedia().dir(), "foo.mp3"), "w") as note:
       note.write("foo");
       col.close();

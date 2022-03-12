@@ -60,7 +60,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
      * Return whether it was successful.
      */
     internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
-        Timber.d("creating folder '$destination'")
+        Timber.d("creating directory '$destination'")
         if (!createDirectory(destination)) {
             context.reportError(this, IllegalStateException("Could not create '$destination'"))
             return false
