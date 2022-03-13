@@ -102,10 +102,11 @@ object FileSystemUtils {
  * Returns a new directory in the OS's default temp directory, using the given [prefix] to generate its name.
  * This directory is deleted on exit
  */
-fun createTransientDirectory(): File =
+fun createTransientDirectory(vararg fileNames: String): File =
     createTempDirectory().let {
         val file = File(it.pathString)
         file.deleteOnExit()
+        fileNames.forEach(file::addTempFile)
         return@let file
     }
 

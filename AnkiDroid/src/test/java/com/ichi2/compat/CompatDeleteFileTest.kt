@@ -67,7 +67,7 @@ class CompatDeleteFileTest(
     @Test
     fun delete_fails_if_not_empty_directory() {
         // Note: Exception is a DirectoryNotEmptyException in V26
-        val dir = createTransientDirectory().withTempFile("foo.txt")
+        val dir = createTransientDirectory("foo.txt")
         assertThrowsSubclass<IOException> { deleteFile(dir) }
     }
 

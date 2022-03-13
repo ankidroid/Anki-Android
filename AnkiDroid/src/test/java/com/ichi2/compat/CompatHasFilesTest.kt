@@ -20,7 +20,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ichi2.testutils.*
 import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.withTempFile
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -43,7 +42,7 @@ class CompatHasFilesTest(
 
     @Test
     fun has_files_with_file() {
-        val dir = createTransientDirectory().withTempFile("aa.txt")
+        val dir = createTransientDirectory("aa.txt")
         assertThat("empty directory has no files", hasFiles(dir), equalTo(true))
     }
 

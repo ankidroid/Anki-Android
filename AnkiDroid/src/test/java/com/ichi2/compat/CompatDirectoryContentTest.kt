@@ -48,8 +48,7 @@ class CompatDirectoryContentTest(
     @Test
     fun ensure_absolute_path() {
         // Relative paths caused me hours of debugging. Never again.
-        val directory = createTransientDirectory()
-            .withTempFile("zero")
+        val directory = createTransientDirectory("zero")
         val iterator = compat.contentOfDirectory(directory)
         val file = iterator.next()
         assertThat("Paths should be canonical", file.path, equalTo(file.canonicalPath))
@@ -57,10 +56,7 @@ class CompatDirectoryContentTest(
 
     @Test
     fun dir_test_three_files() {
-        val directory = createTransientDirectory()
-            .withTempFile("zero")
-            .withTempFile("one")
-            .withTempFile("two")
+        val directory = createTransientDirectory("zero", "one", "two")
         val iterator = compat.contentOfDirectory(directory)
         val found = Array(3) { false }
         for (i in 1..3) {
