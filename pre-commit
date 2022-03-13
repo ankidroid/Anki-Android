@@ -30,18 +30,18 @@ echo "$CHANGED_KT_FILES" | while read -r file; do
     fi
 done
 
+if ! command -v npx &> /dev/null
+then
+    echo "npx could not be found. Hence, skipping pre-commit Prettier check."
+    exit 0
+fi
+
 CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
 
 if [ -z "$CHANGED_JS_FILES" ]; then
     echo "No Javascript staged files. Hence, skipping pre-commit Prettier check."
     exit 0
 fi;
-
-if ! command -v npx &> /dev/null
-then
-    echo "npx could not be found, but it is required for pre-commit Prettier check."
-    exit 1
-fi
 
 echo "Running Prettier check over these files:"
 echo "$CHANGED_JS_FILES"
