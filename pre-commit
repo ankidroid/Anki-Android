@@ -1,59 +1,67 @@
 #!/bin/sh
 set -e
 
-CHANGED_KT_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')"
+runKtlint () {
+    CHANGED_KT_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2 }')"
 
-if [ -z "$CHANGED_KT_FILES" ]; then
-    echo "No Kotlin staged files. Hence, skipping pre-commit Ktlint run."
-    exit 0
-fi;
+    if [ -z "$CHANGED_KT_FILES" ]; then
+        echo "No Kotlin staged files. Hence, skipping pre-commit Ktlint run."
+        return 0
+    fi;
 
-echo "Running Ktlint over these files:"
-echo "$CHANGED_KT_FILES"
+    echo "Running Ktlint over these files:"
+    echo "$CHANGED_KT_FILES"
 
 
-# -q removes noise from the output if it fails.
-# TODO: -w is better, but https://github.com/JLLeitschuh/ktlint-gradle/issues/457 adds noise
-# -w should display: "CriticalExceptionTest.kt:19:1 Wildcard import (cannot be auto-corrected)"
-# Cleaning and retrying only if the ktlint fails
-if ! ./gradlew -q ktlintFormat ; then
-    echo "Cleaning the project and retrying."
-    # Clean is required because of https://github.com/ankidroid/Anki-Android/issues/9521
-    ./gradlew clean
-    ./gradlew -q ktlintFormat
-fi;
+    # -q removes noise from the output if it fails.
+    # TODO: -w is better, but https://github.com/JLLeitschuh/ktlint-gradle/issues/457 adds noise
+    # -w should display: "CriticalExceptionTest.kt:19:1 Wildcard import (cannot be auto-corrected)"
+    # Cleaning and retrying only if the ktlint fails
+    if ! ./gradlew -q ktlintFormat ; then
+        echo "Cleaning the project and retrying."
+        # Clean is required because of https://github.com/ankidroid/Anki-Android/issues/9521
+        ./gradlew clean
+        ./gradlew -q ktlintFormat
+    fi;
 
-echo "Completed ./gradlew ktlintFormat run."
-echo "$CHANGED_KT_FILES" | while read -r file; do
-    if [ -f "$file" ]; then
-        git add "$file"
+    echo "Completed ./gradlew ktlintFormat run."
+    echo "$CHANGED_KT_FILES" | while read -r file; do
+        if [ -f "$file" ]; then
+            git add "$file"
+        fi
+    done
+}
+
+checkPrettier () {
+    # check if npx is installed, else skip checkPrettier
+    if ! command -v npx &> /dev/null
+    then
+        echo "npx could not be found. Hence, skipping pre-commit Prettier check."
+        return 0
     fi
-done
 
-if ! command -v npx &> /dev/null
-then
-    echo "npx could not be found. Hence, skipping pre-commit Prettier check."
-    exit 0
-fi
+    CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
 
-CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
+    if [ -z "$CHANGED_JS_FILES" ]; then
+        echo "No Javascript staged files. Hence, skipping pre-commit Prettier run."
+        return 0
+    fi;
 
-if [ -z "$CHANGED_JS_FILES" ]; then
-    echo "No Javascript staged files. Hence, skipping pre-commit Prettier check."
-    exit 0
-fi;
+    echo "Running Prettier check over these files:"
+    echo "$CHANGED_JS_FILES"
 
-echo "Running Prettier check over these files:"
-echo "$CHANGED_JS_FILES"
+    # Prettify check all selected files. In case there are unformatted files, exit with error
+    echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --check \
+        || { echo "Problem running prettier check"; exit 1; }
 
-# run Prettier check for all staged files
-echo "$CHANGED_JS_FILES" | xargs npx prettier -y --ignore-unknown --check
+    echo "Completed npx prettier run."
+    echo "$CHANGED_JS_FILES" | while read -r file; do
+        if [ -f "$file" ]; then
+            git add "$file"
+        fi
+    done
+}
 
-
-echo "Completed npx prettier run."
-echo "$CHANGED_JS_FILES" | while read -r file; do
-    if [ -f "$file" ]; then
-        git add "$file"
-    fi
-done
+runKtlint
+checkPrettier
 echo "Completed the pre-commit hook."
