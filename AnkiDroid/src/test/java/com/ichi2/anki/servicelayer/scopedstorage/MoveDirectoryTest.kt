@@ -58,7 +58,7 @@ class MoveDirectoryTest(
     @Test
     fun test_success_integration_test_recursive() {
         val source = createTransientDirectory().withTempFile("tmp.txt")
-        source.createTransientDirectory("more files").withTempFile("tmp-2.txt")
+        source.createTransientDirectory("more files", "tmp-2.txt")
         val destinationFile = generateDestinationDirectoryRef()
         executionContext.attemptRename = false
 

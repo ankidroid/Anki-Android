@@ -71,7 +71,7 @@ class MoveDirectoryContentTest(
     @Test
     fun test_success_integration_test_recursive() {
         val source = createTransientDirectory().withTempFile("tmp.txt")
-        val moreFiles = source.createTransientDirectory("more files").withTempFile("tmp-2.txt")
+        val moreFiles = source.createTransientDirectory("more files", "tmp-2.txt")
         val destinationDirectory = createTransientDirectory()
 
         executeAll(moveDirectoryContent(source, destinationDirectory))
