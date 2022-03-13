@@ -32,11 +32,11 @@ runKtlint () {
     done
 }
 
-checkPrettier () {
-    # check if npx is installed, else skip checkPrettier
+runPrettier () {
+    # check if npx is installed, else skip runPrettier
     if ! command -v npx &> /dev/null
     then
-        echo "npx could not be found. Hence, skipping pre-commit Prettier check."
+        echo "npx could not be found. Hence, skipping pre-commit Prettier run."
         return 0
     fi
 
@@ -47,12 +47,11 @@ checkPrettier () {
         return 0
     fi;
 
-    echo "Running Prettier check over these files:"
+    echo "Running Prettier over these files:"
     echo "$CHANGED_JS_FILES"
 
-    # Prettify check all selected files. In case there are unformatted files, exit with error
-    echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --check \
-        || { echo "Problem running prettier check"; exit 1; }
+    # Prettify all selected files.
+    echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --write
 
     echo "Completed npx prettier run."
     echo "$CHANGED_JS_FILES" | while read -r file; do
@@ -63,5 +62,5 @@ checkPrettier () {
 }
 
 runKtlint
-checkPrettier
+runPrettier
 echo "Completed the pre-commit hook."
