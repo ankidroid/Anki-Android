@@ -53,6 +53,8 @@
 
 
     <issue id="ImplicitSamInstance" severity="fatal" />
+    <issue id="LogConditional" severity="fatal" />
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
@@ -223,7 +225,6 @@
     <issue id="InvalidResourceFolder" severity="ignore" />
     <issue id="WrongRegion" severity="ignore" />
     <issue id="UseAlpha2" severity="ignore" />
-    <issue id="LogConditional" severity="ignore" />
     <issue id="LongLogTag" severity="ignore" />
     <issue id="LogTagMismatch" severity="ignore" />
     <issue id="AllowBackup" severity="ignore" />

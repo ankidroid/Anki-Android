@@ -249,3 +249,19 @@ function ankiSearchCard(result) {
         searchCardHook[i](result);
     }
 }
+
+function showHint() {
+    var hints = document.querySelectorAll('a.hint');
+    for (var i = 0; i < hints.length; i++) {
+        if (hints[i].style.display != 'none') {
+            hints[i].click();
+            break;
+        }
+    }
+}
+
+function showAllHints() {
+    document.querySelectorAll('a.hint').forEach(el => {
+        el.click()
+    });
+}
