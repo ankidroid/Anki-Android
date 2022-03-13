@@ -57,22 +57,10 @@ object FileUtil {
 fun DiskFile.length(): Long = this.file.length()
 fun Directory.exists(): Boolean = this.directory.exists()
 
-/** Adds a file to the directory with the provided name and content */
-fun File.withTempFile(fileName: String): File {
-    this.addTempFile(fileName)
-    return this
-}
-
 /** A new file at path this/[fileName]. Its content is its original canonical path. */
 fun File.addTempFile(fileName: String): File {
     return File(this, fileName).also {
         IOUtils.writeStringToFile(it, it.canonicalPath)
         it.deleteOnExit()
     }
-}
-
-/** Adds a file to the directory with the provided name and content */
-fun Directory.withTempFile(fileName: String): Directory {
-    this.directory.withTempFile(fileName)
-    return this
 }

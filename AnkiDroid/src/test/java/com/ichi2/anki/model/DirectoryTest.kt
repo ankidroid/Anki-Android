@@ -75,10 +75,7 @@ class DirectoryTest(
 
     @Test
     fun list_files_returns_valid_paths() {
-        val dir = createValidTempDir()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.xtx")
-            .withTempFile("baz.xtx")
+        val dir = createValidTempDir("foo.txt", "bar.xtx", "baz.xtx")
 
         val files = dir.listFiles()
 
@@ -128,7 +125,7 @@ class DirectoryTest(
         permissionDenied.assertThrowsWhenPermissionDenied { permissionDenied.directory.hasFiles() }
     }
 
-    private fun createValidTempDir(): Directory {
-        return Directory.createInstance(createTransientDirectory())!!
+    private fun createValidTempDir(vararg fileNames: String): Directory {
+        return Directory.createInstance(createTransientDirectory(*fileNames))!!
     }
 }
