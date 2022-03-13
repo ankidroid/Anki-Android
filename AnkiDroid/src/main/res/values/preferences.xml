@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="new_spread_preference">newSpread</string>
+    <string name="day_offset_preference">dayOffset</string>
+    <string name="learn_cutoff_preference">learnCutoff</string>
+    <string name="time_limit_preference">timeLimit</string>
+    <string name="new_timezone_handling_preference">newTimezoneHandling</string>
+    <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
+    <string name="custom_buttons_link_preference">custom_buttons_link</string>
+    <string name="keep_screen_on_preference">keepScreenOn</string>
+    <string name="fullscreen_mode_preference">fullscreenMode</string>
+    <string name="center_vertically_preference">centerVertically</string>
+    <string name="show_estimates_preference">showEstimates</string>
+    <string name="card_zoom_preference">cardZoom</string>
+    <string name="image_zoom_preference">imageZoom</string>
+    <string name="answer_button_size_preference">answerButtonSize</string>
+    <string name="show_topbar_preference">showTopbar</string>
+    <string name="show_progress_preference">showProgress</string>
+    <string name="show_eta_preference">showETA</string>
+    <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
+    <string name="white_board_stroke_width_preference">whiteBoardStrokeWidth</string>
+    <string name="timeout_answer_preference">timeoutAnswer</string>
+    <string name="automatic_answer_action_preference">automaticAnswerAction</string>
+    <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
+    <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
+</resources>

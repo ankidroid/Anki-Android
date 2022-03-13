@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Haut</item>
         <item>Bas</item>
-        <item>None</item>
+        <item>Aucun</item>
     </string-array>
     <string name="gestures" maxLength="41">Activer les gestes</string>
     <string name="gestures_summ">Assigner des gestes à des actions comme répondre et éditer des cartes.</string>
@@ -213,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Autoriser l\'importation de tous fichiers</string>
     <string name="media_import_allow_all_files_summ">Si android ne reconnait pas un fichier comme média</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Statistiques avancées</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Activer les statistiques avancées</string>
