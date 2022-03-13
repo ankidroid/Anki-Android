@@ -57,12 +57,12 @@ class MoveDirectoryTest(
 
     @Test
     fun test_success_integration_test_recursive() {
-        val source = createDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory().withTempFile("tmp.txt")
         source.createTransientDirectory("more files").withTempFile("tmp-2.txt")
         val destinationFile = generateDestinationDirectoryRef()
         executionContext.attemptRename = false
 
-        executeAll(MoveDirectory(source, destinationFile))
+        executeAll(moveDirectory(source, destinationFile))
 
         assertThat("source directory should not exist", source.exists(), equalTo(false))
         assertThat("destination directory should exist", destinationFile.exists(), equalTo(true))
@@ -75,11 +75,11 @@ class MoveDirectoryTest(
 
     @Test
     fun test_fast_rename() {
-        val source = createDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory().withTempFile("tmp.txt")
         val destinationFile = generateDestinationDirectoryRef()
         executionContext.attemptRename = true
 
-        val ret = MoveDirectory(source, destinationFile).execute()
+        val ret = moveDirectory(source, destinationFile).execute()
 
         assertThat("fast rename returns no operations", ret, empty())
         assertThat("source directory should not exist", source.exists(), equalTo(false))
@@ -90,13 +90,13 @@ class MoveDirectoryTest(
     @Test
     fun failed_rename_avoids_further_renames() {
         // This is a performance optimization,
-        val source = createDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory().withTempFile("tmp.txt")
         val destinationFile = generateDestinationDirectoryRef()
         var renameCalled = 0
 
         executionContext.logExceptions = true
         // don't actually move the directory, or we'd have a problem
-        val moveDirectory = spy(MoveDirectory(source, destinationFile)) {
+        val moveDirectory = spy(moveDirectory(source, destinationFile)) {
             doAnswer { renameCalled++; return@doAnswer false }.whenever(it).rename(any(), any())
         }
 
@@ -112,12 +112,12 @@ class MoveDirectoryTest(
         assertThat("rename was not called again", renameCalled, equalTo(1))
 
         assertThat(executionContext.exceptions, hasSize(0))
-        assertThat("source was not copied", File(source.directory, "tmp.txt").exists(), equalTo(true))
+        assertThat("source was not copied", File(source, "tmp.txt").exists(), equalTo(true))
     }
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
             .withTempFile("baz.txt")
@@ -126,7 +126,7 @@ class MoveDirectoryTest(
 
         executionContext.attemptRename = false
         executionContext.logExceptions = true
-        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val moveDirectory = moveDirectory(source, destinationDirectory)
         val subOperations = moveDirectory.execute()
         val moveDirectoryContent = subOperations[0] as MoveDirectoryContent
         val deleteDirectory = subOperations[1]
@@ -151,7 +151,7 @@ class MoveDirectoryTest(
     @Test
     fun adding_file_during_move_is_not_fatal() {
         val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
         }
 
         assertThat("source should not be deleted on retry", operation.source.exists(), equalTo(true))
@@ -161,7 +161,7 @@ class MoveDirectoryTest(
     @Test
     fun adding_directory_during_move_is_not_fatal() {
         val operation = adding_during_move_helper {
-            val new_directory = File(it.directory, "subdirectory")
+            val new_directory = File(it, "subdirectory")
             assertThat("Subdirectory is created", new_directory.mkdir())
             new_directory.deleteOnExit()
             return@adding_during_move_helper new_directory
@@ -176,7 +176,7 @@ class MoveDirectoryTest(
         executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
 
         val operation = adding_during_move_helper {
-            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
         }
 
         assertThat("source should be deleted on retry", operation.source.exists(), equalTo(false))
@@ -188,7 +188,7 @@ class MoveDirectoryTest(
         executionContext = RetryMigrationContext { l -> executor.operations.addAll(0, l) }
 
         val operation = adding_during_move_helper {
-            val newDirectory = File(it.directory, "subdirectory")
+            val newDirectory = File(it, "subdirectory")
             assertThat("Subdirectory is created", newDirectory.mkdir())
             newDirectory.deleteOnExit()
             return@adding_during_move_helper newDirectory
@@ -204,8 +204,8 @@ class MoveDirectoryTest(
      *
      * @return The [MoveDirectory] which was executed
      */
-    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File): MoveDirectory {
-        val source = createDirectory()
+    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File): MoveDirectory {
+        val source = createTransientDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
 
@@ -215,7 +215,7 @@ class MoveDirectoryTest(
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val moveDirectory = MoveDirectory(source, destinationDirectory)
+        val moveDirectory = moveDirectory(source, destinationDirectory)
         val suboperations = moveDirectory.execute()
         val moveDirectoryContent = suboperations[0] as MoveDirectoryContent
         val deleteDirectory = suboperations[1]
@@ -240,33 +240,33 @@ class MoveDirectoryTest(
 
         assertThat(
             "new_file should be present in source or directory",
-            File(source.directory, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
+            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
         )
         return moveDirectory
     }
 
     @Test
     fun empty_directory_is_deleted() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
         val destinationFile = generateDestinationDirectoryRef()
 
         executionContext.attemptRename = false
 
-        executeAll(MoveDirectory(source, destinationFile))
+        executeAll(moveDirectory(source, destinationFile))
 
-        assertThat("source was deleted", source.directory.exists(), equalTo(false))
+        assertThat("source was deleted", source.exists(), equalTo(false))
     }
 
     @Test
     fun empty_directory_is_deleted_rename() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
         val destinationFile = generateDestinationDirectoryRef()
 
         executionContext.attemptRename = true
 
-        executeAll(MoveDirectory(source, destinationFile))
+        executeAll(moveDirectory(source, destinationFile))
 
-        assertThat("source was deleted", source.directory.exists(), equalTo(false))
+        assertThat("source was deleted", source.exists(), equalTo(false))
     }
 
     /**
@@ -278,6 +278,10 @@ class MoveDirectoryTest(
     fun reproduce_10358() {
         val sourceWithPermissionDenied = createPermissionDenied()
         val destination = createTransientDirectory()
-        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(MoveDirectory(sourceWithPermissionDenied.directory, destination)) }
+        sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(moveDirectory(sourceWithPermissionDenied.directory.directory, destination)) }
+    }
+
+    fun moveDirectory(source: File, destination: File): MoveDirectory {
+        return MoveDirectory(Directory.createInstance(source)!!, destination)
     }
 }
