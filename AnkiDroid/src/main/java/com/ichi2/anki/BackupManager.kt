@@ -25,7 +25,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.BufferedOutputStream
 import java.io.File
@@ -38,10 +37,9 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 open class BackupManager {
-    @KotlinCleanup("make path non-null")
     @Throws(OutOfSpaceException::class)
-    fun performDowngradeBackupInForeground(path: String?): Boolean {
-        val colFile = File(path!!)
+    fun performDowngradeBackupInForeground(path: String): Boolean {
+        val colFile = File(path)
         if (!hasFreeDiscSpace(colFile)) {
             Timber.w("Could not backup: no free disc space")
             throw OutOfSpaceException()
@@ -145,9 +143,8 @@ open class BackupManager {
         return null
     }
 
-    @KotlinCleanup("make backupFilename non-null")
-    fun getBackupFile(colFile: File, backupFilename: String?): File {
-        return File(getBackupDirectory(colFile.parentFile!!), backupFilename!!)
+    fun getBackupFile(colFile: File, backupFilename: String): File {
+        return File(getBackupDirectory(colFile.parentFile!!), backupFilename)
     }
 
     fun performBackupInNewThread(colFile: File, backupFile: File) {
@@ -214,9 +211,8 @@ open class BackupManager {
         val isActivated: Boolean
             get() = true
 
-        @KotlinCleanup("make non-null - requires fixing unit tests - they accidentally use empty string as the path")
         @JvmStatic
-        fun getBackupDirectory(ankidroidDir: File?): File {
+        fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
@@ -241,10 +237,9 @@ open class BackupManager {
          * @param colFile The current collection file to backup
          * @return the amount of free space required for a backup.
          */
-        @KotlinCleanup("make colFile non-null")
-        fun getRequiredFreeSpace(colFile: File?): Long {
+        fun getRequiredFreeSpace(colFile: File): Long {
             // We add a minimum amount of free space to ensure against
-            return colFile!!.length() + MIN_FREE_SPACE * 1024 * 1024
+            return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
         @JvmStatic
@@ -304,9 +299,8 @@ open class BackupManager {
             return false
         }
 
-        @KotlinCleanup("make colPath non-null")
-        fun moveDatabaseToBrokenFolder(colPath: String?, moveConnectedFilesToo: Boolean, time: Time): Boolean {
-            val colFile = File(colPath!!)
+        fun moveDatabaseToBrokenFolder(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+            val colFile = File(colPath)
 
             // move file
             val value: Date = time.genToday(utcOffset())
@@ -399,7 +393,7 @@ open class BackupManager {
          * @return Array of files with names which matches the backup name pattern
          */
         fun getBackups(colFile: File): Array<File> {
-            var files = getBackupDirectory(colFile.parentFile).listFiles()
+            var files = getBackupDirectory(colFile.parentFile!!).listFiles()
             if (files == null) {
                 files = arrayOf<File>()
             }
