@@ -57,7 +57,7 @@ class MoveDirectoryTest(
 
     @Test
     fun test_success_integration_test_recursive() {
-        val source = createTransientDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory("tmp.txt")
         source.createTransientDirectory("more files", "tmp-2.txt")
         val destinationFile = generateDestinationDirectoryRef()
         executionContext.attemptRename = false
@@ -75,7 +75,7 @@ class MoveDirectoryTest(
 
     @Test
     fun test_fast_rename() {
-        val source = createTransientDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory("tmp.txt")
         val destinationFile = generateDestinationDirectoryRef()
         executionContext.attemptRename = true
 
@@ -90,7 +90,7 @@ class MoveDirectoryTest(
     @Test
     fun failed_rename_avoids_further_renames() {
         // This is a performance optimization,
-        val source = createTransientDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory("tmp.txt")
         val destinationFile = generateDestinationDirectoryRef()
         var renameCalled = 0
 
@@ -117,10 +117,7 @@ class MoveDirectoryTest(
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
-            .withTempFile("baz.txt")
+        val source = createTransientDirectory("foo.txt", "bar.txt", "baz.txt")
 
         val destinationDirectory = generateDestinationDirectoryRef()
 
@@ -205,10 +202,7 @@ class MoveDirectoryTest(
      * @return The [MoveDirectory] which was executed
      */
     fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File): MoveDirectory {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
-
+        val source = createTransientDirectory("foo.txt", "bar.txt")
         val destinationDirectory = generateDestinationDirectoryRef()
         var new_file_name: String? = null
 

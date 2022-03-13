@@ -52,8 +52,7 @@ class MoveDirectoryContentTest(
 
     @Test
     fun test_one_operation() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
+        val source = createTransientDirectory("foo.txt")
         val destinationDirectory = createTransientDirectory()
 
         val moveOperation = moveDirectoryContent(source, destinationDirectory)
@@ -70,7 +69,7 @@ class MoveDirectoryContentTest(
 
     @Test
     fun test_success_integration_test_recursive() {
-        val source = createTransientDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory("tmp.txt")
         val moreFiles = source.createTransientDirectory("more files", "tmp-2.txt")
         val destinationDirectory = createTransientDirectory()
 
@@ -90,10 +89,7 @@ class MoveDirectoryContentTest(
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
-            .withTempFile("baz.txt")
+        val source = createTransientDirectory("foo.txt", "bar.txt", "baz.txt")
 
         assertThat("foo should exists", File(source, "foo.txt").exists(), equalTo(true))
         val destinationDirectory = createTransientDirectory()
@@ -139,9 +135,7 @@ class MoveDirectoryContentTest(
      *
      */
     fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File) {
-        val source = createTransientDirectory()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.txt")
+        val source = createTransientDirectory("foo.txt", "bar.txt")
 
         val destinationDirectory = generateDestinationDirectoryRef()
         var new_file_name: String? = null
