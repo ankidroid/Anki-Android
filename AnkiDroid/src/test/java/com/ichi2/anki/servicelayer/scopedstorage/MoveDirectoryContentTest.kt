@@ -85,7 +85,7 @@ class MoveDirectoryContentTest(
         val subdirectory = File(destinationDirectory, "more files")
         assertThat("'more file' should be deleted at source", moreFiles.exists(), equalTo(false))
         assertThat("subdir was copied", subdirectory.exists(), equalTo(true))
-        assertThat("tmp-2.txt file was deleted at source", File(moreFiles.directory, "tmp-2.txt").exists(), equalTo(false))
+        assertThat("tmp-2.txt file was deleted at source", File(moreFiles, "tmp-2.txt").exists(), equalTo(false))
         assertThat("tmp-2.txt file was copied", File(subdirectory, "tmp-2.txt").exists(), equalTo(true))
     }
 

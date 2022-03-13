@@ -118,11 +118,11 @@ fun createTransientFile(content: String = ""): File =
     }
 
 /** Creates a sub-directory with the given name which is deleted on exit */
-fun Directory.createTransientDirectory(name: String): Directory {
+fun Directory.createTransientDirectory(name: String): File {
     File(this.directory, name).also { directory ->
         directory.deleteOnExit()
         Timber.d("test: creating $directory")
         MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
-        return Directory.createInstance(directory)!!
+        return directory
     }
 }
