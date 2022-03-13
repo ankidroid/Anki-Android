@@ -2041,7 +2041,6 @@ public class NoteEditor extends AnkiActivity implements
         et2.setText(currentButton.getSuffix());
 
         MaterialDialog toolbarDialog = getToolbarDialogBuilder()
-                .title(R.string.edit_toolbar_item)
                 .customView(view, true)
                 .positiveText(R.string.save)
                 .onPositive((m, v) -> editToolbarButton(etIcon.getText().toString(), et.getText().toString(), et2.getText().toString(), currentButton)).build();
