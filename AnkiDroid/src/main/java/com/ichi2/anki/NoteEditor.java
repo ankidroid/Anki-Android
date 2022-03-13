@@ -2034,7 +2034,7 @@ public class NoteEditor extends AnkiActivity implements
         final EditText etIcon =  view.findViewById(R.id.note_editor_toolbar_item_icon);
         final EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
         final EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
-        final Button btnDelete = view.findViewById(R.id.note_editor_toolbar_btn_delete);
+        final ImageButton btnDelete = view.findViewById(R.id.note_editor_toolbar_btn_delete);
 
         etIcon.setText(currentButton.getButtonText());
         et.setText(currentButton.getPrefix());
