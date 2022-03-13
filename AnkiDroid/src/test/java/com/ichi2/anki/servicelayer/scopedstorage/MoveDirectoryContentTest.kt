@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -214,7 +213,7 @@ class MoveDirectoryContentTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         permissionDenied.assertThrowsWhenPermissionDenied { MoveDirectoryContent.createInstance(permissionDenied.directory, createTransientFile()) }
     }
 

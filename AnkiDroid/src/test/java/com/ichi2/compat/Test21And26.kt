@@ -20,6 +20,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
+import com.ichi2.testutils.createTransientDirectory
 import org.junit.After
 import org.junit.Before
 import org.junit.runners.Parameterized
@@ -100,7 +101,14 @@ open class Test21And26(
             runWithPermissionDenied { assertThrowsSubclass(test) }
     }
 
-    fun createPermissionDenied(directory: File, compat: Compat): PermissionDenied {
+    /**
+     * Create a directory [directory]. Ensures that [directory.hasFile] returns [null],
+     * which simulates to simulate https://github.com/ankidroid/Anki-Android/issues/10358.
+     * Also ensure that [Files.newDirectoryStream] fails on this directory.
+     */
+    fun createPermissionDenied(): PermissionDenied {
+        val directory = createTransientDirectory()
+        val compat = CompatHelper.getCompat()
         val directoryWithPermissionDenied =
             spy(directory) {
                 on { listFiles() } doReturn null

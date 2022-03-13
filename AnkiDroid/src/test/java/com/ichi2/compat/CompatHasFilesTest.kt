@@ -78,7 +78,7 @@ class CompatHasFilesTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         assertThrowsSubclass<IOException> { permissionDenied.compat.hasFiles(permissionDenied.directory.directory) }
     }
 
