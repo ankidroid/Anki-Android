@@ -215,10 +215,10 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
 
     @Test
     fun error_if_both_files_do_not_exist_but_no_directory() {
-        val sourceDirectoryToDelete = createTransientDirectory("toDelete")
-        val destinationDirectoryToDelete = createTransientDirectory("toDelete")
-        val sourceNotExist = DiskFile.createInstanceUnsafe(File(sourceDirectoryToDelete, "deletedDirectory-in.txt"))
-        val destinationFileNotExist = File(destinationDirectoryToDelete, "deletedDirectory-out.txt")
+        val sourceDirectoryToDelete = createTransientDirectory()
+        val destinationDirectoryToDelete = createTransientDirectory()
+        val sourceNotExist = DiskFile.createInstanceUnsafe(File(sourceDirectoryToDelete, "deletedFolder-in.txt"))
+        val destinationFileNotExist = File(destinationDirectoryToDelete, "deletedFolder-out.txt")
         assertThat(
             "deletion should work",
             sourceDirectoryToDelete.delete() && destinationDirectoryToDelete.delete(),

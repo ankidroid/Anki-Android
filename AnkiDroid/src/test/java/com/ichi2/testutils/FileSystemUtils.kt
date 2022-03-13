@@ -102,8 +102,8 @@ object FileSystemUtils {
  * Returns a new directory in the OS's default temp directory, using the given [prefix] to generate its name.
  * This directory is deleted on exit
  */
-fun createTransientDirectory(prefix: String? = null): File =
-    createTempDirectory(prefix = prefix).let {
+fun createTransientDirectory(): File =
+    createTempDirectory().let {
         val file = File(it.pathString)
         file.deleteOnExit()
         return@let file
