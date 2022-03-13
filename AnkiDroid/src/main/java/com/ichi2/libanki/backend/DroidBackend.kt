@@ -13,46 +13,40 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.backend
 
-package com.ichi2.libanki.backend;
-
-import android.content.Context;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.TemplateManager;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.utils.KotlinCleanup;
-
-import net.ankiweb.rsdroid.RustV1Cleanup;
-
-import BackendProto.Backend;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import BackendProto.Backend.ExtractAVTagsOut
+import BackendProto.Backend.RenderCardOut
+import android.content.Context
+import androidx.annotation.VisibleForTesting
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.backend.model.SchedTimingToday
+import com.ichi2.libanki.utils.Time
+import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.RustV1Cleanup
 
 /**
  * Interface to the rust backend listing all currently supported functionality.
  */
-@KotlinCleanup("priority to convert to kotlin for named arguments")
-public interface DroidBackend {
-    /** Should only be called from "Storage.java" */
-    Collection createCollection(@NonNull Context context, @NonNull DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time);
+@KotlinCleanup("priority to convert to kotlin for named arguments" + "needs better nullable definitions")
+interface DroidBackend {
+    /** Should only be called from "Storage.java"  */
+    fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection?
+    fun openCollectionDatabase(path: String): DB?
+    fun closeCollection(db: DB?, downgradeToSchema11: Boolean)
 
-    DB openCollectionDatabase(@NonNull String path);
-    void closeCollection(DB db, boolean downgradeToSchema11);
-
-    /** Whether a call to {@link DroidBackend#openCollectionDatabase(String)} will generate a schema and indices for the database */
-    boolean databaseCreationCreatesSchema();
-    boolean databaseCreationInitializesData();
-
-    boolean isUsingRustBackend();
+    /** Whether a call to [DroidBackend.openCollectionDatabase] will generate a schema and indices for the database  */
+    fun databaseCreationCreatesSchema(): Boolean
+    fun databaseCreationInitializesData(): Boolean
+    fun isUsingRustBackend(): Boolean
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    void debugEnsureNoOpenPointers();
+    fun debugEnsureNoOpenPointers()
 
     /**
      * Obtains Timing information for the current day.
@@ -62,29 +56,33 @@ public interface DroidBackend {
      * @param nowSecs timestamp of the current time
      * @param nowMinsWest The current offset west of UTC
      * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
-     * @return Timing information for the current day. See {@link SchedTimingToday}.
+     * @return Timing information for the current day. See [SchedTimingToday].
      */
-    SchedTimingToday sched_timing_today(long createdSecs, int createdMinsWest, long nowSecs, int nowMinsWest, int rolloverHour) throws BackendNotSupportedException;
+    @Throws(BackendNotSupportedException::class)
+    fun sched_timing_today(createdSecs: Long, createdMinsWest: Int, nowSecs: Long, nowMinsWest: Int, rolloverHour: Int): SchedTimingToday?
 
     /**
-     * For the given timestamp, return minutes west of UTC in the local timezone.<br/><br/>
+     * For the given timestamp, return minutes west of UTC in the local timezone.
      *
-     * eg, Australia at +10 hours is -600.<br/>
+     * eg, Australia at +10 hours is -600.<br>
      * Includes the daylight savings offset if applicable.
      *
      * @param timestampSeconds The timestamp in seconds
      * @return minutes west of UTC in the local timezone
      */
-    int local_minutes_west(long timestampSeconds) throws BackendNotSupportedException;
+    @Throws(BackendNotSupportedException::class)
+    fun local_minutes_west(timestampSeconds: Long): Int
 
     @RustV1Cleanup("backend.newDeckConfigLegacy")
-    default DeckConfig new_deck_config_legacy() {
-        return new DeckConfig(Decks.DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG);
+    fun new_deck_config_legacy(): DeckConfig? {
+        return DeckConfig(Decks.DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG)
     }
 
-    void useNewTimezoneCode(Collection col);
+    fun useNewTimezoneCode(col: Collection)
 
-    @NonNull Backend.ExtractAVTagsOut extract_av_tags(@NonNull String text, boolean question_side) throws BackendNotSupportedException;
+    @Throws(BackendNotSupportedException::class)
+    fun extract_av_tags(text: String, question_side: Boolean): ExtractAVTagsOut
 
-    @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException;
+    @Throws(BackendNotSupportedException::class)
+    fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut
 }
