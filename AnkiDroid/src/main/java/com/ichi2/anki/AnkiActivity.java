@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -261,12 +262,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         enableActivityAnimation(animation);
     }
 
-
-    @Deprecated
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
+    ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> { }
+    );
+    public void launchActivityForResult(Intent intent) {
         try {
-            super.startActivityForResult(intent, requestCode);
+            mActivityResultLauncher.launch(intent);
         } catch (ActivityNotFoundException e) {
             Timber.w(e);
             UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
@@ -276,14 +278,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public void startActivityForResultWithoutAnimation(Intent intent, int requestCode) {
         disableIntentAnimation(intent);
-        startActivityForResult(intent, requestCode);
+        launchActivityForResult(intent);
         disableActivityAnimation();
     }
 
 
     public void startActivityForResultWithAnimation(Intent intent, int requestCode, Direction animation) {
         enableIntentAnimation(intent);
-        startActivityForResult(intent, requestCode);
+        launchActivityForResult(intent);
         enableActivityAnimation(animation);
     }
 
