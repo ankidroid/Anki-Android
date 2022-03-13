@@ -435,7 +435,6 @@ class Preferences : AnkiActivity() {
         }
 
         @Suppress("deprecation") // setTargetFragment
-        @KotlinCleanup("use when")
         override fun onDisplayPreferenceDialog(preference: Preference) {
             val dialogFragment = when (preference) {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
