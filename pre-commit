@@ -33,15 +33,21 @@ done
 CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
 
 if [ -z "$CHANGED_JS_FILES" ]; then
-    echo "No Javascript staged files. Hence, skipping pre-commit Prettier run."
+    echo "No Javascript staged files. Hence, skipping pre-commit Prettier check."
     exit 0
 fi;
+
+if ! command -v npx &> /dev/null
+then
+    echo "npx could not be found, but it is required for pre-commit Prettier check."
+    exit 1
+fi
 
 echo "Running Prettier check over these files:"
 echo "$CHANGED_JS_FILES"
 
-# Prettify all selected files
-echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --check
+# run Prettier check for all staged files
+echo "$CHANGED_JS_FILES" | xargs npx prettier -y --ignore-unknown --check
 
 
 echo "Completed npx prettier run."
