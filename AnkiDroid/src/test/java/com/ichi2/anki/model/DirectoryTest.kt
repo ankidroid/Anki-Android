@@ -129,6 +129,6 @@ class DirectoryTest(
     }
 
     private fun createValidTempDir(): Directory {
-        return Directory.createInstance(File(createTempDirectory().pathString))!!
+        return Directory.createInstance(createTransientDirectory())!!
     }
 }
