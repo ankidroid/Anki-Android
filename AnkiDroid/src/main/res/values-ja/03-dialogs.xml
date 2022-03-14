@@ -178,7 +178,7 @@
     <string name="card_browser_deck_change_error">デッキを変更できませんでした</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">カードからのデータのデコードエラー</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">%s を元に戻しました</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">デッキオプションの処理に失敗しました: %s</string>
     <!-- Database Errors-->

@@ -214,9 +214,9 @@
     <string name="media_import_allow_all_files" maxLength="41">允许媒体导入中的所有文件</string>
     <string name="media_import_allow_all_files_summ">如果安卓系统不识别媒体文件</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">打开统计数据时默认牌组</string>
+    <string name="stats_default_deck_current">显示最近牌组的统计数据</string>
+    <string name="stats_default_deck_all">显示所有牌组的统计数据</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>

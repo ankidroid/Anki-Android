@@ -47,7 +47,7 @@
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
-    <string name="CardEditorTags">Позначки: %1$s</string>
+    <string name="CardEditorTags">Теги: %1$s</string>
     <string name="CardEditorCards">Картки: %1$s</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати позначки</string>
@@ -86,9 +86,9 @@
         <item>Колода</item>
         <item>Запис</item>
         <item>Запитання</item>
-        <item>Позначки</item>
+        <item>Теги</item>
         <item>Забуті</item>
-        <item>Огляди</item>
+        <item>Перегляди</item>
         <item>Проміжок</item>
         <item>Легкість</item>
         <item>До перегляду</item>
@@ -168,7 +168,7 @@
     <string name="import_log_failed_unzip">Не вдалося розпакувати apkg: %s</string>
     <string name="import_log_failed_copy_to">Помилка копіювання apkg до %s</string>
     <string name="import_log_failed_validate">apkg не пройшло перевірку</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Недостатньо місця для імпорту пакету даних.\nПотрібно - %1$s \nДоступно - %2$s.\n\nВиникли проблеми? Спробуйте звільнити пам\'ять на телефоні. Також спробуйте синхронізацію, яка займає менше місця, ніж імпорт. Ви можете імпортувати пакет на пристрої з більшим об\'ємом пам\'яті (наприклад, Anki Desktop), а потім синхронізувати його з цим пристроєм.</string>
     <string name="import_log_file_cache_cleared">Помилка імпорту файлу, можливо очищено кеш під час обробки.\nБудь ласка, спробуйте ще раз</string>
     <string name="import_succeeded_but_check_database">Імпорт даних виконано успішно, але не вдалось виконати після імпортну очистку. Запустіть перевірку бази даних пізніше. Корінь причина: %s</string>
     <string name="import_error_unhandled_request">Не вдалося обробити запит на імпорт</string>
@@ -194,10 +194,10 @@
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_successful">Файл “%s” було експортовано. Ви хочете відправити його до іншої програми?</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Привіт!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Це колода Anki надіслана з AnkiDroid[1].
+        Спробуйте відкрити її за допомогою однієї з версій Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -289,9 +289,9 @@
     <string name="choose_an_image">Оберіть зображення</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Відновити «Типове»</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Це {{%1$s::sample}} завдання з пропусками</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">пріклад</string>
+    <string name="basic_answer_sample_text">приклад</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Будь ласка, увімкніть повноекранний режим, щоб показати відображувач навігації використовуючи JavaScript.</string>
@@ -359,7 +359,7 @@
     <string name="format_font_size">Змінити розмір шрифту</string>
     <string name="insert_mathjax">Вставити рівняння MathJax</string>
     <string name="insert_cloze">Вставити місце для доповнення</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Текст кнопки</string>
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>
@@ -407,17 +407,17 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зробити поле %s липким</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="scoped_storage_title">Перенесення сховища</string>
+    <string name="scoped_storage_initial_message">AnkiDroid повинен перенести дані, щоб відповідати новим правилам конфіденційності Ankidroid
+\n\nЯкщо ви видалите AnkiDroid перед перенесенням, ваші дані будуть втрачені
+\n\nБудь ласка, виконайте перенесення якомога швидше</string>
+    <string name="scoped_storage_terms_message">Перенесення даних відбуватиметься у фоновому режимі. Ви не зможете синхронізуватися під час перенесення\n\nПриблизний час: %s</string>
+    <string name="scoped_storage_term_1">Я зробив резервну копію своїх даних</string>
+    <string name="scoped_storage_term_1_ankiweb">Я нещодавно робив синхронізацію з AnkiWeb</string>
+    <string name="scoped_storage_term_2">Я не видалятиму додаток під час переміщення даних</string>
+    <string name="scoped_storage_select_all_terms">Будь ласка, прийміть всі пункти, аби продовжити</string>
+    <string name="scoped_storage_learn_more">Докладніше</string>
+    <string name="scoped_storage_postpone">Відкласти</string>
+    <string name="scoped_storage_migrate">Перенести</string>
+    <string name="search_card_js_api_no_results">Нічого не знайдено</string>
 </resources>
