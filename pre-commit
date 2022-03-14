@@ -40,18 +40,8 @@ runPrettier () {
         return 0
     fi
 
-    CHANGED_JS_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.js/ { print $2 }')"
-
-    if [ -z "$CHANGED_JS_FILES" ]; then
-        echo "No Javascript staged files. Hence, skipping pre-commit Prettier run."
-        return 0
-    fi;
-
-    echo "Running Prettier over these files:"
-    echo "$CHANGED_JS_FILES"
-
-    # Prettify all selected files.
-    echo "$CHANGED_JS_FILES" | xargs npx prettier --ignore-unknown --write
+    # Run prettier over all Javascript files
+    npx --yes prettier --ignore-unknown --write AnkiDroid/**/*.js
 
     echo "Completed npx prettier run."
     echo "$CHANGED_JS_FILES" | while read -r file; do

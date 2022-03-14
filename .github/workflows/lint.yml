@@ -40,8 +40,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-          # This is important to fetch the changes to the previous commit
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Configure JDK 1.11
         uses: actions/setup-java@v2
@@ -86,5 +85,4 @@ jobs:
         uses: creyD/prettier_action@v4.2
         with:
           prettier_options: --check AnkiDroid/**/*.js
-          only_changed: True
           dry: True
