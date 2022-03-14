@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:hint="@string/feedback_default_text"
-            android:minLines="2" />
+            android:minLines="2"
+            android:inputType="text" />
     </ScrollView>
 
     <CheckBox

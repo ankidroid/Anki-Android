@@ -80,7 +80,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public boolean waitToFinishConcrete(Integer timeoutSeconds) {
+    public boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds) {
         return true;
     }
 

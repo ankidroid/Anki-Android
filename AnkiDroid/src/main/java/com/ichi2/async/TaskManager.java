@@ -107,13 +107,13 @@ public abstract class TaskManager {
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     * @param timeoutSeconds timeout in seconds
-     * @return whether or not the previous task was successful or not
+     * @param timeoutSeconds timeout in seconds (or null to wait indefinitely)
+     * @return whether or not the previous task was successful or not, OR if an exception occurred (for example: timeout)
      */
-    public static boolean waitToFinish(Integer timeoutSeconds) {
+    public static boolean waitToFinish(@Nullable Integer timeoutSeconds) {
         return sTaskManager.waitToFinishConcrete(timeoutSeconds);
     };
-    public abstract boolean waitToFinishConcrete(Integer timeoutSeconds);
+    public abstract boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds);
 
 
     /** Cancel the current task only if it's of type taskType */

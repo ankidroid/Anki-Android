@@ -26,7 +26,7 @@ import java.io.IOException
 /**
  * This operation moves content of source to destination. This Operation is called one time for each file in the directory, and one last time. Unless an exception occurs. Use the [createInstance] to instantiate the object.  It will convert the given Directory source to a FileStream. This conversion is a potentially long-running operation.
  * @param [source]: an iterator over File content, [source] will be closed in [execute] once the source is empty or if accessing its content raise an exception.
- * @param [destination]: a folder to copy the source content.
+ * @param [destination]: a directory to copy the source content.
  * This is different than [MoveFile], [MoveDirectory] and [MoveFileOrDirectory] where destination is the new path of the copied element.
  * Because in this case, there is not a single destination path.
  */

@@ -43,8 +43,8 @@ import static org.junit.Assert.assertTrue;
 public class FileUtilTest {
 
     @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
-    long mTestFolderSize;
+    public TemporaryFolder temporaryDirectory = new TemporaryFolder();
+    long mTestDirectorySize;
 
     private static class DummyListener implements ProgressSenderAndCancelListener<Integer> {
         @Override
@@ -95,7 +95,7 @@ public class FileUtilTest {
         for (int i = 0; i < files.size(); ++i) {
             final File file = files.get(i);
             writeStringToFile(file, "File " + (i + 1) + " called " + file.getName());
-            mTestFolderSize += file.length();
+            mTestDirectorySize += file.length();
         }
 
         return grandParentDir;
@@ -105,7 +105,7 @@ public class FileUtilTest {
     @Test
     public void testCopyDirectory() throws Exception {
         // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
 
         // Test for successful copy directory operation
         File srcDir = createSrcFilesForTest(temporaryRootDir, "srcDir");
@@ -131,7 +131,7 @@ public class FileUtilTest {
     @Test
     public void testMoveDirectory() throws Exception {
         // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
 
         // Test for successful move directory operation
         File srcDirToBeMovedSuccessfully = createSrcFilesForTest(temporaryRootDir, "srcDirToBeMovedSuccessfully");
@@ -178,11 +178,11 @@ public class FileUtilTest {
     @Test
     public void testDirectorySize() throws Exception {
         // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
 
         // Test for success scenario
         File dir = createSrcFilesForTest(temporaryRootDir, "dir");
-        assertEquals(FileUtil.getDirectorySize(dir), mTestFolderSize);
+        assertEquals(FileUtil.getDirectorySize(dir), mTestDirectorySize);
 
         // Test for failure scenario by passing a file as an argument instead of a directory
         assertThrows(IOException.class, () -> FileUtil.getDirectorySize(new File(dir, "file1.txt")));
@@ -191,7 +191,7 @@ public class FileUtilTest {
     @Test
     public void ensureFileIsDirectoryTest() throws Exception {
         // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
 
         // Create test data
         File testDir = createSrcFilesForTest(temporaryRootDir, "testDir");
@@ -214,7 +214,7 @@ public class FileUtilTest {
     @Test
     public void listFilesTest() throws Exception {
         // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryFolder.newFolder("tempRootDir");
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
 
         // Create valid input
         File testDir = createSrcFilesForTest(temporaryRootDir ,"testDir");

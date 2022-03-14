@@ -22,7 +22,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
 import java.io.File
 
-/** A path to the AnkiDroid folder, named "AnkiDroid" by default */
+/** A path to the AnkiDroid directory, named "AnkiDroid" by default */
 typealias AnkiDroidDirectory = String
 
 object ScopedStorageService {

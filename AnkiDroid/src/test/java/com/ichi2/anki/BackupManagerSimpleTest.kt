@@ -40,7 +40,7 @@ import kotlin.test.junit.JUnitAsserter.assertTrue
  */
 class BackupManagerSimpleTest {
     @get:Rule
-    var tempFolder = TemporaryFolder()
+    var tempDirectory = TemporaryFolder()
 
     @Test
     fun getBackupTimeStringTest() {
@@ -111,9 +111,9 @@ class BackupManagerSimpleTest {
     fun getBackupsTest() {
         // getBackups() doesn't require a proper collection file
         // because it is only used to get its parent
-        val colFile = tempFolder.newFile()
+        val colFile = tempDirectory.newFile()
         assertEquals(0, BackupManager.getBackups(colFile).size)
-        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        val backupDir = BackupManager.getBackupDirectory(tempDirectory.root)
         val f1 = File(backupDir, "collection-2000-12-31-23-04.colpkg")
         val f2 = File(backupDir, "foo")
         val f3 = File(backupDir, "collection-2010-12-06-13-04.colpkg")
@@ -131,8 +131,8 @@ class BackupManagerSimpleTest {
 
     @Test
     fun deleteDeckBackupsTest() {
-        val colFile = tempFolder.newFile()
-        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        val colFile = tempDirectory.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempDirectory.root)
 
         val f1 = File(backupDir, "collection-2000-12-31-23-04.colpkg")
         val f2 = File(backupDir, "collection-1990-08-31-45-04.colpkg")
@@ -152,22 +152,22 @@ class BackupManagerSimpleTest {
 
     @Test
     fun latest_backup_returns_null_on_no_backups() {
-        val colFile = tempFolder.newFile()
+        val colFile = tempDirectory.newFile()
         assertThat(getLatestBackup(colFile), nullValue())
     }
 
     @Test
     fun latest_backup_returns_null_on_invalid() {
-        val colFile = tempFolder.newFile()
-        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        val colFile = tempDirectory.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempDirectory.root)
         File(backupDir, "blah.colpkg").createNewFile()
         assertThat(getLatestBackup(colFile), nullValue())
     }
 
     @Test
     fun latest_backup_returns_latest() {
-        val colFile = tempFolder.newFile()
-        val backupDir = BackupManager.getBackupDirectory(tempFolder.root)
+        val colFile = tempDirectory.newFile()
+        val backupDir = BackupManager.getBackupDirectory(tempDirectory.root)
         File(backupDir, "collection-1990-08-31-45-04.colpkg").createNewFile()
         File(backupDir, "collection-2010-12-06-13-04.colpkg").createNewFile()
         File(backupDir, "blah.colpkg").createNewFile()

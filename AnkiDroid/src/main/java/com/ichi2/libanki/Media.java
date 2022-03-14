@@ -452,7 +452,7 @@ public class Media {
                 allRefs.addAll(noteRefs);
             }
         }
-        // loop through media folder
+        // loop through media directory
         List<String> unused = new ArrayList<>();
         List<String> invalid = new ArrayList<>();
         File[] files;
@@ -615,7 +615,7 @@ public class Media {
      */
 
     /**
-     * Scan the media folder if it's changed, and note any changes.
+     * Scan the media directory if it's changed, and note any changes.
      */
     public void findChanges() {
         findChanges(false);
@@ -623,7 +623,7 @@ public class Media {
 
 
     /**
-     * @param force Unconditionally scan the media folder for changes (i.e., ignore differences in recorded and current
+     * @param force Unconditionally scan the media directory for changes (i.e., ignore differences in recorded and current
      *            directory mod times). Use this when rebuilding the media database.
      */
     public void findChanges(boolean force) {
@@ -709,7 +709,7 @@ public class Media {
         List<String> removed = new ArrayList<>();
         // loop through on-disk files
         for (File f : new File(dir()).listFiles()) {
-            // ignore folders and thumbs.db
+            // ignore directories and thumbs.db
             if (f.isDirectory()) {
                 continue;
             }
@@ -848,7 +848,7 @@ public class Media {
      * - This method will be repeatedly called from MediaSyncer until there are no more files (marked "dirty" in the DB)
      * to send.
      * <p>
-     * - Since AnkiDroid avoids scanning the media folder on every sync, it is possible for a file to be marked as a
+     * - Since AnkiDroid avoids scanning the media directory on every sync, it is possible for a file to be marked as a
      * new addition but actually have been deleted (e.g., with a file manager). In this case we skip over the file
      * and mark it as removed in the database. (This behaviour differs from the desktop client).
      * <p>

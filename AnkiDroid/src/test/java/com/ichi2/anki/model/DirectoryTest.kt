@@ -19,7 +19,6 @@ package com.ichi2.anki.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
@@ -125,7 +124,7 @@ class DirectoryTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         permissionDenied.assertThrowsWhenPermissionDenied { permissionDenied.directory.hasFiles() }
     }
 

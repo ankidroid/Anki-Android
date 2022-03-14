@@ -109,7 +109,7 @@ class CompatDirectoryContentTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         assertThrowsSubclass<IOException> { permissionDenied.compat.contentOfDirectory(permissionDenied.directory.directory) }
     }
 }

@@ -98,7 +98,7 @@ public class ExportingTest extends RobolectricTest {
 
        @Test
        public void test_export_ankipkg(){
-       // add a test file to the media folder
+       // add a test file to the media directory
        with open(os.path.join(col.getMedia().dir(), "今日.mp3"), "w") as note:
        note.write("test");
        Note n = col.newNote();

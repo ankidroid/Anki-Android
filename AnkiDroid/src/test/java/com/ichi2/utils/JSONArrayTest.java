@@ -23,9 +23,11 @@
 package com.ichi2.utils;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +41,7 @@ import static org.junit.Assert.*;
  * This black box test was written without inspecting the non-free org.json sourcecode.
  */
 @RunWith(AndroidJUnit4.class)
+@Config(application = EmptyApplication.class)
 public class JSONArrayTest {
 
     @Test
