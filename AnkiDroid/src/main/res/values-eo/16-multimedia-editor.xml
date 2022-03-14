@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Aldoni bildon</string>
     <string name="multimedia_editor_popup_audio_clip">Aldoni aŭdaĵon</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Aldoni filmeton</string>
     <string name="multimedia_editor_popup_audio">Registri sonon</string>
     <string name="multimedia_editor_popup_text">Altnivela redaktilo</string>
     <string name="multimedia_editor_popup_cloze">Truteksta malpleno</string>
@@ -90,8 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galerio</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotilo</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Sono</string>
+    <string name="multimedia_editor_import_video">Filmeto</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Elŝutado</string>

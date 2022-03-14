@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Savi la Anki-pakaĵon malsukcesis</string>
     <string name="export_successful">Elportis dosieron “%s”. Ĉu sendi ĝin per alia aplikaĵo?</string>
     <string name="export_email_subject">AnkiDroid elportis fulmokartojn: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Saluton!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Tio ĉi estas Anki-kartaro sendita per la aplikaĵo Anki[1].
+        Malfermu ĝin per iu el la disponeblaj Anki-programoj[2] por ĝui facilan kaj efikan lernadon!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Ŝanĝi grandon de tiparo</string>
     <string name="insert_mathjax">Enmeti ekvacion MathJax</string>
     <string name="insert_cloze">Enmeti trutekstan malplenon</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Teksto de butono</string>
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
@@ -393,5 +393,5 @@
     <string name="scoped_storage_learn_more">Pli da informoj</string>
     <string name="scoped_storage_postpone">Ne nun</string>
     <string name="scoped_storage_migrate">Movi datumojn</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Serĉ-rezulto estas malplena</string>
 </resources>
