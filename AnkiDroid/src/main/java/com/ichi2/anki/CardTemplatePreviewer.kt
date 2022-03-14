@@ -28,7 +28,6 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.IOException
@@ -50,8 +49,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     /** The list (currently singular) of cards to be previewed
      * A single template was selected, and there was an associated card which exists
      */
-    @KotlinCleanup("make lateinit")
-    private var mCardList: LongArray? = null
+    private lateinit var mCardList: LongArray
     private var mNoteEditorBundle: Bundle? = null
     private var mShowingAnswer = false
 
@@ -81,7 +79,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (parameters != null) {
             mNoteEditorBundle = parameters.getBundle("noteEditorBundle")
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME)
-            mCardList = parameters.getLongArray("cardList")
+            mCardList = parameters.getLongArray("cardList") ?: longArrayOf()
             mOrdinal = parameters.getInt("ordinal")
             mCardListIndex = parameters.getInt("cardListIndex")
             mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer)
@@ -246,8 +244,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the card template editor
             mAllFieldsNull = true
             // card template with associated card due to opening from note editor
-            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList!!.size) {
-                currentCard = PreviewerCard(col, mCardList!![mCardListIndex])
+            if (mCardListIndex >= 0 && mCardListIndex < mCardList.size) {
+                currentCard = PreviewerCard(col, mCardList[mCardListIndex])
             } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
                 currentCard = getDummyCard(mEditedModel!!, mOrdinal)
