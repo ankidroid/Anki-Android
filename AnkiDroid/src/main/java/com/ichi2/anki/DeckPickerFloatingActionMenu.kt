@@ -28,11 +28,16 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
     private val mAddDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
     private val mAddNoteLayout: LinearLayout = view.findViewById(R.id.add_note_layout)
-    private val mFabBGLayout: View
-    private val mStudyOptionsFrame: View?
+    private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
+    private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
+    private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     var isFABOpen = false
-    private var mFragmented = false
-    private val mLinearLayout: LinearLayout
+
+    // Check to see if the view was correctly located
+    @Suppress("unused")
+    val isFragmented: Boolean
+        get() = mStudyOptionsFrame != null
+
     private fun animationEnabled(): Boolean {
         val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
         return !preferences.getBoolean("safeDisplay", false)
@@ -40,9 +45,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
 
     private fun showFloatingActionMenu() {
         mLinearLayout.alpha = 0.5f
-        if (mFragmented) {
-            mStudyOptionsFrame?.let { it.alpha = 0.5f }
-        }
+        mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
         if (animationEnabled()) {
             // Show with animation
@@ -74,9 +77,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
 
     fun closeFloatingActionMenu() {
         mLinearLayout.alpha = 1f
-        if (mFragmented) {
-            mStudyOptionsFrame?.let { it.alpha = 1f }
-        }
+        mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
         if (animationEnabled()) {
@@ -112,16 +113,9 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addNoteButton: FloatingActionButton = view.findViewById(R.id.add_note_action)
         val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)
         val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
-        mFabBGLayout = view.findViewById(R.id.fabBGLayout)
-        mLinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
-        mStudyOptionsFrame = view.findViewById(R.id.studyoptions_fragment)
-        val addNoteLabel = view.findViewById<TextView>(R.id.add_note_label)
-        val addSharedLabel = view.findViewById<TextView>(R.id.add_shared_label)
-        val addDeckLabel = view.findViewById<TextView>(R.id.add_deck_label)
-
-        // Check to see if the view was correctly located
-        mFragmented = mStudyOptionsFrame != null
-
+        val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
+        val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
+        val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
         mFabMain.setOnClickListener {
             if (!isFABOpen) {
                 showFloatingActionMenu()
