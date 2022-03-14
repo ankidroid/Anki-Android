@@ -20,6 +20,8 @@ import android.content.SharedPreferences
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.SingleRetryDecorator
 import timber.log.Timber
 import java.io.File
 
@@ -124,7 +126,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * a large mutable queue of tasks
      */
     abstract class MigrationContext {
-        abstract fun reportError(context: Operation, ex: Exception)
+        abstract fun reportError(throwingOperation: Operation, ex: Exception)
         abstract fun reportProgress(transferred: NumberOfBytes)
         /**
          * Whether [File#renameTo] should be attempted
@@ -233,8 +235,42 @@ class MigrateUserData private constructor(val source: Directory, val destination
          * * deleting the original folder.
          */
         abstract fun execute(context: MigrationContext): List<Operation>
+
+        /** A list of operations to perform if the operation should be retried */
+        open val retryOperations get() = emptyList<Operation>()
+    }
+
+    /**
+     * A decorator for [Operation] which executes [standardOperation].
+     * When retried, executes [retryOperation].
+     * Ignores [retryOperations] defined in [standardOperation]
+     */
+    class SingleRetryDecorator(
+        private val standardOperation: Operation,
+        private val retryOperation: Operation
+    ) : Operation() {
+        override fun execute(context: MigrationContext) = standardOperation.execute(context)
+        override val retryOperations get() = listOf(retryOperation)
     }
 }
 
+/**
+ * Wraps an [Operation] with functionality to allow for retries
+ *
+ * Useful if you want to call a different operation when an operation is being retried.
+ *
+ * Example: call MoveDirectory again if DeleteEmptyDirectory fails
+ *
+ * @receiver The operation to be decorated with a retry action
+ * @param operationOnRetry The action to perform is [Operation.retryOperations] is called
+ */
+internal fun Operation.onRetryExecute(operationOnRetry: Operation): Operation {
+    val operationToBeDecorated = this
+    return SingleRetryDecorator(
+        standardOperation = operationToBeDecorated,
+        retryOperation = operationOnRetry
+    )
+}
+
 /** The operation was completed (not necessarily successfully) and no additional operations are required */
-internal fun operationCompleted() = emptyList<MigrateUserData.Operation>()
+internal fun operationCompleted() = emptyList<Operation>()

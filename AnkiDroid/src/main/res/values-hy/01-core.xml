@@ -65,11 +65,11 @@
         <item quantity="other">%d րոպե է մնացել</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">What your name?</item>
-        <item quantity="other">%d ঘণ্টা %d বাকি  </item>
+        <item quantity="one">%d hour %d left</item>
+        <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">can we go for dinner?</item>
+        <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>

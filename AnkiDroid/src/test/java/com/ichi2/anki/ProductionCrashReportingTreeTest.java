@@ -34,7 +34,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-@SuppressLint("LogNotTimber")
+@SuppressLint( {"LogNotTimber", "LogConditional"})
 public class ProductionCrashReportingTreeTest {
 
 

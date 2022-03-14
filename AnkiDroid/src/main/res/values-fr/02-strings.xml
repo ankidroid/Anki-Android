@@ -188,10 +188,10 @@
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du fichier Anki</string>
     <string name="export_successful">Le fichier « %s » a été exporté. Voulez-vous le partager à l\'aide d\'une autre app ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes mémoire</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Bonjour !
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Ceci est un jeu de cartes Anki envoyé par AnkiDroid[1].
+        Essayez de l\'ouvrir en utilisant l\'une des distributions Anki disponibles[2] et profitez d\'un apprentissage facile et efficace !<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Changer la taille de la police</string>
     <string name="insert_mathjax">Insérer une équation MathJax</string>
     <string name="insert_cloze">Insérer un texte à trous</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Texte du bouton</string>
     <string name="before_text">HTML avant sélection</string>
     <string name="after_text">HTML après sélection</string>
     <string name="add_toolbar_item">Créer un élément de la barre d\'outils</string>
@@ -391,5 +391,5 @@
     <string name="scoped_storage_learn_more">En savoir plus</string>
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
 </resources>
