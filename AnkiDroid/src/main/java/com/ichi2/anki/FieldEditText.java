@@ -168,12 +168,11 @@ public class FieldEditText extends FixedEditText implements NoteService.NoteFiel
                 return remaining;
             }
 
-            for (int i = 0; i < clip.getItemCount(); i++){
+            for (int i = 0; i < clip.getItemCount(); i++) {
                 Uri uri = clip.getItemAt(i).getUri();
                 try {
                     mImageListener.onImagePaste(this, uri);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Timber.w(e);
                     AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage");
                     return remaining;
