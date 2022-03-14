@@ -33,7 +33,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     var isFABOpen = false
 
-    // Check to see if the view was correctly located
     @Suppress("unused")
     val isFragmented: Boolean
         get() = mStudyOptionsFrame != null
