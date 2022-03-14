@@ -31,6 +31,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     private val mFabBGLayout: View
     private val mStudyOptionsFrame: View?
     var isFABOpen = false
+    private var mFragmented = false
     private val mLinearLayout: LinearLayout
 
     private fun animationEnabled(): Boolean {
@@ -40,7 +41,9 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
 
     private fun showFloatingActionMenu() {
         mLinearLayout.alpha = 0.5f
-        mStudyOptionsFrame?.let { it.alpha = 0.5f }
+        if (mFragmented) {
+            mStudyOptionsFrame!!.alpha = 0.5f
+        }
         isFABOpen = true
         if (animationEnabled()) {
             // Show with animation
@@ -72,7 +75,9 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
 
     fun closeFloatingActionMenu() {
         mLinearLayout.alpha = 1f
-        mStudyOptionsFrame?.let { it.alpha = 1f }
+        if (mFragmented) {
+            mStudyOptionsFrame!!.alpha = 1f
+        }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
         if (animationEnabled()) {
@@ -114,6 +119,10 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addNoteLabel = view.findViewById<TextView>(R.id.add_note_label)
         val addSharedLabel = view.findViewById<TextView>(R.id.add_shared_label)
         val addDeckLabel = view.findViewById<TextView>(R.id.add_deck_label)
+
+        // Check to see if the view was correctly located
+        mFragmented = mStudyOptionsFrame != null
+
         mFabMain.setOnClickListener {
             if (!isFABOpen) {
                 showFloatingActionMenu()
