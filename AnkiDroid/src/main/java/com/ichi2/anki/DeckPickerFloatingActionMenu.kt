@@ -75,7 +75,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     fun closeFloatingActionMenu() {
         mLinearLayout.alpha = 1f
         if (mFragmented) {
-            mStudyOptionsFrame?.let { it.alpha = 0.5f }
+            mStudyOptionsFrame?.let { it.alpha = 1f }
         }
         isFABOpen = false
         mFabBGLayout.visibility = View.GONE
