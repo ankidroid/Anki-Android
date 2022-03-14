@@ -33,7 +33,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     var isFABOpen = false
     private var mFragmented = false
     private val mLinearLayout: LinearLayout
-
     private fun animationEnabled(): Boolean {
         val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
         return !preferences.getBoolean("safeDisplay", false)
