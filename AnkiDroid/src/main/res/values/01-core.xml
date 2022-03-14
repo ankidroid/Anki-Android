@@ -144,6 +144,7 @@
     <string name="search_deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="deck_name_in_use">Deck with same name already exist</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
     <string name="studyoptions_limit_reached">Daily study limit reached</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>

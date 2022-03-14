@@ -85,7 +85,12 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
-            createNewDeck(deckName)
+            if (CollectionHelper.getInstance().getCol(context).decks.byName(deckName) == null) {
+                createNewDeck(deckName)
+            } else {
+                Timber.d("CreateDeckDialog::createDeck - Not creating deck with name '%s' already exists", deckName)
+                showThemedToast(context, context.getString(R.string.deck_name_in_use), false)
+            }
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
