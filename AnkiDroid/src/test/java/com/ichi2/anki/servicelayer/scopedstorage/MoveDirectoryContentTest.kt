@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -85,7 +84,7 @@ class MoveDirectoryContentTest(
         val subdirectory = File(destinationDirectory, "more files")
         assertThat("'more file' should be deleted at source", moreFiles.exists(), equalTo(false))
         assertThat("subdir was copied", subdirectory.exists(), equalTo(true))
-        assertThat("tmp-2.txt file was deleted at source", File(moreFiles.directory, "tmp-2.txt").exists(), equalTo(false))
+        assertThat("tmp-2.txt file was deleted at source", File(moreFiles, "tmp-2.txt").exists(), equalTo(false))
         assertThat("tmp-2.txt file was copied", File(subdirectory, "tmp-2.txt").exists(), equalTo(true))
     }
 
@@ -135,7 +134,7 @@ class MoveDirectoryContentTest(
     }
 
     /**
-     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
+     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subdirectory).
      * This new file/directory must be present in source or destination.
      *
      */
@@ -214,7 +213,7 @@ class MoveDirectoryContentTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         permissionDenied.assertThrowsWhenPermissionDenied { MoveDirectoryContent.createInstance(permissionDenied.directory, createTransientFile()) }
     }
 

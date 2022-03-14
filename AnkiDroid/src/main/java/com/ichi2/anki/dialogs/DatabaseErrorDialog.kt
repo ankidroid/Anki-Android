@@ -259,7 +259,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val time = ch.getTimeSafe(context)
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(activity)
-                        if (BackupManager.moveDatabaseToBrokenFolder(path1, false, time)) {
+                        if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             (activity as DeckPicker?)!!.restartActivity()
                         } else {
                             (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_LOAD_FAILED)

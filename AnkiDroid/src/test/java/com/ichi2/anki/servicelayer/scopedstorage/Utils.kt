@@ -42,7 +42,7 @@ private fun convertPathToMediaFile(media: Media, path: List<String>): File {
 }
 
 /** A [File] reference to the AnkiDroid directory of the current collection */
-internal fun RobolectricTest.ankiDroidFolder() = File(col.path).parentFile!!
+internal fun RobolectricTest.ankiDroidDirectory() = File(col.path).parentFile!!
 
 /** Adds a file to collection.media which [Media] is not aware of */
 @CheckResult

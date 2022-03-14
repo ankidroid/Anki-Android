@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
@@ -200,7 +199,7 @@ class MoveDirectoryTest(
     }
 
     /**
-     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
+     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subdirectory).
      * This new file/directory must be present in source or destination.
      *
      * @return The [MoveDirectory] which was executed
@@ -277,7 +276,7 @@ class MoveDirectoryTest(
      */
     @Test
     fun reproduce_10358() {
-        val sourceWithPermissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val sourceWithPermissionDenied = createPermissionDenied()
         val destination = createTransientDirectory()
         sourceWithPermissionDenied.assertThrowsWhenPermissionDenied { executeAll(MoveDirectory(sourceWithPermissionDenied.directory, destination)) }
     }

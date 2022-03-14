@@ -116,7 +116,7 @@ public class SingleTaskManager extends TaskManager {
      */
     @Override
     @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public boolean waitToFinishConcrete(Integer timeoutSeconds) {
+    public boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds) {
         try {
             if ((mLatestInstance != null) && (mLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", mLatestInstance.getTask().getClass());

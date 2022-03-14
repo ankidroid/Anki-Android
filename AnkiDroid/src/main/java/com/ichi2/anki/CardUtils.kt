@@ -5,7 +5,6 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.utils.HashUtil.HashSetInit
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 /**
@@ -51,10 +50,9 @@ object CardUtils {
         }
     }
 
-    @KotlinCleanup("rename val")
-    fun isIn(array: LongArray, `val`: Long): Boolean {
+    fun isIn(array: LongArray, value: Long): Boolean {
         for (v in array) {
-            if (v == `val`) {
+            if (v == value) {
                 return true
             }
         }

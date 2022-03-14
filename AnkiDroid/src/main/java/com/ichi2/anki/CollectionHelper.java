@@ -56,9 +56,9 @@ public class CollectionHelper {
     public static final String COLLECTION_FILENAME = "collection.anki2";
 
     /**
-     * The preference key for the path to the current AnkiDroid folder
+     * The preference key for the path to the current AnkiDroid directory
      * <br>
-     * This folder contains all AnkiDroid data and media for a given collection
+     * This directory contains all AnkiDroid data and media for a given collection
      * Except the Android preferences, cached files and {@link MetaDB}
      * <br>
      * This can be changed by the {@link Preferences} screen
@@ -288,15 +288,15 @@ public class CollectionHelper {
 
     /**
      * Get the absolute path to a directory that is suitable to be the default starting location
-     * for the AnkiDroid folder.
+     * for the AnkiDroid directory.
      * <p>
-     * Currently, this is a folder named "AnkiDroid" at the top level of the non-app-specific external storage directory.
+     * Currently, this is a directory named "AnkiDroid" at the top level of the non-app-specific external storage directory.
      * <p><br>
      * When targeting API > 29, AnkiDroid will have to use Scoped Storage on any device of any API level.
      * Scoped Storage only allows access to App-Specific directories (without permissions).
      * Hence, AnkiDroid won't be able to access the directory used currently on all devices,
      * regardless of their API level, once AnkiDroid targets API > 29.
-     * Instead, AnkiDroid will have to use an App-Specific directory to store the AnkiDroid folder.
+     * Instead, AnkiDroid will have to use an App-Specific directory to store the AnkiDroid directory.
      * This applies to the entire AnkiDroid userbase.
      * <p><br>
      * Currently, if <code>TESTING_SCOPED_STORAGE</code> is set to <code>true</code>, AnkiDroid uses its External
@@ -340,7 +340,7 @@ public class CollectionHelper {
      * very different things as explained above.
      * <p><br>
      *
-     * @return Absolute Path to the default location starting location for the AnkiDroid folder
+     * @return Absolute Path to the default location starting location for the AnkiDroid directory
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
@@ -414,7 +414,7 @@ public class CollectionHelper {
     public static String getCurrentAnkiDroidDirectory(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
-            // create an "androidTest" folder inside the current collection folder which contains the test data
+            // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
             return new File(getDefaultAnkiDroidDirectory(context), "androidTest").getAbsolutePath();
         }
@@ -427,7 +427,7 @@ public class CollectionHelper {
     /**
      * Get parent directory given the {@link Collection} path.
      * @param path path to AnkiDroid collection
-     * @return path to AnkiDroid folder
+     * @return path to AnkiDroid directory
      */
     private static String getParentDirectory(String path) {
         return new File(path).getParentFile().getAbsolutePath();
