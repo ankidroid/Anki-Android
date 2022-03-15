@@ -37,6 +37,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.*
@@ -1157,28 +1158,28 @@ class Preferences : AnkiActivity() {
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
             resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit()
-                edit.remove("customButtonUndo")
-                edit.remove("customButtonScheduleCard")
-                edit.remove("customButtonEditCard")
-                edit.remove("customButtonTags")
-                edit.remove("customButtonAddCard")
-                edit.remove("customButtonReplay")
-                edit.remove("customButtonCardInfo")
-                edit.remove("customButtonSelectTts")
-                edit.remove("customButtonDeckOptions")
-                edit.remove("customButtonMarkCard")
-                edit.remove("customButtonToggleMicToolBar")
-                edit.remove("customButtonBury")
-                edit.remove("customButtonSuspend")
-                edit.remove("customButtonFlag")
-                edit.remove("customButtonDelete")
-                edit.remove("customButtonEnableWhiteboard")
-                edit.remove("customButtonSaveWhiteboard")
-                edit.remove("customButtonWhiteboardPenColor")
-                edit.remove("customButtonClearWhiteboard")
-                edit.remove("customButtonShowHideWhiteboard")
-                edit.apply()
+                AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                    remove("customButtonUndo")
+                    remove("customButtonScheduleCard")
+                    remove("customButtonEditCard")
+                    remove("customButtonTags")
+                    remove("customButtonAddCard")
+                    remove("customButtonReplay")
+                    remove("customButtonCardInfo")
+                    remove("customButtonSelectTts")
+                    remove("customButtonDeckOptions")
+                    remove("customButtonMarkCard")
+                    remove("customButtonToggleMicToolBar")
+                    remove("customButtonBury")
+                    remove("customButtonSuspend")
+                    remove("customButtonFlag")
+                    remove("customButtonDelete")
+                    remove("customButtonEnableWhiteboard")
+                    remove("customButtonSaveWhiteboard")
+                    remove("customButtonWhiteboardPenColor")
+                    remove("customButtonClearWhiteboard")
+                    remove("customButtonShowHideWhiteboard")
+                }
                 // #9263: refresh the screen to display the changes
                 refreshScreen()
                 true
