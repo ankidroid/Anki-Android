@@ -29,9 +29,8 @@ object LanguageUtils {
      * or contains more than 3 fields separated by underscores.
      */
     @JvmStatic
-    fun localeFromStringIgnoringScriptAndExtensions(localeCodeStr: String?): Locale {
-        var localeCode = localeCodeStr ?: return Locale("")
-        localeCode = stripScriptAndExtensions(localeCode)
+    fun localeFromStringIgnoringScriptAndExtensions(localeCodeStr: String): Locale {
+        val localeCode = stripScriptAndExtensions(localeCodeStr)
         val fields = localeCode.split("_".toRegex()).toTypedArray()
         return when (fields.size) {
             1 -> Locale(fields[0])

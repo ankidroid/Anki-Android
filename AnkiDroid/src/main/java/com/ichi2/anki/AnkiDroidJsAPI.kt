@@ -427,7 +427,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     @JavascriptInterface
-    fun ankiTtsSetLanguage(loc: String?): Int {
+    fun ankiTtsSetLanguage(loc: String): Int {
         return mTalker.setLanguage(loc)
     }
 
