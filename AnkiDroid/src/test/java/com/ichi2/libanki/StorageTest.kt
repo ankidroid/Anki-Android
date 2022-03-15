@@ -195,12 +195,10 @@ open class StorageTest : RobolectricTest() {
             MatcherAssert.assertThat(tags, Matchers.equalTo(expected.tags))
         }
 
-        @Suppress("Name_Shadowing")
-        // @KotlinCleanup("make parameters val")
         private fun assertDConfEqual(actualConf: String?, expectedConf: String?) {
-            val actualConf = removeUnusedNewIntervalValue(actualConf)
-            val expectedConf = removeUnusedNewIntervalValue(expectedConf)
-            assertJsonEqual(actualConf, expectedConf)
+            val actualConfiguration = removeUnusedNewIntervalValue(actualConf)
+            val expectedConfiguration = removeUnusedNewIntervalValue(expectedConf)
+            assertJsonEqual(actualConfiguration, expectedConfiguration)
         }
 
         private fun removeUnusedNewIntervalValue(actualDecks: String?): String {
