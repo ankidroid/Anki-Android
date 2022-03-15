@@ -74,7 +74,6 @@
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
-    <issue id="RedundantNamespace" severity="ignore" />
     <issue id="Autofill" severity="ignore" />
     <issue id="ContentDescription" severity="ignore" />
     <issue id="AddJavascriptInterface" severity="ignore" />
@@ -224,7 +223,6 @@
     <issue id="InvalidResourceFolder" severity="ignore" />
     <issue id="WrongRegion" severity="ignore" />
     <issue id="UseAlpha2" severity="ignore" />
-    <issue id="LogConditional" severity="ignore" />
     <issue id="LongLogTag" severity="ignore" />
     <issue id="LogTagMismatch" severity="ignore" />
     <issue id="AllowBackup" severity="ignore" />
