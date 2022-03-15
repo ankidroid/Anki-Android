@@ -64,8 +64,6 @@ import static com.ichi2.libanki.Utils.checksum;
 
 public class ModelBrowser extends AnkiActivity {
 
-    public static final int REQUEST_TEMPLATE_EDIT = 3;
-
     DisplayPairAdapter mModelDisplayAdapter;
     private ListView mModelListView;
 
