@@ -615,7 +615,7 @@ public class ModelBrowser extends AnkiActivity {
     }
 
     private final ActivityResultLauncher<Intent> mEditTemplateResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if(result.getResultCode() == Activity.RESULT_OK) {
+        if (result.getResultCode() == Activity.RESULT_OK) {
             TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
         }
     });
