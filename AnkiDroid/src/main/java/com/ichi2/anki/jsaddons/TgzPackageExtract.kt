@@ -47,16 +47,23 @@ import java.io.*
 import java.util.zip.GZIPInputStream
 
 /**
- * In JS Addons the addon packages are downloaded from npm registry.
- * The file format of downloaded file is tgz, so I created this class to extract tgz file to provided directory.
+ * In JS Addons the addon packages are downloaded from npm registry, https://registry.npmjs.org
+ * The file format of downloaded file is tgz, so this class used to extract tgz file to addon directory.
+ * To extract the gzip file considering security the following checks are implemented
  *
- * This file in kotlin is used for extracting tgz file.
+ * 1. File size of package should be less than 100 MB
+ * 2. During extract the space consumed should be less than half of original availableSpace
+ * 3. The file should not write outside of specified directory
+ * 4. Clean up of temp files
+ *
+ * The following TarUtil.java file used to implement this
  * https://android.googlesource.com/platform/tools/tradefederation/+/master/src/com/android/tradefed/util/TarUtil.java
  *
- * Also added zip slip safety
+ * zip slip safety
  * https://snyk.io/research/zip-slip-vulnerability
  *
- * Also extracted gzip files with file size limit 100MB and number of entries in the tar file
+ * Safely extract files
+ * https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream
  */
 
 class TgzPackageExtract(private val context: Context) {
@@ -64,13 +71,13 @@ class TgzPackageExtract(private val context: Context) {
     private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
 
-    val BUFFER = 512
-    val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
-    val TOO_MANY_FILES = 1024 // max number of files
+    private val BUFFER = 512
+    private val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
+    private val TOO_MANY_FILES = 1024 // max number of files
 
-    var count = 0
-    var total: Long = 0
-    var data = ByteArray(BUFFER)
+    private var count = 0
+    private var total: Long = 0
+    private var data = ByteArray(BUFFER)
 
     /**
      * Determine whether a file is a gzip.
@@ -158,31 +165,31 @@ class TgzPackageExtract(private val context: Context) {
         data = ByteArray(BUFFER)
 
         try {
-            // file being unGzipped must not be greater than TOO_BIG_SIZE or half of available space
             GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
                 FileOutputStream(outputFile).use { outputStream ->
                     BufferedOutputStream(outputStream, BUFFER).use { bufferOutput ->
 
+                        // Gzip file size should not not be greater than TOO_BIG_SIZE
                         while (total + BUFFER <= TOO_BIG_SIZE &&
                             inputStream.read(data, 0, BUFFER).also { count = it } != -1
                         ) {
                             bufferOutput.write(data, 0, count)
                             total += count
 
-                            // check if space increased to 50% of total space
-                            checkNewSpaceAvailable(outputFile)
+                            // If space consumed is more than half of original availableSpace, delete file recursively and throw
+                            enforceSpaceUsedLessThanHalfAvailable(outputFile)
                         }
 
                         if (total + BUFFER > TOO_BIG_SIZE) {
                             outputFile.delete()
-                            throw IllegalStateException("File being unGzip is too big")
+                            throw IllegalStateException("Gzip file is too big to unGzip")
                         }
                     }
                 }
             }
         } catch (e: IOException) {
             outputFile.delete()
-            throw IllegalStateException("File being unGzip is too big")
+            throw IllegalStateException("Gzip file is too big to unGzip")
         }
 
         return outputFile
@@ -221,7 +228,7 @@ class TgzPackageExtract(private val context: Context) {
                             unTarFile(tarInputStream, entry, outputDir, outputFile)
                         }
 
-                        entry = tarInputStream.nextEntry as? TarArchiveEntry?
+                        entry = tarInputStream.nextEntry as? TarArchiveEntry
                     }
                 }
             }
@@ -240,9 +247,9 @@ class TgzPackageExtract(private val context: Context) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun unTarFile(tarInputStream: TarArchiveInputStream, entry: TarArchiveEntry?, outputDir: File, outputFile: File) {
+    private fun unTarFile(tarInputStream: TarArchiveInputStream, entry: TarArchiveEntry, outputDir: File, outputFile: File) {
         Timber.i("Creating output file %s.", outputFile.absolutePath)
-        val currentFile = File(outputDir, entry!!.name)
+        val currentFile = File(outputDir, entry.name)
         val parent = currentFile.parentFile // this line important otherwise FileNotFoundException
 
         if (parent != null && !parent.exists()) {
@@ -253,11 +260,10 @@ class TgzPackageExtract(private val context: Context) {
             }
         }
 
-        // file being unTar must not be greater than TOO_BIG_SIZE or half of available space
-        // here total is global so the total will be size of all files inside tar combined
         FileOutputStream(outputFile).use { outputFileStream ->
             BufferedOutputStream(outputFileStream, BUFFER).use { bufferOutput ->
 
+                // Tar file should not be greater than TOO_BIG_SIZE
                 while (total + BUFFER <= TOO_BIG_SIZE &&
                     tarInputStream.read(data, 0, BUFFER).also { count = it } != -1
                 ) {
@@ -265,14 +271,14 @@ class TgzPackageExtract(private val context: Context) {
                     bufferOutput.write(data, 0, count)
                     total += count
 
-                    // check if space increased to 50% of total space
-                    checkNewSpaceAvailable(outputDir)
+                    // If space consumed is more than half of original availableSpace, delete file recursively and throw
+                    enforceSpaceUsedLessThanHalfAvailable(outputDir)
                 }
 
                 if (total + BUFFER > TOO_BIG_SIZE) {
                     // remove unused file
                     outputFile.delete()
-                    throw IllegalStateException("File being untar is too big")
+                    throw IllegalStateException("Tar file is too big to untar")
                 }
             }
         }
@@ -292,7 +298,13 @@ class TgzPackageExtract(private val context: Context) {
         }
     }
 
-    // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
+    /**
+     * Ensure that the canonical path of destination directory should be equal to canonical path of output file
+     * Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
+     *
+     * @param outputFile output file
+     * @param destDirectory destination directory
+     */
     @Throws(ArchiveException::class, IOException::class)
     private fun zipPathSafety(outputFile: File, destDirectory: File) {
         val destDirCanonicalPath = destDirectory.canonicalPath
@@ -322,7 +334,7 @@ class TgzPackageExtract(private val context: Context) {
                 while (entry != null) {
                     numOfEntries++
                     unTarSize += entry.size
-                    entry = tarInputStream.nextEntry as? TarArchiveEntry?
+                    entry = tarInputStream.nextEntry as? TarArchiveEntry
                 }
 
                 if (numOfEntries > TOO_MANY_FILES) {
@@ -334,8 +346,13 @@ class TgzPackageExtract(private val context: Context) {
         return unTarSize
     }
 
-    // check if space increased to 50% of total space
-    fun checkNewSpaceAvailable(outputDir: File) {
+    //
+    /**
+     * If space consumed is more than half of original availableSpace, delete file recursively and throw
+     *
+     * @param outputDir output directory
+     */
+    private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
         val newAvailableSpace: Long = Utils.determineBytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
             // clean up
