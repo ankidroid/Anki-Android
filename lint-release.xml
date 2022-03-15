@@ -51,7 +51,11 @@
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
 
-    <issue id="ObsoleteSdkInt" severity="fatal" />
+    <issue id="ObsoleteSdkInt">
+        <ignore path="res/drawable-v21" />
+        <ignore path="res/values-v21" />
+    </issue>
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
@@ -96,7 +100,6 @@
     <issue id="SwitchIntDef" severity="ignore" />
     <issue id="UniqueConstants" severity="ignore" />
     <issue id="Override" severity="ignore" />
-    <issue id="ObsoleteSdkInt" severity="ignore" />
     <issue id="UnusedAttribute" severity="ignore" />
     <issue id="AppCompatMethod" severity="ignore" />
     <issue id="AppCompatCustomView" severity="ignore" />
