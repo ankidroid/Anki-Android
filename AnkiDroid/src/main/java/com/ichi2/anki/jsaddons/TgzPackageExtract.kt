@@ -132,6 +132,8 @@ class TgzPackageExtract(private val context: Context) {
             unTar(tarTempFile, addonsDir)
         } catch (e: IOException) {
             Timber.w("Failed to unTar file")
+        } finally {
+            tarTempFile.delete()
         }
     }
 
@@ -156,7 +158,7 @@ class TgzPackageExtract(private val context: Context) {
         data = ByteArray(BUFFER)
 
         try {
-            // file being unGzipped must not be greater than 100MB
+            // file being unGzipped must not be greater than TOO_BIG_SIZE or half of available space
             GZIPInputStream(FileInputStream(inputFile)).use { inputStream ->
                 FileOutputStream(outputFile).use { outputStream ->
                     BufferedOutputStream(outputStream, BUFFER).use { bufferOutput ->
@@ -169,6 +171,7 @@ class TgzPackageExtract(private val context: Context) {
                         }
 
                         if (total + BUFFER > TOO_BIG_SIZE) {
+                            outputFile.delete()
                             throw IllegalStateException("File being unGzip is too big")
                         }
                     }
@@ -211,6 +214,8 @@ class TgzPackageExtract(private val context: Context) {
                         // check if space increased to 50% of total space
                         newAvailableSpace = Utils.determineBytesAvailable(outputDir.canonicalPath)
                         if (newAvailableSpace <= availableSpace / 2) {
+                            // clean up
+                            outputFile.deleteRecursively()
                             throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
                         }
 
@@ -248,11 +253,13 @@ class TgzPackageExtract(private val context: Context) {
 
         if (parent != null && !parent.exists()) {
             if (!parent.mkdirs()) {
+                // clean up
+                outputDir.deleteRecursively()
                 throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
             }
         }
 
-        // file being untar must not be greater than 100MB
+        // file being unTar must not be greater than TOO_BIG_SIZE or half of available space
         // here total is global so the total will be size of all files inside tar combined
         FileOutputStream(outputFile).use { outputFileStream ->
             BufferedOutputStream(outputFileStream, BUFFER).use { bufferOutput ->
@@ -266,6 +273,8 @@ class TgzPackageExtract(private val context: Context) {
                 }
 
                 if (total + BUFFER > TOO_BIG_SIZE) {
+                    // remove unused file
+                    outputFile.delete()
                     throw IllegalStateException("File being untar is too big")
                 }
             }
