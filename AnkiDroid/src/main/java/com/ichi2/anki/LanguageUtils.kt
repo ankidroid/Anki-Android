@@ -16,7 +16,6 @@
 
 package com.ichi2.anki
 
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 object LanguageUtils {
@@ -30,12 +29,8 @@ object LanguageUtils {
      * or contains more than 3 fields separated by underscores.
      */
     @JvmStatic
-    @KotlinCleanup("localeCodeStr")
     fun localeFromStringIgnoringScriptAndExtensions(localeCodeStr: String?): Locale {
-        var localeCode = localeCodeStr
-        if (localeCode == null) {
-            return Locale("")
-        }
+        var localeCode = localeCodeStr ?: return Locale("")
         localeCode = stripScriptAndExtensions(localeCode)
         val fields = localeCode.split("_".toRegex()).toTypedArray()
         return when (fields.size) {
@@ -46,7 +41,6 @@ object LanguageUtils {
         }
     }
 
-    @KotlinCleanup("localeCodeStr")
     private fun stripScriptAndExtensions(localeCodeStr: String): String {
         var localeCode = localeCodeStr
         val hashPos = localeCode.indexOf('#')
