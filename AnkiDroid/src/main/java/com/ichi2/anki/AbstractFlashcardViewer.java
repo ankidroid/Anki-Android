@@ -1068,7 +1068,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** Consumers should use {@link #showDeleteNoteDialog()}  */
-    private void deleteNoteWithoutConfirmation() {
+    protected void deleteNoteWithoutConfirmation() {
         dismiss(new SchedulerService.DeleteNote(mCurrentCard), () -> UIUtils.showThemedToast(this, R.string.deleted_note, true));
     }
 

@@ -20,6 +20,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,17 +29,25 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.cardviewer.PreviewLayout;
 import com.ichi2.anki.cardviewer.ViewerCommand;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.END;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
 
 /**
  * The previewer intent must supply an array of cards to show and the index in the list from where
@@ -199,22 +208,116 @@ public class Previewer extends AbstractFlashcardViewer {
         if (item.getItemId() == R.id.action_edit) {
             editCard();
             return true;
+        } else if (item.getItemId() == R.id.action_delete) {
+            showDeleteNoteDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
     @Override
+    protected void showDeleteNoteDialog() {
+        Resources res = getResources();
+        new MaterialDialog.Builder(this)
+                .title(res.getString(R.string.delete_card_title))
+                .iconAttr(R.attr.dialogErrorIcon)
+                .content(res.getString(R.string.delete_note_message,
+                        Utils.stripHTML(mCurrentCard.q(true))))
+                .positiveText(R.string.dialog_positive_delete)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((dialog, which) -> {
+                    Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
+                    mSoundPlayer.stopSounds();
+                    deleteNoteWithoutConfirmation();
+                })
+                .build().show();
+    }
+
+
+    @Override
+    protected void deleteNoteWithoutConfirmation() {
+        //create an ArrayList from the Array
+        List<Long> tempList = LongStream.of(mCardList)
+                                .boxed()
+                                .collect(Collectors.toList());
+
+        Note currentNote = mCurrentCard.getCol().getNote(mCurrentCard.getNid());
+
+        //remove all the cards under the note from the list
+        for(Card card: currentNote.cards()) {
+            tempList.remove(card.getId());
+        }
+
+        //TODO: needs to be more accurate
+        //decide which index to change to after deleting depending on current index
+        mIndex -= (mIndex != mCardList.length - 1) ? currentNote.numberOfCards() : currentNote.numberOfCards() - 1;
+
+        //handling case of deleting multiple cards from first index, so next index is first as well
+        if(mIndex < -1)
+        {
+            mIndex = -1;
+        }
+
+        //converting back to Array
+        mCardList = tempList.stream()
+                .mapToLong(Long::longValue)
+                .toArray();
+
+        //deleting the note
+        super.deleteNoteWithoutConfirmation();
+
+        //if no cards remain, go back to the Deck Picker
+        if(mCardList.length == 0) {
+            openDeckPicker();
+            return;
+        }
+
+        //if only 1 card is present, don't show progressLayout
+        if(mCardList.length == 1) {
+            LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
+            progressLayout.setVisibility(View.GONE);
+        } else {
+            mProgressSeekBar.setMax(mCardList.length - 1);
+        }
+
+        changePreviewedCard(mIndex < mCardList.length-1);
+    }
+
+
+    void openDeckPicker() {
+        Timber.i("Navigating to decks");
+        Intent deckPicker = new Intent(Previewer.this, DeckPicker.class);
+        // opening DeckPicker should use the instance on the back stack & clear back history
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivityWithAnimation(deckPicker, END);
+    }
+
+
+    @Override
     public void onBackPressed() {
         setResult(RESULT_OK, getResultIntent());
-        super.onBackPressed();
+        openCardBrowser();
     }
 
 
     @Override
     protected void onNavigationPressed() {
         setResult(RESULT_OK, getResultIntent());
-        super.onNavigationPressed();
+        openCardBrowser();
+    }
+
+
+    //Need to override and open, otherwise the deleted cards are not updated
+    //in the card browser when navigated back to it
+    @Override
+    protected void openCardBrowser() {
+        Intent intent = new Intent(Previewer.this, CardBrowser.class);
+        Long currentCardId = getCurrentCardId();
+        if (currentCardId != null) {
+            intent.putExtra("currentCard", currentCardId);
+        }
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, END);
     }
 
 
