@@ -168,6 +168,9 @@ class TgzPackageExtract(private val context: Context) {
                         ) {
                             bufferOutput.write(data, 0, count)
                             total += count
+
+                            // check if space increased to 50% of total space
+                            checkNewSpaceAvailable(outputFile)
                         }
 
                         if (total + BUFFER > TOO_BIG_SIZE) {
@@ -196,7 +199,6 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(Exception::class)
     fun unTar(inputFile: File, outputDir: File) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
-        var newAvailableSpace: Long
 
         count = 0
         total = 0
@@ -210,14 +212,6 @@ class TgzPackageExtract(private val context: Context) {
 
                     while (entry != null) {
                         val outputFile = File(outputDir, entry.name)
-
-                        // check if space increased to 50% of total space
-                        newAvailableSpace = Utils.determineBytesAvailable(outputDir.canonicalPath)
-                        if (newAvailableSpace <= availableSpace / 2) {
-                            // clean up
-                            outputFile.deleteRecursively()
-                            throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
-                        }
 
                         // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
                         zipPathSafety(outputFile, outputDir)
@@ -270,6 +264,9 @@ class TgzPackageExtract(private val context: Context) {
 
                     bufferOutput.write(data, 0, count)
                     total += count
+
+                    // check if space increased to 50% of total space
+                    checkNewSpaceAvailable(outputDir)
                 }
 
                 if (total + BUFFER > TOO_BIG_SIZE) {
@@ -335,5 +332,15 @@ class TgzPackageExtract(private val context: Context) {
         }
 
         return unTarSize
+    }
+
+    // check if space increased to 50% of total space
+    fun checkNewSpaceAvailable(outputDir: File) {
+        val newAvailableSpace: Long = Utils.determineBytesAvailable(outputDir.canonicalPath)
+        if (newAvailableSpace <= availableSpace / 2) {
+            // clean up
+            outputDir.deleteRecursively()
+            throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+        }
     }
 }
