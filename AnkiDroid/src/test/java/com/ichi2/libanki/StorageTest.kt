@@ -22,7 +22,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -197,12 +196,10 @@ open class StorageTest : RobolectricTest() {
         }
 
         @Suppress("Name_Shadowing")
-        @KotlinCleanup("make parameters val")
+        // @KotlinCleanup("make parameters val")
         private fun assertDConfEqual(actualConf: String?, expectedConf: String?) {
-            var actualConf = actualConf
-            var expectedConf = expectedConf
-            actualConf = removeUnusedNewIntervalValue(actualConf)
-            expectedConf = removeUnusedNewIntervalValue(expectedConf)
+            val actualConf = removeUnusedNewIntervalValue(actualConf)
+            val expectedConf = removeUnusedNewIntervalValue(expectedConf)
             assertJsonEqual(actualConf, expectedConf)
         }
 
