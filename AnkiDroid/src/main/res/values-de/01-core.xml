@@ -73,7 +73,7 @@
         <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
-    <string name="no_cards_placeholder_description">Fügen Sie Karten mit\ndem »+«-Symbol hinzu.</string>
+    <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>

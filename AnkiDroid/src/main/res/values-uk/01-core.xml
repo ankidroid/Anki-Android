@@ -104,7 +104,7 @@
     <string name="undo_action_change_deck_multi">Змінити колоди</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
     <string name="unbury">Повернути</string>
-    <string name="rename_deck">Переназвати колоду</string>
+    <string name="rename_deck">Перейменувати колоду</string>
     <string name="create_shortcut">Створити значок</string>
     <string name="browse_cards">Переглянути картки</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додати</string>

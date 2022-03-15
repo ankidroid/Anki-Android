@@ -105,7 +105,7 @@
     <string name="custom_study_preview_new">新規カードをプレビューする</string>
     <string name="custom_study_limit_tags">特定のタグで選ぶ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ノートの編集</string>
+    <string name="cardeditor_title_edit_card">ノートを編集</string>
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
@@ -362,7 +362,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">カードを延期しました</string>
     <string name="buried_note">ノートを延期しました</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="deleted_note">ノートを削除しました</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->

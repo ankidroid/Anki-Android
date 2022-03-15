@@ -55,7 +55,7 @@
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_gestures_summ">よく行う操作を、タップやスワイプをするだけで手軽に行えるようになります</string>
     <string name="pref_cat_actions" maxLength="41">アクション</string>
-    <string name="pref_cat_controls" maxLength="41">コント ローラー</string>
+    <string name="pref_cat_controls" maxLength="41">コントローラー</string>
     <string name="pref_cat_controls_summ">外部デバイス（キーボードやゲームパッド）のキーやボタンに操作を割り当てます</string>
     <string name="pref_cat_advanced" maxLength="41">その他</string>
     <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
@@ -192,7 +192,7 @@
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>
-    <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
+    <string name="convert_fen_text_summ">FEN (Forsyth-Edwards Notation)を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API を有効にする</string>
     <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
     <string name="custom_buttons" maxLength="41">アプリバー アイコン</string>
@@ -307,7 +307,7 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
-    <string name="note_editor_replace_newlines" maxLength="41">改行を HTML に置き換え</string>
+    <string name="note_editor_replace_newlines" maxLength="41">改行をHTMLに置き換え</string>
     <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
     <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
     <string name="no_code_formatting_summ">文字入力して回答する種類のカードの解答画面で、自分の回答に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
