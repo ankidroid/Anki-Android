@@ -502,7 +502,7 @@ public class ModelBrowser extends AnkiActivity {
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
-        launchActivityForResultWithAnimation(intent,mEditTemplateResultLauncher,START);
+        launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, START);
     }
 
     // ----------------------------------------------------------------------------
