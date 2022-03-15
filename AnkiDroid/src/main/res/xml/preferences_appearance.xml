@@ -31,13 +31,13 @@
             android:defaultValue="0"
             android:entries="@array/day_theme_labels"
             android:entryValues="@array/day_theme_values"
-            android:key="dayTheme"
+            android:key="@string/day_theme_key"
             android:title="@string/day_theme" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/night_theme_labels"
             android:entryValues="@array/night_theme_values"
-            android:key="nightTheme"
+            android:key="@string/night_theme_key"
             android:title="@string/night_theme" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
