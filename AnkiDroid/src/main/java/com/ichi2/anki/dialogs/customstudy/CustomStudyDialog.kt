@@ -36,7 +36,6 @@ import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.ContextMenuHelper.getValuesFromKeys
-import com.ichi2.anki.dialogs.ContextMenuHelper.integerListToArray
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.async.CollectionTask.RebuildCram
@@ -357,7 +356,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW))
                 }
-                return integerListToArray(dialogOptions)
+                return dialogOptions.toIntArray()
             }
             CONTEXT_MENU_LIMITS -> // Special custom study options to show when the daily study limit has been reached
                 return if (collection?.sched?.newDue() != true && collection?.sched?.revDue() != true) {

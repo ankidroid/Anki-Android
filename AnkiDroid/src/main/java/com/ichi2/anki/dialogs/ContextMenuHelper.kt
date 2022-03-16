@@ -27,13 +27,4 @@ object ContextMenuHelper {
         }
         return values
     }
-
-    @JvmStatic
-    fun integerListToArray(itemIds: ArrayList<Int>): IntArray {
-        val intItemIds = IntArray(itemIds.size)
-        for (i in itemIds.indices) {
-            intItemIds[i] = itemIds[i]
-        }
-        return intItemIds
-    }
 }
