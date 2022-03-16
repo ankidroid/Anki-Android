@@ -46,6 +46,7 @@
     <issue id="WrongViewCast" severity="fatal" />
     <issue id="UnknownId" severity="fatal" />
     <issue id="MergeRootFrame" severity="fatal" />
+    <issue id="ObsoleteLayoutParam" severity="fatal" />
 
     <!--           RTL Rules               -->
     <issue id="RtlCompat" severity="fatal" />
@@ -265,7 +266,6 @@
     <issue id="UnlocalizedSms" severity="ignore" />
     <issue id="ObjectAnimatorBinding" severity="ignore" />
     <issue id="AnimatorKeep" severity="ignore" />
-    <issue id="ObsoleteLayoutParam" severity="ignore" />
     <issue id="OnClick" severity="ignore" />
     <issue id="Overdraw" severity="ignore" />
     <issue id="DalvikOverride" severity="ignore" />

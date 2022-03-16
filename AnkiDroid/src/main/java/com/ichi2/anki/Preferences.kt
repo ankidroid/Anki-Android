@@ -32,11 +32,13 @@ import android.text.TextUtils
 import android.view.MenuItem
 import android.view.WindowManager.BadTokenException
 import android.webkit.URLUtil
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.*
@@ -764,8 +766,7 @@ class Preferences : AnkiActivity() {
             mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 if (mBackgroundImage!!.isChecked) {
                     try {
-                        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(galleryIntent, RESULT_LOAD_IMG)
+                        mBackgroundImageResultLauncher.launch("image/*")
                         mBackgroundImage!!.isChecked = true
                     } catch (ex: Exception) {
                         Timber.e("%s", ex.localizedMessage)
@@ -824,15 +825,12 @@ class Preferences : AnkiActivity() {
             return names
         }
 
-        @Suppress("deprecation") // super.onActivityResult
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            // DEFECT #5973: Does not handle Google Drive downloads
-            try {
-                if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                    val selectedImage = data.data
+        private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
+            if (selectedImage != null) {
+                // handling file may result in exception
+                try {
                     val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                    requireContext().contentResolver.query(selectedImage!!, filePathColumn, null, null, null).use { cursor ->
+                    requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
                         cursor!!.moveToFirst()
                         // file size in MB
                         val fileLength = cursor.getLong(0) / (1024 * 1024)
@@ -852,21 +850,17 @@ class Preferences : AnkiActivity() {
                             showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
                         }
                     }
-                } else {
-                    mBackgroundImage!!.isChecked = false
-                    showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
+                } catch (e: OutOfMemoryError) {
+                    Timber.w(e)
+                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
                 }
-            } catch (e: OutOfMemoryError) {
-                Timber.w(e)
-                showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
-            } catch (e: Exception) {
-                Timber.w(e)
-                showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+            } else {
+                mBackgroundImage!!.isChecked = false
+                showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
             }
-        }
-
-        companion object {
-            private const val RESULT_LOAD_IMG = 111
         }
     }
 
@@ -1157,28 +1151,28 @@ class Preferences : AnkiActivity() {
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
             resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit()
-                edit.remove("customButtonUndo")
-                edit.remove("customButtonScheduleCard")
-                edit.remove("customButtonEditCard")
-                edit.remove("customButtonTags")
-                edit.remove("customButtonAddCard")
-                edit.remove("customButtonReplay")
-                edit.remove("customButtonCardInfo")
-                edit.remove("customButtonSelectTts")
-                edit.remove("customButtonDeckOptions")
-                edit.remove("customButtonMarkCard")
-                edit.remove("customButtonToggleMicToolBar")
-                edit.remove("customButtonBury")
-                edit.remove("customButtonSuspend")
-                edit.remove("customButtonFlag")
-                edit.remove("customButtonDelete")
-                edit.remove("customButtonEnableWhiteboard")
-                edit.remove("customButtonSaveWhiteboard")
-                edit.remove("customButtonWhiteboardPenColor")
-                edit.remove("customButtonClearWhiteboard")
-                edit.remove("customButtonShowHideWhiteboard")
-                edit.apply()
+                AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                    remove("customButtonUndo")
+                    remove("customButtonScheduleCard")
+                    remove("customButtonEditCard")
+                    remove("customButtonTags")
+                    remove("customButtonAddCard")
+                    remove("customButtonReplay")
+                    remove("customButtonCardInfo")
+                    remove("customButtonSelectTts")
+                    remove("customButtonDeckOptions")
+                    remove("customButtonMarkCard")
+                    remove("customButtonToggleMicToolBar")
+                    remove("customButtonBury")
+                    remove("customButtonSuspend")
+                    remove("customButtonFlag")
+                    remove("customButtonDelete")
+                    remove("customButtonEnableWhiteboard")
+                    remove("customButtonSaveWhiteboard")
+                    remove("customButtonWhiteboardPenColor")
+                    remove("customButtonClearWhiteboard")
+                    remove("customButtonShowHideWhiteboard")
+                }
                 // #9263: refresh the screen to display the changes
                 refreshScreen()
                 true

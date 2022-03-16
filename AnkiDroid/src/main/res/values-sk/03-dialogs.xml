@@ -82,12 +82,6 @@
         <item quantity="other">%d resetovaných kartičiek</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Preplánovať kartičku</item>
-        <item quantity="few">Preplánovať kartičky</item>
-        <item quantity="many">Preplánovať kartičky</item>
-        <item quantity="other">Preplánovať kartičky</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Súčasný interval: %d deň</item>
         <item quantity="few">Súčasný interval: %d dni</item>
