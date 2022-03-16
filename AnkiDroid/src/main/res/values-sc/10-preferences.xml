@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>In bassu</item>
         <item>In artu</item>
-        <item>None</item>
+        <item>Perunu</item>
     </string-array>
     <string name="gestures" maxLength="41">Abìlita sos gestos</string>
     <string name="gestures_summ">Assigna gestos a atziones che a sas rispostas e a sas modìficas de sas cartas.</string>
@@ -213,6 +213,10 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importende permite totu sos archìvios</string>
     <string name="media_import_allow_all_files_summ">Si Android non reconnoschet un\'archìviu multimediale</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Matzu predef. aberende sas istatìsticas</string>
+    <string name="stats_default_deck_current">Ammustra sas istatìsticas pro su matzu prus reghente</string>
+    <string name="stats_default_deck_all">Ammustra sas istatìsticas pro totu sos matzos</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Istatìsticas avantzadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Abìlita sas istatìsticas avantzadas</string>

@@ -76,10 +76,6 @@
         <item quantity="other">%d cartes réinitialisées</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Replanifier la carte</item>
-        <item quantity="other">Replanifier les cartes</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Intervalle actuel : %d jour</item>
         <item quantity="other">Intervalle actuel : %d jours</item>
@@ -119,7 +115,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid a besoin de %s d\'espace libre pour continuer. Veuillez libérer de l\'espace</string>
     <string name="restore_backup_title">Restaurer la sauvegarde ?</string>
     <string name="restore_backup">Votre collection sera remplacée par une copie plus ancienne. Tout progrès non enregistré sera perdu.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">En choisir un autre</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Non</string>
@@ -185,7 +181,7 @@
     <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded"> « %s » annulé</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Impossible de traiter les options du paquet : %s</string>
     <!-- Database Errors-->

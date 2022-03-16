@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -53,7 +52,7 @@ class MoveDirectoryContentTest(
 
     @Test
     fun test_one_operation() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
             .withTempFile("foo.txt")
         val destinationDirectory = createTransientDirectory()
 
@@ -71,7 +70,7 @@ class MoveDirectoryContentTest(
 
     @Test
     fun test_success_integration_test_recursive() {
-        val source = createDirectory().withTempFile("tmp.txt")
+        val source = createTransientDirectory().withTempFile("tmp.txt")
         val moreFiles = source.createTransientDirectory("more files").withTempFile("tmp-2.txt")
         val destinationDirectory = createTransientDirectory()
 
@@ -79,24 +78,24 @@ class MoveDirectoryContentTest(
 
         assertThat("source directory should exist", source.exists(), equalTo(true))
         assertThat("destination directory should exist", destinationDirectory.exists(), equalTo(true))
-        assertThat("tmp.txt should be deleted at source", File(source.directory, "tmp.txt").exists(), equalTo(false))
+        assertThat("tmp.txt should be deleted at source", File(source, "tmp.txt").exists(), equalTo(false))
         assertThat("tmp.txt should be copied", File(destinationDirectory, "tmp.txt").exists(), equalTo(true))
 
         val subdirectory = File(destinationDirectory, "more files")
         assertThat("'more file' should be deleted at source", moreFiles.exists(), equalTo(false))
         assertThat("subdir was copied", subdirectory.exists(), equalTo(true))
-        assertThat("tmp-2.txt file was deleted at source", File(moreFiles.directory, "tmp-2.txt").exists(), equalTo(false))
+        assertThat("tmp-2.txt file was deleted at source", File(moreFiles, "tmp-2.txt").exists(), equalTo(false))
         assertThat("tmp-2.txt file was copied", File(subdirectory, "tmp-2.txt").exists(), equalTo(true))
     }
 
     @Test
     fun a_move_failure_is_not_fatal() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
             .withTempFile("baz.txt")
 
-        assertThat("foo should exists", File(source.directory, "foo.txt").exists(), equalTo(true))
+        assertThat("foo should exists", File(source, "foo.txt").exists(), equalTo(true))
         val destinationDirectory = createTransientDirectory()
 
         // Use variables as we don't know which file will be returned in the middle from listFiles()
@@ -119,15 +118,15 @@ class MoveDirectoryContentTest(
 
     @Test
     fun adding_file_during_move_is_not_fatal() {
-        adding_during_move_helper() {
-            return@adding_during_move_helper it.directory.addTempFile("new_file.txt", "new file")
+        adding_during_move_helper {
+            return@adding_during_move_helper it.addTempFile("new_file.txt", "new file")
         }
     }
 
     @Test
     fun adding_directory_during_move_is_not_fatal() {
-        adding_during_move_helper() {
-            val new_directory = File(it.directory, "subdirectory")
+        adding_during_move_helper {
+            val new_directory = File(it, "subdirectory")
             assertThat("Subdirectory is created", new_directory.mkdir())
             new_directory.deleteOnExit()
             return@adding_during_move_helper new_directory
@@ -135,12 +134,12 @@ class MoveDirectoryContentTest(
     }
 
     /**
-     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subfolder).
+     * Test moving a directory with two files. [toDoBetweenTwoFilesMove] is executed before moving the second file and return a new file/directory it generated in source directly (not in a subdirectory).
      * This new file/directory must be present in source or destination.
      *
      */
-    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: Directory) -> File) {
-        val source = createDirectory()
+    fun adding_during_move_helper(toDoBetweenTwoFilesMove: (source: File) -> File) {
+        val source = createTransientDirectory()
             .withTempFile("foo.txt")
             .withTempFile("bar.txt")
 
@@ -150,7 +149,7 @@ class MoveDirectoryContentTest(
         executionContext.attemptRename = false
         executionContext.logExceptions = true
         var movesProcessed = 0
-        val operation = spy(MoveDirectoryContent.createInstance(source, destinationDirectory)) {
+        val operation = spy(MoveDirectoryContent.createInstance(Directory.createInstance(source)!!, destinationDirectory)) {
             doAnswer { op ->
                 val operation = op.callRealMethod() as Operation
                 if (movesProcessed++ == 1) {
@@ -170,7 +169,7 @@ class MoveDirectoryContentTest(
 
         assertThat(
             "new_file should be present in source or directory",
-            File(source.directory, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
+            File(source, new_file_name!!).exists() || File(destinationDirectory, new_file_name!!).exists()
         )
     }
 
@@ -180,20 +179,21 @@ class MoveDirectoryContentTest(
      */
     @Test
     fun empty_directory_is_not_deleted() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
         val destinationDirectory = generateDestinationDirectoryRef()
 
         executeAll(moveDirectoryContent(source, destinationDirectory))
 
-        assertThat("source directory should not be deleted", source.directory.exists(), equalTo(true))
+        assertThat("source directory should not be deleted", source.exists(), equalTo(true))
     }
 
     @Test
     fun factory_on_missing_directory_throw() {
-        val source = createDirectory()
+        val source = createTransientDirectory()
+        val sourceDirectory = Directory.createInstance(source)!!
         val destinationDirectory = generateDestinationDirectoryRef()
-        source.directory.delete()
-        assertThrows<FileNotFoundException> { moveDirectoryContent(source, destinationDirectory) }
+        source.delete()
+        assertThrows<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
     }
 
     @Test
@@ -214,11 +214,15 @@ class MoveDirectoryContentTest(
      */
     @Test
     fun reproduce_10358() {
-        val permissionDenied = createPermissionDenied(createTransientDirectory(), CompatHelper.getCompat())
+        val permissionDenied = createPermissionDenied()
         permissionDenied.assertThrowsWhenPermissionDenied { MoveDirectoryContent.createInstance(permissionDenied.directory, createTransientFile()) }
     }
 
     private fun moveDirectoryContent(source: Directory, destinationDirectory: File): MoveDirectoryContent {
         return MoveDirectoryContent.createInstance(source, destinationDirectory)
+    }
+
+    private fun moveDirectoryContent(source: File, destinationDirectory: File): MoveDirectoryContent {
+        return moveDirectoryContent(Directory.createInstance(source)!!, destinationDirectory)
     }
 }

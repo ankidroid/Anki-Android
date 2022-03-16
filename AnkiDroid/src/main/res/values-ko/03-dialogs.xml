@@ -73,9 +73,6 @@
         <item quantity="other">%d개의 카드를 초기화했습니다.</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="other">카드 기한 변경</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">현재 간격: %d일</item>
     </plurals>

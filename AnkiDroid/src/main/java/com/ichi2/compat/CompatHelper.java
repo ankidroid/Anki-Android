@@ -20,8 +20,11 @@ package com.ichi2.compat;
 import android.os.Build;
 import android.view.KeyCharacterMap;
 
+import androidx.annotation.NonNull;
+
 public class CompatHelper {
     private static CompatHelper sInstance;
+    @NonNull
     private final Compat mCompat;
 
 
@@ -52,10 +55,12 @@ public class CompatHelper {
     /**
      * Main public method to get the compatibility class
      */
+    @NonNull
     public static Compat getCompat() {
         return getInstance().mCompat;
     }
 
+    @NonNull
     public static synchronized CompatHelper getInstance() {
         if (sInstance == null) {
             sInstance = new CompatHelper();

@@ -52,11 +52,11 @@ public class NoteServiceTest extends RobolectricTest {
         mTestCol = getCol();
     }
 
-    //temporary folder to test importMediaToDirectory function
+    //temporary directory to test importMediaToDirectory function
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public TemporaryFolder directory = new TemporaryFolder();
     @Rule
-    public TemporaryFolder folder2 = new TemporaryFolder();
+    public TemporaryFolder directory2 = new TemporaryFolder();
 
     //tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
@@ -95,7 +95,7 @@ public class NoteServiceTest extends RobolectricTest {
     @Test
     public void importAudioClipToDirectoryTest() throws IOException {
 
-        File fileAudio = folder.newFile("testaudio.wav");
+        File fileAudio = directory.newFile("testaudio.wav");
 
         // writes a line in the file so the file's length isn't 0
         try (FileWriter fileWriter = new FileWriter(fileAudio)) {
@@ -117,7 +117,7 @@ public class NoteServiceTest extends RobolectricTest {
     @Test
     public void importImageToDirectoryTest() throws IOException {
 
-        File fileImage = folder.newFile("testimage.png");
+        File fileImage = directory.newFile("testimage.png");
 
         // writes a line in the file so the file's length isn't 0
         try (FileWriter fileWriter = new FileWriter(fileImage)) {
@@ -142,12 +142,12 @@ public class NoteServiceTest extends RobolectricTest {
      * * File with same name, but different content, has its name changed
      * * File with same name and content don't have its name changed
      *
-     * @throws IOException if new created files already exist on temp folder
+     * @throws IOException if new created files already exist on temp directory
      */
     @Test
     public void importAudioWithSameNameTest() throws IOException {
-        File f1 = folder.newFile("audio.mp3");
-        File f2 = folder2.newFile("audio.mp3");
+        File f1 = directory.newFile("audio.mp3");
+        File f2 = directory2.newFile("audio.mp3");
 
         // write a line in the file so the file's length isn't 0
         try (FileWriter fileWriter = new FileWriter(f1)) {
@@ -185,8 +185,8 @@ public class NoteServiceTest extends RobolectricTest {
     // Similar test like above, but with an ImageField instead of a MediaClipField
     @Test
     public void importImageWithSameNameTest() throws IOException {
-        File f1 = folder.newFile("img.png");
-        File f2 = folder2.newFile("img.png");
+        File f1 = directory.newFile("img.png");
+        File f2 = directory2.newFile("img.png");
 
         // write a line in the file so the file's length isn't 0
         try (FileWriter fileWriter = new FileWriter(f1)) {

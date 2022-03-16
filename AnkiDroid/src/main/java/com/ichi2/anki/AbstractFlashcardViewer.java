@@ -1977,6 +1977,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_TOGGLE_WHITEBOARD:
                 toggleWhiteboard();
                 return true;
+            case COMMAND_SHOW_HINT:
+                loadUrlInViewer("javascript: showHint();");
+                return true;
+            case COMMAND_SHOW_ALL_HINTS:
+                loadUrlInViewer("javascript: showAllHints();");
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
@@ -2713,7 +2719,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     return true;
                 /*
                  *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
-                 *  See card.js in assets/scripts folder
+                 *  See card.js in assets/scripts directory
                  */
                 case WebViewSignalParserUtils.SHOW_ANSWER:
                     // display answer when showAnswer() called from card.js

@@ -37,6 +37,7 @@ Most of the code is:
 package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.EmptyApplication
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
@@ -44,6 +45,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
@@ -52,6 +54,7 @@ import java.util.*
  * This black box test was written without inspecting the non-free org.json sourcecode.
  */
 @RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
 @KotlinCleanup("fix `object`")
 class JSONObjectTest {
     @Test

@@ -114,6 +114,8 @@
     <string name="gesture_page_down">Paĝo suben</string>
     <string name="gesture_abort_sync">Pri lernado kaj samtempigo</string>
     <string name="gesture_toggle_whiteboard">Baskuli skribtabulon</string>
+    <string name="gesture_show_hint">Montri konsilon</string>
+    <string name="gesture_show_all_hints">Montri ĉiujn konsilojn</string>
     <string name="record_voice">Registri voĉon</string>
     <string name="replay_voice">Ludi voĉon</string>
     <string name="automatic_answer_option_2">malfacile (“facile” se nedisponebla)</string>

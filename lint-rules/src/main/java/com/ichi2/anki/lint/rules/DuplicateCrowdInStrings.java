@@ -98,8 +98,8 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
     @Override
-    public boolean appliesTo(ResourceFolderType folderType) {
-        return folderType == ResourceFolderType.VALUES;
+    public boolean appliesTo(ResourceFolderType directoryType) {
+        return directoryType == ResourceFolderType.VALUES;
     }
 
 

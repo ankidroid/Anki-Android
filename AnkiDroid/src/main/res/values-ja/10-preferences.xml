@@ -55,7 +55,7 @@
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
     <string name="pref_cat_gestures_summ">よく行う操作を、タップやスワイプをするだけで手軽に行えるようになります</string>
     <string name="pref_cat_actions" maxLength="41">アクション</string>
-    <string name="pref_cat_controls" maxLength="41">コント ローラー</string>
+    <string name="pref_cat_controls" maxLength="41">コントローラー</string>
     <string name="pref_cat_controls_summ">外部デバイス（キーボードやゲームパッド）のキーやボタンに操作を割り当てます</string>
     <string name="pref_cat_advanced" maxLength="41">その他</string>
     <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
@@ -192,7 +192,7 @@
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>
-    <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
+    <string name="convert_fen_text_summ">FEN (Forsyth-Edwards Notation)を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API を有効にする</string>
     <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
     <string name="custom_buttons" maxLength="41">アプリバー アイコン</string>
@@ -208,11 +208,15 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">PNG形式でクリップボード画像を貼り付け</string>
     <string name="paste_as_png_summary">デフォルトでは、AnkiはJPGファイルとしてクリップボードに画像を貼り付けてディスク領域を節約します。 このオプションを使用すると、代わりに PNGファイルとして画像を貼り付けることができます。</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back" maxLength="41">バックキー２度押しで 戻る/終了</string>
+    <string name="exit_via_double_tap_back_summ">学習やアプリを誤って終了してしまうことを防ぎます</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <!-- Statistics settings -->
+    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_current">Show stats for most recent deck</string>
+    <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高度な統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">高度な統計を有効にする</string>
@@ -303,7 +307,7 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
-    <string name="note_editor_replace_newlines" maxLength="41">改行を HTML に置き換え</string>
+    <string name="note_editor_replace_newlines" maxLength="41">改行をHTMLに置き換え</string>
     <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
     <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
     <string name="no_code_formatting_summ">文字入力して回答する種類のカードの解答画面で、自分の回答に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
@@ -312,8 +316,8 @@
     <!-- Open Changelog-->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_key">キーを追加</string>
+    <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
@@ -323,6 +327,6 @@
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">&lt;unk&gt;%s を削除</string>
     <string name="bindings_already_bound">Already bound to %s</string>
 </resources>

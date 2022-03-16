@@ -114,6 +114,8 @@
     <string name="gesture_page_down">Descendre</string>
     <string name="gesture_abort_sync">Abandonner l\'apprentissage et la synchronisation</string>
     <string name="gesture_toggle_whiteboard">Activer le tableau blanc</string>
+    <string name="gesture_show_hint">Afficher l\'indice</string>
+    <string name="gesture_show_all_hints">Afficher tous les indices</string>
     <string name="record_voice">Enregistrer la voix</string>
     <string name="replay_voice">Réentendre la voix</string>
     <string name="automatic_answer_option_2">Difficile (Bon si indisponible)</string>

@@ -114,6 +114,8 @@
     <string name="gesture_page_down">Achirra</string>
     <string name="gesture_abort_sync">Firma s\'imparòngiu e sa sincronizatzione</string>
     <string name="gesture_toggle_whiteboard">Allughe/istuda sa lavagna</string>
+    <string name="gesture_show_hint">Ammustra s\'impòsitu</string>
+    <string name="gesture_show_all_hints">Ammustra totu sos impòsitos</string>
     <string name="record_voice">Registra sa boghe</string>
     <string name="replay_voice">Riprodui sa boghe</string>
     <string name="automatic_answer_option_2">Difìtzile (\"Bonu\" si no a disponimentu)</string>

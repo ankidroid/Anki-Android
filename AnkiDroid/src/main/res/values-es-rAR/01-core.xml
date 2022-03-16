@@ -186,8 +186,8 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
     <string name="card_template_editor_deck_override">Anulación de mazo</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Insertar campos</string>
+    <string name="card_template_editor_select_field">Seleccionar campo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Esto creará %1$d tarjetas. ¿Continuar?</item>
@@ -210,7 +210,7 @@
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a las notas existentes, tarjetas, tipos de nota y mazos, así como crear nuevos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de la tarjeta</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Explorador de tarjetas</string>
     <string name="context_menu_anki_card_label">Tarjeta Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tiene un problema:<br/>%2$s</string>
     <string name="more_information">Más información</string>

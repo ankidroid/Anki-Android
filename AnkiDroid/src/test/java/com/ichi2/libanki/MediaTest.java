@@ -31,7 +31,7 @@ public class MediaTest extends RobolectricTest {
     /*****************
      ** Media        *
      *****************/
-    // copying files to media folder
+    // copying files to media directory
 
     /* TODO: media
        @Test

@@ -76,10 +76,6 @@
         <item quantity="other">%d Karten zurücksetzen</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Karte umplanen</item>
-        <item quantity="other">Karten umplanen</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Aktuelles Intervall: %d Tag</item>
         <item quantity="other">Aktuelles Intervall: %d Tage</item>
@@ -100,8 +96,8 @@
     <string name="intent_aedict_category">Entfernen Sie alle Notepad-Kategorien um Karten zu AnkiDroid hinzuzufügen oder fügen Sie die Kategorie »Standard« hinzu</string>
     <string name="custom_study_new_total_new">Neue Karten im Stapel: %d</string>
     <string name="custom_study_rev_total_rev">Fällige Wiederholungen im Stapel: %d</string>
-    <string name="custom_study_new_extend">Erweitern/Verringern (---3“) der heutigen neuen Kartengrenze um</string>
-    <string name="custom_study_rev_extend">Erweitern/Verringern (---3“) der heutigen neuen Kartengrenze um</string>
+    <string name="custom_study_new_extend">Erweitern/Verringern (\"-3“) der heutigen neuen Kartengrenze um</string>
+    <string name="custom_study_rev_extend">Erweitern/Verringern (\"-3“) der heutigen neuen Kartengrenze um</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
     <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
@@ -119,7 +115,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid benötigt %s freien Speicherplatz um fortzufahren. Bitte leeren Sie etwas Speicherplatz</string>
     <string name="restore_backup_title">Sicherung wiederherstellen?</string>
     <string name="restore_backup">Ihre Sammlung wird durch eine ältere Kopie ersetzt. Nicht gespeicherte Lernfortschritte gehen verloren.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Eine andere auswählen</string>
     <string name="dialog_cancel">Abbrechen</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nein</string>
@@ -185,7 +181,7 @@
     <string name="card_browser_deck_change_error">Stapel konnte nicht geändert werden</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Decodieren der Daten von Karte</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">\"%s\" rückgängig gemacht</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Stapeloptionen konnten nicht verarbeitet werden: %s</string>
     <!-- Database Errors-->

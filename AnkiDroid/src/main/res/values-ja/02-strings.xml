@@ -105,7 +105,7 @@
     <string name="custom_study_preview_new">新規カードをプレビューする</string>
     <string name="custom_study_limit_tags">特定のタグで選ぶ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ノートの編集</string>
+    <string name="cardeditor_title_edit_card">ノートを編集</string>
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
@@ -339,7 +339,7 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">メールアドレスが必要です</string>
     <string name="password_empty">パスワードが必要です</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">もう一度押すと終了します</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
@@ -354,15 +354,15 @@
     <string name="deck_download_progress_message">ダウンロード中は他のアプリを使用できます</string>
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="home">ホーム</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>
     <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="buried_card">カードを延期しました</string>
+    <string name="buried_note">ノートを延期しました</string>
+    <string name="deleted_note">ノートを削除しました</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->

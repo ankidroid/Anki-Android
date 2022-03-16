@@ -50,7 +50,7 @@
         <item quantity="other">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟି ପତ୍ର ଅଛି।</item>
     </plurals>
     <string name="delete_cram_deck_message">%s ରେ ଥିବା ସମସ୍ତ ପତ୍ରକୁ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡ କୁ ପଠାଇବେ କି?</string>
-    <string name="no_tts_available_message">କୌଣସି ଲେଖା-ରୁ-କଥା ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
+    <string name="no_tts_available_message">କୌଣସି ପାଠ୍ୟ-ରୁ-କଥନ ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
@@ -76,10 +76,6 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="other">Reschedule cards</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
         <item quantity="other">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
@@ -102,7 +98,7 @@
     <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_rev_extend">ଆଜିର ସମୀକ୍ଷା ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
-    <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା କାର୍ଡ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
+    <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ି ହୋଇଥିବା ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରନ୍ତୁ:</string>

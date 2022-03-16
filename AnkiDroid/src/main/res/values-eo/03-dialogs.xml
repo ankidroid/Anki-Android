@@ -76,10 +76,6 @@
         <item quantity="other">%d kartoj estas nuligitaj</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Replani karton</item>
-        <item quantity="other">Replani kartojn</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Nuna intertempo: %d tago</item>
         <item quantity="other">Nuna intertempo: %d tagoj</item>
@@ -119,7 +115,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
     <string name="restore_backup_title">Ĉu restarigi sekurkopion?</string>
     <string name="restore_backup">Via kolekto estos anstataŭigita per eksa kopio. Ĉiu nekonservita progreso perdiĝos.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Elekti alian</string>
     <string name="dialog_cancel">Nuligi</string>
     <string name="dialog_ok">Bone</string>
     <string name="dialog_no">Ne</string>
@@ -185,7 +181,7 @@
     <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Malfaris “%s”</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Fiaskis pritrakti agordojn de kartaro: %s</string>
     <!-- Database Errors-->

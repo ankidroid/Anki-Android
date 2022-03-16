@@ -158,7 +158,7 @@
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
     <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
-    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの今日の課題を全て達成しました！</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題を全て達成しました！</string>
     <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。</string>
     <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。（上限を上げると短期的に学習の負担が増えますのでご注意ください。）</string>
     <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
@@ -218,9 +218,9 @@
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroidのコレクションをAnkiWebのコレクションに置き換えますか？</string>
-    <string name="sync_conflict_local_confirm_new">AnkiDroidのコレクションとAnkiWeb上のコレクションを置き換えてください。</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWebのコレクションをAnkiDroidのコレクションに置き換えますか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
-    <string name="sync_conflict_replace_title">コレクションを置き換える</string>
+    <string name="sync_conflict_replace_title">コレクションを置換</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>

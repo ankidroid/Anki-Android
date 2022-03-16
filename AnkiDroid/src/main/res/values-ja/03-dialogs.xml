@@ -73,9 +73,6 @@
         <item quantity="other">%d枚のカードの学習履歴がリセットされました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="other">カードの再スケジュール</item>
-    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">現在の間隔: %d 日</item>
     </plurals>
@@ -178,7 +175,7 @@
     <string name="card_browser_deck_change_error">デッキを変更できませんでした</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">カードからのデータのデコードエラー</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">%s を元に戻しました</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">デッキオプションの処理に失敗しました: %s</string>
     <!-- Database Errors-->
