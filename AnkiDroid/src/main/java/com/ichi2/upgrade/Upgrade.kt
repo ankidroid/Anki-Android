@@ -1,30 +1,29 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.upgrade;
+package com.ichi2.upgrade
 
-import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
-import timber.log.Timber;
-
-public class Upgrade {
-
-    public static boolean upgradeJSONIfNecessary(Collection col, String name, boolean defaultValue) {
-        boolean val = defaultValue;
+object Upgrade {
+    @JvmStatic
+    @KotlinCleanup("make name non-null + rename `val` variable")
+    fun upgradeJSONIfNecessary(col: Collection, name: String?, defaultValue: Boolean): Boolean {
+        var `val` = defaultValue
         try {
-            val = col.get_config_boolean(name);
-        } catch (JSONException e) {
-            Timber.w(e);
+            `val` = col.get_config_boolean(name!!)
+        } catch (e: JSONException) {
+            Timber.w(e)
             // workaround to repair wrong values from older libanki versions
             try {
-                 col.set_config(name, val);
-            } catch (JSONException e1) {
-                Timber.w(e1);
+                col.set_config(name!!, `val`)
+            } catch (e1: JSONException) {
+                Timber.w(e1)
                 // do nothing
             }
-            col.save();
+            col.save()
         }
-        return val;
+        return `val`
     }
 }
