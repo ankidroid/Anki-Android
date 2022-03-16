@@ -45,6 +45,7 @@
     <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
     <issue id="UnknownId" severity="fatal" />
+    <issue id="MergeRootFrame" severity="fatal" />
 
     <!--           RTL Rules               -->
     <issue id="RtlCompat" severity="fatal" />
@@ -247,7 +248,6 @@
     <issue id="ManifestResource" severity="ignore" />
     <issue id="ManifestTypo" severity="ignore" />
     <issue id="MergeMarker" severity="ignore" />
-    <issue id="MergeRootFrame" severity="ignore" />
     <issue id="IncompatibleMediaBrowserServiceCompatVersion" severity="ignore" />
     <issue id="InnerclassSeparator" severity="ignore" />
     <issue id="Instantiatable" severity="ignore" />
