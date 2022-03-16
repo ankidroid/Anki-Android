@@ -97,7 +97,7 @@
     <string name="sync_media_find">إيجاد الوسائط المتغيرة...</string>
     <string name="sync_media_no_changes">لا توجد تغييرات في ملفات الوسائط.</string>
     <string name="sync_media_success">تمت مزامنة الوسائط بنجاح.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">اكتملت المزامنة جزئيًا:\nتم تحميل %1$d ملف وسائط.\nتم رفع %2$d ملف وسائط.</string>
     <string name="sync_media_changes_count">%d تغيير وسائط بانتظار الرفع</string>
     <string name="sync_media_downloaded_count">تم تنزيل %d ملف وسائط</string>
     <string name="sync_sanity_failed">بعد المزامنة، أصبحت المجموعة في حالة غير مستقرة. لإصلاح هذه المشكلة، سيفرض أنكي مزامنة كاملة. اختر الجانب الذي تريد إبقاءه.</string>

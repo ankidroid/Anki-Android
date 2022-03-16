@@ -200,10 +200,10 @@
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
     <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        مرحبًا
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        هذه رزمة بطاقات استذكار Anki مرسلة من AnkiDroid[1].
+        جرب فتحها باستخدام برنامج من برامج أنكي المتوفرة[2] واستمتع بتعلم سهل وفعال!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -385,7 +385,7 @@
     <string name="format_font_size">تغيير لون الخط</string>
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
     <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">نص الزر</string>
     <string name="before_text">HTML قبل المحدد</string>
     <string name="after_text">HTML بعد المحدد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
@@ -443,5 +443,5 @@
     <string name="scoped_storage_learn_more">تعلم المزيد</string>
     <string name="scoped_storage_postpone">تأجيل</string>
     <string name="scoped_storage_migrate">نقل</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">لم يجد البحث أي نتائج</string>
 </resources>
