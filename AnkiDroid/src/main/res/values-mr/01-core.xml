@@ -76,8 +76,8 @@
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करा \n चिन्हाचा उपयोग करून.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">आज% %1$d मध्ये %2$s कार्डचा अभ्यास केला</item>
-        <item quantity="other">आज%  %1$d मध्ये% %2$s कार्डांचा अभ्यास केला</item>
+        <item quantity="one">आज %1$d मध्ये %2$s कार्डचा अभ्यास केला</item>
+        <item quantity="other">आज %1$d मध्ये %2$s कार्डांचा अभ्यास केला</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उत्तर टाइप करा</string>
