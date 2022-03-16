@@ -16,110 +16,105 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.multimediacard.fields
 
-package com.ichi2.anki.multimediacard.fields;
+import android.content.Context
+import android.content.Intent
+import android.view.Gravity
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import com.ichi2.anki.R
+import com.ichi2.anki.multimediacard.AudioView
+import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
+import com.ichi2.anki.multimediacard.AudioView.Companion.generateTempAudioFile
+import com.ichi2.anki.multimediacard.AudioView.OnRecordingFinishEventListener
+import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.UiUtil.makeBold
+import java.io.File
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+/**
+ * This controller always return a temporary path where it writes the audio
+ */
+class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldController {
 
-import com.ichi2.anki.R;
-import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.ui.FixedTextView;
-import com.ichi2.utils.UiUtil;
+    @KotlinCleanup("nun-null & lateinit")
+    private var mTempAudioPath: String? = null
+    @KotlinCleanup("nun-null & lateinit")
+    private var mAudioView: AudioView? = null
 
-import java.io.File;
-
-import androidx.annotation.NonNull;
-
-public class BasicAudioRecordingFieldController extends FieldControllerBase implements IFieldController {
-
-    /**
-     * This controller always return a temporary path where it writes the audio
-     */
-    private String mTempAudioPath;
-    private AudioView mAudioView;
-
-
-    @Override
-    public void createUI(@NonNull Context context, LinearLayout layout) {
-        String origAudioPath = mField.getAudioPath();
-
-        boolean bExist = false;
-
+    override fun createUI(context: Context, layout: LinearLayout?) {
+        val origAudioPath = mField.audioPath
+        var bExist = false
         if (origAudioPath != null) {
-            File f = new File(origAudioPath);
-
+            val f = File(origAudioPath)
             if (f.exists()) {
-                mTempAudioPath = f.getAbsolutePath();
-                bExist = true;
+                mTempAudioPath = f.absolutePath
+                bExist = true
             }
         }
-
         if (!bExist) {
-            mTempAudioPath = AudioView.generateTempAudioFile(mActivity);
+            mTempAudioPath = generateTempAudioFile(mActivity)
         }
 
         // FIXME: We should move this outside the scrollview as it should always be on the screen.
-        mAudioView = AudioView.createRecorderInstance(mActivity, R.drawable.ic_play_arrow_white_24dp, R.drawable.ic_pause_white_24dp,
-                R.drawable.ic_stop_white_24dp, R.drawable.ic_rec, R.drawable.ic_rec_stop, mTempAudioPath);
-        mAudioView.setOnRecordingFinishEventListener(v -> {
-            // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
-            // FIXME is this okay if it is still null?
-            mField.setAudioPath(mTempAudioPath);
-            mField.setHasTemporaryMedia(true);
-        });
-        layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT);
+        mAudioView = createRecorderInstance(
+            context = mActivity,
+            resPlay = R.drawable.ic_play_arrow_white_24dp,
+            resPause = R.drawable.ic_pause_white_24dp,
+            resStop = R.drawable.ic_stop_white_24dp,
+            resRecord = R.drawable.ic_rec,
+            resRecordStop = R.drawable.ic_rec_stop,
+            audioPath = mTempAudioPath!!
+        )
+        mAudioView!!.setOnRecordingFinishEventListener(object : OnRecordingFinishEventListener {
+            override fun onRecordingFinish(v: View?) {
+                // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
+                // FIXME is this okay if it is still null?
+                mField.audioPath = mTempAudioPath
+                mField.setHasTemporaryMedia(true)
+            }
+        })
+        layout!!.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT)
 
-        addFieldPreview(context, layout);
-    }
-
-
-    private void addFieldPreview(Context context, LinearLayout layout) {
-        // add preview of the field data to provide context to the user
-        // use a separate scrollview to ensure that the content does not push the buttons off-screen when scrolled
-        ScrollView sv = new ScrollView(context);
-        layout.addView(sv);
-        LinearLayout previewLayout = new LinearLayout(context); // scrollView can only have one child
-        previewLayout.setOrientation(LinearLayout.VERTICAL);
-        sv.addView(previewLayout);
-
-        FixedTextView label = new FixedTextView(context);
-        label.setTextSize(20);
-        label.setText(UiUtil.makeBold(context.getString(R.string.audio_recording_field_list)));
-        label.setGravity(Gravity.CENTER_HORIZONTAL);
-        previewLayout.addView(label);
-        for (int i = 0; i < this.mNote.getInitialFieldCount(); i++) {
-            IField field = mNote.getInitialField(i);
-            FixedTextView textView = new FixedTextView(context);
-            textView.setText(field.getText());
-            textView.setTextSize(16);
-            textView.setPadding(16, 0, 16, 24);
-            previewLayout.addView(textView);
+        context.apply {
+            // add preview of the field data to provide context to the user
+            // use a separate scrollview to ensure that the content does not push the buttons off-screen when scrolled
+            val sv = ScrollView(this)
+            layout.addView(sv)
+            val previewLayout = LinearLayout(this) // scrollView can only have one child
+            previewLayout.orientation = LinearLayout.VERTICAL
+            sv.addView(previewLayout)
+            val label = FixedTextView(this)
+            label.textSize = 20f
+            label.text = makeBold(this.getString(R.string.audio_recording_field_list))
+            label.gravity = Gravity.CENTER_HORIZONTAL
+            previewLayout.addView(label)
+            for (i in 0 until mNote.initialFieldCount) {
+                val field = mNote.getInitialField(i)
+                val textView = FixedTextView(this)
+                textView.text = field?.text
+                textView.textSize = 16f
+                textView.setPadding(16, 0, 16, 24)
+                previewLayout.addView(textView)
+            }
         }
     }
 
-
-    @Override
-    public void onDone() {
-        mAudioView.notifyStopRecord();
+    override fun onDone() {
+        mAudioView!!.notifyStopRecord()
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // do nothing
     }
 
-    @Override
-    public void onFocusLost() {
-        mAudioView.notifyReleaseRecorder();
+    override fun onFocusLost() {
+        mAudioView!!.notifyReleaseRecorder()
     }
 
-
-    @Override
-    public void onDestroy() {
-        mAudioView.notifyReleaseRecorder();
+    override fun onDestroy() {
+        mAudioView!!.notifyReleaseRecorder()
     }
 }
