@@ -58,6 +58,7 @@ interface IFieldController {
     // Called during editing Activity pause, allows state persistence across Activity restarts
     fun saveInstanceState(): Bundle?
 
+    @KotlinCleanup("make layout non-null")
     // Layout is vertical inside a scroll view already
     fun createUI(context: Context, layout: LinearLayout?)
 
