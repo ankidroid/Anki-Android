@@ -1047,7 +1047,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        launchActivityForResultWithAnimation(editCard,mEditCurrentCardLauncher,START);
+        launchActivityForResultWithAnimation(editCard, mEditCurrentCardLauncher, START);
     }
 
 
