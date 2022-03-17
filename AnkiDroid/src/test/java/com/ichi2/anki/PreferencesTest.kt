@@ -13,60 +13,55 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Preferences.Companion.getDayOffset
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class PreferencesTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class PreferencesTest : RobolectricTest() {
     @Test
-    public void testDayOffsetExhaustive() {
-        Preferences preferences = getInstance();
-        for (int i = 0; i < 24; i++) {
-            preferences.setDayOffset(i);
-            assertThat(Preferences.getDayOffset(getCol()), is(i));
+    fun testDayOffsetExhaustive() {
+        val preferences = instance
+        for (i in 0..23) {
+            preferences.setDayOffset(i)
+            assertThat(getDayOffset(col), equalTo(i))
         }
     }
 
     @Test
-    public void testDayOffsetExhaustiveV2() throws ConfirmModSchemaException {
-        getCol().changeSchedulerVer(2);
-        Preferences preferences = getInstance();
-        for (int i = 0; i < 24; i++) {
-            preferences.setDayOffset(i);
-            assertThat(Preferences.getDayOffset(getCol()), is(i));
+    @Throws(ConfirmModSchemaException::class)
+    fun testDayOffsetExhaustiveV2() {
+        col.changeSchedulerVer(2)
+        val preferences = instance
+        for (i in 0..23) {
+            preferences.setDayOffset(i)
+            assertThat(getDayOffset(col), equalTo(i))
         }
     }
 
     @Test
-    public void setDayOffsetSetsConfig() throws ConfirmModSchemaException {
-        getCol().changeSchedulerVer(2);
-        Preferences preferences = getInstance();
-
-        int offset = Preferences.getDayOffset(getCol());
-        assertThat("Default offset should be 4", offset, is(4));
-
-        preferences.setDayOffset(2);
-
-        assertThat("rollover config should be set to new value", getCol().get_config("rollover", 4), is(2));
+    @Throws(ConfirmModSchemaException::class)
+    fun setDayOffsetSetsConfig() {
+        col.changeSchedulerVer(2)
+        val preferences = instance
+        val offset = getDayOffset(col)
+        assertThat("Default offset should be 4", offset, equalTo(4))
+        preferences.setDayOffset(2)
+        assertThat("rollover config should be set to new value", col.get_config("rollover", 4.toInt()), equalTo(2))
     }
 
-    @NonNull
-    protected Preferences getInstance() {
-        Preferences preferences = new Preferences();
-        preferences.attachBaseContext(getTargetContext());
-        return preferences;
-    }
-
+    @KotlinCleanup("use scope function")
+    val instance: Preferences
+        get() {
+            val preferences = Preferences()
+            preferences.attachBaseContext(targetContext)
+            return preferences
+        }
 }
