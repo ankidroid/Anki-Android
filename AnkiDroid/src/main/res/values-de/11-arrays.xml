@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Immer melden</item>
-        <item>Niemals melden</item>
-        <item>Nachfragen</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Karte ausschließen</item>
-        <item>Nur Schlagwort</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Neue Karten in zufälliger Reihenfolge</item>
-        <item>Neue Karten in Reihenfolge des Hinzufügens</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Älteste zuerst</item>
-        <item>Zufällig</item>
-        <item>Steigende Intervalle</item>
-        <item>abnehmenden Intervallen</item>
-        <item>Häufigkeit des Vergessens</item>
-        <item>Reihenfolge des Hinzufügens</item>
-        <item>Fälligkeit</item>
-        <item>Zuletzt hinzugefügte zuerst</item>
-        <item>relativer Überfälligkeit</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Aktuellen Stapel verwenden</item>
-        <item>Nach Notiztyp entscheiden</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Neue Karten und Wiederholungen mischen</item>
-        <item>Neue Karten nach Wiederholungen</item>
-        <item>Neue Karten vor Wiederholungen</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Falls keine Schriftart auf Karten angegeben</item>
-        <item>Immer</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Hell</item>
-        <item>Schlicht</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Schwarz</item>
-        <item>Dunkel</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>am kleinsten</item>
-        <item>kleiner</item>
-        <item>klein</item>
-        <item>mittel</item>
-        <item>groß</item>
-        <item>größer</item>
-        <item>am größten</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Immer melden</string>
+    <string name="error_reporting_choice_never_report">Niemals melden</string>
+    <string name="error_reporting_choice_ask_user">Nachfragen</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Nur Schlagwort</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Neue Karten in zufälliger Reihenfolge</string>
+    <string name="new_order_order_added">Neue Karten in Reihenfolge des Hinzufügens</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Älteste zuerst</string>
+    <string name="cram_deck_conf_order_random">Zufällig</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Steigende Intervalle</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">abnehmenden Intervallen</string>
+    <string name="cram_deck_conf_order_most_lapsed">Häufigkeit des Vergessens</string>
+    <string name="cram_deck_conf_order_order_added">Reihenfolge des Hinzufügens</string>
+    <string name="cram_deck_conf_order_order_due">Fälligkeit</string>
+    <string name="cram_deck_conf_order_latest_added_first">Zuletzt hinzugefügte zuerst</string>
+    <string name="cram_deck_conf_order_relative_overdueness">relativer Überfälligkeit</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Aktuellen Stapel verwenden</string>
+    <string name="add_to_deck_decide_by_note_type">Nach Notiztyp entscheiden</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Neue Karten und Wiederholungen mischen</string>
+    <string name="new_spread_new_after_review">Neue Karten nach Wiederholungen</string>
+    <string name="new_spread_new_before_review">Neue Karten vor Wiederholungen</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Falls keine Schriftart auf Karten angegeben</string>
+    <string name="override_font_always">Immer</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Hell</string>
+    <string name="day_theme_plain">Schlicht</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Schwarz</string>
+    <string name="night_theme_dark">Dunkel</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">am kleinsten</string>
+    <string name="html_size_code_x_small">kleiner</string>
+    <string name="html_size_code_small">klein</string>
+    <string name="html_size_code_medium">mittel</string>
+    <string name="html_size_code_large">groß</string>
+    <string name="html_size_code_x_large">größer</string>
+    <string name="html_size_code_xx_large">am größten</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Keine Aktion</string>
     <string name="gesture_answer_1">Antwortschaltfläche 1</string>
     <string name="gesture_answer_2">Antwortschaltfläche 2</string>

@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>selalu laporkan</item>
-        <item>Jangan lapor</item>
-        <item>Tanya aku</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Tangguhkan kartu</item>
-        <item>Hanya tag</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Kartu baru dalam urutan acak</item>
-        <item>Kartu baru dalam urutan ditambahkan</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Lihat yang paling lama dahulu</item>
-        <item>Acak</item>
-        <item>Interval bertambah</item>
-        <item>Interval berkurang</item>
-        <item>Paling banyak kelupaan</item>
-        <item>Urutan ditambahkan</item>
-        <item>Urutan jatuh tempo</item>
-        <item>Terakhir ditambahkan lebih dahulu</item>
-        <item>Keterlambatan relatif</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Gunakan dek saat ini</item>
-        <item>Tentukan menurut tipe catatan</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Campur kartu dan ulasan baru</item>
-        <item>Kartu baru setelah ulasan</item>
-        <item>kartu baru sebelum ulasan</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Bila tidak ada fon yang ditentukan dalam kartu flash</item>
-        <item>Selalu</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Terang</item>
-        <item>Biasa</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Hitam</item>
-        <item>Gelap</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-kecil</item>
-        <item>x-kecil</item>
-        <item>kecil</item>
-        <item>medium</item>
-        <item>besar</item>
-        <item>x-besar</item>
-        <item>xx-besar</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">selalu laporkan</string>
+    <string name="error_reporting_choice_never_report">Jangan lapor</string>
+    <string name="error_reporting_choice_ask_user">Tanya aku</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Hanya tag</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Kartu baru dalam urutan acak</string>
+    <string name="new_order_order_added">Kartu baru dalam urutan ditambahkan</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Lihat yang paling lama dahulu</string>
+    <string name="cram_deck_conf_order_random">Acak</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Interval bertambah</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Interval berkurang</string>
+    <string name="cram_deck_conf_order_most_lapsed">Paling banyak kelupaan</string>
+    <string name="cram_deck_conf_order_order_added">Urutan ditambahkan</string>
+    <string name="cram_deck_conf_order_order_due">Urutan jatuh tempo</string>
+    <string name="cram_deck_conf_order_latest_added_first">Terakhir ditambahkan lebih dahulu</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Keterlambatan relatif</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Gunakan dek saat ini</string>
+    <string name="add_to_deck_decide_by_note_type">Tentukan menurut tipe catatan</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Campur kartu dan ulasan baru</string>
+    <string name="new_spread_new_after_review">Kartu baru setelah ulasan</string>
+    <string name="new_spread_new_before_review">kartu baru sebelum ulasan</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Bila tidak ada fon yang ditentukan dalam kartu flash</string>
+    <string name="override_font_always">Selalu</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Terang</string>
+    <string name="day_theme_plain">Biasa</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Hitam</string>
+    <string name="night_theme_dark">Gelap</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-kecil</string>
+    <string name="html_size_code_x_small">x-kecil</string>
+    <string name="html_size_code_small">kecil</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">besar</string>
+    <string name="html_size_code_x_large">x-besar</string>
+    <string name="html_size_code_xx_large">xx-besar</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Tidak ada tindakan</string>
     <string name="gesture_answer_1">Tombol jawaban 1</string>
     <string name="gesture_answer_2">Tombol jawaban 2</string>

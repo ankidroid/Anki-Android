@@ -83,10 +83,10 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="few">Reschedule %d cards</item>
-        <item quantity="many">Reschedule %d cards</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Перапланаваць %d картку</item>
+        <item quantity="few">Перапланаваць %d карткі</item>
+        <item quantity="many">Перапланаваць %d картак</item>
+        <item quantity="other">Перапланаваць %d карткі</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Бягучы інтэрвал: %d дзень</item>
@@ -199,7 +199,7 @@
     <string name="card_browser_deck_change_error">Не атрымалася змяніць калоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Памылка дэкадавання даных карткі</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Адрабіць \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не атрымалася апрацаваць параметры калоды: %s</string>
     <!-- Database Errors-->

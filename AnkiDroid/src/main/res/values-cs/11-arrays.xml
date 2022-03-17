@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Vždy hlásit</item>
-        <item>Nikdy nehlásit</item>
-        <item>Zeptat se mě</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Vyřadit kartu</item>
-        <item>Pouze označit štítkem</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Nové karty v náhodném pořadí</item>
-        <item>Nové karty v pořadí, v jakém byly přidány</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Nejstarší nejdříve</item>
-        <item>Náhodně</item>
-        <item>Rostoucí intervaly</item>
-        <item>Klesající intervaly</item>
-        <item>Nejvíce zapomínané</item>
-        <item>V pořadí přidání</item>
-        <item>V pořadí ke zkoušení</item>
-        <item>Naposledy přidané první</item>
-        <item>Relativní zpožděnost</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Použít aktuální balíček</item>
-        <item>Rozhodnout podle typu poznámky</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Promíchat nové karty a opakování</item>
-        <item>Nové karty po opakování</item>
-        <item>Nové karty před opakováním</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Když není určeno žádné písmo pro kartičky</item>
-        <item>Vždy</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Světlé</item>
-        <item>Klasické</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Černé</item>
-        <item>Tmavé</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-malé</item>
-        <item>x-malé</item>
-        <item>malé</item>
-        <item>střední</item>
-        <item>velké</item>
-        <item>x-velké</item>
-        <item>xx-velké</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Vždy hlásit</string>
+    <string name="error_reporting_choice_never_report">Nikdy nehlásit</string>
+    <string name="error_reporting_choice_ask_user">Zeptat se mě</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Pouze označit štítkem</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Nové karty v náhodném pořadí</string>
+    <string name="new_order_order_added">Nové karty v pořadí, v jakém byly přidány</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Nejstarší nejdříve</string>
+    <string name="cram_deck_conf_order_random">Náhodně</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Rostoucí intervaly</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Klesající intervaly</string>
+    <string name="cram_deck_conf_order_most_lapsed">Nejvíce zapomínané</string>
+    <string name="cram_deck_conf_order_order_added">V pořadí přidání</string>
+    <string name="cram_deck_conf_order_order_due">V pořadí ke zkoušení</string>
+    <string name="cram_deck_conf_order_latest_added_first">Naposledy přidané první</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Relativní zpožděnost</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Použít aktuální balíček</string>
+    <string name="add_to_deck_decide_by_note_type">Rozhodnout podle typu poznámky</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Promíchat nové karty a opakování</string>
+    <string name="new_spread_new_after_review">Nové karty po opakování</string>
+    <string name="new_spread_new_before_review">Nové karty před opakováním</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
+    <string name="override_font_always">Vždy</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Světlé</string>
+    <string name="day_theme_plain">Klasické</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Černé</string>
+    <string name="night_theme_dark">Tmavé</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-malé</string>
+    <string name="html_size_code_x_small">x-malé</string>
+    <string name="html_size_code_small">malé</string>
+    <string name="html_size_code_medium">střední</string>
+    <string name="html_size_code_large">velké</string>
+    <string name="html_size_code_x_large">x-velké</string>
+    <string name="html_size_code_xx_large">xx-velké</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Žádná akce</string>
     <string name="gesture_answer_1">Tlačítko odpovědi 1</string>
     <string name="gesture_answer_2">Tlačítko odpovědi 2</string>

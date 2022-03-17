@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>總是發送報告</item>
-        <item>從不發送報告</item>
-        <item>詢問我</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>長久擱置卡片</item>
-        <item>僅標記</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>按隨機順序學習新卡片</item>
-        <item>按建立順序學習新卡片</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>舊卡先出現</item>
-        <item>隨機</item>
-        <item>間隔由小至大排列</item>
-        <item>間隔由大至小排列</item>
-        <item>最常忘記</item>
-        <item>依新增順序</item>
-        <item>依到期順序</item>
-        <item>最後加入的先</item>
-        <item>相對逾期</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>使用當前牌組</item>
-        <item>由筆記種類決定</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>混合新卡片和複習卡片</item>
-        <item>新卡片在複習卡片之後</item>
-        <item>新卡片在複習卡片之前</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>當單字卡沒有指定字型時</item>
-        <item>總是</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>亮色</item>
-        <item>簡潔</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>黑色</item>
-        <item>暗色</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>極小</item>
-        <item>很小</item>
-        <item>小</item>
-        <item>中</item>
-        <item>大</item>
-        <item>很大</item>
-        <item>極大</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">總是發送報告</string>
+    <string name="error_reporting_choice_never_report">從不發送報告</string>
+    <string name="error_reporting_choice_ask_user">詢問我</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">僅標記</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">按隨機順序學習新卡片</string>
+    <string name="new_order_order_added">按創建順序學習新卡片</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">舊卡先出現</string>
+    <string name="cram_deck_conf_order_random">隨機</string>
+    <string name="cram_deck_conf_order_increasing_intervals">間隔由小至大排列</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">間隔由大至小排列</string>
+    <string name="cram_deck_conf_order_most_lapsed">最常忘記</string>
+    <string name="cram_deck_conf_order_order_added">依新增順序</string>
+    <string name="cram_deck_conf_order_order_due">依到期順序</string>
+    <string name="cram_deck_conf_order_latest_added_first">最後加入的先</string>
+    <string name="cram_deck_conf_order_relative_overdueness">相對逾期</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">使用當前牌組</string>
+    <string name="add_to_deck_decide_by_note_type">由筆記種類決定</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">混合新卡片和複習卡片</string>
+    <string name="new_spread_new_after_review">新卡片在複習卡片之後</string>
+    <string name="new_spread_new_before_review">新卡片在複習卡片之前</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">當單字卡沒有指定字型時</string>
+    <string name="override_font_always">總是</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">亮色</string>
+    <string name="day_theme_plain">簡潔</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">黑色</string>
+    <string name="night_theme_dark">暗色</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">極小</string>
+    <string name="html_size_code_x_small">很小</string>
+    <string name="html_size_code_small">小</string>
+    <string name="html_size_code_medium">中</string>
+    <string name="html_size_code_large">大</string>
+    <string name="html_size_code_x_large">很大</string>
+    <string name="html_size_code_xx_large">極大</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">沒有動作</string>
     <string name="gesture_answer_1">答案按鈕 1</string>
     <string name="gesture_answer_2">答案按鈕 2</string>

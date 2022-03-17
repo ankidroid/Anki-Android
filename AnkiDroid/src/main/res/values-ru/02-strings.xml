@@ -289,9 +289,9 @@
     <string name="choose_an_image">Выберите изображение</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Сбросить настройки</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Это {{%1$s::пример}} задания с пропусками</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">прымер</string>
+    <string name="basic_answer_sample_text">пример</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пусто</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Включите полноэкранный режим для показа панели навигации с помощью JavaScript.</string>
@@ -359,7 +359,7 @@
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
     <string name="insert_cloze">Вставить задание с пропусками</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Текст на кнопке</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>
     <string name="add_toolbar_item">Создать элемент панели инструментов</string>
@@ -413,11 +413,11 @@
 \n\nПожалуйста, выполните миграцию как можно скорее</string>
     <string name="scoped_storage_terms_message">Перенос будет идти в фоне, и в это время нельзя будет синхронизироваться.\n\nПримерное время: %s</string>
     <string name="scoped_storage_term_1">Вы сделали резервную копию</string>
-    <string name="scoped_storage_term_1_ankiweb">Вы синхронизировали данные с AnkiWeb</string>
+    <string name="scoped_storage_term_1_ankiweb">Недавно была синхронизация с AnkiWeb</string>
     <string name="scoped_storage_term_2">Вы не будете удалять приложение во время переноса данных</string>
     <string name="scoped_storage_select_all_terms">Подтвердите, что:</string>
     <string name="scoped_storage_learn_more">Подробнее</string>
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Ничего не найдено</string>
 </resources>

@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Sempre reportar</item>
-        <item>Nunca reportar</item>
-        <item>Pergunte-me</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspender card</item>
-        <item>Por Tag somente em</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Novos cards em ordem aleatória</item>
-        <item>Novos cards na ordem adicionada</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Mais antigos primeiro</item>
-        <item>Aleatório</item>
-        <item>Intervalos crescentes</item>
-        <item>Intervalos decrescentes</item>
-        <item>Mais falhados</item>
-        <item>Ordem de adição</item>
-        <item>Ordem de revisão</item>
-        <item>Novos primeiro</item>
-        <item>Atrasos relativos</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Usar o baralho atual</item>
-        <item>Decidir pelo tipo de nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Misturar novos cards e revisões</item>
-        <item>Novos cards após revisões</item>
-        <item>Novos cartões antes das revisões</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Quando não há fonte especificada nos cards</item>
-        <item>Sempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Claro</item>
-        <item>Plano</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Preto</item>
-        <item>Escuro</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-pequeno</item>
-        <item>x-pequeno</item>
-        <item>pequeno</item>
-        <item>médio</item>
-        <item>grande</item>
-        <item>x-grande</item>
-        <item>xx-grande</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Sempre reportar</string>
+    <string name="error_reporting_choice_never_report">Nunca reportar</string>
+    <string name="error_reporting_choice_ask_user">Pergunte-me</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Por Tag somente em</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Novos cards em ordem aleatória</string>
+    <string name="new_order_order_added">Novos cards na ordem adicionada</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Mais antigos primeiro</string>
+    <string name="cram_deck_conf_order_random">Aleatório</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervalos crescentes</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervalos decrescentes</string>
+    <string name="cram_deck_conf_order_most_lapsed">Mais falhados</string>
+    <string name="cram_deck_conf_order_order_added">Ordem de adição</string>
+    <string name="cram_deck_conf_order_order_due">Ordem de revisão</string>
+    <string name="cram_deck_conf_order_latest_added_first">Novos primeiro</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Atrasos relativos</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Usar o baralho atual</string>
+    <string name="add_to_deck_decide_by_note_type">Decidir pelo tipo de nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Misturar novos cards e revisões</string>
+    <string name="new_spread_new_after_review">Novos cartões após revisões</string>
+    <string name="new_spread_new_before_review">Novos cartões antes das revisões</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Quando não há fonte especificada nos cards</string>
+    <string name="override_font_always">Sempre</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Claro</string>
+    <string name="day_theme_plain">Plano</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Preto</string>
+    <string name="night_theme_dark">Escuro</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-pequeno</string>
+    <string name="html_size_code_x_small">x-pequeno</string>
+    <string name="html_size_code_small">pequeno</string>
+    <string name="html_size_code_medium">médio</string>
+    <string name="html_size_code_large">grande</string>
+    <string name="html_size_code_x_large">x-grande</string>
+    <string name="html_size_code_xx_large">xx-grande</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Nenhuma ação</string>
     <string name="gesture_answer_1">Botão de resposta 1</string>
     <string name="gesture_answer_2">Botão de resposta 2</string>
