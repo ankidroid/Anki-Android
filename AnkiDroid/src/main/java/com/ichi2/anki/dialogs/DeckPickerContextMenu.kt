@@ -116,7 +116,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT)
             itemIds.add(CONTEXT_MENU_DELETE_DECK)
-            return ContextMenuHelper.itemIds.toIntArray()
+            return itemIds.toIntArray()
         }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
