@@ -467,7 +467,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             toggleWhiteboard();
         } else if (itemId == R.id.action_open_deck_options) {
             Intent intent = new Intent(this, DeckOptions.class);
-            launchActivityForResultWithAnimation(intent,mDeckOptionsLauncher,FADE);
+            launchActivityForResultWithAnimation(intent, mDeckOptionsLauncher, FADE);
         } else if (itemId == R.id.action_select_tts) {
             Timber.i("Reviewer:: Select TTS button pressed");
             showSelectTtsDialogue();
