@@ -172,9 +172,9 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
                 ChartType.REVIEW_COUNT, ChartType.REVIEW_TIME, ChartType.FORECAST -> {
                     if (i == 1) {
                         ColorWrap(getColorFromAttr(chartView.context, mColors[i - 1]), BAR_OPACITY)
-                        break
+                    } else {
+                        ColorWrap(getColorFromAttr(chartView.context, mColors[i - 1]))
                     }
-                    ColorWrap(getColorFromAttr(chartView.context, mColors[i - 1]))
                 }
                 else -> ColorWrap(getColorFromAttr(chartView.context, mColors[i - 1]))
             }
