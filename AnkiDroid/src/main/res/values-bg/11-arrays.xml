@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Винаги докладвай</item>
-        <item>Никога не докладвай</item>
-        <item>Попитай ме</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Отлагане на карта</item>
-        <item>Само етикети</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Нови карти в случаен ред</item>
-        <item>Нови карти по ред на добавяне</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Първо - по-старите</item>
-        <item>Случайно</item>
-        <item>Увеличаване на интервалите</item>
-        <item>намаляване на интервалите</item>
-        <item>Най-много пропуски</item>
-        <item>Ред на добавяне</item>
-        <item>По ред на разглеждане</item>
-        <item>Първо - последно добавени</item>
-        <item>Относителна закъснение</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Използвайте текущото тесте</item>
-        <item>Избор по тип на бележката</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Смесване на нови карти и преговор</item>
-        <item>Новите карти след повторените</item>
-        <item>Новите карти преди повторените</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Когато не е определен шрифт на флашкартите</item>
-        <item>Винаги</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Светла</item>
-        <item>Обикновена</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Черна</item>
-        <item>Тъмна</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Винаги докладвай</string>
+    <string name="error_reporting_choice_never_report">Никога не докладвай</string>
+    <string name="error_reporting_choice_ask_user">Попитай ме</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Само етикети</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Нови карти в случаен ред</string>
+    <string name="new_order_order_added">Нови карти по ред на добавяне</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Първо - по-старите</string>
+    <string name="cram_deck_conf_order_random">Случайно</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Увеличаване на интервалите</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">намаляване на интервалите</string>
+    <string name="cram_deck_conf_order_most_lapsed">Най-много пропуски</string>
+    <string name="cram_deck_conf_order_order_added">Ред на добавяне</string>
+    <string name="cram_deck_conf_order_order_due">По ред на разглеждане</string>
+    <string name="cram_deck_conf_order_latest_added_first">Първо - последно добавени</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Относителна закъснение</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Използвайте текущото тесте</string>
+    <string name="add_to_deck_decide_by_note_type">Избор по тип на бележката</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Смесване на нови карти и преговор</string>
+    <string name="new_spread_new_after_review">Новите карти след повторените</string>
+    <string name="new_spread_new_before_review">Новите карти преди повторените</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Когато не е определен шрифт на флашкартите</string>
+    <string name="override_font_always">Винаги</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Светла</string>
+    <string name="day_theme_plain">Обикновена</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Черна</string>
+    <string name="night_theme_dark">Тъмна</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Няма действие</string>
     <string name="gesture_answer_1">Бутон отговор 1</string>
     <string name="gesture_answer_2">Бутон отговор 2</string>
@@ -100,8 +89,8 @@
     <string name="gesture_answer_green">Препоръчителен отговор (зелен)</string>
     <string name="gesture_answer_better_recommended">Отговаря се по-добре, отколкото се препоръчва</string>
     <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_play">Пускане на медия</string>
+    <string name="gesture_abort_learning">Прекъсване на обучението</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
     <string name="gesture_flag_green">Toggle Green Flag</string>

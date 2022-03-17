@@ -235,7 +235,7 @@
     <!-- Key Bindings -->
     <string name="controls_main_category" maxLength="41">କମାଣ୍ଡ୍ ମ୍ୟାପିଂ</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ। ଯଦି ଆପଣ କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ। ଯଦି ଆପଣ କେବଳ ଚଳିତ ତାସଖଣ୍ଡକୁ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଗୋଟେ ନୂଆ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description" maxLength="41">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
@@ -279,8 +279,8 @@
     <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
     <string name="deck_conf_replayq_summ">ଉତ୍ତର ଦେଖାଯିବା ବେଳେ, ଉଭୟ ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ଅଡ଼ିଓ ପୁନଃଚାଳନ କରନ୍ତୁ</string>
     <string name="deck_conf_manage" maxLength="41">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
-    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ିବା ଏବଂ ପରିବର୍ତ୍ତନ କରିବା</string>
-    <string name="deck_conf_current_group" maxLength="41">ସାମ୍ପ୍ରତିକ ଗୋଷ୍ଠୀ</string>
+    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ିବା ଏବଂ ପରିବର୍ତ୍ତନ କରିବା</string>
+    <string name="deck_conf_current_group" maxLength="41">ଚଳିତ ଗୋଷ୍ଠୀ</string>
     <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="deck_conf_reset" maxLength="41">ଡିଫଲ୍ଟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
     <string name="deck_conf_reset_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ କୁ ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିବେ କି?</string>
@@ -298,8 +298,8 @@
     <string name="deck_conf_cram_search" maxLength="41">ସନ୍ଧାନ</string>
     <string name="deck_conf_cram_limit" maxLength="41">ଏତିକିରେ ସୀମିତ କର</string>
     <string name="deck_conf_cram_order" maxLength="41">ଏହି ଆଧାରରେ ପତ୍ରଗୁଡ଼ିକ ଚୟନ କରାଯାଏ</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନର୍ନିର୍ଦ୍ଧାରଣ</string>
-    <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନର୍ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
+    <string name="deck_conf_cram_reschedule_summ">ଏହି ତାସଖଣ୍ଡରେ ମୋର ଉତ୍ତର ଉପରେ ଆଧାର କରି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>

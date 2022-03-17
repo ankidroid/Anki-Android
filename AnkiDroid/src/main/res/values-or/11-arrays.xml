@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>ସର୍ବଦା ରିପୋର୍ଟ କରନ୍ତୁ</item>
-        <item>କଦାପି ରିପୋର୍ଟ କରନ୍ତୁ ନାହିଁ</item>
-        <item>ମୋତେ ପଚାରନ୍ତୁ</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>ପତ୍ର ନିଲମ୍ବିତ କରନ୍ତୁ</item>
-        <item>କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>ଅନିୟମିତ କ୍ରମରେ ନୂତନ ପତ୍ର</item>
-        <item>ଯୋଡ଼ାଯିବା କ୍ରମରେ ନୂତନ ପତ୍ର</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>ପ୍ରଥମେ ସର୍ବପୁରାତନ</item>
-        <item>ଅନିୟମିତ</item>
-        <item>ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</item>
-        <item>କମୁଥିବା ଅନ୍ତରାଳ</item>
-        <item>ସବୁଠୁ ଅଧିକ ଲାପ୍ସ ହୋଇଥିବା</item>
-        <item>ଯୋଡ଼ାଯିବା କ୍ରମାନୁସାରେ</item>
-        <item>ଧାର୍ଯ୍ୟ କ୍ରମାନୁସାରେ</item>
-        <item>ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</item>
-        <item>ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</item>
-        <item>ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>ନୂଆ ପତ୍ର ଏବଂ ସମୀକ୍ଷାସବୁ ର ମିଶ୍ରଣ</item>
-        <item>ସମୀକ୍ଷା ପରେ ନୂଆ ପତ୍ର</item>
-        <item>ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂଆ ପତ୍ର</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</item>
-        <item>ସର୍ବଦା</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>ହାଲୁକା</item>
-        <item>ସାଧା</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>କଳା</item>
-        <item>ଗାଢ଼</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-ଛୋଟ</item>
-        <item>x-ଛୋଟ</item>
-        <item>ଛୋଟ</item>
-        <item>ମଧ୍ୟମ</item>
-        <item>ବଡ଼</item>
-        <item>x-ବଡ଼</item>
-        <item>xx-ବଡ଼</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">ସର୍ବଦା ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="error_reporting_choice_never_report">କଦାପି ରିପୋର୍ଟ କରନ୍ତୁ ନାହିଁ</string>
+    <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">କେବଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">ଅନିୟମିତ କ୍ରମରେ ନୂତନ ପତ୍ର</string>
+    <string name="new_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମରେ ନୂତନ ପତ୍ର</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">ପ୍ରଥମେ ସର୍ବପୁରାତନ</string>
+    <string name="cram_deck_conf_order_random">ଅନିୟମିତ</string>
+    <string name="cram_deck_conf_order_increasing_intervals">ବଢ଼ୁଥିବା ଅନ୍ତରାଳ</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">କମୁଥିବା ଅନ୍ତରାଳ</string>
+    <string name="cram_deck_conf_order_most_lapsed">ସବୁଠୁ ଅଧିକ ଲାପ୍ସ ହୋଇଥିବା</string>
+    <string name="cram_deck_conf_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମାନୁସାରେ</string>
+    <string name="cram_deck_conf_order_order_due">ଧାର୍ଯ୍ୟ କ୍ରମାନୁସାରେ</string>
+    <string name="cram_deck_conf_order_latest_added_first">ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">ଚଳିତ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="add_to_deck_decide_by_note_type">ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">ନୂଆ ପତ୍ର ଏବଂ ସମୀକ୍ଷାସବୁ ର ମିଶ୍ରଣ</string>
+    <string name="new_spread_new_after_review">ସମୀକ୍ଷା ପରେ ନୂଆ ପତ୍ର</string>
+    <string name="new_spread_new_before_review">ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂଆ ପତ୍ର</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
+    <string name="override_font_always">ସର୍ବଦା</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">ହାଲୁକା</string>
+    <string name="day_theme_plain">ସାଧା</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">କଳା</string>
+    <string name="night_theme_dark">ଗାଢ଼</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-ଛୋଟ</string>
+    <string name="html_size_code_x_small">x-ଛୋଟ</string>
+    <string name="html_size_code_small">ଛୋଟ</string>
+    <string name="html_size_code_medium">ମଧ୍ୟମ</string>
+    <string name="html_size_code_large">ବଡ଼</string>
+    <string name="html_size_code_x_large">x-ବଡ଼</string>
+    <string name="html_size_code_xx_large">xx-ବଡ଼</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">କିଛି କରନ୍ତୁନି</string>
     <string name="gesture_answer_1">ଉତ୍ତର ବଟନ୍ ୧</string>
     <string name="gesture_answer_2">ଉତ୍ତର ବଟନ୍ ୨</string>

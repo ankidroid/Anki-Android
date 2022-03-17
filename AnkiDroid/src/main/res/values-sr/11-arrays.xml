@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Увек пријављуј</item>
-        <item>Никада не пријављуј</item>
-        <item>Питај ме</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Откажи картицу</item>
-        <item>Додај само таг</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Нове картице у случајном редоследу</item>
-        <item>Нове картице у редоследу додавања</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Најстарије виђене прво</item>
-        <item>Насумице</item>
-        <item>По увећању размака</item>
-        <item>По умањењу размака</item>
-        <item>Највеће истеклих</item>
-        <item>Додат редослед прегледа</item>
-        <item>У редоследу додавања</item>
-        <item>Прво последње додате</item>
-        <item>Relative overdueness</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Користи текући шпил</item>
-        <item>Одлучи по типу белешке</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Помешај нове и поновљене картице</item>
-        <item>Нове картице после поновљених</item>
-        <item>Нове картице пре поновљених</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Када нема фонт одређен за картице</item>
-        <item>Увек</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Light</item>
-        <item>Plain</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Увек пријављуј</string>
+    <string name="error_reporting_choice_never_report">Никада не пријављуј</string>
+    <string name="error_reporting_choice_ask_user">Питај ме</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Додај само таг</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Нове картице у случајном редоследу</string>
+    <string name="new_order_order_added">Нове картице у редоследу додавања</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Најстарије виђене прво</string>
+    <string name="cram_deck_conf_order_random">Насумице</string>
+    <string name="cram_deck_conf_order_increasing_intervals">По увећању размака</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">По умањењу размака</string>
+    <string name="cram_deck_conf_order_most_lapsed">Највеће истеклих</string>
+    <string name="cram_deck_conf_order_order_added">Додат редослед прегледа</string>
+    <string name="cram_deck_conf_order_order_due">У редоследу додавања</string>
+    <string name="cram_deck_conf_order_latest_added_first">Прво последње додате</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Користи текући шпил</string>
+    <string name="add_to_deck_decide_by_note_type">Одлучи по типу белешке</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Помешај нове и поновљене картице</string>
+    <string name="new_spread_new_after_review">Нове картице после поновљених</string>
+    <string name="new_spread_new_before_review">Нове картице пре поновљених</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Када нема фонт одређен за картице</string>
+    <string name="override_font_always">Увек</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Light</string>
+    <string name="day_theme_plain">Plain</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Black</string>
+    <string name="night_theme_dark">Dark</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Нема радње</string>
     <string name="gesture_answer_1">Дугме одговора 1</string>
     <string name="gesture_answer_2">Дугме одговора 2</string>

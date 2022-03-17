@@ -110,7 +110,7 @@
     <string name="note_editor_no_cards_created">କୌଣସି ପତ୍ର ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
     <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ବିଲୋପ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
-    <string name="note_editor_no_cards_created_all_fields">ଏହି ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କରି ନାହିଁ।\nଦୟାକରି ଅନ୍ୟ ଏକ ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ କିମ୍ବା ‘ପତ୍ର’ କ୍ଲିକ୍ କରନ୍ତୁ ଏବଂ ଏକ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ।</string>
+    <string name="note_editor_no_cards_created_all_fields">ଚଳିତ ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କଲା ନାହିଁ।\nଦୟାକରି ଅନ୍ୟ କୌଣସି ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ କିମ୍ବା ‘ପତ୍ର’ କ୍ଲିକ୍ କରି ଗୋଟେ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>
     <string name="saving_model">ନୋଟ୍ ପ୍ରକାର ସଂରକ୍ଷିତ ହଉଛି</string>
@@ -135,7 +135,7 @@
     <string name="note_editor_copy_note">ନୋଟ୍ କପି କରନ୍ତୁ</string>
     <string name="card_editor_reposition_card">ରିପୋଜିସନ୍ କର</string>
     <string name="card_editor_reset_card">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଧାରଣ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ର %1$d</string>
     <string name="error_insufficient_memory">ଆପଣଙ୍କ ଡିଭାଇସରେ ଅପର୍ଯ୍ୟାପ୍ତ ମେମୋରୀ ଯୋଗୁ ଏହା ହେଇପାରିଲାନାହିଁ</string>
@@ -157,7 +157,7 @@
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
-    <string name="import_message_add_confirm">%s କୁ ସଂଗ୍ରହରେ ଯୋଡ଼ନ୍ତୁ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
+    <string name="import_message_add_confirm">ସଂଗ୍ରହରେ “%s” କୁ ଯୋଡ଼ିବେ କି? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
     <string name="import_log_failed_unzip">apkg: %s କୁ unzip କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_copy_to">%s କୁ apkg ନକଲ କରିବାରେ ବିଫଳ</string>
@@ -283,7 +283,7 @@
     <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[ଖାଲି ପତ୍ରଗୁଡ଼ିକ ମିଳିଲା। ଦୟାକରି ଉପକରଣଗୁଡ଼ିକ>ଖାଲି ପତ୍ରଗୁଡ଼ିକ ଚଲାନ୍ତୁ।]]></string>
-    <string name="note_importer_error_empty_first_field">ଖାଲି ଥିବା ପ୍ରଥମ କ୍ଷେତ୍ର : %s</string>
+    <string name="note_importer_error_empty_first_field">ପ୍ରଥମ କ୍ଷେତ୍ରଟି ଖାଲି ଅଛି: %s</string>
     <string name="note_importer_error_first_field_matched">ପ୍ରଥମ କ୍ଷେତ୍ର ମେଳ ହେଲା : %s</string>
     <string name="note_importer_error_added_duplicate_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ସହିତ ନକଲି ଯୋଡ଼ା ହେଲା : %s</string>
     <string name="note_importer_error_appeared_twice">ଫାଇଲରେ ଦୁଇଥର ଦେଖାଗଲା: %s</string>
@@ -342,8 +342,8 @@
     <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>
-    <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>
+    <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକ କ୍ୟାପିଟାଲାଇଜ୍ କରନ୍ତୁ</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ସ୍କ୍ରୋଲ୍ ଟୁଲ୍ ବାର୍</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->

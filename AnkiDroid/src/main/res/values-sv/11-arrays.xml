@@ -34,64 +34,53 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Rapportera alltid</item>
-        <item>Rapportera aldrig</item>
-        <item>Fråga mig</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Åsidosätt kort</item>
-        <item>Endast etikett</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Nya kort i slumpmässig ordning</item>
-        <item>Nya kort i ordningen de lades till</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Äldst först</item>
-        <item>Slumpmässigt</item>
-        <item>Ökande intervall</item>
-        <item>Minskande intervall</item>
-        <item>Mest felbesvarade</item>
-        <item>Ordningen de lades till</item>
-        <item>Efter förfallotid</item>
-        <item>Senast tillagda först</item>
-        <item>Relativ försening innan repetition</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Använd nuvarande kortlek</item>
-        <item>Välj efter nottyp</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Blanda nya kort och repetitionskort</item>
-        <item>Nya kort efter repetitioner</item>
-        <item>Nya kort före repetitioner</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>När inget typsnitt angetts på flashkort</item>
-        <item>Alltid</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Ljus</item>
-        <item>Enkel</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Svart</item>
-        <item>Mörk</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Rapportera alltid</string>
+    <string name="error_reporting_choice_never_report">Rapportera aldrig</string>
+    <string name="error_reporting_choice_ask_user">Fråga mig</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Endast etikett</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Nya kort i slumpmässig ordning</string>
+    <string name="new_order_order_added">Nya kort i ordningen de lades till</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Äldst först</string>
+    <string name="cram_deck_conf_order_random">Slumpmässigt</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Ökande intervall</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Minskande intervall</string>
+    <string name="cram_deck_conf_order_most_lapsed">Mest felbesvarade</string>
+    <string name="cram_deck_conf_order_order_added">Ordningen de lades till</string>
+    <string name="cram_deck_conf_order_order_due">Efter förfallotid</string>
+    <string name="cram_deck_conf_order_latest_added_first">Senast tillagda först</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Relativ försening innan repetition</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Använd nuvarande kortlek</string>
+    <string name="add_to_deck_decide_by_note_type">Välj efter nottyp</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Blanda nya kort och repetitionskort</string>
+    <string name="new_spread_new_after_review">Nya kort efter repetitioner</string>
+    <string name="new_spread_new_before_review">Nya kort före repetitioner</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">När inget typsnitt angetts på flashkort</string>
+    <string name="override_font_always">Alltid</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Ljus</string>
+    <string name="day_theme_plain">Enkel</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Svart</string>
+    <string name="night_theme_dark">Mörk</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Ingen åtgärd</string>
     <string name="gesture_answer_1">Svarsknapp 1</string>
     <string name="gesture_answer_2">Svarsknapp 2</string>

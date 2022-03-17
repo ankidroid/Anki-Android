@@ -74,7 +74,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">重设 %d 张卡牌学习进度</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">当前间隔：%d 天</item>

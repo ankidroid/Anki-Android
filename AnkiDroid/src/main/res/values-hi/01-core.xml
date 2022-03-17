@@ -232,7 +232,7 @@ This will create 24 cards. Proceed?  - यह 24 कार्ड बनाएग
     <string name="sync_conflict_title_new">रखने के लिए संग्रह का चयन करें</string>
     <string name="sync_conflict_replace_title">संग्रह बदलें</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
+        <item quantity="one">%1$d card बाकी है (0 बचे)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
