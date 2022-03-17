@@ -604,22 +604,8 @@ public class SchedV2 extends AbstractSched {
      * @param allDecksSorted the set of all decks of the collection. Sorted.
      * @param checkDone Whether the set of deck was checked. If false, we can'ta ssume all decks have parents
      * and that there is no duplicate. Instead, we'll ignore problems.*/
-    private @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
-        // sort based on name's components
-        // TODO: remove since decks are already sorted.
-        Collections.sort(allDecksSorted);
-        // then run main function
-        return _groupChildrenMain(allDecksSorted, checkDone);
-    }
-
-
-    /**
-     * @return the tree with `allDecksSorted` content.
-     * @param allDecksSorted the set of all decks of the collection. Sorted.
-     * @param checkDone Whether the set of deck was checked. If false, we can'ta ssume all decks have parents
-     * and that there is no duplicate. Instead, we'll ignore problems.*/
-    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> allDecksSorted, boolean checkDone) {
-        return _groupChildrenMain(allDecksSorted, 0, checkDone);
+    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
+        return _groupChildren(allDecksSorted, 0, checkDone);
     }
 
     /**
@@ -633,7 +619,7 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
         List<T> sortedChildren = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = sortedDescendants.listIterator();
@@ -671,7 +657,7 @@ public class SchedV2 extends AbstractSched {
             }
             // the childrenNode set contains direct child of `child`, but not
             // any descendants of the children of `child`...
-            List<T> childrenNode = _groupChildrenMain(sortedDescendantsOfChild, depth + 1, checkDone);
+            List<T> childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone);
             child.setChildren(childrenNode, "std".equals(getName()));
             sortedChildren.add(child);
         }

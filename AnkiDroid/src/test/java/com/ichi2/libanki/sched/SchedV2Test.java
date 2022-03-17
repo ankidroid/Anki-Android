@@ -103,12 +103,12 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode ci = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::INSBGDS", 1, 0, 0, 0);
         ci.setChildren(new ArrayList<>(), addRev);
         DeckDueTreeNode c = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv", 1, 0, 0, 0);
-        c.setChildren(Arrays.asList(ci, ca), addRev);
+        c.setChildren(Arrays.asList(ca, ci), addRev);
         DeckDueTreeNode defaul = new DeckDueTreeNode(col, "Default", 1, 0, 0, 0);
         defaul.setChildren(new ArrayList<>(), addRev);
         DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1, 0, 0, 0);
         s.setChildren(new ArrayList<>(), addRev);
-        return Arrays.asList(defaul, c, s); // Default is first, because start by an Upper case
+        return Arrays.asList(c, defaul, s);
     }
 
 
