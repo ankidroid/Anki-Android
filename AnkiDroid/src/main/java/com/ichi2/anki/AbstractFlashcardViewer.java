@@ -897,7 +897,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private ActivityResultLauncher<Intent> getResultLauncher(ResultCallback callback) {
-        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result -> {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             int resultCode = result.getResultCode();
             Intent data = result.getData();
 
