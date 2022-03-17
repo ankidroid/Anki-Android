@@ -39,6 +39,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -177,12 +179,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     public static final int RESULT_DEFAULT = 50;
     public static final int RESULT_NO_MORE_CARDS = 52;
     public static final int RESULT_ABORT_AND_SYNC = 53;
-
-    /**
-     * Available options performed by other activities.
-     */
-    public static final int EDIT_CURRENT_CARD = 0;
-    public static final int DECK_OPTIONS = 1;
 
     public static final int EASE_1 = 1;
     public static final int EASE_2 = 2;
@@ -900,40 +896,51 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private ActivityResultLauncher<Intent> getResultLauncher(ResultCallback callback) {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),result -> {
+            int resultCode = result.getResultCode();
+            Intent data = result.getData();
 
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
-        }
+            if (resultCode == DeckPicker.RESULT_DB_ERROR) {
+                closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
+            }
 
-        if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            finishNoStorageAvailable();
-        }
+            if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                finishNoStorageAvailable();
+            }
 
-        /* Reset the schedule and reload the latest card off the top of the stack if required.
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
-        if (data != null && data.hasExtra("reloadRequired")) {
-            performReload();
-        }
-
-        if (requestCode == EDIT_CURRENT_CARD) {
-            if (resultCode == RESULT_OK) {
-                // content of note was changed so update the note and current card
-                Timber.i("AbstractFlashcardViewer:: Saving card...");
-                TaskManager.launchCollectionTask(
-                        new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()),
-                        mUpdateCardHandler);
-                onEditedNoteChanged();
-            } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
-                // nothing was changed by the note editor so just redraw the card
-                redrawCard();
+            if (data != null && data.hasExtra("reloadRequired")) {
+                performReload();
             }
-        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
+            callback.onResult(resultCode,data);
+        });
+    }
+
+    protected ActivityResultLauncher<Intent> mEditCurrentCardLauncher = getResultLauncher((resultCode,data)->{
+        if (resultCode == RESULT_OK) {
+            // content of note was changed so update the note and current card
+            Timber.i("AbstractFlashcardViewer:: Saving card...");
+            TaskManager.launchCollectionTask(
+                    new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()),
+                    mUpdateCardHandler);
+            onEditedNoteChanged();
+        } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
+            // nothing was changed by the note editor so just redraw the card
+            redrawCard();
+        }
+    });
+
+    protected ActivityResultLauncher<Intent> mDeckOptionsLauncher = getResultLauncher(((resultCode, data) -> {
+        if( resultCode == RESULT_OK) {
             performReload();
         }
+    }));
+
+    private interface ResultCallback {
+        void onResult(int resultCode, Intent data);
     }
 
     /**
@@ -1040,7 +1047,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, START);
+        launchActivityForResultWithAnimation(editCard,mEditCurrentCardLauncher,START);
     }
 
 
