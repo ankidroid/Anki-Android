@@ -934,7 +934,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     });
 
     protected ActivityResultLauncher<Intent> mDeckOptionsLauncher = getResultLauncher(((resultCode, data) -> {
-        if( resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK) {
             performReload();
         }
     }));
