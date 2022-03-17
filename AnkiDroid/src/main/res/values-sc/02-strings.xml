@@ -196,10 +196,10 @@
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
     <string name="export_successful">Su documentu “%s” est istadu esportadu. Lu cheres imbiare cun un\'àtera aplicatzione?</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Salude!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Custu est unu matzu de cartas mnemònicas de Anki imbiadu dae AnkiDroid[1].
+        Proa a l\'abèrrere impreende una de sas distributziones de Anki a disponimentu[2] e gosa·ti un\'imparu fàtzile e efitziente!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -341,7 +341,7 @@
     <string name="format_font_size">Muda sa mannària de sos caràteres</string>
     <string name="insert_mathjax">Inserta un\'ecuatzione MathJax</string>
     <string name="insert_cloze">Inserta un\'iscantzellamentu cloze</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Testu de su hutone</string>
     <string name="before_text">HTML in antis de s\'ischerta</string>
     <string name="after_text">HTML a pustis de s\'ischerta</string>
     <string name="add_toolbar_item">Crea un\'elementu de sa barra de trastes</string>
@@ -403,5 +403,5 @@
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Sa chirca no at frunidu resurtados</string>
 </resources>

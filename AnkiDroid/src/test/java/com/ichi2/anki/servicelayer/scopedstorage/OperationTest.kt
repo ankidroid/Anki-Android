@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.TestException
@@ -45,16 +44,12 @@ interface OperationTest {
 
     fun Operation.execute(): List<Operation> = this.execute(executionContext)
 
-    /** Return a new empty Directory, which will be deleted after the test. */
-    fun createDirectory(): Directory =
-        Directory.createInstance(createTransientDirectory())!!
-
     /** Creates an empty TMP directory to place the output files in */
     fun generateDestinationDirectoryRef(): File {
-        val createDirectory = createDirectory()
+        val createDirectory = createTransientDirectory()
         Timber.d("test: deleting $createDirectory")
-        CompatHelper.getCompat().deleteFile(createDirectory.directory)
-        return createDirectory.directory
+        CompatHelper.getCompat().deleteFile(createDirectory)
+        return createDirectory
     }
 
     /**

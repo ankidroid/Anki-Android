@@ -214,9 +214,9 @@
     <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">ପରିସଂଖ୍ୟାନ ଖୋଲିବା ବେଳେ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ</string>
+    <string name="stats_default_deck_current">ସବୁଠାରୁ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପାଇଁ ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
+    <string name="stats_default_deck_all">ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>

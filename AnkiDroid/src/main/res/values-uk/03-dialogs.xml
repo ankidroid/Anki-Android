@@ -53,7 +53,7 @@
     </plurals>
     <string name="delete_cram_deck_message">Відправити всі картки з %s назад до їх початкових колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
-    <string name="initializing_tts">Ініціалізація TTS&#8230;</string>
+    <string name="initializing_tts">Запуск синтезу мовлення&#8230;</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
     <string-array name="about_content">
@@ -101,7 +101,7 @@
         <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланувалася і стала переглянутою. Використовуйте опцію «перемістити картку», щоб змінити позицію карти в новій черзі</string>
+    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланувалася і стала переглянутою. Використовуйте опцію «перемістити картку», щоб змінити позицію картки в новій черзі</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду у вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження) для її імпорту</string>
     <string name="answering_error_title">Помилка бази даних</string>
@@ -111,7 +111,7 @@
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
     <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
-    <string name="custom_study_rev_total_rev">Повторити сьогодні: %d</string>
+    <string name="custom_study_rev_total_rev">Картки до повторення: %d</string>
     <string name="custom_study_new_extend">Збільшення/зменшення («-3») сьогоднішньої межі на нові картки</string>
     <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішньої межі на повторення</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
@@ -131,9 +131,9 @@
     <string name="no_space_to_downgrade_content">AnkiDroid потрібно %s вільного місця, щоб продовжити. Будь ласка, очистіть трохи пам\'ять</string>
     <string name="restore_backup_title">Відновити резервну копію?</string>
     <string name="restore_backup">Вашу колекцію замінить стара копія. Будь-який незбережений прогрес буде втрачено.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Вибрати інший</string>
     <string name="dialog_cancel">Скасувати</string>
-    <string name="dialog_ok">Гаразд</string>
+    <string name="dialog_ok">Ок</string>
     <string name="dialog_no">Ні</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
@@ -199,7 +199,7 @@
     <string name="card_browser_deck_change_error">Не вдалося змінити колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Помилка при декодуванні даних з картки</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Повернено назад \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не вдалося обробити параметри колоди: %s</string>
     <!-- Database Errors-->
