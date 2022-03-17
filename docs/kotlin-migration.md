@@ -67,7 +67,7 @@ While you are still in `filename.java`:
 In the file `kotlinMigration.gradle`
 * Find the line `def className = ""`,
 * Add a / after the first double quote,
-* Paste the filename you codied earlier between the two double-quotes.  The result should be something as
+* Paste the filename you copied earlier between the two double-quotes.  The result should be something as
 ```gradle
 def className = "/com/ichi2/anki/filename.kt"
 ```
