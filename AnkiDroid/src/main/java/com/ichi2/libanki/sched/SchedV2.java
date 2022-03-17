@@ -598,16 +598,8 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(deckDueTree, true);
     }
 
-    private @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
-        // sort based on name's components
-        Collections.sort(decks);
-        // then run main function
-        return _groupChildrenMain(decks, checkDone);
-    }
-
-
-    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
-        return _groupChildrenMain(decks, 0, checkDone);
+    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
+        return _groupChildren(decks, 0, checkDone);
     }
 
     /**
@@ -621,7 +613,7 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> descendants, int depth, boolean checkDone) {
         List<T> children = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = descendants.listIterator();
@@ -658,7 +650,7 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
-            List<T> childrenNode = _groupChildrenMain(descendantsOfChild, depth + 1, checkDone);
+            List<T> childrenNode = _groupChildren(descendantsOfChild, depth + 1, checkDone);
             child.setChildren(childrenNode, "std".equals(getName()));
             children.add(child);
         }
