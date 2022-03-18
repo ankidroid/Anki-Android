@@ -286,7 +286,7 @@ object ImportUtils {
                 return false
             }
             try {
-                CompatHelper.getCompat().copyFile(`in`, tempPath)
+                CompatHelper.compat.copyFile(`in`, tempPath)
             } catch (e: IOException) {
                 Timber.e(e, "Could not copy file to %s", tempPath)
                 return false

@@ -36,7 +36,7 @@ data class DeleteEmptyDirectory(val directory: Directory) : MigrateUserData.Oper
         }
 
         try {
-            CompatHelper.getCompat().deleteFile(directory.directory)
+            CompatHelper.compat.deleteFile(directory.directory)
             Timber.d("deleted $directory")
         } catch (ex: FileNotFoundException) {
             Timber.d("$directory already deleted")

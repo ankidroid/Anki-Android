@@ -13,76 +13,75 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.compat
 
-package com.ichi2.compat;
+import android.os.Build
+import android.view.KeyCharacterMap
+import com.ichi2.utils.KotlinCleanup
 
+class CompatHelper private constructor() {
 
-import android.os.Build;
-import android.view.KeyCharacterMap;
+    @KotlinCleanup("inline & convert to when")
+    private val compatValue: Compat
 
-import androidx.annotation.NonNull;
+    companion object {
+        private var sInstance: CompatHelper? = null
 
-public class CompatHelper {
-    private static CompatHelper sInstance;
-    @NonNull
-    private final Compat mCompat;
+        /** Get the current Android API level.  */
+        @JvmStatic
+        val sdkVersion: Int
+            get() = Build.VERSION.SDK_INT
 
+        /** Determine if the device is running API level 23 or higher.  */
+        @JvmStatic
+        val isMarshmallow: Boolean
+            get() = sdkVersion >= Build.VERSION_CODES.M
 
-    private CompatHelper() {
-        if (getSdkVersion() >= Build.VERSION_CODES.S) {
-            mCompat = new CompatV31();
-        } else if (getSdkVersion() >= Build.VERSION_CODES.Q) {
-            mCompat = new CompatV29();
-        } else if (getSdkVersion() >= Build.VERSION_CODES.O) {
-            mCompat = new CompatV26();
-        } else if (getSdkVersion() >= Build.VERSION_CODES.M) {
-            mCompat = new CompatV23();
+        /**
+         * Main public method to get the compatibility class
+         */
+        @JvmStatic
+        val compat get() = instance.compatValue
+
+        @get:Synchronized
+        @KotlinCleanup("lazy")
+        val instance: CompatHelper
+            get() {
+                if (sInstance == null) {
+                    sInstance = CompatHelper()
+                }
+                return sInstance!!
+            }
+
+        val isChromebook: Boolean
+            get() = (
+                "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
+                    "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
+                )
+        @JvmStatic
+        val isKindle: Boolean
+            get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
+
+        fun hasKanaAndEmojiKeys(): Boolean {
+            return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95)
+        }
+
+        fun hasScrollKeys(): Boolean {
+            return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93)
+        }
+    }
+
+    init {
+        if (sdkVersion >= Build.VERSION_CODES.S) {
+            compatValue = CompatV31()
+        } else if (sdkVersion >= Build.VERSION_CODES.Q) {
+            compatValue = CompatV29()
+        } else if (sdkVersion >= Build.VERSION_CODES.O) {
+            compatValue = CompatV26()
+        } else if (sdkVersion >= Build.VERSION_CODES.M) {
+            compatValue = CompatV23()
         } else {
-            mCompat = new CompatV21();
+            compatValue = CompatV21()
         }
-    }
-
-    /** Get the current Android API level. */
-    public static int getSdkVersion() {
-        return Build.VERSION.SDK_INT;
-    }
-
-    /** Determine if the device is running API level 23 or higher. */
-    public static boolean isMarshmallow() {
-        return getSdkVersion() >= Build.VERSION_CODES.M;
-    }
-
-    /**
-     * Main public method to get the compatibility class
-     */
-    @NonNull
-    public static Compat getCompat() {
-        return getInstance().mCompat;
-    }
-
-    @NonNull
-    public static synchronized CompatHelper getInstance() {
-        if (sInstance == null) {
-            sInstance = new CompatHelper();
-        }
-        return sInstance;
-    }
-
-    public static boolean isChromebook() {
-        return "chromium".equalsIgnoreCase(Build.BRAND) || "chromium".equalsIgnoreCase(Build.MANUFACTURER)
-                || "novato_cheets".equalsIgnoreCase(Build.DEVICE);
-    }
-
-    public static boolean isKindle() {
-        return "amazon".equalsIgnoreCase(Build.BRAND) || "amazon".equalsIgnoreCase(Build.MANUFACTURER);
-    }
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean hasKanaAndEmojiKeys() {
-        return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95);
-    }
-
-    public static boolean hasScrollKeys() {
-        return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93);
     }
 }

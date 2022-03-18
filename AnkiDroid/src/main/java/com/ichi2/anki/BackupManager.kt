@@ -164,7 +164,7 @@ open class BackupManager {
             val zos = ZipOutputStream(BufferedOutputStream(FileOutputStream(backupFile)))
             val ze = ZipEntry(CollectionHelper.COLLECTION_FILENAME)
             zos.putNextEntry(ze)
-            CompatHelper.getCompat().copyFile(colPath, zos)
+            CompatHelper.compat.copyFile(colPath, zos)
             zos.close()
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)

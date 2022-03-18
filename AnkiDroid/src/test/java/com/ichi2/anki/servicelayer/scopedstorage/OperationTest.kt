@@ -48,7 +48,7 @@ interface OperationTest {
     fun generateDestinationDirectoryRef(): File {
         val createDirectory = createTransientDirectory()
         Timber.d("test: deleting $createDirectory")
-        CompatHelper.getCompat().deleteFile(createDirectory)
+        CompatHelper.compat.deleteFile(createDirectory)
         return createDirectory
     }
 

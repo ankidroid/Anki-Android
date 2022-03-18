@@ -150,7 +150,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
             val ankiDroidIntent = Intent(context, IntentHandler::class.java)
             ankiDroidIntent.action = Intent.ACTION_MAIN
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pendingAnkiDroidIntent = CompatHelper.getCompat().getImmutableActivityIntent(
+            val pendingAnkiDroidIntent = CompatHelper.compat.getImmutableActivityIntent(
                 context, 0, ankiDroidIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )

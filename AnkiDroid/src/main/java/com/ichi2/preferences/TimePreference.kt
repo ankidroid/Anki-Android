@@ -35,14 +35,14 @@ class TimePreference(context: Context?, attrs: AttributeSet?) : android.preferen
 
     override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
-        CompatHelper.getCompat().setTime(mTimepicker, mHours, mMinutes)
+        CompatHelper.compat.setTime(mTimepicker, mHours, mMinutes)
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
         super.onDialogClosed(positiveResult)
         if (positiveResult) {
-            mHours = CompatHelper.getCompat().getHour(mTimepicker)
-            mMinutes = CompatHelper.getCompat().getMinute(mTimepicker)
+            mHours = CompatHelper.compat.getHour(mTimepicker)
+            mMinutes = CompatHelper.compat.getMinute(mTimepicker)
             val time = String.format("%1$02d:%2$02d", mHours, mMinutes)
             if (callChangeListener(time)) {
                 persistString(time)

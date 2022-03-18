@@ -62,7 +62,7 @@ object FileUtil {
             throw e
         }
         try {
-            CompatHelper.getCompat().copyFile(inputStream, internalFile.absolutePath)
+            CompatHelper.compat.copyFile(inputStream, internalFile.absolutePath)
         } catch (e: Exception) {
             Timber.w(e, "internalizeUri() unable to internalize file from Uri %s to File %s", uri, internalFile.absolutePath)
             throw e
