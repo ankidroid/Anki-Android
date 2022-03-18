@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>
     <string name="sync_status_badge" maxLength="41">Hiển thị trạng thái đồng bộ hóa</string>
     <string name="sync_status_badge_summ">Thay đổi biểu tượng đồng bộ hóa khi các thay đổi có thể được tải lên</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Chủ đề ban ngày</string>
     <string name="night_theme" maxLength="41">Chủ đề ban đêm</string>
     <string name="default_font" maxLength="41">Font mặc định</string>

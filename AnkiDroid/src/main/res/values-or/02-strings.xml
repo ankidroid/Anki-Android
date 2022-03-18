@@ -341,7 +341,7 @@
     <string name="remove_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ହଟାଇବେ?</string>
     <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>
     <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକ କ୍ୟାପିଟାଲାଇଜ୍ କରନ୍ତୁ</string>

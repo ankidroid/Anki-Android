@@ -134,6 +134,7 @@
         perce volt.</string>
     <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>
     <string name="default_font" maxLength="41">Alapértelmezett betűtípus</string>

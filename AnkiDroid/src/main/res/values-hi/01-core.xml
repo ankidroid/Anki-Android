@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">आप उच्चारण जाँचिये</string>
     <string name="new_deck">डेक बनाने</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
-    <string name="night_mode">रात मोड</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका पहुंच योग्य नहीं है</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">कस्टम अध्ययन सत्र</string>
     <string name="custom_study_deck_exists">कृपया पहले मौजूदा कस्टम अध्ययन डेक का नाम बदलें।</string>
     <string name="empty_deck">इस डेक खाली है</string>
-    <string name="search_deck">डेक खोज</string>
+    <string name="search_deck" comment="Deck search for selecting it">डेक खोज</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">कार्ड जोड़ें</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_empty">यह डेक खाली है । नई सामग्री जोड़ने के लिए + बटन दबाएँ.</string>

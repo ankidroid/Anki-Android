@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>
     <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
     <string name="default_font" maxLength="41">Шрифт по умолчанию</string>

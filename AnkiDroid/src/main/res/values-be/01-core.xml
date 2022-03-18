@@ -136,7 +136,6 @@
     <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
-    <string name="night_mode">Начны рэжым</string>
     <string name="directory_inaccessible">Каталог AnkiDroid недаступны</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -167,7 +166,8 @@
     <string name="custom_study_deck_name">Дадатковая навучанне</string>
     <string name="custom_study_deck_exists">Спачатку дайце новую назву калодзе дадатковага навучання</string>
     <string name="empty_deck">Гэта калода пустая</string>
-    <string name="search_deck">Пошук калоды</string>
+    <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Дадаць картку</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_empty">Гэта калода пустая. Націсніце кнопку +, каб дадаць новае змесціва.</string>

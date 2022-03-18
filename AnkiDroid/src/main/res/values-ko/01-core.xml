@@ -121,7 +121,6 @@
     <string name="menu_toggle_mic_tool_bar">발음 확인</string>
     <string name="new_deck">카드 묶음 만들기</string>
     <string name="new_dynamic_deck">거르기된 카드뭉치 만들기</string>
-    <string name="night_mode">야간 모드</string>
     <string name="directory_inaccessible">암기드로이드서류철에 접근할수 없습니다</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,7 +151,8 @@
     <string name="custom_study_deck_name">맞춤배움주기</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 뭉치는 비어있습니다.</string>
-    <string name="search_deck">뭉치 검색</string>
+    <string name="search_deck" comment="Deck search for selecting it">뭉치 검색</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">카드 추가</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
     <string name="studyoptions_empty">이 카드뭉치는 비어있습니다. +단추를 눌러 새 내용물을 추가하세요.</string>

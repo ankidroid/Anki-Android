@@ -128,7 +128,6 @@
     <string name="menu_toggle_mic_tool_bar">Verìfica sa pronùntzia</string>
     <string name="new_deck">Crea unu matzu</string>
     <string name="new_dynamic_deck">Crea unu matzu filtradu</string>
-    <string name="night_mode">Modalidade pro sa note</string>
     <string name="directory_inaccessible">Sa cartella de AnkiDroid no est atzessìbile</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -159,7 +158,8 @@
     <string name="custom_study_deck_name">Sessione de istùdiu personalizada</string>
     <string name="custom_study_deck_exists">In antis càmbia su nùmene a su matzu de istùdiu personalizadu chi esistit</string>
     <string name="empty_deck">Custu matzu est bòidu</string>
-    <string name="search_deck">Chirca de matzos</string>
+    <string name="search_deck" comment="Deck search for selecting it">Chirca de matzos</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Annanghe una carta</string>
     <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
     <string name="studyoptions_empty">Su matzu est bòidu. Incarca su butone + pro annànghere cuntenutos noos.</string>

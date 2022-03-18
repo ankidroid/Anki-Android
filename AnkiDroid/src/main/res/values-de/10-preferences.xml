@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>
     <string name="default_font" maxLength="41">Standardschrift</string>

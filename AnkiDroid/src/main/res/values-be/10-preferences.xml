@@ -134,6 +134,7 @@
         калі з часу апошняй сінхранізацыі мінула больш чым 10 хвілін.</string>
     <string name="sync_status_badge" maxLength="41">Адлюстроўваць статус сінхранізацыі</string>
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Дзённая тэма</string>
     <string name="night_theme" maxLength="41">Начная тэма</string>
     <string name="default_font" maxLength="41">Стандартны шрыфт</string>

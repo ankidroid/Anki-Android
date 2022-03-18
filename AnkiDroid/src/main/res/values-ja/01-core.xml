@@ -121,7 +121,6 @@
     <string name="menu_toggle_mic_tool_bar">録音用マイクアイコン</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
-    <string name="night_mode">ナイトモード</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,7 +151,8 @@
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
-    <string name="search_deck">デッキ検索</string>
+    <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">カードを追加</string>
     <string name="invalid_deck_name">無効なデッキ名です。</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>

@@ -121,7 +121,6 @@
     <string name="menu_toggle_mic_tool_bar">Semak sebutan</string>
     <string name="new_deck">Cipta dek</string>
     <string name="new_dynamic_deck">Cipta dek tapisan</string>
-    <string name="night_mode">Mod malam</string>
     <string name="directory_inaccessible">Apa yang anda perlu lakukan direktori tidak boleh diakses</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,7 +151,8 @@
     <string name="custom_study_deck_name">Adat belajar sesi</string>
     <string name="custom_study_deck_exists">Menamakan ada adat belajar dek pertama</string>
     <string name="empty_deck">Dek ini adalah kosong</string>
-    <string name="search_deck">Carian dek</string>
+    <string name="search_deck" comment="Deck search for selecting it">Carian dek</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Tambah kad</string>
     <string name="invalid_deck_name">Nama dek tidak sah</string>
     <string name="studyoptions_empty">Dek ini adalah kosong. Tekan butang + untuk menambah kandungan baru.</string>

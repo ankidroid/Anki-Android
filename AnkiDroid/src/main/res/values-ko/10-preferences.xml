@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">주간 테마</string>
     <string name="night_theme" maxLength="41">야간 테마</string>
     <string name="default_font" maxLength="41">기본 글꼴</string>
