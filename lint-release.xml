@@ -45,6 +45,7 @@
     <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
     <issue id="UnknownId" severity="fatal" />
+    <issue id="UselessParent" severity="fatal" />
     <issue id="ObsoleteLayoutParam" severity="fatal" />
 
     <!--           RTL Rules               -->
@@ -350,7 +351,6 @@
     <issue id="UnusedIds" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
     <issue id="UselessLeaf" severity="ignore" />
-    <issue id="UselessParent" severity="ignore" />
     <issue id="EnforceUTF8" severity="ignore" />
     <issue id="VectorRaster" severity="ignore" />
     <issue id="VectorDrawableCompat" severity="ignore" />
