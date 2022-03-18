@@ -23,6 +23,7 @@
     <string name="automatic_answer_action_preference">automaticAnswerAction</string>
     <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
     <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
+    <string name="app_theme_key">appTheme</string>
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
 </resources>

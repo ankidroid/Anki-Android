@@ -26,6 +26,7 @@ import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
@@ -71,7 +72,9 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.setup
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
+import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
@@ -816,7 +819,67 @@ class Preferences : AnkiActivity() {
                 }
                 true
             }
+
+            val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
+            val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
+            val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+
+            // Remove follow system options in android versions which do not have system dark mode
+            // When minSdk reaches 29, only this if block needs to be removed
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                dayThemePref.isVisible = false
+                nightThemePref.isVisible = false
+
+                // Drop "Follow system" option (the first one)
+                val appThemesLabels = resources.getStringArray(R.array.app_theme_labels)
+                val appThemesValues = resources.getStringArray(R.array.app_theme_values)
+
+                appThemePref.entries = appThemesLabels.sliceArray(1..appThemesLabels.lastIndex)
+                appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
+            }
+
+            val followSystem = Themes.themeFollowsSystem(context)
+            dayThemePref.isEnabled = followSystem
+            nightThemePref.isEnabled = followSystem
+
+            appThemePref.setOnPreferenceChangeListener { _, newValue ->
+                dayThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+                nightThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+
+                // Only restart if value was changed
+                if (newValue != appThemePref.value) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
+
+            dayThemePref.setOnPreferenceChangeListener { _, newValue ->
+                if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext())) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
+
+            nightThemePref.setOnPreferenceChangeListener { _, newValue ->
+                if (newValue != nightThemePref.value && systemIsInNightMode(requireContext())) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
             initializeCustomFontsDialog()
+        }
+
+        /**
+         * Restart [Preferences] activity with [AppearanceSettingsFragment]
+         * in the top of the backstack
+         */
+        private fun restartActivityOnBackStackTop() {
+            Timber.i("PreferenceActivity -- restartActivity()")
+            val intent = Intent(context, requireActivity().javaClass)
+            val fragmentClassNames = arrayOf(AppearanceSettingsFragment::class.java.name)
+            intent.putExtra(EXTRA_BACKSTACK_FRAGMENTS, fragmentClassNames)
+            requireContext().startActivity(intent)
+            this.requireActivity().finish()
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
