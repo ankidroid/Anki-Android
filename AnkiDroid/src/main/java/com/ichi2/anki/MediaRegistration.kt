@@ -64,14 +64,14 @@ class MediaRegistration(private val context: Context) {
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
             if (shouldConvertToJPG(fileNameAndExtension.value, copyFd!!)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
-                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.absolutePath)
+                bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
                 if (!convertToJPG(clipCopy)) {
                     return null
                 }
             } else {
                 clipCopy = File.createTempFile(fileName, fileNameAndExtension.value)
-                bytesWritten = CompatHelper.getCompat().copyFile(fd, clipCopy.absolutePath)
+                bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
             }
         }
         val tempFilePath = clipCopy.absolutePath

@@ -57,8 +57,8 @@ open class Test21And26(
 
     @Before
     open fun setup() {
-        mockkStatic(CompatHelper::class)
-        every { CompatHelper.getCompat() } returns compat
+        mockkObject(CompatHelper)
+        every { CompatHelper.compat } returns compat
     }
 
     // Allow to cancel every static mock, appart from the setup's one.
@@ -70,7 +70,7 @@ open class Test21And26(
 
     @After
     fun tearDown() {
-        unmockkStatic(CompatHelper::class)
+        unmockkObject(CompatHelper)
     }
 
     /**
@@ -83,7 +83,7 @@ open class Test21And26(
          * This is useful in the case where we can't directly access the directory or compat
          */
         fun <T> runWithPermissionDenied(test: () -> T): T {
-            every { CompatHelper.getCompat() } returns compat
+            every { CompatHelper.compat } returns compat
             val result = test()
             restart()
             return result
@@ -105,7 +105,7 @@ open class Test21And26(
      */
     fun createPermissionDenied(): PermissionDenied {
         val directory = createTransientDirectory()
-        val compat = CompatHelper.getCompat()
+        val compat = CompatHelper.compat
         val directoryWithPermissionDenied =
             spy(directory) {
                 on { listFiles() } doReturn null

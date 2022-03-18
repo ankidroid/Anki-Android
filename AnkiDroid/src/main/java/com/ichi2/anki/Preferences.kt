@@ -553,7 +553,7 @@ class Preferences : AnkiActivity() {
                             if (listpref.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
                                 scheduleNotification(preferencesActivity.col.time, preferencesActivity)
                             } else {
-                                val intent = CompatHelper.getCompat().getImmutableBroadcastIntent(
+                                val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                                     preferencesActivity, 0,
                                     Intent(preferencesActivity, NotificationService::class.java), 0
                                 )

@@ -47,7 +47,7 @@ class AddNoteWidget : AppWidgetProvider() {
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
         val intent = Intent(context, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        val pendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(context, 0, intent, 0)
+        val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(context, 0, intent, 0)
         remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
     }

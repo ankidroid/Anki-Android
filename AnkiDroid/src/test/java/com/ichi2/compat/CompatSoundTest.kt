@@ -32,7 +32,7 @@ import org.robolectric.annotation.Config
 @Config(application = EmptyApplication::class)
 @TargetApi(26)
 class CompatSoundTest {
-    private val compat: Compat = CompatHelper.getCompat()
+    private val compat: Compat = CompatHelper.compat
     private val audioManager: AudioManager = ApplicationProvider.getApplicationContext<Application>().getSystemService(Context.AUDIO_SERVICE) as AudioManager
     private val afChangeListener: OnAudioFocusChangeListener = OnAudioFocusChangeListener { }
 
