@@ -78,7 +78,7 @@ class AnswerTimerTest {
         }
 
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
-        assertThat("time limit is 12 minutes", timer.limit, equalTo(12))
+        assertThat("Time limit should be 12 minutes", timer.limit, equalTo(12))
 
         verify(chronometer).start()
         verify(chronometer, atLeast(1)).visibility // we call twice due to the else branch
