@@ -32,6 +32,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.BundleUtils.requireLong
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.function.Supplier
 
@@ -135,7 +136,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 Timber.i("Custom study option selected")
                 val ankiActivity = requireActivity() as AnkiActivity
                 val d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog::class.java)
-                d.withArguments(CustomStudyDialog.CONTEXT_MENU_STANDARD, deckId)
+                d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
                 ankiActivity.showDialogFragment(d)
             }
             CONTEXT_MENU_CREATE_SHORTCUT -> {
@@ -178,6 +179,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         }
     }
 
+    @KotlinCleanup("replace with enum")
     companion object {
         /**
          * Context Menus
