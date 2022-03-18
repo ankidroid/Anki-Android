@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">پس زمینه روز</string>
     <string name="night_theme" maxLength="41">پس زمینه شب</string>
     <string name="default_font" maxLength="41">قلم پیش فرض</string>

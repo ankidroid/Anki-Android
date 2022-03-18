@@ -105,7 +105,7 @@
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
-    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ି ହୋଇଥିବା ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରନ୍ତୁ:</string>
+    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରିବା:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>

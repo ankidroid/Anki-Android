@@ -121,7 +121,6 @@
     <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
     <string name="new_deck">Колода ясау</string>
     <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
-    <string name="night_mode">Төнге режим</string>
     <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,7 +151,8 @@
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="empty_deck">Бу колода буш</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>

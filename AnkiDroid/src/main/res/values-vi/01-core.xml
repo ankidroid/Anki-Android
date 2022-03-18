@@ -121,7 +121,6 @@
     <string name="menu_toggle_mic_tool_bar">Kiểm tra phát âm</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
-    <string name="night_mode">Chế độ ban đêm</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -152,7 +151,8 @@
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
-    <string name="search_deck">Tìm kiếm bộ thẻ</string>
+    <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Thêm thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>

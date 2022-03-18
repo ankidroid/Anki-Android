@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
     <string name="sync_status_badge" maxLength="41">Visa synkroniseringsstatus</string>
     <string name="sync_status_badge_summ">Ändra synkroniseringsikon när ändringar kan laddas upp</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Dags-tema</string>
     <string name="night_theme" maxLength="41">Natt-tema</string>
     <string name="default_font" maxLength="41">Standardteckensnitt</string>

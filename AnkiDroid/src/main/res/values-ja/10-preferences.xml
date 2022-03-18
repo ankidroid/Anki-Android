@@ -133,8 +133,9 @@
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">他の端末と同期できる変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
-    <string name="day_theme" maxLength="41">通常表示 テーマ</string>
-    <string name="night_theme" maxLength="41">夜間表示 テーマ</string>
+    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="day_theme" maxLength="41">通常表示のテーマ</string>
+    <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
     <string name="default_font" maxLength="41">標準フォント</string>
     <string name="override_font" maxLength="41">標準フォントの適用範囲</string>
     <string name="language" maxLength="41">言語</string>

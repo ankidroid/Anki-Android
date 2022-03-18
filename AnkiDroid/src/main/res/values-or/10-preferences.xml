@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
     <string name="default_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ</string>

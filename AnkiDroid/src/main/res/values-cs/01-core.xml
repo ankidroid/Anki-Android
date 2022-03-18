@@ -136,7 +136,6 @@
     <string name="menu_toggle_mic_tool_bar">Zkontrolovat výslovnost</string>
     <string name="new_deck">Vytvořit balíček</string>
     <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
-    <string name="night_mode">Noční režim</string>
     <string name="directory_inaccessible">AnkiDroid adresář není přístupný</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -167,7 +166,8 @@
     <string name="custom_study_deck_name">Dodatečné procvičování</string>
     <string name="custom_study_deck_exists">Nejdříve přejmenujte stávající balíček vlastního učení</string>
     <string name="empty_deck">Tento balíček je prázdný</string>
-    <string name="search_deck">Hledat balíček</string>
+    <string name="search_deck" comment="Deck search for selecting it">Hledat balíček</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Přidat kartu</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
     <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>
