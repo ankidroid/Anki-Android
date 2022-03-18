@@ -52,6 +52,7 @@
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
 
+    <issue id="RedundantNamespace" severity="fatal" />
     <issue id="TextFields" severity="fatal" />
     <issue id="LogConditional" severity="fatal" />
 
@@ -75,7 +76,6 @@
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
-    <issue id="RedundantNamespace" severity="ignore" />
     <issue id="Autofill" severity="ignore" />
     <issue id="ContentDescription" severity="ignore" />
     <issue id="AddJavascriptInterface" severity="ignore" />
