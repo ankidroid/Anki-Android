@@ -915,7 +915,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (data != null && data.hasExtra("reloadRequired")) {
                 performReload();
             }
-            callback.onResult(resultCode,data);
+            callback.onResult(resultCode, data);
         });
     }
 
