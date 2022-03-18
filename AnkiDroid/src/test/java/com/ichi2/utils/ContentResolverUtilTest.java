@@ -22,9 +22,12 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 
+import com.ichi2.testutils.EmptyApplication;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Shadows;
+import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -37,6 +40,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class) // needs a URI instance
+@Config(application = EmptyApplication.class)
 public class ContentResolverUtilTest {
 
     @Test
