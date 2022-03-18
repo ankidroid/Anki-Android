@@ -18,57 +18,86 @@
 
 package com.ichi2.themes
 
+import android.app.UiModeManager
 import android.content.Context
-import androidx.annotation.IntDef
+import androidx.annotation.StringDef
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import timber.log.Timber
 
+/**
+ * Handles the user selectable themes
+ * The user can choose one of the app themes or "Follow system" option
+ * If one of the themes is selected, it will always be the theme used by the app
+ * If "Follow system" is selected, the theme will be what is selected
+ * on "Day" or "Night" theme categories, following the current system mode.
+ */
 object Themes {
     const val ALPHA_ICON_ENABLED_LIGHT = 255 // 100%
     const val ALPHA_ICON_DISABLED_LIGHT = 76 // 31%
     const val ALPHA_ICON_ENABLED_DARK = 138 // 54%
 
-    /**
-     * Preferences for the night theme mode
-     */
-    private const val DAY_THEME = "dayTheme"
+    // Themes preferences keys
+    private const val APP_THEME_KEY = "appTheme"
+    private const val DAY_THEME_KEY = "dayTheme"
+    private const val NIGHT_THEME_KEY = "nightTheme"
+    private const val NIGHT_MODE_PREFERENCE = "invertedColors"
 
-    // Day themes
-    const val THEME_DAY_LIGHT = 0
-    const val THEME_DAY_PLAIN = 1
+    /* App themes values
+     * These are unique values which be used to differentiate the themes,
+     * following their values set on their ListPreference
+     */
+    const val FOLLOW_SYSTEM_MODE = "0"
+    private const val APP_LIGHT_THEME = "1"
+    const val APP_PLAIN_THEME = "2"
+    private const val APP_BLACK_THEME = "3"
+    const val APP_DARK_THEME = "4"
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(THEME_DAY_LIGHT, THEME_DAY_PLAIN)
-    annotation class DAY_THEME_INTERFACE
+    @StringDef(APP_LIGHT_THEME, APP_PLAIN_THEME, APP_BLACK_THEME, APP_DARK_THEME)
+    annotation class AppTheme
 
-    /**
-     * Preferences for the night theme mode
+    /*
+     * Follow system day and night themes.
+     * Only used if "Follow system" is the selected app theme
      */
-    private const val NIGHT_THEME = "nightTheme"
+    // Day themes
+    private const val DAY_LIGHT_THEME = "0"
+    private const val DAY_PLAIN_THEME = "1"
 
     // Night themes
-    const val THEME_NIGHT_BLACK = 0
-    const val THEME_NIGHT_DARK = 1
+    private const val NIGHT_BLACK_THEME = "0"
+    private const val NIGHT_DARK_THEME = "1"
 
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(THEME_NIGHT_BLACK, THEME_NIGHT_DARK)
-    annotation class NIGHT_THEME_INTERFACE
-
+    /**
+     * Sets the current theme based on what is selected
+     * by the user on the themes preference.
+     * Also sets [NIGHT_MODE_PREFERENCE] if night mode is being used or not
+     */
     @JvmStatic
     fun setTheme(context: Context) {
         val prefs = AnkiDroidApp.getSharedPrefs(context.applicationContext)
-        if (prefs.getBoolean("invertedColors", false)) {
-            val theme = prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK))!!.toInt()
-            when (theme) {
-                THEME_NIGHT_DARK -> context.setTheme(R.style.Theme_Dark_Compat)
-                THEME_NIGHT_BLACK -> context.setTheme(R.style.Theme_Black_Compat)
+        if (themeFollowsSystem(context)) {
+            if (systemIsInNightMode(context)) {
+                when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
+                    NIGHT_BLACK_THEME -> context.setTheme(R.style.Theme_Black_Compat)
+                    NIGHT_DARK_THEME -> context.setTheme(R.style.Theme_Dark_Compat)
+                }
+                setNightModePreference(context, true)
+            } else {
+                when (prefs.getString(DAY_THEME_KEY, DAY_LIGHT_THEME)) {
+                    DAY_LIGHT_THEME -> context.setTheme(R.style.Theme_Light_Compat)
+                    DAY_PLAIN_THEME -> context.setTheme(R.style.Theme_Plain_Compat)
+                }
+                setNightModePreference(context, false)
             }
         } else {
-            val theme = prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT))!!.toInt()
-            when (theme) {
-                THEME_DAY_LIGHT -> context.setTheme(R.style.Theme_Light_Compat)
-                THEME_DAY_PLAIN -> context.setTheme(R.style.Theme_Plain_Compat)
+            when (prefs.getString(APP_THEME_KEY, APP_LIGHT_THEME)) {
+                APP_LIGHT_THEME -> { setNightModePreference(context, false); context.setTheme(R.style.Theme_Light_Compat) }
+                APP_PLAIN_THEME -> { setNightModePreference(context, false); context.setTheme(R.style.Theme_Plain_Compat) }
+                APP_BLACK_THEME -> { setNightModePreference(context, true); context.setTheme(R.style.Theme_Black_Compat) }
+                APP_DARK_THEME -> { setNightModePreference(context, true); context.setTheme(R.style.Theme_Dark_Compat) }
             }
         }
         disableXiaomiForceDarkMode(context)
@@ -77,17 +106,24 @@ object Themes {
     @JvmStatic
     fun setThemeLegacy(context: Context) {
         val prefs = AnkiDroidApp.getSharedPrefs(context.applicationContext)
-        if (prefs.getBoolean("invertedColors", false)) {
-            val theme = prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK))!!.toInt()
-            when (theme) {
-                THEME_NIGHT_DARK -> context.setTheme(R.style.LegacyActionBarDark)
-                THEME_NIGHT_BLACK -> context.setTheme(R.style.LegacyActionBarBlack)
+        if (themeFollowsSystem(context)) {
+            if (systemIsInNightMode(context)) {
+                when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
+                    NIGHT_BLACK_THEME -> context.setTheme(R.style.LegacyActionBarBlack)
+                    NIGHT_DARK_THEME -> context.setTheme(R.style.LegacyActionBarDark)
+                }
+            } else {
+                when (prefs.getString(DAY_THEME_KEY, DAY_LIGHT_THEME)) {
+                    DAY_LIGHT_THEME -> context.setTheme(R.style.LegacyActionBarLight)
+                    DAY_PLAIN_THEME -> context.setTheme(R.style.LegacyActionBarPlain)
+                }
             }
         } else {
-            val theme = prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT))!!.toInt()
-            when (theme) {
-                THEME_DAY_LIGHT -> context.setTheme(R.style.LegacyActionBarLight)
-                THEME_DAY_PLAIN -> context.setTheme(R.style.LegacyActionBarPlain)
+            when (prefs.getString(APP_THEME_KEY, APP_LIGHT_THEME)) {
+                APP_LIGHT_THEME -> context.setTheme(R.style.LegacyActionBarLight)
+                APP_PLAIN_THEME -> context.setTheme(R.style.LegacyActionBarPlain)
+                APP_BLACK_THEME -> context.setTheme(R.style.LegacyActionBarBlack)
+                APP_DARK_THEME -> context.setTheme(R.style.LegacyActionBarDark)
             }
         }
         disableXiaomiForceDarkMode(context)
@@ -135,16 +171,58 @@ object Themes {
     }
 
     /**
-     * Return the current integer code of the theme being used, taking into account
-     * whether we are in day mode or night mode.
+     * @return code of the theme being used.
+     * Follow system Day and Night themes are exchanged
+     * to their [AppTheme] equivalents so they can be differentiated by value
      */
     @JvmStatic
-    fun getCurrentTheme(context: Context?): Int {
+    @AppTheme
+    fun getCurrentTheme(context: Context): String {
         val prefs = AnkiDroidApp.getSharedPrefs(context)
-        return if (prefs.getBoolean("invertedColors", false)) {
-            prefs.getString(NIGHT_THEME, Integer.toString(THEME_NIGHT_BLACK))!!.toInt()
-        } else {
-            prefs.getString(DAY_THEME, Integer.toString(THEME_DAY_LIGHT))!!.toInt()
+        if (themeFollowsSystem(context)) {
+            if (systemIsInNightMode(context)) {
+                when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
+                    NIGHT_BLACK_THEME -> return APP_BLACK_THEME
+                    NIGHT_DARK_THEME -> return APP_DARK_THEME
+                }
+            } else {
+                when (prefs.getString(DAY_THEME_KEY, DAY_LIGHT_THEME)) {
+                    DAY_LIGHT_THEME -> return APP_LIGHT_THEME
+                    DAY_PLAIN_THEME -> return APP_PLAIN_THEME
+                }
+            }
         }
+        return prefs.getString(APP_THEME_KEY, APP_LIGHT_THEME)!!
+    }
+
+    /**
+     * @return if user system is in night mode
+     */
+    @JvmStatic
+    fun systemIsInNightMode(context: Context): Boolean {
+        val uiModeManager = ContextCompat.getSystemService(context, UiModeManager::class.java)
+        if (uiModeManager != null) {
+            return uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
+        }
+        Timber.w("Unable to getSystemService() - UIModeManager")
+        return false
+    }
+
+    /**
+     * Sets [NIGHT_MODE_PREFERENCE] to [isNightMode]
+     */
+    @JvmStatic
+    fun setNightModePreference(context: Context, isNightMode: Boolean) {
+        AnkiDroidApp.getSharedPrefs(context).edit().putBoolean(NIGHT_MODE_PREFERENCE, isNightMode).apply()
+    }
+
+    /**
+     * @return if user current selected theme is "Follow system"
+     */
+    @JvmStatic
+    fun themeFollowsSystem(context: Context?): Boolean {
+        val prefs = AnkiDroidApp.getSharedPrefs(context)
+        val selectedAppTheme = prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE)
+        return selectedAppTheme == FOLLOW_SYSTEM_MODE
     }
 }

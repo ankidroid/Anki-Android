@@ -314,7 +314,21 @@
         <item>@string/full_screen_system</item>
         <item>@string/full_screen_complete</item>
     </string-array>
-
+    <!-- Themes -->
+    <string-array name="app_theme_labels">
+        <item>@string/theme_follow_system</item>
+        <item>@string/day_theme_light</item>
+        <item>@string/day_theme_plain</item>
+        <item>@string/night_theme_black</item>
+        <item>@string/night_theme_dark</item>
+    </string-array>
+    <string-array name="app_theme_values">
+        <item>0</item> <!-- Follow system -->
+        <item>1</item> <!-- Light -->
+        <item>2</item> <!-- Plain -->
+        <item>3</item> <!-- Black -->
+        <item>4</item> <!-- Dark -->
+    </string-array>
     <string-array name="day_theme_values">
         <item>0</item>
         <item>1</item>
