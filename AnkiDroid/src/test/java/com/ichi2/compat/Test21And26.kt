@@ -21,11 +21,10 @@ import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
+import io.mockk.*
 import org.junit.After
 import org.junit.Before
 import org.junit.runners.Parameterized
-import org.mockito.MockedStatic
-import org.mockito.Mockito
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
@@ -56,12 +55,10 @@ open class Test21And26(
     val isV26: Boolean
         get() = compat is CompatV26
 
-    lateinit var mocked: MockedStatic<CompatHelper>
-
     @Before
     open fun setup() {
-        mocked = Mockito.mockStatic(CompatHelper::class.java)
-        mocked.`when`<Compat> { CompatHelper.getCompat() }.doReturn(compat)
+        mockkStatic(CompatHelper::class)
+        every { CompatHelper.getCompat() } returns compat
     }
 
     // Allow to cancel every static mock, appart from the setup's one.
@@ -73,7 +70,7 @@ open class Test21And26(
 
     @After
     fun tearDown() {
-        mocked.close()
+        unmockkStatic(CompatHelper::class)
     }
 
     /**
@@ -86,7 +83,7 @@ open class Test21And26(
          * This is useful in the case where we can't directly access the directory or compat
          */
         fun <T> runWithPermissionDenied(test: () -> T): T {
-            mocked.`when`<Compat> { CompatHelper.getCompat() }.doReturn(compat)
+            every { CompatHelper.getCompat() } returns compat
             val result = test()
             restart()
             return result
