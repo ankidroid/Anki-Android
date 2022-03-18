@@ -121,6 +121,8 @@ class Preferences : AnkiActivity() {
             .replace(R.id.settings_container, fragment)
             .commit()
 
+        addFragmentsToBackStack(supportFragmentManager, intent)
+
         supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
@@ -153,6 +155,33 @@ class Preferences : AnkiActivity() {
             Class.forName(fragmentClass).newInstance() as Fragment
         } catch (e: Exception) {
             throw RuntimeException("Failed to load $fragmentClass", e)
+        }
+    }
+
+    /**
+     * Adds fragments specified in [intent] extra to [fragmentManager] backstack,
+     * following the fragments array order
+     * @param intent with extra key [EXTRA_BACKSTACK_FRAGMENTS]
+     * and value of a array of fragments java class names
+     */
+    private fun addFragmentsToBackStack(fragmentManager: FragmentManager, intent: Intent?) {
+        if (intent == null) {
+            return
+        }
+        val fragmentClasses = intent.getStringArrayExtra(EXTRA_BACKSTACK_FRAGMENTS)
+            ?: return
+
+        for (fragmentClass in fragmentClasses) {
+            try {
+                val fragment = Class.forName(fragmentClass).newInstance() as Fragment
+                fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.settings_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            } catch (e: Exception) {
+                throw RuntimeException("Failed to load $fragmentClass", e)
+            }
         }
     }
 
@@ -1346,6 +1375,11 @@ class Preferences : AnkiActivity() {
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
         )
         const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
+
+        /**
+         * Key of intent extra used in [addFragmentsToBackStack]
+         */
+        const val EXTRA_BACKSTACK_FRAGMENTS = ":android:backstack_fragments"
 
         /** Returns the hour that the collection rolls over to the next day  */
         @JvmStatic
