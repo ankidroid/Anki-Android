@@ -919,7 +919,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         });
     }
 
-    protected ActivityResultLauncher<Intent> mEditCurrentCardLauncher = getResultLauncher((resultCode, data)->{
+    protected ActivityResultLauncher<Intent> mEditCurrentCardLauncher = getResultLauncher((resultCode, data) -> {
         if (resultCode == RESULT_OK) {
             // content of note was changed so update the note and current card
             Timber.i("AbstractFlashcardViewer:: Saving card...");
