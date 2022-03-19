@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>ఎల్లప్పుడూ రిపోర్ట్ చెయ్యండి</item>
-        <item>ఎప్పుడూ రిపోర్ట్ చెయ్యండి</item>
-        <item>నన్ను అడుగు</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>కార్డ్ను ఆపివేయి</item>
-        <item>ట్యాగ్ మాత్రమే</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>యాదృచ్ఛిక క్రమంలో కొత్త కార్డులు</item>
-        <item>క్రమంలో కొత్త కార్డులు జోడించబడ్డాయి</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>పురాతనమైనది మొదటిది</item>
-        <item>పద్ధతి లేకుండా</item>
-        <item>విరామాలను పెంచండి</item>
-        <item>విరామాలను తగ్గించండి</item>
-        <item>చాలా లాప్స్</item>
-        <item>ఆర్డర్ జోడించబడింది</item>
-        <item>ఆర్డర్ జోడించబడింది</item>
-        <item>ఇటీవల జోడించబడింది</item>
-        <item>సాపేక్ష నిర్లక్ష్యం</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>ప్రస్తుత డెక్ ఉపయోగించండి</item>
-        <item>గమనిక రకం ద్వారా నిర్ణయిస్తారు</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>కొత్త కార్డులు మరియు సమీక్షలను జోడించండి</item>
-        <item>సమీక్షల తర్వాత కొత్త కార్డ్లు</item>
-        <item>సమీక్షలకు ముందు కొత్త కార్డ్లు</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Flashcards లో ఏ ఫాంట్ పేర్కొనబడలేదు</item>
-        <item>ఎల్లప్పుడూ</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>లైట్</item>
-        <item>సాదా</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>నలుపు</item>
-        <item>ముదురు రంగు</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">ఎల్లప్పుడూ రిపోర్ట్ చెయ్యండి</string>
+    <string name="error_reporting_choice_never_report">ఎప్పుడూ రిపోర్ట్ చెయ్యండి</string>
+    <string name="error_reporting_choice_ask_user">నన్ను అడుగు</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">ట్యాగ్ మాత్రమే</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">యాదృచ్ఛిక క్రమంలో కొత్త కార్డులు</string>
+    <string name="new_order_order_added">క్రమంలో కొత్త కార్డులు జోడించబడ్డాయి</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">పురాతనమైనది మొదటిది</string>
+    <string name="cram_deck_conf_order_random">పద్ధతి లేకుండా</string>
+    <string name="cram_deck_conf_order_increasing_intervals">విరామాలను పెంచండి</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">విరామాలను తగ్గించండి</string>
+    <string name="cram_deck_conf_order_most_lapsed">చాలా లాప్స్</string>
+    <string name="cram_deck_conf_order_order_added">ఆర్డర్ జోడించబడింది</string>
+    <string name="cram_deck_conf_order_order_due">ఆర్డర్ జోడించబడింది</string>
+    <string name="cram_deck_conf_order_latest_added_first">ఇటీవల జోడించబడింది</string>
+    <string name="cram_deck_conf_order_relative_overdueness">సాపేక్ష నిర్లక్ష్యం</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">ప్రస్తుత డెక్ ఉపయోగించండి</string>
+    <string name="add_to_deck_decide_by_note_type">గమనిక రకం ద్వారా నిర్ణయిస్తారు</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">కొత్త కార్డులు మరియు సమీక్షలను జోడించండి</string>
+    <string name="new_spread_new_after_review">సమీక్షల తర్వాత కొత్త కార్డ్లు</string>
+    <string name="new_spread_new_before_review">సమీక్షలకు ముందు కొత్త కార్డ్లు</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Flashcards లో ఏ ఫాంట్ పేర్కొనబడలేదు</string>
+    <string name="override_font_always">ఎల్లప్పుడూ</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">లైట్</string>
+    <string name="day_theme_plain">సాదా</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">నలుపు</string>
+    <string name="night_theme_dark">ముదురు రంగు</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">చర్య తీసుకోలేదు</string>
     <string name="gesture_answer_1">జవాబు బటన్ 1</string>
     <string name="gesture_answer_2">జవాబు బటన్ 2</string>

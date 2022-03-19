@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Siempre enviar</item>
-        <item>Nunca enviar</item>
-        <item>Preguntarme</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspender tarjeta</item>
-        <item>Sólo etiquetar</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Tarjetas nuevas en orden aleatorio</item>
-        <item>Tarjetas nuevas en orden de adición</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Más antiguas primero</item>
-        <item>Aleatorio</item>
-        <item>Intervalos crecientes</item>
-        <item>Intervalos decrecientes</item>
-        <item>Más atrasadas</item>
-        <item>En el orden añadido</item>
-        <item>Orden programado</item>
-        <item>Últimas añadidas primero</item>
-        <item>Sobreprogramación relativa</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Usar mazo actual</item>
-        <item>Decidir por tipo de nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mezclar tarjetas nuevas y repasos</item>
-        <item>Tarjetas nuevas después de repasos</item>
-        <item>Tarjetas nuevas antes de repasos</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Cuando no hay una fuente especificada en las tarjetas</item>
-        <item>Siempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Claro</item>
-        <item>Simple</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Negro</item>
-        <item>Oscuro</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-pequeño</item>
-        <item>x-pequeño</item>
-        <item>pequeño</item>
-        <item>medio</item>
-        <item>grande</item>
-        <item>x-grande</item>
-        <item>xx-grande</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Siempre enviar</string>
+    <string name="error_reporting_choice_never_report">Nunca enviar</string>
+    <string name="error_reporting_choice_ask_user">Preguntarme</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Sólo etiquetar</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Tarjetas nuevas en orden aleatorio</string>
+    <string name="new_order_order_added">Tarjetas nuevas en orden de adición</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Más antiguas primero</string>
+    <string name="cram_deck_conf_order_random">Aleatorio</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervalos crecientes</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervalos decrecientes</string>
+    <string name="cram_deck_conf_order_most_lapsed">Más atrasadas</string>
+    <string name="cram_deck_conf_order_order_added">En el orden añadido</string>
+    <string name="cram_deck_conf_order_order_due">Orden programado</string>
+    <string name="cram_deck_conf_order_latest_added_first">Últimas añadidas primero</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Sobreprogramación relativa</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Usar mazo actual</string>
+    <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Mezclar tarjetas nuevas y repasos</string>
+    <string name="new_spread_new_after_review">Tarjetas nuevas después de repasos</string>
+    <string name="new_spread_new_before_review">Tarjetas nuevas antes de repasos</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Cuando no hay una fuente especificada en las tarjetas</string>
+    <string name="override_font_always">Siempre</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Claro</string>
+    <string name="day_theme_plain">Plain</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Negro</string>
+    <string name="night_theme_dark">Oscuro</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-pequeño</string>
+    <string name="html_size_code_x_small">x-pequeño</string>
+    <string name="html_size_code_small">pequeño</string>
+    <string name="html_size_code_medium">medio</string>
+    <string name="html_size_code_large">grande</string>
+    <string name="html_size_code_x_large">x-grande</string>
+    <string name="html_size_code_xx_large">xx-grande</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Ninguna acción</string>
     <string name="gesture_answer_1">Botón de respuesta 1</string>
     <string name="gesture_answer_2">Botón de respuesta 2</string>

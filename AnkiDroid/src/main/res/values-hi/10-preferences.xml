@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
     <string name="night_theme" maxLength="41">रात विषय</string>
     <string name="default_font" maxLength="41">डिफ़ॉल्ट फ़ॉंट</string>

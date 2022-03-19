@@ -122,7 +122,6 @@
     <string name="menu_toggle_mic_tool_bar">檢查發音</string>
     <string name="new_deck">建立牌組</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
-    <string name="night_mode">夜間模式</string>
     <string name="directory_inaccessible">無法存取 AnkiDroid 目錄</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -153,7 +152,8 @@
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="empty_deck">這個牌組是空的</string>
-    <string name="search_deck">牌組搜尋</string>
+    <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">新增卡片</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_empty">這個牌組是空的。按下 + 按鈕增加新內容。</string>

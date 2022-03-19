@@ -77,17 +77,17 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%dଟିଏ ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
+        <item quantity="other">%dଟି ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
-        <item quantity="other">ସାମ୍ପ୍ରତିକ ଅନ୍ତରାଳ: %d ଦିନ</item>
+        <item quantity="one">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
+        <item quantity="other">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">x ଦିନରେ ସମୀକ୍ଷା ପାଇଁ reschedule କରନ୍ତୁ</string>
+    <string name="reschedule_card_dialog_message">x ଦିନରେ ସମୀକ୍ଷା ପାଇଁ ପୁନଃନିର୍ଦ୍ଧାରିତ କରନ୍ତୁ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d ପତ୍ର reschedule ହୋଇଛି</item>
-        <item quantity="other">%dଟି ପତ୍ର reschedule ହୋଇଛି</item>
+        <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
+        <item quantity="other">%dଟି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
@@ -97,7 +97,7 @@
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
-    <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="custom_study_new_total_new">ତାସଖଣ୍ଡ ରେ ନୂତନ ପତ୍ରର ସଂଖ୍ୟା: %d</string>
     <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
@@ -105,7 +105,7 @@
     <string name="custom_study_forgotten">ଗତ x ଦିନରେ ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_ahead">x ଦିନ ପୂର୍ବରୁ ସମୀକ୍ଷା କରନ୍ତୁ:</string>
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
-    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ି ହୋଇଥିବା ନୂତନ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରନ୍ତୁ:</string>
+    <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ବାବଲୋକନ କରିବା:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
@@ -180,7 +180,7 @@
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଭାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ %dଟି ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି। ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="video_creation_error">ଭିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="video_creation_error">ଭିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->

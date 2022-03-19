@@ -16,8 +16,11 @@
 
 package com.ichi2.utils;
 
+import android.content.SharedPreferences;
+
 import com.google.common.collect.Sets;
-import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +30,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static java.util.Arrays.asList;
@@ -38,7 +44,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.oneOf;
 
 @RunWith(AndroidJUnit4.class)
-public class LanguageUtilsTest extends RobolectricTest {
+@Config(application = EmptyApplication.class)
+public class LanguageUtilsTest {
 
     /** The value of CURRENT_LANGUAGES before the last language update */
     private static final String[] PREVIOUS_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
@@ -92,7 +99,7 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeTwoLetterCodeResolves() {
         assertThat("A locale with a 3-letter code resolves correctly",
-                LanguageUtil.getLocale("af").getDisplayLanguage(),
+                getLocale("af").getDisplayLanguage(),
                 is("Afrikaans"));
     }
 
@@ -100,7 +107,7 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeThreeLetterCodeResolves() {
         assertThat("A locale with a 3-letter code resolves correctly",
-                LanguageUtil.getLocale("fil").getDisplayLanguage(),
+                getLocale("fil").getDisplayLanguage(),
                 is("Filipino"));
     }
 
@@ -108,10 +115,10 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeTwoLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("pt-BR").getDisplayName(),
+                getLocale("pt-BR").getDisplayName(),
                 is("Portuguese (Brazil)"));
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("pt_BR").getDisplayName(),
+                getLocale("pt_BR").getDisplayName(),
                 is("Portuguese (Brazil)"));
     }
 
@@ -119,11 +126,17 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeThreeLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("yue-TW").getDisplayName(),
+                getLocale("yue-TW").getDisplayName(),
                 oneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
         
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                LanguageUtil.getLocale("yue_TW").getDisplayName(),
+                getLocale("yue_TW").getDisplayName(),
                 oneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
+    }
+
+    @NonNull
+    private Locale getLocale(String localeCode) {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext());
+        return LanguageUtil.getLocale(localeCode, prefs);
     }
 }

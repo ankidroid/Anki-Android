@@ -31,7 +31,7 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
 
     private fun getKeyCodePrefix(): String {
         // KEY_PREFIX is not usable before API 23
-        val keyPrefix = if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) KEY_PREFIX.toString() else ""
+        val keyPrefix = if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) KEY_PREFIX.toString() else ""
 
         if (keycode == null) {
             return keyPrefix

@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Visada pranešti</item>
-        <item>Niekada nepranešti</item>
-        <item>Paklausti</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Sustabdyti kortelę</item>
-        <item>Tik žymos</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Naujos kortelės atsitiktine tvarka</item>
-        <item>Naujos kortelės pridėjimo tvarka</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Pirmiau rodyti senesnes</item>
-        <item>Atsitiktine tvarka</item>
-        <item>Didėjančiais intervalais</item>
-        <item>Mažėjančiais intervalais</item>
-        <item>Dažniausiai užmirštamos</item>
-        <item>Pagal pridėjimo eiliškumą</item>
-        <item>Pagal numatytų eiliškumą</item>
-        <item>Pirmiau rodyti vėliausiai pridėtas</item>
-        <item>Labiausiai pradelstos</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Naudoti dabartinį rinkinį</item>
-        <item>Spręsti pagal užrašo tipą</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Maišyti naujas korteles su peržiūrėtomis</item>
-        <item>Naujos kortelės po peržiūros</item>
-        <item>Naujos kortelės bus pateiktos prieš peržiūrėtas</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Kai kortelėse nenurodytas joks šriftas</item>
-        <item>Visada</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Šviesi</item>
-        <item>Paprastas</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Juodas</item>
-        <item>Tamsi</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Visada pranešti</string>
+    <string name="error_reporting_choice_never_report">Niekada nepranešti</string>
+    <string name="error_reporting_choice_ask_user">Paklausti</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Tik žymos</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Naujos kortelės atsitiktine tvarka</string>
+    <string name="new_order_order_added">Naujos kortelės pridėjimo tvarka</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Pirmiau rodyti senesnes</string>
+    <string name="cram_deck_conf_order_random">Atsitiktine tvarka</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Didėjančiais intervalais</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Mažėjančiais intervalais</string>
+    <string name="cram_deck_conf_order_most_lapsed">Dažniausiai užmirštamos</string>
+    <string name="cram_deck_conf_order_order_added">Pagal pridėjimo eiliškumą</string>
+    <string name="cram_deck_conf_order_order_due">Pagal numatytų eiliškumą</string>
+    <string name="cram_deck_conf_order_latest_added_first">Pirmiau rodyti vėliausiai pridėtas</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Labiausiai pradelstos</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Naudoti dabartinį rinkinį</string>
+    <string name="add_to_deck_decide_by_note_type">Spręsti pagal užrašo tipą</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Maišyti naujas korteles su peržiūrėtomis</string>
+    <string name="new_spread_new_after_review">Naujos kortelės po peržiūros</string>
+    <string name="new_spread_new_before_review">Naujos kortelės bus pateiktos prieš peržiūrėtas</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Kai kortelėse nenurodytas joks šriftas</string>
+    <string name="override_font_always">Visada</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Šviesi</string>
+    <string name="day_theme_plain">Paprastas</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Juodas</string>
+    <string name="night_theme_dark">Tamsi</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Nieko nedaryti</string>
     <string name="gesture_answer_1">Atsakymo mygtukas 1</string>
     <string name="gesture_answer_2">Atsakymo mygtukas 2</string>

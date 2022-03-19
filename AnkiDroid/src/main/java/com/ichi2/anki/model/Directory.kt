@@ -47,7 +47,7 @@ class Directory private constructor(val directory: File) {
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      */
     @Throws(IOException::class, SecurityException::class, NotDirectoryException::class)
-    fun hasFiles(): Boolean = CompatHelper.getCompat().hasFiles(directory)
+    fun hasFiles(): Boolean = CompatHelper.compat.hasFiles(directory)
 
     /** The [canonical path][java.io.File.getCanonicalPath] for the file */
     override fun toString(): String = directory.canonicalPath

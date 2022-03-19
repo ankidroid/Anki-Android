@@ -134,6 +134,7 @@
          minuto ang nakalipas.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
     <string name="default_font" maxLength="41">Default na font</string>

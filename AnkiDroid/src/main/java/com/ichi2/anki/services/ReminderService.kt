@@ -41,7 +41,7 @@ class ReminderService : BroadcastReceiver() {
             return
         }
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
+        val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
             context,
             deckId.toInt(),
             Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, deckId),
@@ -74,7 +74,7 @@ class ReminderService : BroadcastReceiver() {
         }
         if (col.decks.getConf(dConfId) == null) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
+            val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
                 context,
                 dConfId.toInt(),
                 Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, dConfId),
@@ -117,7 +117,7 @@ class ReminderService : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_stat_notify)
                 .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                 .setContentIntent(
-                    CompatHelper.getCompat().getImmutableActivityIntent(
+                    CompatHelper.compat.getImmutableActivityIntent(
                         context,
                         deckId.toInt(),
                         getReviewDeckIntent(context, deckId),

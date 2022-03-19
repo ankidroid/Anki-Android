@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Notifica sempre</item>
-        <item>Non segnalare mai</item>
-        <item>Chiedimi</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Sospendi carta</item>
-        <item>Etichetta soltanto</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Carte nuove in ordine casuale</item>
-        <item>Carte nuove in ordine di aggiunta</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Più vecchie visualizzate per prime</item>
-        <item>Casuale</item>
-        <item>Intervalli crescenti</item>
-        <item>Intervalli decrescenti</item>
-        <item>Maggior numero di errori</item>
-        <item>Ordine di aggiunta</item>
-        <item>Ordine di scadenza</item>
-        <item>Dapprima aggiunte più recentemente</item>
-        <item>Ritardo relativo</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Utilizza il mazzo attuale</item>
-        <item>Decidi per tipo di nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mescola le carte nuove e le ripetizioni</item>
-        <item>Carte nuove dopo le ripetizioni</item>
-        <item>Carte nuove prima delle ripetizioni</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Quando nessun tipo di carattere specificato nelle carte</item>
-        <item>Sempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Chiaro</item>
-        <item>Semplice</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Nero</item>
-        <item>Scuro</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-piccolo</item>
-        <item>x-piccolo</item>
-        <item>piccolo</item>
-        <item>medio</item>
-        <item>grande</item>
-        <item>x-grande</item>
-        <item>xx-grande</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Notifica sempre</string>
+    <string name="error_reporting_choice_never_report">Non segnalare mai</string>
+    <string name="error_reporting_choice_ask_user">Chiedimi</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Etichetta soltanto</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Carte nuove in ordine casuale</string>
+    <string name="new_order_order_added">Carte nuove in ordine di aggiunta</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Più vecchie visualizzate per prime</string>
+    <string name="cram_deck_conf_order_random">Casuale</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervalli crescenti</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervalli decrescenti</string>
+    <string name="cram_deck_conf_order_most_lapsed">Maggior numero di errori</string>
+    <string name="cram_deck_conf_order_order_added">Ordine di aggiunta</string>
+    <string name="cram_deck_conf_order_order_due">Ordine di scadenza</string>
+    <string name="cram_deck_conf_order_latest_added_first">Dapprima aggiunte più recentemente</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Ritardo relativo</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Utilizza il mazzo attuale</string>
+    <string name="add_to_deck_decide_by_note_type">Decidi per tipo di nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Mescola le carte nuove e le ripetizioni</string>
+    <string name="new_spread_new_after_review">Carte nuove dopo le ripetizioni</string>
+    <string name="new_spread_new_before_review">Carte nuove prima delle ripetizioni</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Quando nessun tipo di carattere specificato nelle carte</string>
+    <string name="override_font_always">Sempre</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Chiaro</string>
+    <string name="day_theme_plain">Semplice</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Nero</string>
+    <string name="night_theme_dark">Scuro</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-piccolo</string>
+    <string name="html_size_code_x_small">x-piccolo</string>
+    <string name="html_size_code_small">piccolo</string>
+    <string name="html_size_code_medium">medio</string>
+    <string name="html_size_code_large">grande</string>
+    <string name="html_size_code_x_large">x-grande</string>
+    <string name="html_size_code_xx_large">xx-grande</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Nessuna azione</string>
     <string name="gesture_answer_1">Pulsante risposta 1</string>
     <string name="gesture_answer_2">Pulsante risposta 2</string>

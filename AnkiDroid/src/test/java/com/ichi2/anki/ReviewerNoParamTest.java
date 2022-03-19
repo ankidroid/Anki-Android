@@ -78,9 +78,8 @@ public class ReviewerNoParamTest extends RobolectricTest {
     @Test
     public void whiteboardDarkModeColorIsUsed() {
         storeDarkModeColor(555);
-        enableDarkMode();
 
-        Whiteboard whiteboard = startReviewerForWhiteboard();
+        Whiteboard whiteboard = startReviewerForWhiteboardInDarkMode();
 
         assertThat("Pen color defaults to black", whiteboard.getPenColor(), is(555));
     }
@@ -98,9 +97,7 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
     @Test
     public void whiteboardPenColorChangeChangesDatabaseDark() {
-        enableDarkMode();
-
-        Whiteboard whiteboard = startReviewerForWhiteboard();
+        Whiteboard whiteboard = startReviewerForWhiteboardInDarkMode();
 
         whiteboard.setPenColor(ARBITRARY_PEN_COLOR_VALUE);
 
@@ -355,6 +352,22 @@ public class ReviewerNoParamTest extends RobolectricTest {
 
         Reviewer reviewer = startReviewer();
 
+        reviewer.toggleWhiteboard();
+
+        Whiteboard whiteboard = reviewer.getWhiteboard();
+        if (whiteboard == null) {
+            throw new IllegalStateException("Could not get whiteboard");
+        }
+        return whiteboard;
+    }
+
+    @CheckResult
+    @NonNull
+    protected Whiteboard startReviewerForWhiteboardInDarkMode() {
+        addNoteUsingBasicModel("Hello", "World");
+
+        Reviewer reviewer = startReviewer();
+        enableDarkMode();
         reviewer.toggleWhiteboard();
 
         Whiteboard whiteboard = reviewer.getWhiteboard();

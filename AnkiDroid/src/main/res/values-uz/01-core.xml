@@ -127,7 +127,6 @@
     <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
     <string name="new_deck">Paluba yaratish</string>
     <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
-    <string name="night_mode">Tungi rejim</string>
     <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -158,7 +157,8 @@
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Karta qo\'shish</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>

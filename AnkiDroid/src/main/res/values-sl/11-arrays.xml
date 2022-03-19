@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Vedno prijavi</item>
-        <item>Nikoli ne prijavi</item>
-        <item>Vprašaj me</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Pridrži kartico</item>
-        <item>Samo oznako</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Nove kartice v naključnem vrstnem redu</item>
-        <item>Nove kartice v vrstnem redu dodajanja</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Najprej videna najprej</item>
-        <item>Nakjučno</item>
-        <item>Naraščajoči razmiki</item>
-        <item>Padajoči razmiki</item>
-        <item>Z največ spodrsljaji</item>
-        <item>Vrs. red dodajanja</item>
-        <item>Vrs. red zapad.</item>
-        <item>Nazadnje dodana najprej</item>
-        <item>Relativna zapadlost</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Uporabi trenutni komplet</item>
-        <item>Odloči se po vrsti zapiska</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Premešaj nove kartice in preglede</item>
-        <item>Nove kartice za pregledi</item>
-        <item>Nove kartice pred pregledi</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Ko na pomnilnih karticah ni določena pisava</item>
-        <item>Vedno</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Svetla</item>
-        <item>Gola</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Črna</item>
-        <item>Temna</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Vedno prijavi</string>
+    <string name="error_reporting_choice_never_report">Nikoli ne prijavi</string>
+    <string name="error_reporting_choice_ask_user">Vprašaj me</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Samo oznako</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Nove kartice v naključnem vrstnem redu</string>
+    <string name="new_order_order_added">Nove kartice v vrstnem redu dodajanja</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Najprej videna najprej</string>
+    <string name="cram_deck_conf_order_random">Nakjučno</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Naraščajoči razmiki</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Padajoči razmiki</string>
+    <string name="cram_deck_conf_order_most_lapsed">Z največ spodrsljaji</string>
+    <string name="cram_deck_conf_order_order_added">Vrs. red dodajanja</string>
+    <string name="cram_deck_conf_order_order_due">Vrs. red zapad.</string>
+    <string name="cram_deck_conf_order_latest_added_first">Nazadnje dodana najprej</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Relativna zapadlost</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Uporabi trenutni komplet</string>
+    <string name="add_to_deck_decide_by_note_type">Odloči se po vrsti zapiska</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Premešaj nove kartice in preglede</string>
+    <string name="new_spread_new_after_review">Nove kartice za pregledi</string>
+    <string name="new_spread_new_before_review">Nove kartice pred pregledi</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Ko na pomnilnih karticah ni določena pisava</string>
+    <string name="override_font_always">Vedno</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Svetla</string>
+    <string name="day_theme_plain">Gola</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Črna</string>
+    <string name="night_theme_dark">Temna</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Brez dejanja</string>
     <string name="gesture_answer_1">1. gumb za odgovor</string>
     <string name="gesture_answer_2">2. gumb za odgovor</string>

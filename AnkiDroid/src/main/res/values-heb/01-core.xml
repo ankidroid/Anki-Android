@@ -137,7 +137,6 @@
     <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
-    <string name="night_mode">מצב לילה</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -168,7 +167,8 @@
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="empty_deck">החפיסה ריקה</string>
-    <string name="search_deck">חיפוש חפיסה</string>
+    <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">הוספת קלף</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>

@@ -65,21 +65,13 @@
                             android:textSize="28sp"
                             android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:id="@+id/studyoptions_deckinformation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_gravity="center_horizontal">
-
-                            <TableLayout
+                        <TableLayout
                                 android:id="@+id/studyoptions_deckcounts"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="16dp"
                                 android:layout_marginBottom="5dip"
                                 android:layout_marginEnd="3dip"
                                 android:layout_marginStart="5dip"
@@ -168,7 +160,6 @@
                                         android:gravity="end" />
                                 </TableRow>
                             </TableLayout>
-                        </LinearLayout>
                         <com.ichi2.ui.FixedTextView
                             android:id="@+id/studyoptions_deck_description"
                             android:layout_width="wrap_content"

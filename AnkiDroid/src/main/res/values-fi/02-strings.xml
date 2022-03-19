@@ -113,7 +113,7 @@
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Tallennetaan merkintää</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Tallennetaan muistiotyyppiä</string>
     <string name="save">Tallenna</string>
     <string name="close">Sulje</string>
     <string name="select">Valitse</string>
@@ -121,7 +121,7 @@
     <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">Aikaikkuna saavutettu</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
         <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
@@ -133,11 +133,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kortti</string>
     <string name="note_editor_copy_note">Kopioi muistiinpano</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_reposition_card">Uudelleenasettele</string>
     <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ajasta uudelleen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Esikatselu</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
     <string name="error_insufficient_memory">Operaatio ei ole mahdollista laitteesi vähäisen muistimäärän vuoksi</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Nimeä uudelleen</string>
     <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
@@ -159,7 +159,7 @@
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
     <string name="import_message_add_confirm">Lisää ”%s” kokoelmaan? Se voi kestää pitkään</string>
     <string name="import_log_no_apkg">Tämä ei ole salittu Anki-tiedosto</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
+    <string name="import_log_failed_unzip">Ei voitu purkaa apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
@@ -197,7 +197,7 @@
         ]]></string>
     <string name="export_unsuccessful">Virhe apkg-tiedoston tuonnissa</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valinnat</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__deck_options">Pakan asetukset</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts">Määritä TTS-kieli</string>
     <string name="custom_study">Mukautettu opiskelu</string>
@@ -238,7 +238,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s sekuntia</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -270,8 +270,8 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Palauta oletusarvot</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ecimerkki</string>
+    <string name="basic_answer_sample_text">esimerkki</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>

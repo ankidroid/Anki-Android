@@ -169,7 +169,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             pfd = activity.contentResolver.openFileDescriptor(uri!!, "w")
             if (pfd != null) {
                 fileOutputStream = FileOutputStream(pfd.fileDescriptor)
-                CompatHelper.getCompat().copyFile(mExportFileName, fileOutputStream)
+                CompatHelper.compat.copyFile(mExportFileName, fileOutputStream)
                 fileOutputStream.close()
                 pfd.close()
             } else {

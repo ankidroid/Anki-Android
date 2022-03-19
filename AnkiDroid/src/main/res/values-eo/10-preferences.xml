@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
     <string name="default_font" maxLength="41">Implicita tiparo</string>

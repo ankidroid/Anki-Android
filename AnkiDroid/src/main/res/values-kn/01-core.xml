@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">ಉಚ್ಚಾರಣೆಯನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="new_deck">ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_dynamic_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹ ರಚಿಸಿ</string>
-    <string name="night_mode">ರಾತ್ರಿ ಮೋಡ್</string>
     <string name="directory_inaccessible">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ ಅಧಿವೇಶನ</string>
     <string name="custom_study_deck_exists">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಕಸ್ಟಮ್ ಸ್ಟಡಿ ಡೆಕ್ ಅನ್ನು ಮೊದಲು ಮರುಹೆಸರಿಸಿ</string>
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
-    <string name="search_deck">ಡೆಕ್ ಹುಡುಕಾಟ</string>
+    <string name="search_deck" comment="Deck search for selecting it">ಡೆಕ್ ಹುಡುಕಾಟ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">ಕಾರ್ಡ್‌ ಸೇರಿಸಿ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_empty">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ. ಹೊಸ ವಿಷಯವನ್ನು ಸೇರಿಸಲು + ಬಟನ್ ಒತ್ತಿರಿ.</string>

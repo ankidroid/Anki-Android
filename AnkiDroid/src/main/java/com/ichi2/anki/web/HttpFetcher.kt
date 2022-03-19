@@ -151,7 +151,7 @@ object HttpFetcher {
             response = client.newCall(request).execute()
             val file = File.createTempFile(prefix!!, extension, context.cacheDir)
             val inputStream = response.body!!.byteStream()
-            CompatHelper.getCompat().copyFile(inputStream, file.canonicalPath)
+            CompatHelper.compat.copyFile(inputStream, file.canonicalPath)
             inputStream.close()
             file.absolutePath
         } catch (e: Exception) {

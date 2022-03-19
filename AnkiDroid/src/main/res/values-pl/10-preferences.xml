@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
     <string name="default_font" maxLength="41">Domyślna czcionka</string>

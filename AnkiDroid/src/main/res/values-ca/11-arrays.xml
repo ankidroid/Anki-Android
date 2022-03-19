@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Envia-ho sempre</item>
-        <item>No ho enviïs mai</item>
-        <item>Pregunta-ho</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspèn la fitxa</item>
-        <item>Només l\'etiqueta</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Mostra les fitxes noves desendreçades</item>
-        <item>Mostra les fitxes noves pel ordre en que s\'han afegit</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Primer les que fa més temps que no heu vist</item>
-        <item>A l\'atzar</item>
-        <item>A intervals creixents</item>
-        <item>A intervals decreixents</item>
-        <item>Més espaiades</item>
-        <item>Ordre en que s\'han afegit</item>
-        <item>Per ordre de venciment</item>
-        <item>Primera les darrers que s\'ahn afegit</item>
-        <item>Retràs d\'entrega relatiu</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Utilitza aquest paquet</item>
-        <item>Dedueix pel tipus de nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Barreja cartes noves i revisions</item>
-        <item>Cartes noves després de revisions</item>
-        <item>Cartes noves abans de revisions</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Quan cap font està especificada en les flashcards</item>
-        <item>Sempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Clar</item>
-        <item>Pla</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Negre</item>
-        <item>Fosc</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>petitíssim</item>
-        <item>molt petit</item>
-        <item>petit</item>
-        <item>mitjà</item>
-        <item>gran</item>
-        <item>molt gran</item>
-        <item>immens</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Envia-ho sempre</string>
+    <string name="error_reporting_choice_never_report">No ho enviïs mai</string>
+    <string name="error_reporting_choice_ask_user">Pregunta-ho</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Només l\'etiqueta</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Mostra les fitxes noves desendreçades</string>
+    <string name="new_order_order_added">Mostra les fitxes noves pel ordre en que s\'han afegit</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Primer les que fa més temps que no heu vist</string>
+    <string name="cram_deck_conf_order_random">A l\'atzar</string>
+    <string name="cram_deck_conf_order_increasing_intervals">A intervals creixents</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">A intervals decreixents</string>
+    <string name="cram_deck_conf_order_most_lapsed">Més espaiades</string>
+    <string name="cram_deck_conf_order_order_added">Ordre en que s\'han afegit</string>
+    <string name="cram_deck_conf_order_order_due">Per ordre de venciment</string>
+    <string name="cram_deck_conf_order_latest_added_first">Primera les darrers que s\'ahn afegit</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Retràs d\'entrega relatiu</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Utilitza aquest paquet</string>
+    <string name="add_to_deck_decide_by_note_type">Dedueix pel tipus de nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Barreja cartes noves i revisions</string>
+    <string name="new_spread_new_after_review">Cartes noves després de revisions</string>
+    <string name="new_spread_new_before_review">Cartes noves abans de revisions</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Quan cap font està especificada en les flashcards</string>
+    <string name="override_font_always">Sempre</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Clar</string>
+    <string name="day_theme_plain">Pla</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Negre</string>
+    <string name="night_theme_dark">Fosc</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">petitíssim</string>
+    <string name="html_size_code_x_small">molt petit</string>
+    <string name="html_size_code_small">petit</string>
+    <string name="html_size_code_medium">mitjà</string>
+    <string name="html_size_code_large">gran</string>
+    <string name="html_size_code_x_large">molt gran</string>
+    <string name="html_size_code_xx_large">immens</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Cap acció</string>
     <string name="gesture_answer_1">Botó de resposta 1</string>
     <string name="gesture_answer_2">Botó de resposta 2</string>

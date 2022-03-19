@@ -45,7 +45,7 @@ class MoveDirectoryContent private constructor(val source: FileStream, val desti
          * @throws [SecurityException] – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
          */
         fun createInstance(source: Directory, destination: File): MoveDirectoryContent =
-            MoveDirectoryContent(CompatHelper.getCompat().contentOfDirectory(source.directory), destination)
+            MoveDirectoryContent(CompatHelper.compat.contentOfDirectory(source.directory), destination)
     }
 
     override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {
