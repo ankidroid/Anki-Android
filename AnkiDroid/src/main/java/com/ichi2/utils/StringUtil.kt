@@ -25,9 +25,8 @@ object StringUtil {
     @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun trimRight(s: String?): String? {
-        if (s == null) {
-            return null
-        }
+        if (s == null) return null
+
         var newLength = s.length
         while (newLength > 0 && Character.isWhitespace(s[newLength - 1])) {
             newLength--
@@ -46,9 +45,8 @@ object StringUtil {
     @JvmStatic
     @Contract("null -> null; !null -> !null")
     fun strip(string: String?): String? {
-        if (string == null || string.length == 0) {
-            return string
-        }
+        if (string.isNullOrEmpty()) return string
+
         var start = 0
         while (start < string.length && Character.isWhitespace(string[start])) {
             start++
@@ -68,14 +66,10 @@ object StringUtil {
     /** Converts the string to where the first letter is uppercase, and the rest of the string is lowercase  */
     @JvmStatic
     @Contract("null -> null; !null -> !null")
-    fun toTitleCase(_s: String?): String? {
-        var s = _s
-        if (s == null) {
-            return null
-        }
-        if (s.length > 0) {
-            s = s.substring(0, 1).uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
-        }
-        return s
+    fun toTitleCase(s: String?): String? {
+        if (s == null) return null
+        if (s.isBlank()) return s
+
+        return s.substring(0, 1).uppercase(Locale.getDefault()) + s.substring(1).lowercase(Locale.getDefault())
     }
 }
