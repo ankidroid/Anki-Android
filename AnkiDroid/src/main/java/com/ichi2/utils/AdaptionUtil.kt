@@ -133,8 +133,8 @@ object AdaptionUtil {
     }
 
     // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
-    private fun isIntentResolved(ctx: Context, intent: Intent?): Boolean {
-        return intent != null && ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
+    private fun isIntentResolved(ctx: Context, intent: Intent): Boolean {
+        return ctx.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null
     }
 
     /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company)  */
