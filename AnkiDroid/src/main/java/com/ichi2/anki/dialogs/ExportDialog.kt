@@ -42,10 +42,7 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
      */
     @JvmOverloads
     fun withArguments(dialogMessage: String, did: Long? = null): ExportDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         if (did != null) {
             args.putLong("did", did)
         }
