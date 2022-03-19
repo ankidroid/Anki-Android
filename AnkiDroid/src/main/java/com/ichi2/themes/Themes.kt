@@ -223,7 +223,7 @@ object Themes {
      * @return if user current selected theme is "Follow system"
      */
     @JvmStatic
-    fun themeFollowsSystem(context: Context?): Boolean {
+    fun themeFollowsSystem(context: Context): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(context)
         val selectedAppTheme = prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE)
         return selectedAppTheme == FOLLOW_SYSTEM_MODE
