@@ -22,8 +22,6 @@ package com.ichi2.anki.multimediacard
 import android.media.MediaPlayer
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
-import kotlin.Throws
 
 class AudioPlayer {
     private var mPlayer: MediaPlayer? = null
@@ -44,17 +42,11 @@ class AudioPlayer {
     }
 
     private fun onStopped() {
-        if (mOnStoppedListener == null) {
-            return
-        }
-        mOnStoppedListener!!.run()
+        mOnStoppedListener?.run()
     }
 
     private fun onStopping() {
-        if (mOnStoppingListener == null) {
-            return
-        }
-        mOnStoppingListener!!.run()
+        mOnStoppingListener?.run()
     }
 
     fun start() {
