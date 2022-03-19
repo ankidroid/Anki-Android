@@ -16,7 +16,8 @@
 package com.ichi2.compat
 
 import android.os.Build
-import android.view.KeyCharacterMap
+import android.view.KeyCharacterMap.deviceHasKey
+import android.view.KeyEvent.*
 
 class CompatHelper private constructor() {
 
@@ -59,11 +60,11 @@ class CompatHelper private constructor() {
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
         fun hasKanaAndEmojiKeys(): Boolean {
-            return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95)
+            return deviceHasKey(KEYCODE_SWITCH_CHARSET) && deviceHasKey(KEYCODE_PICTSYMBOLS)
         }
 
         fun hasScrollKeys(): Boolean {
-            return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93)
+            return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
         }
     }
 }
