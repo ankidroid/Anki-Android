@@ -42,6 +42,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.NotDirectoryException;
+import java.util.Stack;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -297,5 +299,29 @@ public class CompatV21 implements Compat {
                 return paths[mOrd++];
             }
         };
+    }
+
+
+    @Override
+    public void createDirectories(File directory) throws IOException {
+        Stack<File> directoriesToCreate = new Stack<>();
+        @NonNull File directoryToProcess = directory;
+        while (!directoryToProcess.exists()) {
+            directoriesToCreate.add(directoryToProcess);
+            File parent = directoryToProcess.getParentFile();
+            if (parent == null) {
+                throw new IOException(directory + " has no ancestor that is a directory. It should not be possible.");
+            }
+            directoryToProcess = parent;
+        }
+        if (!directoryToProcess.isDirectory()) {
+            throw new NotDirectoryException(directoryToProcess);
+        }
+        while (!directoriesToCreate.isEmpty()) {
+            File directoryToCreate = directoriesToCreate.pop();
+            if (!directoryToCreate.mkdir()) {
+                throw new IOException("Impossible to create " + directoryToCreate);
+            }
+        }
     }
 }

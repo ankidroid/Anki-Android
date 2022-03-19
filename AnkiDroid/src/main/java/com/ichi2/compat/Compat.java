@@ -279,5 +279,23 @@ public interface Compat {
      * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
      */
     @NonNull FileStream contentOfDirectory(File directory) throws IOException  ;
+
+
+    /**
+     * Same as [File::createDirectories]
+     * @param directory a directory to create. Create parents if necessary
+     * @throws IOException
+     */
+    void createDirectories(File directory) throws IOException;
+
+    class NotDirectoryException extends IOException {
+        private File mFile;
+        NotDirectoryException(File file) {
+            mFile = file;
+        }
+        public File getFile() {
+            return mFile;
+        }
+    }
 }
 

@@ -230,4 +230,10 @@ public class CompatV26 extends CompatV23 implements Compat {
             }
         };
     }
+
+
+    @Override
+    public void createDirectories(File directory) throws IOException {
+        Files.createDirectories(directory.toPath());
+    }
 }
