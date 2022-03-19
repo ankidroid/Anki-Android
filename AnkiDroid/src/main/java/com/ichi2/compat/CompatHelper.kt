@@ -17,15 +17,21 @@ package com.ichi2.compat
 
 import android.os.Build
 import android.view.KeyCharacterMap
-import com.ichi2.utils.KotlinCleanup
 
 class CompatHelper private constructor() {
 
-    @KotlinCleanup("inline & convert to when")
-    private val compatValue: Compat
+    // Note: Needs ": Compat" or the type system assumes `Compat21`
+    private val compatValue: Compat = when {
+        sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+        sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
+        sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
+        sdkVersion >= Build.VERSION_CODES.M -> CompatV23()
+        else -> CompatV21()
+    }
 
     companion object {
-        private var sInstance: CompatHelper? = null
+        /** Singleton instance of [CompatHelper] */
+        private val instance by lazy { CompatHelper() }
 
         /** Get the current Android API level.  */
         @JvmStatic
@@ -43,16 +49,6 @@ class CompatHelper private constructor() {
         @JvmStatic
         val compat get() = instance.compatValue
 
-        @get:Synchronized
-        @KotlinCleanup("lazy")
-        val instance: CompatHelper
-            get() {
-                if (sInstance == null) {
-                    sInstance = CompatHelper()
-                }
-                return sInstance!!
-            }
-
         val isChromebook: Boolean
             get() = (
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
@@ -68,20 +64,6 @@ class CompatHelper private constructor() {
 
         fun hasScrollKeys(): Boolean {
             return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93)
-        }
-    }
-
-    init {
-        if (sdkVersion >= Build.VERSION_CODES.S) {
-            compatValue = CompatV31()
-        } else if (sdkVersion >= Build.VERSION_CODES.Q) {
-            compatValue = CompatV29()
-        } else if (sdkVersion >= Build.VERSION_CODES.O) {
-            compatValue = CompatV26()
-        } else if (sdkVersion >= Build.VERSION_CODES.M) {
-            compatValue = CompatV23()
-        } else {
-            compatValue = CompatV21()
         }
     }
 }
