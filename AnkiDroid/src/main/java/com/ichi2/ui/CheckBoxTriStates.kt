@@ -13,252 +13,194 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.AttributeSet;
-import android.widget.CompoundButton;
-
-import com.ichi2.anki.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatCheckBox;
-
-import static com.ichi2.ui.CheckBoxTriStates.State.*;
+import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
+import android.util.AttributeSet
+import android.widget.CompoundButton.OnCheckedChangeListener
+import androidx.appcompat.widget.AppCompatCheckBox
+import com.ichi2.anki.R
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * Based on https://gist.github.com/kevin-barrientos/d75a5baa13a686367d45d17aaec7f030.
  */
-public class CheckBoxTriStates extends AppCompatCheckBox {
-
-    public enum State {
-        INDETERMINATE,
-        UNCHECKED,
-        CHECKED
+@KotlinCleanup("IDE-based lint")
+class CheckBoxTriStates : AppCompatCheckBox {
+    enum class State {
+        INDETERMINATE, UNCHECKED, CHECKED
     }
 
-
-    private State mState;
-    private boolean mCycleBackToIndeterminate;
+    private var mState: State = State.UNCHECKED
+    @KotlinCleanup("move setter function here")
+    private var mCycleBackToIndeterminate = false
 
     /**
      * This is the listener set to the super class which is going to be invoked each
      * time the check state has changed.
      */
-    private final OnCheckedChangeListener mPrivateListener = new CompoundButton.OnCheckedChangeListener() {
-
+    private val mPrivateListener = OnCheckedChangeListener { _, _ ->
         // checkbox status is changed from unchecked to checked.
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            toggle();
-        }
-    };
+        toggle()
+    }
 
     /**
      * Holds a reference to the listener set by a client, if any.
      */
-    private OnCheckedChangeListener mClientListener;
+    private var mClientListener: OnCheckedChangeListener? = null
 
     /**
-     * This flag is needed to avoid accidentally changing the current {@link #mState} when
-     * {@link #onRestoreInstanceState(Parcelable)} calls {@link #setChecked(boolean)}
-     * invoking our {@link #mPrivateListener} and therefore changing the real state.
+     * This flag is needed to avoid accidentally changing the current [mState] when
+     * [onRestoreInstanceState] calls [setChecked]
+     * invoking our [mPrivateListener] and therefore changing the real state.
      */
-    private boolean mRestoring;
+    private var mRestoring = false
 
-
-    public CheckBoxTriStates(Context context) {
-        super(context);
-        init(context, null);
+    constructor(context: Context) : super(context) {
+        init(context, null)
     }
 
-
-    public CheckBoxTriStates(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(context, attrs)
     }
 
-
-    public CheckBoxTriStates(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        init(context, attrs)
     }
 
-
-    public State getState() {
-        return mState;
-    }
-
-
-    public void setState(State state) {
-        if (!this.mRestoring && this.mState != state) {
-            this.mState = state;
-
-            if (this.mClientListener != null) {
-                this.mClientListener.onCheckedChanged(this, this.isChecked());
-            }
-
-            updateBtn();
-        }
-    }
-
-
-    @Override
-    public void toggle() {
-        switch (mState) {
-            case INDETERMINATE:
-                setState(UNCHECKED);
-                break;
-            case UNCHECKED:
-                setState(CHECKED);
-                break;
-            case CHECKED:
-                if (mCycleBackToIndeterminate) {
-                    setState(INDETERMINATE);
-                } else {
-                    setState(UNCHECKED);
+    @KotlinCleanup("use ?.let")
+    var state: State
+        get() = mState
+        set(state) {
+            if (!mRestoring && mState != state) {
+                mState = state
+                if (mClientListener != null) {
+                    mClientListener!!.onCheckedChanged(this, this.isChecked)
                 }
-                break;
+                updateBtn()
+            }
+        }
+
+    override fun toggle() {
+        when (mState) {
+            State.INDETERMINATE -> state = State.UNCHECKED
+            State.UNCHECKED -> state = State.CHECKED
+            State.CHECKED -> state = if (mCycleBackToIndeterminate) {
+                State.INDETERMINATE
+            } else {
+                State.UNCHECKED
+            }
         }
     }
 
-
-    @Override
-    public void setChecked(boolean checked) {
-        mState = checked ? CHECKED : UNCHECKED;
+    @KotlinCleanup("Should be according to code style.")
+    override fun setChecked(checked: Boolean) {
+        mState = if (checked) State.CHECKED else State.UNCHECKED
     }
 
-
-    @Override
-    public boolean isChecked() {
-        return mState != UNCHECKED;
+    override fun isChecked(): Boolean {
+        return mState != State.UNCHECKED
     }
 
-
-    public void setCycleBackToIndeterminate(boolean cycleBackToIndeterminate) {
-        mCycleBackToIndeterminate = cycleBackToIndeterminate;
+    fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
+        mCycleBackToIndeterminate = cycleBackToIndeterminate
     }
 
-
-    @Override
-    public void setOnCheckedChangeListener(@Nullable OnCheckedChangeListener listener) {
+    override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
 
         // we never truly set the listener to the client implementation, instead we only hold
         // a reference to it and invoke it when needed.
-        if (this.mPrivateListener != listener) {
-            this.mClientListener = listener;
+        if (mPrivateListener !== listener) {
+            mClientListener = listener
         }
 
         // always use our implementation
-        super.setOnCheckedChangeListener(mPrivateListener);
+        super.setOnCheckedChangeListener(mPrivateListener)
     }
 
-
-    @Override
-    public Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
-
-        SavedState ss = new SavedState(superState);
-
-        ss.mState = mState;
-        ss.mCycleBackToIndeterminate = mCycleBackToIndeterminate;
-
-        return ss;
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()
+        val ss = SavedState(superState)
+        ss.state = mState
+        ss.cycleBackToIndeterminate = mCycleBackToIndeterminate
+        return ss
     }
 
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        this.mRestoring = true; // indicates that the ui is restoring its state
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-        setState(ss.mState);
-        setCycleBackToIndeterminate(ss.mCycleBackToIndeterminate);
-        requestLayout();
-        this.mRestoring = false;
+    @KotlinCleanup("fix 'ss' variable name")
+    override fun onRestoreInstanceState(state: Parcelable) {
+        mRestoring = true // indicates that the ui is restoring its state
+        val ss = state as SavedState
+        super.onRestoreInstanceState(ss.superState)
+        this.state = ss.state
+        setCycleBackToIndeterminate(ss.cycleBackToIndeterminate)
+        requestLayout()
+        mRestoring = false
     }
 
-
-    private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
-        mCycleBackToIndeterminate = true;
+    private fun init(context: Context, attrs: AttributeSet?) {
+        mCycleBackToIndeterminate = true
         if (attrs != null) {
-            TypedArray a = context.getTheme().obtainStyledAttributes(
-                    attrs, R.styleable.CheckBoxTriStates, 0, 0);
-            mCycleBackToIndeterminate = a.getBoolean(R.styleable.CheckBoxTriStates_cycle_back_to_indeterminate,
-                    mCycleBackToIndeterminate);
+            val a = context.theme.obtainStyledAttributes(
+                attrs, R.styleable.CheckBoxTriStates, 0, 0
+            )
+            mCycleBackToIndeterminate = a.getBoolean(
+                R.styleable.CheckBoxTriStates_cycle_back_to_indeterminate,
+                mCycleBackToIndeterminate
+            )
         }
-        mState = UNCHECKED;
-        updateBtn();
-        setOnCheckedChangeListener(this.mPrivateListener);
+        updateBtn()
+        setOnCheckedChangeListener(mPrivateListener)
     }
 
-
-    private void updateBtn() {
-        int btnDrawable;
-        switch (mState) {
-            case UNCHECKED:
-                btnDrawable = R.drawable.ic_baseline_check_box_outline_blank_24;
-                break;
-            case CHECKED:
-                btnDrawable = R.drawable.ic_baseline_check_box_24;
-                break;
-            default:
-                btnDrawable = R.drawable.ic_baseline_indeterminate_check_box_24;
+    private fun updateBtn() {
+        val btnDrawable: Int
+        btnDrawable = when (mState) {
+            State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24
+            State.CHECKED -> R.drawable.ic_baseline_check_box_24
+            else -> R.drawable.ic_baseline_indeterminate_check_box_24
         }
-        setButtonDrawable(btnDrawable);
+        setButtonDrawable(btnDrawable)
     }
 
+    @KotlinCleanup("https://stackoverflow.com/a/69476454")
+    private class SavedState : BaseSavedState {
+        lateinit var state: State
+        var cycleBackToIndeterminate = false
 
-    private static class SavedState extends BaseSavedState {
-        State mState;
-        boolean mCycleBackToIndeterminate;
-
-        SavedState(Parcelable superState) {
-            super(superState);
+        internal constructor(superState: Parcelable?) : super(superState) {}
+        private constructor(`in`: Parcel) : super(`in`) {
+            state = State.values()[`in`.readInt()]
+            cycleBackToIndeterminate = `in`.readInt() != 0
         }
 
-
-        private SavedState(Parcel in) {
-            super(in);
-            mState = State.values()[in.readInt()];
-            mCycleBackToIndeterminate = in.readInt() != 0;
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeValue(state)
+            out.writeInt(if (cycleBackToIndeterminate) 1 else 0)
         }
 
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeValue(mState);
-            out.writeInt(mCycleBackToIndeterminate ? 1 : 0);
+        override fun toString(): String {
+            return (
+                "CheckboxTriState.SavedState{" +
+                    Integer.toHexString(System.identityHashCode(this)) +
+                    " state=" + state +
+                    " cycleBackToIndeterminate=" + cycleBackToIndeterminate + "}"
+                )
         }
 
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(`in`: Parcel): SavedState {
+                    return SavedState(`in`)
+                }
 
-        @Override
-        public String toString() {
-            return "CheckboxTriState.SavedState{"
-                    + Integer.toHexString(System.identityHashCode(this))
-                    + " state=" + mState
-                    + " cycleBackToIndeterminate=" + mCycleBackToIndeterminate + "}";
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
         }
-
-
-        @SuppressWarnings("hiding")
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    @Override
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-
-                    @Override
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
-
     }
 }
