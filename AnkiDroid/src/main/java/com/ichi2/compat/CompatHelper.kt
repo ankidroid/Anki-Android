@@ -18,7 +18,17 @@ package com.ichi2.compat
 import android.os.Build
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
+import com.ichi2.compat.CompatHelper.Companion.compat
 
+/**
+ * Selects a [Compat] class based on the device's [Build.VERSION.SDK_INT]
+ *
+ * Use [compat] to obtain this instance:
+ *
+ * ```kotlin
+ *     CompatHelper.compat.copyFile(stream, path)
+ * ```
+ */
 class CompatHelper private constructor() {
 
     // Note: Needs ": Compat" or the type system assumes `Compat21`
