@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.stats
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -45,6 +46,7 @@ class ChartView : View {
         setWillNotDraw(false)
     }
 
+    @SuppressLint("DrawAllocation")
     public override fun onDraw(canvas: Canvas) {
         // Timber.d("drawing chart");
         if (mDataIsSet) {

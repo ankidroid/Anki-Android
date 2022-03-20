@@ -52,7 +52,7 @@
     <issue id="RtlCompat" severity="fatal" />
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
-
+    <issue id="DrawAllocation" severity="fatal" />
     <issue id="RedundantNamespace" severity="fatal" />
     <issue id="TextFields" severity="fatal" />
     <issue id="LogConditional" severity="fatal" />
@@ -211,7 +211,6 @@
     <issue id="TrustAllX509TrustManager" severity="ignore" />
     <issue id="InvalidImeActionId" severity="ignore" />
     <issue id="InvalidPackage" severity="ignore" />
-    <issue id="DrawAllocation" severity="fatal" />
     <issue id="UseSparseArrays" severity="ignore" />
     <issue id="UseValueOf" severity="ignore" />
     <issue id="JavascriptInterface" severity="ignore" />
