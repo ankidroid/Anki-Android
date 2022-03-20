@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Controlla la pronuncia</string>
     <string name="new_deck">Crea mazzo</string>
     <string name="new_dynamic_deck">Crea mazzo filtrato</string>
-    <string name="night_mode">Modalità notturna</string>
     <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
-    <string name="search_deck">Ricerca mazzo</string>
+    <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Aggiungi carta</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>

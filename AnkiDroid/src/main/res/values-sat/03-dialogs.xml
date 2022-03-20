@@ -76,9 +76,9 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
-        <item quantity="other">ᱠᱟᱰ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Reschedule %d card</item>
+        <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>

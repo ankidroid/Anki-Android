@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Supre</item>
         <item>Sube</item>
-        <item>None</item>
+        <item>Neniu</item>
     </string-array>
     <string name="gestures" maxLength="41">Enŝalti gestojn</string>
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>
@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
     <string name="default_font" maxLength="41">Implicita tiparo</string>
@@ -204,7 +205,7 @@
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
-    <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
+    <string name="html_javascript_debugging_summ">Aktivigi forajn konektojn por WebView kaj konservi HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
     <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
@@ -214,9 +215,9 @@
     <string name="media_import_allow_all_files" maxLength="41">Ĉiuj dosieroj dum enporti aŭdvidaĵojn</string>
     <string name="media_import_allow_all_files_summ">Se Android ne povas rekoni dosierojn de aŭdvidaĵojn</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">Implicite montri statistikojn por</string>
+    <string name="stats_default_deck_current">la antaŭe malfermita kartaro</string>
+    <string name="stats_default_deck_all">ĉiuj kartaroj</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>

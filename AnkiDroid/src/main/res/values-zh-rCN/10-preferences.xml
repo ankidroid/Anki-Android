@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>
     <string name="default_font" maxLength="41">默认字体</string>
@@ -214,9 +215,9 @@
     <string name="media_import_allow_all_files" maxLength="41">允许媒体导入中的所有文件</string>
     <string name="media_import_allow_all_files_summ">如果安卓系统不识别媒体文件</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">打开统计数据时默认牌组</string>
+    <string name="stats_default_deck_current">显示最近牌组的统计数据</string>
+    <string name="stats_default_deck_all">显示所有牌组的统计数据</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高级统计</string>
     <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>

@@ -52,7 +52,7 @@ object NotificationChannels {
     @JvmStatic
     fun setup(context: Context) {
         val res = context.resources
-        val compat = CompatHelper.getCompat()
+        val compat = CompatHelper.compat
         for (channel in Channel.values()) {
             compat.setupNotificationChannel(context, getId(channel), getName(channel, res))
         }

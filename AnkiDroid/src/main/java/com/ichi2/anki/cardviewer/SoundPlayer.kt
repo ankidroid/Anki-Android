@@ -31,7 +31,7 @@ import com.ichi2.libanki.TTSTag
  *
  * https://docs.ankiweb.net/templates/fields.html?highlight=tts#text-to-speech
  * No manual reference for [sound:], but this handles Sound or Video with a reference to the file
- * in the media folder.
+ * in the media directory.
  *
  * AnkiDroid also introduced a "tts" setting, which existed before Anki Desktop TTS.
  * This only allowed TTS if a setting was enabled,

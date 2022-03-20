@@ -31,6 +31,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
+import kotlin.math.sqrt
 
 class AnkiDroidWidgetSmall : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -69,8 +70,6 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                 .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
         }
 
-        @KotlinCleanup("Fill in the Deprecated annotation below")
-        @Deprecated("")
         override fun onStart(intent: Intent, startId: Int) {
             Timber.i("SmallWidget: OnStart")
             val updateViews = buildUpdate(this, true)
@@ -133,14 +132,14 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                     } else {
                         updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.INVISIBLE)
                         updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_due, Integer.toString(mDueCardsCount))
+                        updateViews.setTextViewText(R.id.widget_due, mDueCardsCount.toString())
                         updateViews.setContentDescription(R.id.widget_due, context.resources.getQuantityString(R.plurals.widget_cards_due, mDueCardsCount, mDueCardsCount))
                     }
                     if (eta <= 0 || mDueCardsCount <= 0) {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta))
+                        updateViews.setTextViewText(R.id.widget_eta, eta.toString())
                         updateViews.setContentDescription(R.id.widget_eta, context.resources.getQuantityString(R.plurals.widget_eta, eta, eta))
                     }
                 }
@@ -151,7 +150,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
             val ankiDroidIntent = Intent(context, IntentHandler::class.java)
             ankiDroidIntent.action = Intent.ACTION_MAIN
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pendingAnkiDroidIntent = CompatHelper.getCompat().getImmutableActivityIntent(
+            val pendingAnkiDroidIntent = CompatHelper.compat.getImmutableActivityIntent(
                 context, 0, ankiDroidIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
@@ -190,11 +189,11 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                 if (width / height > 0.8) {
                     horizontal = (((width - height * 0.8) / 2 + 4) * scale + 0.5f).toInt()
                     vertical = (4 * scale + 0.5f).toInt()
-                    text = (Math.sqrt(height * 0.8 / width) * 18).toFloat()
+                    text = (sqrt(height * 0.8 / width) * 18).toFloat()
                 } else {
                     vertical = (((height - width * 1.25) / 2 + 4) * scale + 0.5f).toInt()
                     horizontal = (4 * scale + 0.5f).toInt()
-                    text = (Math.sqrt(width * 1.25 / height) * 18).toFloat()
+                    text = (sqrt(width * 1.25 / height) * 18).toFloat()
                 }
                 updateViews.setTextViewTextSize(R.id.widget_due, TypedValue.COMPLEX_UNIT_SP, text)
                 updateViews.setTextViewTextSize(R.id.widget_eta, TypedValue.COMPLEX_UNIT_SP, text)

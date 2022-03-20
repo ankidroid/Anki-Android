@@ -164,7 +164,7 @@ open class BackupManager {
             val zos = ZipOutputStream(BufferedOutputStream(FileOutputStream(backupFile)))
             val ze = ZipEntry(CollectionHelper.COLLECTION_FILENAME)
             zos.putNextEntry(ze)
-            CompatHelper.getCompat().copyFile(colPath, zos)
+            CompatHelper.compat.copyFile(colPath, zos)
             zos.close()
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
@@ -284,11 +284,11 @@ open class BackupManager {
                     Timber.e("repairCollection - dump to %s.tmp failed", deckPath)
                     return false
                 }
-                if (!moveDatabaseToBrokenFolder(deckPath, false, time)) {
-                    Timber.e("repairCollection - could not move corrupt file to broken folder")
+                if (!moveDatabaseToBrokenDirectory(deckPath, false, time)) {
+                    Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
                 }
-                Timber.i("repairCollection - moved corrupt file to broken folder")
+                Timber.i("repairCollection - moved corrupt file to broken directory")
                 val repairedFile = File("$deckPath.tmp")
                 return repairedFile.renameTo(deckFile)
             } catch (e: IOException) {
@@ -299,7 +299,7 @@ open class BackupManager {
             return false
         }
 
-        fun moveDatabaseToBrokenFolder(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
             val colFile = File(colPath)
 
             // move file

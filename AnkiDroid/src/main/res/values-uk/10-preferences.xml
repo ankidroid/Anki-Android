@@ -88,7 +88,7 @@
     <string-array name="answer_buttons_position_labels">
         <item>Вгорі</item>
         <item>Внизу</item>
-        <item>None</item>
+        <item>Немає</item>
     </string-array>
     <string name="gestures" maxLength="41">Увімкнути жести</string>
     <string name="gestures_summ">Використовувати жести для таких дій, як відповідь і редагування карток.</string>
@@ -134,6 +134,7 @@
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
     <string name="default_font" maxLength="41">Шрифт за замовчуванням</string>
@@ -216,8 +217,8 @@
     <string name="media_import_allow_all_files_summ">Якщо Android не розпізнає медіа-файл</string>
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_current">Показати статистику для нещодавньої колоди</string>
+    <string name="stats_default_deck_all">Показати статистику для всіх колод</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>

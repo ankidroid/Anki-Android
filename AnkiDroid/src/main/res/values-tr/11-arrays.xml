@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Her zaman bildir</item>
-        <item>Hiçbir zaman bildirme</item>
-        <item>Bana sor</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Kartı askıya al</item>
-        <item>Yalnızca etiket</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Yeni kartlar rastgele sırada</item>
-        <item>Yeni kartlar ekleniş sırasına göre</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Önce en eski görüntülenir</item>
-        <item>Rastgele</item>
-        <item>Artan aralıkta</item>
-        <item>Azalan aralıkta</item>
-        <item>En çok yanıltan</item>
-        <item>Ekleniş sırası</item>
-        <item>Çıkma sırası</item>
-        <item>En son eklenenler ilk</item>
-        <item>Görece vadesi geçmişlik</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Geçerli desteyi kullan</item>
-        <item>Not türüne göre karar ver</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Yeni kartları ve çalışmaları karıştır</item>
-        <item>Yeni kartlar tekrardan sonra</item>
-        <item>Yeni kartlar tekrardan önce</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Bilgi kartlarında font belirtilmediği zaman</item>
-        <item>Her zaman</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Açık</item>
-        <item>Düz</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Siyah</item>
-        <item>Koyu</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>çok çok küçük</item>
-        <item>çok küçük</item>
-        <item>küçük</item>
-        <item>orta</item>
-        <item>büyük</item>
-        <item>çok büyük</item>
-        <item>çok çok büyük</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Her zaman bildir</string>
+    <string name="error_reporting_choice_never_report">Hiçbir zaman bildirme</string>
+    <string name="error_reporting_choice_ask_user">Bana sor</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Yalnızca etiket</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Yeni kartlar rastgele sırada</string>
+    <string name="new_order_order_added">Yeni kartlar ekleniş sırasına göre</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görüntülenir</string>
+    <string name="cram_deck_conf_order_random">Rastgele</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Artan aralıkta</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Azalan aralıkta</string>
+    <string name="cram_deck_conf_order_most_lapsed">En çok yanıltan</string>
+    <string name="cram_deck_conf_order_order_added">Ekleniş sırası</string>
+    <string name="cram_deck_conf_order_order_due">Çıkma sırası</string>
+    <string name="cram_deck_conf_order_latest_added_first">En son eklenenler ilk</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Görece vadesi geçmişlik</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
+    <string name="add_to_deck_decide_by_note_type">Not türüne göre karar ver</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Yeni kartları ve çalışmaları karıştır</string>
+    <string name="new_spread_new_after_review">Yeni kartlar çalışmalardan sonra</string>
+    <string name="new_spread_new_before_review">Yeni kartlar çalışmalardan önce</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Bilgi kartlarında font belirtilmediği zaman</string>
+    <string name="override_font_always">Her zaman</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Açık</string>
+    <string name="day_theme_plain">Düz</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Siyah</string>
+    <string name="night_theme_dark">Koyu</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">çok çok küçük</string>
+    <string name="html_size_code_x_small">çok küçük</string>
+    <string name="html_size_code_small">küçük</string>
+    <string name="html_size_code_medium">orta</string>
+    <string name="html_size_code_large">büyük</string>
+    <string name="html_size_code_x_large">çok büyük</string>
+    <string name="html_size_code_xx_large">çok çok büyük</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Eylem yok</string>
     <string name="gesture_answer_1">Cevap butonu 1</string>
     <string name="gesture_answer_2">Cevap butonu 2</string>

@@ -2078,7 +2078,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // If there are no cards to review because of the daily study limit then give "Study more" option
             UIUtils.showSnackbar(this, R.string.studyoptions_limit_reached, false, R.string.study_more, v -> {
                 CustomStudyDialog d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
-                        CustomStudyDialog.CONTEXT_MENU_LIMITS,
+                        CustomStudyDialog.ContextMenuConfiguration.LIMITS,
                         getCol().getDecks().selected(), true);
                 showDialogFragment(d);
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);
@@ -2109,7 +2109,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
             UIUtils.showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, v -> {
                 CustomStudyDialog d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
-                        CustomStudyDialog.CONTEXT_MENU_EMPTY_SCHEDULE,
+                        CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
                         getCol().getDecks().selected(), true);
                 showDialogFragment(d);
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback);

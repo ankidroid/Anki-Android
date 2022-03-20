@@ -20,11 +20,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
+import com.ichi2.testutils.createTransientDirectory
+import io.mockk.*
 import org.junit.After
 import org.junit.Before
 import org.junit.runners.Parameterized
-import org.mockito.MockedStatic
-import org.mockito.Mockito
 import org.mockito.kotlin.*
 import java.io.File
 import java.io.IOException
@@ -55,12 +55,10 @@ open class Test21And26(
     val isV26: Boolean
         get() = compat is CompatV26
 
-    lateinit var mocked: MockedStatic<CompatHelper>
-
     @Before
     open fun setup() {
-        mocked = Mockito.mockStatic(CompatHelper::class.java)
-        mocked.`when`<Compat> { CompatHelper.getCompat() }.doReturn(compat)
+        mockkObject(CompatHelper)
+        every { CompatHelper.compat } returns compat
     }
 
     // Allow to cancel every static mock, appart from the setup's one.
@@ -72,7 +70,7 @@ open class Test21And26(
 
     @After
     fun tearDown() {
-        mocked.close()
+        unmockkObject(CompatHelper)
     }
 
     /**
@@ -85,7 +83,7 @@ open class Test21And26(
          * This is useful in the case where we can't directly access the directory or compat
          */
         fun <T> runWithPermissionDenied(test: () -> T): T {
-            mocked.`when`<Compat> { CompatHelper.getCompat() }.doReturn(compat)
+            every { CompatHelper.compat } returns compat
             val result = test()
             restart()
             return result
@@ -100,7 +98,14 @@ open class Test21And26(
             runWithPermissionDenied { assertThrowsSubclass(test) }
     }
 
-    fun createPermissionDenied(directory: File, compat: Compat): PermissionDenied {
+    /**
+     * Create a directory [directory]. Ensures that [directory.hasFile] returns [null],
+     * which simulates to simulate https://github.com/ankidroid/Anki-Android/issues/10358.
+     * Also ensure that [Files.newDirectoryStream] fails on this directory.
+     */
+    fun createPermissionDenied(): PermissionDenied {
+        val directory = createTransientDirectory()
+        val compat = CompatHelper.compat
         val directoryWithPermissionDenied =
             spy(directory) {
                 on { listFiles() } doReturn null

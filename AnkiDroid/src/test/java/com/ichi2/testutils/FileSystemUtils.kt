@@ -17,7 +17,6 @@
 package com.ichi2.testutils
 
 import androidx.annotation.CheckResult
-import com.ichi2.anki.model.Directory
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
@@ -41,7 +40,7 @@ object FileSystemUtils {
      * |  +--backup/
      * |  |  +--collection-2020-08-07-08-00.colpkg
      * |  +--collection.media/
-     * |  |  +--folder/
+     * |  |  +--directory/
      * |  |  |  +--test.txt
      * |  |  +--test.txt
      * ```
@@ -52,27 +51,27 @@ object FileSystemUtils {
 
     /** from https://stackoverflow.com/a/13130974/ */
     @CheckResult
-    private fun printDirectoryTree(folder: File): String {
-        require(folder.isDirectory) { "folder is not a Directory" }
+    private fun printDirectoryTree(directory: File): String {
+        require(directory.isDirectory) { "directory is not a Directory" }
         val indent = 0
         val sb = StringBuilder()
-        printDirectoryTree(folder, indent, sb)
+        printDirectoryTree(directory, indent, sb)
         return sb.toString()
     }
 
     /** from https://stackoverflow.com/a/13130974/ */
     private fun printDirectoryTree(
-        folder: File,
+        directory: File,
         indent: Int,
         sb: StringBuilder
     ) {
-        require(folder.isDirectory) { "folder is not a Directory" }
+        require(directory.isDirectory) { "directory is not a Directory" }
         sb.append(getIndentString(indent))
         sb.append("+--")
-        sb.append(folder.name)
+        sb.append(directory.name)
         sb.append("/")
         sb.append("\n")
-        for (file in folder.listFiles() ?: emptyArray()) {
+        for (file in directory.listFiles() ?: emptyArray()) {
             if (file.isDirectory) {
                 printDirectoryTree(file, indent + 1, sb)
             } else {
@@ -118,11 +117,11 @@ fun createTransientFile(content: String = ""): File =
     }
 
 /** Creates a sub-directory with the given name which is deleted on exit */
-fun Directory.createTransientDirectory(name: String): Directory {
-    File(this.directory, name).also { directory ->
+fun File.createTransientDirectory(name: String): File {
+    File(this, name).also { directory ->
         directory.deleteOnExit()
         Timber.d("test: creating $directory")
         MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
-        return Directory.createInstance(directory)!!
+        return directory
     }
 }

@@ -51,7 +51,7 @@ class CompatDeleteFileTest(
     }
 
     @Test
-    fun delete_folder_which_exists() {
+    fun delete_directory_which_exists() {
         val dir = createTransientDirectory()
         assertDoesNotThrow { deleteFile(dir) }
         assertThat("directory should no longer exist", dir.exists(), equalTo(false))

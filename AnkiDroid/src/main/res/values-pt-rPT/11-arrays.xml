@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Comunicar sempre</item>
-        <item>Nunca comunicar</item>
-        <item>Perguntar-me</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspender ficha</item>
-        <item>Etiquetar somente</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Novas fichas em ordem aleatória</item>
-        <item>Novas fichas na ordem de adição</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Mais antigos primeiro</item>
-        <item>Aleatória</item>
-        <item>Intervalos crescentes</item>
-        <item>Intervalos decrescentes</item>
-        <item>Mais falhadas</item>
-        <item>Ordem de adição</item>
-        <item>Ordem de revisão</item>
-        <item>Primeiro, a última adicionada</item>
-        <item>Atrasos relativos</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Usar o baralho atual</item>
-        <item>Decidir por tipo de nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Misturar fichas novas e revisões</item>
-        <item>Fichas novas depois das revisões</item>
-        <item>Fichas novas antes das revisões</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Quando nenhum tipo de letra especificado nas fichas</item>
-        <item>Sempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Claro</item>
-        <item>Plain</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Negro</item>
-        <item>Escuro</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Comunicar sempre</string>
+    <string name="error_reporting_choice_never_report">Nunca comunicar</string>
+    <string name="error_reporting_choice_ask_user">Perguntar-me</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Etiquetar somente</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Novas fichas em ordem aleatória</string>
+    <string name="new_order_order_added">Novas fichas na ordem de adição</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Mais antigas primeiro</string>
+    <string name="cram_deck_conf_order_random">Aleatória</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervalos crescentes</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervalos decrescentes</string>
+    <string name="cram_deck_conf_order_most_lapsed">Mais falhadas</string>
+    <string name="cram_deck_conf_order_order_added">Ordem de adição</string>
+    <string name="cram_deck_conf_order_order_due">Ordem de revisão</string>
+    <string name="cram_deck_conf_order_latest_added_first">Primeiro, a última adicionada</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Atrasos relativos</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Usar o baralho atual</string>
+    <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Misturar fichas novas e revisões</string>
+    <string name="new_spread_new_after_review">Fichas novas depois das revisões</string>
+    <string name="new_spread_new_before_review">Fichas novas antes das revisões</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Quando nenhum tipo de letra especificado nas fichas</string>
+    <string name="override_font_always">Sempre</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Claro</string>
+    <string name="day_theme_plain">Plain</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Negro</string>
+    <string name="night_theme_dark">Escuro</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Nenhuma ação</string>
     <string name="gesture_answer_1">Botão de resposta 1</string>
     <string name="gesture_answer_2">Botão de resposta 2</string>

@@ -16,10 +16,13 @@
  ****************************************************************************************/
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -60,8 +63,6 @@ import static com.ichi2.libanki.Utils.checksum;
 
 
 public class ModelBrowser extends AnkiActivity {
-
-    public static final int REQUEST_TEMPLATE_EDIT = 3;
 
     DisplayPairAdapter mModelDisplayAdapter;
     private ListView mModelListView;
@@ -499,7 +500,7 @@ public class ModelBrowser extends AnkiActivity {
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, START);
+        launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, START);
     }
 
     // ----------------------------------------------------------------------------
@@ -611,11 +612,9 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TEMPLATE_EDIT) {
+    private final ActivityResultLauncher<Intent> mEditTemplateResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == Activity.RESULT_OK) {
             TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
         }
-    }
+    });
 }

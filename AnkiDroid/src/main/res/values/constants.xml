@@ -153,6 +153,62 @@
         <item>0</item>
         <item>3</item>
     </string-array>
+
+    <string-array name="error_reporting_choice_labels">
+        <item>@string/error_reporting_choice_always_report</item>
+        <item>@string/error_reporting_choice_never_report</item>
+        <item>@string/error_reporting_choice_ask_user</item>
+    </string-array>
+    <string-array name="leech_action_labels">
+        <item>@string/menu_suspend_card</item>
+        <item>@string/leech_action_tag_only</item>
+    </string-array>
+    <string-array name="new_order_labels">
+        <item>@string/new_order_random</item>
+        <item>@string/new_order_order_added</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_labels">
+        <item>@string/cram_deck_conf_order_oldest_seen_first</item>
+        <item>@string/cram_deck_conf_order_random</item>
+        <item>@string/cram_deck_conf_order_increasing_intervals</item>
+        <item>@string/cram_deck_conf_order_decreasing_intervals</item>
+        <item>@string/cram_deck_conf_order_most_lapsed</item>
+        <item>@string/cram_deck_conf_order_order_added</item>
+        <item>@string/cram_deck_conf_order_order_due</item>
+        <item>@string/cram_deck_conf_order_latest_added_first</item>
+        <item>@string/cram_deck_conf_order_relative_overdueness</item>
+    </string-array>
+    <string-array name="add_to_cur_labels">
+        <item>@string/add_to_deck_use_current_deck</item>
+        <item>@string/add_to_deck_decide_by_note_type</item>
+    </string-array>
+    <string-array name="new_spread_labels">
+        <item>@string/new_spread_mix_new_and_review</item>
+        <item>@string/new_spread_new_after_review</item>
+        <item>@string/new_spread_new_before_review</item>
+    </string-array>
+    <string-array name="override_font_labels">
+        <item>@string/override_font_if_missing</item>
+        <item>@string/override_font_always</item>
+    </string-array>
+    <string-array name="day_theme_labels">
+        <item>@string/day_theme_light</item>
+        <item>@string/day_theme_plain</item>
+    </string-array>
+    <string-array name="night_theme_labels">
+        <item>@string/night_theme_black</item>
+        <item>@string/night_theme_dark</item>
+    </string-array>
+    <string-array name="html_size_code_labels">
+        <item>@string/html_size_code_xx_small</item>
+        <item>@string/html_size_code_x_small</item>
+        <item>@string/html_size_code_small</item>
+        <item>@string/html_size_code_medium</item>
+        <item>@string/html_size_code_large</item>
+        <item>@string/html_size_code_x_large</item>
+        <item>@string/html_size_code_xx_large</item>
+    </string-array>
+
     <string name="link_anki">https://ankisrs.net</string>
     <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
@@ -258,7 +314,21 @@
         <item>@string/full_screen_system</item>
         <item>@string/full_screen_complete</item>
     </string-array>
-
+    <!-- Themes -->
+    <string-array name="app_theme_labels">
+        <item>@string/theme_follow_system</item>
+        <item>@string/day_theme_light</item>
+        <item>@string/day_theme_plain</item>
+        <item>@string/night_theme_black</item>
+        <item>@string/night_theme_dark</item>
+    </string-array>
+    <string-array name="app_theme_values">
+        <item>0</item> <!-- Follow system -->
+        <item>1</item> <!-- Light -->
+        <item>2</item> <!-- Plain -->
+        <item>3</item> <!-- Black -->
+        <item>4</item> <!-- Dark -->
+    </string-array>
     <string-array name="day_theme_values">
         <item>0</item>
         <item>1</item>

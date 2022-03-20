@@ -127,7 +127,6 @@ mga natitirang minuto</item>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Gumawa ng deck</string>
     <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
-    <string name="night_mode">Pang-gabing mode</string>
     <string name="directory_inaccessible">Ang AnkiDroid directory ay hindi mahanap</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -158,7 +157,8 @@ mga natitirang minuto</item>
     <string name="custom_study_deck_name">I-custom ang study session</string>
     <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng existing custom study deck</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">Ang deck na ito ay walang laman. Pindotin ang + na button para magdagdag ng laman.</string>

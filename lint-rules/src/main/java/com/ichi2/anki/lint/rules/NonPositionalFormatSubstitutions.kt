@@ -54,12 +54,12 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         )
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
+    override fun appliesTo(directoryType: ResourceFolderType): Boolean = directoryType == ResourceFolderType.VALUES
 
     override fun getApplicableElements() = listOf(SdkConstants.TAG_STRING)
 
     override fun visitElement(context: XmlContext, element: Element) {
-        // Check both the translated text and the "values" folder.
+        // Check both the translated text and the "values" directory.
 
         val childNodes = element.childNodes
         if (childNodes.length <= 0) return

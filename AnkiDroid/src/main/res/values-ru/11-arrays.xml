@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Всегда сообщать</item>
-        <item>Никогда не сообщать</item>
-        <item>Спрашивать меня</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Исключить карточку</item>
-        <item>Добавить метку</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Новые в случайном порядке</item>
-        <item>Новые карточки в порядке добавления</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Давно не повторяемые</item>
-        <item>Случайные</item>
-        <item>По возрастанию интервалов</item>
-        <item>По убыванию интервалов</item>
-        <item>Самые забываемые</item>
-        <item>По порядку добавления</item>
-        <item>По сроку</item>
-        <item>Последние добавленные</item>
-        <item>По относительной просрочке</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Использовать текущую</item>
-        <item>Выбрать по типу записи</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Перемешивать новые и повторяемые</item>
-        <item>Повторяемые до новых</item>
-        <item>Новые до повторяемых</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Если в карточке не указан шрифт</item>
-        <item>Всегда</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Светлая</item>
-        <item>Простая</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Чёрная</item>
-        <item>Тёмная</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>самый маленький</item>
-        <item>очень маленький</item>
-        <item>маленький</item>
-        <item>средний</item>
-        <item>большой</item>
-        <item>очень большой</item>
-        <item>самый большой</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Всегда сообщать</string>
+    <string name="error_reporting_choice_never_report">Никогда не сообщать</string>
+    <string name="error_reporting_choice_ask_user">Спрашивать меня</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Добавить метку</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Новые в случайном порядке</string>
+    <string name="new_order_order_added">Новые карточки в порядке добавления</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Давно не повторяемые</string>
+    <string name="cram_deck_conf_order_random">Случайные</string>
+    <string name="cram_deck_conf_order_increasing_intervals">По возрастанию интервалов</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">По убыванию интервалов</string>
+    <string name="cram_deck_conf_order_most_lapsed">Самые забываемые</string>
+    <string name="cram_deck_conf_order_order_added">По порядку добавления</string>
+    <string name="cram_deck_conf_order_order_due">По сроку</string>
+    <string name="cram_deck_conf_order_latest_added_first">Последние добавленные</string>
+    <string name="cram_deck_conf_order_relative_overdueness">По относительной просрочке</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Использовать текущую</string>
+    <string name="add_to_deck_decide_by_note_type">Выбрать по типу записи</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Перемешивать новые и повторяемые</string>
+    <string name="new_spread_new_after_review">Повторяемые до новых</string>
+    <string name="new_spread_new_before_review">Новые до повторяемых</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Если в карточке не указан шрифт</string>
+    <string name="override_font_always">Всегда</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Светлая</string>
+    <string name="day_theme_plain">Простая</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Чёрная</string>
+    <string name="night_theme_dark">Тёмная</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">самый маленький</string>
+    <string name="html_size_code_x_small">очень маленький</string>
+    <string name="html_size_code_small">маленький</string>
+    <string name="html_size_code_medium">средний</string>
+    <string name="html_size_code_large">большой</string>
+    <string name="html_size_code_x_large">очень большой</string>
+    <string name="html_size_code_xx_large">самый большой</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Без действия</string>
     <string name="gesture_answer_1">Кнопка ответа 1</string>
     <string name="gesture_answer_2">Кнопка ответа 2</string>
@@ -114,8 +105,8 @@
     <string name="gesture_page_down">На страницу вниз</string>
     <string name="gesture_abort_sync">Отменить обучение и синхронизацию</string>
     <string name="gesture_toggle_whiteboard">Переключить доску</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">Показать подсказку</string>
+    <string name="gesture_show_all_hints">Показать все подсказки</string>
     <string name="record_voice">Записать голос</string>
     <string name="replay_voice">Воспроизвести голос</string>
     <string name="automatic_answer_option_2">«Трудно» (иначе «Хорошо»)</string>

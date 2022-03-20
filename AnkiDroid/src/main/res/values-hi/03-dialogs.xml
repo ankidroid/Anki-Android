@@ -76,9 +76,9 @@
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">कार्ड पुनर्निर्धारित करें</item>
-        <item quantity="other">कार्ड पुनर्निर्धारित करें</item>
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Reschedule %d card</item>
+        <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">वर्तमान अंतराल: %d दिन</item>

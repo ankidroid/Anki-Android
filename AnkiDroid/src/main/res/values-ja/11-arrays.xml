@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>常に報告する</item>
-        <item>報告しない</item>
-        <item>毎回確認する</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>タグを付けて保留</item>
-        <item>タグを付けるだけ</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>新規カードを無作為に選んで表示する</item>
-        <item>新規カードを追加順に表示する</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>前回表示日時が古い順</item>
-        <item>ランダム</item>
-        <item>間隔が小さい順</item>
-        <item>間隔が大きい順</item>
-        <item>忘却回数が多い順</item>
-        <item>作成日時が古い順</item>
-        <item>学習予定日時が古い順</item>
-        <item>作成日時が新しい順</item>
-        <item>期日超過が相対的に大きい順</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>選択中のデッキ</item>
-        <item>ノートタイプから選択</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>新規カードと復習カードを混ぜる</item>
-        <item>復習カードの後</item>
-        <item>復習カードの前</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>フォントが指定されていない場合</item>
-        <item>全て</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>ライトブルー</item>
-        <item>プレーン</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>ブラック</item>
-        <item>ダークグレー</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>XXS</item>
-        <item>XS</item>
-        <item>S</item>
-        <item>M</item>
-        <item>L</item>
-        <item>XL</item>
-        <item>XXL</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">常に報告する</string>
+    <string name="error_reporting_choice_never_report">報告しない</string>
+    <string name="error_reporting_choice_ask_user">毎回確認する</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">タグを付けるだけ</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">新規カードを無作為に選んで表示する</string>
+    <string name="new_order_order_added">新規カードを追加順に表示する</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">前回表示日時が古い順</string>
+    <string name="cram_deck_conf_order_random">ランダム</string>
+    <string name="cram_deck_conf_order_increasing_intervals">間隔が小さい順</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">間隔が大きい順</string>
+    <string name="cram_deck_conf_order_most_lapsed">忘却回数が多い順</string>
+    <string name="cram_deck_conf_order_order_added">作成日時が古い順</string>
+    <string name="cram_deck_conf_order_order_due">学習予定日時が古い順</string>
+    <string name="cram_deck_conf_order_latest_added_first">作成日時が新しい順</string>
+    <string name="cram_deck_conf_order_relative_overdueness">期日超過が相対的に大きい順</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">選択中のデッキ</string>
+    <string name="add_to_deck_decide_by_note_type">ノートタイプから選択</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">新規カードと復習カードを混ぜる</string>
+    <string name="new_spread_new_after_review">復習カードの後</string>
+    <string name="new_spread_new_before_review">復習カードの前</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">フォントが指定されていない場合</string>
+    <string name="override_font_always">全て</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">ライトブルー</string>
+    <string name="day_theme_plain">プレーン</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">ブラック</string>
+    <string name="night_theme_dark">ダークグレー</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">XXS</string>
+    <string name="html_size_code_x_small">XS</string>
+    <string name="html_size_code_small">S</string>
+    <string name="html_size_code_medium">M</string>
+    <string name="html_size_code_large">L</string>
+    <string name="html_size_code_x_large">XL</string>
+    <string name="html_size_code_xx_large">XXL</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">何もしない</string>
     <string name="gesture_answer_1">回答ボタン１</string>
     <string name="gesture_answer_2">回答ボタン２</string>
@@ -106,16 +97,16 @@
     <string name="gesture_flag_orange">橙フラグを付ける/取り外す</string>
     <string name="gesture_flag_green">緑フラグを付ける/取り外す</string>
     <string name="gesture_flag_blue">青フラグを付ける/取り外す</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">ピンクフラグを付ける/取り外す</string>
+    <string name="gesture_flag_turquoise">青緑フラグを付ける/取り外す</string>
+    <string name="gesture_flag_purple">紫フラグを付ける/取り外す</string>
     <string name="gesture_flag_remove">フラグを取り外す</string>
     <string name="gesture_page_up">１画面分上へスクロール</string>
     <string name="gesture_page_down">１画面分下へスクロール</string>
     <string name="gesture_abort_sync">学習を中断して同期</string>
     <string name="gesture_toggle_whiteboard">ホワイトボード機能をオン/オフ</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">ヒントを表示</string>
+    <string name="gesture_show_all_hints">全てのヒントを表示</string>
     <string name="record_voice">音声を録音</string>
     <string name="replay_voice">音声を再生</string>
     <string name="automatic_answer_option_2">難しい（選択できない場合は 普通）</string>

@@ -36,7 +36,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Annanghe un\'immàgine</string>
     <string name="multimedia_editor_popup_audio_clip">Annanghe un\'estratu àudio</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Annanghe un\'estratu vìdeu</string>
     <string name="multimedia_editor_popup_audio">Registra su sonu</string>
     <string name="multimedia_editor_popup_text">Editore avantzadu</string>
     <string name="multimedia_editor_popup_cloze">Iscantzellamentu cloze</string>
@@ -90,8 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotocàmera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Àudio</string>
+    <string name="multimedia_editor_import_video">Vìdeu</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Iscarrighende</string>

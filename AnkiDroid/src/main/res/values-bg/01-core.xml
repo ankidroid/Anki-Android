@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Проверете произношението</string>
     <string name="new_deck">Създай тесте</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
-    <string name="night_mode">Нощен режим</string>
     <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Допълнително време за учене</string>
     <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
     <string name="empty_deck">Това тесте е празно</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Добавяне на карта</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
     <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>

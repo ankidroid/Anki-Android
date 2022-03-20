@@ -34,7 +34,7 @@ class AudioRecorder {
     private var mRecorder: MediaRecorder? = null
     private var mOnRecordingInitialized: Runnable? = null
     private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
-        val mr = CompatHelper.getCompat().getMediaRecorder(context)
+        val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         onRecordingInitialized()

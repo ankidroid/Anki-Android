@@ -73,7 +73,7 @@
         <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
-    <string name="no_cards_placeholder_description">Fügen Sie Karten mit\ndem »+«-Symbol hinzu.</string>
+    <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Ausprache überprüfen</string>
     <string name="new_deck">Stapel erstellen</string>
     <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
-    <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">Auf das AnkiDroid-Verzeichnis kann nicht zugegriffen werden</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
-    <string name="search_deck">Stapelsuche</string>
+    <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Karte hinzufügen</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>

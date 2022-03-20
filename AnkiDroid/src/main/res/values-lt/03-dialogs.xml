@@ -82,11 +82,11 @@
         <item quantity="other">%d kort. atkūrimas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Reschedule card</item>
-        <item quantity="few">Keisti Kortelių mokymosi dieną</item>
-        <item quantity="many">Reschedule cards</item>
-        <item quantity="other">Reschedule cards</item>
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Reschedule %d card</item>
+        <item quantity="few">Reschedule %d cards</item>
+        <item quantity="many">Reschedule %d cards</item>
+        <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Current interval: %d day</item>

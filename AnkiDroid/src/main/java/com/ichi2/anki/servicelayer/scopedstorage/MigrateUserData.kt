@@ -32,7 +32,7 @@ typealias NumberOfBytes = Long
  * This needs to be performed in the background to allow users to use AnkiDroid
  *
  * If this were performed in the foreground, users would be encouraged to uninstall the app
- * which means the app permanently loses access to the AnkiDroid folder.
+ * which means the app permanently loses access to the AnkiDroid directory.
  *
  * This also handles preemption, allowing media files to skip the queue
  * (if they're required for review)
@@ -87,7 +87,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
     class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException("File $source can not be copied to $destination, destination exists and differs.")
 
     /**
-     * If [destination] is a folder. In this case, move `source/filename` to `source/conflict/filename`.
+     * If [destination] is a directory. In this case, move `source/filename` to `source/conflict/filename`.
      */
     class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : RuntimeException("File $source can not be copied to $destination, as destination is a directory.")
 
@@ -229,10 +229,10 @@ class MigrateUserData private constructor(val source: Directory, val destination
          * Starts to execute the current operation. Only do as little non-trivial work as possible to start the operation, such as listing a directory content or moving a single file.
          * Returns the list of operations remaining to end this operation.
          *
-         * E.g. for "move a folder", this method would simply compute the folder content and then retuns the following list of operations:
-         * * creating the destination folder
-         * * moving each file and subfolder individually
-         * * deleting the original folder.
+         * E.g. for "move a directory", this method would simply compute the directory content and then retuns the following list of operations:
+         * * creating the destination directory
+         * * moving each file and subdirectory individually
+         * * deleting the original directory.
          */
         abstract fun execute(context: MigrationContext): List<Operation>
 

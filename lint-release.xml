@@ -45,11 +45,18 @@
     <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
     <issue id="UnknownId" severity="fatal" />
+    <issue id="UselessParent" severity="fatal" />
+    <issue id="ObsoleteLayoutParam" severity="fatal" />
 
     <!--           RTL Rules               -->
     <issue id="RtlCompat" severity="fatal" />
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
+
+    <issue id="RedundantNamespace" severity="fatal" />
+    <issue id="TextFields" severity="fatal" />
+    <issue id="LogConditional" severity="fatal" />
+    <issue id="ImplicitSamInstance" severity="fatal" />
 
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
@@ -71,7 +78,6 @@
 
     <issue id="UseCompatTextViewDrawableXml" severity="ignore" />
     <issue id="AcceptsUserCertificates" severity="ignore" />
-    <issue id="RedundantNamespace" severity="ignore" />
     <issue id="Autofill" severity="ignore" />
     <issue id="ContentDescription" severity="ignore" />
     <issue id="AddJavascriptInterface" severity="ignore" />
@@ -221,7 +227,6 @@
     <issue id="InvalidResourceFolder" severity="ignore" />
     <issue id="WrongRegion" severity="ignore" />
     <issue id="UseAlpha2" severity="ignore" />
-    <issue id="LogConditional" severity="ignore" />
     <issue id="LongLogTag" severity="ignore" />
     <issue id="LogTagMismatch" severity="ignore" />
     <issue id="AllowBackup" severity="ignore" />
@@ -263,7 +268,6 @@
     <issue id="UnlocalizedSms" severity="ignore" />
     <issue id="ObjectAnimatorBinding" severity="ignore" />
     <issue id="AnimatorKeep" severity="ignore" />
-    <issue id="ObsoleteLayoutParam" severity="ignore" />
     <issue id="OnClick" severity="ignore" />
     <issue id="Overdraw" severity="ignore" />
     <issue id="DalvikOverride" severity="ignore" />
@@ -347,7 +351,6 @@
     <issue id="UnusedIds" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
     <issue id="UselessLeaf" severity="ignore" />
-    <issue id="UselessParent" severity="ignore" />
     <issue id="EnforceUTF8" severity="ignore" />
     <issue id="VectorRaster" severity="ignore" />
     <issue id="VectorDrawableCompat" severity="ignore" />

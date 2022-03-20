@@ -40,12 +40,12 @@
 -->
 <resources>
     <string name="youre_offline">आप ऑफ़लाइन हैं</string>
-    <string name="sync_even_if_offline">फिर भी कोशिश करो</string>
-    <string name="sync_error">समकालन में त्रुटि</string>
-    <string name="vague_error">त्रुटि</string>
+    <string name="sync_even_if_offline">फिर भी कोशिश करे</string>
+    <string name="sync_error">सिंक में दिकत </string>
+    <string name="vague_error">गलती</string>
     <string name="retry">पुनः प्रयास करें</string>
     <string name="menu_get_shared_decks">साझा किए गए डेक पाएँ</string>
-    <string name="connection_error_message">कोई नेटवर्क त्रुटि हुई</string>
+    <string name="connection_error_message">नेटवर्क में कोई त्रुटि हुई</string>
     <string name="not_logged_in_title">AnkiWeb में लॉग इन करें</string>
     <string name="login_create_account_message">क्लाउड समकालन सेवा का उपयोग करने के लिए आपको किसी तीसरा पक्ष खाते में लॉग इन करना होगा। आप अगले चरण में खाता बना सकते हैं।</string>
     <!-- MyAccount.java -->
@@ -60,11 +60,11 @@
     <string name="alert_logging_message">लॉग इन कर रहे हैं...</string>
     <string name="invalid_username_password">अमान्य ईमेल पता या पासवर्ड</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">ईमेल भूल गए?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">पसंद</string>
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
-    <string name="sync_prepare_syncing">सिंक्रनाइज़ करने की तैयारी कर रहा है.. ।</string>
+    <string name="sync_prepare_syncing">सिंकोराइजेशन हो रहा है...</string>
     <string name="sync_preparing_full_sync_message">पूर्ण समकालन की तैयारी हो रही है...</string>
     <string name="sync_uploading_message">अपलोड हो रहा है...</string>
     <string name="sync_downloading_message">डाउनलोड कर रहा है...</string>
@@ -97,7 +97,7 @@
     <string name="sync_media_find">परिवर्तित मीडिया ढूंढ रहा है.. ।</string>
     <string name="sync_media_no_changes">मीडिया फ़ाइलों में कोई परिवर्तन नहीं</string>
     <string name="sync_media_success">मीडिया सिंक किए गए</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">मीडिया सिंक पूरा नहीं हुआ:\n%1$d मीडिया फाइल्स डाउनलोड हो गई। \n%2$d मीडिया फाइल्स अपलोड हो गई।</string>
     <string name="sync_media_changes_count">अपलोड करने के लिए %d मीडिया परिवर्तन</string>
     <string name="sync_media_downloaded_count">%d मीडिया फ़ाइलें डाउनलोड की गई</string>
     <string name="sync_sanity_failed">सिंक्रनाइज़ करने के बाद, संग्रह एक असंगत स्थिति में था । इस समस्या को हल करने के लिए, AnkiDroid पूर्ण सिंक्रनाइज़ेशन को बाध्य करेगा । चुनें जो पक्ष आप रखना चाहते हैं ।</string>

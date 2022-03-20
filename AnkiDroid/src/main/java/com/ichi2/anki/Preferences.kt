@@ -26,17 +26,20 @@ import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.WindowManager.BadTokenException
 import android.webkit.URLUtil
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.*
@@ -69,7 +72,9 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.setup
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
+import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
@@ -119,6 +124,8 @@ class Preferences : AnkiActivity() {
             .replace(R.id.settings_container, fragment)
             .commit()
 
+        addFragmentsToBackStack(supportFragmentManager, intent)
+
         supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
@@ -151,6 +158,33 @@ class Preferences : AnkiActivity() {
             Class.forName(fragmentClass).newInstance() as Fragment
         } catch (e: Exception) {
             throw RuntimeException("Failed to load $fragmentClass", e)
+        }
+    }
+
+    /**
+     * Adds fragments specified in [intent] extra to [fragmentManager] backstack,
+     * following the fragments array order
+     * @param intent with extra key [EXTRA_BACKSTACK_FRAGMENTS]
+     * and value of a array of fragments java class names
+     */
+    private fun addFragmentsToBackStack(fragmentManager: FragmentManager, intent: Intent?) {
+        if (intent == null) {
+            return
+        }
+        val fragmentClasses = intent.getStringArrayExtra(EXTRA_BACKSTACK_FRAGMENTS)
+            ?: return
+
+        for (fragmentClass in fragmentClasses) {
+            try {
+                val fragment = Class.forName(fragmentClass).newInstance() as Fragment
+                fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.settings_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            } catch (e: Exception) {
+                throw RuntimeException("Failed to load $fragmentClass", e)
+            }
         }
     }
 
@@ -435,7 +469,6 @@ class Preferences : AnkiActivity() {
         }
 
         @Suppress("deprecation") // setTargetFragment
-        @KotlinCleanup("use when")
         override fun onDisplayPreferenceDialog(preference: Preference) {
             val dialogFragment = when (preference) {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
@@ -520,7 +553,7 @@ class Preferences : AnkiActivity() {
                             if (listpref.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
                                 scheduleNotification(preferencesActivity.col.time, preferencesActivity)
                             } else {
-                                val intent = CompatHelper.getCompat().getImmutableBroadcastIntent(
+                                val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                                     preferencesActivity, 0,
                                     Intent(preferencesActivity, NotificationService::class.java), 0
                                 )
@@ -765,8 +798,7 @@ class Preferences : AnkiActivity() {
             mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 if (mBackgroundImage!!.isChecked) {
                     try {
-                        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(galleryIntent, RESULT_LOAD_IMG)
+                        mBackgroundImageResultLauncher.launch("image/*")
                         mBackgroundImage!!.isChecked = true
                     } catch (ex: Exception) {
                         Timber.e("%s", ex.localizedMessage)
@@ -787,7 +819,67 @@ class Preferences : AnkiActivity() {
                 }
                 true
             }
+
+            val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
+            val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
+            val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+
+            // Remove follow system options in android versions which do not have system dark mode
+            // When minSdk reaches 29, only this if block needs to be removed
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                dayThemePref.isVisible = false
+                nightThemePref.isVisible = false
+
+                // Drop "Follow system" option (the first one)
+                val appThemesLabels = resources.getStringArray(R.array.app_theme_labels)
+                val appThemesValues = resources.getStringArray(R.array.app_theme_values)
+
+                appThemePref.entries = appThemesLabels.sliceArray(1..appThemesLabels.lastIndex)
+                appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
+            }
+
+            val followSystem = Themes.themeFollowsSystem(requireContext())
+            dayThemePref.isEnabled = followSystem
+            nightThemePref.isEnabled = followSystem
+
+            appThemePref.setOnPreferenceChangeListener { _, newValue ->
+                dayThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+                nightThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+
+                // Only restart if value was changed
+                if (newValue != appThemePref.value) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
+
+            dayThemePref.setOnPreferenceChangeListener { _, newValue ->
+                if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext())) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
+
+            nightThemePref.setOnPreferenceChangeListener { _, newValue ->
+                if (newValue != nightThemePref.value && systemIsInNightMode(requireContext())) {
+                    restartActivityOnBackStackTop()
+                }
+                true
+            }
             initializeCustomFontsDialog()
+        }
+
+        /**
+         * Restart [Preferences] activity with [AppearanceSettingsFragment]
+         * in the top of the backstack
+         */
+        private fun restartActivityOnBackStackTop() {
+            Timber.i("PreferenceActivity -- restartActivity()")
+            val intent = Intent(context, requireActivity().javaClass)
+            val fragmentClassNames = arrayOf(AppearanceSettingsFragment::class.java.name)
+            intent.putExtra(EXTRA_BACKSTACK_FRAGMENTS, fragmentClassNames)
+            requireContext().startActivity(intent)
+            this.requireActivity().finish()
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
@@ -825,22 +917,19 @@ class Preferences : AnkiActivity() {
             return names
         }
 
-        @Suppress("deprecation") // super.onActivityResult
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            // DEFECT #5973: Does not handle Google Drive downloads
-            try {
-                if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                    val selectedImage = data.data
+        private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
+            if (selectedImage != null) {
+                // handling file may result in exception
+                try {
                     val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                    requireContext().contentResolver.query(selectedImage!!, filePathColumn, null, null, null).use { cursor ->
+                    requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
                         cursor!!.moveToFirst()
                         // file size in MB
                         val fileLength = cursor.getLong(0) / (1024 * 1024)
                         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
                         val imageName = "DeckPickerBackground.png"
                         val destFile = File(currentAnkiDroidDirectory, imageName)
-                        // Image size less than 10 MB copied to AnkiDroid folder
+                        // Image size less than 10 MB copied to AnkiDroid directory
                         if (fileLength < 10) {
                             (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream?)!!.channel.use { sourceChannel ->
                                 FileOutputStream(destFile).channel.use { destChannel ->
@@ -853,21 +942,17 @@ class Preferences : AnkiActivity() {
                             showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
                         }
                     }
-                } else {
-                    mBackgroundImage!!.isChecked = false
-                    showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
+                } catch (e: OutOfMemoryError) {
+                    Timber.w(e)
+                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
                 }
-            } catch (e: OutOfMemoryError) {
-                Timber.w(e)
-                showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
-            } catch (e: Exception) {
-                Timber.w(e)
-                showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+            } else {
+                mBackgroundImage!!.isChecked = false
+                showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
             }
-        }
-
-        companion object {
-            private const val RESULT_LOAD_IMG = 111
         }
     }
 
@@ -1158,28 +1243,28 @@ class Preferences : AnkiActivity() {
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
             resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val edit = AnkiDroidApp.getSharedPrefs(requireContext()).edit()
-                edit.remove("customButtonUndo")
-                edit.remove("customButtonScheduleCard")
-                edit.remove("customButtonEditCard")
-                edit.remove("customButtonTags")
-                edit.remove("customButtonAddCard")
-                edit.remove("customButtonReplay")
-                edit.remove("customButtonCardInfo")
-                edit.remove("customButtonSelectTts")
-                edit.remove("customButtonDeckOptions")
-                edit.remove("customButtonMarkCard")
-                edit.remove("customButtonToggleMicToolBar")
-                edit.remove("customButtonBury")
-                edit.remove("customButtonSuspend")
-                edit.remove("customButtonFlag")
-                edit.remove("customButtonDelete")
-                edit.remove("customButtonEnableWhiteboard")
-                edit.remove("customButtonSaveWhiteboard")
-                edit.remove("customButtonWhiteboardPenColor")
-                edit.remove("customButtonClearWhiteboard")
-                edit.remove("customButtonShowHideWhiteboard")
-                edit.apply()
+                AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                    remove("customButtonUndo")
+                    remove("customButtonScheduleCard")
+                    remove("customButtonEditCard")
+                    remove("customButtonTags")
+                    remove("customButtonAddCard")
+                    remove("customButtonReplay")
+                    remove("customButtonCardInfo")
+                    remove("customButtonSelectTts")
+                    remove("customButtonDeckOptions")
+                    remove("customButtonMarkCard")
+                    remove("customButtonToggleMicToolBar")
+                    remove("customButtonBury")
+                    remove("customButtonSuspend")
+                    remove("customButtonFlag")
+                    remove("customButtonDelete")
+                    remove("customButtonEnableWhiteboard")
+                    remove("customButtonSaveWhiteboard")
+                    remove("customButtonWhiteboardPenColor")
+                    remove("customButtonClearWhiteboard")
+                    remove("customButtonShowHideWhiteboard")
+                }
                 // #9263: refresh the screen to display the changes
                 refreshScreen()
                 true
@@ -1353,6 +1438,11 @@ class Preferences : AnkiActivity() {
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
         )
         const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
+
+        /**
+         * Key of intent extra used in [addFragmentsToBackStack]
+         */
+        const val EXTRA_BACKSTACK_FRAGMENTS = ":android:backstack_fragments"
 
         /** Returns the hour that the collection rolls over to the next day  */
         @JvmStatic

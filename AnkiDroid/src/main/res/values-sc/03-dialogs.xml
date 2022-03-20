@@ -77,9 +77,9 @@
         <item quantity="other">%d cartas resetadas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Torra a pranificare sa carta</item>
-        <item quantity="other">Torra a pranificare sas cartas</item>
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Reschedule %d card</item>
+        <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Intervallu atuale: %d die</item>
@@ -127,7 +127,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid tenet bisòngiu de %s de memòria lìbera pro sighire. Lìbera unu pagu de ispàtziu</string>
     <string name="restore_backup_title">Ripristinare sa còpia de seguresa?</string>
     <string name="restore_backup">Sa colletzione tua s\'at a remplasare cun una còpia prus betza. Cale si siat progressu non sarvadu s\'at a pèrdere.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Issèbera·nde un\'àteru</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">AB</string>
     <string name="dialog_no">Nono</string>
@@ -200,7 +200,7 @@
     <string name="card_browser_deck_change_error">Cambiamentu de su matzu fallidu</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore decodifichende sos datos dae sa carta</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">\"%s\" annulladu</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Elaboratzione de sas optziones de su matzu fallida: %s</string>
     <!-- Database Errors-->

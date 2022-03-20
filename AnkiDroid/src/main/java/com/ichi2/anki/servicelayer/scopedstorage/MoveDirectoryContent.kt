@@ -26,7 +26,7 @@ import java.io.IOException
 /**
  * This operation moves content of source to destination. This Operation is called one time for each file in the directory, and one last time. Unless an exception occurs. Use the [createInstance] to instantiate the object.  It will convert the given Directory source to a FileStream. This conversion is a potentially long-running operation.
  * @param [source]: an iterator over File content, [source] will be closed in [execute] once the source is empty or if accessing its content raise an exception.
- * @param [destination]: a folder to copy the source content.
+ * @param [destination]: a directory to copy the source content.
  * This is different than [MoveFile], [MoveDirectory] and [MoveFileOrDirectory] where destination is the new path of the copied element.
  * Because in this case, there is not a single destination path.
  */
@@ -45,7 +45,7 @@ class MoveDirectoryContent private constructor(val source: FileStream, val desti
          * @throws [SecurityException] – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
          */
         fun createInstance(source: Directory, destination: File): MoveDirectoryContent =
-            MoveDirectoryContent(CompatHelper.getCompat().contentOfDirectory(source.directory), destination)
+            MoveDirectoryContent(CompatHelper.compat.contentOfDirectory(source.directory), destination)
     }
 
     override fun execute(context: MigrateUserData.MigrationContext): List<MigrateUserData.Operation> {

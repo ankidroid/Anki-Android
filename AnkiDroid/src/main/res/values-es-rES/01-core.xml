@@ -73,7 +73,7 @@
         <item quantity="other">%d días %d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
-    <string name="no_cards_placeholder_description">Empieza a añadir tarjetas\nusando el icono +</string>
+    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Comprobar pronunciación</string>
     <string name="new_deck">Crear mazo</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
-    <string name="night_mode">Modo nocturno</string>
     <string name="directory_inaccessible">El directorio AnkiDroid es inaccesible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="empty_deck">Este mazo está vacío</string>
-    <string name="search_deck">Buscar Mazos</string>
+    <string name="search_deck" comment="Deck search for selecting it">Buscar Mazos</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Añadir tarjeta</string>
     <string name="invalid_deck_name">Nombre de mazo no válido</string>
     <string name="studyoptions_empty">Este mazo está vacío. Pulsa el botón + para añadir contenido nuevo.</string>
@@ -186,8 +186,8 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
     <string name="card_template_editor_deck_override">Anulación de mazo</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Insertar campos</string>
+    <string name="card_template_editor_select_field">Seleccionar campo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Esto creará %1$d tarjeta. ¿Continuar?</item>
@@ -210,7 +210,7 @@
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de la tarjeta</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Explorador de tarjetas</string>
     <string name="context_menu_anki_card_label">Tarjeta Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tiene un problema:<br/>%2$s</string>
     <string name="more_information">Más información</string>

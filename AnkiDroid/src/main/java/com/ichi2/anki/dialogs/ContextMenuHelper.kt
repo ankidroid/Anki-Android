@@ -15,11 +15,13 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
+import com.ichi2.utils.KotlinCleanup
 import java.util.ArrayList
 import java.util.HashMap
 
 object ContextMenuHelper {
     @JvmStatic
+    @KotlinCleanup("make this use enum instead of Int (requires rewrite of DeckPickerContextMenu)")
     fun getValuesFromKeys(map: HashMap<Int, String>, keys: IntArray): Array<String?> {
         val values = arrayOfNulls<String>(keys.size)
         for (i in keys.indices) {

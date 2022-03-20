@@ -82,11 +82,11 @@
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Перепланировать карточку</item>
-        <item quantity="few">Перепланировать карточки</item>
-        <item quantity="many">Перепланировать карточки</item>
-        <item quantity="other">Перепланировать карточки</item>
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Перепланировать %d карту</item>
+        <item quantity="few">Перепланировать %d карты</item>
+        <item quantity="many">Перепланировать %d карт</item>
+        <item quantity="other">Перепланировать %d карт</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Текущий интервал: %d день</item>
@@ -131,7 +131,7 @@
     <string name="no_space_to_downgrade_content">Для продолжения AnkiDroid требуется %s свободного места в памяти. Пожалуйста, освободите немного места</string>
     <string name="restore_backup_title">Восстановить из резервной копии?</string>
     <string name="restore_backup">Ваша коллекция будет заменена более старой копией. Несохранённый прогресс будет потерян.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Выбрать другой</string>
     <string name="dialog_cancel">Отменить</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Нет</string>
@@ -200,7 +200,7 @@
     <string name="card_browser_deck_change_error">Не удалось сменить колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ошибка при декодировании данных карточки</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Отменить \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Не удалось обработать параметры колоды: %s</string>
     <!-- Database Errors-->

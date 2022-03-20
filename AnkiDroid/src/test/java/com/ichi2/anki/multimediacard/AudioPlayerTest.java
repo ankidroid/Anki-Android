@@ -45,12 +45,12 @@ public class AudioPlayerTest extends RobolectricTest {
     private File mFile;
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempDirectory = new TemporaryFolder();
 
     @Before
     public void before() throws IOException {
         mAudioPlayer = new AudioPlayer();
-        mFile = tempFolder.newFile("testaudio.wav");
+        mFile = tempDirectory.newFile("testaudio.wav");
 
         ShadowMediaPlayer testPlayer = new ShadowMediaPlayer();
         DataSource fileSource = DataSource.toDataSource(mFile.getAbsolutePath());
