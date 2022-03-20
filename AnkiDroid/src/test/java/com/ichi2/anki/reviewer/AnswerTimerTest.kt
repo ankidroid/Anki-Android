@@ -78,7 +78,7 @@ class AnswerTimerTest {
         }
 
         assertThat("timer should be enabled", timer.showTimer, equalTo(true))
-        assertThat("Limit should be 12", timer.limit, equalTo(12))
+        assertThat("Time limit should be 12 minutes", timer.limit, equalTo(12))
 
         verify(chronometer).start()
         verify(chronometer, atLeast(1)).visibility // we call twice due to the else branch
@@ -101,17 +101,17 @@ class AnswerTimerTest {
         }
 
         timer.setupForCard(timerCard)
-        assertThat(timer.showTimer, equalTo(true))
-        assertThat(chronometer.visibility, equalTo(View.VISIBLE))
+        assertThat("timer should be enabled", timer.showTimer, equalTo(true))
+        assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
 
         timer.setupForCard(nonTimerCard)
 
-        assertThat(timer.showTimer, equalTo(false))
-        assertThat(chronometer.visibility, equalTo(View.INVISIBLE))
+        assertThat("timer should not be enabled", timer.showTimer, equalTo(false))
+        assertThat("chronometer should not be visible", chronometer.visibility, equalTo(View.INVISIBLE))
 
         timer.setupForCard(timerCard)
-        assertThat(timer.showTimer, equalTo(true))
-        assertThat(chronometer.visibility, equalTo(View.VISIBLE))
+        assertThat("timer should be enabled", timer.showTimer, equalTo(true))
+        assertThat("chronometer should be visible", chronometer.visibility, equalTo(View.VISIBLE))
     }
 
     @Test

@@ -134,6 +134,7 @@
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
     <string name="default_font" maxLength="41">Шрифт за замовчуванням</string>

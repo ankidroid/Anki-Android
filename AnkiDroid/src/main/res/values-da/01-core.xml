@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Tjek udtale</string>
     <string name="new_deck">Opret dæk</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>
-    <string name="night_mode">Nattetilstand</string>
     <string name="directory_inaccessible">AnkiDroid vejviser er utilgængelig</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Tilpasset studiesession</string>
     <string name="custom_study_deck_exists">Omdøb det eksisterende tilpassede dæk først </string>
     <string name="empty_deck">Dette kortsæt er tomt</string>
-    <string name="search_deck">Søgning</string>
+    <string name="search_deck" comment="Deck search for selecting it">Søgning</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Tilføj kort</string>
     <string name="invalid_deck_name">Ugyldigt dæknavn</string>
     <string name="studyoptions_empty">Dette dæk er tomt. Tryk på + knappen for at tilføje nyt indhold.</string>

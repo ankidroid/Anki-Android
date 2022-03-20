@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
-    <string name="night_mode">Nokta reĝimo</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
-    <string name="search_deck">Serĉi kartaron</string>
+    <string name="search_deck" comment="Deck search for selecting it">Serĉi kartaron</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Aldoni karton</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_empty">Tiu ĉi kartaro estas malplena. Frapetu la butonon “+” por aldoni novan enhavon.</string>

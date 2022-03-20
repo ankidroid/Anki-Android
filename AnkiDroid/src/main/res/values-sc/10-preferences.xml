@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>
     <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Tema pro sa die</string>
     <string name="night_theme" maxLength="41">Tema pro sa note</string>
     <string name="default_font" maxLength="41">Caràtere predefinidu</string>

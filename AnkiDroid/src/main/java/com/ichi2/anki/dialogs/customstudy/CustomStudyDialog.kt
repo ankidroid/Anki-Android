@@ -36,6 +36,8 @@ import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.ContextMenuHelper.getValuesFromKeys
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.*
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.async.CollectionTask.RebuildCram
@@ -48,11 +50,10 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 
-class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val collection: Collection?, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment?)
@@ -61,12 +62,12 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
     }
 
     @JvmOverloads
-    fun withArguments(id: Int, did: Long, jumpToReviewer: Boolean = false): CustomStudyDialog {
+    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: Long, jumpToReviewer: Boolean = false): CustomStudyDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
         }
-        args.putInt("id", id)
+        args.putInt("id", contextMenuAttribute.value)
         args.putLong("did", did)
         args.putBoolean("jumpToReviewer", jumpToReviewer)
         this.arguments = args
@@ -83,10 +84,10 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         val dialogId = requireArguments().getInt("id")
         return if (dialogId < 100) {
             // Select the specified deck
-            collection?.decks?.select(requireArguments().getLong("did"))
+            collection.decks?.select(requireArguments().getLong("did"))
             buildContextMenu(dialogId)
         } else {
-            buildInputDialog(dialogId)
+            buildInputDialog(ContextMenuOption.fromInt(dialogId))
         }
     }
 
@@ -95,35 +96,33 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
      * @param id the id type of the dialog
      */
     private fun buildContextMenu(id: Int): MaterialDialog {
-        val listIds = getListIds(id)
+        val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
 
         return MaterialDialog.Builder(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
-            .itemsIds(listIds!!)
+            .itemsIds(listIds)
             .items(*getValuesFromKeys(keyValueMap, listIds))
             .itemsCallback { _: MaterialDialog?, view: View, _: Int, _: CharSequence? ->
-                when (view.id) {
+                when (ContextMenuOption.fromInt(view.id)) {
                     DECK_OPTIONS -> {
-
                         // User asked to permanently change the deck options
                         val i = Intent(requireContext(), DeckOptions::class.java)
                         i.putExtra("did", requireArguments().getLong("did"))
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
-
                         // User asked to see all custom study options
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                CONTEXT_MENU_STANDARD,
+                                STANDARD,
                                 requireArguments().getLong("did"),
                                 jumpToReviewer
                             )
                         customStudyListener?.showDialogFragment(d)
                     }
-                    CUSTOM_STUDY_TAGS -> {
+                    STUDY_TAGS -> {
 
                         /*
                          * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
@@ -132,21 +131,18 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
                          */
                         val currentDeck = requireArguments().getLong("did")
 
-                        @KotlinCleanup("Handle null case")
-                        collection?.let {
-                            val dialogFragment = TagsDialog().withArguments(
-                                TagsDialog.DialogType.CUSTOM_STUDY_TAGS, ArrayList(),
-                                ArrayList(collection.tags.byDeck(currentDeck, true))
-                            )
-                            customStudyListener?.showDialogFragment(dialogFragment)
-                        }
+                        val dialogFragment = TagsDialog().withArguments(
+                            TagsDialog.DialogType.CUSTOM_STUDY_TAGS, ArrayList(),
+                            ArrayList(collection.tags.byDeck(currentDeck, true))
+                        )
+                        customStudyListener?.showDialogFragment(dialogFragment)
                     }
                     else -> {
 
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                view.id,
+                                ContextMenuOption.fromInt(view.id),
                                 requireArguments().getLong("did"),
                                 jumpToReviewer
                             )
@@ -158,9 +154,9 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
 
     /**
      * Build an input dialog that is used to get a parameter related to custom study from the user
-     * @param dialogId the id type of the dialog
+     * @param contextMenuOption the option of the dialog
      */
-    private fun buildInputDialog(dialogId: Int): MaterialDialog {
+    private fun buildInputDialog(contextMenuOption: ContextMenuOption): MaterialDialog {
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
@@ -178,7 +174,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         // Give EditText focus and show keyboard
         editText.setSelectAllOnFocus(true)
         editText.requestFocus()
-        if (dialogId == CUSTOM_STUDY_NEW || dialogId == CUSTOM_STUDY_REV) {
+        if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
             editText.inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
         }
         // deck id
@@ -192,36 +188,31 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
             .negativeText(R.string.dialog_cancel)
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 // Get the value selected by user
-                val n: Int
-                n = try {
+                val n: Int = try {
                     editText.text.toString().toInt()
                 } catch (e: Exception) {
                     Timber.w(e)
                     // This should never happen because we disable positive button for non-parsable inputs
                     return@onPositive
                 }
-                when (dialogId) {
-                    CUSTOM_STUDY_NEW -> {
+                when (contextMenuOption) {
+                    STUDY_NEW -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply()
-                        collection?.let {
-                            val deck = collection.decks.get(did)
-                            deck.put("extendNew", n)
-                            deck.let { collection.decks.save(deck) }
-                            collection.sched.extendLimits(n, 0)
-                        }
+                        val deck = collection.decks.get(did)
+                        deck.put("extendNew", n)
+                        collection.decks.save(deck)
+                        collection.sched.extendLimits(n, 0)
                         onLimitsExtended(jumpToReviewer)
                     }
-                    CUSTOM_STUDY_REV -> {
+                    STUDY_REV -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply()
-                        collection?.let {
-                            val deck = collection.decks.get(did)
-                            deck.put("extendRev", n)
-                            collection.decks.save(deck)
-                            collection.sched.extendLimits(0, n)
-                        }
+                        val deck = collection.decks.get(did)
+                        deck.put("extendRev", n)
+                        collection.decks.save(deck)
+                        collection.sched.extendLimits(0, n)
                         onLimitsExtended(jumpToReviewer)
                     }
-                    CUSTOM_STUDY_FORGOT -> {
+                    STUDY_FORGOT -> {
                         val ar = JSONArray()
                         ar.put(0, 1)
                         createCustomStudySession(
@@ -236,7 +227,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
                             false
                         )
                     }
-                    CUSTOM_STUDY_AHEAD -> {
+                    STUDY_AHEAD -> {
                         createCustomStudySession(
                             JSONArray(),
                             arrayOf(
@@ -249,10 +240,10 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
                             true
                         )
                     }
-                    CUSTOM_STUDY_RANDOM -> {
+                    STUDY_RANDOM -> {
                         createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
                     }
-                    CUSTOM_STUDY_PREVIEW -> {
+                    STUDY_PREVIEW -> {
                         createCustomStudySession(
                             JSONArray(),
                             arrayOf(
@@ -263,8 +254,9 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
                             false
                         )
                     }
-                    else -> {
-                    }
+                    STUDY_TAGS,
+                    DECK_OPTIONS,
+                    MORE_OPTIONS -> TODO("This branch has not been covered before")
                 }
             }
             .onNegative { _: MaterialDialog?, _: DialogAction? -> customStudyListener?.dismissAllDialogFragments() }
@@ -292,16 +284,16 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         get() {
             val res = resources
             val keyValueMap = HashMapInit<Int, String>(10)
-            keyValueMap[CONTEXT_MENU_STANDARD] = res.getString(R.string.custom_study)
-            keyValueMap[CUSTOM_STUDY_NEW] = res.getString(R.string.custom_study_increase_new_limit)
-            keyValueMap[CUSTOM_STUDY_REV] = res.getString(R.string.custom_study_increase_review_limit)
-            keyValueMap[CUSTOM_STUDY_FORGOT] = res.getString(R.string.custom_study_review_forgotten)
-            keyValueMap[CUSTOM_STUDY_AHEAD] = res.getString(R.string.custom_study_review_ahead)
-            keyValueMap[CUSTOM_STUDY_RANDOM] = res.getString(R.string.custom_study_random_selection)
-            keyValueMap[CUSTOM_STUDY_PREVIEW] = res.getString(R.string.custom_study_preview_new)
-            keyValueMap[CUSTOM_STUDY_TAGS] = res.getString(R.string.custom_study_limit_tags)
-            keyValueMap[DECK_OPTIONS] = res.getString(R.string.menu__deck_options)
-            keyValueMap[MORE_OPTIONS] = res.getString(R.string.more_options)
+            keyValueMap[STANDARD.value] = res.getString(R.string.custom_study)
+            keyValueMap[STUDY_NEW.value] = res.getString(R.string.custom_study_increase_new_limit)
+            keyValueMap[STUDY_REV.value] = res.getString(R.string.custom_study_increase_review_limit)
+            keyValueMap[STUDY_FORGOT.value] = res.getString(R.string.custom_study_review_forgotten)
+            keyValueMap[STUDY_AHEAD.value] = res.getString(R.string.custom_study_review_ahead)
+            keyValueMap[STUDY_RANDOM.value] = res.getString(R.string.custom_study_random_selection)
+            keyValueMap[STUDY_PREVIEW.value] = res.getString(R.string.custom_study_preview_new)
+            keyValueMap[STUDY_TAGS.value] = res.getString(R.string.custom_study_limit_tags)
+            keyValueMap[DECK_OPTIONS.value] = res.getString(R.string.menu__deck_options)
+            keyValueMap[MORE_OPTIONS.value] = res.getString(R.string.more_options)
             return keyValueMap
         }
 
@@ -314,11 +306,9 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         when (option) {
             1 -> sb.append("is:new ")
             2 -> sb.append("is:due ")
-            else -> {
-            }
         }
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
-        if (!selectedTags.isEmpty()) {
+        if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
                 arr.add(String.format("tag:'%s'", tag))
             }
@@ -339,78 +329,75 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
      * @param dialogId option to specify which tasks are shown in the list
      * @return the ids of which values to show
      */
-    @KotlinCleanup("Inspect Nullability" + "Map dialogID to enum to make exhaustive")
-    private fun getListIds(dialogId: Int): IntArray? {
+    private fun getListIds(dialogId: ContextMenuConfiguration): List<ContextMenuOption> {
         when (dialogId) {
-            CONTEXT_MENU_STANDARD -> {
+            STANDARD -> {
                 // Standard context menu
-                val dialogOptions = ArrayList<Int>()
-                dialogOptions.add(CUSTOM_STUDY_NEW)
-                dialogOptions.add(CUSTOM_STUDY_REV)
-                dialogOptions.add(CUSTOM_STUDY_FORGOT)
-                dialogOptions.add(CUSTOM_STUDY_AHEAD)
-                dialogOptions.add(CUSTOM_STUDY_RANDOM)
-                dialogOptions.add(CUSTOM_STUDY_PREVIEW)
-                dialogOptions.add(CUSTOM_STUDY_TAGS)
-                if (collection?.sched?.totalNewForCurrentDeck() == 0) {
+                val dialogOptions = mutableListOf<ContextMenuOption>()
+                dialogOptions.add(STUDY_NEW)
+                dialogOptions.add(STUDY_REV)
+                dialogOptions.add(STUDY_FORGOT)
+                dialogOptions.add(STUDY_AHEAD)
+                dialogOptions.add(STUDY_RANDOM)
+                dialogOptions.add(STUDY_PREVIEW)
+                dialogOptions.add(STUDY_TAGS)
+                if (collection.sched?.totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
-                    dialogOptions.remove(Integer.valueOf(CUSTOM_STUDY_NEW))
+                    dialogOptions.remove(STUDY_NEW)
                 }
                 return dialogOptions.toIntArray()
+                return dialogOptions.toList()
             }
-            CONTEXT_MENU_LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (collection?.sched?.newDue() != true && collection?.sched?.revDue() != true) {
-                    intArrayOf(CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
+            LIMITS -> // Special custom study options to show when the daily study limit has been reached
+                return if (collection.sched?.newDue() != true && collection.sched?.revDue() != true) {
+                    listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
                     if (collection.sched.newDue()) {
-                        intArrayOf(CUSTOM_STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS)
+                        listOf(STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS)
                     } else {
-                        intArrayOf(CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
+                        listOf(STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                     }
                 }
-            CONTEXT_MENU_EMPTY_SCHEDULE -> // Special custom study options to show when extending the daily study limits is not applicable
-                return intArrayOf(
-                    CUSTOM_STUDY_FORGOT, CUSTOM_STUDY_AHEAD, CUSTOM_STUDY_RANDOM,
-                    CUSTOM_STUDY_PREVIEW, CUSTOM_STUDY_TAGS, DECK_OPTIONS
+            EMPTY_SCHEDULE -> // Special custom study options to show when extending the daily study limits is not applicable
+                return listOf(
+                    STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM,
+                    STUDY_PREVIEW, STUDY_TAGS, DECK_OPTIONS
                 )
-            else -> {
-            }
         }
-        return null
     }
 
     private val text1: String
         get() {
             val res = AnkiDroidApp.getAppResources()
-            return when (requireArguments().getInt("id")) {
-                CUSTOM_STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection?.sched?.totalNewForCurrentDeck())
-                CUSTOM_STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection?.sched?.totalRevForCurrentDeck())
+            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+                STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched?.totalNewForCurrentDeck())
+                STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched?.totalRevForCurrentDeck())
                 else -> ""
             }
         }
     private val text2: String
         get() {
             val res = AnkiDroidApp.getAppResources()
-            return when (requireArguments().getInt("id")) {
-                CUSTOM_STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
-                CUSTOM_STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
-                CUSTOM_STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
-                CUSTOM_STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
-                CUSTOM_STUDY_RANDOM -> res.getString(R.string.custom_study_random)
-                CUSTOM_STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
+            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+                STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
+                STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
+                STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
+                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
+                STUDY_RANDOM -> res.getString(R.string.custom_study_random)
+                STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 else -> ""
             }
         }
     private val defaultValue: String
         get() {
             val prefs = AnkiDroidApp.getSharedPrefs(requireActivity())
-            return when (requireArguments().getInt("id")) {
-                CUSTOM_STUDY_NEW -> Integer.toString(prefs.getInt("extendNew", 10))
-                CUSTOM_STUDY_REV -> Integer.toString(prefs.getInt("extendRev", 50))
-                CUSTOM_STUDY_FORGOT -> Integer.toString(prefs.getInt("forgottenDays", 1))
-                CUSTOM_STUDY_AHEAD -> Integer.toString(prefs.getInt("aheadDays", 1))
-                CUSTOM_STUDY_RANDOM -> Integer.toString(prefs.getInt("randomCards", 100))
-                CUSTOM_STUDY_PREVIEW -> Integer.toString(prefs.getInt("previewDays", 1))
+            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+                STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
+                STUDY_REV -> prefs.getInt("extendRev", 50).toString()
+                STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
+                STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
+                STUDY_RANDOM -> prefs.getInt("randomCards", 100).toString()
+                STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
                 else -> ""
             }
         }
@@ -425,7 +412,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         val dyn: Deck
         val did = requireArguments().getLong("did")
 
-        val decks = collection?.decks
+        val decks = collection.decks
         val deckToStudyName = decks?.get(did)?.getString("name")
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks?.byName(customStudyDeck)
@@ -438,7 +425,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
                 // safe to empty
-                collection?.sched?.emptyDyn(cur.getLong("id"))
+                collection.sched?.emptyDyn(cur.getLong("id"))
                 // reuse; don't delete as it may have children
                 dyn = cur
                 decks.select(cur.getLong("id"))
@@ -476,7 +463,7 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
-        collection?.decks?.save(dyn)
+        collection.decks?.save(dyn)
         TaskManager.launchCollectionTask(RebuildCram(), createCustomStudySessionListener())
 
         // Hide the dialogs
@@ -496,25 +483,50 @@ class CustomStudyDialog(@KotlinCleanup("Make collection non null") private val c
         return CreateCustomStudySessionListener(customStudyListener)
     }
 
-    companion object {
-        // Different configurations for the context menu
-        const val CONTEXT_MENU_STANDARD = 0
-        const val CONTEXT_MENU_LIMITS = 1
-        const val CONTEXT_MENU_EMPTY_SCHEDULE = 2
+    /**
+     * Interface that enables mixed usage of ContextMenuOptions and ContextMenuConfigurations.
+     *
+     * @see ContextMenuConfiguration
+     * @see ContextMenuOption
+     */
+    interface ContextMenuAttribute<T> where T : Enum<*> {
+        val value: Int
+    }
 
-        // Standard custom study options to show in the context menu
-        private const val CUSTOM_STUDY_NEW = 100
-        private const val CUSTOM_STUDY_REV = 101
-        private const val CUSTOM_STUDY_FORGOT = 102
+    /**
+     * Different context menu configurations for the custom study dialog.
+     *
+     * @see ContextMenuAttribute
+     */
+    enum class ContextMenuConfiguration(override val value: Int) : ContextMenuAttribute<ContextMenuConfiguration> {
+        STANDARD(1),
+        LIMITS(2),
+        EMPTY_SCHEDULE(3);
 
-        @VisibleForTesting
-        val CUSTOM_STUDY_AHEAD = 103
-        private const val CUSTOM_STUDY_RANDOM = 104
-        private const val CUSTOM_STUDY_PREVIEW = 105
-        private const val CUSTOM_STUDY_TAGS = 106
+        companion object {
+            fun fromInt(value: Int): ContextMenuConfiguration = values().first { it.value == value }
+        }
+    }
 
-        // Special items to put in the context menu
-        private const val DECK_OPTIONS = 107
-        private const val MORE_OPTIONS = 108
+    /**
+     * Possible context menu options that could be shown in the custom study dialog.
+     *
+     * @see ContextMenuAttribute
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    enum class ContextMenuOption(override val value: Int) : ContextMenuAttribute<ContextMenuOption> {
+        STUDY_NEW(100),
+        STUDY_REV(101),
+        STUDY_FORGOT(102),
+        STUDY_AHEAD(103),
+        STUDY_RANDOM(104),
+        STUDY_PREVIEW(105),
+        STUDY_TAGS(106),
+        DECK_OPTIONS(107),
+        MORE_OPTIONS(108);
+
+        companion object {
+            fun fromInt(value: Int): ContextMenuOption = values().first { it.value == value }
+        }
     }
 }

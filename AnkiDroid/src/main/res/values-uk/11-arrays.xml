@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Завжди звітувати</item>
-        <item>Ніколи не звітувати</item>
-        <item>Запитувати мене</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Призупинити картку</item>
-        <item>Тільки позначки</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Нові картки у випадковому порядку</item>
-        <item>Нові картки в порядку додавання</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Найстарші спочатку</item>
-        <item>Випадковий порядок</item>
-        <item>Зростаючими інтервалами</item>
-        <item>Спадаючими інтервалами</item>
-        <item>Найбільше помилок</item>
-        <item>В порядку додавання</item>
-        <item>В порядку черги</item>
-        <item>Остання додана йде першою</item>
-        <item>Відносно затримки</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Використовувати поточну колоду</item>
-        <item>Вирішувати за типом записів</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Перемішувати нові і повторювані картки</item>
-        <item>Нові картки після повторюваних</item>
-        <item>Нові картки перед повторюваними</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Коли шрифт не визначений на навчальних картках</item>
-        <item>Завжди</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Світла</item>
-        <item>Звичайна</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Чорна</item>
-        <item>Темна</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>Найдрібніший</item>
-        <item>Дуже дрібний</item>
-        <item>Дрібний</item>
-        <item>Середній</item>
-        <item>Великий</item>
-        <item>Дуже великий</item>
-        <item>Найбільший</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Завжди звітувати</string>
+    <string name="error_reporting_choice_never_report">Ніколи не звітувати</string>
+    <string name="error_reporting_choice_ask_user">Запитувати мене</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Тільки позначки</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Нові картки у випадковому порядку</string>
+    <string name="new_order_order_added">Нові картки в порядку додавання</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Найстарші спочатку</string>
+    <string name="cram_deck_conf_order_random">Випадковий порядок</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Зростаючими інтервалами</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Спадаючими інтервалами</string>
+    <string name="cram_deck_conf_order_most_lapsed">Найбільше помилок</string>
+    <string name="cram_deck_conf_order_order_added">В порядку додавання</string>
+    <string name="cram_deck_conf_order_order_due">В порядку черги</string>
+    <string name="cram_deck_conf_order_latest_added_first">Остання додана йде першою</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Відносно затримки</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Використовувати поточну колоду</string>
+    <string name="add_to_deck_decide_by_note_type">Вирішувати за типом записів</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Перемішувати нові і повторювані картки</string>
+    <string name="new_spread_new_after_review">Нові картки після повторюваних</string>
+    <string name="new_spread_new_before_review">Нові картки перед повторюваними</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Коли шрифт не визначений на навчальних картках</string>
+    <string name="override_font_always">Завжди</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Світла</string>
+    <string name="day_theme_plain">Звичайна</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Чорна</string>
+    <string name="night_theme_dark">Темна</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">Найдрібніший</string>
+    <string name="html_size_code_x_small">Дуже дрібний</string>
+    <string name="html_size_code_small">Дрібний</string>
+    <string name="html_size_code_medium">Середній</string>
+    <string name="html_size_code_large">Великий</string>
+    <string name="html_size_code_x_large">Дуже великий</string>
+    <string name="html_size_code_xx_large">Найбільший</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Ніяких дій</string>
     <string name="gesture_answer_1">Кнопка відповіді 1</string>
     <string name="gesture_answer_2">Кнопка відповіді 2</string>

@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">உச்சரிப்பை சரிபார்</string>
     <string name="new_deck">டெக் உருவாக்கவும்</string>
     <string name="new_dynamic_deck">வடிகட்டப்பட்ட டெக் உருவாக்கவும்</string>
-    <string name="night_mode">இரவு நிலை</string>
     <string name="directory_inaccessible">AnkiDroid அடைவு அணுகக்கூடியதாக</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
     <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>
-    <string name="search_deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Add card</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_empty">இந்த கட்டு காலியாக உள்ளது. பத்திரிகை, + புதிய உள்ளடக்கம் சேர்க்க பொத்தான்.</string>

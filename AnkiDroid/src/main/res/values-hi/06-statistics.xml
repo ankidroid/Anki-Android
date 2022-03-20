@@ -77,10 +77,10 @@
     <string name="stats_overview_forecast_total">कुल: &lt;b&gt;%1$d&lt;/b&gt; समीक्षाएँ</string>
     <string name="stats_overview_forecast_average">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा/दिन</string>
     <string name="stats_overview_forecast_due_tomorrow">कल के लिए नियत: &lt;b&gt;%1$d&lt;/b&gt;</string>
-    <string name="stats_overview_days_studied">Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
+    <string name="stats_overview_days_studied">दिन पड़े: &lt;b&gt;%1$d%%&lt;/b&gt; (%3$d में से %2$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">औसत: &lt;b&gt;%1$.1f&lt;/b&gt; समीक्षा / दिन</string>
     <string name="stats_overview_reviews_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं: &lt;b&gt;%1$.1f &lt;/b&gt;</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">पूरे: &lt;b&gt;%d&lt;/b&gt; मिनट्स</string>
     <string name="stats_overview_time_per_day_studydays">अध्ययन किए गए दिनों के लिए औसत: &lt;b&gt;%1$.1f&lt;/b&gt; मिनट/दिन</string>
     <string name="stats_overview_time_per_day_all">यदि आप प्रतिदिन अध्ययन करते हैं:  &lt;b&gt;%1$.1f&lt;/b&gt; मिनट/दिन</string>
     <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>

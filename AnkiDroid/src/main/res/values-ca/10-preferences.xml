@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
     <string name="sync_status_badge" maxLength="41">Mostra l\'estat de sincronització</string>
     <string name="sync_status_badge_summ">Canvia la icona de sincronització quan es puguin pujar canvis</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Tema diürn</string>
     <string name="night_theme" maxLength="41">Tema nocturn</string>
     <string name="default_font" maxLength="41">Tipus de lletra per omissió</string>

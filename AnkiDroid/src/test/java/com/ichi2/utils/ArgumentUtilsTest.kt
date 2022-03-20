@@ -18,17 +18,18 @@
 package com.ichi2.utils
 
 import androidx.core.os.bundleOf
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
 import com.ichi2.utils.ArgumentUtils.getSerializableWithCast
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.lang.ClassCastException
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-class ArgumentUtilsTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+class ArgumentUtilsTest {
 
     @Test
     fun shouldReturnValueIfCastIsSuccessful() {

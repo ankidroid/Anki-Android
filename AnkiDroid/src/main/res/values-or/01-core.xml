@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="night_mode">ରାତ୍ରି ମୋଡ୍</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ପ୍ରଥମେ ବିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
-    <string name="search_deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
+    <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">ପତ୍ର ଯୋଡ଼ନ୍ତୁ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
     <string name="studyoptions_empty">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି। ନୂଆ ବିଷୟବସ୍ତୁ ଯୋଡ଼ିବା ପାଇଁ + ବଟନ୍ ଦବାନ୍ତୁ।</string>

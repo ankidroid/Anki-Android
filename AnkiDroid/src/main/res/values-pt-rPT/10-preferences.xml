@@ -134,6 +134,7 @@
         de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Tema do dia</string>
     <string name="night_theme" maxLength="41">Tema noturno</string>
     <string name="default_font" maxLength="41">Letra predefinida</string>

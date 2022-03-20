@@ -77,7 +77,7 @@ class BootService : BroadcastReceiver() {
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
-                    val reminderIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(
+                    val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
                         context,
                         deckConfiguration.getLong("id").toInt(),
                         Intent(context, ReminderService::class.java).putExtra(
@@ -117,7 +117,7 @@ class BootService : BroadcastReceiver() {
             calendar[Calendar.HOUR_OF_DAY] = getRolloverHourOfDay(context)
             calendar[Calendar.MINUTE] = 0
             calendar[Calendar.SECOND] = 0
-            val notificationIntent = CompatHelper.getCompat().getImmutableBroadcastIntent(context, 0, Intent(context, NotificationService::class.java), 0)
+            val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(context, 0, Intent(context, NotificationService::class.java), 0)
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,

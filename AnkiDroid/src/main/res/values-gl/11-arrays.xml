@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Informar sempre</item>
-        <item>Non informar nunca</item>
-        <item>Preguntarme</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspender cartón</item>
-        <item>Só etiquetar</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>Novos cartóns ordenados ao chou</item>
-        <item>Cartóns novos na orde de adición</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Máis antigos primeiro</item>
-        <item>Ao chou</item>
-        <item>Intervalos crecentes</item>
-        <item>Intervalos decrecentes</item>
-        <item>Máis atrasadas</item>
-        <item>Orde de adición</item>
-        <item>Orde de revisión</item>
-        <item>Última engadida primeiro</item>
-        <item>Atrasos relativos</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Empregar baralla actual</item>
-        <item>Decidir polo tipo de nota</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mesturar cartóns novos e revisións</item>
-        <item>Cartóns novos despois das revisións</item>
-        <item>Cartóns novos antes das revisóns</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>Cando non se especificou unha fonte nos cartóns</item>
-        <item>Sempre</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Claro</item>
-        <item>Simple</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Negro</item>
-        <item>Escuro</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Informar sempre</string>
+    <string name="error_reporting_choice_never_report">Non informar nunca</string>
+    <string name="error_reporting_choice_ask_user">Preguntarme</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Só etiquetar</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">Novos cartóns ordenados ao chou</string>
+    <string name="new_order_order_added">Cartóns novos na orde de adición</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Máis antigos primeiro</string>
+    <string name="cram_deck_conf_order_random">Ao chou</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Intervalos crecentes</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Intervalos decrecentes</string>
+    <string name="cram_deck_conf_order_most_lapsed">Máis atrasadas</string>
+    <string name="cram_deck_conf_order_order_added">Orde de adición</string>
+    <string name="cram_deck_conf_order_order_due">Orde de revisión</string>
+    <string name="cram_deck_conf_order_latest_added_first">Última engadida primeiro</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Atrasos relativos</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Empregar baralla actual</string>
+    <string name="add_to_deck_decide_by_note_type">Decidir polo tipo de nota</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Mesturar cartóns novos e revisións</string>
+    <string name="new_spread_new_after_review">Cartóns novos despois das revisións</string>
+    <string name="new_spread_new_before_review">Cartóns novos antes das revisóns</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">Cando non se especificou unha fonte nos cartóns</string>
+    <string name="override_font_always">Sempre</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Claro</string>
+    <string name="day_theme_plain">Simple</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Negro</string>
+    <string name="night_theme_dark">Escuro</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">Sen acción</string>
     <string name="gesture_answer_1">Botón de resposta 1</string>
     <string name="gesture_answer_2">Botón de resposta 2</string>
@@ -100,8 +91,8 @@
     <string name="gesture_answer_green">Resposta recomendada (verde)</string>
     <string name="gesture_answer_better_recommended">Resposta mellor ca recomendada</string>
     <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_play">Reproducir medio</string>
+    <string name="gesture_abort_learning">Abortar aprendizaxe</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
     <string name="gesture_flag_green">Toggle Green Flag</string>

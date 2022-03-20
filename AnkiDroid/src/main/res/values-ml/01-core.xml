@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">ഉച്ചാരണം പരിശോധിക്കുക</string>
     <string name="new_deck">ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="new_dynamic_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് സൃഷ്ടിക്കുക</string>
-    <string name="night_mode">നൈറ്റ് മോഡ്</string>
     <string name="directory_inaccessible">AnkiDroid ഡയറക്‌ടറി ആക്‌സസ്സുചെയ്യാനാകില്ല</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">ഇഷ്‌ടാനുസൃത പഠന സെഷൻ</string>
     <string name="custom_study_deck_exists">ആദ്യം നിലവിലുള്ള ഇഷ്‌ടാനുസൃത പഠന ഡെക്കിന്റെ പേരുമാറ്റുക</string>
     <string name="empty_deck">ഈ ഡെക്ക് ശൂന്യമാണ്</string>
-    <string name="search_deck">ഡെക്ക് തിരയൽ</string>
+    <string name="search_deck" comment="Deck search for selecting it">ഡെക്ക് തിരയൽ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">കാർഡ് ചേർക്കുക</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
     <string name="studyoptions_empty">ഈ ഡെക്ക് ശൂന്യമാണ്. പുതിയ ഉള്ളടക്കം ചേർക്കാൻ + ബട്ടൺ അമർത്തുക</string>

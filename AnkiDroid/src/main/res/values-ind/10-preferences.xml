@@ -134,6 +134,7 @@
          menit yang lalu.</string>
     <string name="sync_status_badge" maxLength="41">Tampilkan status sinkronisasi</string>
     <string name="sync_status_badge_summ">Ubah ikon sinkronisasi saat perubahan dapat diunggah</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Tema siang</string>
     <string name="night_theme" maxLength="41">Tema malam</string>
     <string name="default_font" maxLength="41">Fon dasar</string>

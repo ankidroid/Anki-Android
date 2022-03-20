@@ -14,65 +14,69 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 --><resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>Always report</item>
-        <item>Never report</item>
-        <item>Ask me</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>Suspend card</item>
-        <item>Tag only</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>New cards in random order</item>
-        <item>New cards in order added</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>Oldest seen first</item>
-        <item>Random</item>
-        <item>Increasing intervals</item>
-        <item>Decreasing intervals</item>
-        <item>Most lapsed</item>
-        <item>Order added</item>
-        <item>Order due</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>Use current deck</item>
-        <item>Decide by note type</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>Mix new cards and reviews</item>
-        <item>New cards after reviews</item>
-        <item>New cards before reviews</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
-        <item>Always</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>Light</item>
-        <item>Plain</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
-    </string-array>
 
-    <!--
-    #7794 - it's better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">Always report</string>
+    <string name="error_reporting_choice_never_report">Never report</string>
+    <string name="error_reporting_choice_ask_user">Ask me</string>
+
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">Tag only</string>
+
+
+    <!-- new_order_labels -->
+    <string name="new_order_random">New cards in random order</string>
+    <string name="new_order_order_added">New cards in order added</string>
+
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
+    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
+    <string name="cram_deck_conf_order_order_added">Order added</string>
+    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">Use current deck</string>
+    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
+    <string name="new_spread_new_after_review">New cards after reviews</string>
+    <string name="new_spread_new_before_review">New cards before reviews</string>
+
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">When no font specified on flashcards</string>
+    <string name="override_font_always">Always</string>
+
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">Light</string>
+    <string name="day_theme_plain">Plain</string>
+
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">Black</string>
+    <string name="night_theme_dark">Dark</string>
+
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-small</string>
+    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_x_large">x-large</string>
+    <string name="html_size_code_xx_large">xx-large</string>
+
+    <!-- gestures_labels -->
     <string name="gesture_no_action">No action</string>
     <string name="gesture_answer_1">Answer button 1</string>
     <string name="gesture_answer_2">Answer button 2</string>

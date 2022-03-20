@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
     <string name="sync_status_badge" maxLength="41">Afficher l\'état de la synchronisation</string>
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
     <string name="default_font" maxLength="41">Police par défaut</string>

@@ -476,7 +476,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         draw(canvas)
         val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
         // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
-        return CompatHelper.getCompat().saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
+        return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
     }
 
     interface OnPaintColorChangeListener {

@@ -136,7 +136,6 @@
     <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
-    <string name="night_mode">Tryb nocny</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -167,7 +166,8 @@
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="search_deck">Przeszukaj talię</string>
+    <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">Dodaj kartę</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>

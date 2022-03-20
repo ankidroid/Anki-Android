@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>
     <string name="default_font" maxLength="41">Varsayılan yazı tipi</string>

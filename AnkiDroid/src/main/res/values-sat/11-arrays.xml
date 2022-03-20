@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>ᱜᱷᱤᱲᱜᱮ ᱨᱤᱯᱚᱴ ᱢᱮ</item>
-        <item>ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</item>
-        <item>ᱠᱩᱞᱤᱧ ᱢᱮ</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱴᱮᱜ ᱜᱮ</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>ᱨᱮᱱᱰᱚᱢ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱷᱟᱨ</item>
-        <item>ᱛᱷᱟᱨ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>ᱢᱟᱨᱮ ᱧᱮᱞ ᱢᱟᱲᱟᱝ</item>
-        <item>ᱨᱮᱱᱰᱚᱢ</item>
-        <item>ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱰᱷᱮᱨᱚᱜ ᱠᱟᱱᱟ</item>
-        <item>ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱠᱚᱢᱚᱜ ᱠᱟᱱᱟ</item>
-        <item>ᱡᱟᱥᱛᱤ ᱫᱚᱱᱟᱜ</item>
-        <item>ᱛᱷᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-        <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱛᱷᱟᱨ ᱢᱮ</item>
-        <item>ᱱᱮᱛᱟᱨᱟᱜ ᱥᱮᱞᱮᱫᱟᱜ ᱢᱟᱲᱟᱝ</item>
-        <item>ᱥᱟᱯᱮᱠᱷᱤᱠ ᱜᱷᱟᱹᱲᱤᱡ</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>ᱱᱟᱶᱟ ‌ᱠᱟᱰ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</item>
-        <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱟᱭᱚᱢ ᱱᱟᱶᱟ ᱠᱟᱰᱟ</item>
-        <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱢᱟᱲᱟᱝ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞ</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>ᱪᱮᱫ ᱦᱚᱸ ᱪᱤᱠᱤ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱱᱚᱶᱟ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱞᱟᱹᱜᱤᱫ</item>
-        <item>ᱡᱷᱚᱛᱚᱵᱮᱲᱟ</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>ᱟᱨᱥᱟᱞ</item>
-        <item>ᱥᱟᱯᱷᱟ</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>ᱦᱮᱸᱫᱮ</item>
-        <item>ᱧᱩᱛ</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-ᱦᱚᱯᱚᱱ</item>
-        <item>x-ᱦᱚᱯᱚᱱ</item>
-        <item>ᱦᱚᱯᱚᱱ</item>
-        <item>ᱢᱮᱰᱤᱭᱚᱢ</item>
-        <item>ᱢᱟᱨᱟᱝ</item>
-        <item>x-ᱢᱟᱨᱟᱝ</item>
-        <item>xx-ᱢᱟᱨᱟᱝ</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">ᱜᱷᱤᱲᱜᱮ ᱨᱤᱯᱚᱴ ᱢᱮ</string>
+    <string name="error_reporting_choice_never_report">ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</string>
+    <string name="error_reporting_choice_ask_user">ᱠᱩᱞᱤᱧ ᱢᱮ</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">ᱴᱮᱜ ᱜᱮ</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">ᱨᱮᱱᱰᱚᱢ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱷᱟᱨ</string>
+    <string name="new_order_order_added">ᱛᱷᱟᱨ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">ᱢᱟᱨᱮ ᱧᱮᱞ ᱢᱟᱲᱟᱝ</string>
+    <string name="cram_deck_conf_order_random">ᱨᱮᱱᱰᱚᱢ</string>
+    <string name="cram_deck_conf_order_increasing_intervals">ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱰᱷᱮᱨᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">ᱚᱠᱛᱚ ᱛᱟᱞᱟ ᱠᱚᱢᱚᱜ ᱠᱟᱱᱟ</string>
+    <string name="cram_deck_conf_order_most_lapsed">ᱡᱟᱥᱛᱤ ᱫᱚᱱᱟᱜ</string>
+    <string name="cram_deck_conf_order_order_added">ᱛᱷᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
+    <string name="cram_deck_conf_order_order_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ ᱛᱷᱟᱨ ᱢᱮ</string>
+    <string name="cram_deck_conf_order_latest_added_first">ᱱᱮᱛᱟᱨᱟᱜ ᱥᱮᱞᱮᱫᱟᱜ ᱢᱟᱲᱟᱝ</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ᱥᱟᱯᱮᱠᱷᱤᱠ ᱜᱷᱟᱹᱲᱤᱡ</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</string>
+    <string name="add_to_deck_decide_by_note_type">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">ᱱᱟᱶᱟ ‌ᱠᱟᱰ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</string>
+    <string name="new_spread_new_after_review">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱟᱭᱚᱢ ᱱᱟᱶᱟ ᱠᱟᱰᱟ</string>
+    <string name="new_spread_new_before_review">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱢᱟᱲᱟᱝ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞ</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">ᱪᱮᱫ ᱦᱚᱸ ᱪᱤᱠᱤ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱱᱚᱶᱟ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱞᱟᱹᱜᱤᱫ</string>
+    <string name="override_font_always">ᱡᱷᱚᱛᱚᱵᱮᱲᱟ</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">ᱟᱨᱥᱟᱞ</string>
+    <string name="day_theme_plain">ᱥᱟᱯᱷᱟ</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">ᱦᱮᱸᱫᱮ</string>
+    <string name="night_theme_dark">ᱧᱩᱛ</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-ᱦᱚᱯᱚᱱ</string>
+    <string name="html_size_code_x_small">x-ᱦᱚᱯᱚᱱ</string>
+    <string name="html_size_code_small">ᱦᱚᱯᱚᱱ</string>
+    <string name="html_size_code_medium">ᱢᱮᱰᱤᱭᱚᱢ</string>
+    <string name="html_size_code_large">ᱢᱟᱨᱟᱝ</string>
+    <string name="html_size_code_x_large">x-ᱢᱟᱨᱟᱝ</string>
+    <string name="html_size_code_xx_large">xx-ᱢᱟᱨᱟᱝ</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">ᱪᱮᱫ ᱟᱹᱞᱚ ᱪᱤᱠᱟᱹ</string>
     <string name="gesture_answer_1">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱑</string>
     <string name="gesture_answer_2">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱒</string>

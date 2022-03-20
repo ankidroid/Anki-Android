@@ -34,64 +34,55 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string-array name="error_reporting_choice_labels">
-        <item>أبلغ دائمًا</item>
-        <item>لا تبلغ أبدًا</item>
-        <item>اسألني</item>
-    </string-array>
-    <string-array name="leech_action_labels">
-        <item>علق البطاقة</item>
-        <item>إضافة وسم فقط</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>البطاقات الجديدة في ترتيب عشوائي</item>
-        <item>البطاقات الجديدة في ترتيب إضافتها</item>
-    </string-array>
-    <string-array name="cram_deck_conf_order_labels">
-        <item>مشاهدة الأقدم أولا</item>
-        <item>عشوائي</item>
-        <item>فواصل زمنية متزايدة</item>
-        <item>تقليل الفترات</item>
-        <item>الأكثر نسيانا</item>
-        <item>تاريخ الإضافة</item>
-        <item>ترتيب الاستحقاق</item>
-        <item>المضافة مؤخرًا أولًا</item>
-        <item>التأخير النسبي</item>
-    </string-array>
-    <string-array name="add_to_cur_labels">
-        <item>استخدام الرزمة الحالية</item>
-        <item>تقرير حسب نوع الملحوظة</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>خلط البطاقات الجديدة والمراجعات</item>
-        <item>إظهار البطاقات الجديدة بعد المراجعات</item>
-        <item>إظهار البطاقات الجديدة قبل المراجعات</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>عندما لا يكون هناك خط محدد في البطاقات</item>
-        <item>دائمًا</item>
-    </string-array>
-    <string-array name="day_theme_labels">
-        <item>ساطع</item>
-        <item>بسيط</item>
-    </string-array>
-    <string-array name="night_theme_labels">
-        <item>أسود</item>
-        <item>داكن</item>
-    </string-array>
-    <string-array name="html_size_code_labels">
-        <item>xx-صغير</item>
-        <item>x-صغير</item>
-        <item>صغير</item>
-        <item>متوسط</item>
-        <item>كبير</item>
-        <item>x-كبير</item>
-        <item>xx-كبير</item>
-    </string-array>
-    <!--
-    #7794 - it\'s better to use @string references in non-translated arrays as this handles
-    changes in the array ordering better
-     -->
+    <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
+    Now arrays are defined in constants.xml, and the strings are here -->
+    <!-- error_reporting_choice_labels -->
+    <string name="error_reporting_choice_always_report">أبلغ دائمًا</string>
+    <string name="error_reporting_choice_never_report">لا تبلغ أبدًا</string>
+    <string name="error_reporting_choice_ask_user">اسألني</string>
+    <!-- leech_action_labels -->
+    <!-- 01-core:menu_suspend_card -->
+    <string name="leech_action_tag_only">إضافة وسم فقط</string>
+    <!-- new_order_labels -->
+    <string name="new_order_random">البطاقات الجديدة في ترتيب عشوائي</string>
+    <string name="new_order_order_added">البطاقات الجديدة في ترتيب إضافتها</string>
+    <!-- cram_deck_conf_order_labels -->
+    <string name="cram_deck_conf_order_oldest_seen_first">مشاهدة الأقدم أولا</string>
+    <string name="cram_deck_conf_order_random">عشوائي</string>
+    <string name="cram_deck_conf_order_increasing_intervals">فواصل زمنية متزايدة</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">تقليل الفترات</string>
+    <string name="cram_deck_conf_order_most_lapsed">الأكثر نسيانا</string>
+    <string name="cram_deck_conf_order_order_added">تاريخ الإضافة</string>
+    <string name="cram_deck_conf_order_order_due">ترتيب الاستحقاق</string>
+    <string name="cram_deck_conf_order_latest_added_first">المضافة مؤخرًا أولًا</string>
+    <string name="cram_deck_conf_order_relative_overdueness">التأخير النسبي</string>
+    <!-- add_to_cur_labels -->
+    <string name="add_to_deck_use_current_deck">استخدام الرزمة الحالية</string>
+    <string name="add_to_deck_decide_by_note_type">تقرير حسب نوع الملحوظة</string>
+    <!-- new_spread_labels -->
+    <string name="new_spread_mix_new_and_review">خلط البطاقات الجديدة والمراجعات</string>
+    <string name="new_spread_new_after_review">إظهار البطاقات الجديدة بعد المراجعات</string>
+    <string name="new_spread_new_before_review">إظهار البطاقات الجديدة قبل المراجعات</string>
+    <!-- override_font_labels -->
+    <string name="override_font_if_missing">عندما لا يكون هناك خط محدد في البطاقات</string>
+    <string name="override_font_always">دائمًا</string>
+    <!-- theme labels -->
+    <string name="theme_follow_system">Follow system</string>
+    <!-- day_theme_labels -->
+    <string name="day_theme_light">ساطع</string>
+    <string name="day_theme_plain">بسيط</string>
+    <!-- night_theme_labels -->
+    <string name="night_theme_black">أسود</string>
+    <string name="night_theme_dark">داكن</string>
+    <!-- html_size_code_labels -->
+    <string name="html_size_code_xx_small">xx-صغير</string>
+    <string name="html_size_code_x_small">x-صغير</string>
+    <string name="html_size_code_small">صغير</string>
+    <string name="html_size_code_medium">متوسط</string>
+    <string name="html_size_code_large">كبير</string>
+    <string name="html_size_code_x_large">x-كبير</string>
+    <string name="html_size_code_xx_large">xx-كبير</string>
+    <!-- gestures_labels -->
     <string name="gesture_no_action">بدون اجراء</string>
     <string name="gesture_answer_1">زر الإجابة 1</string>
     <string name="gesture_answer_2">زر الإجابة 2</string>
@@ -114,8 +105,8 @@
     <string name="gesture_page_down">تمرير صفحة إلى الأسفل</string>
     <string name="gesture_abort_sync">إيقاف التعلم والمزامنة</string>
     <string name="gesture_toggle_whiteboard">تمكين اللوحة البيضاء</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">إظهار التلميح</string>
+    <string name="gesture_show_all_hints">إظهار كل التلميحات</string>
     <string name="record_voice">تسجيل الصوت</string>
     <string name="replay_voice">إعادة تشغيل الصوت</string>
     <string name="automatic_answer_option_2">صعب (جيد إذا لم يكن متوفرًا)</string>

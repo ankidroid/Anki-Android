@@ -133,6 +133,7 @@
     <string name="automatic_sync_choice_summ">അവസാന സമന്വയം 10 ​​ൽ കൂടുതലാണെങ്കിൽ അപ്ലിക്കേഷൻ ആരംഭത്തിൽ / പുറത്തുകടക്കുമ്പോൾ യാന്ത്രികമായി സമന്വയിപ്പിക്കുക</string>
     <string name="sync_status_badge" maxLength="41">സമന്വയ നില പ്രദർശിപ്പിക്കുക</string>
     <string name="sync_status_badge_summ">മാറ്റങ്ങൾ അപ്‌ലോഡ് ചെയ്യാൻ കഴിയുമ്പോൾ സമന്വയ ഐക്കൺ മാറ്റുക</string>
+    <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">ദിവസത്തെ തീം</string>
     <string name="night_theme" maxLength="41">രാത്രി തീം</string>
     <string name="default_font" maxLength="41">സ്ഥിരസ്ഥിതി ഫോണ്ട്</string>

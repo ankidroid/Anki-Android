@@ -76,6 +76,10 @@
         <item quantity="other">%d कार्डे रीसेट केली</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <plurals name="reschedule_cards_dialog_title_new">
+        <item quantity="one">Reschedule %d card</item>
+        <item quantity="other">Reschedule %d cards</item>
+    </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Current interval: %d day</item>
         <item quantity="other">वर्तमान मध्यांतर:%d दिवस</item>

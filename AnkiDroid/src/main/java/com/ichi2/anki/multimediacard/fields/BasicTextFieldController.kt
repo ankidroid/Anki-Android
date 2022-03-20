@@ -127,7 +127,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
             val translationSources = ArrayList<String>(2)
             translationSources.add("Glosbe.com")
             // Chromebooks do not support dependent apps yet.
-            if (!CompatHelper.isChromebook()) {
+            if (!CompatHelper.isChromebook) {
                 translationSources.add("ColorDict")
             }
             fragment.setChoices(translationSources)

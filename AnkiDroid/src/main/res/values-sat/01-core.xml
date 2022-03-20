@@ -126,7 +126,6 @@
     <string name="menu_toggle_mic_tool_bar">ᱥᱩᱨ ᱧᱣᱞ ᱛᱟᱢ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="night_mode">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -157,7 +156,8 @@
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
-    <string name="search_deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">ᱠᱟᱰ ᱥᱮᱞᱮᱫᱽ ᱢᱮ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_empty">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ ᱾ + ᱵᱚᱴᱚᱱ ᱯᱨᱮᱥ ᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱡᱤᱱᱥᱚ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭ ᱢᱮ ᱾</string>

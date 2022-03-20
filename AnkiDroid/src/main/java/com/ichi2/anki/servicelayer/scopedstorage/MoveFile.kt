@@ -142,12 +142,12 @@ internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File
     @VisibleForTesting
     internal fun copyFile(source: File, destination: File) {
         Timber.d("copying: $source to $destination")
-        CompatHelper.getCompat().copyFile(source.canonicalPath, destination.canonicalPath)
+        CompatHelper.compat.copyFile(source.canonicalPath, destination.canonicalPath)
     }
 
     @VisibleForTesting
     internal fun deleteFile(file: File) {
         Timber.d("deleting '$file'")
-        CompatHelper.getCompat().deleteFile(file)
+        CompatHelper.compat.deleteFile(file)
     }
 }
