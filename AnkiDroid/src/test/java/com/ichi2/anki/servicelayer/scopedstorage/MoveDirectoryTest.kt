@@ -26,8 +26,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
@@ -37,7 +35,6 @@ import java.io.File
 /**
  * Test for [MoveDirectory]
  */
-@RunWith(Parameterized::class)
 class MoveDirectoryTest : Test21And26(), OperationTest {
     override lateinit var executionContext: MockMigrationContext
     private val executor = MockExecutor { executionContext }

@@ -24,8 +24,6 @@ import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
@@ -34,7 +32,6 @@ import kotlin.io.path.pathString
 /**
  * Tests for [Directory]
  */
-@RunWith(Parameterized::class)
 class DirectoryTest : Test21And26() {
     @Test
     fun passes_if_existing_directory() {

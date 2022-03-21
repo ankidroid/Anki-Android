@@ -24,8 +24,6 @@ import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
@@ -38,7 +36,6 @@ import java.nio.file.NotDirectoryException
 /**
  * Test for [MoveDirectoryContent]
  */
-@RunWith(Parameterized::class)
 class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
     override val executionContext = MockMigrationContext()

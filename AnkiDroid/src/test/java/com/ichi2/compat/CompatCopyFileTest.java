@@ -20,8 +20,6 @@ import com.ichi2.anki.TestUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +31,6 @@ import java.net.URL;
 
 import static com.ichi2.utils.FileOperation.getFileResource;
 
-@RunWith(Parameterized.class)
 public class CompatCopyFileTest extends Test21And26 {
 
     @Test

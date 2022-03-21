@@ -22,8 +22,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
@@ -31,7 +29,6 @@ import kotlin.io.path.pathString
 /**
  * Tests for [DeleteEmptyDirectory]
  */
-@RunWith(Parameterized::class)
 class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
 
     override val executionContext = MockMigrationContext()
