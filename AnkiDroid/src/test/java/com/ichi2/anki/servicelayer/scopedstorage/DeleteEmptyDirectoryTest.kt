@@ -16,8 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.compat.Test21And26
 import org.hamcrest.MatcherAssert.assertThat
@@ -33,7 +31,6 @@ import kotlin.io.path.pathString
 /**
  * Tests for [DeleteEmptyDirectory]
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized::class)
 class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
 

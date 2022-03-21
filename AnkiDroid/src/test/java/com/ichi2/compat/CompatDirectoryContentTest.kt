@@ -16,8 +16,7 @@
 
 package com.ichi2.compat
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -28,7 +27,6 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized::class)
 class CompatDirectoryContentTest : Test21And26() {
 
@@ -85,6 +83,7 @@ class CompatDirectoryContentTest : Test21And26() {
         )
     }
 
+    @SuppressLint("NewApi")
     @Test
     fun file_test() {
         val file = createTransientFile("foo")
