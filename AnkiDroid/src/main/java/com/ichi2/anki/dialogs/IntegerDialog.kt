@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.MaterialEditTextDialog.Companion.displayKeyboard
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.contentNullable
@@ -43,16 +44,18 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        return MaterialDialog.Builder(requireActivity())
-            .title(requireArguments().getString("title")!!)
-            .positiveText(resources.getString(R.string.dialog_ok))
-            .negativeText(R.string.dialog_cancel)
-            .inputType(InputType.TYPE_CLASS_NUMBER)
-            .inputRange(1, requireArguments().getInt("digits"))
-            .input(
-                requireArguments().getString("prompt"), ""
-            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
-            .contentNullable(requireArguments().getString("content"))
-            .show()
+        val show = MaterialDialog.Builder(requireActivity())
+                .title(requireArguments().getString("title")!!)
+                .positiveText(resources.getString(R.string.dialog_ok))
+                .negativeText(R.string.dialog_cancel)
+                .inputType(InputType.TYPE_CLASS_NUMBER)
+                .inputRange(1, requireArguments().getInt("digits"))
+                .input(
+                        requireArguments().getString("prompt"), ""
+                ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
+                .contentNullable(requireArguments().getString("content"))
+                .show()
+        displayKeyboard(show.inputEditText!!, show)
+        return show
     }
 }
