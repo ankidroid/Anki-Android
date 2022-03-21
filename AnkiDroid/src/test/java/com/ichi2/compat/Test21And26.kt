@@ -35,11 +35,7 @@ import java.io.IOException
  * And versions that must restrict themselves to [File].
  */
 @RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
-open class Test21And26(
-    open val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) {
+open class Test21And26 {
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{1}")
@@ -49,6 +45,14 @@ open class Test21And26(
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
     }
+
+    @Parameterized.Parameter(0)
+    lateinit var compat: Compat
+
+    @Parameterized.Parameter(1)
+    @Suppress("unused")
+    /** Used in the "Test Results" Window */
+    lateinit var unitTestDescription: String
 
     val isV21: Boolean
         get() = compat is CompatV21

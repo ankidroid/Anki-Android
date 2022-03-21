@@ -19,8 +19,6 @@ package com.ichi2.compat
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ichi2.testutils.*
-import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.withTempFile
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,11 +33,7 @@ import java.nio.file.NotDirectoryException
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
 @RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
-class CompatHasFilesTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription) {
+class CompatHasFilesTest : Test21And26() {
 
     @Test
     fun has_files_with_file() {
