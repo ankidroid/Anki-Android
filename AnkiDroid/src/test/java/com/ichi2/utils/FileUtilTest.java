@@ -16,21 +16,17 @@
 
 package com.ichi2.utils;
 
-import com.ichi2.async.ProgressSenderAndCancelListener;
-import com.ichi2.compat.CompatHelper;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
 
 import static org.acra.util.IOUtils.writeStringToFile;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -45,33 +41,6 @@ public class FileUtilTest {
     @Rule
     public TemporaryFolder temporaryDirectory = new TemporaryFolder();
     long mTestDirectorySize;
-
-    private static class DummyListener implements ProgressSenderAndCancelListener<Integer> {
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-
-        @Override
-        public void doProgress(@Nullable Integer value) { }
-    }
-
-    private File addUnexpectedFileToDestination(File unsuccessfulDestDir) throws Exception {
-        // Add an 'unexpected' file to destination directory with the same name and relative path as a directory in
-        // the source directory
-        // This triggers an exception
-        File parentOfUnexpectedFile = new File(unsuccessfulDestDir.getAbsoluteFile() + File.separator + "parent"
-                + File.separator + "child");
-        if (!parentOfUnexpectedFile.mkdirs()) {
-            throw new Exception("Directories could not be created inside empty directory '" + unsuccessfulDestDir + "'");
-        }
-        File unexpectedFile = new File(parentOfUnexpectedFile, "grandChild");
-        if (!unexpectedFile.createNewFile()) {
-            throw new Exception("File could not be created inside empty directory '" + parentOfUnexpectedFile + "'");
-        }
-
-        return unexpectedFile;
-    }
 
     private File createSrcFilesForTest(File temporaryRoot, String testDirName) throws Exception {
         File grandParentDir = new File(temporaryRoot, testDirName);
@@ -100,72 +69,7 @@ public class FileUtilTest {
 
         return grandParentDir;
     }
-
-    @Config(sdk = { 21, 26 })
-    @Test
-    public void testCopyDirectory() throws Exception {
-        // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
-
-        // Test for successful copy directory operation
-        File srcDir = createSrcFilesForTest(temporaryRootDir, "srcDir");
-        File successfulDestDir = new File(temporaryRootDir, "successfulDest");
-        compareDirs(srcDir, successfulDestDir);
-
-
-        // Test for unsuccessful copy directory operation
-        File unsuccessfulDestDir = new File(temporaryRootDir, "failedDest");
-        File unexpectedFile = addUnexpectedFileToDestination(unsuccessfulDestDir);
-
-        // Test for successful copy directory operation after partial operation
-        // by removing the unexpected file from the destination directory and trying again
-        Assert.assertTrue(unexpectedFile.delete());
-    }
-
-    @Config(sdk = { 21, 26 })
-    @Test
-    public void testMoveDirectory() throws Exception {
-        // Create temporary root directory for holding test directories
-        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
-
-        // Test for successful move directory operation
-        File srcDirToBeMovedSuccessfully = createSrcFilesForTest(temporaryRootDir, "srcDirToBeMovedSuccessfully");
-        File srcDirForComparison = createSrcFilesForTest(temporaryRootDir, "srcDirForComparison");
-        File successfulDestDir = new File(temporaryRootDir, "successfulDestDir");
-        compareDirs(srcDirForComparison, successfulDestDir);
-
-        // Test for unsuccessful move directory operation
-        File srcDirToBeMovedUnsuccessfully = createSrcFilesForTest(temporaryRootDir, "srcDirToBeMovedUnsuccessfully");
-        File unsuccessfulDestDir = new File(temporaryRootDir, "unsuccessfulDestDir");
-        File unexpectedFile = addUnexpectedFileToDestination(unsuccessfulDestDir);
-
-        // Test for successful move directory operation after partial operation
-        // by removing the unexpected file from the destination directory and trying again
-        Assert.assertTrue(unexpectedFile.delete());
-        compareDirs(srcDirForComparison, unsuccessfulDestDir);
-    }
-
-    private void compareDirs(File srcDir, File destDir) {
-        org.junit.Assert.assertTrue(srcDir.isDirectory());
-        org.junit.Assert.assertTrue(destDir.isDirectory());
-
-        final File[] srcFiles = srcDir.listFiles();
-        org.junit.Assert.assertNotNull(srcFiles);
-
-        for (final File srcFile : srcFiles) {
-            final File destFile = new File(destDir, srcFile.getName());
-            org.junit.Assert.assertTrue("src: " + srcFile + ", dest: " + destFile, destFile.exists());
-
-            if (srcFile.isDirectory()) {
-                org.junit.Assert.assertTrue(destFile.isDirectory());
-                compareDirs(srcFile, destFile);
-            } else {
-                org.junit.Assert.assertFalse(destFile.isDirectory());
-                Assert.assertEquals(srcFile.length(), destFile.length());
-            }
-        }
-    }
-
+    
     @Test
     public void testDirectorySize() throws Exception {
         // Create temporary root directory for holding test directories
