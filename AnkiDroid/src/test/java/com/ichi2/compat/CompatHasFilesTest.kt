@@ -22,15 +22,12 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
-@RunWith(Parameterized::class)
 class CompatHasFilesTest : Test21And26() {
 
     @Test

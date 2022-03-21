@@ -23,6 +23,7 @@ import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
 import org.junit.After
 import org.junit.Before
+import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
 import java.io.File
@@ -33,7 +34,8 @@ import java.io.IOException
  * In particular it allows to test version of the code that uses [Files] and [Path] classes.
  * And versions that must restrict themselves to [File].
  */
-open class Test21And26 {
+@RunWith(Parameterized::class)
+abstract class Test21And26 {
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{1}")

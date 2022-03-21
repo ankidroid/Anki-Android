@@ -21,13 +21,10 @@ import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
-@RunWith(Parameterized::class)
 class CompatDirectoryContentTest : Test21And26() {
 
     @Test
