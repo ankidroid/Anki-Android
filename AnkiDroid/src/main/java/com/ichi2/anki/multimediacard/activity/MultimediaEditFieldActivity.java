@@ -101,6 +101,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             }
         }
 
+        setTitle(R.string.title_activity_edit_text);
         setContentView(R.layout.multimedia_edit_field_activity);
         View mainView = findViewById(android.R.id.content);
         enableToolbar(mainView);
