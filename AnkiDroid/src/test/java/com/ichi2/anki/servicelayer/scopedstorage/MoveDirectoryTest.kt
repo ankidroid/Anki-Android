@@ -16,8 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
@@ -39,7 +37,6 @@ import java.io.File
 /**
  * Test for [MoveDirectory]
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized::class)
 class MoveDirectoryTest : Test21And26(), OperationTest {
     override lateinit var executionContext: MockMigrationContext

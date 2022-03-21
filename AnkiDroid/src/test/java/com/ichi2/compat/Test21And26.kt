@@ -16,8 +16,7 @@
 
 package com.ichi2.compat
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
@@ -34,7 +33,6 @@ import java.io.IOException
  * In particular it allows to test version of the code that uses [Files] and [Path] classes.
  * And versions that must restrict themselves to [File].
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 open class Test21And26 {
     companion object {
         @JvmStatic
@@ -107,6 +105,7 @@ open class Test21And26 {
      * which simulates to simulate https://github.com/ankidroid/Anki-Android/issues/10358.
      * Also ensure that [Files.newDirectoryStream] fails on this directory.
      */
+    @SuppressLint("NewApi") // File.toPath = only called if sending API 26
     fun createPermissionDenied(): PermissionDenied {
         val directory = createTransientDirectory()
         val compat = CompatHelper.compat

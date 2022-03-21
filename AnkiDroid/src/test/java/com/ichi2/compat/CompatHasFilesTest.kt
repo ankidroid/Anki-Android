@@ -17,7 +17,6 @@
 package com.ichi2.compat
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
@@ -32,7 +31,6 @@ import java.nio.file.NotDirectoryException
 
 /** Tests for [Compat.hasFiles] */
 @RunWith(Parameterized::class)
-@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
 class CompatHasFilesTest : Test21And26() {
 
     @Test

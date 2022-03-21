@@ -16,8 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
@@ -39,7 +38,6 @@ import java.nio.file.NotDirectoryException
 /**
  * Test for [MoveDirectoryContent]
  */
-@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
 @RunWith(Parameterized::class)
 class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
@@ -191,6 +189,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
         assertThrows<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
     }
 
+    @SuppressLint("NewApi") // NotDirectoryException
     @Test
     fun factory_on_file_throw() {
         val source_file = createTransientFile()
