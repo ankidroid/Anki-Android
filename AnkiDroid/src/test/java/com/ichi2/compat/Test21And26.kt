@@ -21,8 +21,9 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
-import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
@@ -44,6 +45,20 @@ abstract class Test21And26 {
             yield(arrayOf(CompatV21(), "CompatV21"))
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
+
+        lateinit var staticCompat: Compat
+        @BeforeClass
+        @JvmStatic
+        fun setupClass() {
+            mockkObject(CompatHelper)
+            every { CompatHelper.compat } answers { staticCompat }
+        }
+
+        @AfterClass
+        @JvmStatic
+        fun tearDownClass() {
+            unmockkObject(CompatHelper)
+        }
     }
 
     @Parameterized.Parameter(0)
@@ -61,20 +76,7 @@ abstract class Test21And26 {
 
     @Before
     open fun setup() {
-        mockkObject(CompatHelper)
-        every { CompatHelper.compat } returns compat
-    }
-
-    // Allow to cancel every static mock, appart from the setup's one.
-    // Required because individual method can't be unregistered.
-    fun restart() {
-        tearDown()
-        setup()
-    }
-
-    @After
-    fun tearDown() {
-        unmockkObject(CompatHelper)
+        staticCompat = compat
     }
 
     /**
@@ -86,11 +88,17 @@ abstract class Test21And26 {
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat
          */
-        fun <T> runWithPermissionDenied(test: () -> T): T {
-            every { CompatHelper.compat } returns compat
-            val result = test()
-            restart()
-            return result
+        fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
+
+        /** Runs a provided action having [CompatHelper.compat] return the provided compat */
+        private fun <T> runUsingCompat(compatOverride: Compat, test: () -> T): T {
+            val originalValue = staticCompat
+            staticCompat = compatOverride
+            try {
+                return test()
+            } finally {
+                staticCompat = originalValue
+            }
         }
 
         /**
