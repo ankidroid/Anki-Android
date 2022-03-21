@@ -24,18 +24,13 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.mockito.kotlin.*
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.NotDirectoryException
 
 @RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
 @RunWith(Parameterized::class)
-class CompatDirectoryContentTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription) {
+class CompatDirectoryContentTest : Test21And26() {
 
     @Test
     fun empty_dir_test() {
