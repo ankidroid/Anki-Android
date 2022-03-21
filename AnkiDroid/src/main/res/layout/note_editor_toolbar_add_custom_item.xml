@@ -23,7 +23,7 @@
     <com.ichi2.ui.FixedTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/toolbar_item_explain_remove"
+        android:text="@string/toolbar_item_explain_edit_or_remove"
         android:paddingBottom="15dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
