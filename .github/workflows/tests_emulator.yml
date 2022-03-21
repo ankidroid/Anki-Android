@@ -46,7 +46,7 @@ jobs:
           fetch-depth: 50
 
       - name: Gradle Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v1
