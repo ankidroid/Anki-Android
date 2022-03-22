@@ -57,12 +57,12 @@
     <string name="collapse">संक्षिप्त करें</string>
     <string name="study_more">अधिक अध्ययन करें</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d पत्ता बाकी (%2$s)</item>
-        <item quantity="other">%1$d पत्ते बाकी (%2$s)</item>
+        <item quantity="one">%1$d कार्ड बाकी (%2$s)</item>
+        <item quantity="other">%1$d कार्ड बाकी (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d मिनट छोड़ दिया</item>
-        <item quantity="other">%d मिनट छोड़ दिया</item>
+        <item quantity="one">%d मिनट शेष</item>
+        <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d घंटे %d बचे हैं</item>
@@ -72,12 +72,12 @@
         <item quantity="one">%d दिन %d बचे हैं</item>
         <item quantity="other">%d दिन %d बचे हैं</item>
     </plurals>
-    <string name="no_cards_placeholder_title">संग्रह खाली है</string>
-    <string name="no_cards_placeholder_description">कार्ड्स को जोड़ना शुरू करें\n + आइकन का उपयोग करना शुरू करें।</string>
+    <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
+    <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए + आइकन का उपयोग करें।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">आज %2$s में %1$d पत्ते का अध्ययन किया</item>
-        <item quantity="other">आज %2$s में %1$d पत्तों का अध्ययन किया</item>
+        <item quantity="one">आज आपने %2$s में %1$d कार्ड का अध्ययन किया</item>
+        <item quantity="other">आज आपने %2$s में %1$d कार्डों का अध्ययन किया</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
@@ -100,7 +100,7 @@
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाते को सिंक करें</string>
-    <string name="menu_dismiss_note">छुपाएं/हटाना</string>
+    <string name="menu_dismiss_note">छुपाएं/हटाएं</string>
     <string name="menu_bury_card">पत्ता स्थगित करें</string>
     <string name="menu_bury_note">नोट स्थगित करें</string>
     <string name="menu_suspend_card">पत्ता निलंबित करें</string>
@@ -111,7 +111,7 @@
     <string name="menu_flag">ध्वज</string>
     <string name="menu_flag_card">कार्ड को ध्वजांकित करें</string>
     <string name="menu_flag_card_zero">कोई ध्वज नहीं</string>
-    <string name="menu_flag_card_one">लाल ध्वज</string>
+    <string name="menu_flag_card_one">लाल झंडा</string>
     <string name="menu_flag_card_two">नारंगी ध्वज</string>
     <string name="menu_flag_card_three">हरा ध्वज</string>
     <string name="menu_flag_card_four">नीला ध्वज</string>
@@ -182,7 +182,7 @@
     <!-- Card template editor -->
     <string name="title_activity_template_editor">कार्ड के प्रकार</string>
     <string name="card_template_editor_front">फ्रंट टेम्पलेट</string>
-    <string name="card_template_editor_back">वापस टेंपलेट</string>
+    <string name="card_template_editor_back">बॅक टेंप्लेट</string>
     <string name="card_template_editor_styling">स्टाइल</string>
     <string name="card_template_editor_menu_card_browser_appearance">कार्ड ब्राउज़र का दिखाव</string>
     <string name="card_template_editor_deck_override">डेक ओवरराइड</string>
@@ -190,18 +190,17 @@
     <string name="card_template_editor_select_field">Select field - फ़ील्ड चुनें
 Front - फ्रंट
 Back - बैक</string>
-    <string name="card_template_editor_cant_delete">कम से कम एक कार्ड की आवश्यकता है</string>
+    <string name="card_template_editor_cant_delete">कम से कम एक कार्ड का होना आवश्यक है</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">AnkiDroid - अंकिड़रोइड
-This will create 24 cards. Proceed?  - यह 24 कार्ड बनाएगा। आगे बढ़ना?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">%1$d कार्ड बना दिया जाएगा। जारी रखे?</item>
+        <item quantity="other">%1$d कार्ड बना दिया जाएंगे। जारी रखे?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटाएं?</item>
+        <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटा दिया जाए?</item>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
     <string name="invalid_template">एक पत्ता उत्पन्न नहीं किया जा सका</string>
-    <string name="card_template_editor_would_delete_note">इस कार्ड के प्रकार को हटाने से एक या अधिक नोट हटा दिए जाएंगे। कृपया पहले एक नया कार्ड बनाएं और सहेजें।</string>
+    <string name="card_template_editor_would_delete_note">इस कार्ड के प्रकार को हटाने से आपके एक या अधिक नोट हटा दिए जा सकते हैं। कृपया हटाने से पहले एक नया कार्ड प्रकार बनाकर उसे सहेजें।</string>
     <string name="card_template_editor_save_error">कार्ड टेम्प्लेट परिवर्तन सहेजने में असमर्थ: %s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Card Browser Appearance -->
@@ -232,8 +231,8 @@ This will create 24 cards. Proceed?  - यह 24 कार्ड बनाएग
     <string name="sync_conflict_title_new">रखने के लिए संग्रह का चयन करें</string>
     <string name="sync_conflict_replace_title">संग्रह बदलें</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card बाकी है (0 बचे)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d कार्ड (0 शेष)</item>
+        <item quantity="other">%1$d कार्ड (0 शेष)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
 </resources>

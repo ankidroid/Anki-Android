@@ -126,7 +126,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">続行するにはAnkiDroidに「ストレージ」の権限を付与してください</string>
+    <string name="startup_no_storage_permission">続行するにはAnkiDroidにストレージの権限を許可してください</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.

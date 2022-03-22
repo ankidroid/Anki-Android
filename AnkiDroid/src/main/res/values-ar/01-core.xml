@@ -177,7 +177,7 @@
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
     <string name="empty_deck_add_note">إضافة بِطاقة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>

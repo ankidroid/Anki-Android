@@ -82,16 +82,16 @@
     <string name="fullscreen_review" maxLength="41">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
     <string name="full_screen_system">ステータスバー（通知バー）を隠す</string>
-    <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・解答ボタンを隠す</string>
-    <string name="full_screen_error_gestures">解答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
-    <string name="answer_buttons_position" maxLength="41">解答表示ボタン・解答ボタンの位置</string>
+    <string name="full_screen_complete">ステータスバー（通知バー）と解答表示ボタン・回答ボタンを隠す</string>
+    <string name="full_screen_error_gestures">回答ボタンを非表示にするにはジェスチャーを有効にする必要があります</string>
+    <string name="answer_buttons_position" maxLength="41">解答表示ボタン・回答ボタンの位置</string>
     <string-array name="answer_buttons_position_labels">
         <item>カードの上側</item>
         <item>カードの下側</item>
-        <item>None</item>
+        <item>表示しない</item>
     </string-array>
     <string name="gestures" maxLength="41">ジェスチャーを有効にする</string>
-    <string name="gestures_summ">解答やカード編集などの操作にジェスチャーを割り当てます</string>
+    <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
     <string name="gestures_corner_touch" maxLength="41">タップを９種類にする</string>
     <string name="gestures_corner_touch_summary">カード画面内を縦３×横３の９エリアに区別して各エリアにタップジェスチャーを割り当てます</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">全画面ナビゲーションドロワー</string>
@@ -101,7 +101,7 @@
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
     <string name="gestures_swipe_right" maxLength="41">右にスワイプ</string>
     <string name="gestures_double_tap" maxLength="41">ダブルタップ</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">長押し</string>
     <string name="gestures_tap_top" maxLength="41">上をタップ</string>
     <string name="gestures_tap_left" maxLength="41">左をタップ</string>
     <string name="gestures_tap_right" maxLength="41">右をタップ</string>
@@ -133,8 +133,8 @@
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">他の端末と同期できる変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
-    <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">通常表示のテーマ</string>
+    <string name="app_theme" maxLength="41">テーマ</string>
+    <string name="day_theme" maxLength="41">通常モードのテーマ</string>
     <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
     <string name="default_font" maxLength="41">標準フォント</string>
     <string name="override_font" maxLength="41">標準フォントの適用範囲</string>
@@ -166,8 +166,8 @@
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、回答ボタンの誤タップを防ぎます</string>
-    <string name="show_estimates" maxLength="41">解答ボタンに復習間隔を表示</string>
-    <string name="show_estimates_summ">次の復習までの間隔を解答ボタンの中に表示します</string>
+    <string name="show_estimates" maxLength="41">回答ボタンに復習間隔を表示</string>
+    <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">大きな回答ボタンを表示</string>
     <string name="show_large_answer_buttons_summ">回答ボタンを２行２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
@@ -254,7 +254,7 @@
     <string name="deck_conf_new_cards_day" maxLength="41">一日あたりの新規カード出題枚数の上限</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
     <string name="deck_conf_days">XXX 日</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">簡単と解答してから復習開始までの間隔</string>
+    <string name="deck_conf_easy_ivl" maxLength="41">簡単と回答してから復習開始までの間隔</string>
     <string name="deck_conf_start_ease" maxLength="41">復習開始時の「易しさ」（復習間隔の伸び率）</string>
     <string name="deck_conf_max_rev" maxLength="41">一日あたりの復習カード出題枚数の上限</string>
     <string name="deck_conf_new_bury" maxLength="41">新規の関連カードの学習を延期</string>
@@ -298,7 +298,7 @@
     <string name="deck_conf_cram_limit" maxLength="41">抽出件数の上限</string>
     <string name="deck_conf_cram_order" maxLength="41">抽出されたカードの並べ方</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
-    <string name="deck_conf_cram_reschedule_summ">解答結果を元のデッキでのスケジュールに反映させます</string>
+    <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">独自の学習ステップを設定</string>
@@ -316,13 +316,13 @@
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- Open Changelog-->
     <string name="open_changelog">変更履歴を開く</string>
-    <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_add_gesture">ジェスチャーを追加</string>
     <string name="binding_add_key">キーを追加</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
+    <string name="card_side_question">問題</string>
+    <string name="card_side_answer">解答</string>
     <string name="card_side_both">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>

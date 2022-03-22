@@ -89,12 +89,12 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="zero">Reschedule %d cards</item>
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="two">Reschedule %d cards</item>
-        <item quantity="few">Reschedule %d cards</item>
-        <item quantity="many">Reschedule %d cards</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="zero">إعادة جدولة %d بطاقة</item>
+        <item quantity="one">إعادة جدولة %d بطاقة</item>
+        <item quantity="two">إعادة جدولة %d بطاقة</item>
+        <item quantity="few">إعادة جدولة %d بطاقات</item>
+        <item quantity="many">إعادة جدولة %d بطاقة</item>
+        <item quantity="other">إعادة جدولة %d بطاقة</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="zero">الفاصل الزمني الحالي: %d يوم</item>

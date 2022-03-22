@@ -98,11 +98,11 @@
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Додано</string>
-    <string name="card_info_first_review">Перший перегляд</string>
-    <string name="card_info_latest_review">Останній перегляд</string>
+    <string name="card_info_first_review">Перше повторення</string>
+    <string name="card_info_latest_review">Останнє повторення</string>
     <string name="card_info_interval">Інтервал</string>
     <string name="card_info_ease">Легкість</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Перегляди</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Повторення</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Кількість помилок</string>
     <string name="card_info_average_time">Середній час</string>
     <string name="card_info_total_time">Загальний час</string>
@@ -116,7 +116,7 @@
     <string name="card_info_revlog_rating">Оцінка</string>
     <string name="card_info_revlog_type">Тип</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Вчена</string>
-    <string name="card_info_revlog_review">Повторена</string>
+    <string name="card_info_revlog_review">Повторювана</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Повторно вчена</string>
     <string name="card_info_revlog_filtered">Фільтрована</string>
     <string name="card_info_ease_not_applicable">Н/Д</string>

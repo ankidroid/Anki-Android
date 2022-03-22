@@ -76,7 +76,7 @@
         <item>学習予定日時順</item>
         <item>復習間隔順</item>
         <item>易しさ順</item>
-        <item>学習回数順</item>
+        <item>回答回数順</item>
         <item>忘却回数順</item>
     </string-array>
     <string name="card_browser_select_all">全て選択</string>
@@ -96,7 +96,7 @@
     <string name="card_info_latest_review">直近の学習日</string>
     <string name="card_info_interval">間隔</string>
     <string name="card_info_ease">易しさ</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">学習回数</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">回答数</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">忘却回数</string>
     <string name="card_info_average_time">平均タイム</string>
     <string name="card_info_total_time">合計タイム</string>
