@@ -14,627 +14,574 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.os.Build;
-import android.os.Bundle;
+import android.os.Build
+import android.os.Bundle
+import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ListView
+import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
+import androidx.fragment.app.DialogFragment
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.MaterialDialog.ListCallback
+import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.LocaleSelectionDialog
+import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
+import com.ichi2.anki.dialogs.ModelEditorContextMenu
+import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
+import com.ichi2.async.CollectionTask.AddField
+import com.ichi2.async.CollectionTask.ChangeSortField
+import com.ichi2.async.CollectionTask.DeleteField
+import com.ichi2.async.CollectionTask.RepositionField
+import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.themes.StyledProgressDialog.Companion.show
+import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.widget.WidgetStatus
+import timber.log.Timber
+import java.lang.NumberFormatException
+import java.lang.RuntimeException
+import java.util.*
+import kotlin.Throws
 
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.LocaleSelectionDialog;
-import com.ichi2.anki.dialogs.ModelEditorContextMenu;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.servicelayer.LanguageHintService;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Model;
-import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.ui.FixedEditText;
-import com.ichi2.widget.WidgetStatus;
-
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.DialogFragment;
-import timber.log.Timber;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-
-public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
-
-    private final static int NORMAL_EXIT = 100001;
-
-    //Position of the current field selected
-    private int mCurrentPos;
-
-    private ListView mFieldLabelView;
-    private List<String> mFieldLabels;
-    private MaterialDialog mProgressDialog;
-
-    private Collection mCol;
-    private JSONArray mNoteFields;
-    private Model mMod;
-
-    private ModelEditorContextMenu mContextMenu;
-    private EditText mFieldNameInput;
-
-    private final Runnable mConfirmDialogCancel = this::dismissContextMenu;
+@KotlinCleanup("Remove hungarian notation")
+class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
+    // Position of the current field selected
+    private var mCurrentPos = 0
+    private var mFieldLabelView: ListView? = null
+    private var mFieldLabels: List<String>? = null
+    private var mProgressDialog: MaterialDialog? = null
+    private var mCol: Collection? = null
+    private var mNoteFields: JSONArray? = null
+    private var mMod: Model? = null
+    private var mContextMenu: ModelEditorContextMenu? = null
+    private var mFieldNameInput: EditText? = null
+    private val mConfirmDialogCancel = Runnable { dismissContextMenu() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @KotlinCleanup("Use ?.let { } for null handling of supportActionBar")
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.model_field_editor);
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.model_field_editor)
 
-        mFieldLabelView = findViewById(R.id.note_type_editor_fields);
-        enableToolbar();
+        mFieldLabelView = findViewById(R.id.note_type_editor_fields)
+        enableToolbar()
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.model_field_editor_title);
-            getSupportActionBar().setSubtitle(getIntent().getStringExtra("title"));
+        if (supportActionBar != null) {
+            supportActionBar!!.setTitle(R.string.model_field_editor_title)
+            supportActionBar!!.subtitle = intent.getStringExtra("title")
         }
-        startLoadingCollection();
+        startLoadingCollection()
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!isFinishing()) {
-            WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+    override fun onStop() {
+        super.onStop()
+        if (!isFinishing) {
+            WidgetStatus.update(this)
+            saveCollectionInBackground()
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.model_editor, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.model_editor, menu)
+        return true
     }
-
 
     // ----------------------------------------------------------------------------
     // ANKI METHODS
     // ----------------------------------------------------------------------------
-
-
-    @Override
-    protected void onCollectionLoaded(Collection col) {
-        super.onCollectionLoaded(col);
-        this.mCol = col;
-        setupLabels();
-        createfieldLabels();
+    override fun onCollectionLoaded(col: Collection) {
+        super.onCollectionLoaded(col)
+        mCol = col
+        setupLabels()
+        createfieldLabels()
     }
-
 
     // ----------------------------------------------------------------------------
     // UI SETUP
     // ----------------------------------------------------------------------------
-
-
     /*
      * Sets up the main ListView and ArrayAdapters
      * Containing clickable labels for the fields
      */
-    private void createfieldLabels() {
-        ArrayAdapter<String> fieldLabelAdapter = new ArrayAdapter<>(this, R.layout.model_field_editor_list_item, mFieldLabels);
-        mFieldLabelView.setAdapter(fieldLabelAdapter);
-        mFieldLabelView.setOnItemClickListener((parent, view, position, id) -> {
-            mContextMenu = ModelEditorContextMenu.newInstance(mFieldLabels.get(position), mContextMenuListener);
-            showDialogFragment(mContextMenu);
-            mCurrentPos = position;
-        });
+    @KotlinCleanup("Use scope function")
+    private fun createfieldLabels() {
+        val fieldLabelAdapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, mFieldLabels!!)
+        mFieldLabelView!!.adapter = fieldLabelAdapter
+        mFieldLabelView!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            mContextMenu = newInstance(mFieldLabels!![position], mContextMenuListener)
+            showDialogFragment(mContextMenu)
+            mCurrentPos = position
+        }
     }
-
 
     /*
       * Sets up the ArrayList containing the text for the main ListView
       */
-    private void setupLabels() {
-        long noteTypeID = getIntent().getLongExtra("noteTypeID", 0);
-        mMod = mCol.getModels().get(noteTypeID);
+    private fun setupLabels() {
+        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
+        mMod = mCol!!.models.get(noteTypeID)
 
-        mNoteFields = mMod.getJSONArray("flds");
-        mFieldLabels = mNoteFields.toStringList("name");
+        mNoteFields = mMod!!.getJSONArray("flds")
+        mFieldLabels = mNoteFields!!.toStringList("name")
     }
-
-
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
-
-
     /**
      * Clean the input field or explain why it's rejected
      * @param fieldNameInput Editor to get the input
      * @return The value to use, or null in case of failure
      */
-    private @Nullable String _uniqueName(@NonNull EditText fieldNameInput) {
-        String input = fieldNameInput.getText().toString()
-                .replaceAll("[\\n\\r{}:\"]", "");
+    private fun _uniqueName(fieldNameInput: EditText): String? {
+        var input = fieldNameInput.text.toString()
+            .replace("[\\n\\r{}:\"]".toRegex(), "")
         // The number of #, ^, /, space, tab, starting the input
-        int offset;
-        for (offset = 0; offset < input.length(); offset++) {
-            if (!Arrays.asList('#', '^', '/',' ', '\t').contains(input.charAt(offset))) {
-                break;
+        var offset: Int
+        offset = 0
+        while (offset < input.length) {
+            if (!Arrays.asList('#', '^', '/', ' ', '\t').contains(input[offset])) {
+                break
             }
+            offset++
         }
-        input = input.substring(offset).trim();
-        if (input.length() == 0) {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
-            return null;
+        input = input.substring(offset).trim { it <= ' ' }
+        if (input.length == 0) {
+            showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
+            return null
         }
         if (containsField(input)) {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
-            return null;
+            showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
+            return null
         }
-        return input;
+        return input
     }
 
     /*
     * Creates a dialog to create a field
     */
-    private void addFieldDialog() {
-        mFieldNameInput = new FixedEditText(this);
-        mFieldNameInput.setSingleLine(true);
-
-        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
+    private fun addFieldDialog() {
+        mFieldNameInput = FixedEditText(this)
+        mFieldNameInput?.let {
+            it.isSingleLine = true
+            MaterialEditTextDialog.Builder(this, it)
                 .title(R.string.model_field_editor_add)
                 .positiveText(R.string.dialog_ok)
-                .onPositive((dialog, which) -> {
-                    //Name is valid, now field is added
-                    changeHandler listener = changeFieldHandler();
-                    String fieldName = _uniqueName(mFieldNameInput);
+                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    // Name is valid, now field is added
+                    val listener = changeFieldHandler()
+                    val fieldName = _uniqueName(it)
                     try {
-                        addField(fieldName, listener, true);
-                    } catch (ConfirmModSchemaException e) {
-                        e.log();
+                        addField(fieldName, listener, true)
+                    } catch (e: ConfirmModSchemaException) {
+                        e.log()
 
-                        //Create dialogue to for schema change
-                        ConfirmationDialog c = new ConfirmationDialog();
-                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                        Runnable confirm = () -> {
+                        // Create dialogue to for schema change
+                        val c = ConfirmationDialog()
+                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                        val confirm = Runnable {
                             try {
-                                addField(fieldName, listener, false);
-                            } catch (ConfirmModSchemaException e1) {
-                                e1.log();
-                                //This should never be thrown
+                                addField(fieldName, listener, false)
+                            } catch (e1: ConfirmModSchemaException) {
+                                e1.log()
+                                // This should never be thrown
                             }
-                            dismissContextMenu();
-                        };
-
-                        c.setConfirm(confirm);
-                        c.setCancel(mConfirmDialogCancel);
-                        ModelFieldEditor.this.showDialogFragment(c);
+                            dismissContextMenu()
+                        }
+                        c.setConfirm(confirm)
+                        c.setCancel(mConfirmDialogCancel)
+                        this@ModelFieldEditor.showDialogFragment(c)
                     }
-                    mCol.getModels().update(mMod);
-                    fullRefreshList();
-                })
+                    mCol!!.models.update(mMod!!)
+                    fullRefreshList()
+                }
                 .negativeText(R.string.dialog_cancel)
-                .show();
+                .show()
+        }
     }
 
-
-    private void addField(String fieldName, changeHandler listener, boolean modSchemaCheck)
-            throws ConfirmModSchemaException {
-
+    @Throws(ConfirmModSchemaException::class)
+    @KotlinCleanup("Check if we can make fieldName non-null")
+    private fun addField(fieldName: String?, listener: ChangeHandler, modSchemaCheck: Boolean) {
         if (fieldName == null) {
-            return;
+            return
         }
-        //Name is valid, now field is added
+        // Name is valid, now field is added
         if (modSchemaCheck) {
-            mCol.modSchema();
+            mCol!!.modSchema()
         } else {
-            mCol.modSchemaNoCheck();
+            mCol!!.modSchemaNoCheck()
         }
-        TaskManager.launchCollectionTask(new CollectionTask.AddField(mMod, fieldName), listener);
+        TaskManager.launchCollectionTask(AddField(mMod, fieldName), listener)
     }
-
 
     /*
      * Creates a dialog to delete the currently selected field
      */
-    private void deleteFieldDialog() {
-        Runnable confirm = () -> {
-            mCol.modSchemaNoCheck();
-            deleteField();
-            dismissContextMenu();
-        };
+    @KotlinCleanup("Add scope functions")
+    private fun deleteFieldDialog() {
+        val confirm = Runnable {
+            mCol!!.modSchemaNoCheck()
+            deleteField()
+            dismissContextMenu()
+        }
 
-
-        if (mFieldLabels.size() < 2) {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_last_field), true);
+        if (mFieldLabels!!.size < 2) {
+            showThemedToast(this, resources.getString(R.string.toast_last_field), true)
         } else {
             try {
-                mCol.modSchema();
-                ConfirmationDialog d = new ConfirmationDialog();
-                d.setArgs(getResources().getString(R.string.field_delete_warning));
-                d.setConfirm(confirm);
-                d.setCancel(mConfirmDialogCancel);
-                showDialogFragment(d);
-            } catch (ConfirmModSchemaException e) {
-                e.log();
-                ConfirmationDialog c = new ConfirmationDialog();
-                c.setConfirm(confirm);
-                c.setCancel(mConfirmDialogCancel);
-                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                showDialogFragment(c);
+                mCol!!.modSchema()
+                val d = ConfirmationDialog()
+                d.setArgs(resources.getString(R.string.field_delete_warning))
+                d.setConfirm(confirm)
+                d.setCancel(mConfirmDialogCancel)
+                showDialogFragment(d)
+            } catch (e: ConfirmModSchemaException) {
+                e.log()
+                val c = ConfirmationDialog()
+                c.setConfirm(confirm)
+                c.setCancel(mConfirmDialogCancel)
+                c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                showDialogFragment(c)
             }
         }
     }
 
-    private void deleteField() {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteField(mMod, mNoteFields.getJSONObject(mCurrentPos)), changeFieldHandler());
+    private fun deleteField() {
+        TaskManager.launchCollectionTask(DeleteField(mMod, mNoteFields!!.getJSONObject(mCurrentPos)), changeFieldHandler())
     }
-
 
     /*
      * Creates a dialog to rename the currently selected field
      * Processing time is constant
      */
-    private void renameFieldDialog() {
-        mFieldNameInput = new FixedEditText(this);
-        mFieldNameInput.setSingleLine(true);
-        mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
-        mFieldNameInput.setSelection(mFieldNameInput.getText().length());
-        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
+    private fun renameFieldDialog() {
+        mFieldNameInput = FixedEditText(this)
+        mFieldNameInput?.let {
+            it.isSingleLine = true
+            it.setText(mFieldLabels!![mCurrentPos])
+            it.setSelection(it.text!!.length)
+            MaterialEditTextDialog.Builder(this, mFieldNameInput)
                 .title(R.string.model_field_editor_rename)
                 .positiveText(R.string.rename)
-                .onPositive((dialog, which) -> {
-                    String fieldName = _uniqueName(mFieldNameInput);
-                    if (fieldName == null) {
-                        return;
+                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    if (_uniqueName(it) == null) {
+                        return@onPositive
                     }
-                    //Field is valid, now rename
+                    // Field is valid, now rename
                     try {
-                        renameField();
-                    } catch (ConfirmModSchemaException e) {
-                        e.log();
+                        renameField()
+                    } catch (e: ConfirmModSchemaException) {
+                        e.log()
 
                         // Handler mod schema confirmation
-                        ConfirmationDialog c = new ConfirmationDialog();
-                        c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                        Runnable confirm = () -> {
-                            mCol.modSchemaNoCheck();
+                        val c = ConfirmationDialog()
+                        c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                        val confirm = Runnable {
+                            mCol!!.modSchemaNoCheck()
                             try {
-                                renameField();
-                            } catch (ConfirmModSchemaException e1) {
-                                e1.log();
-                                //This should never be thrown
+                                renameField()
+                            } catch (e1: ConfirmModSchemaException) {
+                                e1.log()
+                                // This should never be thrown
                             }
-                            dismissContextMenu();
-                        };
-                        c.setConfirm(confirm);
-                        c.setCancel(mConfirmDialogCancel);
-                        ModelFieldEditor.this.showDialogFragment(c);
+                            dismissContextMenu()
+                        }
+                        c.setConfirm(confirm)
+                        c.setCancel(mConfirmDialogCancel)
+                        this@ModelFieldEditor.showDialogFragment(c)
                     }
-                })
+                }
                 .negativeText(R.string.dialog_cancel)
-                .show();
+                .show()
+        }
     }
-
 
     /*
      * Allows the user to select a number less than the number of fields in the current model to
      * reposition the current field to
      * Processing time is scales with number of items
      */
-    private void repositionFieldDialog() {
-        mFieldNameInput = new FixedEditText(this);
-        mFieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-        new MaterialEditTextDialog.Builder(this, mFieldNameInput)
-                .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, mFieldLabels.size()))
+    private fun repositionFieldDialog() {
+        mFieldNameInput = FixedEditText(this)
+        mFieldNameInput?.let {
+            it.setRawInputType(InputType.TYPE_CLASS_NUMBER)
+            MaterialEditTextDialog.Builder(this, it)
+                .title(String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldLabels!!.size))
                 .positiveText(R.string.dialog_ok)
-                .onPositive((dialog, which) -> {
-                        String newPosition = mFieldNameInput.getText().toString();
-                        int pos;
+                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    val newPosition = it.text.toString()
+                    val pos: Int = try {
+                        newPosition.toInt()
+                    } catch (n: NumberFormatException) {
+                        Timber.w(n)
+                        showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
+                        return@onPositive
+                    }
+                    if (pos < 1 || pos > mFieldLabels!!.size) {
+                        showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
+                    } else {
+                        val listener = changeFieldHandler()
+                        // Input is valid, now attempt to modify
                         try {
-                            pos = Integer.parseInt(newPosition);
-                        } catch (NumberFormatException n) {
-                            Timber.w(n);
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
-                            return;
-                        }
+                            mCol!!.modSchema()
+                            TaskManager.launchCollectionTask(RepositionField(mMod, mNoteFields!!.getJSONObject(mCurrentPos), pos - 1), listener)
+                        } catch (e: ConfirmModSchemaException) {
+                            e.log()
 
-                        if (pos < 1 || pos > mFieldLabels.size()) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
-                        } else {
-                            changeHandler listener = changeFieldHandler();
-                            // Input is valid, now attempt to modify
-                            try {
-                                mCol.modSchema();
-                                TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,mNoteFields.getJSONObject(mCurrentPos), pos - 1), listener);
-                            } catch (ConfirmModSchemaException e) {
-                                e.log();
-
-                                // Handle mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog();
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                                Runnable confirm = () -> {
-                                    try {
-                                        mCol.modSchemaNoCheck();
-                                        TaskManager.launchCollectionTask(new CollectionTask.RepositionField(mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1),
-                                                listener);
-                                        dismissContextMenu();
-                                    } catch (JSONException e1) {
-                                        throw new RuntimeException(e1);
-                                    }
-                                };
-                                c.setConfirm(confirm);
-                                c.setCancel(mConfirmDialogCancel);
-                                ModelFieldEditor.this.showDialogFragment(c);
+                            // Handle mod schema confirmation
+                            val c = ConfirmationDialog()
+                            c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                            val confirm = Runnable {
+                                try {
+                                    mCol!!.modSchemaNoCheck()
+                                    TaskManager.launchCollectionTask(
+                                        RepositionField(
+                                            mMod,
+                                            mNoteFields!!.getJSONObject(mCurrentPos), pos - 1
+                                        ),
+                                        listener
+                                    )
+                                    dismissContextMenu()
+                                } catch (e1: JSONException) {
+                                    throw RuntimeException(e1)
+                                }
                             }
+                            c.setConfirm(confirm)
+                            c.setCancel(mConfirmDialogCancel)
+                            this@ModelFieldEditor.showDialogFragment(c)
                         }
-                    })
+                    }
+                }
                 .negativeText(R.string.dialog_cancel)
-                .show();
+                .show()
+        }
     }
-
 
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
-
-
     /*
      * Useful when a confirmation dialog is created within another dialog
      */
-    private void dismissContextMenu() {
+    private fun dismissContextMenu() {
         if (mContextMenu != null) {
-            mContextMenu.dismiss();
-            mContextMenu = null;
+            mContextMenu!!.dismiss()
+            mContextMenu = null
         }
     }
 
-
-    private void dismissProgressBar() {
+    private fun dismissProgressBar() {
         if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
+            mProgressDialog!!.dismiss()
         }
-        mProgressDialog = null;
+        mProgressDialog = null
     }
-
 
     /*
      * Renames the current field
      */
-    private void renameField() throws ConfirmModSchemaException {
-        String fieldLabel = mFieldNameInput.getText().toString()
-                .replaceAll("[\\n\\r]", "");
-        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
-        mCol.getModels().renameField(mMod, field, fieldLabel);
-        mCol.getModels().save();
-        fullRefreshList();
+    @Throws(ConfirmModSchemaException::class)
+    private fun renameField() {
+        val fieldLabel = mFieldNameInput!!.text.toString()
+            .replace("[\\n\\r]".toRegex(), "")
+        val field = mNoteFields!!.getJSONObject(mCurrentPos)
+        mCol!!.models.renameField(mMod!!, field, fieldLabel)
+        mCol!!.models.save()
+        fullRefreshList()
     }
-
 
     /*
      * Changes the sort field (that displays in card browser) to the current field
      */
-    private void sortByField() {
-        changeHandler listener = changeFieldHandler();
+    private fun sortByField() {
+        val listener = changeFieldHandler()
         try {
-            mCol.modSchema();
-            TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
-        } catch (ConfirmModSchemaException e) {
-            e.log();
+            mCol!!.modSchema()
+            TaskManager.launchCollectionTask(ChangeSortField(mMod, mCurrentPos), listener)
+        } catch (e: ConfirmModSchemaException) {
+            e.log()
             // Handler mMod schema confirmation
-            ConfirmationDialog c = new ConfirmationDialog();
-            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-            Runnable confirm = () -> {
-                mCol.modSchemaNoCheck();
-                TaskManager.launchCollectionTask(new CollectionTask.ChangeSortField(mMod, mCurrentPos), listener);
-                dismissContextMenu();
-            };
-            c.setConfirm(confirm);
-            c.setCancel(mConfirmDialogCancel);
-            ModelFieldEditor.this.showDialogFragment(c);
+            val c = ConfirmationDialog()
+            c.setArgs(resources.getString(R.string.full_sync_confirmation))
+            val confirm = Runnable {
+                mCol!!.modSchemaNoCheck()
+                TaskManager.launchCollectionTask(ChangeSortField(mMod, mCurrentPos), listener)
+                dismissContextMenu()
+            }
+            c.setConfirm(confirm)
+            c.setCancel(mConfirmDialogCancel)
+            this@ModelFieldEditor.showDialogFragment(c)
         }
     }
 
     /*
      * Toggle the "Remember last input" setting AKA the "Sticky" setting
      */
-    private void toggleStickyField() {
+    private fun toggleStickyField() {
         // Get the current field
-        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
+        val field = mNoteFields!!.getJSONObject(mCurrentPos)
         // If the sticky setting is enabled then disable it, otherwise enable it
-        field.put("sticky", !field.getBoolean("sticky"));
+        field.put("sticky", !field.getBoolean("sticky"))
     }
-
 
     /*
      * Reloads everything
      */
-    private void fullRefreshList() {
-        setupLabels();
-        createfieldLabels();
+    private fun fullRefreshList() {
+        setupLabels()
+        createfieldLabels()
     }
-
 
     /*
      * Checks if there exists a field with this name in the current model
      */
-    private boolean containsField(String field) {
-        for (String s : mFieldLabels) {
+    @KotlinCleanup("Stream/extension function")
+    private fun containsField(field: String): Boolean {
+        for (s in mFieldLabels!!) {
             if (field.compareTo(s) == 0) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
-
 
     // ----------------------------------------------------------------------------
     // HANDLERS
     // ----------------------------------------------------------------------------
-
-
     /*
      * Called during the desk task when any field is modified
      */
-    private changeHandler changeFieldHandler() {
-        return new changeHandler(this);
+    private fun changeFieldHandler(): ChangeHandler {
+        return ChangeHandler(this)
     }
 
-    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, Void, Boolean> {
-        public changeHandler(ModelFieldEditor modelFieldEditor) {
-            super(modelFieldEditor);
-        }
-
-        @Override
-        public void actualOnPreExecute(@NonNull ModelFieldEditor modelFieldEditor) {
-            if (modelFieldEditor != null && modelFieldEditor.mProgressDialog == null) {
-                modelFieldEditor.mProgressDialog = StyledProgressDialog.show(modelFieldEditor, modelFieldEditor.getIntent().getStringExtra("title"),
-                        modelFieldEditor.getResources().getString(R.string.model_field_editor_changing), false);
+    private class ChangeHandler(modelFieldEditor: ModelFieldEditor?) : TaskListenerWithContext<ModelFieldEditor?, Void?, Boolean?>(modelFieldEditor) {
+        override fun actualOnPreExecute(context: ModelFieldEditor?) {
+            if (context != null && context.mProgressDialog == null) {
+                context.mProgressDialog = show(
+                    context, context.intent.getStringExtra("title"),
+                    context.resources.getString(R.string.model_field_editor_changing), false
+                )
             }
         }
 
-        @Override
-        public void actualOnPostExecute(@NonNull ModelFieldEditor modelFieldEditor, Boolean result) {
-            if (!result) {
-                modelFieldEditor.closeActivity(DeckPicker.RESULT_DB_ERROR);
+        @KotlinCleanup("Convert result to non-null")
+        override fun actualOnPostExecute(context: ModelFieldEditor?, result: Boolean?) {
+            if (result == false) {
+                context?.closeActivity()
             }
-
-            modelFieldEditor.dismissProgressBar();
-            modelFieldEditor.fullRefreshList();
+            context?.dismissProgressBar()
+            context?.fullRefreshList()
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == android.R.id.home) {
-            onBackPressed();
-            return true;
+            onBackPressed()
+            return true
         } else if (itemId == R.id.action_add_new_model) {
-            addFieldDialog();
-            return true;
+            addFieldDialog()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-
-    public void closeActivity() {
-        closeActivity(NORMAL_EXIT);
+    private fun closeActivity() {
+        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-
-    private void closeActivity(int reason) {
-        finishWithAnimation(END);
+    override fun onBackPressed() {
+        closeActivity()
     }
 
-
-    @Override
-    public void onBackPressed() {
-        closeActivity();
-    }
-
-
-    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
-        switch (selection) {
-            case ModelEditorContextMenu.SORT_FIELD:
-                sortByField();
-                break;
-            case ModelEditorContextMenu.FIELD_REPOSITION:
-                repositionFieldDialog();
-                break;
-            case ModelEditorContextMenu.FIELD_DELETE:
-                deleteFieldDialog();
-                break;
-            case ModelEditorContextMenu.FIELD_RENAME:
-                renameFieldDialog();
-                break;
-            case ModelEditorContextMenu.FIELD_TOGGLE_STICKY:
-                toggleStickyField();
-                break;
-            default: {
-                //need this as we can't switch on a @RequiresApi
+    @KotlinCleanup("Add @RequiresApi instead of using check in if condition")
+    private val mContextMenuListener = ListCallback { _: MaterialDialog?, _: View?, selection: Int, _: CharSequence? ->
+        when (selection) {
+            ModelEditorContextMenu.SORT_FIELD -> sortByField()
+            ModelEditorContextMenu.FIELD_REPOSITION -> repositionFieldDialog()
+            ModelEditorContextMenu.FIELD_DELETE -> deleteFieldDialog()
+            ModelEditorContextMenu.FIELD_RENAME -> renameFieldDialog()
+            ModelEditorContextMenu.FIELD_TOGGLE_STICKY -> toggleStickyField()
+            else -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && selection == ModelEditorContextMenu.FIELD_ADD_LANGUAGE_HINT) {
-                    Timber.i("displaying locale hint dialog");
-                    localeHintDialog();
-                    break;
+                    Timber.i("displaying locale hint dialog")
+                    localeHintDialog()
                 }
             }
         }
-    };
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void localeHintDialog() {
-        //We don't currently show the current value, but we may want to in the future
-        DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
-        showDialogFragment(dialogFragment);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private fun localeHintDialog() {
+        // We don't currently show the current value, but we may want to in the future
+        val dialogFragment: DialogFragment = LocaleSelectionDialog.newInstance(this)
+        showDialogFragment(dialogFragment)
+    }
 
     /*
      * Sets the Locale Hint of the field to the provided value.
      * This allows some keyboard (GBoard) to change language
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addFieldLocaleHint(@NonNull Locale selectedLocale) {
-        LanguageHintService.setLanguageHintForField(getCol().getModels(), mMod, mCurrentPos, selectedLocale);
-        String format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.getDisplayName());
-        UIUtils.showSimpleSnackbar(this, format, true);
+    private fun addFieldLocaleHint(selectedLocale: Locale) {
+        setLanguageHintForField(col.models, mMod!!, mCurrentPos, selectedLocale)
+        val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
+        showSimpleSnackbar(this, format, true)
     }
 
-
-
-    @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void onSelectedLocale(@NonNull Locale selectedLocale) {
-        addFieldLocaleHint(selectedLocale);
-        dismissAllDialogFragments();
+    override fun onSelectedLocale(selectedLocale: Locale) {
+        addFieldLocaleHint(selectedLocale)
+        dismissAllDialogFragments()
     }
 
-
-    @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void onLocaleSelectionCancelled() {
-        dismissAllDialogFragments();
+    override fun onLocaleSelectionCancelled() {
+        dismissAllDialogFragments()
     }
 
-
-    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
-    void addField(EditText fieldNameInput) throws ConfirmModSchemaException {
-        String fieldName = _uniqueName(fieldNameInput);
-
-        addField(fieldName, new changeHandler(this), true);
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Throws(ConfirmModSchemaException::class)
+    fun addField(fieldNameInput: EditText) {
+        val fieldName = _uniqueName(fieldNameInput)
+        addField(fieldName, ChangeHandler(this), true)
     }
 
-    @VisibleForTesting (otherwise = VisibleForTesting.NONE)
-    void renameField(EditText fieldNameInput) throws ConfirmModSchemaException {
-        this.mFieldNameInput = fieldNameInput;
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @Throws(ConfirmModSchemaException::class)
+    fun renameField(fieldNameInput: EditText?) {
+        mFieldNameInput = fieldNameInput
+        renameField()
+    }
 
-        renameField();
+    companion object {
+        private const val NORMAL_EXIT = 100001
     }
 }
