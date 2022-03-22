@@ -67,7 +67,7 @@
     <string name="override_font_if_missing">フォントが指定されていない場合</string>
     <string name="override_font_always">全て</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">システム設定に従う</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ライトブルー</string>
     <string name="day_theme_plain">プレーン</string>

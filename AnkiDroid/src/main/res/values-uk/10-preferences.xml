@@ -134,7 +134,7 @@
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
     <string name="default_font" maxLength="41">Шрифт за замовчуванням</string>
@@ -156,7 +156,7 @@
     <string name="timeout_question_seconds" maxLength="41">Час показу наступного питання</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратне відображення карт</string>
-    <string name="software_render_summ">Апаратне відображення швидше, але має проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу оглядача картки, спробуйте це налаштування.</string>
+    <string name="software_render_summ">Апаратне відображення швидше, але має проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу, спробуйте це налаштування.</string>
     <string name="safe_display" maxLength="41">Статичний режим екрану</string>
     <string name="safe_display_summ">Вимкнути всю анімацію та використовувати безпечні методи для відображення карток. Це може бути потрібно для E-ink пристроїв</string>
     <string name="disable_extended_text_ui" maxLength="41">Вимкнути режим редагування одиничного поля</string>
@@ -168,7 +168,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
-    <string name="show_estimates_summ">Показати час наступного повторення вище кнопок відповіді</string>
+    <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
     <string name="show_top_bar" maxLength="41">Показати верхню панель</string>
@@ -211,18 +211,18 @@
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
     <string name="exit_via_double_tap_back" maxLength="41">«Назад» двіч для повернення/виходу</string>
-    <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу до оглядача чи додатку</string>
+    <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу з оглядача чи додатку</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Дозволити всі файли при імпорті медіа</string>
     <string name="media_import_allow_all_files_summ">Якщо Android не розпізнає медіа-файл</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_title" maxLength="41">Колода при відкритті статистики</string>
     <string name="stats_default_deck_current">Показати статистику для нещодавньої колоди</string>
     <string name="stats_default_deck_all">Показати статистику для всіх колод</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>
-    <string name="enable_advanced_statistics_summ">Якщо увімкнено, то відображати прогноз статистики, заснований на обчисленнях і моделюванні майбутніх переглядів, а якщо вимкнено, то на вже спланованих майбутніх переглядах.</string>
+    <string name="enable_advanced_statistics_summ">Якщо увімкнено, відображає прогноз, заснований на обчисленнях і моделюванні майбутніх повторень, а якщо вимкнено, то на основі вже запланованих повторень.</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Обчислювати перші Х дн., симулювати решту</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Точність обчислень</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число кроків моделювання</string>
@@ -249,7 +249,7 @@
         <item quantity="other">%1$s\n%2$d колод використовують цю групу</item>
     </plurals>
     <string name="deck_conf_new_cards" maxLength="41">Нові картки</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Перегляди</string>
+    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторювані картки</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
     <string name="deck_conf_general" maxLength="41">Загальні</string>
     <string name="deck_conf_reminders" maxLength="41">Нагадування</string>
@@ -260,11 +260,11 @@
     <string name="deck_conf_days">ХХХ днів</string>
     <string name="deck_conf_easy_ivl" maxLength="41">Інтервал «Легко»</string>
     <string name="deck_conf_start_ease" maxLength="41">Початкова легкість</string>
-    <string name="deck_conf_max_rev" maxLength="41">Максимальна кількість переглядів за добу</string>
+    <string name="deck_conf_max_rev" maxLength="41">Максимальна кількість повторень за день</string>
     <string name="deck_conf_new_bury" maxLength="41">Відкласти пов\'язані нові картки</string>
     <string name="deck_conf_new_bury_summ">Пов\'язані нові картки будуть відкладені до завтра</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Відкласти пов’язані перегляди</string>
-    <string name="deck_conf_rev_bury_summ">Пов\'язані перегляди будуть відкладені на завтра</string>
+    <string name="deck_conf_rev_bury" maxLength="41">Відкласти пов’язані повторення</string>
+    <string name="deck_conf_rev_bury_summ">Пов\'язані повторення будуть відкладені на завтра</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Використати загальні налаштування</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Використовувати загальні налаштування \"Автоматичного відображення відповіді\" замість параметрів для цієї групи.</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Бонус легкості</string>
@@ -320,7 +320,7 @@
     <string name="no_code_formatting" maxLength="41">Просте форматування введених відповідей</string>
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
     <string name="type_in_answer_focus" maxLength="41">Перемкнути на «Вводити відповідь»</string>
-    <string name="type_in_answer_focus_summ">Автоматично переходити при повторенні до поля «Вводити відповідь»</string>
+    <string name="type_in_answer_focus_summ">Під час повторення автоматично переходити до поля «Ввести відповідь»</string>
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
     <string name="binding_add_gesture">Додати жест</string>

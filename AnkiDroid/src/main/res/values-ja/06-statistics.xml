@@ -50,13 +50,13 @@
     <string name="stats_cards">枚数</string>
     <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
     <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
-    <string name="stats_cumulative_answers">累積解答数 〔折れ線グラフ〕</string>
+    <string name="stats_cumulative_answers">累積回答数 〔折れ線グラフ〕</string>
     <string name="stats_cumulative_time_minutes">累積時間(分)〔折れ線グラフ〕</string>
     <string name="stats_cumulative_time_hours">累積時間 〔折れ線グラフ〕</string>
     <string name="stats_cumulative">累積枚数 〔折れ線グラフ〕</string>
     <string name="stats_cumulative_percentage">累積比率 (%)〔折れ線グラフ〕</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率 (%) 〔折れ線グラフ〕</string>
-    <string name="stats_answers">解答数</string>
+    <string name="stats_answers">回答数</string>
     <string name="stats_minutes">分</string>
     <string name="stats_hours">時間</string>
     <string name="stats_percentage">累積比率 (%) 〔折れ線グラフ〕</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">時刻</string>
     <string name="stats_day_of_week">曜日</string>
     <string formatted="false" name="stats_percentage_correct">正解率 (%)　</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">解答数</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">回答数</string>
     <string name="stats_answer_type">回答の種類</string>
     <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
@@ -83,7 +83,7 @@
     <string name="stats_overview_total_time_in_period">合計: &lt;b&gt;%d&lt;/b&gt;分</string>
     <string name="stats_overview_time_per_day_studydays">各学習の平均: &lt;b&gt;%1$.1f&lt;/b&gt;分/日</string>
     <string name="stats_overview_time_per_day_all">毎日学習した場合の平均:  &lt;b&gt;%1$.1f&lt;/b&gt;分/日</string>
-    <string name="stats_overview_average_answer_time">平均解答時間: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; 枚/分)</string>
+    <string name="stats_overview_average_answer_time">平均回答時間: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; 枚/分)</string>
     <string name="stats_overview_new_cards_per_day">平均: &lt;b&gt;%1$.1f&lt;/b&gt;枚/日</string>
     <string name="stats_overview_total_new_cards">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
     <string name="stats_overview_average_interval">"平均: "</string>
@@ -109,13 +109,13 @@
     <string name="stats_today">今日</string>
     <string name="stats_overview">概要</string>
     <string name="stats_forecast">予測</string>
-    <string name="stats_review_count">履歴（解答数）</string>
+    <string name="stats_review_count">履歴（回答数）</string>
     <string name="stats_review_time">履歴（時間）</string>
     <string name="stats_added" comment="Label of the number of added card">履歴（カードの追加）</string>
     <string name="stats_review_intervals">間隔</string>
     <string name="stats_breakdown">時間帯ごとの分析</string>
     <string name="stats_weekly_breakdown">曜日ごとの分析</string>
-    <string name="stats_answer_buttons">解答ボタン</string>
+    <string name="stats_answer_buttons">解答表示ボタン・回答ボタン</string>
     <string-array name="stats_day_time_strings">
         <item>AM4:00</item>
         <item>AM10:00</item>

@@ -67,7 +67,7 @@
     <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
     <string name="override_font_always">ସର୍ବଦା</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">ସିଷ୍ଟମ୍ କୁ ଅନୁସରଣ କରିବା</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ହାଲୁକା</string>
     <string name="day_theme_plain">ସାଧା</string>
@@ -79,9 +79,9 @@
     <string name="html_size_code_x_small">x-ଛୋଟ</string>
     <string name="html_size_code_small">ଛୋଟ</string>
     <string name="html_size_code_medium">ମଧ୍ୟମ</string>
-    <string name="html_size_code_large">ବଡ଼</string>
-    <string name="html_size_code_x_large">x-ବଡ଼</string>
-    <string name="html_size_code_xx_large">xx-ବଡ଼</string>
+    <string name="html_size_code_large">ବଡ଼</string>
+    <string name="html_size_code_x_large">x-ବଡ଼</string>
+    <string name="html_size_code_xx_large">xx-ବଡ଼</string>
     <!-- gestures_labels -->
     <string name="gesture_no_action">କିଛି କରନ୍ତୁନି</string>
     <string name="gesture_answer_1">ଉତ୍ତର ବଟନ୍ ୧</string>

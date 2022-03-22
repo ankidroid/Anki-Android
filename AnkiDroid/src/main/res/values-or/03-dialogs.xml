@@ -200,7 +200,7 @@
     <string name="error_selecting_image">ପ୍ରତିଛବି ବାଛିବାରେ ତ୍ରୁଟି। ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ। %s</string>
     <string name="error_deleting_image">ଛବି ବିଲୋପ କରିବାରେ ତ୍ରୁଟି</string>
     <string name="failed_to_apply_background_image">ପୃଷ୍ଠପଟ ପ୍ରତିଛବି ପ୍ରୟୋଗ କରିବାରେ ବିଫଳ %s</string>
-    <string name="background_image_too_large">AnkiDroid ର ମୂଳ ସ୍କ୍ରିନ୍ ପୃଷ୍ଠପଟ ଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
+    <string name="background_image_too_large">AnkiDroid ର ମୂଳ ସ୍କ୍ରିନ୍ ପୃଷ୍ଠପଟ ଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
     <string name="image_max_size_allowed">ସର୍ବାଧିକ ପ୍ରତିଛବି ଆକାର %d MB ଅନୁମୋଦିତ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

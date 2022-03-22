@@ -152,7 +152,7 @@
     <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
     <string name="empty_deck">此列表为空</string>
     <string name="search_deck" comment="Deck search for selecting it">牌组搜索</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="empty_deck_add_note">添加卡片</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_empty">这个牌组是空的，请点击 + 按钮来添加内容。</string>

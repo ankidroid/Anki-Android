@@ -40,18 +40,18 @@
 <resources>
     <string name="yes">होय</string>
     <!-- Navigation drawer items-->
-    <string name="decks">पत्त्यांचे गठ्ठे</string>
+    <string name="decks">डेक</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउझर</string>
     <string name="statistics">सांख्यिकी</string>
     <string name="settings">सेटिंग्ज</string>
-    <string name="help">मदत करा</string>
+    <string name="help">सहायता</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">अभिप्राय पाठवा</string>
     <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
-    <string name="studyoptions_new_total">एकुण नविन पत्रं:</string>
-    <string name="studyoptions_total_cards">एकुण पत्रं:</string>
+    <string name="studyoptions_new_total">एकुण नविन कार्ड:</string>
+    <string name="studyoptions_total_cards">एकुण कार्ड:</string>
     <string name="studyoptions_eta">अदमासें वेळ(मिनिटांमधे):</string>
-    <string name="studyoptions_start">अभ्यास</string>
+    <string name="studyoptions_start">अभ्यास शुरू करा</string>
     <!-- DeckPicker.java -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
@@ -61,23 +61,23 @@
         <item quantity="other">कार्ड देय</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">मिनिट शिल्लक</item>
-        <item quantity="other">मिनिट शिल्लक</item>
+        <item quantity="one">%d मिनिट शिल्लक आहे</item>
+        <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
         <item quantity="one">%d तास %d शिल्लक</item>
         <item quantity="other">%d तास %d शिल्लक</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">तास बाकी</item>
-        <item quantity="other">तास बाकी</item>
+        <item quantity="one">%d दिवस %d तास बाकी आहे</item>
+        <item quantity="other">%d दिवस %d तास बाकी आहेत</item>
     </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
-    <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करा \n चिन्हाचा उपयोग करून.</string>
+    <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">आज% %1$d मध्ये %2$s कार्डचा अभ्यास केला</item>
-        <item quantity="other">आज%  %1$d मध्ये% %2$s कार्डांचा अभ्यास केला</item>
+        <item quantity="one">आज %2$s मध्ये %1$d कार्डचा अभ्यास केला</item>
+        <item quantity="other">आज %2$s मध्ये %1$d कार्डांचा अभ्यास केला</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उत्तर टाइप करा</string>
@@ -87,15 +87,15 @@
     <string name="ease_button_hard">कठीण</string>
     <string name="ease_button_good">चांगले</string>
     <string name="ease_button_easy">सोपे</string>
-    <string name="studyoptions_congrats_undo">पूर्ववत् करा %s</string>
+    <string name="studyoptions_congrats_undo">%s पूर्ववत करा</string>
     <string name="menu_import">आयात करा</string>
     <string name="undo">पूर्ववत् करा</string>
     <string name="undo_action_review">अंतिम पुनरावलोकन</string>
     <string name="undo_action_change_deck_multi">डेक बदला</string>
-    <string name="move_all_to_deck">सर्व डेकवर हलवा</string>
+    <string name="move_all_to_deck">सर्व डेकम्धे पाठवा</string>
     <string name="unbury">अनबरी</string>
     <string name="rename_deck">डेक पुनर्नामित करा</string>
-    <string name="create_shortcut">डेक पुनर्नामित करा</string>
+    <string name="create_shortcut">शॉर्टकट तयार करा</string>
     <string name="browse_cards">Browse cards</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">जोडा</string>
     <string name="menu_add_note">नोंदी जोडा</string>

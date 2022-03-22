@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Час доби</string>
     <string name="stats_day_of_week">День тижня</string>
     <string formatted="false" name="stats_percentage_correct">% правильного</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Відповіді</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Повторення</string>
     <string name="stats_answer_type">Тип відповіді</string>
     <string name="stats_today_again_count">Кількість повернень: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правильно)</string>
@@ -77,12 +77,12 @@
 відфільтровано: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Правильних відповідей у закріплених картках: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">За сьогодні не було повторено жодної закріпленої картки.</string>
-    <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
-    <string name="stats_overview_forecast_average">В середньому: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_forecast_total">Загалом: &lt;b&gt;%1$d&lt;/b&gt; повторень</string>
+    <string name="stats_overview_forecast_average">В середньому: &lt;b&gt;%1$.1f&lt;/b&gt; повторень за день</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Днів навчання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d із %3$d)</string>
-    <string name="stats_overview_reviews_per_day_studydays">В середньому за дні навчання: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
-    <string name="stats_overview_reviews_per_day_all">В середньому за всі дні: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
+    <string name="stats_overview_reviews_per_day_studydays">В середньому за дні навчання: &lt;b&gt;%1$.1f&lt;/b&gt; повторень за день</string>
+    <string name="stats_overview_reviews_per_day_all">В середньому за всі дні: &lt;b&gt;%1$.1f&lt;/b&gt; повторень за день</string>
     <string name="stats_overview_total_time_in_period">Загалом: &lt;b&gt;%d&lt;/b&gt; хвилин</string>
     <string name="stats_overview_time_per_day_studydays">В середньому за дні навчання: &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
     <string name="stats_overview_time_per_day_all">В середньому за всі дні:  &lt;b&gt;%1$.1f&lt;/b&gt; хвилин на добу</string>
@@ -112,8 +112,8 @@
     <string name="stats_today">Сьогодні</string>
     <string name="stats_overview">Огляд</string>
     <string name="stats_forecast">Прогноз</string>
-    <string name="stats_review_count">Лічильник переглядів</string>
-    <string name="stats_review_time">Час огляду</string>
+    <string name="stats_review_count">Кількість повторень</string>
+    <string name="stats_review_time">Тривалість повторювання</string>
     <string name="stats_added" comment="Label of the number of added card">Додано</string>
     <string name="stats_review_intervals">Інтервали</string>
     <string name="stats_breakdown">Годинний розподіл</string>
