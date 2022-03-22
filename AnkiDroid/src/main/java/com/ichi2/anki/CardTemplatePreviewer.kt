@@ -244,8 +244,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the card template editor
             mAllFieldsNull = true
             // card template with associated card due to opening from note editor
-            if (mCardListIndex >= 0 && mCardListIndex < mCardList.size) {
-                currentCard = PreviewerCard(col, mCardList[mCardListIndex])
+            if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList!!.size) {
+                currentCard = PreviewerCard(col, mCardList!![mCardListIndex])
             } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
                 currentCard = getDummyCard(mEditedModel!!, mOrdinal)
