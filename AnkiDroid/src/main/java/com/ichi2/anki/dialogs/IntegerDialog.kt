@@ -45,16 +45,16 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val show = MaterialDialog.Builder(requireActivity())
-                .title(requireArguments().getString("title")!!)
-                .positiveText(resources.getString(R.string.dialog_ok))
-                .negativeText(R.string.dialog_cancel)
-                .inputType(InputType.TYPE_CLASS_NUMBER)
-                .inputRange(1, requireArguments().getInt("digits"))
-                .input(
-                        requireArguments().getString("prompt"), ""
-                ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
-                .contentNullable(requireArguments().getString("content"))
-                .show()
+            .title(requireArguments().getString("title")!!)
+            .positiveText(resources.getString(R.string.dialog_ok))
+            .negativeText(R.string.dialog_cancel)
+            .inputType(InputType.TYPE_CLASS_NUMBER)
+            .inputRange(1, requireArguments().getInt("digits"))
+            .input(
+                requireArguments().getString("prompt"), ""
+            ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
+            .contentNullable(requireArguments().getString("content"))
+            .show()
         displayKeyboard(show.inputEditText!!, show)
         return show
     }
