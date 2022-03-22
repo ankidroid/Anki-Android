@@ -49,7 +49,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     /** The list (currently singular) of cards to be previewed
      * A single template was selected, and there was an associated card which exists
      */
-    private lateinit var mCardList: LongArray
+    private var mCardList: LongArray? = null
     private var mNoteEditorBundle: Bundle? = null
     private var mShowingAnswer = false
 
@@ -79,7 +79,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (parameters != null) {
             mNoteEditorBundle = parameters.getBundle("noteEditorBundle")
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME)
-            mCardList = parameters.getLongArray("cardList") ?: longArrayOf()
+            mCardList = parameters.getLongArray("cardList")
             mOrdinal = parameters.getInt("ordinal")
             mCardListIndex = parameters.getInt("cardListIndex")
             mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer)
