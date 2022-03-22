@@ -114,53 +114,6 @@ public class CompatV26 extends CompatV23 implements Compat {
         }
     }
 
-    // Explores the source directory tree recursively and copies each directory and each file inside each directory
-    @Override
-    public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {
-        // If destDir exists, it must be a directory. If not, create it
-        FileUtil.ensureFileIsDirectory(destDir);
-
-        Path sourceDirPath = srcDir.toPath();
-        Path destinationDirPath = destDir.toPath();
-
-        Files.walkFileTree(sourceDirPath, new SimpleFileVisitor<Path>() {
-
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                Files.createDirectories(destinationDirPath.resolve(sourceDirPath.relativize(dir)));
-                return FileVisitResult.CONTINUE;
-            }
-
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                File destFile = destinationDirPath.resolve(sourceDirPath.relativize(file)).toFile();
-
-                // Copy if source file and destination file aren't of the same length
-                // i.e., copy if destination file wasn't copied completely
-                if (file.toFile().length() != destFile.length()) {
-                    OutputStream outputStream = new FileOutputStream(destFile, false);
-                    long bytesCopied = copyFile(file.toString(), outputStream);
-                    ioTask.doProgress((int) bytesCopied / 1024);
-                    outputStream.close();
-                }
-                if (deleteAfterCopy) {
-                    Files.delete(file);
-                }
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (deleteAfterCopy) {
-                    Files.delete(dir);
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
-
-
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
