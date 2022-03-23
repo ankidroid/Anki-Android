@@ -598,25 +598,25 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(deckDueTree, true);
     }
 
-    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
-        return _groupChildren(decks, 0, checkDone);
+    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> sortedDecks, boolean checkDone) {
+        return _groupChildren(sortedDecks, 0, checkDone);
     }
 
     /**
         @return the tree structure of all decks from @descandants, starting
         at specified depth.
 
-        @param descendants a list of decks of dept at least depth, having all
+        @param sortedDescendants a list of decks of dept at least depth, having all
         the same first depth name elements, sorted in deck order.
         @param depth The depth of the tree we are creating
         @param checkDone whether the set of deck was checked. If
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> descendants, int depth, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
         List<T> children = new ArrayList<>();
         // group and recurse
-        ListIterator<T> it = descendants.listIterator();
+        ListIterator<T> it = sortedDescendants.listIterator();
         while (it.hasNext()) {
             T child = it.next();
             String head = child.getDeckNameComponent(depth);
@@ -649,7 +649,7 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
+            // the descendantOfChild set contains direct descendantOfChild but not the descendantOfChild of descendantOfChild...
             List<T> childrenNode = _groupChildren(descendantsOfChild, depth + 1, checkDone);
             child.setChildren(childrenNode, "std".equals(getName()));
             children.add(child);
