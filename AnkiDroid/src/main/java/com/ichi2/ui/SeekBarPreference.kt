@@ -6,183 +6,170 @@
  *
  * adjusted by Norbert Nagold 2011 <norbert.nagold@gmail.com>
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
+import android.app.AlertDialog
+import android.content.Context
+import android.util.AttributeSet
+import android.view.Gravity
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
+import androidx.annotation.StringRes
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.utils.KotlinCleanup
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see: SeekBarPreferenceCompat
+@KotlinCleanup("autolint")
+class SeekBarPreference(context: Context, attrs: AttributeSet) : android.preference.DialogPreference(context, attrs), OnSeekBarChangeListener {
+    @KotlinCleanup("lateinit, not null")
+    private var mSeekLine: LinearLayout? = null
+    @KotlinCleanup("lateinit, not null")
+    private var mSeekBar: SeekBar? = null
+    @KotlinCleanup("lateinit, not null")
+    private var mValueText: TextView? = null
+    private val mSuffix: String?
+    private val mDefault: Int
+    private val mMax: Int
+    private val mMin: Int
+    private val mInterval: Int
+    private var mValue = 0
 
-import com.ichi2.anki.AnkiDroidApp;
-
-import androidx.annotation.StringRes;
-
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see: SeekBarPreferenceCompat
-public class SeekBarPreference extends android.preference.DialogPreference implements SeekBar.OnSeekBarChangeListener {
-    private static final String androidns = "http://schemas.android.com/apk/res/android";
-
-    private LinearLayout mSeekLine;
-    private SeekBar mSeekBar;
-    private TextView mValueText;
-    private final Context mContext;
-
-    private final String mSuffix;
-    private final int mDefault;
-    private final int mMax;
-    private final int mMin;
-    private final int mInterval;
-    private int mValue = 0;
     @StringRes
-    private final int mXLabel;
+    private val mXLabel: Int
+
     @StringRes
-    private final int mYLabel;
+    private val mYLabel: Int
 
-    public SeekBarPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mContext = context;
-
-        mSuffix = attrs.getAttributeValue(androidns, "text");
-        mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0);
-        mMax = attrs.getAttributeIntValue(androidns, "max", 100);
-        mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
-        mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1);
-        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0);
-        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0);
+    init {
+        mSuffix = attrs.getAttributeValue(androidns, "text")
+        mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0)
+        mMax = attrs.getAttributeIntValue(androidns, "max", 100)
+        mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0)
+        mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1)
+        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0)
+        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0)
     }
 
-
-    @Override
-    protected View onCreateDialogView() {
-        LinearLayout layout = new LinearLayout(mContext);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(6, 6, 6, 6);
-
-        mValueText = new FixedTextView(mContext);
-        mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
-        mValueText.setTextSize(32);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        layout.addView(mValueText, params);
-
-        mSeekBar = new SeekBar(mContext);
-        mSeekBar.setOnSeekBarChangeListener(this);
-
-        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-
-
+    override fun onCreateDialogView(): View {
+        val layout = LinearLayout(context)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.setPadding(6, 6, 6, 6)
+        mValueText = FixedTextView(context)
+        mValueText!!.setGravity(Gravity.CENTER_HORIZONTAL)
+        mValueText!!.setTextSize(32f)
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        layout.addView(mValueText, params)
+        mSeekBar = SeekBar(context)
+        mSeekBar!!.setOnSeekBarChangeListener(this)
+        layout.addView(
+            mSeekBar,
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
         if (mXLabel != 0 && mYLabel != 0) {
-            LinearLayout.LayoutParams params_seekbar = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            params_seekbar.setMargins(0, 12, 0, 0);
-            mSeekLine = new LinearLayout(mContext);
-            mSeekLine.setOrientation(LinearLayout.HORIZONTAL);
-            mSeekLine.setPadding(6, 6, 6, 6);
-            addLabelsBelowSeekBar();
-            layout.addView(mSeekLine, params_seekbar);
+            val params_seekbar = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params_seekbar.setMargins(0, 12, 0, 0)
+            mSeekLine = LinearLayout(context)
+            mSeekLine!!.orientation = LinearLayout.HORIZONTAL
+            mSeekLine!!.setPadding(6, 6, 6, 6)
+            addLabelsBelowSeekBar()
+            layout.addView(mSeekLine, params_seekbar)
         }
-
         if (shouldPersist()) {
-            mValue = getPersistedInt(mDefault);
+            mValue = getPersistedInt(mDefault)
         }
-
-        mSeekBar.setMax((mMax - mMin) / mInterval);
-        mSeekBar.setProgress((mValue - mMin) / mInterval);
-
-        String t = String.valueOf(mValue);
-        mValueText.setText(mSuffix == null ? t : t + mSuffix);
-        return layout;
+        mSeekBar!!.max = (mMax - mMin) / mInterval
+        mSeekBar!!.progress = (mValue - mMin) / mInterval
+        val t = mValue.toString()
+        mValueText!!.setText(if (mSuffix == null) t else t + mSuffix)
+        return layout
     }
 
-
-    @Override
-    protected void onBindDialogView(View v) {
-        super.onBindDialogView(v);
-        mSeekBar.setMax((mMax - mMin) / mInterval);
-        mSeekBar.setProgress((mValue - mMin) / mInterval);
+    override fun onBindDialogView(v: View) {
+        super.onBindDialogView(v)
+        mSeekBar!!.max = (mMax - mMin) / mInterval
+        mSeekBar!!.progress = (mValue - mMin) / mInterval
     }
 
-
-    @Override
-    protected void onSetInitialValue(boolean restore, Object defaultValue) {
-        super.onSetInitialValue(restore, defaultValue);
-        mValue = getPersistedInt(mDefault);
-        if (restore) {
-            mValue = shouldPersist() ? getPersistedInt(mDefault) : 0;
+    override fun onSetInitialValue(restore: Boolean, defaultValue: Any) {
+        super.onSetInitialValue(restore, defaultValue)
+        mValue = getPersistedInt(mDefault)
+        mValue = if (restore) {
+            if (shouldPersist()) getPersistedInt(mDefault) else 0
         } else {
-            mValue = (Integer) defaultValue;
+            defaultValue as Int
         }
     }
 
-
-    public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
+    override fun onProgressChanged(seek: SeekBar, value: Int, fromTouch: Boolean) {
         if (fromTouch) {
-            mValue = (value * mInterval) + mMin;
-            String t = String.valueOf(mValue);
-            mValueText.setText(mSuffix == null ? t : t + mSuffix);
-            onValueUpdated();
+            mValue = value * mInterval + mMin
+            val t = mValue.toString()
+            mValueText!!.text = if (mSuffix == null) t else t + mSuffix
+            onValueUpdated()
         }
     }
 
-    private void onValueUpdated() {
+    private fun onValueUpdated() {
         if (shouldPersist()) {
-            persistInt(mValue);
+            persistInt(mValue)
         }
-        callChangeListener(mValue);
+        callChangeListener(mValue)
     }
 
-    public int getValue() {
-        if (mValue == 0) {
-            return getPersistedInt(mDefault);
+    var value: Int
+        get() = if (mValue == 0) {
+            getPersistedInt(mDefault)
         } else {
-            return mValue;
+            mValue
+        }
+        set(value) {
+            mValue = value
+            persistInt(value)
+        }
+
+    override fun onStartTrackingTouch(seek: SeekBar) {}
+    override fun onStopTrackingTouch(seek: SeekBar) {
+        this.dialog.dismiss()
+    }
+
+    override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
+        super.onPrepareDialogBuilder(builder)
+        builder.setNegativeButton(null, null)
+        builder.setPositiveButton(null, null)
+        builder.setTitle(null)
+    }
+
+    private fun addLabelsBelowSeekBar() {
+        val labels = intArrayOf(mXLabel, mYLabel)
+        for (count in 0..1) {
+            val textView: TextView = FixedTextView(context)
+            textView.text = context.getString(labels[count])
+            textView.gravity = Gravity.START
+            mSeekLine!!.addView(textView)
+            if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
         }
     }
 
-    public void setValue(int value) {
-        mValue = value;
-        persistInt(value);
+    fun getLayoutParams(weight: Float): LinearLayout.LayoutParams {
+        return LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, weight
+        )
     }
 
-    public void onStartTrackingTouch(SeekBar seek) {
-    }
-
-
-    public void onStopTrackingTouch(SeekBar seek) {
-        this.getDialog().dismiss();
-    }
-
-
-    @Override
-    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
-        super.onPrepareDialogBuilder(builder);
-        builder.setNegativeButton(null, null);
-        builder.setPositiveButton(null, null);
-        builder.setTitle(null);
-    }
-
-    private void addLabelsBelowSeekBar() {
-        int labels[] = {mXLabel, mYLabel};
-        for (int count = 0; count < 2; count++) {
-            TextView textView = new FixedTextView(mContext);
-            textView.setText(mContext.getString(labels[count]));
-            textView.setGravity(Gravity.START);
-            mSeekLine.addView(textView);
-            if(mContext.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
-                textView.setLayoutParams((count == 1) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
-            else
-                textView.setLayoutParams((count == 0) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
-        }
-    }
-
-    LinearLayout.LayoutParams getLayoutParams(float weight) {
-        return new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, weight);
+    companion object {
+        private const val androidns = "http://schemas.android.com/apk/res/android"
     }
 }
