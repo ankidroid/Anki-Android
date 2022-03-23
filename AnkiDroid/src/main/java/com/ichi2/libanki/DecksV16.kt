@@ -311,7 +311,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return this.all_names_and_ids(
             skip_empty_default = !force_default, include_filtered = dyn
         ).map {
-            x ->
+                x ->
             x.name
         }.toMutableList()
     }
@@ -704,10 +704,10 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     fun child_ids(parent_name: str): Iterable<did> {
         val prefix = parent_name + "::"
         return all_names_and_ids().filter {
-            x ->
+                x ->
             x.name.startsWith(prefix)
         }.map {
-            d ->
+                d ->
             d.id
         }.toMutableList()
     }

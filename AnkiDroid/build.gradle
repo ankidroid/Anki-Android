@@ -205,6 +205,7 @@ android {
     ndkVersion "22.0.7026061"
 
     ktlint {
+        version = "0.45.1"
         disabledRules = ["no-wildcard-imports"]
     }
 }

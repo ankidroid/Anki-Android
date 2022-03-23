@@ -25,7 +25,7 @@ import timber.log.Timber
 abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
     /* provide methods for text to show in notification bar when the DialogFragment
        can't be shown due to the host activity being in stopped state.
-       This can happen when the DialogFragment is shown from 
+       This can happen when the DialogFragment is shown from
        the onPostExecute() method of an AsyncTask */
     @KotlinCleanup("convert these back to properties")
     abstract fun getNotificationMessage(): String?

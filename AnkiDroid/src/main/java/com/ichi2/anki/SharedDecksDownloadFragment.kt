@@ -134,7 +134,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * the download progress checker.
      */
     private fun downloadFile(fileToBeDownloaded: DownloadFile) {
-        // Register broadcast receiver for download completion. 
+        // Register broadcast receiver for download completion.
         Timber.d("Registering broadcast receiver for download completion")
         activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
