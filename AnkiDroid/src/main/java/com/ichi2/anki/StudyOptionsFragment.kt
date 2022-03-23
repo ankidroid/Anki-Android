@@ -399,7 +399,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             closeStudyOptions(result.resultCode)
             return@registerForActivityResult
         }
-        if (result.resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
+        if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
             if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
                 val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)

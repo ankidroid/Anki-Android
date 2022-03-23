@@ -322,7 +322,7 @@ public class ReviewerKeyboardInputTest extends RobolectricTest {
         }
 
         @Override
-        protected void displayCardAnswer() {
+        public void displayCardAnswer() {
             mDisplayAnswer = true;
         }
 
