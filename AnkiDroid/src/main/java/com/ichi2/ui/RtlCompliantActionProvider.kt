@@ -10,90 +10,74 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.graphics.drawable.Drawable;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-
-import com.ichi2.anki.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.core.view.ActionProvider;
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
+import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.ActionProvider
+import com.ichi2.anki.R
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
-public class RtlCompliantActionProvider extends ActionProvider {
-
-    @NonNull
-    private final Context mContext;
-    @NonNull
+@KotlinCleanup("auto-lint class")
+class RtlCompliantActionProvider(context: Context) : ActionProvider(context) {
+    @JvmField
     @VisibleForTesting
-    protected final Activity mActivity;
-
-
-    public RtlCompliantActionProvider(@NonNull Context context) {
-        super(context);
-        mContext = context;
-        mActivity = unwrapContext(context);
-    }
-
-
-    /**
-     * Unwrap a context to get the base activity back.
-     * @param context a context that may be of type {@link ContextWrapper}
-     * @return The activity of the passed context
-     */
-    @NonNull
-    private static Activity unwrapContext(@NonNull Context context){
-        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        if (context instanceof Activity) {
-            return (Activity) context;
-        } else {
-            throw new ClassCastException("Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity");
-        }
-    }
+    val mActivity: Activity
 
     /**
      * Deprecated method, no need to set it up.
      * https://developer.android.com/reference/kotlin/androidx/core/view/ActionProvider#oncreateactionview
      */
-    @Deprecated
-    @Override
-    public View onCreateActionView() {
-        return null;
+    @Deprecated("")
+    override fun onCreateActionView(): View? {
+        return null
     }
 
-
-    @Override
-    public View onCreateActionView(MenuItem forItem) {
-        ImageButton actionView = new ImageButton(mContext, null, R.attr.actionButtonStyle);
-
-        TooltipCompat.setTooltipText(actionView, forItem.getTitle());
-
-        final Drawable iconDrawable = forItem.getIcon();
-        iconDrawable.setAutoMirrored(true);
-        actionView.setImageDrawable(iconDrawable);
-
-        actionView.setId(R.id.action_undo);
-
-        actionView.setOnClickListener(v -> {
-            if (!forItem.isEnabled()) {
-                return;
+    override fun onCreateActionView(forItem: MenuItem): View {
+        val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
+        TooltipCompat.setTooltipText(actionView, forItem.title)
+        val iconDrawable = forItem.icon
+        iconDrawable.isAutoMirrored = true
+        actionView.setImageDrawable(iconDrawable)
+        actionView.id = R.id.action_undo
+        actionView.setOnClickListener {
+            if (!forItem.isEnabled) {
+                return@setOnClickListener
             }
-            mActivity.onOptionsItemSelected(forItem);
-        });
+            mActivity.onOptionsItemSelected(forItem)
+        }
+        return actionView
+    }
 
-        return actionView;
+    companion object {
+        /**
+         * Unwrap a context to get the base activity back.
+         * @param context a context that may be of type [ContextWrapper]
+         * @return The activity of the passed context
+         */
+        private fun unwrapContext(context: Context): Activity {
+            var unwrappedContext: Context? = context
+            while (unwrappedContext !is Activity && unwrappedContext is ContextWrapper) {
+                unwrappedContext = unwrappedContext.baseContext
+            }
+            return if (unwrappedContext is Activity) {
+                unwrappedContext
+            } else {
+                throw ClassCastException("Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity")
+            }
+        }
+    }
+
+    init {
+        mActivity = unwrapContext(context)
     }
 }
