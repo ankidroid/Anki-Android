@@ -36,9 +36,9 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeUtils
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.FileNotFoundException
-import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -479,6 +479,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
     }
 
+    @KotlinCleanup("fun interface & use SAM on callers")
     interface OnPaintColorChangeListener {
         fun onPaintColorChange(color: Int?)
     }
