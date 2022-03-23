@@ -13,63 +13,41 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
-
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.ichi2.utils.ViewGroupUtils;
-
-import androidx.annotation.NonNull;
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.ViewGroupUtils.getAllChildren
 
 // extending androidx.preference didn't work:
 // java.lang.ClassCastException: com.ichi2.ui.AutoSizeCheckBoxPreference cannot be cast to android.preference.Preference
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public class AutoSizeCheckBoxPreference extends android.preference.CheckBoxPreference {
-    @SuppressWarnings("unused")
-    public AutoSizeCheckBoxPreference(Context context) {
-        super(context);
+@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+@KotlinCleanup("auto-lint (except unused class)")
+class AutoSizeCheckBoxPreference : android.preference.CheckBoxPreference {
+    @Suppress("unused") constructor(context: Context?) : super(context) {}
+    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
+    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
+
+    override fun onBindView(view: View) {
+        makeMultiline(view)
+        super.onBindView(view)
     }
 
-    @SuppressWarnings("unused")
-    public AutoSizeCheckBoxPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-
-    @SuppressWarnings("unused")
-    public AutoSizeCheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-
-    @SuppressWarnings("unused")
-    public AutoSizeCheckBoxPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-
-    @Override
-    protected void onBindView(@NonNull View view) {
-        makeMultiline(view);
-        super.onBindView(view);
-    }
-
-
-    protected void makeMultiline(@NonNull View view) {
+    protected fun makeMultiline(view: View) {
         // https://stackoverflow.com/q/4267939/13121290
-        if (view instanceof ViewGroup) {
-            for (View child : ViewGroupUtils.getAllChildren((ViewGroup) view)) {
-                makeMultiline(child);
+        if (view is ViewGroup) {
+            for (child in getAllChildren(view)) {
+                makeMultiline(child)
             }
-        } else if (view instanceof TextView) {
-            TextView t = (TextView) view;
-            t.setSingleLine(false);
-            t.setEllipsize(null);
+        } else if (view is TextView) {
+            val t = view
+            t.isSingleLine = false
+            t.ellipsize = null
         }
     }
 }
