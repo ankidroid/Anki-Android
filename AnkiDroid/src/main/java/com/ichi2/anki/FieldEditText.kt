@@ -23,13 +23,16 @@ import android.net.Uri
 import android.os.*
 import android.text.InputType
 import android.util.AttributeSet
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.core.view.ContentInfoCompat
+import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.ViewCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
-import androidx.core.view.inputmethod.InputContentInfoCompat
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
@@ -95,42 +98,45 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         mImageListener = imageListener
     }
 
-    // Tracked in #9775
-    @Suppress("deprecation")
+    @KotlinCleanup("add extension method to iterate clip items")
     override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection? {
         val inputConnection = super.onCreateInputConnection(editorInfo) ?: return null
         EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES)
-        return InputConnectionCompat.createWrapper(inputConnection, editorInfo) { contentInfo: InputContentInfoCompat, flags: Int, opts: Bundle? ->
-            if (mImageListener == null) {
-                return@createWrapper false
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && flags and
-                InputConnection.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
-            ) {
-                try {
-                    contentInfo.requestPermission()
-                } catch (e: Exception) {
-                    return@createWrapper false
+        ViewCompat.setOnReceiveContentListener(
+            this, IMAGE_MIME_TYPES,
+            object : OnReceiveContentListener {
+                override fun onReceiveContent(view: View, payload: ContentInfoCompat): ContentInfoCompat? {
+                    val pair = payload.partition { item -> item.uri != null }
+                    val uriContent = pair.first
+                    val remaining = pair.second
+                    if (mImageListener == null || uriContent == null) {
+                        return remaining
+                    }
+
+                    val clip = uriContent.clip
+                    val description = clip.description
+
+                    if (!hasImage(description)) {
+                        return remaining
+                    }
+
+                    for (i in 0 until clip.itemCount) {
+                        val uri = clip.getItemAt(i).uri
+                        try {
+                            onImagePaste(uri)
+                        } catch (e: Exception) {
+                            Timber.w(e)
+                            AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage")
+                            return remaining
+                        }
+                    }
+
+                    return remaining
                 }
             }
-            val description = contentInfo.description
-            if (!hasImage(description)) {
-                return@createWrapper false
-            }
-            try {
-                if (!onImagePaste(contentInfo.contentUri)) {
-                    return@createWrapper false
-                }
-                // There is a timeout on this line which occurs even if we're stopped in the debugger, if we take too long we get
-                // "Ankidroid doesn't support image insertion here"
-                InputConnectionCompat.commitContent(inputConnection, editorInfo, contentInfo, flags, opts)
-                return@createWrapper true
-            } catch (e: Exception) {
-                Timber.w(e)
-                AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage")
-                return@createWrapper false
-            }
-        }
+        )
+
+        return InputConnectionCompat.createWrapper(this, inputConnection, editorInfo)
     }
 
     override fun onSelectionChanged(selStart: Int, selEnd: Int) {
