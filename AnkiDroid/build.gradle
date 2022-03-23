@@ -75,7 +75,8 @@ android {
             debuggable true
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
-            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
+//            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
 
             // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
             // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
