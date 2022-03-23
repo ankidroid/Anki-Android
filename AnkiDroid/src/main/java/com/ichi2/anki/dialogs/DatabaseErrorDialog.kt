@@ -217,7 +217,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity)
                         }
                         .itemsCallbackSingleChoice(-1) {
-                            _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
+                                _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
                             if (mBackups[which].length() > 0) {
                                 // restore the backup if it's valid
                                 (activity as DeckPicker?)

@@ -7,6 +7,7 @@ java {
 }
 
 ktlint {
+    version = "0.45.1"
     disabledRules = ["no-wildcard-imports"]
 }
 

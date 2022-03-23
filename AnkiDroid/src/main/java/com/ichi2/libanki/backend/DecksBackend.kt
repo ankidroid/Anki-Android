@@ -147,7 +147,7 @@ class RustDroidDeckBackend(private val backend: BackendV1) : DecksBackend {
 
     override fun all_names_and_ids(skip_empty_default: Boolean, include_filtered: Boolean): List<DeckNameId> {
         return backend.getDeckNames(skip_empty_default, include_filtered).entriesList.map {
-            entry ->
+                entry ->
             DeckNameId(entry.name, entry.id)
         }
     }
