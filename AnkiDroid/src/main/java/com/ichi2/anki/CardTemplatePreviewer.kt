@@ -28,7 +28,6 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.IOException
@@ -50,7 +49,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     /** The list (currently singular) of cards to be previewed
      * A single template was selected, and there was an associated card which exists
      */
-    @KotlinCleanup("make lateinit")
     private var mCardList: LongArray? = null
     private var mNoteEditorBundle: Bundle? = null
     private var mShowingAnswer = false
