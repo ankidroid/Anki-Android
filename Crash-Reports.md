@@ -20,11 +20,7 @@ Any time the library is updated or the usage is changed, the developer making th
 
 You can read about the recent experience upgrading AnkiDroid's ACRA, as well as future ACRA testing directions, [in a related ACRA thread here](https://github.com/ACRA/acra/commit/05e9a5384a981f905913b524f323108838154fe7#commitcomment-29569186) if you are interested.
 
-There are some other [future changes to ACRA](https://github.com/ACRA/acra/pull/680) which may help users of the library test, but they aren't scheduled to be available until ACRA 5.2.x
-
 ### Setting up an Acralyzer instance for testing
 You can create a free IBM Cloudant instance here https://console.bluemix.net/ (the lite plan, plenty for testing, is free), and then replicate a clean acralyzer install to it as described here https://github.com/ACRA/acralyzer/wiki/setup#easy-way---replication-of-remote-couchapps, but using the source database from here https://github.com/ACRA/acralyzer/issues/133#issuecomment-401992809 (to make sure it works, since the main source database has performance issues)
 
-One [free test acralyzer instance](https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acralyzer/_design/acralyzer/index.html#/dashboard/) has already been created with this method, and it allows report writes and dashboard reads without auth.
-
-To configure debug builds to use your acralyzer, you'll need to configure the URL in the [debug build section of the AnkiDroid gradle file](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/build.gradle#L27)
+To configure debug builds to use your acralyzer, you'll need to configure the URL in the [debug build section of the AnkiDroid gradle file](https://github.com/ankidroid/Anki-Android/blob/5ed908b024d4548f22c804f9bff6a6371a91b763/AnkiDroid/build.gradle#L78)
