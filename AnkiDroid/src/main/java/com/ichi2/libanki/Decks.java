@@ -932,10 +932,10 @@ public class Decks extends DeckManager {
     }
 
     private void _checkDeckTree() {
-        List<Deck> decks = allSorted();
-        Map<String, Deck> names = HashUtil.HashMapInit(decks.size());
+        List<Deck> sortedDecks = allSorted();
+        Map<String, Deck> names = HashUtil.HashMapInit(sortedDecks.size());
 
-        for (Deck deck: decks) {
+        for (Deck deck: sortedDecks) {
             String deckName = deck.getString("name");
 
             /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for

@@ -216,10 +216,10 @@ public class Sched extends SchedV2 {
     public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener cancelListener) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
-        List<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(decks.size());
-        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
-        for (Deck deck : decks) {
+        List<Deck> allDecksSorted = mCol.getDecks().allSorted();
+        HashMap<String, Integer[]> lims = HashUtil.HashMapInit(allDecksSorted.size());
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(allDecksSorted.size());
+        for (Deck deck : allDecksSorted) {
             if (isCancelled(cancelListener)) {
                 return null;
             }
