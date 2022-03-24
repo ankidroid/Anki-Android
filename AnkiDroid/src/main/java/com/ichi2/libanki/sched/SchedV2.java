@@ -657,7 +657,8 @@ public class SchedV2 extends AbstractSched {
                     break;
                 }
             }
-            // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
+            // the childrenNode set contains direct child of `child`, but not
+            // any descendants of the children of `child`...
             List<T> childrenNode = _groupChildrenMain(descendantsOfChild, depth + 1, checkDone);
             child.setChildren(childrenNode, "std".equals(getName()));
             children.add(child);
