@@ -42,7 +42,7 @@ class CompatDirectoryContentTest : Test21And26() {
             .withTempFile("zero")
         val iterator = compat.contentOfDirectory(directory)
         val file = iterator.next()
-        assertThat("Paths should be canonical", file.path, equalTo(file.canonicalPath))
+        assertThat("Paths should be absolute", file.path, equalTo(file.absolutePath))
     }
 
     @Test
