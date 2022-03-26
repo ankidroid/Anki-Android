@@ -55,7 +55,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         )
     }
 
-    private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%")
+    private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
         EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
@@ -89,9 +89,8 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
     }
 
     private fun checkText(context: XmlContext, element: Element, text: String) {
-        println(text)
         text.split(" ").forEach {
-            if (it.matches(INVALID_FORMAT_PATTERN.toRegex())) {
+            if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
                 val location = context.createLocationHandle(element).resolve()
                 context.report(
                     ISSUE, location,

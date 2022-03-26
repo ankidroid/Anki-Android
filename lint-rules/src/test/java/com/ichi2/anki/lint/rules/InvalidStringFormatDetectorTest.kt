@@ -50,6 +50,7 @@ class InvalidStringFormatDetectorTest {
         |<plurals name="pluralTestString2">
             <item quantity="one">आज %1${'$'}'d' मध्ये %2${'$'}'s' कार्डचा अभ्यास केला</item>
         </plurals>
+        |<string name="testString7">XXX%</string>
         |</resources>
     """.trimMargin()
 
