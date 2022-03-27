@@ -52,6 +52,17 @@ class CreateDirectoriesTest : Test21And26() {
     }
 
     @Test
+    fun parent_is_a_file() {
+        val file = File(rootDirectory, "a").apply {
+            createNewFile()
+            deleteOnExit()
+        }
+        val child = File(file, "child")
+        // We fail as it's a file
+        assertThrowsSubclass<IOException> { compat.createDirectories(child) }
+    }
+
+    @Test
     fun exception_if_directory_cannot_be_created() {
         val file = File(rootDirectory, "a").apply {
             createNewFile()
