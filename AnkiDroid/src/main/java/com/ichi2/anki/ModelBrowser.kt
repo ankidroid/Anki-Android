@@ -14,342 +14,282 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.util.Pair
+import android.view.*
+import android.widget.*
+import android.widget.AdapterView.OnItemLongClickListener
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBar
+import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.MaterialDialog.ListCallback
+import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.UIUtils.saveCollectionInBackground
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.dialogs.ConfirmationDialog
+import com.ichi2.anki.dialogs.ModelBrowserContextMenu
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.async.CollectionTask.CountModels
+import com.ichi2.async.CollectionTask.DeleteModel
+import com.ichi2.async.TaskListenerWithContext
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.StdModels
+import com.ichi2.libanki.Utils
+import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.widget.WidgetStatus.update
+import timber.log.Timber
+import java.lang.RuntimeException
+import java.util.ArrayList
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.StdModels;
-import com.ichi2.ui.FixedEditText;
-import com.ichi2.widget.WidgetStatus;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import timber.log.Timber;
-
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.START;
-import static com.ichi2.libanki.Utils.checksum;
-
-
-public class ModelBrowser extends AnkiActivity {
-
-    DisplayPairAdapter mModelDisplayAdapter;
-    private ListView mModelListView;
+@KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
+class ModelBrowser : AnkiActivity() {
+    private var modelDisplayAdapter: DisplayPairAdapter? = null
+    private var mModelListView: ListView? = null
 
     // Of the currently selected model
-    private long mCurrentID;
-    private int mModelListPosition;
+    private var mCurrentID: Long = 0
+    private var mModelListPosition = 0
 
-    //Used exclusively to display model name
-    private ArrayList<Model> mModels;
-    private ArrayList<Integer> mCardCounts;
-    private ArrayList<Long> mModelIds;
-    private ArrayList<DisplayPair> mModelDisplayList;
-    private ArrayList<String> mNewModelLabels;
-    private ArrayList<String> mExistingModelNames;
+    // Used exclusively to display model name
+    private var mModels: ArrayList<Model>? = null
+    private var mCardCounts: ArrayList<Int>? = null
+    private var mModelIds: ArrayList<Long>? = null
+    private var mModelDisplayList: ArrayList<DisplayPair>? = null
+    private var mNewModelLabels: ArrayList<String>? = null
+    private var mExistingModelNames: ArrayList<String>? = null
+    private var mCol: Collection? = null
+    private var mActionBar: ActionBar? = null
 
-    private Collection mCol;
-    private ActionBar mActionBar;
-
-    //Dialogue used in renaming
-    private EditText mModelNameInput;
-
-    private ModelBrowserContextMenu mContextMenu;
-
-    private ArrayList<String> mNewModelNames;
-
+    // Dialogue used in renaming
+    private var mModelNameInput: EditText? = null
+    private var mContextMenu: ModelBrowserContextMenu? = null
+    private var mNewModelNames: ArrayList<String>? = null
 
     // ----------------------------------------------------------------------------
     // AsyncTask methods
     // ----------------------------------------------------------------------------
-
-
     /*
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private LoadingModelsHandler loadingModelsHandler() {
-        return new LoadingModelsHandler(this);
+    private fun loadingModelsHandler(): LoadingModelsHandler {
+        return LoadingModelsHandler(this)
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Pair<List<Model>, ArrayList<Integer>>> {
-        public LoadingModelsHandler(ModelBrowser browser) {
-            super(browser);
+
+    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model?>?, ArrayList<Int>?>?>(browser) {
+        override fun actualOnCancelled(context: ModelBrowser) {
+            context.hideProgressBar()
         }
 
-        @Override
-        public void actualOnCancelled(@NonNull ModelBrowser browser) {
-            browser.hideProgressBar();
+        override fun actualOnPreExecute(context: ModelBrowser) {
+            context.showProgressBar()
         }
 
-        @Override
-        public void actualOnPreExecute(@NonNull ModelBrowser browser) {
-            browser.showProgressBar();
-        }
-
-        @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, Pair<List<Model>, ArrayList<Integer>> result) {
+        @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
+        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model?>?, ArrayList<Int>?>?) {
             if (result == null) {
-                throw new RuntimeException();
+                throw RuntimeException()
             }
-            browser.hideProgressBar();
-            browser.mModels = new ArrayList<>(result.first);
-            browser.mCardCounts = result.second;
-
-            browser.fillModelList();
+            context.let {
+                it.hideProgressBar()
+                it.mModels = ArrayList(result.first!!)
+                it.mCardCounts = result.second
+                it.fillModelList()
+            }
         }
     }
-
 
     /*
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private DeleteModelHandler deleteModelHandler() {
-        return new DeleteModelHandler(this);
+    private fun deleteModelHandler(): DeleteModelHandler {
+        return DeleteModelHandler(this)
     }
-    private static class DeleteModelHandler extends TaskListenerWithContext<ModelBrowser, Void, Boolean>{
-        public DeleteModelHandler(ModelBrowser browser) {
-            super(browser);
+
+    private class DeleteModelHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Boolean?>(browser) {
+        override fun actualOnPreExecute(context: ModelBrowser) {
+            context.showProgressBar()
         }
 
-        @Override
-        public void actualOnPreExecute(@NonNull ModelBrowser browser) {
-            browser.showProgressBar();
-        }
-
-        @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, Boolean result) {
-            if (!result) {
-                throw new RuntimeException();
+        override fun actualOnPostExecute(context: ModelBrowser, result: Boolean?) {
+            if (result == false) {
+                throw RuntimeException()
             }
-            browser.hideProgressBar();
-            browser.refreshList();
+            context.hideProgressBar()
+            context.refreshList()
         }
     }
-
-
 
     /*
      * Listens to long hold context menu for main list items
      */
-    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
-        switch (selection) {
-            case ModelBrowserContextMenu.MODEL_DELETE:
-                deleteModelDialog();
-                break;
-            case ModelBrowserContextMenu.MODEL_RENAME:
-                renameModelDialog();
-                break;
-            case ModelBrowserContextMenu.MODEL_TEMPLATE:
-                openTemplateEditor();
-                break;
+    private val mContextMenuListener = ListCallback { _: MaterialDialog?, _: View?, selection: Int, _: CharSequence? ->
+        when (selection) {
+            ModelBrowserContextMenu.MODEL_DELETE -> deleteModelDialog()
+            ModelBrowserContextMenu.MODEL_RENAME -> renameModelDialog()
+            ModelBrowserContextMenu.MODEL_TEMPLATE -> openTemplateEditor()
         }
-    };
-
+    }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.model_browser_label);
-        setContentView(R.layout.model_browser);
-        mModelListView = findViewById(R.id.note_type_browser_list);
-        enableToolbar();
-        mActionBar = getSupportActionBar();
-        startLoadingCollection();
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.model_browser)
+        mModelListView = findViewById(R.id.note_type_browser_list)
+        enableToolbar()
+        mActionBar = supportActionBar
+        startLoadingCollection()
     }
 
-
-    @Override
-    public void onResume() {
-        Timber.d("onResume()");
-        super.onResume();
+    public override fun onResume() {
+        Timber.d("onResume()")
+        super.onResume()
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.model_browser, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.model_browser, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+    @KotlinCleanup("Replace with when")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == android.R.id.home) {
-            onBackPressed();
-            return true;
+            onBackPressed()
+            return true
         } else if (itemId == R.id.action_add_new_note_type) {
-            addNewNoteTypeDialog();
-            return true;
+            addNewNoteTypeDialog()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (!isFinishing()) {
-            WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+    public override fun onStop() {
+        super.onStop()
+        if (!isFinishing) {
+            update(this)
+            saveCollectionInBackground()
         }
     }
 
-    @Override
-    public void onDestroy() {
-        TaskManager.cancelAllTasks(CollectionTask.CountModels.class);
-        super.onDestroy();
+    public override fun onDestroy() {
+        TaskManager.cancelAllTasks(CountModels::class.java)
+        super.onDestroy()
     }
-
 
     // ----------------------------------------------------------------------------
     // ANKI METHODS
     // ----------------------------------------------------------------------------
-    @Override
-    public void onCollectionLoaded(Collection col) {
-        super.onCollectionLoaded(col);
-        this.mCol = col;
-        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+    public override fun onCollectionLoaded(col: Collection) {
+        super.onCollectionLoaded(col)
+        mCol = col
+        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
     }
-
-
 
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
-
     /*
      * Fills the main list view with model names.
      * Handles filling the ArrayLists and attaching
      * ArrayAdapters to main ListView
      */
-    private void fillModelList() {
-        //Anonymous class for handling list item clicks
-        mModelDisplayList = new ArrayList<>(mModels.size());
-        mModelIds = new ArrayList<>(mModels.size());
-
-        for (int i = 0; i < mModels.size(); i++) {
-            mModelIds.add(mModels.get(i).getLong("id"));
-            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
+    private fun fillModelList() {
+        // Anonymous class for handling list item clicks
+        mModelDisplayList = ArrayList(mModels!!.size)
+        mModelIds = ArrayList(mModels!!.size)
+        for (i in mModels!!.indices) {
+            mModelIds!!.add(mModels!![i].getLong("id"))
+            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
         }
-
-        mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
-        mModelListView.setAdapter(mModelDisplayAdapter);
-
-        mModelListView.setOnItemClickListener((parent, view, position, id) -> {
-            long noteTypeID = mModelIds.get(position);
-            mModelListPosition = position;
-            Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
-            noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
-            noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-            startActivityForResultWithAnimation(noteOpenIntent, 0, START);
-        });
-
-        mModelListView.setOnItemLongClickListener((parent, view, position, id) -> {
-            String cardName = mModelDisplayList.get(position).getName();
-            mCurrentID = mModelIds.get(position);
-            mModelListPosition = position;
-            mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
-            showDialogFragment(mContextMenu);
-            return true;
-        });
-        updateSubtitleText();
+        modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
+        mModelListView!!.adapter = modelDisplayAdapter
+        mModelListView!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            val noteTypeID = mModelIds!![position]
+            mModelListPosition = position
+            val noteOpenIntent = Intent(this@ModelBrowser, ModelFieldEditor::class.java)
+            noteOpenIntent.putExtra("title", mModelDisplayList!![position].name)
+            noteOpenIntent.putExtra("noteTypeID", noteTypeID)
+            startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.Direction.START)
+        }
+        mModelListView!!.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            val cardName = mModelDisplayList!![position].name
+            mCurrentID = mModelIds!![position]
+            mModelListPosition = position
+            mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener)
+            showDialogFragment(mContextMenu)
+            true
+        }
+        updateSubtitleText()
     }
 
     /*
      * Updates the subtitle showing the amount of mModels available
      * ONLY CALL THIS AFTER initializing the main list
      */
-    private void updateSubtitleText() {
-        int count = mModelIds.size();
-        mActionBar.setSubtitle(getResources().getQuantityString(R.plurals.model_browser_types_available, count, count));
+    private fun updateSubtitleText() {
+        val count = mModelIds!!.size
+        mActionBar!!.subtitle = resources.getQuantityString(R.plurals.model_browser_types_available, count, count)
     }
-
 
     /*
      *Creates the dialogue box to select a note type, add a name, and then clone it
      */
-    private void addNewNoteTypeDialog() {
-
-        initializeNoteTypeList();
-
-        final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> newModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, mNewModelLabels);
-
-        addSelectionSpinner.setAdapter(newModelAdapter);
-
-        new MaterialDialog.Builder(this)
-                .title(R.string.model_browser_add)
-                .positiveText(R.string.dialog_ok)
-                .customView(addSelectionSpinner, true)
-                .onPositive((dialog, which) -> {
-                        mModelNameInput = new FixedEditText(ModelBrowser.this);
-                        mModelNameInput.setSingleLine();
-                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < mNewModelLabels.size();
-                        // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
-                        String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
-                        if (!isStdModel) {
-                            suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
-                        }
-
-                        if (mExistingModelNames.contains(suggestedName)) {
-                            suggestedName = randomizeName(suggestedName);
-                        }
-                        mModelNameInput.setText(suggestedName);
-                        mModelNameInput.setSelection(mModelNameInput.getText().length());
-
-                        // Create EdiText to name new model
-                        new MaterialEditTextDialog.Builder(ModelBrowser.this, mModelNameInput)
-                                .title(R.string.model_browser_add)
-                                .positiveText(R.string.dialog_ok)
-                                .onPositive((innerDialog, innerWhich) -> {
-                                        String modelName = mModelNameInput.getText().toString();
-                                        addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
-                                    }
-                                )
-                                .negativeText(R.string.dialog_cancel)
-                                .show();
+    private fun addNewNoteTypeDialog() {
+        initializeNoteTypeList()
+        val addSelectionSpinner = Spinner(this)
+        val newModelAdapter = ArrayAdapter(this, R.layout.dropdown_deck_item, mNewModelLabels!!.toList())
+        addSelectionSpinner.adapter = newModelAdapter
+        MaterialDialog.Builder(this)
+            .title(R.string.model_browser_add)
+            .positiveText(R.string.dialog_ok)
+            .customView(addSelectionSpinner, true)
+            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                mModelNameInput = FixedEditText(this@ModelBrowser)
+                mModelNameInput?.let {
+                    it.setSingleLine()
+                    val isStdModel = addSelectionSpinner.selectedItemPosition < mNewModelLabels!!.size
+                    // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
+                    var suggestedName = mNewModelNames!![addSelectionSpinner.selectedItemPosition]
+                    if (!isStdModel) {
+                        suggestedName += " " + resources.getString(R.string.model_clone_suffix)
                     }
-                )
-                .negativeText(R.string.dialog_cancel)
-                .show();
+                    if (mExistingModelNames!!.contains(suggestedName)) {
+                        suggestedName = randomizeName(suggestedName)
+                    }
+                    it.setText(suggestedName)
+                    it.setSelection(it.text.length)
+
+                    // Create textbox to name new model
+                    MaterialEditTextDialog.Builder(this@ModelBrowser, mModelNameInput)
+                        .title(R.string.model_browser_add)
+                        .positiveText(R.string.dialog_ok)
+                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                            val modelName = it.text.toString()
+                            addNewNoteType(modelName, addSelectionSpinner.selectedItemPosition)
+                        }
+                        .negativeText(R.string.dialog_cancel)
+                        .show()
+                }
+            }
+            .negativeText(R.string.dialog_cancel)
+            .show()
     }
 
     /**
@@ -357,265 +297,219 @@ public class ModelBrowser extends AnkiActivity {
      * @param modelName name of the new model
      * @param position position in dialog the user selected to add / clone the model type from
      */
-    private void addNewNoteType(String modelName, int position) {
-        Model model;
-        if (modelName.length() > 0) {
-            int nbStdModels = StdModels.STD_MODELS.length;
-            if (position < nbStdModels) {
-                model = StdModels.STD_MODELS[position].add(mCol);
+    @KotlinCleanup("Use scope function while initializing oldModel + Invert and return early")
+    private fun addNewNoteType(modelName: String, position: Int) {
+        val model: Model
+        if (modelName.isNotEmpty()) {
+            val nbStdModels = StdModels.STD_MODELS.size
+            model = if (position < nbStdModels) {
+                StdModels.STD_MODELS[position].add(mCol)
             } else {
-                //New model
-                //Model that is being cloned
-                Model oldModel = mModels.get(position - nbStdModels).deepClone();
-                Model newModel = StdModels.BASIC_MODEL.add(mCol);
-                oldModel.put("id", newModel.getLong("id"));
-                model = oldModel;
+                // New model
+                // Model that is being cloned
+                val oldModel = mModels!![position - nbStdModels].deepClone()
+                val newModel = StdModels.BASIC_MODEL.add(mCol)
+                oldModel.put("id", newModel.getLong("id"))
+                oldModel
             }
-            model.put("name", modelName);
-            mCol.getModels().update(model);
-            fullRefresh();
+            model.put("name", modelName)
+            mCol!!.models.update(model)
+            fullRefresh()
         } else {
-            showToast(getResources().getString(R.string.toast_empty_name));
+            showToast(resources.getString(R.string.toast_empty_name))
         }
     }
-
 
     /*
      * retrieve list of note type in variable, which will going to be in use for adding/cloning note type
      */
-    private void initializeNoteTypeList() {
-
-        String add = getResources().getString(R.string.model_browser_add_add);
-        String clone = getResources().getString(R.string.model_browser_add_clone);
+    private fun initializeNoteTypeList() {
+        val add = resources.getString(R.string.model_browser_add_add)
+        val clone = resources.getString(R.string.model_browser_add_clone)
 
         // Populates array adapters listing the mModels (includes prefixes/suffixes)
-        int existingModelSize = mModels.size();
-        int stdModelSize = StdModels.STD_MODELS.length;
-        mNewModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
-        mExistingModelNames = new ArrayList<>(existingModelSize);
+        val existingModelSize = mModels!!.size
+        val stdModelSize = StdModels.STD_MODELS.size
+        mNewModelLabels = ArrayList(existingModelSize + stdModelSize)
+        mExistingModelNames = ArrayList(existingModelSize)
 
         // Used to fetch model names
-        mNewModelNames = new ArrayList<>(stdModelSize);
-        for (StdModels StdModels: StdModels.STD_MODELS) {
-            String defaultName = StdModels.getDefaultName();
-            mNewModelLabels.add(String.format(add, defaultName));
-            mNewModelNames.add(defaultName);
+        mNewModelNames = ArrayList(stdModelSize)
+        for (StdModels in StdModels.STD_MODELS) {
+            val defaultName = StdModels.defaultName
+            mNewModelLabels!!.add(String.format(add, defaultName))
+            mNewModelNames!!.add(defaultName)
         }
-
-        for (Model model : mModels) {
-            String name = model.getString("name");
-            mNewModelLabels.add(String.format(clone, name));
-            mNewModelNames.add(name);
-            mExistingModelNames.add(name);
+        for (model in mModels!!) {
+            val name = model.getString("name")
+            mNewModelLabels!!.add(String.format(clone, name))
+            mNewModelNames!!.add(name)
+            mExistingModelNames!!.add(name)
         }
     }
-
 
     /*
      * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
      */
-    private void deleteModelDialog() {
-        if (mModelIds.size() > 1) {
-            Runnable confirm = () -> {
-                mCol.modSchemaNoCheck();
-                deleteModel();
-                dismissContextMenu();
-            };
-            Runnable cancel = this::dismissContextMenu;
-
-            try {
-                mCol.modSchema();
-                ConfirmationDialog d = new ConfirmationDialog();
-                d.setArgs(getResources().getString(R.string.model_delete_warning));
-                d.setConfirm(confirm);
-                d.setCancel(cancel);
-                ModelBrowser.this.showDialogFragment(d);
-            } catch (ConfirmModSchemaException e) {
-                e.log();
-                ConfirmationDialog c = new ConfirmationDialog();
-                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                c.setConfirm(confirm);
-                c.setCancel(cancel);
-                showDialogFragment(c);
+    @KotlinCleanup("Rename d and c variables")
+    private fun deleteModelDialog() {
+        if (mModelIds!!.size > 1) {
+            val confirm = Runnable {
+                mCol!!.modSchemaNoCheck()
+                deleteModel()
+                dismissContextMenu()
             }
-        }
-
-        // Prevent users from deleting last model
-        else {
-            showToast(getString(R.string.toast_last_model));
+            val cancel = Runnable { dismissContextMenu() }
+            try {
+                mCol!!.modSchema()
+                val d = ConfirmationDialog()
+                d.setArgs(resources.getString(R.string.model_delete_warning))
+                d.setConfirm(confirm)
+                d.setCancel(cancel)
+                this@ModelBrowser.showDialogFragment(d)
+            } catch (e: ConfirmModSchemaException) {
+                e.log()
+                val c = ConfirmationDialog()
+                c.setArgs(resources.getString(R.string.full_sync_confirmation))
+                c.setConfirm(confirm)
+                c.setCancel(cancel)
+                showDialogFragment(c)
+            }
+        } else {
+            showToast(getString(R.string.toast_last_model))
         }
     }
 
     /*
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
-    private void renameModelDialog() {
-
-        initializeNoteTypeList();
-
-        mModelNameInput = new FixedEditText(this);
-        mModelNameInput.setSingleLine(true);
-        mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
-        mModelNameInput.setSelection(mModelNameInput.getText().length());
-        new MaterialEditTextDialog.Builder(this, mModelNameInput)
-                            .title(R.string.rename_model)
-                            .positiveText(R.string.rename)
-                            .negativeText(R.string.dialog_cancel)
-                            .onPositive((dialog, which) -> {
-                                    Model model = mModels.get(mModelListPosition);
-                                    String deckName = mModelNameInput.getText().toString()
-                                            // Anki desktop doesn't allow double quote characters in deck names
-                                            .replaceAll("[\"\\n\\r]", "");
-
-                                    if (mExistingModelNames.contains(deckName)) {
-                                        deckName = randomizeName(deckName);
-                                    }
-
-                                    if (deckName.length() > 0) {
-                                        model.put("name", deckName);
-                                        mCol.getModels().update(model);
-                                        mModels.get(mModelListPosition).put("name", deckName);
-                                        mModelDisplayList.set(mModelListPosition,
-                                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                                        mCardCounts.get(mModelListPosition)));
-                                        refreshList();
-                                    } else {
-                                        showToast(getResources().getString(R.string.toast_empty_name));
-                                    }
-                                })
-                            .show();
-    }
-
-    private void dismissContextMenu() {
-        if (mContextMenu != null) {
-            mContextMenu.dismiss();
-            mContextMenu = null;
+    private fun renameModelDialog() {
+        initializeNoteTypeList()
+        mModelNameInput = FixedEditText(this)
+        mModelNameInput?.let {
+            it.isSingleLine = true
+            it.setText(mModels!![mModelListPosition].getString("name"))
+            it.setSelection(it.text.length)
+            MaterialEditTextDialog.Builder(this, mModelNameInput)
+                .title(R.string.rename_model)
+                .positiveText(R.string.rename)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    val model = mModels!![mModelListPosition]
+                    var deckName = it.text.toString() // Anki desktop doesn't allow double quote characters in deck names
+                        .replace("[\"\\n\\r]".toRegex(), "")
+                    if (mExistingModelNames!!.contains(deckName)) {
+                        deckName = randomizeName(deckName)
+                    }
+                    if (deckName.isNotEmpty()) {
+                        model.put("name", deckName)
+                        mCol!!.models.update(model)
+                        mModels!![mModelListPosition].put("name", deckName)
+                        mModelDisplayList!![mModelListPosition] = DisplayPair(
+                            mModels!![mModelListPosition].getString("name"),
+                            mCardCounts!![mModelListPosition].toInt()
+                        )
+                        refreshList()
+                    } else {
+                        showToast(resources.getString(R.string.toast_empty_name))
+                    }
+                }
+                .show()
         }
     }
 
+    private fun dismissContextMenu() {
+        if (mContextMenu != null) {
+            mContextMenu!!.dismiss()
+            mContextMenu = null
+        }
+    }
 
     /*
      * Opens the Template Editor (Card Editor) to allow
      * the user to edit the current note's templates.
      */
-    private void openTemplateEditor() {
-        Intent intent = new Intent(this, CardTemplateEditor.class);
-        intent.putExtra("modelId", mCurrentID);
-        launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, START);
+    private fun openTemplateEditor() {
+        val intent = Intent(this, CardTemplateEditor::class.java)
+        intent.putExtra("modelId", mCurrentID)
+        launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, ActivityTransitionAnimation.Direction.START)
     }
 
     // ----------------------------------------------------------------------------
     // HANDLERS
     // ----------------------------------------------------------------------------
-
     /*
      * Updates the ArrayAdapters for the main ListView.
      * ArrayLists must be manually updated.
      */
-    private void refreshList() {
-        mModelDisplayAdapter.notifyDataSetChanged();
-        updateSubtitleText();
+    private fun refreshList() {
+        modelDisplayAdapter!!.notifyDataSetChanged()
+        updateSubtitleText()
     }
 
     /*
      * Reloads everything
      */
-    private void fullRefresh() {
-        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+    private fun fullRefresh() {
+        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
     }
 
     /*
      * Deletes the currently selected model
      */
-    private void deleteModel() {
-        TaskManager.launchCollectionTask(new CollectionTask.DeleteModel(mCurrentID), deleteModelHandler());
-        mModels.remove(mModelListPosition);
-        mModelIds.remove(mModelListPosition);
-        mModelDisplayList.remove(mModelListPosition);
-        mCardCounts.remove(mModelListPosition);
-        refreshList();
+    private fun deleteModel() {
+        TaskManager.launchCollectionTask(DeleteModel(mCurrentID), deleteModelHandler())
+        mModels!!.removeAt(mModelListPosition)
+        mModelIds!!.removeAt(mModelListPosition)
+        mModelDisplayList!!.removeAt(mModelListPosition)
+        mCardCounts!!.removeAt(mModelListPosition)
+        refreshList()
     }
-
 
     /*
      * Takes current timestamp from col and append to the end of new note types to dissuade
      * User from reusing names (which are technically not unique however
      */
-    private String randomizeName(String s) {
-        return s + "-" + checksum(String.valueOf(getCol().getTime().intTimeMS())).substring(0, 5);
+    private fun randomizeName(s: String): String {
+        return s + "-" + Utils.checksum(col.time.intTimeMS().toString()).substring(0, 5)
     }
 
-
-    private void showToast(CharSequence text) {
-        UIUtils.showThemedToast(this, text, true);
+    private fun showToast(text: CharSequence) {
+        showThemedToast(this, text, true)
     }
-
 
     // ----------------------------------------------------------------------------
     // CUSTOM ADAPTERS
     // ----------------------------------------------------------------------------
-
-
     /*
      * Used so that the main ListView is able to display the number of notes using the model
      * along with the name.
      */
-    public static class DisplayPair {
-        private final String mName;
-        private final int mCount;
-
-        public DisplayPair(String name, int count) {
-            this.mName = name;
-            this.mCount = count;
-        }
-
-        public String getName() {
-            return mName;
-        }
-
-        public int getCount() {
-            return mCount;
-        }
-
-        @Override
-        public @NonNull String toString() {
-            return getName();
+    class DisplayPair(val name: String, val count: Int) {
+        override fun toString(): String {
+            return name
         }
     }
-
 
     /*
      * For display in the main list via an ArrayAdapter
      */
-    public class DisplayPairAdapter extends ArrayAdapter<DisplayPair> {
-        public DisplayPairAdapter(Context context, ArrayList<DisplayPair> items) {
-            super(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            DisplayPair item = getItem(position);
-
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.model_browser_list_item, parent, false);
-            }
-
-            TextView tvName = convertView.findViewById(R.id.model_list_item_1);
-            TextView tvHome = convertView.findViewById(R.id.model_list_item_2);
-
-            int count = item.getCount();
-
-            tvName.setText(item.getName());
-            tvHome.setText(getResources().getQuantityString(R.plurals.model_browser_of_type, count, count));
-
-            return convertView;
+    inner class DisplayPairAdapter(context: Context?, items: ArrayList<DisplayPair>?) : ArrayAdapter<DisplayPair?>(context!!, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!.toList()) {
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val _convertView = convertView ?: LayoutInflater.from(context).inflate(R.layout.model_browser_list_item, parent, false)
+            val item = getItem(position)
+            val tvName = _convertView.findViewById<TextView>(R.id.model_list_item_1)
+            val tvHome = _convertView.findViewById<TextView>(R.id.model_list_item_2)
+            val count = item!!.count
+            tvName.text = item.name
+            tvHome.text = resources.getQuantityString(R.plurals.model_browser_of_type, count, count)
+            return _convertView
         }
     }
 
-    private final ActivityResultLauncher<Intent> mEditTemplateResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-        if (result.getResultCode() == Activity.RESULT_OK) {
-            TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
+    private val mEditTemplateResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
         }
-    });
+    }
 }
