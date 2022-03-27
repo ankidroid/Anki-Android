@@ -70,7 +70,7 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew assembleDebug assembleAndroidTest
+          command: ./gradlew assembleDebug assembleAndroidTest robolectricSdkDownload
 
       - name: Download Emulator Image
         # This can fail on network request, wrap with retry
