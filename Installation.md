@@ -40,9 +40,9 @@ If these links don't work, open the Google Play application on your device, sear
 # APK
 
 1. Choose the desired version:
- - <a href='https://github.com/ankidroid/Anki-Android/releases/latest'>Latest stable release</a>
- - <a href='https://github.com/ankidroid/Anki-Android/releases'>Latest development version</a>
- - Specific version: use direct URL, e.g. for <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.1beta10'>2.1beta10</a>, <a href='https://github.com/ankidroid/Anki-Android/releases/tag/v2.0.4'>2.0.4</a>, etc
+ - <a href='https://bit.ly/3iErqtZ'>Latest stable release</a>
+ - <a href='https://bit.ly/3iErqtZ'>Latest development version</a>
+ - Specific version: use direct URL, e.g. for <a href='https://bit.ly/3iErqtZ'>2.1beta10</a>, <a href='https://bit.ly/3iErqtZ'>2.0.4</a>, etc
 
 2. Download the apk with your stock browser
 
