@@ -2656,6 +2656,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did);
         createDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
+            dismissAllDialogFragments();
             mDeckListAdapter.notifyDataSetChanged();
             updateDeckList();
             if (mFragmented) {
