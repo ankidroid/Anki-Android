@@ -31,8 +31,6 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.widget.TimePicker;
 
-import com.ichi2.async.ProgressSenderAndCancelListener;
-import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.KotlinCleanup;
 
 import java.io.File;
@@ -147,6 +145,21 @@ public class CompatV21 implements Compat {
             throw new IOException("Unable to delete: " + file.getCanonicalPath());
         }
     }
+
+
+    @Override
+    public void createDirectories(@NonNull File directory) throws IOException {
+        if (directory.exists()) {
+            if (!directory.isDirectory()) {
+                throw new IOException(directory + " is not a directory");
+            }
+            return;
+        }
+        if (!directory.mkdirs()) {
+            throw new IOException("Failed to create " + directory);
+        }
+    }
+
 
     // Until API 23 the methods have "current" in the name
     @Override
