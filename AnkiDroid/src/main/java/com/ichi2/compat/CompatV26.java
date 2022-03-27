@@ -26,33 +26,24 @@ import android.media.AudioManager;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
-import com.ichi2.async.ProgressSenderAndCancelListener;
-import com.ichi2.utils.FileUtil;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.NotificationCompat;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.NotificationCompat;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 26 and higher. Check  {@link Compat}'s for more detail. */
@@ -113,6 +104,12 @@ public class CompatV26 extends CompatV23 implements Compat {
             throw new FileNotFoundException(file.getCanonicalPath());
         }
     }
+
+    @Override
+    public void createDirectories(@NonNull File directory) throws IOException {
+        Files.createDirectories(directory.toPath());
+    }
+
 
     @Override
     public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,

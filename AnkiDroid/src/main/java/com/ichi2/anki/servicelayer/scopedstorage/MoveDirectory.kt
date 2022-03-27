@@ -19,6 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
+import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
 
@@ -61,10 +62,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
      */
     internal fun createDirectory(context: MigrateUserData.MigrationContext): Boolean {
         Timber.d("creating directory '$destination'")
-        if (!createDirectory(destination)) {
-            context.reportError(this, IllegalStateException("Could not create '$destination'"))
-            return false
-        }
+        createDirectory(destination)
 
         val destinationDirectory = Directory.createInstance(destination)
         if (destinationDirectory == null) {
@@ -76,7 +74,7 @@ data class MoveDirectory(val source: Directory, val destination: File) : Migrate
 
     /** Creates a directory if it doesn't already exist */
     @VisibleForTesting
-    internal fun createDirectory(directory: File) = directory.exists() || directory.mkdirs()
+    internal fun createDirectory(directory: File) = CompatHelper.compat.createDirectories(directory)
 
     @VisibleForTesting
     internal fun rename(source: Directory, destination: File) = source.renameTo(destination)

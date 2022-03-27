@@ -27,8 +27,6 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.widget.TimePicker;
 
-import com.ichi2.async.ProgressSenderAndCancelListener;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -114,6 +112,12 @@ public interface Compat {
         }
     }
 
+    /**
+     * Same as [File::createDirectories]. Does not throw if directory already exists
+     * @param directory a directory to create. Create parents if necessary
+     * @throws IOException
+     */
+    void createDirectories(@NonNull File directory) throws IOException;
     boolean hasVideoThumbnail(@NonNull String path);
     void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
