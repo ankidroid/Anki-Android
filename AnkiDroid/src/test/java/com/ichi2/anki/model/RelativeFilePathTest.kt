@@ -56,6 +56,21 @@ class RelativeFilePathTest {
         checkBasePlusRelativeEqualsExpected(destination, relative, File(File(destination, "sub"), "fileName"))
     }
 
+    @Test
+    fun test_prepend_directory() {
+        val source = createTransientDirectory()
+        val destination = createTransientDirectory()
+        val subDir = source.createTransientDirectory("sub")
+        val file = subDir.addTempFile("fileName")
+        val relative = RelativeFilePath.fromPaths(source, file)!!
+        val prepended = relative.unsafePrependDirectory("testing")
+        assertThat(prepended.fileName, equalTo("fileName"))
+        assertThat(prepended.path, hasSize(2))
+        assertThat(prepended.path[0], equalTo("testing"))
+        assertThat(prepended.path[1], equalTo("sub"))
+        checkBasePlusRelativeEqualsExpected(destination, prepended, File(File(File(destination, "testing"), "sub"), "fileName"))
+    }
+
     companion object {
         fun checkBasePlusRelativeEqualsExpected(baseDir: File, relative: RelativeFilePath, expected: File) {
             assertThat(relative.toFile(Directory.createInstance(baseDir)!!), equalTo(expected))
