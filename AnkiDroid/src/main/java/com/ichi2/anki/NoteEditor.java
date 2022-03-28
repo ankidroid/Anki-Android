@@ -2229,7 +2229,8 @@ public class NoteEditor extends AnkiActivity implements
             int initialSize = menu.size();
 
             if (isClozeType()) {
-                menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
+                // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
+                menu.add(Menu.NONE, mClozeMenuId, 0, getString(R.string.multimedia_editor_popup_cloze));
             }
 
             return initialSize != menu.size();
