@@ -116,9 +116,15 @@ class MigrateUserData private constructor(val source: Directory, val destination
     class EquivalentFileException(val source: File, val destination: File) : RuntimeException("Source and destination path are the same")
 
     /**
-     * If a directory could not be deleted as it still contained files
+     * If a directory could not be deleted as it still contained files.
      */
     class DirectoryNotEmptyException(val directory: Directory) : RuntimeException("directory was not empty: $directory")
+
+    /**
+     * If the number of retries was exceeded when resolving a file conflict via moving it to the
+     * /conflict/ folder.
+     */
+    class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : RuntimeException("Failed to move $sourceFile to $attemptedDestination")
 
     /**
      * Context for an [Operation], allowing a change of execution behavior and
