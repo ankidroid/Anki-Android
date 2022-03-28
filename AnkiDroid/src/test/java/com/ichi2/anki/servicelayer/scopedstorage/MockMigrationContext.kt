@@ -18,7 +18,8 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 open class MockMigrationContext : MigrateUserData.MigrationContext() {
     /** set [logExceptions] to populate this property */
-    val exceptions = mutableListOf<Exception>()
+    val errors = mutableListOf<ReportedError>()
+    val exceptions get() = errors.map { it.exception }
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
 
@@ -26,12 +27,14 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
         if (!logExceptions) {
             throw ex
         }
-        exceptions.add(ex)
+        errors.add(ReportedError(throwingOperation, ex))
     }
 
     override fun reportProgress(transferred: NumberOfBytes) {
         progress.add(transferred)
     }
+
+    data class ReportedError(val operation: MigrateUserData.Operation, val exception: Exception)
 }
 
 /**
