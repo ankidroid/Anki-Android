@@ -18,6 +18,7 @@
 package com.ichi2.anki.model
 
 import java.io.File
+import java.nio.file.Path
 
 /**
  * A relative path, with the final component representing the filename.
@@ -46,7 +47,7 @@ class RelativeFilePath private constructor(
 
         /**
          * Return the relative path from Folder [baseDir] to file [file]. If [file]
-         * is contained in [baseDir], return [null].
+         * is contained in [baseDir], return `null`.
          * Similar to [Path.relativize], but available in all APIs.
          */
         fun fromPaths(baseDir: Directory, file: DiskFile): RelativeFilePath? =
@@ -56,7 +57,7 @@ class RelativeFilePath private constructor(
 
         /**
          * Return the relative path from Folder [baseDir] to file [file]. If [file]
-         * is contained in [baseDir], return [null].
+         * is contained in [baseDir], return `null`.
          * Assumes that [file] is actually a file and [baseDir] a directory, hence distinct.
          * Similar to [Path.relativize], but available in all APIs.
          * @param baseDir A directory.
