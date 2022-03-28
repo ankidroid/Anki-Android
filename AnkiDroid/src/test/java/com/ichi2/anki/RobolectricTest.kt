@@ -105,7 +105,11 @@ open class RobolectricTest : CollectionGetter {
             RustBackendLoader.loadRsdroid(backendPath)
         } else {
             // default (no env variable): Extract the backend testing lib from the jar
-            RustBackendLoader.init()
+            try {
+                RustBackendLoader.init()
+            } catch (e: UnsatisfiedLinkError) {
+                Timber.e("Please update the environment variables with following commands : export ANKIDROID_BACKEND_PATH=\"{path-to-directory}/Anki-Android-Backend/rslib-bridge/target/aarch64-apple-darwin/release/librsdroid-arm64.dylib\" export ANKIDROID_BACKEND_VERSION=\"0.1.10\"")
+            }
         }
 
         // If you want to see the Android logging (from Timber), you need to set it up here
