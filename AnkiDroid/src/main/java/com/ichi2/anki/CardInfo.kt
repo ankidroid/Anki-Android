@@ -27,6 +27,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
+import androidx.annotation.Nullable
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -38,6 +39,8 @@ import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.UiUtil.makeColored
 import timber.log.Timber
 import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.Function
 
@@ -77,7 +80,7 @@ class CardInfo : AnkiActivity() {
         setText(R.id.card_info_added, formatDate(model.cardId))
         setIfNotNull<Long?>(model.firstReviewDate, R.id.card_info_first_review, R.id.card_info_first_review_label) { date: Long? -> formatDate(date) }
         setIfNotNull<Long?>(model.latestReviewDate, R.id.card_info_latest_review, R.id.card_info_latest_review_label) { date: Long? -> formatDate(date) }
-        setIfNotNull<String?>(model.dues, R.id.card_info_due, R.id.card_info_due_label) { s: String? -> s }
+        setIfNotNull<Long?>(model.getDueDate(), R.id.card_info_due, R.id.card_info_due_label) { date: Long? -> formatDate(date) }
         setIfNotNull<Int?>(model.interval, R.id.card_info_interval, R.id.card_info_interval_label) { _: Int? -> resources.getQuantityString(R.plurals.time_span_days, model.interval!!, model.interval) }
         setIfNotNull<Double?>(model.easeInPercent, R.id.card_info_ease, R.id.card_info_ease_label) { easePercent: Double? -> formatDouble("%.0f%%", easePercent!! * 100) }
         setFormattedText(R.id.card_info_review_count, "%d", model.reviews.toLong())
@@ -208,6 +211,21 @@ class CardInfo : AnkiActivity() {
     ) {
         val due: String
             get() = dues
+
+        @Nullable
+        fun getDueDate(): Long? {
+            // convert the string(dues) date formate to Long
+            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            return try {
+                var due: String = dues.substring(0, 6) + "20" + dues.substring(6)
+                val dueDate: Date? = simpleDateFormat.parse(due)
+                dueDate?.time
+            } catch (e: ParseException) {
+                null
+            } catch (s: StringIndexOutOfBoundsException) {
+                null
+            }
+        }
 
         // date type rating interval ease time
         class RevLogEntry {
