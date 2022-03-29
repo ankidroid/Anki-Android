@@ -47,6 +47,8 @@
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
+
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
     </style>
 
     <!-- Preferences screens -->
