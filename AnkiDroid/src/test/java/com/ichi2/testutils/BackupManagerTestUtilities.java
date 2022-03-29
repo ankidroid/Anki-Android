@@ -33,7 +33,7 @@ public class BackupManagerTestUtilities {
         if (path == null) {
             throw new IllegalStateException("currentAnkiDroidDirectory had no parent");
         }
-        ShadowStatFs.registerStats(path, 100, 20, 10000);
+        ShadowStatFs.markAsNonEmpty(path);
 
         assertTrue(BackupManager.enoughDiscSpace(currentAnkiDroidDirectory));
     }

@@ -33,6 +33,8 @@ object ShadowStatFs {
      * @param blockCount number of blocks
      * @param freeBlocks number of free blocks
      * @param availableBlocks number of available blocks
+     *
+     * @see [markAsNonEmpty]
      */
     @JvmStatic
     fun registerStats(path: File, blockCount: Int, freeBlocks: Int, availableBlocks: Int) {
@@ -40,6 +42,17 @@ object ShadowStatFs {
         // call canonicalFile so this works on macOS
         RobolectricStats.registerStats(path.canonicalFile, blockCount, freeBlocks, availableBlocks)
     }
+
+    /**
+     * Marks the provided path in Robolectric as non-empty, therefore [android.os.StatFs] will work
+     * and operations such as backups will succeed
+     *
+     * Call [reset] when this is completed.
+     *
+     * @param path path to the file
+     */
+    @JvmStatic
+    fun markAsNonEmpty(path: File) = registerStats(path, 100, 20, 10000)
 
     @Resetter
     @JvmStatic
