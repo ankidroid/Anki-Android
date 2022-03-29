@@ -40,14 +40,11 @@ class TgzPackageExtractTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
 
-        var currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
-        val path = File(currentAnkiDroidDirectory, "addons").parentFile!!
-        ShadowStatFs.registerStats(path, 100, 20, 10000)
-
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
+        ShadowStatFs.registerStats(File(currentAnkiDroidDirectory), 100, 20, 10000)
         addonPackage = TgzPackageExtract(targetContext)
-        tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
-        currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
         addonDir = File(currentAnkiDroidDirectory, "addons")
+        tarballPath = getFileResource("valid-ankidroid-js-addon-test-1.0.0.tgz")
         if (!addonDir.exists()) {
             addonDir.mkdirs()
         }
