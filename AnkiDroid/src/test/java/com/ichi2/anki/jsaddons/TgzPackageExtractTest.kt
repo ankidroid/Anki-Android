@@ -23,6 +23,7 @@ import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -50,6 +51,12 @@ class TgzPackageExtractTest : RobolectricTest() {
         if (!addonDir.exists()) {
             addonDir.mkdirs()
         }
+    }
+
+    @After
+    override fun tearDown() {
+        super.tearDown()
+        ShadowStatFs.reset()
     }
 
     /**
