@@ -69,7 +69,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
 
 
         @Override
-        protected void answerCard(int ease) {
+        public void answerCard(int ease) {
             super.answerCard(ease);
             this.mAnswered = ease;
         }

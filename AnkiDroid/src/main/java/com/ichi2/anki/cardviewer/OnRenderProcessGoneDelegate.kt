@@ -71,7 +71,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
                 !activityIsMinimised() -> {
                     // #8459 - if the activity is minimised, this is much more likely to happen multiple times and it is
                     // likely not a permanent error due to a bad card, so don't increment mLastCrashingCardId
-                    val currentCardId = target.currentCard.id
+                    val currentCardId = target.currentCard!!.id
                     if (webViewRendererLastCrashedOnCard(currentCardId)) {
                         Timber.e("Web Renderer crash loop on card: %d", currentCardId)
                         displayRenderLoopDialog(currentCardId, detail)
