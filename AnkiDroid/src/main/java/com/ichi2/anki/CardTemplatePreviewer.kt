@@ -138,7 +138,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun initLayout() {
         super.initLayout()
-        mTopBarLayout.visibility = View.GONE
+        mTopBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
         mPreviewLayout = createAndDisplay(this, mToggleAnswerHandler)
         mPreviewLayout!!.setOnPreviousCard { onPreviousTemplate() }
@@ -155,7 +155,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     override fun displayCardAnswer() {
         if (mAllFieldsNull && mCardType != null && mCardType == getString(R.string.basic_typing_model_name)) {
-            mAnswerField.setText(getString(R.string.basic_answer_sample_text_user))
+            mAnswerField!!.setText(getString(R.string.basic_answer_sample_text_user))
         }
         super.displayCardAnswer()
         mShowingAnswer = true
@@ -280,10 +280,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
         val newDid = mNoteEditorBundle!!.getLong("did")
         if (col.decks.isDyn(newDid)) {
-            mCurrentCard.oDid = mCurrentCard.did
+            mCurrentCard!!.oDid = mCurrentCard!!.did
         }
-        mCurrentCard.did = newDid
-        val currentNote = mCurrentCard.note()
+        mCurrentCard!!.did = newDid
+        val currentNote = mCurrentCard!!.note()
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
         NoteUtils.setTags(currentNote, tagsList)
         return mCurrentCard

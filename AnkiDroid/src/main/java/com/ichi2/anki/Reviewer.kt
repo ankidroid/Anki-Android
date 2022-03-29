@@ -183,7 +183,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     protected val flagToDisplay: Int
         get() {
-            val actualValue = mCurrentCard.userFlag()
+            val actualValue = mCurrentCard!!.userFlag()
             if (actualValue == CardMarker.FLAG_NONE) {
                 return CardMarker.FLAG_NONE
             }
@@ -194,7 +194,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
     override fun createWebView(): WebView {
-        val ret = super.createWebView()
+        val ret = super.createWebView()!!
         if (isRunningOnTv(this)) {
             ret.isFocusable = false
         }
@@ -293,7 +293,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         supportActionBar!!.setSubtitle("")
     }
 
-    override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
+    override fun getContentViewAttr(fullscreenMode: FullScreenMode?): Int {
         return when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
             FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
@@ -322,7 +322,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        mSched.setContext(WeakReference(this))
+        mSched!!.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -588,10 +588,10 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
-            val cardIds = listOf(mCurrentCard.id)
+            val cardIds = listOf(mCurrentCard!!.id)
             RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
         }
-        val dialog = rescheduleSingleCard(resources, mCurrentCard, runnable)
+        val dialog = rescheduleSingleCard(resources, mCurrentCard!!, runnable)
         showDialogFragment(dialog)
     }
 
@@ -605,7 +605,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         dialog.setArgs(title, message)
         val confirm = Runnable {
             Timber.i("NoteEditor:: ResetProgress button pressed")
-            val cardIds = listOf(mCurrentCard.id)
+            val cardIds = listOf(mCurrentCard!!.id)
             ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
         }
         dialog.setConfirm(confirm)
@@ -651,7 +651,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (mCurrentCard != null && isMarked(mCurrentCard.note())) {
+        if (mCurrentCard != null && isMarked(mCurrentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
@@ -662,7 +662,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val flag_icon = menu.findItem(R.id.action_flag)
         if (flag_icon != null) {
             if (mCurrentCard != null) {
-                when (mCurrentCard.userFlag()) {
+                when (mCurrentCard!!.userFlag()) {
                     1 -> flag_icon.setIcon(R.drawable.ic_flag_red)
                     2 -> flag_icon.setIcon(R.drawable.ic_flag_orange)
                     3 -> flag_icon.setIcon(R.drawable.ic_flag_green)
@@ -882,6 +882,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         GetCard().runWithHandler(answerCardHandler(false))
     }
 
+    @KotlinCleanup("improve nextIvlStr - make inner function")
     override fun displayAnswerBottomBar() {
         super.displayAnswerBottomBar()
         mOnboarding.onAnswerShown()
@@ -899,58 +900,58 @@ open class Reviewer : AbstractFlashcardViewer() {
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         val background = getBackgroundColors(this)
         val textColor = getTextColors(this)
-        mEaseButton1.setVisibility(View.VISIBLE)
-        mEaseButton1.setColor(background[0])
-        mEaseButton4.setColor(background[3])
+        mEaseButton1!!.setVisibility(View.VISIBLE)
+        mEaseButton1!!.setColor(background[0])
+        mEaseButton4!!.setColor(background[3])
         when (buttonCount) {
             2 -> {
                 // Ease 2 is "good"
-                mEaseButton2.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton2.requestFocus()
+                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                mEaseButton2!!.requestFocus()
             }
             3 -> {
                 // Ease 2 is good
-                mEaseButton2.setup(background[2], textColor[2], R.string.ease_button_good)
+                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
                 // Ease 3 is easy
-                mEaseButton3.setup(background[3], textColor[3], R.string.ease_button_easy)
-                mEaseButton2.requestFocus()
+                mEaseButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
+                mEaseButton2!!.requestFocus()
             }
             else -> {
                 // Ease 2 is "hard"
-                mEaseButton2.setup(background[1], textColor[1], R.string.ease_button_hard)
-                mEaseButton2.requestFocus()
+                mEaseButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+                mEaseButton2!!.requestFocus()
                 // Ease 3 is good
-                mEaseButton3.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton4.setVisibility(View.VISIBLE)
-                mEaseButton3.requestFocus()
+                mEaseButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                mEaseButton4!!.setVisibility(View.VISIBLE)
+                mEaseButton3!!.requestFocus()
             }
         }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            mEaseButton1.nextTime = mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE)
-            mEaseButton2.nextTime = mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO)
+            mEaseButton1!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_ONE)
+            mEaseButton2!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_TWO)
             if (buttonCount > 2) {
-                mEaseButton3.nextTime = mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE)
+                mEaseButton3!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_THREE)
             }
             if (buttonCount > 3) {
-                mEaseButton4.nextTime = mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR)
+                mEaseButton4!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_FOUR)
             }
         }
     }
 
     val buttonCount: Int
-        get() = mSched.answerButtons(mCurrentCard)
+        get() = mSched!!.answerButtons(mCurrentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
-        if (mEaseButton1.canPerformClick) {
+        if (mEaseButton1!!.canPerformClick) {
             action.execute(this)
         }
     }
 
     override fun restorePreferences(): SharedPreferences {
-        val preferences = super.restorePreferences()
+        val preferences = super.restorePreferences()!!
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false)
         mPrefShowETA = preferences.getBoolean("showETA", true)
         mProcessor.setup()
@@ -968,10 +969,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mCurrentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = mSched.counts(mCurrentCard)
+        val counts = mSched!!.counts(mCurrentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = mSched.eta(counts, false)
+                mEta = mSched!!.eta(counts, false)
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), (mEta * 60).toLong()))
             }
         }
@@ -981,11 +982,11 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (mSched.countIdx(mCurrentCard)) {
+        when (mSched!!.countIdx(mCurrentCard!!)) {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard))
+            else -> Timber.w("Unknown card type %s", mSched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew!!.text = mNewCount
         mTextBarLearn!!.text = mLrnCount
@@ -994,7 +995,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun fillFlashcard() {
         super.fillFlashcard()
-        if (!sDisplayAnswer && mShowWhiteboard && whiteboard != null) {
+        if (!isDisplayingAnswer && mShowWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
         onFlagChanged()
@@ -1003,7 +1004,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer!!.setupForCard(mCurrentCard)
+        answerTimer!!.setupForCard(mCurrentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }
@@ -1026,8 +1027,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
 
         // can't move this into onCreate due to mTopBarLayout
-        val mark = mTopBarLayout.findViewById<ImageView>(R.id.mark_icon)
-        val flag = mTopBarLayout.findViewById<ImageView>(R.id.flag_icon)
+        val mark = mTopBarLayout!!.findViewById<ImageView>(R.id.mark_icon)
+        val flag = mTopBarLayout!!.findViewById<ImageView>(R.id.flag_icon)
         mCardMarker = CardMarker(mark, flag)
     }
 
@@ -1107,7 +1108,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun toggleFlag(@FlagDef flag: Int) {
-        if (mCurrentCard.userFlag() == flag) {
+        if (mCurrentCard!!.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag")
             onFlag(mCurrentCard, CardMarker.FLAG_NONE)
         } else {
@@ -1135,15 +1136,15 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun onCardEdited(card: Card) {
+    override fun onCardEdited(card: Card?) {
         super.onCardEdited(card)
         if (mPrefWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
-        if (!sDisplayAnswer) {
+        if (!isDisplayingAnswer) {
             // Editing the card may reuse mCurrentCard. If so, the scheduler won't call startTimer() to reset the timer
             // QUESTIONABLE(legacy code): Only perform this if editing the question
-            card.startTimer()
+            card!!.startTimer()
         }
     }
 
@@ -1261,7 +1262,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             ) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
                 v.performClick()
-                return@setOnTouchListener gestureDetector.onTouchEvent(event)
+                return@setOnTouchListener gestureDetector!!.onTouchEvent(event)
             }
             whiteboard!!.handleTouchEvent(event!!)
         }
@@ -1290,7 +1291,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun getCurrentCardId(): Long? {
-        return mCurrentCard.id
+        return mCurrentCard!!.id
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -1307,22 +1308,23 @@ open class Reviewer : AbstractFlashcardViewer() {
      * Whether or not dismiss note is available for current card and specified DismissType
      * @return true if there is another card of same note that could be dismissed
      */
+    @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
         return if (mCurrentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-            mCurrentCard.nid, mCurrentCard.id
+            mCurrentCard!!.nid, mCurrentCard!!.id
         ) == 1
         // whether there exists a sibling not buried.
     }
-
+    @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
         return if (mCurrentCard == null || isControlBlocked()) {
             false
         } else col.db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-            mCurrentCard.nid, mCurrentCard.id
+            mCurrentCard!!.nid, mCurrentCard!!.id
         ) == 1
         // Whether there exists a sibling which is neither susbended nor buried
     }
@@ -1469,22 +1471,22 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         @JavascriptInterface
         override fun ankiGetNextTime1(): String {
-            return mEaseButton1.nextTime
+            return mEaseButton1!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime2(): String {
-            return mEaseButton2.nextTime
+            return mEaseButton2!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime3(): String {
-            return mEaseButton3.nextTime
+            return mEaseButton3!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime4(): String {
-            return mEaseButton4.nextTime
+            return mEaseButton4!!.nextTime
         }
     }
 
