@@ -19,13 +19,13 @@ package com.ichi2.anki.jsaddons
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.shadows.ShadowStatFs
 import java.io.File
 import java.io.IOException
 
@@ -40,7 +40,7 @@ class TgzPackageExtractTest : RobolectricTest() {
         super.setUp()
 
         var currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(targetContext)
-        val path = File(currentAnkiDroidDirectory, "addons").parentFile?.path
+        val path = File(currentAnkiDroidDirectory, "addons").parentFile!!
         ShadowStatFs.registerStats(path, 100, 20, 10000)
 
         addonPackage = TgzPackageExtract(targetContext)
