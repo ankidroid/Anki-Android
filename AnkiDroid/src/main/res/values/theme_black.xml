@@ -35,7 +35,7 @@
         <item name="actionBarPopupTextColor">@color/theme_black_primary_text</item>
         <item name="actionModeBackground">@color/theme_black_primary_dark</item>
         <!-- Deck list colors and divider -->
-        <item name="currentDeckBackground">@drawable/item_background_selected_pre21_black</item>
+        <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
         <item name="dynDeckColor">#305683</item>
         <item name="deckDivider">@drawable/divider_black</item>
@@ -102,7 +102,7 @@
         <item name="fab_normal">#ff303030</item>
         <item name="fab_pressed">#c8303030</item> <!-- 55 less opacity than fab_normal -->
         <item name="fab_labelsTextColor">@color/theme_black_primary_text</item>
-        <item name="fab_item_background">@drawable/fab_label_background_black_pre21</item>
+        <item name="fab_item_background">@drawable/fab_label_background_black</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
@@ -114,6 +114,7 @@
         <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
 
         <item name="editTextDisabled">@color/material_grey_700</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
 
     <!-- Preferences screens -->
