@@ -108,7 +108,14 @@ open class RobolectricTest : CollectionGetter {
             try {
                 RustBackendLoader.init()
             } catch (e: UnsatisfiedLinkError) {
-                Timber.e("Please update the environment variables with following commands : export ANKIDROID_BACKEND_PATH=\"{path-to-directory}/Anki-Android-Backend/rslib-bridge/target/aarch64-apple-darwin/release/librsdroid-arm64.dylib\" export ANKIDROID_BACKEND_VERSION=\"0.1.10\"")
+                if (e.message.contains("arm64e")) {
+                    // Giving the commands to user to add the required env variables
+                    throw java.lang.IllegalStateException(
+                        "Please download dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/0.1.10 and add the following environment variables to your device by using following commands: \n" +
+                            "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
+                            "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}}\""
+                    )
+                }
             }
         }
 
