@@ -27,6 +27,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
@@ -40,6 +41,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 
+@NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
 class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceChangeListener {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
