@@ -163,8 +163,8 @@ class TgzPackageExtract(private val context: Context) {
     fun unGzip(inputFile: File, outputDir: File): File {
         Timber.i("Ungzipping %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
-        // rename '-4' to remove the '.tgz' extension and add .tar extension
-        val outputFile = File(outputDir, inputFile.name.substring(0, inputFile.name.length - 4) + ".tar")
+        // remove the '.tgz' extension and add .tar extension
+        val outputFile = File(outputDir, inputFile.nameWithoutExtension + ".tar")
 
         count = 0
         total = 0
