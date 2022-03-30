@@ -37,6 +37,8 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
+import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Utils
 import org.apache.commons.compress.archivers.ArchiveException
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
@@ -111,8 +113,12 @@ class TgzPackageExtract(private val context: Context) {
 
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
-        if (!addonsDir.exists()) {
-            context.getString(R.string.could_not_create_dir, addonsDir.absolutePath)
+        try {
+            compat.createDirectories(addonsDir)
+        } catch (e: IOException) {
+            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsDir.absolutePath), false)
+            Timber.w(e)
+            return
         }
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
@@ -250,14 +256,17 @@ class TgzPackageExtract(private val context: Context) {
     private fun unTarFile(tarInputStream: TarArchiveInputStream, entry: TarArchiveEntry, outputDir: File, outputFile: File) {
         Timber.i("Creating output file %s.", outputFile.absolutePath)
         val currentFile = File(outputDir, entry.name)
-        val parent = currentFile.parentFile // this line important otherwise FileNotFoundException
 
-        if (parent != null && !parent.exists()) {
-            if (!parent.mkdirs()) {
-                // clean up
-                outputDir.deleteRecursively()
-                throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
-            }
+        // this line important otherwise FileNotFoundException
+        val parent = currentFile.parentFile ?: return
+
+        try {
+            compat.createDirectories(parent)
+        } catch (e: IOException) {
+            // clean up
+            outputDir.deleteRecursively()
+            Timber.w(e)
+            throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
         }
 
         FileOutputStream(outputFile).use { outputFileStream ->
@@ -289,12 +298,17 @@ class TgzPackageExtract(private val context: Context) {
      * @param inputFile archive input file
      * @param outputDir Output directory
      * @param outputFile Output file
+     * @throws IOException
      */
+    @Throws(IOException::class)
     private fun unTarDir(inputFile: File, outputDir: File, outputFile: File) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
-        if (!outputFile.exists()) {
+        try {
             Timber.i("Attempting to create output directory %s.", outputFile.absolutePath)
-            check(outputFile.mkdirs()) { context.getString(R.string.could_not_create_dir, outputFile.absolutePath) }
+            compat.createDirectories(outputFile)
+        } catch (e: IOException) {
+            Timber.e(e)
+            throw IOException(context.getString(R.string.could_not_create_dir, outputFile.absolutePath))
         }
     }
 
