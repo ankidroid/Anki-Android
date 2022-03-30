@@ -359,7 +359,8 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         return false
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    @KotlinCleanup("Find a different method rather than providing a null key in a caller")
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         // update values on changed preference
         updateSummaries()
         mPrefChanged = true
