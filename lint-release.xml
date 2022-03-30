@@ -180,6 +180,7 @@
     <issue id="StringShouldBeInt" severity="ignore" />
     <issue id="NewerVersionAvailable" severity="ignore" />
     <issue id="MinSdkTooLow" severity="ignore" />
+    <issue id="NoHardKeywords" severity="fatal"/>
     <issue id="GridLayout" severity="ignore" />
     <issue id="HandlerLeak" severity="ignore" />
     <issue id="HardcodedDebugMode" severity="ignore" />
