@@ -16,11 +16,7 @@
 
 package com.ichi2.anki.exception
 
-import com.ichi2.utils.KotlinCleanup
-import java.lang.Exception
-
-@KotlinCleanup("Combine constructors")
-class StorageAccessException : Exception {
-    constructor(msg: String?, e: Throwable?) : super(msg, e) {}
-    constructor(msg: String?) : super(msg) {}
-}
+class StorageAccessException @JvmOverloads constructor(
+    msg: String? = null,
+    e: Throwable? = null
+) : Exception(msg, e)
