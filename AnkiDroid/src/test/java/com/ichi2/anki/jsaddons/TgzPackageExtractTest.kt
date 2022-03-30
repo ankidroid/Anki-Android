@@ -23,6 +23,9 @@ import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.io.FileMatchers.anExistingDirectory
+import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -87,19 +90,19 @@ class TgzPackageExtractTest : RobolectricTest() {
 
         // test if package folder exists
         val packagePath = File(addonDir, "package")
-        assertTrue(File(packagePath.toString()).exists())
+        assertThat(packagePath, anExistingDirectory())
 
         // test if index.js extracted successfully
         val indexJsPath = File(packagePath, "index.js")
-        assertTrue(File(indexJsPath.toString()).exists())
+        assertThat(indexJsPath, anExistingFile())
 
         // test if README.md extracted successfully
         val readmePath = File(packagePath, "README.md")
-        assertTrue(File(readmePath.toString()).exists())
+        assertThat(readmePath, anExistingFile())
 
         // test if package.json extracted successfully
         val packageJsonPath = File(packagePath, "package.json")
-        assertTrue(File(packageJsonPath.toString()).exists())
+        assertThat(packageJsonPath, anExistingFile())
     }
 
     /**
@@ -120,19 +123,19 @@ class TgzPackageExtractTest : RobolectricTest() {
 
         // test if package folder exists
         val packagePath = File(addonDir, "package")
-        assertTrue(File(packagePath.toString()).exists())
+        assertThat(packagePath, anExistingDirectory())
 
         // test if index.js extracted successfully
         val indexJsPath = File(packagePath, "index.js")
-        assertTrue(File(indexJsPath.toString()).exists())
+        assertThat(indexJsPath, anExistingFile())
 
         // test if README.md extracted successfully
         val readmePath = File(packagePath, "README.md")
-        assertTrue(File(readmePath.toString()).exists())
+        assertThat(readmePath, anExistingFile())
 
         // test if package.json extracted successfully
         val packageJsonPath = File(packagePath, "package.json")
-        assertTrue(File(packageJsonPath.toString()).exists())
+        assertThat(packageJsonPath, anExistingFile())
     }
 
     /**
@@ -147,7 +150,7 @@ class TgzPackageExtractTest : RobolectricTest() {
         val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
 
         // test if unGzip successfully return tar file
-        assertTrue(File(unGzipFile.toString()).exists())
+        assertThat(unGzipFile, anExistingFile())
 
         // test if .tgz file changed to .tar file
         assertTrue(File(unGzipFile.toString()).absolutePath.endsWith(".tar"))
