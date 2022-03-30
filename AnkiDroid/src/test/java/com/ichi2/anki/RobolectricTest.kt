@@ -89,7 +89,24 @@ open class RobolectricTest : CollectionGetter {
             runTasksInBackground()
         }
 
-        RustBackendLoader.init()
+        // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
+        // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
+        val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        if (backendPath != null) {
+            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+                throw java.lang.IllegalStateException(
+                    "AnkiDroid backend testing library requires an update.\n" +
+                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${System.getenv("ANKIDROID_BACKEND_VERSION")})\n" +
+                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
+                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${System.getenv("ANKIDROID_BACKEND_VERSION")}'"
+                )
+            }
+            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
+            RustBackendLoader.loadRsdroid(backendPath)
+        } else {
+            // default (no env variable): Extract the backend testing lib from the jar
+            RustBackendLoader.init()
+        }
 
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out

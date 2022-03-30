@@ -76,5 +76,5 @@
 「%1$s」のデフォルトデッキを「%2$s」に設定</string>
     <string name="model_manager_deck_override_removed_message">%sのデフォルトデッキを削除しました</string>
     <string name="deck_override_explanation">選択したデッキに新しいカード「%s」を設定する</string>
-    <string name="deck_picker_dialog_filter_decks">フィルターデッキ</string>
+    <string name="deck_picker_dialog_filter_decks">デッキ名検索</string>
 </resources>

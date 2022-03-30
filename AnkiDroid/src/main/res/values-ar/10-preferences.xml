@@ -133,7 +133,7 @@
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
     <string name="sync_status_badge" maxLength="41">عرض حالة المزامنة</string>
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">السمة</string>
     <string name="day_theme" maxLength="41">سمة النهار</string>
     <string name="night_theme" maxLength="41">سمة الليل</string>
     <string name="default_font" maxLength="41">الخط الافتراضي</string>

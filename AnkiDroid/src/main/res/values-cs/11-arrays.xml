@@ -67,13 +67,13 @@
     <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
     <string name="override_font_always">Vždy</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Systémové</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Světlé</string>
-    <string name="day_theme_plain">Klasické</string>
+    <string name="day_theme_light">Světlý</string>
+    <string name="day_theme_plain">Klasický</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Černé</string>
-    <string name="night_theme_dark">Tmavé</string>
+    <string name="night_theme_black">Černý</string>
+    <string name="night_theme_dark">Tmavý</string>
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-malé</string>
     <string name="html_size_code_x_small">x-malé</string>

@@ -31,8 +31,6 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.widget.TimePicker;
 
-import com.ichi2.async.ProgressSenderAndCancelListener;
-import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.KotlinCleanup;
 
 import java.io.File;
@@ -148,63 +146,17 @@ public class CompatV21 implements Compat {
         }
     }
 
-    // Explores the source directory tree recursively and copies each directory and each file inside each directory
+
     @Override
-    public void copyDirectory(@NonNull File srcDir, @NonNull File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask, boolean deleteAfterCopy) throws IOException {
-        // If destDir exists, it must be a directory. If not, create it
-        FileUtil.ensureFileIsDirectory(destDir);
-
-        final File[] srcFiles = FileUtil.listFiles(srcDir);
-
-        // Copy the contents of srcDir to destDir
-        for (final File srcFile : srcFiles) {
-            final File destFile = new File(destDir, srcFile.getName());
-            if (srcFile.isDirectory()) {
-                copyDirectory(srcFile, destFile, ioTask, deleteAfterCopy);
-            } else if (srcFile.length() != destFile.length()) {
-                OutputStream out = new FileOutputStream(destFile, false);
-                ioTask.doProgress((int) copyFile(srcFile.getAbsolutePath(), out) / 1024);
-                out.close();
+    public void createDirectories(@NonNull File directory) throws IOException {
+        if (directory.exists()) {
+            if (!directory.isDirectory()) {
+                throw new IOException(directory + " is not a directory");
             }
-            if (deleteAfterCopy) {
-                srcFile.delete();
-            }
+            return;
         }
-
-        if (deleteAfterCopy) {
-            srcDir.delete();
-        }
-    }
-
-    // Attempts to first rename the contents of the directory. This operation is instant, but it fails if the
-    // source and destination paths are not on the same storage partition.
-    // In case rename fails, it explores the directory tree recursively and copies, then deletes every directory & every
-    // file inside each directory.
-    @Override
-    public void moveDirectory(@NonNull final File srcDir, @NonNull final File destDir, @NonNull ProgressSenderAndCancelListener<Integer> ioTask) throws IOException {
-        // If destDir exists, attempt to move the contents of srcDir by renaming
-        // Otherwise, attempt to rename srcDir to destDir
-        boolean renameSuccessful = true;
-        if (destDir.exists()) {
-            final File[] srcFiles = FileUtil.listFiles(srcDir);
-
-            for (final File srcFile : srcFiles) {
-                final File destFile = new File(destDir, srcFile.getName());
-                if (!srcFile.renameTo(destFile)) {
-                    renameSuccessful = false;
-                    break;
-                }
-            }
-            if (renameSuccessful) {
-                srcDir.delete();
-            }
-        } else {
-            renameSuccessful = srcDir.renameTo(destDir);
-        }
-
-        // If srcDir couldn't be moved by renaming, do a copy and delete
-        if (!renameSuccessful) {
-            copyDirectory(srcDir, destDir, ioTask, true);
+        if (!directory.mkdirs()) {
+            throw new IOException("Failed to create " + directory);
         }
     }
 

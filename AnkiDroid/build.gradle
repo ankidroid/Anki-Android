@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600152
-        versionName="2.16alpha52"
+        versionCode=21600153
+        versionName="2.16alpha53"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -75,8 +75,9 @@ android {
             debuggable true
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
-            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
-
+            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
+//            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
+            buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
             // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
             // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
             if (project.rootProject.file('local.properties').exists()) {
@@ -101,6 +102,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
+            buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
         }
@@ -204,6 +206,7 @@ android {
     ndkVersion "22.0.7026061"
 
     ktlint {
+        version = "0.45.1"
         disabledRules = ["no-wildcard-imports"]
     }
 }
@@ -300,18 +303,15 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
     implementation 'com.github.CanHub:Android-Image-Cropper:3.1.3'
 
-
-    // == Rust conversion (from Anki-Android-Backend on GitHub) ==
-    String backendVersion = "0.1.10" // We want both testing and implementation on the same version
     // build with ./gradlew rsdroid:assembleRelease
-    // In my experience, using `files()` currently requires a reindex operation, which is slow.
+    // In my experience, using `files()` currently requires a reindex operation.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
     implementation 'com.google.protobuf:protobuf-java:3.19.4' // This is required when loading from a file
-    implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
+    implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
     // A path for a testing library is typically under rsdroid-testing/assets
-    testImplementation "io.github.david-allison-1:anki-android-backend-testing:$backendVersion"
+    testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
 
     // May need a resolution strategy for support libs to our versions
     implementation "ch.acra:acra-http:$acra_version"

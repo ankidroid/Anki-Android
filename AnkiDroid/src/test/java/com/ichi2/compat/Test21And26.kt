@@ -16,14 +16,15 @@
 
 package com.ichi2.compat
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
-import org.junit.After
+import org.junit.AfterClass
 import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.mockito.kotlin.*
 import java.io.File
@@ -34,12 +35,8 @@ import java.io.IOException
  * In particular it allows to test version of the code that uses [Files] and [Path] classes.
  * And versions that must restrict themselves to [File].
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
-open class Test21And26(
-    open val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) {
+@RunWith(Parameterized::class)
+abstract class Test21And26 {
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{1}")
@@ -48,7 +45,29 @@ open class Test21And26(
             yield(arrayOf(CompatV21(), "CompatV21"))
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
+
+        lateinit var staticCompat: Compat
+        @BeforeClass
+        @JvmStatic
+        fun setupClass() {
+            mockkObject(CompatHelper)
+            every { CompatHelper.compat } answers { staticCompat }
+        }
+
+        @AfterClass
+        @JvmStatic
+        fun tearDownClass() {
+            unmockkObject(CompatHelper)
+        }
     }
+
+    @Parameterized.Parameter(0)
+    lateinit var compat: Compat
+
+    @Parameterized.Parameter(1)
+    @Suppress("unused")
+    /** Used in the "Test Results" Window */
+    lateinit var unitTestDescription: String
 
     val isV21: Boolean
         get() = compat is CompatV21
@@ -57,20 +76,7 @@ open class Test21And26(
 
     @Before
     open fun setup() {
-        mockkObject(CompatHelper)
-        every { CompatHelper.compat } returns compat
-    }
-
-    // Allow to cancel every static mock, appart from the setup's one.
-    // Required because individual method can't be unregistered.
-    fun restart() {
-        tearDown()
-        setup()
-    }
-
-    @After
-    fun tearDown() {
-        unmockkObject(CompatHelper)
+        staticCompat = compat
     }
 
     /**
@@ -82,11 +88,17 @@ open class Test21And26(
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat
          */
-        fun <T> runWithPermissionDenied(test: () -> T): T {
-            every { CompatHelper.compat } returns compat
-            val result = test()
-            restart()
-            return result
+        fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
+
+        /** Runs a provided action having [CompatHelper.compat] return the provided compat */
+        private fun <T> runUsingCompat(compatOverride: Compat, test: () -> T): T {
+            val originalValue = staticCompat
+            staticCompat = compatOverride
+            try {
+                return test()
+            } finally {
+                staticCompat = originalValue
+            }
         }
 
         /**
@@ -103,6 +115,7 @@ open class Test21And26(
      * which simulates to simulate https://github.com/ankidroid/Anki-Android/issues/10358.
      * Also ensure that [Files.newDirectoryStream] fails on this directory.
      */
+    @SuppressLint("NewApi") // File.toPath = only called if sending API 26
     fun createPermissionDenied(): PermissionDenied {
         val directory = createTransientDirectory()
         val compat = CompatHelper.compat

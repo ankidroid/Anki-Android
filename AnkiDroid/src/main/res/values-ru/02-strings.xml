@@ -194,10 +194,10 @@
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_successful">Файл «%s» был экспортирован. Вы хотите отправить его с помощью другого приложения?</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Привет!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Это колода карточек Anki, отправленная из приложения AnkiDroid[1].
+        Её можно открыть в одной из совместимых с Anki программ[2] и наслаждаться легким и эффективным обучением!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>

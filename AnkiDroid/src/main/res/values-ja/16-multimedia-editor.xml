@@ -90,8 +90,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">ギャラリー</string>
     <string name="multimedia_editor_image_field_editing_photo">カメラ</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">音声</string>
+    <string name="multimedia_editor_import_video">動画</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">ダウンロード中...</string>

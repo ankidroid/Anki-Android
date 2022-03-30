@@ -21,8 +21,6 @@ import android.content.Context;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 
-import org.robolectric.shadows.ShadowStatFs;
-
 import java.io.File;
 
 import static org.junit.Assert.assertTrue;
@@ -31,8 +29,11 @@ public class BackupManagerTestUtilities {
     public static void setupSpaceForBackup(Context context) {
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
 
-        String path = new File(currentAnkiDroidDirectory).getParentFile().getPath();
-        ShadowStatFs.registerStats(path, 100, 20, 10000);
+        File path = new File(currentAnkiDroidDirectory).getParentFile();
+        if (path == null) {
+            throw new IllegalStateException("currentAnkiDroidDirectory had no parent");
+        }
+        ShadowStatFs.markAsNonEmpty(path);
 
         assertTrue(BackupManager.enoughDiscSpace(currentAnkiDroidDirectory));
     }

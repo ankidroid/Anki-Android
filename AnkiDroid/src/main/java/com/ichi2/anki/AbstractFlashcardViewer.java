@@ -1019,7 +1019,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     .alsoExecuteAfter(computation -> UIUtils.showThemedToast(
                             AbstractFlashcardViewer.this,
                             res.getString(R.string.undo_succeeded, undoName),
-                            false)
+                            true)
                 )
             );
         }

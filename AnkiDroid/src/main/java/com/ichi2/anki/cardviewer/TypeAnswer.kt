@@ -18,7 +18,6 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.text.TextUtils
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.LanguageHint
@@ -29,7 +28,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.JSONArray
 import timber.log.Timber
-import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -151,7 +149,7 @@ class TypeAnswer(
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
-            if (!TextUtils.isEmpty(font) && size > 0) {
+            if (font.isNotEmpty() && size > 0) {
                 sb.append("style=\"font-family: '").append(font).append("'; font-size: ")
                     .append(size).append("px;\" ")
             }
@@ -251,9 +249,8 @@ class TypeAnswer(
          */
         @JvmStatic
         fun cleanCorrectAnswer(answer: String?): String {
-            if (answer == null || "" == answer) {
-                return ""
-            }
+            if (answer.isNullOrEmpty()) return ""
+
             var matcher = spanPattern.matcher(Utils.stripHTML(answer.trim { it <= ' ' }))
             var answerText = matcher.replaceAll("")
             matcher = brPattern.matcher(answerText)
@@ -269,11 +266,9 @@ class TypeAnswer(
          * @param answer The answer text typed by the user.
          * @return The typed answer text, cleaned up.
          */
-        @JvmStatic
-        fun cleanTypedAnswer(answer: String?): String {
-            return if (answer == null || "" == answer) {
-                ""
-            } else Utils.nfcNormalized(answer.trim())
+        fun cleanTypedAnswer(answer: String): String {
+            if (answer.isBlank()) return ""
+            return Utils.nfcNormalized(answer.trim())
         }
 
         /**
@@ -306,7 +301,7 @@ class TypeAnswer(
             return if (uniqMatches.size == 1) {
                 matches[0]
             } else {
-                TextUtils.join(", ", matches)
+                matches.joinToString(", ")
             }
         }
     }

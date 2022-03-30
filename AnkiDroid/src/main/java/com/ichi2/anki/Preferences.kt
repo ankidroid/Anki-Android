@@ -838,7 +838,7 @@ class Preferences : AnkiActivity() {
                 appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
             }
 
-            val followSystem = Themes.themeFollowsSystem(context)
+            val followSystem = Themes.themeFollowsSystem(requireContext())
             dayThemePref.isEnabled = followSystem
             nightThemePref.isEnabled = followSystem
 

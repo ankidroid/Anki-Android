@@ -94,7 +94,7 @@ fun JSONArray.remove(jsonObject: JSONObject) {
 
 fun JSONArray.index(jsonObject: JSONObject): Optional<Int> {
     this.jsonObjectIterable().forEachIndexed {
-        i, value ->
+            i, value ->
         run {
             if (jsonObject == value) {
                 return Optional.of(i)

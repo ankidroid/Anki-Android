@@ -164,7 +164,7 @@
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が拒否されました</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">AnkiDroidへようこそ!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroidを使用するにはストレージへのアクセス権限が必要です。AnkiDroidはストレージを、AnkiDroidのコレクション（カードのテキスト、スケジュールなど一連の情報）、カードに用いるメディア（画像・動画・音声）ファイル、コレクションのバックアップの保存にのみ使用します。 AnkiDroidのコードはオープンソースであり、ボランティアによって書かれ、何百万人もの人々から信頼されています。\n\nご不明な点がある場合は、サイドメニューの「ヘルプ」からマニュアルをご覧いただくか、同メニューの「フィードバック」からサポートフォーラムにアクセスしてみてください。\n\nAnkiDroidをお試しいただきありがとうございます！\n— AnkiDroid開発チーム</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroidを使用するにはストレージへのアクセスを許可する必要があります。AnkiDroidはストレージを、コレクション（カードのテキスト、表示スケジュールなど一連のデータ）、カードに用いるメディア（画像・動画・音声）ファイル、およびバックアップの保存にのみ使用します。 AnkiDroidのソースコードは、ボランティアによって書かれ、一般に公開されており、何百万人もの人々から信頼されています。\n\nご不明な点がございましたら、アプリ内の「ヘルプ」→「使い方」からマニュアルをご覧いただくか、「ヘルプ」→「問い合わせ」→「メーリングリスト」からサポートフォーラムにお問い合わせください。\n\nAnkiDroidをお試しいただきありがとうございます！\n— AnkiDroid開発チーム</string>
     <string name="mutimedia_editor_assertion_failed">エディターの表示中に不明なエラーが発生しました</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>

@@ -64,12 +64,12 @@
         <item><![CDATA[AnkiDroid випущений під <a href=\"%1$s\"> ліцензією GNU GPL v3</a>, а програмний код доступний <a href=\"%2$s\"> на GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Попередній перегляд</string>
-    <string name="reposition_card_dialog_title">Переміщення нової картки</string>
+    <string name="reposition_card_dialog_title">Перемістити нову картку</string>
     <string name="reposition_card_dialog_message">Початкова позиція:</string>
-    <string name="reposition_card_not_new_error">Тільки нові картки можуть бути переміщені</string>
+    <string name="reposition_card_not_new_error">Можна перемістити тільки нові картки</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d картку переміщено</item>
-        <item quantity="few">%d карток переміщено</item>
+        <item quantity="few">%d картки переміщено</item>
         <item quantity="many">%d карток переміщено</item>
         <item quantity="other">%d карток переміщено</item>
     </plurals>
@@ -83,10 +83,10 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="few">Reschedule %d cards</item>
-        <item quantity="many">Reschedule %d cards</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Перепланувати %d картку</item>
+        <item quantity="few">Перепланувати %d картки</item>
+        <item quantity="many">Перепланувати %d карток</item>
+        <item quantity="other">Перепланувати %d карток</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Поточний інтервал: %d доба</item>
@@ -94,16 +94,16 @@
         <item quantity="many">Поточний інтервал: %d діб</item>
         <item quantity="other">Поточний інтервал: %d доби</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Запланувати перегляд у наступні x днів:</string>
+    <string name="reschedule_card_dialog_message">Запланувати повторення через x днів:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d картку переплановано</item>
         <item quantity="few">%d карток переплановано</item>
         <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланувалася і стала переглянутою. Використовуйте опцію «перемістити картку», щоб змінити позицію картки в новій черзі</string>
+    <string name="reschedule_card_dialog_new_card_warning">Переплановується нова картка. Перепланування перетворює нові картки на повторені. Скористайтеся опцією «перемістити картку», щоб змінити місце картки в новій черзі</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду у вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження) для її імпорту</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду в вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження), аби її імпортувати</string>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>
@@ -111,13 +111,13 @@
     <string name="intent_aedict_empty">Категорія  \"стандартна\"  порожня</string>
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid, видаліть всі категорії Notepad або додайте категорію \'default\'</string>
     <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
-    <string name="custom_study_rev_total_rev">Картки до повторення: %d</string>
+    <string name="custom_study_rev_total_rev">Карток до повторення: %d</string>
     <string name="custom_study_new_extend">Збільшення/зменшення («-3») сьогоднішньої межі на нові картки</string>
-    <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішньої межі на повторення</string>
+    <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішнього ліміту на повторення</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
-    <string name="custom_study_ahead">Переглянути наперед за х днів:</string>
+    <string name="custom_study_ahead">Повторити наперед за х днів:</string>
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
-    <string name="custom_study_preview">Повторити нові картки додані за останні х днів:</string>
+    <string name="custom_study_preview">Переглянути нові картки додані за останні x днів:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не вдалося перебудувати колоду додаткового навчання</string>
     <string name="importing_collection">Завантаження колекції. \nБудь ласка, зачекайте&#8230;</string>
     <string name="import_media_count">Завантаження медіа файлів %1$d%%\nБудь ласка, зачекайте&#8230;</string>

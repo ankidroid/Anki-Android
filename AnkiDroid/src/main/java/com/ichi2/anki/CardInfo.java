@@ -74,7 +74,7 @@ public class CardInfo extends AnkiActivity {
             return;
         }
         super.onCreate(savedInstanceState);
-
+        setTitle(R.string.card_info_title);
         setContentView(R.layout.card_info);
 
         mCardId = getCardId(savedInstanceState);

@@ -16,16 +16,33 @@
 package com.ichi2.compat
 
 import android.os.Build
-import android.view.KeyCharacterMap
-import com.ichi2.utils.KotlinCleanup
+import android.view.KeyCharacterMap.deviceHasKey
+import android.view.KeyEvent.*
+import com.ichi2.compat.CompatHelper.Companion.compat
 
+/**
+ * Selects a [Compat] class based on the device's [Build.VERSION.SDK_INT]
+ *
+ * Use [compat] to obtain this instance:
+ *
+ * ```kotlin
+ *     CompatHelper.compat.copyFile(stream, path)
+ * ```
+ */
 class CompatHelper private constructor() {
 
-    @KotlinCleanup("inline & convert to when")
-    private val compatValue: Compat
+    // Note: Needs ": Compat" or the type system assumes `Compat21`
+    private val compatValue: Compat = when {
+        sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+        sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
+        sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
+        sdkVersion >= Build.VERSION_CODES.M -> CompatV23()
+        else -> CompatV21()
+    }
 
     companion object {
-        private var sInstance: CompatHelper? = null
+        /** Singleton instance of [CompatHelper] */
+        private val instance by lazy { CompatHelper() }
 
         /** Get the current Android API level.  */
         @JvmStatic
@@ -43,16 +60,6 @@ class CompatHelper private constructor() {
         @JvmStatic
         val compat get() = instance.compatValue
 
-        @get:Synchronized
-        @KotlinCleanup("lazy")
-        val instance: CompatHelper
-            get() {
-                if (sInstance == null) {
-                    sInstance = CompatHelper()
-                }
-                return sInstance!!
-            }
-
         val isChromebook: Boolean
             get() = (
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
@@ -63,25 +70,11 @@ class CompatHelper private constructor() {
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
         fun hasKanaAndEmojiKeys(): Boolean {
-            return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95)
+            return deviceHasKey(KEYCODE_SWITCH_CHARSET) && deviceHasKey(KEYCODE_PICTSYMBOLS)
         }
 
         fun hasScrollKeys(): Boolean {
-            return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93)
-        }
-    }
-
-    init {
-        if (sdkVersion >= Build.VERSION_CODES.S) {
-            compatValue = CompatV31()
-        } else if (sdkVersion >= Build.VERSION_CODES.Q) {
-            compatValue = CompatV29()
-        } else if (sdkVersion >= Build.VERSION_CODES.O) {
-            compatValue = CompatV26()
-        } else if (sdkVersion >= Build.VERSION_CODES.M) {
-            compatValue = CompatV23()
-        } else {
-            compatValue = CompatV21()
+            return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
         }
     }
 }

@@ -250,7 +250,7 @@
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
-    <string name="web_page_error">読込みエラー: %s</string>
+    <string name="web_page_error">ページの読み込みエラー: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
@@ -324,12 +324,12 @@
     <string name="before_text">選択部分の前のHTML</string>
     <string name="after_text">選択部分の後ろのHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
-    <string name="toolbar_item_explain_remove">選択したテキストの前後に挿入する HTML を入力してください\n\nツールバーアイテムを長押しすれば削除します</string>
-    <string name="remove_toolbar_item">ツールバーのアイテムを削除しますか？</string>
+    <string name="toolbar_item_explain_remove">選択したテキストの前後に挿入するHTMLを入力してください\n\n作成したツールバーアイテムを削除したい場合は、そのアイテムを長押ししてください</string>
+    <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
     <string name="note_editor_paste_too_large">画像が大きすぎるため、手動で画像を挿入してください</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidにショートカットを追加するには、iManagerを使用する必要があります。</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面にAnkiDroidのショートカットを追加することはできません。</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文章を大文字にする</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ツールバーをスクロール表示</string>

@@ -16,17 +16,12 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
-import com.ichi2.compat.Compat
 import com.ichi2.compat.Test21And26
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
@@ -34,13 +29,7 @@ import kotlin.io.path.pathString
 /**
  * Tests for [DeleteEmptyDirectory]
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
-@RunWith(Parameterized::class)
-class DeleteEmptyDirectoryTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription), OperationTest {
+class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
 
     override val executionContext = MockMigrationContext()
 

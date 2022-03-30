@@ -25,7 +25,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
-import java.util.*
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -102,10 +101,7 @@ class TagsDialog : AnalyticsDialogFragment {
         uncheckedTags: List<String>?,
         allTags: List<String?>
     ): TagsDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
-        }
+        val args = this.arguments ?: Bundle()
         args.putInt(DIALOG_TYPE_KEY, type.ordinal)
         args.putStringArrayList(CHECKED_TAGS_KEY, ArrayList(checkedTags))
         if (uncheckedTags != null) {

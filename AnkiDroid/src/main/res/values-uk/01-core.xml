@@ -69,16 +69,16 @@
         <item quantity="other">Залишилося %d хвилини</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d година %d залишилася</item>
+        <item quantity="one">залишилася %d година %d</item>
         <item quantity="few">залишилося %d години %d </item>
         <item quantity="many">залишилося %d годин %d </item>
-        <item quantity="other">Залишилася %d годин %d</item>
+        <item quantity="other">залишилося %d годин %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">залишилась %d доба, %d </item>
-        <item quantity="few">залишилося %d доби %d</item>
-        <item quantity="many">залишилося %d діб %d</item>
-        <item quantity="other">залишилося %d доби %d</item>
+        <item quantity="one">залишився %d день, %d </item>
+        <item quantity="few">залишилося %d дні %d</item>
+        <item quantity="many">залишилося %d днів %d</item>
+        <item quantity="other">залишилося %d днів %d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекція порожня</string>
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
@@ -100,7 +100,7 @@
     <string name="studyoptions_congrats_undo">Скасувати %s</string>
     <string name="menu_import">Імпортувати</string>
     <string name="undo">Скасувати</string>
-    <string name="undo_action_review">Останній перегляд</string>
+    <string name="undo_action_review">останнє повторення</string>
     <string name="undo_action_change_deck_multi">Змінити колоди</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
     <string name="unbury">Повернути</string>
@@ -167,15 +167,15 @@
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="empty_deck_add_note">Додати картку</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_empty">Ця колода порожня. Натисніть на кнопку +, щоб додати новий вміст.</string>
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
     <string name="studyoptions_empty_schedule">Немає запланованих карток</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
-    <string name="studyoptions_congrats_more_rev">Досягнуто добового ліміту, але ще залишилися картки на перегляд. Ви можете збільшити щоденний ліміт у налаштуваннях.</string>
-    <string name="studyoptions_congrats_more_new">Досягнуто добового ліміту карток. Ви можете збільшити ліміт в налаштуваннях, але це короткочасно збільшить навантаження.</string>
+    <string name="studyoptions_congrats_more_rev">Досягнуто добового ліміту, але ще залишилися картки для повторення. Ви можете збільшити щоденний ліміт у налаштуваннях.</string>
+    <string name="studyoptions_congrats_more_new">Досягнуто добового ліміту карток, але ще залишилися нові карточки. Ви можете збільшити ліміт в налаштуваннях, але тоді збільшиться кількість повторень в майбутньому.</string>
     <string name="studyoptions_congrats_custom">Для додаткового навчання натисніть кнопку «Додаткове навчання»</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>

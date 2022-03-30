@@ -16,11 +16,8 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
-import com.ichi2.compat.Compat
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.CoreMatchers.equalTo
@@ -29,8 +26,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
@@ -40,13 +35,7 @@ import java.io.File
 /**
  * Test for [MoveDirectory]
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
-@RunWith(Parameterized::class)
-class MoveDirectoryTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription), OperationTest {
+class MoveDirectoryTest : Test21And26(), OperationTest {
     override lateinit var executionContext: MockMigrationContext
     private val executor = MockExecutor { executionContext }
 

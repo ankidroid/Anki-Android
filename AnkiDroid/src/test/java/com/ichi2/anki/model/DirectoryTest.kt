@@ -16,18 +16,14 @@
 
 package com.ichi2.anki.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.ichi2.compat.Compat
 import com.ichi2.compat.Test21And26
-import com.ichi2.testutils.*
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
+import com.ichi2.testutils.assertThrows
+import com.ichi2.testutils.withTempFile
 import org.acra.util.IOUtils
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.io.path.createTempDirectory
@@ -36,13 +32,7 @@ import kotlin.io.path.pathString
 /**
  * Tests for [Directory]
  */
-@RequiresApi(Build.VERSION_CODES.O) // This requirement is necessary for compilation. However, it still allows to test CompatV21
-@RunWith(Parameterized::class)
-class DirectoryTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription) {
+class DirectoryTest : Test21And26() {
     @Test
     fun passes_if_existing_directory() {
         val path = createTempDirectory().pathString

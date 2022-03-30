@@ -20,9 +20,12 @@ package com.ichi2.anki.cardviewer;
 import android.net.Uri;
 import android.webkit.WebResourceRequest;
 
+import com.ichi2.testutils.EmptyApplication;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.annotation.Config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ import static org.hamcrest.Matchers.is;
 // Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
 // and URLUtil.guessFileName (static - likely harder)
 @RunWith(AndroidJUnit4.class)
+@Config(application = EmptyApplication.class)
 public class MissingImageHandlerTest {
 
     private MissingImageHandler mSut;

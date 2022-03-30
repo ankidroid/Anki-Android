@@ -47,6 +47,7 @@
     <issue id="UnknownId" severity="fatal" />
     <issue id="UselessParent" severity="fatal" />
     <issue id="ObsoleteLayoutParam" severity="fatal" />
+    <issue id="ObsoleteSdkInt" severity="fatal" />
 
     <!--           RTL Rules               -->
     <issue id="RtlCompat" severity="fatal" />
@@ -101,7 +102,6 @@
     <issue id="SwitchIntDef" severity="ignore" />
     <issue id="UniqueConstants" severity="ignore" />
     <issue id="Override" severity="ignore" />
-    <issue id="ObsoleteSdkInt" severity="ignore" />
     <issue id="UnusedAttribute" severity="ignore" />
     <issue id="AppCompatMethod" severity="ignore" />
     <issue id="AppCompatCustomView" severity="ignore" />

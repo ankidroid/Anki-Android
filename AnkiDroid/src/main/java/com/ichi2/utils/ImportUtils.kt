@@ -169,7 +169,7 @@ object ImportUtils {
             } else {
                 // Copy to temporary file
                 filename = ensureValidLength(filename)
-                val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath
+                val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
                 val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
                 // Show import dialog
                 if (errorMessage != null) {
@@ -178,7 +178,7 @@ object ImportUtils {
                 }
                 val validateZipResult = validateZipFile(context, tempOutDir)
                 if (validateZipResult != null) {
-                    File(tempOutDir!!).delete()
+                    File(tempOutDir).delete()
                     return validateZipResult
                 }
                 sendShowImportFileDialogMsg(tempOutDir)
@@ -186,9 +186,8 @@ object ImportUtils {
             }
         }
 
-        @KotlinCleanup("nonnull path")
-        private fun validateZipFile(ctx: Context, filePath: String?): ImportResult? {
-            val file = File(filePath!!)
+        private fun validateZipFile(ctx: Context, filePath: String): ImportResult? {
+            val file = File(filePath)
             var zf: ZipFile? = null
             try {
                 zf = ZipFile(file)
@@ -273,26 +272,25 @@ object ImportUtils {
          */
         protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String?): Boolean {
             // Get an input stream to the data in ContentProvider
-            val `in`: InputStream? = try {
+            val inputStream: InputStream? = try {
                 context.contentResolver.openInputStream(data!!)
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "Could not open input stream to intent data")
                 return false
             }
             // Check non-null
-            @KotlinCleanup("rename")
             @Suppress("FoldInitializerAndIfToElvis")
-            if (`in` == null) {
+            if (inputStream == null) {
                 return false
             }
             try {
-                CompatHelper.compat.copyFile(`in`, tempPath)
+                CompatHelper.compat.copyFile(inputStream, tempPath)
             } catch (e: IOException) {
                 Timber.e(e, "Could not copy file to %s", tempPath)
                 return false
             } finally {
                 try {
-                    `in`.close()
+                    inputStream.close()
                 } catch (e: IOException) {
                     Timber.e(e, "Error closing input stream")
                 }
@@ -305,10 +303,9 @@ object ImportUtils {
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
              * @param path path to apkg file which will be imported
              */
-            @KotlinCleanup("nonnull path")
-            private fun sendShowImportFileDialogMsg(path: String?) {
+            private fun sendShowImportFileDialogMsg(path: String) {
                 // Get the filename from the path
-                val f = File(path!!)
+                val f = File(path)
                 val filename = f.name
 
                 // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
@@ -347,22 +344,21 @@ object ImportUtils {
              * @param data uri from which to get input stream
              * @return whether or not valid zip file
              */
-            @KotlinCleanup("rename `in`")
             private fun hasValidZipFile(context: Context, data: Uri?): Boolean {
                 // Get an input stream to the data in ContentProvider
-                var `in`: InputStream? = null
+                var inputStream: InputStream? = null
                 try {
-                    `in` = context.contentResolver.openInputStream(data!!)
+                    inputStream = context.contentResolver.openInputStream(data!!)
                 } catch (e: FileNotFoundException) {
                     Timber.e(e, "Could not open input stream to intent data")
                 }
                 // Make sure it's not null
-                if (`in` == null) {
+                if (inputStream == null) {
                     Timber.e("Could not open input stream to intent data")
                     return false
                 }
                 // Open zip input stream
-                val zis = ZipInputStream(`in`)
+                val zis = ZipInputStream(inputStream)
                 var ok = false
                 try {
                     try {
@@ -379,7 +375,7 @@ object ImportUtils {
                     // close the input streams
                     try {
                         zis.close()
-                        `in`.close()
+                        inputStream.close()
                     } catch (e: Exception) {
                         Timber.d(e, "Error closing the InputStream")
                     }

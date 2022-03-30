@@ -16,18 +16,14 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
-import com.ichi2.compat.Compat
 import com.ichi2.compat.Test21And26
 import com.ichi2.testutils.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.spy
@@ -40,13 +36,7 @@ import java.nio.file.NotDirectoryException
 /**
  * Test for [MoveDirectoryContent]
  */
-@RequiresApi(Build.VERSION_CODES.O) // Allows code to compile, but we still test with [CompatV21]
-@RunWith(Parameterized::class)
-class MoveDirectoryContentTest(
-    override val compat: Compat,
-    /** Used in the "Test Results" Window */
-    @Suppress("unused") private val unitTestDescription: String
-) : Test21And26(compat, unitTestDescription), OperationTest {
+class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
     override val executionContext = MockMigrationContext()
 
@@ -196,6 +186,7 @@ class MoveDirectoryContentTest(
         assertThrows<FileNotFoundException> { moveDirectoryContent(sourceDirectory, destinationDirectory) }
     }
 
+    @SuppressLint("NewApi") // NotDirectoryException
     @Test
     fun factory_on_file_throw() {
         val source_file = createTransientFile()

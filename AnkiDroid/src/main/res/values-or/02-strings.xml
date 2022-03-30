@@ -203,7 +203,7 @@
     <string name="custom_study">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
-    <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
+    <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
     <string name="steps_min_error">ଅତି କମରେ ୧ଟିଏ ପାହୁଣ୍ଡ ଆବଶ୍ୟକ</string>
     <string name="sched_end">(ସମାପ୍ତି)</string>
     <string name="sched_unbury_action">ସେଗୁଡ଼ିକୁ ଦେଖିବା ପାଇଁ ମେନୁରେ “ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ” ବିକଳ୍ପ ବାଛନ୍ତୁ</string>
@@ -339,7 +339,7 @@
     <string name="add_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="toolbar_item_explain_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବାକୁ HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଟୁଲବାର୍ ଆଇଟମ୍ କୁ ହଟାଇବା ପାଇଁ ତାହା ଉପରେ ଲମ୍ବା ଦବାନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଟୁଲ୍ ବାର୍ ଆଇଟମ୍ ହଟାଇବେ?</string>
-    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ବହୁତ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ହୋମ୍ ସ୍କ୍ରିନ୍ AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାକୁ ଅନୁମତି ଦିଏ ନାହିଁ</string>

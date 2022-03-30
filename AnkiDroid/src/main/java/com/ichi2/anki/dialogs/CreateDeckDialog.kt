@@ -72,10 +72,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     }
 
     fun closeDialog() {
-        if (mShownDialog == null) {
-            return
-        }
-        mShownDialog!!.dismiss()
+        mShownDialog?.dismiss()
     }
 
     fun createSubDeck(did: Long, deckName: String?) {

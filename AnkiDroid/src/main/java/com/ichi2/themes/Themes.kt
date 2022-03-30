@@ -105,9 +105,12 @@ object Themes {
 
     @JvmStatic
     fun setThemeLegacy(context: Context) {
-        val prefs = AnkiDroidApp.getSharedPrefs(context.applicationContext)
-        if (themeFollowsSystem(context)) {
-            if (systemIsInNightMode(context)) {
+        // we need the applicationContext to obtain preferences, we can't do this with a regular
+        // Activity context since this is called before super.onCreate()
+        val applicationContext = context.applicationContext
+        val prefs = AnkiDroidApp.getSharedPrefs(applicationContext)
+        if (themeFollowsSystem(applicationContext)) {
+            if (systemIsInNightMode(applicationContext)) {
                 when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
                     NIGHT_BLACK_THEME -> context.setTheme(R.style.LegacyActionBarBlack)
                     NIGHT_DARK_THEME -> context.setTheme(R.style.LegacyActionBarDark)
@@ -220,7 +223,7 @@ object Themes {
      * @return if user current selected theme is "Follow system"
      */
     @JvmStatic
-    fun themeFollowsSystem(context: Context?): Boolean {
+    fun themeFollowsSystem(context: Context): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(context)
         val selectedAppTheme = prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE)
         return selectedAppTheme == FOLLOW_SYSTEM_MODE
