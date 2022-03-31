@@ -157,7 +157,7 @@
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
     <string name="search_deck" comment="Deck search for selecting it">Stapelsuche</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Stapelsuche</string>
     <string name="empty_deck_add_note">Karte hinzufügen</string>
     <string name="invalid_deck_name">Ungültiger Stapelname</string>
     <string name="studyoptions_empty">Dieser Stapel ist leer. Berühren Sie die »+«-Schaltfläche, um neue Inhalte hinzuzufügen.</string>

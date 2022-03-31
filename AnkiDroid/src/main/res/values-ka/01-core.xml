@@ -45,7 +45,7 @@
     <string name="statistics">სტატისტიკა</string>
     <string name="settings">პარამეტრები</string>
     <string name="help">დახმარება</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">ნახატი</string>
     <string name="send_feedback">უკუკავშირი</string>
     <string name="studyoptions_due_today">დღეისთვის:</string>
     <string name="studyoptions_new_total">ახალი ბარათები ჯამში:</string>
@@ -115,9 +115,9 @@
     <string name="menu_flag_card_two">სტაფილოსფერი დროშა</string>
     <string name="menu_flag_card_three">მწვანე დროშა</string>
     <string name="menu_flag_card_four">ლურჯი დროშა</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">ვარდისფერი დროშა</string>
+    <string name="menu_flag_card_six">ფირუზისფერი დროშა</string>
+    <string name="menu_flag_card_seven">იისფერი დროშა</string>
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_search">მონახულება %1$s-ში</string>
@@ -157,7 +157,7 @@
     <string name="custom_study_deck_exists">ჯერ ქასთომ სასწავლო დასტის სახელი შეცვალეთ</string>
     <string name="empty_deck">ეს დასტა ცარიელია</string>
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="empty_deck_add_note">ბარათის დამატება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
     <string name="studyoptions_empty">დასტა ცარიელია. დააჭირეთ + ნიშანს, რომ დაამატოთ ახალი კონტენტი.</string>
@@ -169,7 +169,7 @@
     <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ქასთომ სწავლის\" ღილაკს</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებები. (%1$s)</string>
     <string name="button_sync">სინქრონიზაცია</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
     <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
@@ -185,17 +185,17 @@
     <string name="card_template_editor_back">უკანა შაბლონი</string>
     <string name="card_template_editor_styling">სტილი</string>
     <string name="card_template_editor_menu_card_browser_appearance">ბარათის საძიებელის გარეგნობა</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
+    <string name="card_template_editor_deck_override">დასტის გადატანა</string>
     <string name="card_template_editor_insert_field">ველის ჩასმა</string>
     <string name="card_template_editor_select_field">ველის არჩევა</string>
     <string name="card_template_editor_cant_delete">სულ მცირე ერთი ბარათი მაინც არის საჭირო</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">შეიქმნება %1$d ბარათი. გავაგრძელო?</item>
-        <item quantity="other">შეიქმნება %1$d ბარათები. გავაგრძელო?</item>
+        <item quantity="other">შეიქმნება %1$d ბარათი. გავაგრძელო?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათები?</item>
+        <item quantity="one">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
+        <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
     </plurals>
     <string name="invalid_template">ბარათი ვერ გენერირდება</string>
     <string name="card_template_editor_would_delete_note">კარტის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე ჩანიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
@@ -229,8 +229,8 @@
     <string name="sync_conflict_title_new">აირჩიეთ კოლექცია რომ დარჩეს</string>
     <string name="sync_conflict_replace_title">კოლექციის ჩანაცვლება</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d ბარათი (დარჩენილია 0)</item>
+        <item quantity="other">%1$d ბარათი (დარჩენილია 0)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s ასლი</string>
 </resources>

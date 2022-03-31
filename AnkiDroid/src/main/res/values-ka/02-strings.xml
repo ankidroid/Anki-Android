@@ -44,22 +44,22 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
     <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
+    <string name="CardEditorCardDeck">ბარათის დასტა:</string>
+    <string name="CardEditorNoteDeck">დასტა:</string>
+    <string name="CardEditorModel">ტიპი:</string>
+    <string name="CardEditorTags">იარლიყები: %1$s</string>
+    <string name="CardEditorCards">ბარათები: %1$s</string>
+    <string name="tag_name">იარლიყის სახელი</string>
+    <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
+    <string name="add_tag">იარლიყის დამატება</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
+    <string name="filter_tags">იარლიყების გაფილტვრა</string>
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Updated to version %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
+    <string name="save_whiteboard">დაფის შენახვა</string>
+    <string name="enable_whiteboard">დაფის ჩართვა</string>
+    <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
     <string name="hide_whiteboard">დაფის დამალვა</string>
     <string name="clear_whiteboard">დაფის წაშლა</string>
@@ -77,20 +77,20 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
+        <item>კითხვა</item>
         <item>Sort field</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
+        <item>პასუხი</item>
+        <item>ბარათი</item>
+        <item>დასტა</item>
+        <item>შენიშვნა</item>
+        <item>კითხვა</item>
+        <item>იარლიყები</item>
+        <item>დავიწყებულები</item>
+        <item>გამეორებები</item>
         <item>ინტერვალი</item>
-        <item>Ease</item>
+        <item>სიადვილე</item>
         <item>Due</item>
         <item>Card Modified</item>
         <item>შექმნილია</item>
@@ -131,11 +131,11 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid card</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ბარათი</string>
     <string name="note_editor_copy_note">ჩანიშვნის კოპირება</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="card_editor_reposition_card">გადაადგილება</string>
     <string name="card_editor_reset_card">პროგრესის წაშლა</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">ოპერაცია ვერ შესრულდება მოწყობილობაზე მეხსიერების არქონის გამო</string>
@@ -145,7 +145,7 @@
         <item quantity="one">%d card added</item>
         <item quantity="other">%d cards added</item>
     </plurals>
-    <string name="check_db">Check database</string>
+    <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
     <string name="check_media">Check media</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
     <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
@@ -154,8 +154,8 @@
     <string name="delete_deck">Deleting deck&#8230;</string>
     <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
+    <string name="import_title">იმპორტირება</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
@@ -196,44 +196,44 @@
         [2] %2$s
         ]]></string>
     <string name="export_unsuccessful">შეცდომა apkg ფაილის ექსპორტში</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
+    <string name="menu__deck_options">დასტის პარამეტრები</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
+    <string name="select_tts">ხმოვანი წამკითხველის ენის არჩევა</string>
     <string name="custom_study">Custom study</string>
-    <string name="more_options">More</string>
+    <string name="more_options">მეტი</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
+    <string name="sched_end">(დასასრული)</string>
     <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconds</item>
+        <item quantity="one">%s წამი</item>
+        <item quantity="other">%s წამი</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
+        <item quantity="one">%s წუთი</item>
+        <item quantity="other">%s წუთი</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="one">%s hour</item>
-        <item quantity="other">%s hours</item>
+        <item quantity="one">%s საათი</item>
+        <item quantity="other">%s საათი</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="one">%s day</item>
-        <item quantity="other">%s days</item>
+        <item quantity="one">%s დღე</item>
+        <item quantity="other">%s დღე</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="one">%s month</item>
-        <item quantity="other">%s months</item>
+        <item quantity="one">%s თვე</item>
+        <item quantity="other">%s თვე</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="one">%s year</item>
-        <item quantity="other">%s years</item>
+        <item quantity="one">%s წელი</item>
+        <item quantity="other">%s წელი</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
@@ -243,7 +243,7 @@
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">That deck already exists</string>
+    <string name="decks_rename_exists">ეგ დასტა უკვე არსებობს</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
     <string name="filtered_deck_name">Filtered Deck</string>
     <string name="reminder_title">Do not forget to study today!</string>
@@ -265,22 +265,22 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
+    <string name="background_image_title">ფონი</string>
     <string name="choose_an_image">Select image</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">ნაგულისხმევის აღდგენა</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">მაგალიტი</string>
+    <string name="basic_answer_sample_text">მაგალითი</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="white_board_image_save_failed">დაფის სურათი ვერ შეინახა. %s</string>
+    <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
+    <string name="title_whiteboard_pen_color">დაფის მარკერის ფერი</string>
+    <string name="title_whiteboard_editor">დაფის რედაქტორი</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
     <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
@@ -292,16 +292,16 @@
     <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d შენიშვნა დაემატა</item>
+        <item quantity="other">%d შენიშვნა დაემატა</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d შენიშვნა განახლდა</item>
+        <item quantity="other">%d შენიშვნა განახლდა</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d შენიშვნა არ შეცვლილა</item>
+        <item quantity="other">%d შენიშვნა არ შეცვლილა</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -309,7 +309,7 @@
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(შეცდომის კოდი: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
@@ -323,7 +323,7 @@
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
+    <string name="menu_font_size">ტექსტის ზომა</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
@@ -333,7 +333,7 @@
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">ღილაკის ტექსტი</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
@@ -350,24 +350,24 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
+    <string name="email_id_empty">ელფოსტა საჭიროა</string>
+    <string name="password_empty">პაროლი საჭიროა</string>
     <string name="back_pressed_once">Press back again to exit</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
+    <string name="download_deck">დასტის ჩამოტვირთვა</string>
+    <string name="try_again">ხელახლა სცადეთ</string>
+    <string name="cancel_download">ჩამოტვირთვის გაუქმება</string>
     <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="downloading_file">იტვირთება %s</string>
+    <string name="import_deck">დასტის იმპორტი</string>
+    <string name="something_wrong">რაღაც შეცდომა მოხდა, გთხოვთ თავიდან სცადოთ</string>
+    <string name="download_failed">ჩამოტვირთვა წარუმატებელია</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="home">მთავარი</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>
@@ -375,7 +375,7 @@
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
+    <string name="deleted_note">შენიშვნა წაიშალა</string>
     <string name="suspended_card">Suspended card</string>
     <string name="suspended_note">Suspended note</string>
     <!--  Note Editor Toggle Sticky  -->
@@ -390,8 +390,14 @@
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
     <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
+    <string name="scoped_storage_learn_more">გაიგეთ მეტი</string>
+    <string name="scoped_storage_postpone">გადადება</string>
     <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">ვერ მოიძებნა</string>
+    <!--  JS Addons  -->
+    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
+    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
 </resources>

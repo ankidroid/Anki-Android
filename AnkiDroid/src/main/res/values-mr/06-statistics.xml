@@ -55,7 +55,7 @@
     <string name="stats_cumulative_time_hours">संचयी तास</string>
     <string name="stats_cumulative">Cumulative</string>
     <string name="stats_cumulative_percentage">Cumulative percentage</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">संचयी बरोबर%</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">संचयी बरोबर %</string>
     <string name="stats_answers">उत्तरे</string>
     <string name="stats_minutes">मिनिटे</string>
     <string name="stats_hours">तास</string>

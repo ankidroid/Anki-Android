@@ -186,7 +186,7 @@
     <string name="day_offset_summ">XXX 時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午前 0 時</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">午後11時</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
+    <string name="sched_v2" maxLength="41">V2スケジューラー</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
@@ -323,7 +323,7 @@
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">問題</string>
     <string name="card_side_answer">解答</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_both">問題 &amp; 解答</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
