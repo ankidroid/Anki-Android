@@ -35,7 +35,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.dialogs.ContextMenuHelper.getValuesFromKeys
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.*
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -50,6 +49,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 
@@ -150,6 +150,15 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     }
                 }
             }.build()
+    }
+
+    @KotlinCleanup("make this use enum instead of Int")
+    fun getValuesFromKeys(map: HashMap<Int, String>, keys: IntArray): Array<String?> {
+        val values = arrayOfNulls<String>(keys.size)
+        for (i in keys.indices) {
+            values[i] = map[keys[i]]
+        }
+        return values
     }
 
     /**
