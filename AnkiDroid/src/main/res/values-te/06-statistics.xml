@@ -55,7 +55,7 @@
     <string name="stats_cumulative_time_hours">సంచిత గంటల</string>
     <string name="stats_cumulative">సంచిత</string>
     <string name="stats_cumulative_percentage">సంచిత శాతం</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">సంచిత సరైన%</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">సంచిత సరైన %</string>
     <string name="stats_answers">జవాబులు</string>
     <string name="stats_minutes">నిమిషాల</string>
     <string name="stats_hours">గంటలు</string>

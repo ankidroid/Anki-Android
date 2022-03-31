@@ -133,7 +133,7 @@
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Exibir status da sincronização</string>
     <string name="sync_status_badge_summ">Alterar o ícone de sincronização quando alterações forem enviadas.</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema Dia</string>
     <string name="night_theme" maxLength="41">Tema Noite</string>
     <string name="default_font" maxLength="41">Fonte padrão</string>
@@ -215,9 +215,9 @@
     <string name="media_import_allow_all_files" maxLength="41">Importar todos os arquivos de mídia</string>
     <string name="media_import_allow_all_files_summ">Se o Android não reconhecer um arquivo de mídia</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">Baralho padrão ao abrir estatísticas</string>
+    <string name="stats_default_deck_current">Exibir estatísticas do baralho mais recente</string>
+    <string name="stats_default_deck_all">Exibir estatísticas de todos os baralhos</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Habilitar estatísticas avançadas</string>

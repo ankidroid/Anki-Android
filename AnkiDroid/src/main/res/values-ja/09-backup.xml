@@ -53,7 +53,7 @@
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">データベースを修復しています...</string>
     <string name="backup_invalid_file_error">選択したバックアップ ファイルは無効です。</string>
-    <string name="backup_restore_select_title">復元するバックアップの選択</string>
+    <string name="backup_restore_select_title">復元するバックアップを選択</string>
     <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>
     <string name="open_collection_failed_title">コレクションを開けませんでした</string>
     <string name="corrupt_db_message">コレクションが破損しています。\n\n「オプション」をタップして、バックアップからコレクションの復元を行ってください。もしそれで解決しない場合は、データベースを手動で修復するために次の手順を試してください：\n%1$s</string>

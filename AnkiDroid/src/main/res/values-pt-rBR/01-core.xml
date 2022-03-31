@@ -157,7 +157,7 @@
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisa do deck</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="empty_deck_add_note">Adicionar cartão</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>

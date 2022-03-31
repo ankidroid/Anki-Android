@@ -157,7 +157,7 @@
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها </string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">جستجوی دسته‌ها </string>
     <string name="empty_deck_add_note">اضافه کردن کارت</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_empty">این دسته خالی است. دکمه + را فشار دهید تا مطلب جدید اضافه کنید.</string>
