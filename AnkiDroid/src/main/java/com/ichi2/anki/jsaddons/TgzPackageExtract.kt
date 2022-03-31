@@ -103,31 +103,31 @@ class TgzPackageExtract(private val context: Context) {
      * Untar and ungzip a tar.gz file to a AnkiDroid/addons directory.
      *
      * @param tarballFile the .tgz file to extract
-     * @param addonsDir   the AnkiDroid addons directory
+     * @param addonsPackageDir the addons package directory
      * @return the temp directory.
      * @throws FileNotFoundException if .tgz file or ungzipped file i.e. .tar file not found
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsDir: File) {
+    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: File) {
 
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
         try {
-            compat.createDirectories(addonsDir)
+            compat.createDirectories(addonsPackageDir)
         } catch (e: IOException) {
-            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsDir.absolutePath), false)
+            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
             Timber.w(e)
             return
         }
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
         requiredMinSpace = tarballFile.length() * 2
-        availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
+        availableSpace = Utils.determineBytesAvailable(addonsPackageDir.canonicalPath)
         InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
 
         // If space available then unGZip it
-        val tarTempFile = unGzip(tarballFile, addonsDir)
+        val tarTempFile = unGzip(tarballFile, addonsPackageDir)
         tarTempFile.deleteOnExit()
 
         // Make sure we have sufficient free space
@@ -136,9 +136,10 @@ class TgzPackageExtract(private val context: Context) {
 
         try {
             // If space available then unTar it
-            unTar(tarTempFile, addonsDir)
+            unTar(tarTempFile, addonsPackageDir)
         } catch (e: IOException) {
             Timber.w("Failed to unTar file")
+            safeDeleteAddonsPackageDir(addonsPackageDir)
         } finally {
             tarTempFile.delete()
         }
@@ -258,7 +259,6 @@ class TgzPackageExtract(private val context: Context) {
             compat.createDirectories(parent)
         } catch (e: IOException) {
             // clean up
-            outputDir.deleteRecursively()
             Timber.w(e)
             throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
         }
@@ -363,8 +363,6 @@ class TgzPackageExtract(private val context: Context) {
     private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
         val newAvailableSpace: Long = Utils.determineBytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
-            // clean up
-            outputDir.deleteRecursively()
             throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
         }
     }
@@ -379,5 +377,12 @@ class TgzPackageExtract(private val context: Context) {
                 }
             }
         }
+    }
+
+    private fun safeDeleteAddonsPackageDir(addonsPackageDir: File) {
+        if (addonsPackageDir.parent != "addons") {
+            return
+        }
+        addonsPackageDir.deleteRecursively()
     }
 }
