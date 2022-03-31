@@ -124,10 +124,7 @@ class TgzPackageExtract(private val context: Context) {
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
         requiredMinSpace = tarballFile.length() * 2
         availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
-        if (requiredMinSpace > availableSpace) {
-            Timber.e("Not enough space to extract file, need %d, available %d", requiredMinSpace, availableSpace)
-            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace)))
-        }
+        InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
 
         // If space available then unGZip it
         val tarTempFile = unGzip(tarballFile, addonsDir)
@@ -135,10 +132,7 @@ class TgzPackageExtract(private val context: Context) {
 
         // Make sure we have sufficient free space
         val unTarSize = calculateUnTarSize(tarTempFile)
-        if (unTarSize > availableSpace) {
-            Timber.e("Not enough space to untar, need %d, available %d", unTarSize, availableSpace)
-            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, unTarSize), Formatter.formatFileSize(context, availableSpace)))
-        }
+        InsufficientSpaceException.throwIfInsufficientSpace(context, unTarSize, availableSpace)
 
         try {
             // If space available then unTar it
@@ -372,6 +366,18 @@ class TgzPackageExtract(private val context: Context) {
             // clean up
             outputDir.deleteRecursively()
             throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+        }
+    }
+
+    class InsufficientSpaceException(val required: Long, val available: Long, val context: Context) : IOException() {
+
+        companion object {
+            fun throwIfInsufficientSpace(context: Context, requiredMinSpace: Long, availableSpace: Long) {
+                if (requiredMinSpace > availableSpace) {
+                    Timber.w("Not enough space, need %d, available %d", Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace))
+                    throw InsufficientSpaceException(requiredMinSpace, availableSpace, context)
+                }
+            }
         }
     }
 }
