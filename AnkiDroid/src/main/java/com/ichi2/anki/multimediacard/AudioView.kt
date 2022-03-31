@@ -29,7 +29,6 @@ import androidx.appcompat.widget.AppCompatImageButton
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import timber.log.Timber
 import java.io.File
@@ -323,8 +322,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     }
 
     interface OnRecordingFinishEventListener {
-        @KotlinCleanup("make v non-null")
-        fun onRecordingFinish(v: View?)
+        fun onRecordingFinish(v: View)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
