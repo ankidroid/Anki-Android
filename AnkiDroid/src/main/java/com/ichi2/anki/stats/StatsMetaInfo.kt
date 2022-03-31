@@ -16,159 +16,155 @@
 
 package com.ichi2.anki.stats
 
-import android.annotation.SuppressLint
 import com.ichi2.libanki.stats.Stats.AxisType
-import com.ichi2.utils.KotlinCleanup
 
 /**
  * Interface between Stats.java and AdvancedStatistics.java
  */
-@KotlinCleanup("Remove field prefixes, make properties private")
-@SuppressLint("VariableNamingDetector")
 class StatsMetaInfo {
-    var mDynamicAxis = false
-    var mHasColoredCumulative = false
-    var mType: AxisType? = null
-    var mTitle = 0
-    var mBackwards = false
-    var mValueLabels: IntArray? = null
-    var mColors: IntArray? = null
-    var mAxisTitles: IntArray? = null
-    var mMaxCards = 0
-    var mMaxElements = 0
-    var mFirstElement = 0.0
-    var mLastElement = 0.0
-    var mZeroIndex = 0
-    var mCumulative: Array<DoubleArray>? = null
-    var mMcount = 0.0
-    var mSeriesList: Array<DoubleArray>? = null
+    private var dynamicAxis = false
+    private var hasColoredCumulative = false
+    private var type: AxisType? = null
+    private var title = 0
+    private var backwards = false
+    private var valueLabels: IntArray? = null
+    private var colors: IntArray? = null
+    private var axisTitles: IntArray? = null
+    private var maxCards = 0
+    private var maxElements = 0
+    private var firstElement = 0.0
+    private var lastElement = 0.0
+    private var zeroIndex = 0
+    private var cumulative: Array<DoubleArray>? = null
+    private var mcount = 0.0
+    private var seriesList: Array<DoubleArray>? = null
     var isStatsCalculated = false
     var isDataAvailable = false
     fun getmSeriesList(): Array<DoubleArray>? {
-        return mSeriesList
+        return seriesList
     }
 
     fun setmSeriesList(seriesList: Array<DoubleArray>) {
-        mSeriesList = seriesList
+        this.seriesList = seriesList
     }
 
     fun ismDynamicAxis(): Boolean {
-        return mDynamicAxis
+        return dynamicAxis
     }
 
     fun setmDynamicAxis(dynamicAxis: Boolean) {
-        mDynamicAxis = dynamicAxis
+        this.dynamicAxis = dynamicAxis
     }
 
     fun ismHasColoredCumulative(): Boolean {
-        return mHasColoredCumulative
+        return hasColoredCumulative
     }
 
     fun setmHasColoredCumulative(hasColoredCumulative: Boolean) {
-        mHasColoredCumulative = hasColoredCumulative
+        this.hasColoredCumulative = hasColoredCumulative
     }
 
     fun getmType(): AxisType? {
-        return mType
+        return type
     }
 
     fun setmType(type: AxisType?) {
-        mType = type
+        this.type = type
     }
 
     fun getmTitle(): Int {
-        return mTitle
+        return title
     }
 
     fun setmTitle(title: Int) {
-        mTitle = title
+        this.title = title
     }
 
     fun ismBackwards(): Boolean {
-        return mBackwards
+        return backwards
     }
 
     fun setmBackwards(backwards: Boolean) {
-        mBackwards = backwards
+        this.backwards = backwards
     }
 
     fun getmValueLabels(): IntArray? {
-        return mValueLabels
+        return valueLabels
     }
 
     fun setmValueLabels(valueLabels: IntArray?) {
-        mValueLabels = valueLabels
+        this.valueLabels = valueLabels
     }
 
     fun getmColors(): IntArray? {
-        return mColors
+        return colors
     }
 
     fun setmColors(colors: IntArray?) {
-        mColors = colors
+        this.colors = colors
     }
 
     fun getmAxisTitles(): IntArray? {
-        return mAxisTitles
+        return axisTitles
     }
 
     fun setmAxisTitles(axisTitles: IntArray?) {
-        mAxisTitles = axisTitles
+        this.axisTitles = axisTitles
     }
 
     fun getmMaxCards(): Int {
-        return mMaxCards
+        return maxCards
     }
 
     fun setmMaxCards(maxCards: Int) {
-        mMaxCards = maxCards
+        this.maxCards = maxCards
     }
 
     fun getmMaxElements(): Int {
-        return mMaxElements
+        return maxElements
     }
 
     fun setmMaxElements(maxElements: Int) {
-        mMaxElements = maxElements
+        this.maxElements = maxElements
     }
 
     fun getmFirstElement(): Double {
-        return mFirstElement
+        return firstElement
     }
 
     fun setmFirstElement(firstElement: Double) {
-        mFirstElement = firstElement
+        this.firstElement = firstElement
     }
 
     fun getmLastElement(): Double {
-        return mLastElement
+        return lastElement
     }
 
     fun setmLastElement(lastElement: Double) {
-        mLastElement = lastElement
+        this.lastElement = lastElement
     }
 
     fun getmZeroIndex(): Int {
-        return mZeroIndex
+        return zeroIndex
     }
 
     fun setmZeroIndex(zeroIndex: Int) {
-        mZeroIndex = zeroIndex
+        this.zeroIndex = zeroIndex
     }
 
     fun getmCumulative(): Array<DoubleArray>? {
-        return mCumulative
+        return cumulative
     }
 
     fun setmCumulative(cumulative: Array<DoubleArray>?) {
-        mCumulative = cumulative
+        this.cumulative = cumulative
     }
 
     fun getmMcount(): Double {
-        return mMcount
+        return mcount
     }
 
     fun setmMcount(Mcount: Double) {
-        mMcount = Mcount
+        mcount = Mcount
     }
 }

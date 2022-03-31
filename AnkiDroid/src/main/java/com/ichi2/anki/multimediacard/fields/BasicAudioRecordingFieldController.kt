@@ -69,7 +69,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
             audioPath = mTempAudioPath!!
         )
         mAudioView!!.setOnRecordingFinishEventListener(object : OnRecordingFinishEventListener {
-            override fun onRecordingFinish(v: View?) {
+            override fun onRecordingFinish(v: View) {
                 // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
                 // FIXME is this okay if it is still null?
                 mField.audioPath = mTempAudioPath
