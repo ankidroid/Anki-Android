@@ -79,7 +79,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    @KotlinCleanup("Use ?.let { } for null handling of supportActionBar")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -90,9 +89,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldLabelView = findViewById(R.id.note_type_editor_fields)
         enableToolbar()
 
-        if (supportActionBar != null) {
-            supportActionBar!!.setTitle(R.string.model_field_editor_title)
-            supportActionBar!!.subtitle = intent.getStringExtra("title")
+        supportActionBar?.let {
+            it.setTitle(R.string.model_field_editor_title)
+            it.subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
     }
