@@ -118,7 +118,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         super.onCollectionLoaded(col)
         collectionCol = col
         setupLabels()
-        createfieldLabels()
+        createFieldLabels()
     }
 
     // ----------------------------------------------------------------------------
@@ -128,14 +128,15 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Sets up the main ListView and ArrayAdapters
      * Containing clickable labels for the fields
      */
-    @KotlinCleanup("Use scope function")
-    private fun createfieldLabels() {
+    private fun createFieldLabels() {
         val fieldLabelAdapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldLabels!!)
-        fieldLabelView!!.adapter = fieldLabelAdapter
-        fieldLabelView!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-            contextMenu = newInstance(fieldLabels!![position], mContextMenuListener)
-            showDialogFragment(contextMenu)
-            currentPos = position
+        fieldLabelView?.let {
+            it.adapter = fieldLabelAdapter
+            it.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+                contextMenu = newInstance(fieldLabels!![position], mContextMenuListener)
+                showDialogFragment(contextMenu)
+                currentPos = position
+            }
         }
     }
 
@@ -242,7 +243,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     /*
      * Creates a dialog to delete the currently selected field
      */
-    @KotlinCleanup("Add scope functions")
     private fun deleteFieldDialog() {
         val confirm = Runnable {
             collectionCol!!.modSchemaNoCheck()
@@ -255,18 +255,20 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         } else {
             try {
                 collectionCol!!.modSchema()
-                val d = ConfirmationDialog()
-                d.setArgs(resources.getString(R.string.field_delete_warning))
-                d.setConfirm(confirm)
-                d.setCancel(confirmDialogCancel)
-                showDialogFragment(d)
+                ConfirmationDialog().let {
+                    it.setArgs(resources.getString(R.string.field_delete_warning))
+                    it.setConfirm(confirm)
+                    it.setCancel(confirmDialogCancel)
+                    showDialogFragment(it)
+                }
             } catch (e: ConfirmModSchemaException) {
                 e.log()
-                val c = ConfirmationDialog()
-                c.setConfirm(confirm)
-                c.setCancel(confirmDialogCancel)
-                c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                showDialogFragment(c)
+                ConfirmationDialog().let {
+                    it.setConfirm(confirm)
+                    it.setCancel(confirmDialogCancel)
+                    it.setArgs(resources.getString(R.string.full_sync_confirmation))
+                    showDialogFragment(it)
+                }
             }
         }
     }
@@ -454,7 +456,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun fullRefreshList() {
         setupLabels()
-        createfieldLabels()
+        createFieldLabels()
     }
 
     /*
