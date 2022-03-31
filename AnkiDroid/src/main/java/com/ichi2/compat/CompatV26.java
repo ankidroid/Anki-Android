@@ -62,9 +62,9 @@ public class CompatV26 extends CompatV23 implements Compat {
      * @param name the user-visible name for the channel
      */
     @Override
-    public void setupNotificationChannel(Context context, String id, String name) {
-        Timber.i("Creating notification channel with id/name: %s/%s",id, name);
-        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+    public void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name) {
+        Timber.i("Creating notification channel with id/name: %s/%s", id, name);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel notificationChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
         notificationChannel.setShowBadge(true);
         notificationChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);

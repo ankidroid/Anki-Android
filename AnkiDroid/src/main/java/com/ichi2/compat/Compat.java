@@ -76,7 +76,7 @@ public interface Compat {
     /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
     String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
-    void setupNotificationChannel(Context context, String id, String name);
+    void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name);
     void setTime(TimePicker picker, int hour, int minute);
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);

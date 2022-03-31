@@ -57,7 +57,7 @@ public class CompatV21 implements Compat {
 
     // Until API26, ignore notification channels
     @Override
-    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
+    public void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name) { /* pre-API26, do nothing */ }
 
     // Until API 23 the methods have "current" in the name
     @Override
