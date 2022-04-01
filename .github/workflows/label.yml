@@ -11,5 +11,14 @@ jobs:
     steps:
     - uses: andymckay/labeler@master
       with:
-        remove-labels: "Pending Merge, Waiting For Feedback, Needs Review, Review High Priority, Needs Second Approval"
-        
+        remove-labels: > 
+          Pending Merge, 
+          Waiting For Feedback, 
+          Needs Review, 
+          Review High Priority, 
+          Needs Second Approval,
+          Blocked by dependency, 
+          Needs a new dev, 
+          squash-merge, 
+          Keep Open, 
+          Stable
