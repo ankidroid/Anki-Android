@@ -169,7 +169,7 @@ public class AdvancedStatistics {
         }
         //To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         mSettings = new Settings(context);
-        metaInfo.setStatsCalculated(true);
+        metaInfo.isStatsCalculated=true;
 
         Collection col = CollectionHelper.getInstance().getCol(context);
 
@@ -257,25 +257,25 @@ public class AdvancedStatistics {
         if(maxCards == 0)
             maxCards = 10;
 
-        metaInfo.setmDynamicAxis(true);
-        metaInfo.setmHasColoredCumulative(true);
-        metaInfo.setmType(type);
-        metaInfo.setmTitle(R.string.stats_forecast);
-        metaInfo.setmBackwards(true);
-        metaInfo.setmValueLabels(valueLabels);
-        metaInfo.setmColors(colors);
-        metaInfo.setmAxisTitles(axisTitles);
-        metaInfo.setmMaxCards(maxCards);
-        metaInfo.setmMaxElements(maxElements);
-        metaInfo.setmFirstElement(firstElement);
-        metaInfo.setmLastElement(lastElement);
-        metaInfo.setmZeroIndex(zeroIndex);
-        metaInfo.setmCumulative(cumulative);
-        metaInfo.setmMcount(count);
+        metaInfo.dynamicAxis=true;
+        metaInfo.hasColoredCumulative=(true);
+        metaInfo.type=type;
+        metaInfo.title=R.string.stats_forecast;
+        metaInfo.backwards=true;
+        metaInfo.valueLabels=valueLabels;
+        metaInfo.colors=colors;
+        metaInfo.axisTitles=axisTitles;
+        metaInfo.maxCards=maxCards;
+        metaInfo.maxElements=maxElements;
+        metaInfo.firstElement=firstElement;
+        metaInfo.lastElement=lastElement;
+        metaInfo.zeroIndex=zeroIndex;
+        metaInfo.cumulative=cumulative;
+        metaInfo.mcount=count;
 
-        metaInfo.setmSeriesList(seriesList);
+        metaInfo.seriesList=seriesList;
 
-        metaInfo.setDataAvailable(!dues.isEmpty());
+        metaInfo.isDataAvailable=!dues.isEmpty();
 
         return metaInfo;
     }
