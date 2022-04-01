@@ -22,149 +22,40 @@ import com.ichi2.libanki.stats.Stats.AxisType
  * Interface between Stats.java and AdvancedStatistics.java
  */
 class StatsMetaInfo {
-    private var dynamicAxis = false
-    private var hasColoredCumulative = false
-    private var type: AxisType? = null
-    private var title = 0
-    private var backwards = false
-    private var valueLabels: IntArray? = null
-    private var colors: IntArray? = null
-    private var axisTitles: IntArray? = null
-    private var maxCards = 0
-    private var maxElements = 0
-    private var firstElement = 0.0
-    private var lastElement = 0.0
-    private var zeroIndex = 0
-    private var cumulative: Array<DoubleArray>? = null
-    private var mcount = 0.0
-    private var seriesList: Array<DoubleArray>? = null
+    @JvmField
+    var dynamicAxis = false
+    @JvmField
+    var hasColoredCumulative = false
+    @JvmField
+    var type: AxisType? = null
+    @JvmField
+    var title = 0
+    @JvmField
+    var backwards = false
+    @JvmField
+    var valueLabels: IntArray? = null
+    @JvmField
+    var colors: IntArray? = null
+    @JvmField
+    var axisTitles: IntArray? = null
+    @JvmField
+    var maxCards = 0
+    @JvmField
+    var maxElements = 0
+    @JvmField
+    var firstElement = 0.0
+    @JvmField
+    var lastElement = 0.0
+    @JvmField
+    var zeroIndex = 0
+    @JvmField
+    var cumulative: Array<DoubleArray>? = null
+    @JvmField
+    var mcount = 0.0
+    @JvmField
+    var seriesList: Array<DoubleArray>? = null
+    @JvmField
     var isStatsCalculated = false
+    @JvmField
     var isDataAvailable = false
-    fun getmSeriesList(): Array<DoubleArray>? {
-        return seriesList
-    }
-
-    fun setmSeriesList(seriesList: Array<DoubleArray>) {
-        this.seriesList = seriesList
-    }
-
-    fun ismDynamicAxis(): Boolean {
-        return dynamicAxis
-    }
-
-    fun setmDynamicAxis(dynamicAxis: Boolean) {
-        this.dynamicAxis = dynamicAxis
-    }
-
-    fun ismHasColoredCumulative(): Boolean {
-        return hasColoredCumulative
-    }
-
-    fun setmHasColoredCumulative(hasColoredCumulative: Boolean) {
-        this.hasColoredCumulative = hasColoredCumulative
-    }
-
-    fun getmType(): AxisType? {
-        return type
-    }
-
-    fun setmType(type: AxisType?) {
-        this.type = type
-    }
-
-    fun getmTitle(): Int {
-        return title
-    }
-
-    fun setmTitle(title: Int) {
-        this.title = title
-    }
-
-    fun ismBackwards(): Boolean {
-        return backwards
-    }
-
-    fun setmBackwards(backwards: Boolean) {
-        this.backwards = backwards
-    }
-
-    fun getmValueLabels(): IntArray? {
-        return valueLabels
-    }
-
-    fun setmValueLabels(valueLabels: IntArray?) {
-        this.valueLabels = valueLabels
-    }
-
-    fun getmColors(): IntArray? {
-        return colors
-    }
-
-    fun setmColors(colors: IntArray?) {
-        this.colors = colors
-    }
-
-    fun getmAxisTitles(): IntArray? {
-        return axisTitles
-    }
-
-    fun setmAxisTitles(axisTitles: IntArray?) {
-        this.axisTitles = axisTitles
-    }
-
-    fun getmMaxCards(): Int {
-        return maxCards
-    }
-
-    fun setmMaxCards(maxCards: Int) {
-        this.maxCards = maxCards
-    }
-
-    fun getmMaxElements(): Int {
-        return maxElements
-    }
-
-    fun setmMaxElements(maxElements: Int) {
-        this.maxElements = maxElements
-    }
-
-    fun getmFirstElement(): Double {
-        return firstElement
-    }
-
-    fun setmFirstElement(firstElement: Double) {
-        this.firstElement = firstElement
-    }
-
-    fun getmLastElement(): Double {
-        return lastElement
-    }
-
-    fun setmLastElement(lastElement: Double) {
-        this.lastElement = lastElement
-    }
-
-    fun getmZeroIndex(): Int {
-        return zeroIndex
-    }
-
-    fun setmZeroIndex(zeroIndex: Int) {
-        this.zeroIndex = zeroIndex
-    }
-
-    fun getmCumulative(): Array<DoubleArray>? {
-        return cumulative
-    }
-
-    fun setmCumulative(cumulative: Array<DoubleArray>?) {
-        this.cumulative = cumulative
-    }
-
-    fun getmMcount(): Double {
-        return mcount
-    }
-
-    fun setmMcount(Mcount: Double) {
-        mcount = Mcount
-    }
 }

@@ -37,7 +37,6 @@ import com.ichi2.libanki.utils.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
@@ -385,24 +384,24 @@ public class Stats {
         // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
         metaInfo = new AdvancedStatistics().calculateDueAsMetaInfo(metaInfo, type, context, _limit());
-        if (metaInfo.isStatsCalculated()) {
-            mDynamicAxis = metaInfo.ismDynamicAxis();
-            mHasColoredCumulative = metaInfo.ismHasColoredCumulative();
-            mType = metaInfo.getmType();
-            mTitle = metaInfo.getmTitle();
-            mBackwards = metaInfo.ismBackwards();
-            mValueLabels = metaInfo.getmValueLabels();
-            mColors = metaInfo.getmColors();
-            mAxisTitles = metaInfo.getmAxisTitles();
-            mMaxCards = metaInfo.getmMaxCards();
-            mMaxElements = metaInfo.getmMaxElements();
-            mFirstElement = metaInfo.getmFirstElement();
-            mLastElement = metaInfo.getmLastElement();
-            mZeroIndex = metaInfo.getmZeroIndex();
-            mCumulative = metaInfo.getmCumulative();
-            mMcount = metaInfo.getmMcount();
-            mSeriesList = metaInfo.getmSeriesList();
-            return metaInfo.isDataAvailable();
+        if (metaInfo.isStatsCalculated) {
+            mDynamicAxis = metaInfo.dynamicAxis;
+            mHasColoredCumulative = metaInfo.hasColoredCumulative;
+            mType = metaInfo.type;
+            mTitle = metaInfo.title;
+            mBackwards = metaInfo.backwards;
+            mValueLabels = metaInfo.valueLabels;
+            mColors = metaInfo.colors;
+            mAxisTitles = metaInfo.axisTitles;
+            mMaxCards = metaInfo.maxCards;
+            mMaxElements = metaInfo.maxElements;
+            mFirstElement = metaInfo.firstElement;
+            mLastElement = metaInfo.lastElement;
+            mZeroIndex = metaInfo.zeroIndex;
+            mCumulative = metaInfo.cumulative;
+            mMcount = metaInfo.mcount;
+            mSeriesList = metaInfo.seriesList;
+            return metaInfo.isDataAvailable;
         } else {
             return calculateDue(type);
         }
