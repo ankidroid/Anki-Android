@@ -1,0 +1,15 @@
+name: Remove Labels
+
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  merge_job:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: andymckay/labeler@master
+      with:
+        remove-labels: "Pending Merge, Waiting For Feedback, Needs Review, Review High Priority, Needs Second Approval"
+        
