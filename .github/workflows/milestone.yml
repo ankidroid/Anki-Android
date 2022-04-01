@@ -1,0 +1,16 @@
+name: PR Milestone
+
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  milestone:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: zoispag/action-assign-milestone@v1
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          milestone: "2.16 release"
+    
