@@ -90,7 +90,7 @@ public interface Compat {
 
     long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException;
 
-    long copyFile(InputStream source, String target) throws IOException;
+    long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException;
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
