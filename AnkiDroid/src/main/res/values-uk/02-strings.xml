@@ -363,7 +363,8 @@
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>
-    <string name="toolbar_item_explain_remove">Введіть HTML, який буде вставлений до і після виділеного тексту\n\nДовго натискайте на елемент панелі інструментів, щоб видалити його</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Видалити елемент панелі інструментів?</string>
     <string name="note_editor_paste_too_large">Зображення завелике для вставки, будь ласка, вставте зображення вручну</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Виконується резервне копіювання. Будь ласка, спробуйте ще раз</string>

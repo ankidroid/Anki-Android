@@ -152,7 +152,7 @@
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>
     <string name="search_deck" comment="Deck search for selecting it">Tìm kiếm bộ thẻ</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Tìm kiếm bộ thẻ</string>
     <string name="empty_deck_add_note">Thêm thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_empty">Bộ thẻ này rỗng. Bấm bút + để thêm nội dung mới.</string>

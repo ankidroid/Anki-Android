@@ -337,7 +337,8 @@
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
-    <string name="toolbar_item_explain_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por forigi ĝin</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
     <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>

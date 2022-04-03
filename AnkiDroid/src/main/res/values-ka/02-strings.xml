@@ -42,8 +42,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">ნავიგაციის პანელის გახსნა</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">ნავიგაციის პანელის დახურვა</string>
     <string name="CardEditorCardDeck">ბარათის დასტა:</string>
     <string name="CardEditorNoteDeck">დასტა:</string>
     <string name="CardEditorModel">ტიპი:</string>
@@ -52,10 +52,10 @@
     <string name="tag_name">იარლიყის სახელი</string>
     <string name="add_new_filter_tags">იარლიყების დამატება/გაფილტვრა</string>
     <string name="add_tag">იარლიყის დამატება</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
+    <string name="check_all_tags">ყველა იარლიყი მონიშნე/არ მონიშნო</string>
     <string name="filter_tags">იარლიყების გაფილტვრა</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="no_tags">იარლიყები ჯერ არ დაგიმატებიათ</string>
+    <string name="updated_version">მიმდინარეობს ვერსიის განახლება %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">დაფის შენახვა</string>
     <string name="enable_whiteboard">დაფის ჩართვა</string>
@@ -66,7 +66,7 @@
     <string name="replay_audio">ხმის თავიდან ჩართვა</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
+    <string name="corrupt_font">დაზიანებული შრიფტის ფაილი %s</string>
     <string name="webview_crash_unknown">უცნობი შეცდომა</string>
     <string name="webview_crash_unknwon_detailed">ეს იყო გამოწვეული WebWiew-ის შიდა შეცდომით</string>
     <string name="webview_crash_oom">მეხსიერება აღარ არის</string>
@@ -91,10 +91,10 @@
         <item>გამეორებები</item>
         <item>ინტერვალი</item>
         <item>სიადვილე</item>
-        <item>Due</item>
-        <item>Card Modified</item>
+        <item>სასწავლო</item>
+        <item>სახეცვლილი ბარათი</item>
         <item>შექმნილია</item>
-        <item>Note Modified</item>
+        <item>სახეცვლილი შენიშვნა</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">დღეის ახალი ბარათების ლიმიტის შეცვლა</string>
@@ -121,15 +121,15 @@
     <string name="reordering_cards">Reordering cards&#8230;</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">დროის ლიმიტი ამოიწურა</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d card studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d წუთში</item>
+        <item quantity="other">%1$d წუთში</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ბარათი</string>
     <string name="note_editor_copy_note">ჩანიშვნის კოპირება</string>
@@ -137,7 +137,7 @@
     <string name="card_editor_reset_card">პროგრესის წაშლა</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
     <string name="error_insufficient_memory">ოპერაცია ვერ შესრულდება მოწყობილობაზე მეხსიერების არქონის გამო</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
@@ -146,14 +146,14 @@
         <item quantity="other">%d cards added</item>
     </plurals>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
-    <string name="check_media">Check media</string>
+    <string name="check_media">მედია ფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
     <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="show_hint">Show %s</string>
-    <string name="info_rate">Rate AnkiDroid</string>
+    <string name="show_hint">აჩვენე %s</string>
+    <string name="info_rate">შეაფასეთ AnkiDroid</string>
     <string name="import_title">იმპორტირება</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
@@ -176,7 +176,7 @@
     <string name="import_replacing">Replacing collection&#8230;</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
+    <string name="export_include_media">მედია ფაილების მოცვა</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
     <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
     <string name="export_in_progress">Exporting Anki package file&#8230;</string>
@@ -200,7 +200,7 @@
     <string name="menu__deck_options">დასტის პარამეტრები</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
     <string name="select_tts">ხმოვანი წამკითხველის ენის არჩევა</string>
-    <string name="custom_study">Custom study</string>
+    <string name="custom_study">ინდივიდუალური სწავლა</string>
     <string name="more_options">მეტი</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
@@ -258,7 +258,7 @@
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
@@ -324,12 +324,12 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ტექსტის ზომა</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ინსტრუმენტების პანელის ჩვენება</string>
+    <string name="format_insert_bold">ტექსტის გასქელება</string>
+    <string name="format_insert_italic">ტექსტის წაქცევა</string>
+    <string name="format_insert_underline">ტექსტის გახაზვა</string>
+    <string name="insert_horizontal_line">ჰორიზონტალური ხაზის ჩასმა</string>
+    <string name="insert_heading">სათაურის ჩასმა</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
@@ -337,7 +337,8 @@
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>

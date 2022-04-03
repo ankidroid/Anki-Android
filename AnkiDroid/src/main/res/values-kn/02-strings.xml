@@ -337,7 +337,8 @@
     <string name="before_text">ಆಯ್ಕೆಗೆ ಮೊದಲು HTML</string>
     <string name="after_text">ಆಯ್ಕೆಯ ನಂತರ HTML</string>
     <string name="add_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ರಚಿಸಿ</string>
-    <string name="toolbar_item_explain_remove">ಆಯ್ದ ಪಠ್ಯದ ಮೊದಲು ಮತ್ತು ನಂತರ ಸೇರಿಸಲು HTML ಅನ್ನು ನಮೂದಿಸಿ \n\n ಅದನ್ನು ತೆಗೆದುಹಾಕಲು ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ಒತ್ತಿರಿ</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ತೆಗೆದುಹಾಕುವುದೇ?</string>
     <string name="note_editor_paste_too_large">ಚಿತ್ರ ಅಂಟಿಸಲು ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ, ದಯವಿಟ್ಟು ಚಿತ್ರವನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಸೇರಿಸಿ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android ಬ್ಯಾಕಪ್ ಪ್ರಗತಿಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>

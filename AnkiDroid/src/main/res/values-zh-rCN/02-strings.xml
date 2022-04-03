@@ -324,7 +324,8 @@
     <string name="before_text">选择前的 HTML</string>
     <string name="after_text">选择后的 HTML</string>
     <string name="add_toolbar_item">创建工具栏项</string>
-    <string name="toolbar_item_explain_remove">请输入要在选定文本之前和之后插入的 HTML\n\n长按工具栏项目以删除它</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">删除工具栏项目？</string>
     <string name="note_editor_paste_too_large">图片太大，无法粘贴，请手动插入图像</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        正在进行 Android 备份。请重试</string>
@@ -382,9 +383,9 @@
     <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s 不是一个有效的 javascript 附加组件包</string>
+    <string name="could_not_create_dir">无法创建目录 %s</string>
+    <string name="malicious_archive_entry_outside">恶意压缩文件。包含目标目录外的条目： %s</string>
+    <string name="malicious_archive_exceeds_limit">恶意压缩文件。大小超过 %1$s 或包含超过 %2$d 个文件</string>
+    <string name="file_extract_exceeds_storage_space">文件提取超出存储空间</string>
 </resources>

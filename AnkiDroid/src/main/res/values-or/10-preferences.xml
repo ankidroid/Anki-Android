@@ -205,7 +205,7 @@
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
-    <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରନ୍ତୁ</string>
+    <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରିବା</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
     <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>

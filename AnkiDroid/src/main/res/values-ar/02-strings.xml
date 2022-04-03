@@ -389,7 +389,8 @@
     <string name="before_text">HTML قبل المحدد</string>
     <string name="after_text">HTML بعد المحدد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
-    <string name="toolbar_item_explain_remove">أدخل HTML ليتم إدخاله قبل النص المحدد وبعده\n\nاضغط ضغطًا مطولًا على عنصر شريط أدوات لإزالته</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
     <string name="note_editor_paste_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
@@ -445,9 +446,9 @@
     <string name="scoped_storage_migrate">نقل</string>
     <string name="search_card_js_api_no_results">لم يجد البحث أي نتائج</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s ليست حزمة إضافة جافاسكربت صالحة</string>
+    <string name="could_not_create_dir">فشل إنشاء المجلد %s</string>
+    <string name="malicious_archive_entry_outside">أرشيف خبيث. يحتوي على مدخلة خارج المجلد الهدف: %s</string>
+    <string name="malicious_archive_exceeds_limit">أرشيف خبيث. يتخطى الحجم %1$s أو يحتوي على أكثر من %2$d ملف</string>
+    <string name="file_extract_exceeds_storage_space">يتخطى الملف المستخرج مساحة التخزين</string>
 </resources>

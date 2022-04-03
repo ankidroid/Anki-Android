@@ -337,7 +337,8 @@
     <string name="before_text">निवड करण्यापूर्वी एचटीएमएल</string>
     <string name="after_text">निवडानंतर एचटीएमएल</string>
     <string name="add_toolbar_item">टूलबार आयटम तयार करा</string>
-    <string name="toolbar_item_explain_remove">निवडलेल्या मजकूराच्या आधी आणि नंतर घालण्यासाठी HTML प्रविष्ट करा \n\n टूलबार आयटम काढण्यासाठी तो दाबा</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">टूलबार आयटम काढायचा?</string>
     <string name="note_editor_paste_too_large">पेस्ट करण्यासाठी प्रतिमा खूप मोठी आहे, कृपया व्यक्तिचलितपणे प्रतिमा घाला</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android बॅकअप प्रगतीपथावर आहे. कृपया पुन्हा प्रयत्न करा</string>

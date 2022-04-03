@@ -93,12 +93,12 @@
     <string name="reschedule_card_dialog_warning_ease_reset">ଭବିଷ୍ୟତରେ ନିର୍ଦ୍ଧାରକ କିପରି ପତ୍ରଙ୍କୁ ବ୍ୟବହାର କରେ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ କଲେ ପୁନଃସେଟ୍ ହେଇଯାଏ (ସହଜତା %d%% ରେ ସେଟ୍ ହେବ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ତାସଖଣ୍ଡଟି ଆମଦାନୀ କରିବାକୁ ଆପଣଙ୍କ ଫାଇଲ୍ ପରିଚାଳକରେ ଏହାକୁ ଚୟନ କରନ୍ତୁ କିମ୍ୱା about:downloads ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
-    <string name="answering_error_message">ସଂଗ୍ରହକୁ ଲେଖିବା ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
+    <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="custom_study_new_total_new">ତାସଖଣ୍ଡ ରେ ନୂତନ ପତ୍ରର ସଂଖ୍ୟା: %d</string>
+    <string name="custom_study_new_total_new">ତାସଖଣ୍ଡ ରେ ନୂଆ ପତ୍ରର ସଂଖ୍ୟା: %d</string>
     <string name="custom_study_rev_total_rev">ତାସଖଣ୍ଡ ରେ ଧାର୍ଯ୍ୟ ସମୀକ୍ଷାଗୁଡ଼ିକ: %d</string>
     <string name="custom_study_new_extend">ଆଜିର ନୂତନ ପତ୍ର ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>
     <string name="custom_study_rev_extend">ଆଜିର ସମୀକ୍ଷା ସୀମା ରେ ବୃଦ୍ଧି/ହ୍ରାସ (“-3”) କରନ୍ତୁ</string>

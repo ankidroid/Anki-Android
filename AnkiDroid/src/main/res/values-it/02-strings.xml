@@ -337,7 +337,8 @@
     <string name="before_text">HTML Prima della Selezione</string>
     <string name="after_text">HTML Dopo la Selezione</string>
     <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>
-    <string name="toolbar_item_explain_remove">Inserisci l\'HTML da inserire prima e dopo il testo selezionato\n\nPremi a lungo su un elemento della barra degli strumenti per rimuoverlo</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Rimuovere l\'Elemento della Barra Strumenti?</string>
     <string name="note_editor_paste_too_large">L\'immagine è troppo grande da incollare, sei pregato di inserire manualmente l\'immagine</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup di Android in corso. Sei pregato di riprovare</string>

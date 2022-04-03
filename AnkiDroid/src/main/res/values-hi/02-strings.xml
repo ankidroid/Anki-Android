@@ -337,7 +337,8 @@
     <string name="before_text">चयन से पहले का HTML</string>
     <string name="after_text">चयन के बाद का HTML</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">चयनित पाठ से पहले और बाद में डाले जाने वाले HTML दर्ज करें\n\nकिसी टूलबार आइटम को निकालने के लिए उसे लंबे समय तक दबाएं</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">एन्ड्रॉयड बैकप प्रगति पर है। कृपया पुन: प्रयास करें</string>

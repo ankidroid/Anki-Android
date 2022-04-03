@@ -57,8 +57,8 @@
     <string name="collapse">ჩაკეცვა</string>
     <string name="study_more">მეტის სწავლა</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">დარჩენილია %1$d ბარათი (%2$s)</item>
-        <item quantity="other">დარჩენილია %1$d ბარათი (%2$s)</item>
+        <item quantity="one">სასწავლოა %1$d ბარათი (%2$s)</item>
+        <item quantity="other">სასწავლოა %1$d ბარათი (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">დარჩა %d წუთი</item>
@@ -153,8 +153,8 @@
     <string name="empty_cram_label">ცარიელია</string>
     <string name="create_subdeck">ქვედასტის შექმნა</string>
     <string name="empty_filtered_deck">გაფილტრული დეკის დაცარიელება</string>
-    <string name="custom_study_deck_name">სწავლის ქასთომ სესია</string>
-    <string name="custom_study_deck_exists">ჯერ ქასთომ სასწავლო დასტის სახელი შეცვალეთ</string>
+    <string name="custom_study_deck_name">სწავლის ინდივიდუალური სესია</string>
+    <string name="custom_study_deck_exists">ჯერ ინდივიდუალური სასწავლო დასტის სახელი შეცვალეთ</string>
     <string name="empty_deck">ეს დასტა ცარიელია</string>
     <string name="search_deck" comment="Deck search for selecting it">დასტის ძებნა</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
@@ -166,7 +166,7 @@
     <string name="studyoptions_congrats_finished">გილოცავთ! ამჯერად დაასრულეთ.</string>
     <string name="studyoptions_congrats_more_rev">დღეის ლიმიტი მიღწეულია, მაგრამ კიდევ არის გადასახედი ბარათები. ლიმიტი შეგიძლიათ პარამეტრებიდან გაზარდოთ.</string>
     <string name="studyoptions_congrats_more_new">დღეის ლიმიტი მიღწეულია. კიდევ არის ახალი ბარათები; ლიმიტი შეგიძლიათ პარამეტრებიდან გაზარდოთ, მაგრამ ეს გაზრდის თქვენს მოკლევადიანი გადახედვის დატვირთვას.</string>
-    <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ქასთომ სწავლის\" ღილაკს</string>
+    <string name="studyoptions_congrats_custom">ნორმალური გეგმის გარეთ სასწავლად, დააჭირეთ \"ინდივიდუალური სწავლის\" ღილაკს</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებები. (%1$s)</string>
@@ -229,8 +229,8 @@
     <string name="sync_conflict_title_new">აირჩიეთ კოლექცია რომ დარჩეს</string>
     <string name="sync_conflict_replace_title">კოლექციის ჩანაცვლება</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d ბარათი (დარჩენილია 0)</item>
-        <item quantity="other">%1$d ბარათი (დარჩენილია 0)</item>
+        <item quantity="one">%1$d ბარათი (სასწავლოა 0)</item>
+        <item quantity="other">%1$d ბარათი (სასწავლოა 0)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ასლი</string>
 </resources>
