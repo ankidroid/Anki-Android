@@ -220,7 +220,8 @@ public interface Compat {
      * @throws FileNotFoundException if the device's API is <= 28 and has not obtained the
      * WRITE_EXTERNAL_STORAGE permission
      */
-    Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
+    @NonNull
+    Uri saveImage(@NonNull Context context, @NonNull Bitmap bitmap, @NonNull String baseFileName, @NonNull String extension, @NonNull Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
 
     /**
      *

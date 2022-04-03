@@ -209,9 +209,11 @@ public class CompatV21 implements Compat {
         return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
 
+
+    @NonNull
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public Uri saveImage(@NonNull Context context, @NonNull Bitmap bitmap, @NonNull String baseFileName, @NonNull String extension, @NonNull Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File ankiDroidDirectory = new File(pictures, "AnkiDroid");
         if (!ankiDroidDirectory.exists()) {
