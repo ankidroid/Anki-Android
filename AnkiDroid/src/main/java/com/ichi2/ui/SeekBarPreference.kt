@@ -102,7 +102,7 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
         mSeekBar!!.progress = (mValue - mMin) / mInterval
     }
 
-    override fun onSetInitialValue(restore: Boolean, defaultValue: Any) {
+    override fun onSetInitialValue(restore: Boolean, defaultValue: Any?) {
         super.onSetInitialValue(restore, defaultValue)
         mValue = getPersistedInt(mDefault)
         mValue = if (restore) {

@@ -39,6 +39,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
+import com.ichi2.annotations.NeedsTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
@@ -80,6 +81,7 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 /**
  * Preferences for the current deck.
  */
+@NeedsTest("onCreate - to be done after preference migration (5019)")
 public class DeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private DeckConfig mOptions;
