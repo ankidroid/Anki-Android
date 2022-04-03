@@ -24,14 +24,6 @@ import com.ichi2.themes.Themes.AppTheme
 
 /** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
 class CardAppearance(private val customFonts: ReviewerCustomFonts, private val cardZoom: Int, private val imageZoom: Int, val isNightMode: Boolean, private val centerVertically: Boolean) {
-    /**
-     * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
-     */
-    fun hasUserDefinedNightMode(card: Card): Boolean {
-        // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
-        return card.css().contains(".night_mode") || card.css().contains(".nightMode")
-    }
-
     /** Below could be in a better abstraction.  */
     fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
@@ -83,6 +75,8 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
     }
 
     companion object {
+        private val nightModeClassRegex = Regex("\\.night(?:_m|M)ode\\b")
+
         @JvmStatic
         fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
@@ -102,6 +96,12 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
             return content.replace("font-weight:600;", "font-weight:700;")
+        }
+        /**
+         * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
+         */
+        fun hasUserDefinedNightMode(card: Card): Boolean {
+            return card.css().contains(nightModeClassRegex)
         }
     }
 }
