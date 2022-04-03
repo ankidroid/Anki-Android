@@ -88,7 +88,8 @@ public interface Compat {
 
     void copyFile(@NonNull String source, @NonNull String target) throws IOException;
 
-    long copyFile(String source, OutputStream target) throws IOException;
+    long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException;
+
     long copyFile(InputStream source, String target) throws IOException;
 
     /**
