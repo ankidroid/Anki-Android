@@ -107,10 +107,10 @@
     <string name="import_update_details">既存のノート%2$d件のうち%1$d件を更新しました。</string>
     <string name="import_update_ignored">ノートタイプが変更されたため、いくつかのアップデートが無視されました</string>
     <string name="import_complete_count">%d枚のカードをインポートしました。</string>
-    <string name="sd_card_full_title">SD カード残量なし</string>
-    <string name="sd_card_almost_full_title">SD カード残量わずか</string>
+    <string name="sd_card_full_title">SDカード空き容量なし</string>
+    <string name="sd_card_almost_full_title">SDカード空き容量わずか</string>
     <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroidを続行するには、%s の空き容量が必要です。容量を空けてください</string>
+    <string name="no_space_to_downgrade_content">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
     <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
     <string name="restore_backup_choose_another">他を選択</string>

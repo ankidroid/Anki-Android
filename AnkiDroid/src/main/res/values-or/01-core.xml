@@ -207,8 +207,8 @@
     <!-- card Info -->
     <string name="card_info_title">ପତ୍ର ସୂଚନା</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ନ୍ତୁ ଏବଂ ଲେଖନ୍ତୁ</string>
-    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ପ୍ରବେଶ କରିବା ବ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="read_write_permission_label">Ankidroid ଡାଟାବେସ୍ କୁ ପଢ଼ିବା ଓ ଲେଖିବା</string>
+    <string name="read_write_permission_description">ବିଦ୍ୟମାନ ନୋଟ୍, ପତ୍ର, ନୋଟ୍ ପ୍ରକାର ଓ ତାସଖଣ୍ଡ ଅଧ୍ୟୟନ କରିବା ବ୍ୟତୀତ ନୂଆରେ ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ପତ୍ର ବ୍ରାଉଜର୍</string>
     <string name="context_menu_anki_card_label">Anki ପତ୍ର</string>

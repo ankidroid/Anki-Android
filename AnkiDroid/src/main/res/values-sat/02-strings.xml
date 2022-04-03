@@ -337,7 +337,8 @@
     <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
     <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
-    <string name="toolbar_item_explain_remove">ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱ ᱚᱞ ᱞᱟᱦᱟ ᱟᱨ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ HTML ᱟᱫᱮᱨ ᱢᱮ\n\nᱱᱚᱶᱟ ᱚᱪᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱴᱩᱞᱵᱟᱨ ᱟᱭᱴᱮᱢ ᱚᱛᱟ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
     <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>

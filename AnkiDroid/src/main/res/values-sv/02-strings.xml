@@ -337,7 +337,8 @@
     <string name="before_text">HTML före markering</string>
     <string name="after_text">HTML efter markering</string>
     <string name="add_toolbar_item">Skapa objekt i verktygsfältet</string>
-    <string name="toolbar_item_explain_remove">Ange HTML som ska infogas före och efter den markerade texten\n\nTryck länge på ett verktygsfält för att ta bort det</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
     <string name="note_editor_paste_too_large">Bilden är för stor för att klistra in, vänligen infoga bilden manuellt</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Säkerhetskopiering av Android pågår. Försök igen</string>

@@ -337,7 +337,8 @@
     <string name="before_text">HTML voor de selectie</string>
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>
-    <string name="toolbar_item_explain_remove">Voer de HTML in die voor en na de geselecteerde tekst moet worden ingevoegd\n\nHou een werkbalkitem ingedrukt om het te verwijderen</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Werkbalkitem verwijderen?</string>
     <string name="note_editor_paste_too_large">De afbeelding is te groot om te plakken, gelieve de afbeelding manueel in te voegen</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Bezig met Android back-up. Probeer het opnieuw</string>

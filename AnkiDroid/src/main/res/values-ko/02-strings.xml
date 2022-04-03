@@ -325,7 +325,8 @@
     <string name="before_text">선택 전 HTML</string>
     <string name="after_text">선택 후 HTML</string>
     <string name="add_toolbar_item">도구 모음 항목 만들기</string>
-    <string name="toolbar_item_explain_remove">선택한 텍스트 앞뒤로 삽입할 HTML을 입력해주십시오.\n\n도구 모음 항목을 길게 눌러 제거합니다.</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">도구 모음 항목을 지울까요?</string>
     <string name="note_editor_paste_too_large">이미지가 너무 커서 붙여넣을 수 없습니다. 수동으로 넣으십시오.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android 백업이 작동 중입니다. 다시 시도하십시오.</string>

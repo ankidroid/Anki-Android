@@ -337,7 +337,8 @@
     <string name="before_text">HTML abans de la selecció</string>
     <string name="after_text">HTML després de la selecció</string>
     <string name="add_toolbar_item">Crear element de la barra d\'eines</string>
-    <string name="toolbar_item_explain_remove">Entreu HTML a ser inserit abans i després del text seleccionat\n\nFeu una pressió prolongada a un element de la barra d\'eines per eliminar-lo</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Elimino l\'element de la barra d\'eines?</string>
     <string name="note_editor_paste_too_large">La imatge és massa gran per enganxar-la. Inseriu-la manualment si us plau</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        S\'està fent una còpia de seguretat d\'Android. Prova-ho un altre vegada si us plau</string>

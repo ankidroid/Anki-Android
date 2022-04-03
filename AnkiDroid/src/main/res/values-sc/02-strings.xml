@@ -345,9 +345,8 @@
     <string name="before_text">HTML in antis de s\'ischerta</string>
     <string name="after_text">HTML a pustis de s\'ischerta</string>
     <string name="add_toolbar_item">Crea un\'elementu de sa barra de trastes</string>
-    <string name="toolbar_item_explain_remove">Inserta s\'HTML de pònnere in antis e a pustis de su testu seletzionadu\n
-   \n
-   Incarca a longu in un\'elementu de sa barra de sas ainas pro lu bogare</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Bogare s\'elementu de sa barra de sas ainas?</string>
     <string name="note_editor_paste_too_large">S\'immàgine est tropu manna pro l\'incollare, inserta·la in manera manuale</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Còpia de seguresa de Android in cursu. Torra a proare, pro praghere</string>

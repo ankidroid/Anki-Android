@@ -363,7 +363,8 @@
     <string name="before_text">HTML pred výberom</string>
     <string name="after_text">HTML po výbere</string>
     <string name="add_toolbar_item">Vytvoriť položku nástrojovej lišty</string>
-    <string name="toolbar_item_explain_remove">Vložte HTML, ktorý má byť pred a po zvolenom texte\n\nPodržte dlho položku nástrojovej lišty na jeho vymazanie</string>
+    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Vymazať položku nástrojovej lišty?</string>
     <string name="note_editor_paste_too_large">Obrázok je príliš veľký na to, aby bol prilepený, vložte, prosím, obrázok manuálne</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Prebieha Android záloha. Prosím, skúste znovu</string>
