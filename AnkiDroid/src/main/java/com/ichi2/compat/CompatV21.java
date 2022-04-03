@@ -193,8 +193,10 @@ public class CompatV21 implements Compat {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
 
+
+    @NonNull
     @Override
-    public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {
+    public PendingIntent getImmutableActivityIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, int flags) {
         //noinspection WrongConstant
         return PendingIntent.getActivity(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
