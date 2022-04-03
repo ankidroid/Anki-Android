@@ -110,12 +110,12 @@ open class RobolectricTest : CollectionGetter {
             } catch (e: UnsatisfiedLinkError) {
                 if (e.message?.contains("arm64e")) {
                     // Giving the commands to user to add the required env variables
-                    val Exception = "Please download dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
+                    val exception = "Please download dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
                         "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
                         "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}}\""
-                    throw IllegalStateException(Exception, e)
+                    throw IllegalStateException(exception, e)
                 }
-                throw IllegalStateException(e)
+                throw e
             }
         }
 
