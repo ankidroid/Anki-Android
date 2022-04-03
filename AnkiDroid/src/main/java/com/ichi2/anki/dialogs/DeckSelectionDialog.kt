@@ -47,6 +47,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.FilterResultsUtils
 import com.ichi2.utils.FunctionalInterfaces
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
@@ -316,19 +317,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
          * rather than the entire deck name.
          * Eg: foo::bar -> \t\tbar
          */
-        val displayName: String // TODO should be a lazy value
-            get() = getDisplayName(name)
+        @IgnoredOnParcel
+        val displayName: String by lazy {
+            val nameArr = name.split("::")
+            "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
+        }
 
         protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
-
-        /**
-         * @param name the entire name(path) of the deck
-         * @return the deck/subdeck name to be displayed to the user
-         */
-        private fun getDisplayName(name: String): String {
-            val nameArr = name.split("::")
-            return "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
-        }
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
