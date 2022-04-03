@@ -141,7 +141,10 @@ import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
 
+import net.greypanther.natsort.CaseInsensitiveSimpleNaturalComparator;
+
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 import kotlin.Unit;
@@ -2168,6 +2171,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
+
+            // Sort entries using natural sorting order ("Lesson 2" before "Lesson 11")
+            Collections.sort(dueTree,
+                    (T a, T b) -> CaseInsensitiveSimpleNaturalComparator
+                            .<String>getInstance()
+                            .compare(a.getLastDeckNameComponent(), b.getLastDeckNameComponent()));
             deckPicker.mDueTree = dueTree;
 
             deckPicker.__renderPage();
