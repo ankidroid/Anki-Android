@@ -19,6 +19,7 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
+import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
@@ -129,7 +130,7 @@ class CardHtml(
         fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
-            val nightModeInversion = context.cardAppearance.isNightMode && !context.cardAppearance.hasUserDefinedNightMode(card)
+            val nightModeInversion = context.cardAppearance.isNightMode && !hasUserDefinedNightMode(card)
 
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags
