@@ -69,9 +69,9 @@ public class CompatV21 implements Compat {
 
     // Until API 26 just specify time, after that specify effect also
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void vibrate(@NonNull Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibratorManager != null) {
             vibratorManager.vibrate(durationMillis);
         }

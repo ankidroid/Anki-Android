@@ -80,7 +80,9 @@ public interface Compat {
     void setTime(TimePicker picker, int hour, int minute);
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);
-    void vibrate(Context context, long durationMillis);
+
+    void vibrate(@NonNull Context context, long durationMillis);
+
     MediaRecorder getMediaRecorder(Context context);
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
