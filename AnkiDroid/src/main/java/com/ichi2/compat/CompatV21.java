@@ -78,9 +78,10 @@ public class CompatV21 implements Compat {
     }
 
     // Until API31 the MediaRecorder constructor was default, ignoring the Context
+    @NonNull
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public MediaRecorder getMediaRecorder(Context context) {
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public MediaRecorder getMediaRecorder(@NonNull Context context) {
         return new MediaRecorder();
     }
 

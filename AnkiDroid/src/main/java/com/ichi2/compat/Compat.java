@@ -83,7 +83,9 @@ public interface Compat {
 
     void vibrate(@NonNull Context context, long durationMillis);
 
-    MediaRecorder getMediaRecorder(Context context);
+    @NonNull
+    MediaRecorder getMediaRecorder(@NonNull Context context);
+
     void copyFile(String source, String target) throws IOException;
     long copyFile(String source, OutputStream target) throws IOException;
     long copyFile(InputStream source, String target) throws IOException;
