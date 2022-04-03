@@ -201,8 +201,10 @@ public class CompatV21 implements Compat {
         return PendingIntent.getActivity(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
 
+
+    @NonNull
     @Override
-    public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
+    public PendingIntent getImmutableBroadcastIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, int flags) {
         //noinspection WrongConstant
         return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }

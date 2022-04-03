@@ -202,7 +202,8 @@ public interface Compat {
      * parameters.  May return null only if {@link PendingIntent#FLAG_NO_CREATE} has been
      * supplied.
      */
-    PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
+    @NonNull
+    PendingIntent getImmutableBroadcastIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, @PendingIntentFlags int flags);
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
