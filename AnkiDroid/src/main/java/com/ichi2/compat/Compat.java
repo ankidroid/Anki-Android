@@ -234,6 +234,7 @@ public interface Compat {
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
      */
-    @NonNull FileStream contentOfDirectory(File directory) throws IOException  ;
+    @NonNull
+    FileStream contentOfDirectory(@NonNull File directory) throws IOException;
 }
 
