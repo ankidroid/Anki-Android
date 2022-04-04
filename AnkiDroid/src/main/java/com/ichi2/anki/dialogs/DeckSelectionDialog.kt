@@ -328,7 +328,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
-        protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
+        constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
