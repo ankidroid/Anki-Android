@@ -191,8 +191,8 @@ public class CompatV21 implements Compat {
     }
 
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void abandonAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
     }

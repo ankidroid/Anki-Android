@@ -121,7 +121,7 @@ public class CompatV26 extends CompatV23 implements Compat {
     }
 
     @Override
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    public void abandonAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         // abandonAudioFocusRequest needs NonNull argument
         if (audioFocusRequest != null) {
