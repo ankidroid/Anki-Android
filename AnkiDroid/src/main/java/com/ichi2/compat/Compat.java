@@ -77,7 +77,9 @@ public interface Compat {
     String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
     void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name);
-    void setTime(TimePicker picker, int hour, int minute);
+
+    void setTime(@NonNull TimePicker picker, int hour, int minute);
+
     int getHour(TimePicker picker);
     int getMinute(TimePicker picker);
 
