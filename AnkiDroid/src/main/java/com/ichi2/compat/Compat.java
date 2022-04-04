@@ -128,7 +128,9 @@ public interface Compat {
      */
     void createDirectories(@NonNull File directory) throws IOException;
     boolean hasVideoThumbnail(@NonNull String path);
-    void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
+    void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
     void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
 
     @IntDef(flag = true,

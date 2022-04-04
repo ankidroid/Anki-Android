@@ -112,7 +112,7 @@ public class CompatV26 extends CompatV23 implements Compat {
 
 
     @Override
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    public void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         // requestAudioFocus needs NonNull argument
         if (audioFocusRequest != null) {

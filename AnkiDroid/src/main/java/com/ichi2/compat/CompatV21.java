@@ -183,8 +183,8 @@ public class CompatV21 implements Compat {
     }
     
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
