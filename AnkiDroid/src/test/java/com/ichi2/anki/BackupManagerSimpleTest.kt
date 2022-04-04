@@ -18,22 +18,20 @@ package com.ichi2.anki
 
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.assertFalse
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder
+import org.hamcrest.io.FileMatchers.anExistingFile
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.junit.JUnitAsserter.assertEquals
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNull
-import kotlin.test.junit.JUnitAsserter.assertTrue
 
 /**
  * Test for [BackupManager] without [RobolectricTest]. For performance
@@ -124,9 +122,7 @@ class BackupManagerSimpleTest {
 
         assertNotNull(backups)
         assertEquals("Only the valid backup names should have been kept", 2, backups.size)
-        Arrays.sort(backups)
-        assertEquals("collection-2000-12-31-23-04.colpkg", backups[0].name)
-        assertEquals("collection-2010-12-06-13-04.colpkg", backups[1].name)
+        assertThat(backups, arrayContainingInAnyOrder(f1, f3))
     }
 
     @Test
@@ -144,10 +140,10 @@ class BackupManagerSimpleTest {
         f4.createNewFile()
 
         BackupManager.deleteDeckBackups(colFile.path, 2)
-        assertFalse("Older backups should have been deleted", f2.exists())
-        assertFalse("Older backups should have been deleted", f4.exists())
-        assertTrue("Newer backups should have been kept", f1.exists())
-        assertTrue("Newer backups should have been kept", f3.exists())
+        assertThat("Older backups should have been deleted", f2, not(anExistingFile()))
+        assertThat("Older backups should have been deleted", f4, not(anExistingFile()))
+        assertThat("Newer backups should have been kept", f1, anExistingFile())
+        assertThat("Newer backups should have been kept", f3, anExistingFile())
     }
 
     @Test
