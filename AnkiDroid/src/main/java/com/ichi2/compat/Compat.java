@@ -80,7 +80,8 @@ public interface Compat {
 
     void setTime(@NonNull TimePicker picker, int hour, int minute);
 
-    int getHour(TimePicker picker);
+    int getHour(@NonNull TimePicker picker);
+
     int getMinute(TimePicker picker);
 
     void vibrate(@NonNull Context context, long durationMillis);
