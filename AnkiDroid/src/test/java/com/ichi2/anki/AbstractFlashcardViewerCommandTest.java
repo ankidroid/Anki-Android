@@ -204,7 +204,7 @@ public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
 
 
         @Override
-        protected void setCurrentCard(Card card) {
+        public void setCurrentCard(Card card) {
             this.mCurrentCard = card;
             // we don't have getCol() here and we don't need the additional sound processing.
         }

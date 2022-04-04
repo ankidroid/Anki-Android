@@ -22,7 +22,7 @@
             android:gravity="top"
             android:hint="@string/feedback_default_text"
             android:minLines="2"
-            android:inputType="text" />
+            android:inputType="text|textMultiLine" />
     </ScrollView>
 
     <CheckBox

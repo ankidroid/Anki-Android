@@ -141,7 +141,7 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
     @Override
-    protected void onCollectionLoaded(Collection col) {
+    public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         setCurrentCard(col.getCard(mCardList[mIndex]));
 

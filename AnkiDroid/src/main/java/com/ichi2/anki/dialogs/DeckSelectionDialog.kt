@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
-import android.os.Parcel
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +37,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.Deck
@@ -47,7 +47,8 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.FilterResultsUtils
 import com.ichi2.utils.FunctionalInterfaces
-import com.ichi2.utils.KotlinCleanup
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
 import java.util.Objects.requireNonNull
@@ -63,6 +64,7 @@ import java.util.Objects.requireNonNull
  *
  * @see SelectableDeck The data that is displayed
  */
+@NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private var mDialog: MaterialDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -302,46 +304,26 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             mCurrentlyDisplayedDecks.sort()
         }
     }
-    @KotlinCleanup("auto parcel is needed")
-    open class SelectableDeck : Comparable<SelectableDeck>, Parcelable {
-        /**
-         * Either a deck id or ALL_DECKS_ID
-         */
-        val deckId: Long
 
-        /**
-         * Name of the deck, or localization of "all decks"
-         */
-        val name: String
-
+    /**
+     * @param deckId Either a deck id or ALL_DECKS_ID
+     * @param name Name of the deck, or localization of "all decks"
+     */
+    @Parcelize
+    class SelectableDeck(val deckId: Long, val name: String) : Comparable<SelectableDeck>, Parcelable {
         /**
          * The name to be displayed to the user. Contains
          * only the sub-deck name with proper indentation
          * rather than the entire deck name.
          * Eg: foo::bar -> \t\tbar
          */
-        val displayName: String // TODO should be a lazy value
-            get() = getDisplayName(name)
-
-        constructor(deckId: Long, name: String) {
-            this.deckId = deckId
-            this.name = name
+        @IgnoredOnParcel
+        val displayName: String by lazy {
+            val nameArr = name.split("::")
+            "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
         protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
-        protected constructor(`in`: Parcel) {
-            deckId = `in`.readLong()
-            name = `in`.readString()!!
-        }
-
-        /**
-         * @param name the entire name(path) of the deck
-         * @return the deck/subdeck name to be displayed to the user
-         */
-        private fun getDisplayName(name: String): String {
-            var nameArr = name.split("::")
-            return "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
-        }
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
@@ -353,15 +335,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
             } else DeckNameComparator.INSTANCE.compare(name, other.name)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        override fun writeToParcel(dest: Parcel, flags: Int) {
-            dest.writeLong(deckId)
-            dest.writeString(name)
         }
 
         companion object {
@@ -381,16 +354,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     ret.add(SelectableDeck(d))
                 }
                 return ret
-            }
-
-            val CREATOR: Parcelable.Creator<SelectableDeck?> = object : Parcelable.Creator<SelectableDeck?> {
-                override fun createFromParcel(`in`: Parcel): SelectableDeck {
-                    return SelectableDeck(`in`)
-                }
-
-                override fun newArray(size: Int): Array<SelectableDeck?> {
-                    return arrayOfNulls(size)
-                }
             }
         }
     }

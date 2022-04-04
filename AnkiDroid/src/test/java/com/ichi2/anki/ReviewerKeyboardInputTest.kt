@@ -20,7 +20,10 @@ import android.view.KeyEvent.*
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ibm.icu.impl.Assert
-import com.ichi2.anki.AbstractFlashcardViewer.*
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_1
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.SchedulerService.BuryNote
@@ -233,7 +236,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         var replayAudioCalled = false
             private set
         override var controlBlocked = ControlBlock.UNBLOCKED
-            private set
         private var mUndoAvailable = false
         fun withControlsBlocked(value: ControlBlock): KeyboardInputTestReviewer {
             controlBlocked = value
@@ -337,9 +339,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return this
         }
 
-        override fun getAnswerButtonCount(): Int {
-            return mAnswerButtonCount
-        }
+        override val answerButtonCount: Int
+            get() = mAnswerButtonCount
 
         override fun answerCard(ease: Int) {
             mAnswered = ease
@@ -375,7 +376,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val buryNoteCalled: Boolean
             get() = mDismissType is BuryNote
 
-        override fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>?, executeAfter: Runnable): Boolean {
+        override fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>, executeAfter: Runnable): Boolean {
             mDismissType = dismiss
             return true
         }
@@ -395,9 +396,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             replayAudioCalled = true
         }
 
-        override fun isUndoAvailable(): Boolean {
-            return mUndoAvailable
-        }
+        override val isUndoAvailable: Boolean
+            get() = mUndoAvailable
 
         fun withUndoAvailable(value: Boolean): KeyboardInputTestReviewer {
             mUndoAvailable = value
