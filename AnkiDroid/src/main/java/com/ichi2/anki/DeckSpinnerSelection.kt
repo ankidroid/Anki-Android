@@ -108,7 +108,7 @@ class DeckSpinnerSelection(
             deckNames.add(lineContent)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
-            override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View {
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
 
                 // Cast the drop down items (popup items) as text view
                 val tv = super.getDropDownView(position, convertView, parent) as TextView

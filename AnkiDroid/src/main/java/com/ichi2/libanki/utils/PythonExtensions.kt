@@ -77,7 +77,7 @@ fun <E> MutableList<E>.toJsonArray(): JSONArray {
     return array
 }
 
-fun <K, V> Map<K, V>.getOptional(k: K): Optional<V> {
+fun <K, V : Any> Map<K, V>.getOptional(k: K): Optional<V> {
     if (!this.containsKey(k)) {
         return Optional.empty()
     }
