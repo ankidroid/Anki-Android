@@ -171,8 +171,10 @@ public class CompatV21 implements Compat {
 
     // Until API 23 the methods have "current" in the name
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public int getMinute(@NonNull TimePicker picker) {
+        return picker.getCurrentMinute();
+    }
 
     @Override
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
