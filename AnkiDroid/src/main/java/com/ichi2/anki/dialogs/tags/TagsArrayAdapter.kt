@@ -25,7 +25,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.ui.CheckBoxTriStates
-import com.ichi2.utils.FilterResultsUtils
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -118,7 +117,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
                     }
                 }
             }
-            return FilterResultsUtils.fromCollection(mFilteredList)
+            return FilterResults()
         }
 
         override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
