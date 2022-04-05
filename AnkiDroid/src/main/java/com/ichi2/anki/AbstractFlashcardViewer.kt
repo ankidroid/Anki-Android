@@ -388,7 +388,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
                  */
-                Companion.sDisplayAnswer = false
+                sDisplayAnswer = false
             }
             currentCard = value
             TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
@@ -400,7 +400,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 return
             }
             onCardEdited(mCurrentCard)
-            if (Companion.sDisplayAnswer) {
+            if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false // causes answer sounds to be reloaded
                 generateQuestionSoundList() // questions must be intentionally regenerated
@@ -681,7 +681,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         if (answerFieldIsFocused()) {
             return super.onKeyUp(keyCode, event)
         }
-        if (!Companion.sDisplayAnswer) {
+        if (!sDisplayAnswer) {
             if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
                 displayCardAnswer()
                 return true
@@ -709,6 +709,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         return text ?: ""
     }
 
+    @Suppress("deprecation") // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -862,7 +863,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(mCurrentCard!!), Runnable { showThemedToast(this, R.string.deleted_note, true) })
+        dismiss(DeleteNote(mCurrentCard!!), { showThemedToast(this, R.string.deleted_note, true) })
     }
 
     private fun getRecommendedEase(easy: Boolean): Int {
@@ -1012,7 +1013,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     /** If a card is displaying the question, flip it, otherwise answer it  */
     private fun flipOrAnswerCard(cardOrdinal: Int) {
-        if (!Companion.sDisplayAnswer) {
+        if (!sDisplayAnswer) {
             displayCardAnswer()
             return
         }
@@ -1286,7 +1287,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     protected fun displayCardQuestion(reload: Boolean) {
         Timber.d("displayCardQuestion()")
-        Companion.sDisplayAnswer = false
+        sDisplayAnswer = false
         mBackButtonPressedToReturn = false
         setInterface()
         typeAnswer!!.input = ""
@@ -1331,7 +1332,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
             val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(mAnswerField!!.windowToken, 0)
         }
-        Companion.sDisplayAnswer = true
+        sDisplayAnswer = true
         mSoundPlayer.stopSounds()
         mAnswerField!!.visibility = View.GONE
         // Clean up the user answer and the correct answer
@@ -1388,7 +1389,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")
         mUseTimerDynamicMS = 0
-        if (Companion.sDisplayAnswer) {
+        if (sDisplayAnswer) {
             addAnswerSounds { content.getSoundTags(Side.BACK) }
         } else {
             // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
@@ -1429,13 +1430,13 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         if (mCardSoundConfig!!.autoplay || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
             val useTTS = mTTS.enabled &&
-                !(Companion.sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!Companion.sDisplayAnswer && mSoundPlayer.hasQuestion())
+                !(sDisplayAnswer && mSoundPlayer.hasAnswer()) && !(!sDisplayAnswer && mSoundPlayer.hasQuestion())
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here
-                if (doAudioReplay && replayQuestion && Companion.sDisplayAnswer) {
+                if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
                     playSounds(SoundSide.QUESTION_AND_ANSWER)
-                } else if (Companion.sDisplayAnswer) {
+                } else if (sDisplayAnswer) {
                     playSounds(SoundSide.ANSWER)
                     if (mAutomaticAnswer.isEnabled()) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER)
@@ -1450,10 +1451,10 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
-                    if (!Companion.sDisplayAnswer || doAudioReplay && replayQuestion) {
+                    if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
                         readCardTts(SoundSide.QUESTION)
                     }
-                    if (Companion.sDisplayAnswer) {
+                    if (sDisplayAnswer) {
                         readCardTts(SoundSide.ANSWER)
                     }
                 } else {
@@ -1494,7 +1495,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
      */
     protected fun showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            mTTS.selectTts(this, mCurrentCard!!, if (Companion.sDisplayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
+            mTTS.selectTts(this, mCurrentCard!!, if (sDisplayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
         }
     }
 
@@ -1508,7 +1509,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         val cardContent = cardContent!!
         processCardAction { cardWebView: WebView? -> loadContentIntoCard(cardWebView, cardContent) }
         mGestureDetectorImpl!!.onFillFlashcard()
-        if (!Companion.sDisplayAnswer) {
+        if (!sDisplayAnswer) {
             updateForNewCard()
         }
     }
@@ -1577,19 +1578,19 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     }
 
     internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(mCurrentCard!!), Runnable { showThemedToast(this, R.string.buried_card, true) })
+        return dismiss(BuryCard(mCurrentCard!!), { showThemedToast(this, R.string.buried_card, true) })
     }
 
     internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(mCurrentCard!!), Runnable { showThemedToast(this, R.string.suspended_card, true) })
+        return dismiss(SuspendCard(mCurrentCard!!), { showThemedToast(this, R.string.suspended_card, true) })
     }
 
     internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(mCurrentCard!!), Runnable { showThemedToast(this, R.string.suspended_note, true) })
+        return dismiss(SuspendNote(mCurrentCard!!), { showThemedToast(this, R.string.suspended_note, true) })
     }
 
     internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(mCurrentCard!!), Runnable { showThemedToast(this, R.string.buried_note, true) })
+        return dismiss(BuryNote(mCurrentCard!!), { showThemedToast(this, R.string.buried_note, true) })
     }
 
     override fun executeCommand(which: ViewerCommand): Boolean {
@@ -1598,7 +1599,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         } else when (which) {
             ViewerCommand.COMMAND_NOTHING -> true
             ViewerCommand.COMMAND_SHOW_ANSWER -> {
-                if (Companion.sDisplayAnswer) {
+                if (sDisplayAnswer) {
                     return false
                 }
                 displayCardAnswer()
@@ -2554,7 +2555,6 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         var editorCard: Card? = null
         @JvmField
         internal var sDisplayAnswer = false
-        protected const val MENU_DISABLED = 3
         const val DOUBLE_TAP_TIME_INTERVAL = "doubleTapTimeInterval"
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200
 
