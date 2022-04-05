@@ -322,7 +322,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        mSched!!.setContext(WeakReference(this))
+        sched!!.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -900,52 +900,52 @@ open class Reviewer : AbstractFlashcardViewer() {
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         val background = getBackgroundColors(this)
         val textColor = getTextColors(this)
-        mEaseButton1!!.setVisibility(View.VISIBLE)
-        mEaseButton1!!.setColor(background[0])
-        mEaseButton4!!.setColor(background[3])
+        easeButton1!!.setVisibility(View.VISIBLE)
+        easeButton1!!.setColor(background[0])
+        easeButton4!!.setColor(background[3])
         when (buttonCount) {
             2 -> {
                 // Ease 2 is "good"
-                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton2!!.requestFocus()
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton2!!.requestFocus()
             }
             3 -> {
                 // Ease 2 is good
-                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
                 // Ease 3 is easy
-                mEaseButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
-                mEaseButton2!!.requestFocus()
+                easeButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
+                easeButton2!!.requestFocus()
             }
             else -> {
                 // Ease 2 is "hard"
-                mEaseButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
-                mEaseButton2!!.requestFocus()
+                easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+                easeButton2!!.requestFocus()
                 // Ease 3 is good
-                mEaseButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton4!!.setVisibility(View.VISIBLE)
-                mEaseButton3!!.requestFocus()
+                easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton4!!.setVisibility(View.VISIBLE)
+                easeButton3!!.requestFocus()
             }
         }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            mEaseButton1!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_ONE)
-            mEaseButton2!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_TWO)
+            easeButton1!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_ONE)
+            easeButton2!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_TWO)
             if (buttonCount > 2) {
-                mEaseButton3!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_THREE)
+                easeButton3!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_THREE)
             }
             if (buttonCount > 3) {
-                mEaseButton4!!.nextTime = mSched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_FOUR)
+                easeButton4!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_FOUR)
             }
         }
     }
 
     val buttonCount: Int
-        get() = mSched!!.answerButtons(mCurrentCard!!)
+        get() = sched!!.answerButtons(mCurrentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
-        if (mEaseButton1!!.canPerformClick) {
+        if (easeButton1!!.canPerformClick) {
             action.execute(this)
         }
     }
@@ -969,10 +969,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mCurrentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = mSched!!.counts(mCurrentCard!!)
+        val counts = sched!!.counts(mCurrentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = mSched!!.eta(counts, false)
+                mEta = sched!!.eta(counts, false)
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), (mEta * 60).toLong()))
             }
         }
@@ -982,11 +982,11 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (mSched!!.countIdx(mCurrentCard!!)) {
+        when (sched!!.countIdx(mCurrentCard!!)) {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", mSched!!.countIdx(mCurrentCard!!))
+            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew!!.text = mNewCount
         mTextBarLearn!!.text = mLrnCount
@@ -1044,7 +1044,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpen() && mSched != null) {
+        if (!isFinishing && colIsOpen() && sched != null) {
             update(this)
         }
         saveCollectionInBackground()
@@ -1471,22 +1471,22 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         @JavascriptInterface
         override fun ankiGetNextTime1(): String {
-            return mEaseButton1!!.nextTime
+            return easeButton1!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime2(): String {
-            return mEaseButton2!!.nextTime
+            return easeButton2!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime3(): String {
-            return mEaseButton3!!.nextTime
+            return easeButton3!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime4(): String {
-            return mEaseButton4!!.nextTime
+            return easeButton4!!.nextTime
         }
     }
 
