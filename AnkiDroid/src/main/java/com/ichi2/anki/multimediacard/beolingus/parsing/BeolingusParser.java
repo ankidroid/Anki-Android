@@ -19,6 +19,8 @@
 
 package com.ichi2.anki.multimediacard.beolingus.parsing;
 
+import org.intellij.lang.annotations.Language;
+
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +41,7 @@ public class BeolingusParser {
      * @param html HTML page from beolingus, with translation of the word we search
      * @return {@code "no"} or the pronunciation URL
      */
-    public static String getPronunciationAddressFromTranslation(String html, String wordToSearchFor) {
+    public static String getPronunciationAddressFromTranslation(@Language("HTML") String html, String wordToSearchFor) {
         Matcher m = PRONUNC_PATTERN.matcher(html);
         while (m.find()) {
             //Perform .contains() due to #5376 (a "%20{noun}" suffix).
@@ -58,7 +60,7 @@ public class BeolingusParser {
     /**
      * @return {@code "no"}, or the http address of the mp3 file
      */
-    public static String getMp3AddressFromPronounciation(String pronunciationPageHtml) {
+    public static String getMp3AddressFromPronounciation(@Language("HTML") String pronunciationPageHtml) {
         // Only log the page if you need to work with the regex
         // Timber.d("pronunciationPageHtml is %s", pronunciationPageHtml);
         Matcher m = MP3_PATTERN.matcher(pronunciationPageHtml);

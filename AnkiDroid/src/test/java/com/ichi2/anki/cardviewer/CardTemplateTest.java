@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.cardviewer;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,6 +24,7 @@ import static org.hamcrest.Matchers.is;
 
 public class CardTemplateTest {
 
+    @Language("HTML")
     private static final String data = "<!doctype html>\n" +
             "<html class=\"mobile android linux js\">\n" +
             "    <head>\n" +

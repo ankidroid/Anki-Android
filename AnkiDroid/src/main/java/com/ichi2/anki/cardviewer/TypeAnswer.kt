@@ -27,6 +27,7 @@ import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.JSONArray
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -140,26 +141,27 @@ class TypeAnswer(
             return m.replaceFirst(warning!!)
         }
         val sb = java.lang.StringBuilder()
+        fun append(@Language("HTML") html: String) = sb.append(html)
         if (useInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
-            sb.append(
+            append(
                 """<center>
 <input type="text" name="typed" id="typeans" onfocus="taFocus();" onblur="taBlur(this);" onKeyPress="return taKey(this, event)" autocomplete="off" """
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (font.isNotEmpty() && size > 0) {
-                sb.append("style=\"font-family: '").append(font).append("'; font-size: ")
+                append("style=\"font-family: '").append(font).append("'; font-size: ")
                     .append(size).append("px;\" ")
             }
-            sb.append(">\n</center>\n")
+            append(">\n</center>\n")
         } else {
-            sb.append("<span id=\"typeans\" class=\"typePrompt")
+            append("<span id=\"typeans\" class=\"typePrompt")
             if (useInputTag) {
-                sb.append(" typeOff")
+                append(" typeOff")
             }
-            sb.append("\">........</span>")
+            append("\">........</span>")
         }
         return m.replaceAll(sb.toString())
     }
@@ -193,33 +195,34 @@ class TypeAnswer(
         val m: Matcher = PATTERN.matcher(answer)
         val diffEngine = DiffEngine()
         val sb = StringBuilder()
-        sb.append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
+        fun append(@Language("HTML") html: String) = sb.append(html)
+        append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
 
         // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
         if (userAnswer.isNotEmpty()) {
             // The user did type something.
             if (userAnswer == correctAnswer) {
                 // and it was right.
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
-                sb.append("<span id=\"typecheckmark\">\u2714</span>") // Heavy check mark
+                append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
+                append("<span id=\"typecheckmark\">\u2714</span>") // Heavy check mark
             } else {
                 // Answer not correct.
                 // Only use the complex diff code when needed, that is when we have some typed text that is not
                 // exactly the same as the correct text.
                 val diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer)
                 // We know we get back two strings.
-                sb.append(Matcher.quoteReplacement(diffedStrings[0]))
-                sb.append("<br><span id=\"typearrow\">&darr;</span><br>")
-                sb.append(Matcher.quoteReplacement(diffedStrings[1]))
+                append(Matcher.quoteReplacement(diffedStrings[0]))
+                append("<br><span id=\"typearrow\">&darr;</span><br>")
+                append(Matcher.quoteReplacement(diffedStrings[1]))
             }
         } else {
             if (!useInputTag) {
-                sb.append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)))
+                append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)))
             } else {
-                sb.append(Matcher.quoteReplacement(correctAnswer))
+                append(Matcher.quoteReplacement(correctAnswer))
             }
         }
-        sb.append(if (doNotUseCodeFormatting) "</span></div>" else "</code></div>")
+        append(if (doNotUseCodeFormatting) "</span></div>" else "</code></div>")
         return m.replaceAll(sb.toString())
     }
 
