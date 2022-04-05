@@ -110,6 +110,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
+import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
 abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi, ViewerCommand.CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods, AutomaticallyAnswered {
@@ -146,7 +147,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     private var mHtmlGenerator: HtmlGenerator? = null
 
     // Default short animation duration, provided by Android framework
-    protected var shortAnimDuration = 0
+    private var shortAnimDuration = 0
     private var mBackButtonPressedToReturn = false
 
     // Preferences from the collection
@@ -287,8 +288,8 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 mTouchX = event.rawX
                 mTouchY = event.rawY
             } else if (event.action == MotionEvent.ACTION_UP) {
-                val diffX = Math.abs(event.rawX - mTouchX)
-                val diffY = Math.abs(event.rawY - mTouchY)
+                val diffX = abs(event.rawX - mTouchX)
+                val diffY = abs(event.rawY - mTouchY)
                 // If a click is not coming then we reset the touch
                 if (diffX > Companion.CLICK_ACTION_THRESHOLD || diffY > Companion.CLICK_ACTION_THRESHOLD) {
                     mHasBeenTouched = false
@@ -309,21 +310,24 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                     }
                     mLastClickTime = elapsedRealTime
                     mAutomaticAnswer.onSelectEase()
-                    val id = view.id
-                    if (id == R.id.flashcard_layout_ease1) {
-                        Timber.i("AbstractFlashcardViewer:: EASE_1 pressed")
-                        answerCard(Consts.BUTTON_ONE)
-                    } else if (id == R.id.flashcard_layout_ease2) {
-                        Timber.i("AbstractFlashcardViewer:: EASE_2 pressed")
-                        answerCard(Consts.BUTTON_TWO)
-                    } else if (id == R.id.flashcard_layout_ease3) {
-                        Timber.i("AbstractFlashcardViewer:: EASE_3 pressed")
-                        answerCard(Consts.BUTTON_THREE)
-                    } else if (id == R.id.flashcard_layout_ease4) {
-                        Timber.i("AbstractFlashcardViewer:: EASE_4 pressed")
-                        answerCard(Consts.BUTTON_FOUR)
-                    } else {
-                        mCurrentEase = 0
+                    when (view.id) {
+                        R.id.flashcard_layout_ease1 -> {
+                            Timber.i("AbstractFlashcardViewer:: EASE_1 pressed")
+                            answerCard(Consts.BUTTON_ONE)
+                        }
+                        R.id.flashcard_layout_ease2 -> {
+                            Timber.i("AbstractFlashcardViewer:: EASE_2 pressed")
+                            answerCard(Consts.BUTTON_TWO)
+                        }
+                        R.id.flashcard_layout_ease3 -> {
+                            Timber.i("AbstractFlashcardViewer:: EASE_3 pressed")
+                            answerCard(Consts.BUTTON_THREE)
+                        }
+                        R.id.flashcard_layout_ease4 -> {
+                            Timber.i("AbstractFlashcardViewer:: EASE_4 pressed")
+                            answerCard(Consts.BUTTON_FOUR)
+                        }
+                        else -> mCurrentEase = 0
                     }
                     if (!mHasBeenTouched) {
                         view.isPressed = false
@@ -863,7 +867,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(mCurrentCard!!), { showThemedToast(this, R.string.deleted_note, true) })
+        dismiss(DeleteNote(mCurrentCard!!)) { showThemedToast(this, R.string.deleted_note, true) }
     }
 
     private fun getRecommendedEase(easy: Boolean): Int {
@@ -904,7 +908,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         val cardContainer = findViewById<FrameLayout>(R.id.flashcard_frame)
         mTopBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
-        mCardFrameParent = mCardFrame!!.getParent() as ViewGroup
+        mCardFrameParent = mCardFrame!!.parent as ViewGroup
         mTouchLayer = findViewById(R.id.touch_layer)
         mTouchLayer!!.setOnTouchListener(mGestureListener)
         mCardFrame!!.removeAllViews()
@@ -934,7 +938,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
             flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
         }
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
-            val params = flipCardLayout!!.getLayoutParams()
+            val params = flipCardLayout!!.layoutParams
             params.height = params.height * mRelativeButtonSize / 100
             easeButton1!!.setButtonScale(mRelativeButtonSize)
             easeButton2!!.setButtonScale(mRelativeButtonSize)
@@ -942,9 +946,9 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
             easeButton4!!.setButtonScale(mRelativeButtonSize)
             mButtonHeightSet = true
         }
-        mInitialFlipCardHeight = flipCardLayout!!.getLayoutParams().height
+        mInitialFlipCardHeight = flipCardLayout!!.layoutParams.height
         if (mLargeAnswerButtons) {
-            val params = flipCardLayout!!.getLayoutParams()
+            val params = flipCardLayout!!.layoutParams
             params.height = mInitialFlipCardHeight * 2
         }
         mAnswerField = findViewById(R.id.answer_field)
@@ -1244,12 +1248,12 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         updateDeckName()
     }
 
-    protected fun updateDeckName() {
+    private fun updateDeckName() {
         if (mCurrentCard == null) return
         val actionBar = supportActionBar
         if (actionBar != null) {
             val title = Decks.basename(col.decks.get(mCurrentCard!!.did).getString("name"))
-            actionBar.setTitle(title)
+            actionBar.title = title
         }
         if (!prefShowTopbar) {
             mTopBarLayout!!.visibility = View.GONE
@@ -1285,7 +1289,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         mAnkiDroidJsAPI!!.init()
     }
 
-    protected fun displayCardQuestion(reload: Boolean) {
+    private fun displayCardQuestion(reload: Boolean) {
         Timber.d("displayCardQuestion()")
         sDisplayAnswer = false
         mBackButtonPressedToReturn = false
@@ -1542,10 +1546,10 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
      */
     @VisibleForTesting
     protected open fun blockControls(quick: Boolean) {
-        if (quick) {
-            controlBlocked = ControlBlock.QUICK
+        controlBlocked = if (quick) {
+            ControlBlock.QUICK
         } else {
-            controlBlocked = ControlBlock.SLOW
+            ControlBlock.SLOW
         }
         mCardFrame!!.isEnabled = false
         flipCardLayout!!.isEnabled = false
@@ -1578,19 +1582,19 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     }
 
     internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(mCurrentCard!!), { showThemedToast(this, R.string.buried_card, true) })
+        return dismiss(BuryCard(mCurrentCard!!)) { showThemedToast(this, R.string.buried_card, true) }
     }
 
     internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(mCurrentCard!!), { showThemedToast(this, R.string.suspended_card, true) })
+        return dismiss(SuspendCard(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_card, true) }
     }
 
     internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(mCurrentCard!!), { showThemedToast(this, R.string.suspended_note, true) })
+        return dismiss(SuspendNote(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_note, true) }
     }
 
     internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(mCurrentCard!!), { showThemedToast(this, R.string.buried_note, true) })
+        return dismiss(BuryNote(mCurrentCard!!)) { showThemedToast(this, R.string.buried_note, true) }
     }
 
     override fun executeCommand(which: ViewerCommand): Boolean {
@@ -1730,7 +1734,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
-    protected fun showSnackbar(mainText: String?, @StringRes buttonText: Int, onClickListener: View.OnClickListener?) {
+    private fun showSnackbar(mainText: String?, @StringRes buttonText: Int, onClickListener: View.OnClickListener?) {
         // BUG: Moving from full screen to non-full screen obscures the buttons
         val sb = getSnackbar(this, mainText, Snackbar.LENGTH_LONG, buttonText, onClickListener, webView!!, null)
         val easeButtons = findViewById<View>(R.id.answer_options_layout)
@@ -1821,7 +1825,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
         override fun onScrollChanged(horiz: Int, vert: Int, oldHoriz: Int, oldVert: Int) {
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert)
-            if (Math.abs(horiz - oldHoriz) > Math.abs(vert - oldVert)) {
+            if (abs(horiz - oldHoriz) > abs(vert - oldVert)) {
                 mIsXScrolling = true
                 mScrollHandler.removeCallbacks(mScrollXRunnable)
                 mScrollHandler.postDelayed(mScrollXRunnable, 300)
@@ -2002,8 +2006,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                     return@setOnTouchListener true
                 }
                 val cardWebView = webViewAsView as WebView
-                val result: HitTestResult
-                result = try {
+                val result: HitTestResult = try {
                     cardWebView.hitTestResult
                 } catch (e: Exception) {
                     Timber.w(e, "Cannot obtain HitTest result")
@@ -2186,15 +2189,15 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
             return null
         }
 
-        protected fun isLoadedFromHttpUrl(url: String): Boolean {
+        private fun isLoadedFromHttpUrl(url: String): Boolean {
             return url.trim { it <= ' ' }.lowercase(Locale.ROOT).startsWith("http")
         }
 
-        protected fun isLoadedFromHttpUrl(uri: Uri): Boolean {
+        private fun isLoadedFromHttpUrl(uri: Uri): Boolean {
             return uri.scheme.equals("http", ignoreCase = true)
         }
 
-        protected fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
+        private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
             // a URL provided as "//wikipedia.org" is currently transformed to file://wikipedia.org, we can catch this
             // because <img src="x.png"> maps to file:///.../x.png
             return url.startsWith("file://") && !url.startsWith("file:///")
@@ -2276,8 +2279,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 if (!mAnkiDroidJsAPI!!.isInit(AnkiDroidJsAPIConstants.TOGGLE_FLAG, AnkiDroidJsAPIConstants.ankiJsErrorCodeFlagCard)) {
                     return true
                 }
-                val flag = url.replaceFirst("signal:flag_".toRegex(), "")
-                return when (flag) {
+                return when (url.replaceFirst("signal:flag_".toRegex(), "")) {
                     "none" -> {
                         executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
                         true
@@ -2312,8 +2314,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 showThemedToast(this@AbstractFlashcardViewer, msgDecode, true)
                 return true
             }
-            val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)
-            when (signalOrdinal) {
+            when (val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)) {
                 WebViewSignalParserUtils.SIGNAL_UNHANDLED -> {}
                 WebViewSignalParserUtils.SIGNAL_NOOP -> return true
                 WebViewSignalParserUtils.TYPE_FOCUS -> {
