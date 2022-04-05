@@ -37,6 +37,7 @@ import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -182,7 +183,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
             return fetchThroughHttp(address, "ISO-8859-1")
         }
 
-        override fun onPostExecute(result: String?) {
+        override fun onPostExecute(@Language("HTML") result: String?) {
             // Result here is the whole HTML of the page
             // this is passed to ask for address and differentiate, which of the
             // post has finished.
@@ -211,7 +212,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
     }
 
     @Suppress("deprecation") // #7108: AsyncTask
-    protected fun processPostFinished(post: BackgroundPost, result: String) {
+    protected fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
         if (mStopped) {
             return
         }
