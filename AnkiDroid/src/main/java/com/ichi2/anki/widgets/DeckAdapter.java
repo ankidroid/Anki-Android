@@ -44,7 +44,6 @@ import com.ichi2.libanki.Collection;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.utils.FilterResultsUtils;
 import com.ichi2.libanki.sched.Counts;
 
 import java.util.ArrayList;
@@ -415,7 +414,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
                 mFilteredDecks.addAll(filteredDecks);
             }
 
-            return FilterResultsUtils.fromCollection(mFilteredDecks);
+            return new FilterResults();
         }
 
         @Override

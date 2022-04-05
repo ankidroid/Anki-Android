@@ -45,7 +45,6 @@ import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
-import com.ichi2.utils.FilterResultsUtils
 import com.ichi2.utils.FunctionalInterfaces
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -286,7 +285,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                         }
                     }
                 }
-                return FilterResultsUtils.fromCollection(mFilteredDecks)
+                return FilterResults()
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
