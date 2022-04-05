@@ -31,6 +31,8 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
+import org.intellij.lang.annotations.Language;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -173,7 +175,7 @@ public class DB {
     }
 
     // Allows to avoid using new Object[]
-    public Cursor query(String query, Object... selectionArgs) {
+    public Cursor query(@Language("SQL") String query, Object... selectionArgs) {
         return mDatabase.query(query, selectionArgs);
     }
 
@@ -183,7 +185,7 @@ public class DB {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    public int queryScalar(String query, Object... selectionArgs) {
+    public int queryScalar(@Language("SQL") String query, Object... selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -201,7 +203,7 @@ public class DB {
     }
 
 
-    public String queryString(String query, Object... bindArgs) throws SQLException {
+    public String queryString(@Language("SQL") String query, Object... bindArgs) throws SQLException {
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
@@ -211,7 +213,7 @@ public class DB {
     }
 
 
-    public long queryLongScalar(String query, Object... bindArgs) {
+    public long queryLongScalar(@Language("SQL") String query, Object... bindArgs) {
         long scalar;
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
@@ -230,7 +232,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
+    public ArrayList<Long> queryLongList(@Language("SQL") String query, Object... bindArgs) {
         ArrayList<Long> results = new ArrayList<>();
 
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
@@ -248,7 +250,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public ArrayList<String> queryStringList(String query, Object... bindArgs) {
+    public ArrayList<String> queryStringList(@Language("SQL") String query, Object... bindArgs) {
         ArrayList<String> results = new ArrayList<>();
 
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
@@ -261,7 +263,7 @@ public class DB {
     }
 
 
-    public void execute(String sql, Object... object) {
+    public void execute(@Language("SQL") String sql, Object... object) {
         String s = sql.trim().toLowerCase(Locale.ROOT);
         // mark modified?
         for (String mo : MOD_SQLS) {
@@ -283,7 +285,7 @@ public class DB {
      * as the delimiter. Only use this method on internal functions where we can guarantee that the script does
      * not contain any non-statement-terminating semicolons.
      */
-    public void executeScript(String sql) {
+    public void executeScript(@Language("SQL") String sql) {
         mMod = true;
         String[] queries = sql.split(";");
         for(String query : queries) {
@@ -311,7 +313,7 @@ public class DB {
         return getDatabase().insert(table, SQLiteDatabase.CONFLICT_NONE, values);
     }
 
-    public void executeMany(String sql, List<Object[]> list) {
+    public void executeMany(@Language("SQL") String sql, List<Object[]> list) {
         mMod = true;
         if (BuildConfig.DEBUG) {
             if (list.size() <= 1) {
@@ -322,7 +324,7 @@ public class DB {
     }
 
     /** Use this executeMany version with external transaction management */
-    public void executeManyNoTransaction(String sql, List<Object[]> list) {
+    public void executeManyNoTransaction(@Language("SQL") String sql, List<Object[]> list) {
         mMod = true;
         for (Object[] o : list) {
             mDatabase.execSQL(sql, o);
