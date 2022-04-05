@@ -223,6 +223,7 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener);
         } else {
             holder.deckExpander.setClickable(false);
+            holder.deckExpander.setOnClickListener(null);
         }
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
