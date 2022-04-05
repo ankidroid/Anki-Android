@@ -19,16 +19,27 @@ package com.ichi2.utils
 import android.widget.Filter
 
 /** Implementation of [Filter] which is strongly typed */
-abstract class TypedFilter<T>(private val items: List<T>) : Filter() {
+abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Filter() {
+    constructor(items: List<T>) : this({ items })
+
+    var lastConstraint: CharSequence? = null
+
+    fun refresh() {
+        filter(lastConstraint)
+    }
+
     override fun performFiltering(constraint: CharSequence?): FilterResults {
+
+        val itemsBeforeFiltering = getCurrentItems()
+
         if (constraint.isNullOrBlank()) {
             return FilterResults().also {
-                it.values = items
-                it.count = items.size
+                it.values = itemsBeforeFiltering
+                it.count = itemsBeforeFiltering.size
             }
         }
 
-        val items = filterResults(constraint, items)
+        val items = filterResults(constraint, itemsBeforeFiltering)
 
         return FilterResults().also {
             it.values = items
