@@ -306,7 +306,7 @@ dependencies {
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation, which is slow.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.19.4' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.20.0' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$backendVersion"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
