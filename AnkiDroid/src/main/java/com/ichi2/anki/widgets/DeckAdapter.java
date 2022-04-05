@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +44,13 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.libanki.sched.Counts;
+import com.ichi2.utils.TypedFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
@@ -390,50 +392,27 @@ public class DeckAdapter<T extends AbstractDeckTreeNode<T>> extends RecyclerView
     }
 
 
-    private class DeckFilter extends Filter {
-        private final @NonNull ArrayList<AbstractDeckTreeNode<?>> mFilteredDecks = new ArrayList<>();
+    private class DeckFilter extends TypedFilter<T> {
         private DeckFilter() {
-            super();
+            super(mDeckList);
         }
 
-        private List<T> getAllDecks() {
-            return mDeckList;
+        @NonNull
+        @Override
+        public List<T> filterResults(@NonNull CharSequence constraint, @NonNull List<? extends T> items) {
+            final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
+
+            return items.stream().map((t) -> filterDeckInternal(filterPattern, t))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         }
+
 
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            mFilteredDecks.clear();
-            mFilteredDecks.ensureCapacity(mCol.getDecks().count());
-
-            List<T> allDecks = getAllDecks();
-            if (TextUtils.isEmpty(constraint)) {
-                mFilteredDecks.addAll(allDecks);
-            } else {
-                final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                List<T> filteredDecks = filterDecks(filterPattern, allDecks);
-                mFilteredDecks.addAll(filteredDecks);
-            }
-
-            return new FilterResults();
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
+        public void publishResults(@Nullable CharSequence constraint, @NonNull List<? extends T> results) {
             mCurrentDeckList.clear();
-            mCurrentDeckList.addAll(mFilteredDecks);
+            mCurrentDeckList.addAll(results);
             notifyDataSetChanged();
-        }
-
-
-        private List<T> filterDecks(String filterPattern, List<T> allDecks) {
-            ArrayList<T> ret = new ArrayList<>(allDecks.size());
-            for (T tag : allDecks) {
-                T node = filterDeckInternal(filterPattern, tag);
-                if (node != null) {
-                    ret.add(node);
-                }
-            }
-            return ret;
         }
 
         @Nullable
