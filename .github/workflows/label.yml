@@ -12,16 +12,43 @@ jobs:
       pull-requests: write    
     runs-on: ubuntu-latest
     steps:
-    - uses: andymckay/labeler@master
+    - uses: actions/github-script@v6
       with:
-        remove-labels: > 
-          Pending Merge, 
-          Waiting For Feedback, 
-          Needs Review, 
-          Review High Priority, 
-          Needs Second Approval,
-          Blocked by dependency, 
-          Needs a new dev, 
-          squash-merge, 
-          Keep Open, 
-          Stable
+        script: |
+          let removeLabelsList = [
+            "Pending Merge", 
+            "Waiting For Feedback", 
+            "Needs Review", 
+            "Review High Priority", 
+            "Needs Second Approval",
+            "Blocked by dependency", 
+            "Needs a new dev", 
+            "squash-merge", 
+            "Keep Open", 
+            "Stable"
+          ];
+
+          async function removeLabel(label) {
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: label
+            });
+          }
+
+          let result = await github.rest.issues.listLabelsOnIssue({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+
+          if (result.data !== null && result.data.length > 0) {
+            let labels = result.data;
+            for (let label of labels) {
+                if (removeLabelsList.includes(label.name)) {
+                  console.log("Removed: ", label.name);
+                  removeLabel(label.name);
+                }
+            }
+          }
