@@ -133,7 +133,7 @@ class Toolbar : FrameLayout {
     }
 
     fun insertItem(id: Int, drawable: Drawable?, formatter: TextFormatter?): View {
-        return insertItem(id, drawable) { onFormat(formatter) }
+        return insertItem(id, drawable, Runnable { onFormat(formatter) })
     }
 
     fun insertItem(@IdRes id: Int, drawable: Drawable?, runnable: Runnable): AppCompatImageButton {
@@ -295,11 +295,11 @@ class Toolbar : FrameLayout {
         mStringPaint!!.color = color
     }
 
-    interface TextFormatListener {
+    fun interface TextFormatListener {
         fun performFormat(formatter: TextFormatter?)
     }
 
-    interface TextFormatter {
+    fun interface TextFormatter {
         fun format(s: String): TextWrapper.StringFormat
     }
 
