@@ -228,22 +228,22 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     // behavior change ankiGetNextTime1...4
     @JavascriptInterface
     open fun ankiGetNextTime1(): String {
-        return activity.mEaseButton1!!.nextTime
+        return activity.easeButton1!!.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime2(): String {
-        return activity.mEaseButton2!!.nextTime
+        return activity.easeButton2!!.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime3(): String {
-        return activity.mEaseButton3!!.nextTime
+        return activity.easeButton3!!.nextTime
     }
 
     @JavascriptInterface
     open fun ankiGetNextTime4(): String {
-        return activity.mEaseButton4!!.nextTime
+        return activity.easeButton4!!.nextTime
     }
 
     @JavascriptInterface
@@ -331,7 +331,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiIsTopbarShown(): Boolean {
-        return activity.mPrefShowTopbar
+        return activity.prefShowTopbar
     }
 
     @JavascriptInterface
