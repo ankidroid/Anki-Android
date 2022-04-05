@@ -230,12 +230,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     /**
      * Show the context menu for the custom study options
      */
-    @KotlinCleanup("give it a better name")
     private fun showCustomStudyContextMenu() {
         val ankiActivity = requireActivity() as AnkiActivity
-        val d = instantiate(ankiActivity, CustomStudyDialog::class.java)
-        d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, col!!.decks.selected())
-        ankiActivity.showDialogFragment(d)
+        val contextMenu = instantiate(ankiActivity, CustomStudyDialog::class.java)
+        contextMenu.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, col!!.decks.selected())
+        ankiActivity.showDialogFragment(contextMenu)
     }
 
     fun setFragmentContentView(newView: View?) {
