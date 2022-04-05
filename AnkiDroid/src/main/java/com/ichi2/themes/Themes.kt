@@ -1,7 +1,7 @@
 /*
- Copyright (c) 2011 Norbert Nagold <norbert.nagold></norbert.nagold>@gmail.com>
- Copyright (c) 2015 Timothy Rae <perceptualchaos2></perceptualchaos2>@gmail.com>
- Copyright (c) 2021 Akshay Jadhav <akshay0701></jadhavakshay0701>@gmail.com>
+ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+ Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+ Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
