@@ -67,8 +67,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
-import com.ichi2.anki.reviewer.AutomaticAnswer.Companion.createInstance
-import com.ichi2.anki.reviewer.AutomaticAnswer.Companion.defaultInstance
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
@@ -140,7 +138,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     // Android WebView
     @JvmField
-    var mAutomaticAnswer = defaultInstance(this)
+    var mAutomaticAnswer = AutomaticAnswer.defaultInstance(this)
     protected var typeAnswer: TypeAnswer? = null
 
     /** Generates HTML content  */
@@ -1208,7 +1206,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes")
             val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-            mAutomaticAnswer = createInstance(this, preferences, col)
+            mAutomaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
         } catch (ex: Exception) {
             Timber.w(ex)
             onCollectionLoadError()
