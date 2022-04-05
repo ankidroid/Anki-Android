@@ -142,17 +142,12 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             return TextViewHolder(v)
         }
 
-        override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: TextViewHolder, position: Int) =
             holder.setLocale(mCurrentlyVisibleLocales[position])
-        }
 
-        override fun getItemCount(): Int {
-            return mCurrentlyVisibleLocales.size
-        }
+        override fun getItemCount(): Int = mCurrentlyVisibleLocales.size
 
-        fun getLocaleAtPosition(position: Int): Locale {
-            return mCurrentlyVisibleLocales[position]
-        }
+        fun getLocaleAtPosition(position: Int): Locale = mCurrentlyVisibleLocales[position]
 
         override fun getFilter(): Filter {
             return object : TypedFilter<Locale>(mSelectableLocales) {
@@ -178,11 +173,10 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
          */
         @JvmStatic
         fun newInstance(handler: LocaleSelectionDialogHandler): LocaleSelectionDialog {
-            val t = LocaleSelectionDialog()
-            t.mDialogHandler = handler
-            val args = Bundle()
-            t.arguments = args
-            return t
+            return LocaleSelectionDialog().apply {
+                mDialogHandler = handler
+                arguments = Bundle()
+            }
         }
     }
 }
