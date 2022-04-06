@@ -633,7 +633,7 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     private fun shouldUseDefaultColor(menuItem: MenuItem) {
         val drawable = menuItem.icon
-        if (drawable != null && !menuItem.hasSubMenu() && !isFlagResource(menuItem.itemId)) {
+        if (drawable != null && !isFlagResource(menuItem.itemId)) {
             drawable.mutate()
             drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
         }
