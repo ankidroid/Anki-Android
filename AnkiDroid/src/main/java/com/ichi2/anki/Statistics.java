@@ -124,7 +124,7 @@ public class Statistics extends NavigationDrawerActivity implements
 
         // Dirty way to get text size from a TextView with current style, change if possible
         float size = new FixedTextView(this).getTextSize();
-        mTaskHandler.setmStandardTextSize(size);
+        mTaskHandler.setStandardTextSize(size);
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
 //        StatisticFragment.updateAllFragments();
