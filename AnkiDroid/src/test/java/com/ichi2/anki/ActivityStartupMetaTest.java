@@ -55,7 +55,6 @@ public class ActivityStartupMetaTest extends RobolectricTest {
                 .filter(x -> !x.equals("com.ichi2.anki.TestCardTemplatePreviewer"))
                 .filter(x -> !x.equals("com.ichi2.anki.AnkiCardContextMenuAction"))
                 .filter(x -> !x.equals("com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"))
-                .filter(x -> !x.startsWith("com.yalantis"))
                 .filter(x -> !x.startsWith("androidx"))
                 .filter(x -> !x.startsWith("org.acra"))
                 .filter(x -> !x.startsWith("leakcanary.internal"))
