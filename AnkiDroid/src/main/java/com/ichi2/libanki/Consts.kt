@@ -152,4 +152,7 @@ object Consts {
     const val DEFAULT_DECK_CONFIG_ID: Long = 1
     @JvmField
     val FIELD_SEPARATOR = Character.toString('\u001f')
+
+    /** Time duration for toasy **/
+    const val LENGTH_SHORT: Long = 2000
 }

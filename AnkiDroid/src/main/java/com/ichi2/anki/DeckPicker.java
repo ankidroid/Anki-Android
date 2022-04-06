@@ -123,6 +123,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
@@ -149,6 +150,7 @@ import java.io.File;
 import java.util.List;
 
 import kotlin.Unit;
+import kotlin.io.ConstantsKt;
 import timber.log.Timber;
 
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
@@ -979,7 +981,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     public void run() {
                         mBackButtonPressedToExit = false;
                     }
-                }, 2000);
+                }, Consts.LENGTH_SHORT);
             }
         }
     }

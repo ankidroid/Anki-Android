@@ -634,7 +634,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 Runnable {
                     mBackButtonPressedToReturn = false
                 },
-                2000
+                Consts.LENGTH_SHORT
             )
         }
     }
