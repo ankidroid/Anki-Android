@@ -50,7 +50,6 @@ import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,7 +58,6 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -659,7 +657,7 @@ public class NoteEditor extends AnkiActivity implements
         String selectedText = text.substring(start, end);
         String afterText = text.substring(end);
 
-        Toolbar.TextWrapper.StringFormat formatResult = formatter.format(selectedText);
+        Toolbar.StringFormat formatResult = formatter.format(selectedText);
         String newText = formatResult.result;
 
         // Update text field with updated text and selection
@@ -667,8 +665,8 @@ public class NoteEditor extends AnkiActivity implements
         StringBuilder newFieldContent = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
         textBox.setText(newFieldContent);
 
-        int newStart = formatResult.start;
-        int newEnd = formatResult.end;
+        int newStart = formatResult.selectionStart;
+        int newEnd = formatResult.selectionEnd;
         textBox.setSelection(start + newStart, start + newEnd);
     }
 
@@ -1893,15 +1891,15 @@ public class NoteEditor extends AnkiActivity implements
         View clozeIcon = mToolbar.getClozeIcon();
         if (mEditorNote.model().isCloze()) {
             Toolbar.TextFormatter clozeFormatter = s -> {
-                Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
+                Toolbar.StringFormat stringFormat = new Toolbar.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
                 stringFormat.result = prefix + s + "}}";
                 if (s.length() == 0) {
-                    stringFormat.start = prefix.length();
-                    stringFormat.end = prefix.length();
+                    stringFormat.selectionStart = prefix.length();
+                    stringFormat.selectionEnd = prefix.length();
                 } else {
-                    stringFormat.start = 0;
-                    stringFormat.end = stringFormat.result.length();
+                    stringFormat.selectionStart = 0;
+                    stringFormat.selectionEnd = stringFormat.result.length();
                 }
                 return stringFormat;
             };
