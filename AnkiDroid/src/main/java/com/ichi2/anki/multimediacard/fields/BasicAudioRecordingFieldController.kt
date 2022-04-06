@@ -38,8 +38,8 @@ import java.io.File
  */
 class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldController {
 
-    private lateinit var mTempAudioPath: String
-    private lateinit var mAudioView: AudioView
+    private var mTempAudioPath: String? = null
+    private var mAudioView: AudioView? = null
 
     override fun createUI(context: Context, layout: LinearLayout?) {
         val origAudioPath = mField.audioPath
@@ -63,9 +63,9 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
             resStop = R.drawable.ic_stop_white_24dp,
             resRecord = R.drawable.ic_rec,
             resRecordStop = R.drawable.ic_rec_stop,
-            audioPath = mTempAudioPath
-        )!!
-        mAudioView.setOnRecordingFinishEventListener(object : OnRecordingFinishEventListener {
+            audioPath = mTempAudioPath!!
+        )
+        mAudioView!!.setOnRecordingFinishEventListener(object : OnRecordingFinishEventListener {
             override fun onRecordingFinish(v: View) {
                 // currentFilePath.setText("Recording done, you can preview it. Hit save after finish");
                 // FIXME is this okay if it is still null?
@@ -100,7 +100,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
     }
 
     override fun onDone() {
-        mAudioView.notifyStopRecord()
+        mAudioView!!.notifyStopRecord()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -108,10 +108,10 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
     }
 
     override fun onFocusLost() {
-        mAudioView.notifyReleaseRecorder()
+        mAudioView!!.notifyReleaseRecorder()
     }
 
     override fun onDestroy() {
-        mAudioView.notifyReleaseRecorder()
+        mAudioView!!.notifyReleaseRecorder()
     }
 }

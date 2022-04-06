@@ -38,6 +38,7 @@ import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 /**
@@ -172,12 +173,14 @@ class Info : AnkiActivity() {
         @VisibleForTesting
         fun getAboutAnkiDroidHtml(res: Resources, textColor: String?): String {
             val sb = StringBuilder()
+            fun append(@Language("HTML") html: String) = sb.append(html)
+
             val content = res.getStringArray(R.array.about_content)
-            sb.append("<html><style>body {color:").append(textColor).append(";}</style>")
-            sb.append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            sb.append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
+            append("<html><style>body {color:").append(textColor).append(";}</style>")
+            append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
+            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
                 .append("<br/><br/>")
-            sb.append(
+            append(
                 String.format(
                     content[1], res.getString(R.string.link_issue_tracker),
                     res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
@@ -185,20 +188,20 @@ class Info : AnkiActivity() {
             ).append(
                 "<br/><br/>"
             )
-            sb.append(
+            append(
                 String.format(
                     content[2], res.getString(R.string.link_wikipedia_open_source),
                     res.getString(R.string.link_contribution)
                 )
             ).append(" ")
-            sb.append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
-            sb.append(
+            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
+            append(
                 String.format(
                     content[4], res.getString(R.string.licence_wiki),
                     res.getString(R.string.link_source)
                 )
             ).append("<br/><br/>")
-            sb.append("</body></html>")
+            append("</body></html>")
             return sb.toString()
         }
     }

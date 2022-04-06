@@ -81,6 +81,7 @@ import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.HandlerUtils.postOnNewHandler
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.update
@@ -89,6 +90,7 @@ import java.io.File
 import java.lang.ref.WeakReference
 import java.util.function.Consumer
 
+@KotlinCleanup("too many to count")
 open class Reviewer : AbstractFlashcardViewer() {
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
@@ -165,6 +167,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
         mColorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
+        mTextBarNew = findViewById(R.id.new_number)
+        mTextBarLearn = findViewById(R.id.learn_number)
+        mTextBarReview = findViewById(R.id.review_number)
         startLoadingCollection()
     }
 
@@ -319,7 +324,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        mSched!!.setContext(WeakReference(this))
+        sched!!.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -335,11 +340,10 @@ open class Reviewer : AbstractFlashcardViewer() {
             return true
         }
         val itemId = item.itemId
-        return when (itemId) {
+        when (itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
                 closeReviewer(RESULT_OK, true)
-                true
             }
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
@@ -348,38 +352,31 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     undo()
                 }
-                true
             }
             R.id.action_reset_card_progress -> {
                 Timber.i("Reviewer:: Reset progress button pressed")
                 showResetCardDialog()
-                true
             }
             R.id.action_mark_card -> {
                 Timber.i("Reviewer:: Mark button pressed")
                 onMark(mCurrentCard)
-                true
             }
             R.id.action_replay -> {
                 Timber.i("Reviewer:: Replay audio button pressed (from menu)")
                 playSounds(true)
-                true
             }
             R.id.action_toggle_mic_tool_bar -> {
                 Timber.i("Reviewer:: Record mic")
                 // Check permission to record and request if not granted
                 openOrToggleMicToolbar()
-                true
             }
             R.id.action_tag -> {
                 Timber.i("Reviewer:: Tag button pressed")
                 showTagsDialog()
-                true
             }
             R.id.action_edit -> {
                 Timber.i("Reviewer:: Edit note button pressed")
                 editCard()
-                true
             }
             R.id.action_bury -> {
                 Timber.i("Reviewer:: Bury button pressed")
@@ -387,7 +384,6 @@ open class Reviewer : AbstractFlashcardViewer() {
                     Timber.d("Bury card due to no submenu")
                     buryCard()
                 }
-                true
             }
             R.id.action_suspend -> {
                 Timber.i("Reviewer:: Suspend button pressed")
@@ -395,12 +391,10 @@ open class Reviewer : AbstractFlashcardViewer() {
                     Timber.d("Suspend card due to no submenu")
                     suspendCard()
                 }
-                true
             }
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
-                true
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
@@ -409,7 +403,6 @@ open class Reviewer : AbstractFlashcardViewer() {
                 } else {
                     mColorPalette!!.visibility = View.GONE
                 }
-                true
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -422,89 +415,74 @@ open class Reviewer : AbstractFlashcardViewer() {
                         showThemedToast(this@Reviewer, getString(R.string.white_board_image_save_failed, e.localizedMessage), true)
                     }
                 }
-                true
             }
             R.id.action_clear_whiteboard -> {
                 Timber.i("Reviewer:: Clear whiteboard button pressed")
                 if (whiteboard != null) {
                     whiteboard!!.clear()
                 }
-                true
             }
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
                 setWhiteboardVisibility(!mShowWhiteboard)
                 refreshActionBar()
-                true
             }
             R.id.action_toggle_whiteboard -> {
                 toggleWhiteboard()
-                true
             }
             R.id.action_open_deck_options -> {
                 val i = Intent(this, DeckOptions::class.java)
                 startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
-                true
             }
             R.id.action_select_tts -> {
                 Timber.i("Reviewer:: Select TTS button pressed")
                 showSelectTtsDialogue()
-                true
             }
             R.id.action_add_note_reviewer -> {
                 Timber.i("Reviewer:: Add note button pressed")
                 addNote()
-                true
             }
             R.id.action_flag_zero -> {
                 Timber.i("Reviewer:: No flag")
                 onFlag(mCurrentCard, CardMarker.FLAG_NONE)
-                true
             }
             R.id.action_flag_one -> {
                 Timber.i("Reviewer:: Flag one")
                 onFlag(mCurrentCard, CardMarker.FLAG_RED)
-                true
             }
             R.id.action_flag_two -> {
                 Timber.i("Reviewer:: Flag two")
                 onFlag(mCurrentCard, CardMarker.FLAG_ORANGE)
-                true
             }
             R.id.action_flag_three -> {
                 Timber.i("Reviewer:: Flag three")
                 onFlag(mCurrentCard, CardMarker.FLAG_GREEN)
-                true
             }
             R.id.action_flag_four -> {
                 Timber.i("Reviewer:: Flag four")
                 onFlag(mCurrentCard, CardMarker.FLAG_BLUE)
-                true
             }
             R.id.action_flag_five -> {
                 Timber.i("Reviewer:: Flag five")
                 onFlag(mCurrentCard, CardMarker.FLAG_PINK)
-                true
             }
             R.id.action_flag_six -> {
                 Timber.i("Reviewer:: Flag six")
                 onFlag(mCurrentCard, CardMarker.FLAG_TURQUOISE)
-                true
             }
             R.id.action_flag_seven -> {
                 Timber.i("Reviewer:: Flag seven")
                 onFlag(mCurrentCard, CardMarker.FLAG_PURPLE)
-                true
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
                 openCardInfo()
-                true
             }
             else -> {
                 return super.onOptionsItemSelected(item)
             }
         }
+        return true
     }
 
     public override fun toggleWhiteboard() {
@@ -557,6 +535,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         super.blockControls(quick)
     }
 
+    @KotlinCleanup("tempAudioPath!!")
     override fun closeReviewer(result: Int, saveDeck: Boolean) {
         // Stop the mic recording if still pending
         if (audioView != null) {
@@ -595,6 +574,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
+    @KotlinCleanup("maybe scope function")
     private fun toggleMicToolBar() {
         if (audioView != null) {
             // It exists swap visibility status
@@ -949,53 +929,54 @@ open class Reviewer : AbstractFlashcardViewer() {
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
         val background = getBackgroundColors(this)
         val textColor = getTextColors(this)
-        mEaseButton1!!.setVisibility(View.VISIBLE)
-        mEaseButton1!!.setColor(background[0])
-        mEaseButton4!!.setColor(background[3])
+        easeButton1!!.setVisibility(View.VISIBLE)
+        easeButton1!!.setColor(background[0])
+        easeButton4!!.setColor(background[3])
         when (buttonCount) {
             2 -> {
                 // Ease 2 is "good"
-                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton2!!.requestFocus()
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton2!!.requestFocus()
             }
             3 -> {
                 // Ease 2 is good
-                mEaseButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
                 // Ease 3 is easy
-                mEaseButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
-                mEaseButton2!!.requestFocus()
+                easeButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
+                easeButton2!!.requestFocus()
             }
             else -> {
                 // Ease 2 is "hard"
-                mEaseButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
-                mEaseButton2!!.requestFocus()
+                easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+                easeButton2!!.requestFocus()
                 // Ease 3 is good
-                mEaseButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                mEaseButton4!!.setVisibility(View.VISIBLE)
-                mEaseButton3!!.requestFocus()
+                easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton4!!.setVisibility(View.VISIBLE)
+                easeButton3!!.requestFocus()
             }
         }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = mSched!!.nextIvlStr(this, mCurrentCard!!, button)
-            mEaseButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
-            mEaseButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
+            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, mCurrentCard!!, button)
+
+            easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
+            easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
             if (buttonCount > 2) {
-                mEaseButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
+                easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
             }
             if (buttonCount > 3) {
-                mEaseButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
+                easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
             }
         }
     }
 
     val buttonCount: Int
-        get() = mSched!!.answerButtons(mCurrentCard!!)
+        get() = sched!!.answerButtons(mCurrentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
-        if (mEaseButton1!!.canPerformClick) {
+        if (easeButton1!!.canPerformClick) {
             action.execute(this)
         }
     }
@@ -1019,10 +1000,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mCurrentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = mSched!!.counts(mCurrentCard!!)
+        val counts = sched!!.counts(mCurrentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = mSched!!.eta(counts, false)
+                mEta = sched!!.eta(counts, false)
                 actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), (mEta * 60).toLong()))
             }
         }
@@ -1032,11 +1013,11 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (mPrefHideDueCount) {
             mRevCount = SpannableString("???")
         }
-        when (mSched!!.countIdx(mCurrentCard!!)) {
+        when (sched!!.countIdx(mCurrentCard!!)) {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", mSched!!.countIdx(mCurrentCard!!))
+            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
@@ -1066,9 +1047,6 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun initLayout() {
-        mTextBarNew = findViewById(R.id.new_number)
-        mTextBarLearn = findViewById(R.id.learn_number)
-        mTextBarReview = findViewById(R.id.review_number)
         super.initLayout()
         if (!mShowRemainingCardCount) {
             mTextBarNew.setVisibility(View.GONE)
@@ -1094,7 +1072,7 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpen() && mSched != null) {
+        if (!isFinishing && colIsOpen() && sched != null) {
             update(this)
         }
         saveCollectionInBackground()
@@ -1358,6 +1336,7 @@ open class Reviewer : AbstractFlashcardViewer() {
      * Whether or not dismiss note is available for current card and specified DismissType
      * @return true if there is another card of same note that could be dismissed
      */
+    @KotlinCleanup("mCurrentCard handling")
     private fun suspendNoteAvailable(): Boolean {
         return if (mCurrentCard == null || isControlBlocked()) {
             false
@@ -1367,6 +1346,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         ) == 1
         // whether there exists a sibling not buried.
     }
+    @KotlinCleanup("mCurrentCard handling")
     private fun buryNoteAvailable(): Boolean {
         return if (mCurrentCard == null || isControlBlocked()) {
             false
@@ -1519,22 +1499,22 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         @JavascriptInterface
         override fun ankiGetNextTime1(): String {
-            return mEaseButton1!!.nextTime
+            return easeButton1!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime2(): String {
-            return mEaseButton2!!.nextTime
+            return easeButton2!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime3(): String {
-            return mEaseButton3!!.nextTime
+            return easeButton3!!.nextTime
         }
 
         @JavascriptInterface
         override fun ankiGetNextTime4(): String {
-            return mEaseButton4!!.nextTime
+            return easeButton4!!.nextTime
         }
     }
 

@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
@@ -35,6 +36,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.SortOrder;
 import com.ichi2.testutils.AnkiAssert;
+import com.ichi2.testutils.AnkiActivityUtils;
 import com.ichi2.testutils.IntentAssert;
 
 import org.junit.Assert;
@@ -47,6 +49,7 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +60,7 @@ import java.util.Random;
 import javax.annotation.CheckReturnValue;
 
 import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
@@ -72,6 +76,8 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -257,10 +263,8 @@ public class CardBrowserTest extends RobolectricTest {
             assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
         }
 
-        final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
-
         //act
-        AnkiAssert.assertDoesNotThrow(() -> b.moveSelectedCardsToDeck(deckPosition));
+        AnkiAssert.assertDoesNotThrow(() -> b.moveSelectedCardsToDeck(deckIdToChangeTo));
 
         //assert
         advanceRobolectricLooperWithSleep();
@@ -583,6 +587,21 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         assertUndoContains(b, R.string.deck_conf_cram_reschedule);
+    }
+
+    @Test
+    public void change_deck_dialog_is_dismissed_on_activity_recreation() {
+        CardBrowser cardBrowser = getBrowserWithNoNewCards();
+
+        DeckSelectionDialog dialog = cardBrowser.getChangeDeckDialog(new ArrayList<>());
+        cardBrowser.showDialogFragment(dialog);
+
+        Fragment shownDialog = AnkiActivityUtils.getDialogFragment(cardBrowser);
+        assertNotNull(shownDialog);
+
+        cardBrowser.recreate();
+        Fragment dialogAfterRecreate = AnkiActivityUtils.getDialogFragment(cardBrowser);
+        assertNull(dialogAfterRecreate);
     }
 
     /** 8027 */

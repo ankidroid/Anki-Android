@@ -24,7 +24,6 @@ import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,10 +36,13 @@ import java.io.IOException;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.io.FileMatchers.aFileWithAbsolutePath;
+import static org.hamcrest.io.FileMatchers.anExistingFile;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertFalse;
 import static com.ichi2.testutils.FileSystemUtilsKt.createTransientFile;
 
 @RunWith(AndroidJUnit4.class)
@@ -109,7 +111,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         File outFile = new File(mTestCol.getMedia().dir(), fileAudio.getName());
 
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", outFile.getAbsolutePath(), audioField.getAudioPath());
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.getAudioPath())));
 
     }
 
@@ -131,7 +133,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         File outFile = new File(mTestCol.getMedia().dir(), fileImage.getName());
 
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", outFile.getAbsolutePath(), imgField.getImagePath());
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.getImagePath())));
     }
 
 
@@ -177,9 +179,9 @@ public class NoteServiceTest extends RobolectricTest {
         NoteService.importMediaToDirectory(mTestCol, fld3);
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld1.getAudioPath());
-        assertNotEquals("path should be different to the new file made in NoteService.importMediaToDirectory", o2.getAbsolutePath(), fld2.getAudioPath());
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld3.getAudioPath());
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.getAudioPath())));
+        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.getAudioPath())));
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.getAudioPath())));
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
@@ -216,9 +218,9 @@ public class NoteServiceTest extends RobolectricTest {
         NoteService.importMediaToDirectory(mTestCol, fld3);
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld1.getImagePath());
-        assertNotEquals("path should be different to the new file made in NoteService.importMediaToDirectory", o2.getAbsolutePath(), fld2.getImagePath());
-        assertEquals("path should be equal to the new file made in NoteService.importMediaToDirectory", o1.getAbsolutePath(), fld3.getImagePath());
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.getImagePath())));
+        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.getImagePath())));
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.getImagePath())));
     }
 
     /**
@@ -236,7 +238,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         NoteService.importMediaToDirectory(mTestCol, field);
 
-        assertFalse("Audio temporary file should have been deleted after importing", file.exists());
+        assertThat("Audio temporary file should have been deleted after importing", file, not(anExistingFile()));
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
@@ -250,7 +252,7 @@ public class NoteServiceTest extends RobolectricTest {
 
         NoteService.importMediaToDirectory(mTestCol, field);
 
-        assertFalse("Image temporary file should have been deleted after importing", file.exists());
+        assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()));
     }
 
 }

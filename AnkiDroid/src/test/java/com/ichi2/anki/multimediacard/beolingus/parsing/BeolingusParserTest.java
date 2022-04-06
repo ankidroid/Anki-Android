@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.multimediacard.beolingus.parsing;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,6 +11,7 @@ public class BeolingusParserTest {
 
     @Test
     public void testPronunciation() {
+        @Language("HTML")
         String html = ""
                 + "<a href=\"/dings.cgi?speak=de/0/7/52qA5FttGIU;text=Wasser\" "
                 + "onclick=\"return s(this)\" onmouseover=\"return u('Wasser')\">"
@@ -23,6 +25,7 @@ public class BeolingusParserTest {
     @Test
     public void testHaystackCaseInsensitivity() {
         //#5810 - a search for "hello" did not match "Hello".
+        @Language("HTML")
         String html = ""
                 + "<a href=\"/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello\" "
                 + "onclick=\"return s(this)\" onmouseover=\"return u('Hello')\">"
@@ -36,6 +39,7 @@ public class BeolingusParserTest {
     @Test
     public void testNeedleCaseInsensitivity() {
         //#5810 - confirm "HELLO" matches "Hello"
+        @Language("HTML")
         String html = ""
                 + "<a href=\"/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello\" "
                 + "onclick=\"return s(this)\" onmouseover=\"return u('Hello')\">"
@@ -51,6 +55,7 @@ public class BeolingusParserTest {
     public void testEszettCasing() {
         // Some transformations lose the Eszett: "ß".toUpperCase() == "SS".
         // Ensure that we don't do this.
+        @Language("HTML")
         String html = ""
                 + "<a href=\"/dings.cgi?speak=de/8/9/5wbPa4jy41_;text=Straße\" "
                 + "onclick=\"return s(this)\" onmouseover=\"return u('Straße')\">"
@@ -63,6 +68,7 @@ public class BeolingusParserTest {
 
     @Test
     public void testMp3() {
+        @Language("HTML")
         String html = "<td><a href=\"/speak-de/0/7/52qA5FttGIU.mp3\">Mit Ihrem";
 
         String mp3 = BeolingusParser.getMp3AddressFromPronounciation(html);

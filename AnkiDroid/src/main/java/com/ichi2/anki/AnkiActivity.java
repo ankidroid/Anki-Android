@@ -67,6 +67,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
+    public static final String DIALOG_FRAGMENT_TAG = "dialog";
+
     /** The name of the parent class (Reviewer) */
     private final String mActivityName;
 
@@ -496,13 +498,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
         FragmentTransaction ft = manager.beginTransaction();
-        Fragment prev = manager.findFragmentByTag("dialog");
+        Fragment prev = manager.findFragmentByTag(DIALOG_FRAGMENT_TAG);
         if (prev != null) {
             ft.remove(prev);
         }
         // save transaction to the back stack
-        ft.addToBackStack("dialog");
-        newFragment.show(ft, "dialog");
+        ft.addToBackStack(DIALOG_FRAGMENT_TAG);
+        newFragment.show(ft, DIALOG_FRAGMENT_TAG);
         manager.executePendingTransactions();
     }
 
@@ -633,7 +635,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     // Dismiss whatever dialog is showing
     public void dismissAllDialogFragments() {
-        getSupportFragmentManager().popBackStack("dialog", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().popBackStack(DIALOG_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
 
