@@ -706,7 +706,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
-     * cannot be convered to text.
+     * cannot be converted to text.
      *
      * @return the text in clipboard or the empty string.
      */

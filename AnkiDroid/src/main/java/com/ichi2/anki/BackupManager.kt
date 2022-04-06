@@ -134,7 +134,7 @@ open class BackupManager {
     }
 
     /**
-     * @return last date in parseable file names or null if all names can't be parsed
+     * @return last date in parsable file names or null if all names can't be parsed
      */
     fun getLastBackupDate(files: Array<File>): Date? {
         for (file in files.sortedDescending()) {
@@ -174,7 +174,7 @@ open class BackupManager {
                 Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.name)
                 return false
             }
-            Timber.i("Backup created succesfully")
+            Timber.i("Backup created successfully")
             true
         } catch (e: IOException) {
             Timber.w(e)
@@ -344,7 +344,7 @@ open class BackupManager {
         /**
          * Parses a string with backup naming pattern
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
-         * @return Its dateformat parseable string or null if it doesn't match naming pattern
+         * @return Its dateformat parsable string or null if it doesn't match naming pattern
          */
         @JvmStatic
         fun getBackupTimeString(fileName: String): String? {
@@ -352,7 +352,7 @@ open class BackupManager {
         }
 
         /**
-         * @return date in string if it matches mackup naming pattern or null if not
+         * @return date in string if it matches backup naming pattern or null if not
          */
         @JvmStatic
         fun parseBackupTimeString(timeString: String): Date? {

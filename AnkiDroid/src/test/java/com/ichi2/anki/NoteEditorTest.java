@@ -31,8 +31,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.backend.DroidBackendFactory;
 import com.ichi2.libanki.backend.RustDroidV16Backend;
 
-import net.ankiweb.rsdroid.BackendFactory;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -162,7 +160,7 @@ public class NoteEditorTest extends RobolectricTest {
 
     @Test
     public void errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
-        NoteEditor noteEditor = getNoteEditorAdding(NoteType.BACKTOFRONT)
+        NoteEditor noteEditor = getNoteEditorAdding(NoteType.BACK_TO_FRONT)
                 .withFirstField("front is not enough")
                 .build();
 
@@ -389,7 +387,7 @@ public class NoteEditorTest extends RobolectricTest {
         switch (noteType) {
             case BASIC: return getCol().getModels().byName("Basic");
             case CLOZE: return getCol().getModels().byName("Cloze");
-            case BACKTOFRONT: {
+            case BACK_TO_FRONT: {
                 String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
                 return getCol().getModels().byName(name);
             }
@@ -467,7 +465,7 @@ public class NoteEditorTest extends RobolectricTest {
         BASIC,
         CLOZE,
         /**Basic, but Back is on the front */
-        BACKTOFRONT,
+        BACK_TO_FRONT,
         THREE_FIELD_INVALID_TEMPLATE
     }
 

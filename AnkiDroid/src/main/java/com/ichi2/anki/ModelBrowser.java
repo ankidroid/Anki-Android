@@ -335,7 +335,7 @@ public class ModelBrowser extends AnkiActivity {
                         mModelNameInput.setText(suggestedName);
                         mModelNameInput.setSelection(mModelNameInput.getText().length());
 
-                        //Create textbox to name new model
+                        // Create EdiText to name new model
                         new MaterialEditTextDialog.Builder(ModelBrowser.this, mModelNameInput)
                                 .title(R.string.model_browser_add)
                                 .positiveText(R.string.dialog_ok)

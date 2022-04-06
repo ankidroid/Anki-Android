@@ -86,7 +86,7 @@ public class Decks extends DeckManager {
                 + "\"conf\": 1,"
                 + "\"usn\": 0,"
                 + "\"desc\": \"\","
-                + "\"dyn\": 0," // anki uses int/bool interchangably here
+                + "\"dyn\": 0," // anki uses int/bool interchangeably here
                 + "\"collapsed\": false,"
                 + "\"browserCollapsed\": false,"
                 // added in beta11

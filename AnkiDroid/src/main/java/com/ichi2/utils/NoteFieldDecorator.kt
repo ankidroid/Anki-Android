@@ -14,6 +14,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+@file:Suppress("SpellCheckingInspection")
+
 package com.ichi2.utils
 
 import java.util.*

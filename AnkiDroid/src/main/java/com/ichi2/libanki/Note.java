@@ -156,7 +156,7 @@ public class Note implements Cloneable {
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>(cids().size());
         for (long cid : cids()) {
-            // each getCard access database. This is inneficient.
+            // each getCard access database. This is inefficient.
             // Seems impossible to solve without creating a constructor of a list of card.
             // Not a big trouble since most note have a small number of cards.
             cards.add(mCol.getCard(cid));

@@ -1139,7 +1139,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mRecommendFullSync = true;
             }
 
-            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
+            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates");
                 try {
@@ -1281,11 +1281,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new UndoTaskListener(isReview, this);
     }
     private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Unit, Computation<? extends SchedulerService.NextCard<?>>> {
-        private final boolean mIsreview;
+        private final boolean mIsReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
             super(deckPicker);
-            this.mIsreview = isReview;
+            this.mIsReview = isReview;
         }
 
 
@@ -1305,7 +1305,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<? extends SchedulerService.NextCard<?>> voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
-            if (mIsreview) {
+            if (mIsReview) {
                 Timber.i("Review undone - opening reviewer.");
                 deckPicker.openReviewer();
             }

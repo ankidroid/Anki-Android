@@ -25,7 +25,7 @@ import timber.log.Timber
 /**
  * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast
  * intent to all activities which might be open in order to show an appropriate screen After media has been remounted,
- * another broadcast intent will be sent to let the activites know about it
+ * another broadcast intent will be sent to let the activities know about it
  */
 class SdCardReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
