@@ -38,6 +38,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 
@@ -61,6 +63,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -77,6 +80,7 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
@@ -970,6 +974,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     UIUtils.showThemedToast(this, getString(R.string.back_pressed_once), true);
                 }
                 mBackButtonPressedToExit = true;
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBackButtonPressedToExit = false;
+                    }
+                }, 2000);
             }
         }
     }
