@@ -634,7 +634,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 Runnable {
                     mBackButtonPressedToReturn = false
                 },
-                Consts.LENGTH_SHORT
+                Consts.SHORT_TOAST_DURATION
             )
         }
     }
@@ -2524,7 +2524,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
     }
 
     open fun javaScriptFunction(): AnkiDroidJsAPI? {
-        return com.ichi2.anki.AnkiDroidJsAPI(this)
+        return AnkiDroidJsAPI(this)
     }
 
     companion object {

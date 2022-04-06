@@ -153,6 +153,6 @@ object Consts {
     @JvmField
     val FIELD_SEPARATOR = Character.toString('\u001f')
 
-    /** Time duration for toasy **/
-    const val LENGTH_SHORT: Long = 2000
+    /** Time duration for toast **/
+    const val SHORT_TOAST_DURATION: Long = 2000
 }

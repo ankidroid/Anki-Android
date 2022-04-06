@@ -63,7 +63,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -80,7 +79,6 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
@@ -150,7 +148,6 @@ import java.io.File;
 import java.util.List;
 
 import kotlin.Unit;
-import kotlin.io.ConstantsKt;
 import timber.log.Timber;
 
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
@@ -981,7 +978,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     public void run() {
                         mBackButtonPressedToExit = false;
                     }
-                }, Consts.LENGTH_SHORT);
+                }, Consts.SHORT_TOAST_DURATION);
             }
         }
     }
