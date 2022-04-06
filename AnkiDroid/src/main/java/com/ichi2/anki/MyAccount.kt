@@ -11,373 +11,350 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.res.Configuration
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
+import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.UIUtils.showSnackbar
+import com.ichi2.anki.web.HostNumFactory.getInstance
+import com.ichi2.async.Connection
+import com.ichi2.libanki.sync.CustomSyncServerUrlException
+import com.ichi2.themes.StyledProgressDialog
+import com.ichi2.ui.TextInputEditField
+import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.lang.Exception
+import java.net.UnknownHostException
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.material.textfield.TextInputLayout;
-import com.ichi2.anki.web.HostNumFactory;
-import com.ichi2.async.Connection;
-import com.ichi2.async.Connection.Payload;
-import com.ichi2.libanki.sync.CustomSyncServerUrlException;
-import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.ui.TextInputEditField;
-import com.ichi2.utils.AdaptionUtil;
-
-import java.net.UnknownHostException;
-
-import timber.log.Timber;
-
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-
-public class MyAccount extends AnkiActivity {
-    private final static int STATE_LOG_IN  = 1;
-    private final static int STATE_LOGGED_IN = 2;
-
-    private View mLoginToMyAccountView;
-    private View mLoggedIntoMyAccountView;
-
-    private EditText mUsername;
-    private TextInputEditField mPassword;
-
-    private TextView mUsernameLoggedIn;
-
-    private MaterialDialog mProgressDialog;
-    Toolbar mToolbar = null;
-    private TextInputLayout mPasswordLayout;
-
-    private ImageView mAnkidroidLogo;
-
-    private void switchToState(int newState) {
-        switch (newState) {
-            case STATE_LOGGED_IN:
-                String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
-                mUsernameLoggedIn.setText(username);
-                mToolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
-                if (mToolbar!= null) {
-                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(mToolbar);
+class MyAccount : AnkiActivity() {
+    private lateinit var mLoginToMyAccountView: View
+    private lateinit var mLoggedIntoMyAccountView: View
+    @KotlinCleanup("lateinit")
+    private var mUsername: EditText? = null
+    private lateinit var mPassword: TextInputEditField
+    @KotlinCleanup("lateinit")
+    private var mUsernameLoggedIn: TextView? = null
+    private var mProgressDialog: MaterialDialog? = null
+    var toolbar: Toolbar? = null
+    private lateinit var mPasswordLayout: TextInputLayout
+    @KotlinCleanup("lateinit")
+    private var mAnkidroidLogo: ImageView? = null
+    private fun switchToState(newState: Int) {
+        when (newState) {
+            STATE_LOGGED_IN -> {
+                val username = AnkiDroidApp.getSharedPrefs(baseContext).getString("username", "")
+                mUsernameLoggedIn!!.text = username
+                toolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar)
+                if (toolbar != null) {
+                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(toolbar)
                 }
-                setContentView(mLoggedIntoMyAccountView);
-                break;
-
-            case STATE_LOG_IN:
-                mToolbar = mLoginToMyAccountView.findViewById(R.id.toolbar);
-                if (mToolbar!= null) {
-                    mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
-                    setSupportActionBar(mToolbar);
+                setContentView(mLoggedIntoMyAccountView)
+            }
+            STATE_LOG_IN -> {
+                toolbar = mLoginToMyAccountView.findViewById(R.id.toolbar)
+                if (toolbar != null) {
+                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(toolbar)
                 }
-                setContentView(mLoginToMyAccountView);
-                break;
+                setContentView(mLoginToMyAccountView)
+            }
         }
-
-
-        supportInvalidateOptionsMenu();  // Needed?
+        @Suppress("deprecation")
+        supportInvalidateOptionsMenu() // Needed?
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @KotlinCleanup("Use .isNotEmpty()")
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        super.onCreate(savedInstanceState);
-
-        if (AdaptionUtil.isUserATestClient()) {
-            finishWithoutAnimation();
-            return;
+        super.onCreate(savedInstanceState)
+        if (isUserATestClient) {
+            finishWithoutAnimation()
+            return
         }
-
-        mayOpenUrl(Uri.parse(getResources().getString(R.string.register_url)));
-        initAllContentViews();
-
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (preferences.getString("hkey", "").length() > 0) {
-            switchToState(STATE_LOGGED_IN);
+        mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
+        initAllContentViews()
+        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        if (preferences.getString("hkey", "")!!.length > 0) {
+            switchToState(STATE_LOGGED_IN)
         } else {
-            switchToState(STATE_LOG_IN);
+            switchToState(STATE_LOG_IN)
         }
-
-        if (isScreenSmall() && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo.setVisibility(View.GONE);
+        if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mAnkidroidLogo!!.visibility = View.GONE
         } else {
-            mAnkidroidLogo.setVisibility(View.VISIBLE);
+            mAnkidroidLogo!!.visibility = View.VISIBLE
         }
     }
 
-
-    public void attemptLogin() {
-        String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
-        String password = mPassword.getText().toString();
-
-        if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Timber.i("Attempting auto-login");
-            Connection.login(mLoginListener, new Connection.Payload(new Object[]{username, password,
-                    HostNumFactory.getInstance(this) }));
+    @KotlinCleanup("Use .isEmpty() + invert if and return early")
+    fun attemptLogin() {
+        val username = mUsername!!.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val password = mPassword.text.toString()
+        if (!"".equals(username, ignoreCase = true) && !"".equals(password, ignoreCase = true)) {
+            Timber.i("Attempting auto-login")
+            Connection.login(
+                mLoginListener,
+                Connection.Payload(
+                    arrayOf(
+                        username, password,
+                        getInstance(this)
+                    )
+                )
+            )
         } else {
-            Timber.i("Auto-login cancelled - username/password missing");
+            Timber.i("Auto-login cancelled - username/password missing")
         }
     }
 
-
-    private void saveUserInformation(String username, String hkey) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Editor editor = preferences.edit();
-        editor.putString("username", username);
-        editor.putString("hkey", hkey);
-        editor.apply();
+    @KotlinCleanup("Use preferences.edit{ }")
+    private fun saveUserInformation(username: String, hkey: String) {
+        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val editor = preferences.edit()
+        editor.putString("username", username)
+        editor.putString("hkey", hkey)
+        editor.apply()
     }
 
-
-    private void login() {
+    @KotlinCleanup("Remove useless `if (!''.equals...)` check")
+    private fun login() {
         // Hide soft keyboard
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
-
-        String username = mUsername.getText().toString().trim(); // trim spaces, issue 1586
-        String password = mPassword.getText().toString();
-
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(mUsername!!.windowToken, 0)
+        val username = mUsername!!.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val password = mPassword.text.toString()
         if (username.isEmpty()) {
-            mUsername.setError(getString(R.string.email_id_empty));
-            mUsername.requestFocus();
-            return;
+            mUsername!!.error = getString(R.string.email_id_empty)
+            mUsername!!.requestFocus()
+            return
         }
         if (password.isEmpty()) {
-            mPassword.setError(getString(R.string.password_empty));
-            mPassword.requestFocus();
-            return;
-
+            mPassword.error = getString(R.string.password_empty)
+            mPassword.requestFocus()
+            return
         }
-
-        if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.login(mLoginListener, new Connection.Payload(new Object[]{username, password,
-                    HostNumFactory.getInstance(this) }));
+        if (!"".equals(username, ignoreCase = true) && !"".equals(password, ignoreCase = true)) {
+            Connection.login(
+                mLoginListener,
+                Connection.Payload(
+                    arrayOf(
+                        username, password,
+                        getInstance(this)
+                    )
+                )
+            )
         } else {
-            UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
+            showSimpleSnackbar(this, R.string.invalid_username_password, true)
         }
     }
 
-
-    private void logout() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Editor editor = preferences.edit();
-        editor.putString("username", "");
-        editor.putString("hkey", "");
-        editor.apply();
-        HostNumFactory.getInstance(this).reset();
+    @KotlinCleanup("Use preferences.edit{ }")
+    private fun logout() {
+        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val editor = preferences.edit()
+        editor.putString("username", "")
+        editor.putString("hkey", "")
+        editor.apply()
+        getInstance(this).reset()
         //  force media resync on deauth
-        getCol().getMedia().forceResync();
-        switchToState(STATE_LOG_IN);
+        col.media.forceResync()
+        switchToState(STATE_LOG_IN)
     }
 
-
-    private void resetPassword() {
-        super.openUrl(Uri.parse(getResources().getString(R.string.resetpw_url)));
+    private fun resetPassword() {
+        super.openUrl(Uri.parse(resources.getString(R.string.resetpw_url)))
     }
 
+    @KotlinCleanup("Use scope functions")
+    private fun initAllContentViews() {
+        mLoginToMyAccountView = layoutInflater.inflate(R.layout.my_account, null)
+        mUsername = mLoginToMyAccountView.findViewById(R.id.username)
+        mPassword = mLoginToMyAccountView.findViewById(R.id.password)
+        mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout)
+        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo)
 
-    private void initAllContentViews() {
-        mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
-        mUsername = mLoginToMyAccountView.findViewById(R.id.username);
-        mPassword = mLoginToMyAccountView.findViewById(R.id.password);
-        mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout);
-        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo);
-
-        mPassword.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                switch (keyCode) {
-                    case KeyEvent.KEYCODE_DPAD_CENTER:
-                    case KeyEvent.KEYCODE_ENTER:
-                    case KeyEvent.KEYCODE_NUMPAD_ENTER:
-                        login();
-                        return true;
-                    default:
-                        break;
+        mPassword.setOnKeyListener(
+            View.OnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
+                if (event.action == KeyEvent.ACTION_DOWN) {
+                    when (keyCode) {
+                        KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER -> {
+                            login()
+                            return@OnKeyListener true
+                        }
+                        else -> {}
+                    }
                 }
+                false
             }
-            return false;
-        });
+        )
 
-        Button loginButton = mLoginToMyAccountView.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> login());
+        val loginButton = mLoginToMyAccountView.findViewById<Button>(R.id.login_button)
+        loginButton.setOnClickListener { login() }
+        val resetPWButton = mLoginToMyAccountView.findViewById<Button>(R.id.reset_password_button)
+        resetPWButton.setOnClickListener { resetPassword() }
+        val signUpButton = mLoginToMyAccountView.findViewById<Button>(R.id.sign_up_button)
+        val url = Uri.parse(resources.getString(R.string.register_url))
+        signUpButton.setOnClickListener { openUrl(url) }
 
-        Button resetPWButton = mLoginToMyAccountView.findViewById(R.id.reset_password_button);
-        resetPWButton.setOnClickListener(v -> resetPassword());
-
-        Button signUpButton = mLoginToMyAccountView.findViewById(R.id.sign_up_button);
-        Uri url = Uri.parse(getResources().getString(R.string.register_url));
-        signUpButton.setOnClickListener(v -> openUrl(url));
-
-        //Add button to link to instructions on how to find AnkiWeb email
-        Button lostEmail = mLoginToMyAccountView.findViewById(R.id.lost_mail_instructions);
-        Uri lostMailUrl = Uri.parse(getResources().getString((R.string.link_ankiweb_lost_email_instructions)));
-        lostEmail.setOnClickListener(v -> openUrl(lostMailUrl));
-
-
-        mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
-        mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
-        Button logoutButton = mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(v -> logout());
-
+        // Add button to link to instructions on how to find AnkiWeb email
+        val lostEmail = mLoginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
+        val lostMailUrl = Uri.parse(resources.getString(R.string.link_ankiweb_lost_email_instructions))
+        lostEmail.setOnClickListener { openUrl(lostMailUrl) }
+        mLoggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null)
+        mUsernameLoggedIn = mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in)
+        val logoutButton = mLoggedIntoMyAccountView.findViewById<Button>(R.id.logout_button)
+        logoutButton.setOnClickListener { logout() }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mPassword.setAutoFillListener((value) -> {
-                //disable "show password".
-                mPasswordLayout.setEndIconVisible(false);
-                Timber.i("Attempting login from autofill");
-                attemptLogin();
-            });
+            mPassword.setAutoFillListener {
+                // disable "show password".
+                mPasswordLayout.isEndIconVisible = false
+                Timber.i("Attempting login from autofill")
+                attemptLogin()
+            }
         }
     }
 
-    private void showLoginLogMessage(@StringRes int messageResource, String loginMessage) {
-        {
-            if (loginMessage == null || loginMessage.length() == 0) {
+    @KotlinCleanup("Use .isNullOrEmpty()")
+    private fun showLoginLogMessage(@StringRes messageResource: Int, loginMessage: String?) {
+        run {
+            if (loginMessage == null || loginMessage.length == 0) {
                 if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
-                    //#6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
-                    View root = this.findViewById(R.id.root_layout);
-                    UIUtils.showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, (v) -> {
-                        Connection.setAllowLoginSyncOnNoConnection(true);
-                        login();
-                    }, null);
+                    // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
+                    // val root = this.findViewById<View>(R.id.root_layout)
+                    showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, {
+                        Connection.setAllowLoginSyncOnNoConnection(true)
+                        login()
+                    }, null)
                 } else {
-                    UIUtils.showSimpleSnackbar(this, messageResource, false);
+                    showSimpleSnackbar(this, messageResource, false)
                 }
             } else {
-                Resources res = AnkiDroidApp.getAppResources();
-                showSimpleMessageDialog(res.getString(messageResource), loginMessage, false);
+                val res = AnkiDroidApp.getAppResources()
+                showSimpleMessageDialog(res.getString(messageResource), loginMessage, false)
             }
         }
     }
-
 
     /**
      * Listeners
      */
-    final Connection.TaskListener mLoginListener = new Connection.TaskListener() {
-
-        @Override
-        public void onProgressUpdate(Object... values) {
+    val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
+        override fun onProgressUpdate(vararg values: Any) {
             // Pass
         }
 
-
-        @Override
-        public void onPreExecute() {
-            Timber.d("loginListener.onPreExecute()");
-            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog.show(MyAccount.this, null,
-                        getResources().getString(R.string.alert_logging_message), false);
+        override fun onPreExecute() {
+            Timber.d("loginListener.onPreExecute()")
+            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
+                mProgressDialog = StyledProgressDialog.show(
+                    this@MyAccount, null,
+                    resources.getString(R.string.alert_logging_message), false
+                )
             }
         }
 
-
-        @Override
-        public void onPostExecute(Payload data) {
+        @KotlinCleanup("Use .isNotEmpty()")
+        override fun onPostExecute(data: Connection.Payload) {
             if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
+                mProgressDialog!!.dismiss()
             }
-
             if (data.success) {
-                Timber.i("User successfully logged in!");
-                saveUserInformation((String) data.data[0], (String) data.data[1]);
-
-                Intent i = MyAccount.this.getIntent();
-                if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
-                    MyAccount.this.setResult(RESULT_OK, i);
-                    finishWithAnimation(FADE);
+                Timber.i("User successfully logged in!")
+                saveUserInformation(data.data[0] as String, data.data[1] as String)
+                val i = this@MyAccount.intent
+                if (i.hasExtra("notLoggedIn") && i.extras!!.getBoolean("notLoggedIn", false)) {
+                    this@MyAccount.setResult(RESULT_OK, i)
+                    finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
                 } else {
                     // Show logged view
-                    mUsernameLoggedIn.setText((String) data.data[0]);
-                    switchToState(STATE_LOGGED_IN);
+                    mUsernameLoggedIn!!.text = data.data[0] as String
+                    switchToState(STATE_LOGGED_IN)
                 }
             } else {
-                Timber.e("Login failed, error code %d", data.returnType);
+                Timber.e("Login failed, error code %d", data.returnType)
                 if (data.returnType == 403) {
-                    UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
+                    showSimpleSnackbar(this@MyAccount, R.string.invalid_username_password, true)
                 } else {
-                    String message = getResources().getString(R.string.connection_error_message);
-                    Object[] result = data.result;
-                    if (result != null && result.length > 0 && result[0] instanceof Exception) {
-                        showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage((Exception) result[0]), false);
+                    val message = resources.getString(R.string.connection_error_message)
+                    val result = data.result
+                    if (result != null && result.size > 0 && result[0] is Exception) {
+                        showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage(result[0] as Exception), false)
                     } else {
-                        UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
+                        showSimpleSnackbar(this@MyAccount, message, false)
                     }
                 }
             }
         }
 
-
-        @Override
-        public void onDisconnected() {
-            showLoginLogMessage(R.string.youre_offline, "");
+        override fun onDisconnected() {
+            showLoginLogMessage(R.string.youre_offline, "")
         }
-    };
+    }
 
-
-    protected String getHumanReadableLoginErrorMessage(Exception exception) {
+    protected fun getHumanReadableLoginErrorMessage(exception: Exception?): String? {
         if (exception == null) {
-            return "";
+            return ""
         }
-
-        if (exception instanceof CustomSyncServerUrlException) {
-            String url = ((CustomSyncServerUrlException)exception).getUrl();
-            return getResources().getString(R.string.sync_error_invalid_sync_server, url);
+        if (exception is CustomSyncServerUrlException) {
+            val url = exception.url
+            return resources.getString(R.string.sync_error_invalid_sync_server, url)
         }
-
-        if (exception.getCause() != null) {
-            Throwable cause = exception.getCause();
-            if (cause instanceof UnknownHostException) {
-                return getString(R.string.sync_error_unknown_host_readable, exception.getLocalizedMessage());
+        if (exception.cause != null) {
+            val cause = exception.cause
+            if (cause is UnknownHostException) {
+                return getString(R.string.sync_error_unknown_host_readable, exception.localizedMessage)
             }
         }
-
-        return exception.getLocalizedMessage();
+        return exception.localizedMessage
     }
 
-    private boolean isScreenSmall() {
-        return (this.getApplicationContext().getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                < Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
+    private val isScreenSmall: Boolean
+        get() = (
+            (
+                this.applicationContext.resources.configuration.screenLayout
+                    and Configuration.SCREENLAYOUT_SIZE_MASK
+                )
+                < Configuration.SCREENLAYOUT_SIZE_LARGE
+            )
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (isScreenSmall() && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo.setVisibility(View.GONE);
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mAnkidroidLogo!!.visibility = View.GONE
         } else {
-            mAnkidroidLogo.setVisibility(View.VISIBLE);
+            mAnkidroidLogo!!.visibility = View.VISIBLE
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("MyAccount - onBackPressed()");
-            finishWithAnimation(FADE);
-            return true;
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
+            Timber.i("MyAccount - onBackPressed()")
+            finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+            return true
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event)
+    }
+
+    companion object {
+        private const val STATE_LOG_IN = 1
+        private const val STATE_LOGGED_IN = 2
     }
 }
