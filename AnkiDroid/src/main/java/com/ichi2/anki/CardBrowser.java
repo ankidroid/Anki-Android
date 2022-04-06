@@ -2270,7 +2270,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     }
                 browser.hideProgressBar();
                 browser.mCardsAdapter.notifyDataSetChanged();
-                Timber.d("Completed doInBackgroundRenderBrowserQA Successfuly");
+                Timber.d("Completed doInBackgroundRenderBrowserQA Successfully");
             } else {
                 // Might want to do something more proactive here like show a message box?
                 Timber.e("doInBackgroundRenderBrowserQA was not successful... continuing anyway");
@@ -2371,11 +2371,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
                 // > lastVisibleItem 0 and visibleItemCount 0.
 
-                // This change ensure that we log more specifically case where #8821 could have occured. That is, there are cards but we
+                // This change ensure that we log more specifically case where #8821 could have occurred. That is, there are cards but we
                 // are asked to display nothing.
 
                 // Note that this is not a bug. The fact that `visibleItemCount` is equal to 0 is actually authorized by the method we
-                // override and mentionned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
+                // override and mentioned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
                 // can delete some elements from the cache for example, since nothing is displayed.
 
                 // It would be interesting to know how often it occurs, but it is not a bug.

@@ -34,7 +34,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-// This is difficult to test as Chronomoeter.mStarted isn't visible
+// This is difficult to test as Chronometer.mStarted isn't visible
 class AnswerTimerTest {
     lateinit var chronometer: Chronometer
 

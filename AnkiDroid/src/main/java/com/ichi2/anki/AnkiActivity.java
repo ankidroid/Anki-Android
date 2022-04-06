@@ -378,7 +378,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    // Method for loading the collection which is inherited by all AnkiActivitys
+    /** Method for loading the collection which is inherited by every {@link AnkiActivity} */
     public void startLoadingCollection() {
         Timber.d("AnkiActivity.startLoadingCollection()");
         if (colIsOpen()) {

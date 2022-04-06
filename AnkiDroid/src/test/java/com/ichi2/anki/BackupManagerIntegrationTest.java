@@ -45,7 +45,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
         // Perform a write
         addNoteUsingBasicModel("Hello", "World");
 
-        waitFortask(new CollectionTask.ImportReplace(path), 1000);
+        waitForTask(new CollectionTask.ImportReplace(path), 1000);
 
         assertThat("database should be read-write", getCol().getDb().getDatabase().isReadOnly(), is(false));
         AnkiAssert.assertDoesNotThrow(() -> addNoteUsingBasicModel("Hello", "World"));

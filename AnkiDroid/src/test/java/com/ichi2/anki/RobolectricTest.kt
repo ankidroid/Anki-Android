@@ -172,7 +172,7 @@ open class RobolectricTest : CollectionGetter {
                 CollectionHelper.getInstance().getCol(targetContext).getBackend().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End")
+            CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen".equals(ex.message)) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -443,7 +443,7 @@ open class RobolectricTest : CollectionGetter {
 
     @Synchronized
     @Throws(InterruptedException::class)
-    protected fun <Progress, Result : Computation<*>?> waitFortask(task: TaskDelegate<Progress, Result>, timeoutMs: Int) {
+    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegate<Progress, Result>, timeoutMs: Int) {
         val completed = booleanArrayOf(false)
         val listener: TaskListener<Progress, Result> = object : TaskListener<Progress, Result>() {
             override fun onPreExecute() {}

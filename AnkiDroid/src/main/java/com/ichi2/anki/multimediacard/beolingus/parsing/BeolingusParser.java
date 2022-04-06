@@ -32,7 +32,7 @@ import timber.log.Timber;
  */
 public class BeolingusParser {
 
-    private static final Pattern PRONUNC_PATTERN = Pattern.compile("" +
+    private static final Pattern PRONUNCIATION_PATTERN = Pattern.compile("" +
             "<a href=\"([^\"]+)\"[^>]*>" +
             "<img src=\"/pics/s1[.]png\"[^>]*title=\"([^\"]+)\"[^>]*>");
     private static final Pattern MP3_PATTERN = Pattern.compile("href=\"([^\"]+\\.mp3)\">");
@@ -42,7 +42,7 @@ public class BeolingusParser {
      * @return {@code "no"} or the pronunciation URL
      */
     public static String getPronunciationAddressFromTranslation(@Language("HTML") String html, String wordToSearchFor) {
-        Matcher m = PRONUNC_PATTERN.matcher(html);
+        Matcher m = PRONUNCIATION_PATTERN.matcher(html);
         while (m.find()) {
             //Perform .contains() due to #5376 (a "%20{noun}" suffix).
             //Perform .toLowerCase() due to #5810 ("hello" should match "Hello").
@@ -60,7 +60,7 @@ public class BeolingusParser {
     /**
      * @return {@code "no"}, or the http address of the mp3 file
      */
-    public static String getMp3AddressFromPronounciation(@Language("HTML") String pronunciationPageHtml) {
+    public static String getMp3AddressFromPronunciation(@Language("HTML") String pronunciationPageHtml) {
         // Only log the page if you need to work with the regex
         // Timber.d("pronunciationPageHtml is %s", pronunciationPageHtml);
         Matcher m = MP3_PATTERN.matcher(pronunciationPageHtml);

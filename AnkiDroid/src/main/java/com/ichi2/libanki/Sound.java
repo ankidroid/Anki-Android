@@ -73,7 +73,7 @@ public class Sound {
     private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
-     * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playnig or paused, otherwise it is null.
+     * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
      */
     private MediaPlayer mMediaPlayer = null;
 

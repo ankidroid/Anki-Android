@@ -284,7 +284,7 @@ public class SchedV2 extends AbstractSched {
      * Remove from filtered if required.
      * Remove the siblings for the queue for same day spacing
      * Bury siblings if required by the options
-     * Overriden
+     * Overridden
      *  */
     public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
@@ -390,7 +390,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
-     * Overidden: V1 does not have preview
+     * Overridden: V1 does not have preview
      */
     public Queue countIdx(@NonNull Card card) {
         switch (card.getQueue()) {
@@ -602,14 +602,14 @@ public class SchedV2 extends AbstractSched {
     /**
      * @return the tree with `allDecksSorted` content.
      * @param allDecksSorted the set of all decks of the collection. Sorted.
-     * @param checkDone Whether the set of deck was checked. If false, we can'ta ssume all decks have parents
+     * @param checkDone Whether the set of deck was checked. If false, we can't assume all decks have parents
      * and that there is no duplicate. Instead, we'll ignore problems.*/
     protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
         return _groupChildren(allDecksSorted, 0, checkDone);
     }
 
     /**
-        @return the tree structure of all decks from @descandants, starting
+        @return the tree structure of all decks from @descendants, starting
         at specified depth.
 
         @param sortedDescendants a list of decks of dept at least depth, having all
@@ -1055,7 +1055,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden: _updateLrnCutoff not called in V1
+    // Overridden: _updateLrnCutoff not called in V1
     protected void _resetLrn() {
         _resetLrnCount();
         _resetLrnQueue();
@@ -1102,7 +1102,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overidden: no _maybeResetLrn in V1
+    // Overridden: no _maybeResetLrn in V1
     protected @Nullable Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
@@ -1187,7 +1187,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden
+    // Overridden
     protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.REVLOG_TYPE int type;
@@ -1344,7 +1344,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden
+    // Overridden
     protected void _rescheduleAsRev(@NonNull Card card, @NonNull JSONObject conf, boolean early) {
         boolean lapse = (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING);
         if (lapse) {
@@ -1368,7 +1368,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden: V1 has type rev for relearinng
+    // Overridden: V1 has type rev for relearning
     protected int _startingLeft(@NonNull Card card) {
         JSONObject conf;
         if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
@@ -1432,7 +1432,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** Reschedule a new card that's graduated for the first time.
-     * Overriden: V1 does not set type and queue*/
+     * Overridden: V1 does not set type and queue*/
     private void _rescheduleNew(@NonNull Card card, @NonNull JSONObject conf, boolean early) {
         card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
@@ -1470,7 +1470,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden: uses left/1000 in V1
+    // Overridden: uses left/1000 in V1
     private int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
@@ -1495,7 +1495,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Maximal number of rev card still to see today in current deck. It's computed as:
-     * the number of rev card to see by day according to the deck optinos
+     * the number of rev card to see by day according to the deck options
      * minus the number of rev cards seen today in this deck or a descendant
      * plus the number of extra cards to see today in this deck, a parent or a descendant.
      *
@@ -1509,7 +1509,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Maximal number of rev card still to see today in deck d. It's computed as:
-     * the number of rev card to see by day according to the deck optinos
+     * the number of rev card to see by day according to the deck options
      * minus the number of rev cards seen today in deck d or a descendant
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
@@ -1524,7 +1524,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Maximal number of rev card still to see today in deck d. It's computed as:
-     * the number of rev card to see by day according to the deck optinos
+     * the number of rev card to see by day according to the deck options
      * minus the number of rev cards seen today in deck d or a descendant
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
@@ -1561,7 +1561,7 @@ public class SchedV2 extends AbstractSched {
                                         mToday, lim);
     }
 
-    // Overriden: V1 uses _walkingCount
+    // Overridden: V1 uses _walkingCount
     protected void _resetRevCount() {
         _resetRevCount(null);
     }
@@ -1674,7 +1674,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden
+    // Overridden
     protected int _rescheduleLapse(@NonNull Card card) {
         JSONObject conf = _lapseConf(card);
         card.setLapses(card.getLapses() + 1);
@@ -1811,7 +1811,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden
+    // Overridden
     protected void _updateRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         card.setIvl(_nextRevIvl(card, ease, true));
     }
@@ -1897,7 +1897,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Whether the filtered deck is empty
-     * Overriden
+     * Overridden
      */
     private int _fillDyn(Deck deck) {
         int start = -100000;
@@ -1932,7 +1932,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Overriden: other queue in V1
+    // Overridden: other queue in V1
     public void emptyDyn(long did, String lim) {
         if (lim == null) {
             lim = "did = " + did;
@@ -2170,7 +2170,7 @@ public class SchedV2 extends AbstractSched {
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
 
-    /* Overriden: other way to count time*/
+    /* Overridden: other way to count time*/
     @RustCleanup("remove timing == null check once JavaBackend is removed")
     public void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
@@ -2441,7 +2441,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return the next interval for CARD, in seconds.
      */
-    // Overriden
+    // Overridden
     protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
@@ -2473,7 +2473,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // this isn't easily extracted from the learn code
-    // Overriden
+    // Overridden
     protected long _nextLrnIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
@@ -2506,7 +2506,7 @@ public class SchedV2 extends AbstractSched {
      * learning and relearning cards may be seconds-based or day-based;
      * other types map directly to queues
      *
-     * Overriden: in V1, queue becomes type.
+     * Overridden: in V1, queue becomes type.
      */
     @NonNull
     protected String _restoreQueueSnippet() {
@@ -2563,13 +2563,13 @@ public class SchedV2 extends AbstractSched {
                 getTime().intTime(), mCol.usn());
     }
 
-    // Overriden. manual is false by default in V1
+    // Overridden. manual is false by default in V1
     public void buryCards(@NonNull long[] cids) {
         buryCards(cids, true);
     }
 
     @Override
-    // Overriden: V1 also remove from dyns and lrn
+    // Overridden: V1 also remove from dyns and lrn
     @VisibleForTesting
     public void buryCards(@NonNull long[] cids, boolean manual) {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
@@ -2581,7 +2581,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Unbury all buried cards in all decks
-     * Overriden: V1 change lastUnburied
+     * Overridden: V1 change lastUnburied
      */
     public void unburyCards() {
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
@@ -2903,7 +2903,7 @@ public class SchedV2 extends AbstractSched {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    // Overriden: In sched v1, a single type of burying exist
+    // Overridden: In sched v1, a single type of burying exist
     public boolean haveBuried(long did) {
         List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
         all.add(did);

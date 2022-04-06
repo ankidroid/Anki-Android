@@ -20,7 +20,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.canhub.cropper.CropImageActivity;
-import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
+import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
@@ -64,7 +64,7 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
         notYetHandled(CropImageActivity.class.getSimpleName(), "cannot implemented - activity from canhub.cropper");
         notYetHandled(IntentHandler.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(VideoPlayer.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
-        notYetHandled(LoadPronounciationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
+        notYetHandled(LoadPronunciationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
         notYetHandled(Preferences.class.getSimpleName(), "Not working (or implemented) - inherits from AppCompatPreferenceActivity");
         notYetHandled(TranslationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from FragmentActivity");
         notYetHandled(DeckOptions.class.getSimpleName(), "Not working (or implemented) - inherits from AppCompatPreferenceActivity");

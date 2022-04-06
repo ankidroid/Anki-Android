@@ -187,7 +187,7 @@ public class RemoteMediaServer extends HttpSyncer {
         } else if (returnType == JSONArray.class) {
             return (T) resp.getJSONArray("data");
         }
-        throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
+        throw new RuntimeException("Did not specify a valid type for the 'data' element in response");
     }
 
     // Difference from libAnki: we allow a custom URL to specify a different prefix, so this is only used with the

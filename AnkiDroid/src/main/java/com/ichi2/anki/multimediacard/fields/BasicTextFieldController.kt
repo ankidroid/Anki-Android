@@ -31,7 +31,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity
+import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment
 import com.ichi2.anki.multimediacard.activity.TranslationActivity
 import com.ichi2.compat.CompatHelper
@@ -99,9 +99,9 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text))
                 return@setOnClickListener
             }
-            val intent = Intent(mActivity, LoadPronounciationActivity::class.java)
-            intent.putExtra(LoadPronounciationActivity.EXTRA_SOURCE, source)
-            mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_PRONOUNCIATION)
+            val intent = Intent(mActivity, LoadPronunciationActivity::class.java)
+            intent.putExtra(LoadPronunciationActivity.EXTRA_SOURCE, source)
+            mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_PRONUNCIATION)
         }
         layoutTools.addView(btnPronounce, p)
     }
@@ -216,9 +216,9 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 Timber.w(e)
                 showToast(gtxt(R.string.multimedia_editor_something_wrong))
             }
-        } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_PRONUNCIATION && resultCode == Activity.RESULT_OK) {
             try {
-                val pronuncPath = data!!.extras!![LoadPronounciationActivity.EXTRA_PRONUNCIATION_FILE_PATH]
+                val pronuncPath = data!!.extras!![LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH]
                     .toString()
                 val f = File(pronuncPath)
                 if (!f.exists()) {
@@ -305,7 +305,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         // Additional activities are started to perform translation/pronunciation search and
         // so on, here are their request codes, to differentiate, when they return.
         private const val REQUEST_CODE_TRANSLATE_GLOSBE = 101
-        private const val REQUEST_CODE_PRONOUNCIATION = 102
+        private const val REQUEST_CODE_PRONUNCIATION = 102
         private const val REQUEST_CODE_TRANSLATE_COLORDICT = 103
 
         /**
