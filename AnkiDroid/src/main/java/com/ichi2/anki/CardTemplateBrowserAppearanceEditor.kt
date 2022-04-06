@@ -13,251 +13,218 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.dialogs.DiscardChangesDialog;
-import com.ichi2.utils.JSONObject;
-
-import org.jetbrains.annotations.Contract;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import androidx.annotation.CheckResult
+import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import org.jetbrains.annotations.Contract
+import timber.log.Timber
 
 /** Allows specification of the Question and Answer format of a card template in the Card Browser
  * This is known as "Browser Appearance" in Anki
  * We do not allow the user to change fonts as Android only has a handful
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
-public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
-
-    public static final String INTENT_QUESTION_FORMAT = "bqfmt";
-    public static final String INTENT_ANSWER_FORMAT = "bafmt";
-
-    /** Specified the card browser should use the default template formatter */
-    public static final String VALUE_USE_DEFAULT = "";
-
-    private EditText mQuestionEditText;
-    private EditText mAnswerEditText;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
+    private lateinit var mQuestionEditText: EditText
+    private lateinit var mAnswerEditText: EditText
+    @KotlinCleanup("Use ?:")
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        super.onCreate(savedInstanceState);
-        Bundle bundle = savedInstanceState;
+        super.onCreate(savedInstanceState)
+        var bundle = savedInstanceState
         if (bundle == null) {
-            bundle = getIntent().getExtras();
+            bundle = intent.extras
         }
         if (bundle == null) {
-            UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true);
-            finishActivityWithFade(this);
-            return;
+            UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
+            finishActivityWithFade(this)
+            return
         }
-        initializeUiFromBundle(bundle);
+        initializeUiFromBundle(bundle)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.card_template_browser_appearance_editor, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.card_template_browser_appearance_editor, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_confirm) {
-            Timber.i("Save pressed");
-            saveAndExit();
-            return true;
-        } else if (item.getItemId() == R.id.action_restore_default) {
-            Timber.i("Restore Default pressed");
-            showRestoreDefaultDialog();
-            return true;
-        } else if (item.getItemId() == android.R.id.home) {
-            Timber.i("Back Pressed");
-            closeWithDiscardWarning();
-            return true;
+    @KotlinCleanup("use when")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_confirm) {
+            Timber.i("Save pressed")
+            saveAndExit()
+            return true
+        } else if (item.itemId == R.id.action_restore_default) {
+            Timber.i("Restore Default pressed")
+            showRestoreDefaultDialog()
+            return true
+        } else if (item.itemId == android.R.id.home) {
+            Timber.i("Back Pressed")
+            closeWithDiscardWarning()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-
-    @Override
-    public void onBackPressed() {
-        Timber.i("Back Button Pressed");
-        closeWithDiscardWarning();
+    override fun onBackPressed() {
+        Timber.i("Back Button Pressed")
+        closeWithDiscardWarning()
     }
 
-
-    private void closeWithDiscardWarning() {
+    private fun closeWithDiscardWarning() {
         if (hasChanges()) {
-            Timber.i("Changes detected - displaying discard warning dialog");
-            showDiscardChangesDialog();
+            Timber.i("Changes detected - displaying discard warning dialog")
+            showDiscardChangesDialog()
         } else {
-            discardChangesAndClose();
+            discardChangesAndClose()
         }
     }
 
-
-    private void showDiscardChangesDialog() {
+    private fun showDiscardChangesDialog() {
         DiscardChangesDialog
-                .getDefault(this)
-                .onPositive((dialog, which) -> discardChangesAndClose())
-                .show();
+            .getDefault(this)
+            .onPositive { _, _ -> discardChangesAndClose() }
+            .show()
     }
 
-
-    private void showRestoreDefaultDialog() {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
-                .content(R.string.card_template_browser_appearance_restore_default_dialog)
-                .onPositive((dialog, which) -> restoreDefaultAndClose());
-        builder.show();
+    @KotlinCleanup("remove variable and call .show() directly on builder")
+    private fun showRestoreDefaultDialog() {
+        val builder: MaterialDialog.Builder = MaterialDialog.Builder(this)
+            .positiveText(R.string.dialog_ok)
+            .negativeText(R.string.dialog_cancel)
+            .content(R.string.card_template_browser_appearance_restore_default_dialog)
+            .onPositive { _, _ -> restoreDefaultAndClose() }
+        builder.show()
     }
 
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(INTENT_QUESTION_FORMAT, getQuestionFormat());
-        outState.putString(INTENT_ANSWER_FORMAT, getAnswerFormat());
-        super.onSaveInstanceState(outState);
+    public override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(INTENT_QUESTION_FORMAT, questionFormat)
+        outState.putString(INTENT_ANSWER_FORMAT, answerFormat)
+        super.onSaveInstanceState(outState)
     }
 
-    private void initializeUiFromBundle(@NonNull Bundle bundle) {
-        setContentView(R.layout.card_browser_appearance);
+    private fun initializeUiFromBundle(bundle: Bundle) {
+        setContentView(R.layout.card_browser_appearance)
 
-        mQuestionEditText = findViewById(R.id.question_format);
-        mQuestionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT));
+        mQuestionEditText = findViewById(R.id.question_format)
+        mQuestionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT))
 
-        mAnswerEditText = findViewById(R.id.answer_format);
-        mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT));
+        mAnswerEditText = findViewById(R.id.answer_format)
+        mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
-        enableToolbar();
+        enableToolbar()
     }
 
-    private boolean answerHasChanged(Intent intent) {
-        return !intent.getStringExtra(INTENT_ANSWER_FORMAT).equals(getAnswerFormat());
+    private fun answerHasChanged(intent: Intent): Boolean {
+        return intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
     }
 
-    private boolean questionHasChanged(Intent intent) {
-        return !intent.getStringExtra(INTENT_QUESTION_FORMAT).equals(getQuestionFormat());
+    private fun questionHasChanged(intent: Intent): Boolean {
+        return intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
     }
 
-    private String getQuestionFormat() {
-        return getTextValue(mQuestionEditText);
+    private val questionFormat: String
+        get() = getTextValue(mQuestionEditText)
+    private val answerFormat: String
+        get() = getTextValue(mAnswerEditText)
+
+    @KotlinCleanup("make editText non-null")
+    private fun getTextValue(editText: EditText?): String {
+        return editText!!.text.toString()
     }
 
-    private String getAnswerFormat() {
-        return getTextValue(mAnswerEditText);
+    private fun restoreDefaultAndClose() {
+        Timber.i("Restoring Default and Closing")
+        mQuestionEditText.setText(VALUE_USE_DEFAULT)
+        mAnswerEditText.setText(VALUE_USE_DEFAULT)
+        saveAndExit()
     }
 
-    private String getTextValue(EditText editText) {
-        return editText.getText().toString();
+    private fun discardChangesAndClose() {
+        Timber.i("Closing and discarding changes")
+        setResult(RESULT_CANCELED)
+        finishActivityWithFade(this)
     }
 
-    private void restoreDefaultAndClose() {
-        Timber.i("Restoring Default and Closing");
-        mQuestionEditText.setText(VALUE_USE_DEFAULT);
-        mAnswerEditText.setText(VALUE_USE_DEFAULT);
-        saveAndExit();
+    private fun saveAndExit() {
+        Timber.i("Save and Exit")
+        val data = Intent()
+        data.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+        data.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+        setResult(RESULT_OK, data)
+        finishActivityWithFade(this)
     }
 
-    private void discardChangesAndClose() {
-        Timber.i("Closing and discarding changes");
-        setResult(RESULT_CANCELED);
-        finishActivityWithFade(this);
-    }
-
-    private void saveAndExit() {
-        Timber.i("Save and Exit");
-        Intent data = new Intent();
-        data.putExtra(INTENT_QUESTION_FORMAT, getQuestionFormat());
-        data.putExtra(INTENT_ANSWER_FORMAT, getAnswerFormat());
-        setResult(RESULT_OK, data);
-        finishActivityWithFade(this);
-    }
-
-    public boolean hasChanges() {
-        try {
-            Intent intent = getIntent();
-            return questionHasChanged(intent) || answerHasChanged(intent);
-        } catch (Exception e) {
-            Timber.w(e, "Failed to detect changes. Assuming true");
-            return true;
+    @KotlinCleanup("remove redundant intent variable")
+    fun hasChanges(): Boolean {
+        return try {
+            val intent = intent
+            questionHasChanged(intent) || answerHasChanged(intent)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to detect changes. Assuming true")
+            true
         }
     }
 
-    @NonNull @CheckResult
-    public static Intent getIntentFromTemplate(@NonNull Context context, @NonNull JSONObject template) {
-        String browserQuestionTemplate = template.getString("bqfmt");
-        String browserAnswerTemplate = template.getString("bafmt");
-        return CardTemplateBrowserAppearanceEditor.getIntent(context, browserQuestionTemplate, browserAnswerTemplate);
-    }
+    class Result private constructor(question: String?, answer: String?) {
+        val question: String = question ?: VALUE_USE_DEFAULT
+        val answer: String = answer ?: VALUE_USE_DEFAULT
 
-    @NonNull @CheckResult
-    public static Intent getIntent(@NonNull Context context, @NonNull String questionFormat, @NonNull String answerFormat) {
-        Intent intent = new Intent(context, CardTemplateBrowserAppearanceEditor.class);
-        intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat);
-        intent.putExtra(INTENT_ANSWER_FORMAT, answerFormat);
-        return intent;
-    }
-
-    public static class Result {
-        @NonNull
-        private final String mQuestion;
-        @NonNull
-        private final String mAnswer;
-
-        private Result(String question, String answer) {
-            this.mQuestion = question == null ? VALUE_USE_DEFAULT : question;
-            this.mAnswer = answer == null ? VALUE_USE_DEFAULT : answer;
+        fun applyTo(template: JSONObject) {
+            template.put("bqfmt", question)
+            template.put("bafmt", answer)
         }
 
-
-        @Nullable
-        @Contract("null -> null")
-        @SuppressWarnings("WeakerAccess")
-        public static Result fromIntent(@Nullable Intent intent) {
-            if (intent == null) {
-                return null;
-            }
-            try {
-                String question = intent.getStringExtra(INTENT_QUESTION_FORMAT);
-                String answer = intent.getStringExtra(INTENT_ANSWER_FORMAT);
-                return new Result(question, answer);
-            } catch (Exception e) {
-                Timber.w(e, "Could not read result from intent");
-                return null;
+        companion object {
+            @JvmStatic
+            @Contract("null -> null")
+            fun fromIntent(intent: Intent?): Result? {
+                return if (intent == null) {
+                    null
+                } else try {
+                    val question = intent.getStringExtra(INTENT_QUESTION_FORMAT)
+                    val answer = intent.getStringExtra(INTENT_ANSWER_FORMAT)
+                    Result(question, answer)
+                } catch (e: Exception) {
+                    Timber.w(e, "Could not read result from intent")
+                    null
+                }
             }
         }
+    }
 
-        @NonNull
-        public String getQuestion() {
-            return mQuestion;
+    companion object {
+        const val INTENT_QUESTION_FORMAT = "bqfmt"
+        const val INTENT_ANSWER_FORMAT = "bafmt"
+
+        /** Specified the card browser should use the default template formatter  */
+        const val VALUE_USE_DEFAULT = ""
+        @JvmStatic
+        @CheckResult
+        fun getIntentFromTemplate(context: Context, template: JSONObject): Intent {
+            val browserQuestionTemplate = template.getString("bqfmt")
+            val browserAnswerTemplate = template.getString("bafmt")
+            return getIntent(context, browserQuestionTemplate, browserAnswerTemplate)
         }
 
-        @NonNull
-        public String getAnswer() {
-            return mAnswer;
-        }
-
-
-        @SuppressWarnings("WeakerAccess")
-        public void applyTo(@NonNull JSONObject template) {
-            template.put("bqfmt", getQuestion());
-            template.put("bafmt", getAnswer());
+        @CheckResult
+        fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
+            val intent = Intent(context, CardTemplateBrowserAppearanceEditor::class.java)
+            intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+            intent.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            return intent
         }
     }
 }
