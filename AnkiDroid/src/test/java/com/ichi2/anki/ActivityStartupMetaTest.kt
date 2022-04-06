@@ -13,52 +13,44 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.ActivityList
+import com.ichi2.testutils.ActivityList.ActivityLaunchParam
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.Throws
 
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-
-import com.ichi2.testutils.ActivityList;
-import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-
-@RunWith(AndroidJUnit4.class)
-public class ActivityStartupMetaTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class ActivityStartupMetaTest : RobolectricTest() {
     @Test
-    public void ensureAllActivitiesAreTested() throws PackageManager.NameNotFoundException {
+    @Throws(PackageManager.NameNotFoundException::class)
+    @KotlinCleanup("remove throws; remove stream(), remove : String")
+    fun ensureAllActivitiesAreTested() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 
         // we can't access this in a static context
-        PackageManager pm = getTargetContext().getPackageManager();
-
-        PackageInfo packageInfo = pm.getPackageInfo(getTargetContext().getPackageName(), PackageManager.GET_ACTIVITIES);
-        ActivityInfo[] manifestActivities = packageInfo.activities;
-
-        Set<String> testedActivityClassNames = ActivityList.allActivitiesAndIntents().stream().map(ActivityLaunchParam::getClassName).collect(Collectors.toSet());
-
-        Object[] manifestActivityNames = Arrays.stream(manifestActivities)
-                .map(x -> x.name)
-                .filter(x -> !x.equals("com.ichi2.anki.TestCardTemplatePreviewer"))
-                .filter(x -> !x.equals("com.ichi2.anki.AnkiCardContextMenuAction"))
-                .filter(x -> !x.equals("com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"))
-                .filter(x -> !x.startsWith("androidx"))
-                .filter(x -> !x.startsWith("org.acra"))
-                .filter(x -> !x.startsWith("leakcanary.internal"))
-                .toArray();
-        assertThat(testedActivityClassNames, containsInAnyOrder(manifestActivityNames));
+        val pm = targetContext.packageManager
+        val packageInfo = pm.getPackageInfo(targetContext.packageName, PackageManager.GET_ACTIVITIES)
+        val manifestActivities = packageInfo.activities
+        val testedActivityClassNames = ActivityList.allActivitiesAndIntents().stream().map { obj: ActivityLaunchParam -> obj.className }.collect(Collectors.toSet())
+        val manifestActivityNames = Arrays.stream(manifestActivities)
+            .map { x: ActivityInfo -> x.name }
+            .filter { x: String -> x != "com.ichi2.anki.TestCardTemplatePreviewer" }
+            .filter { x: String -> x != "com.ichi2.anki.AnkiCardContextMenuAction" }
+            .filter { x: String -> x != "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" }
+            .filter { x: String -> !x.startsWith("androidx") }
+            .filter { x: String -> !x.startsWith("org.acra") }
+            .filter { x: String -> !x.startsWith("leakcanary.internal") }
+            .toArray()
+        MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }
 }
