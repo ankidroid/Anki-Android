@@ -16,25 +16,18 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.multimediacard.language
 
-package com.ichi2.anki.multimediacard.language;
-
-import java.util.Locale;
+import java.util.*
 
 /**
- * This one lister services in beolingus.
- * <p>
- * It is used to load pronunciation.
+ * This one lister services in beolingus. It is used to load pronunciation.
  */
-public class LanguageListerBeolingus extends LanguageListerBase {
-
-    public LanguageListerBeolingus() {
-        super();
-
-        addLanguage((new Locale("eng")).getDisplayLanguage() , "en-de");
-        addLanguage((new Locale("deu")).getDisplayLanguage(), "deen");
-        addLanguage((new Locale("spa")).getDisplayLanguage(), "es-de");
-        addLanguage((new Locale("por")).getDisplayLanguage(), "pt-de");
+class LanguageListerBeolingus : LanguageListerBase() {
+    init {
+        addLanguage(Locale("eng").displayLanguage, "en-de")
+        addLanguage(Locale("deu").displayLanguage, "deen")
+        addLanguage(Locale("spa").displayLanguage, "es-de")
+        addLanguage(Locale("por").displayLanguage, "pt-de")
     }
-
 }
