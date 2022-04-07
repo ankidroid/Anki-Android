@@ -145,11 +145,6 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT));
 
         enableToolbar();
-
-        // Set activity title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.card_template_browser_appearance_title);
-        }
     }
 
     private boolean answerHasChanged(Intent intent) {
