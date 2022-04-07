@@ -169,7 +169,7 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean isAcraEnabled(Context context, boolean defaultValue) {
+    public static boolean isAcraEnabled(@SuppressLint("UnknownNullness") Context context, boolean defaultValue) {
         if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
             Timber.w("No default value for '%s'", ACRA.PREF_DISABLE_ACRA);
@@ -183,6 +183,7 @@ public class AnkiDroidApp extends Application {
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
      * @return ConfigurationBuilder for the current ACRA config
      */
+    @NonNull
     public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
         return mAcraCoreConfigBuilder;
     }
@@ -283,7 +284,7 @@ public class AnkiDroidApp extends Application {
 
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
-//            Timber.plant(new DebugTree());
+            Timber.plant(new DebugTree());
             setDebugACRAConfig(preferences);
 
             List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
@@ -336,7 +337,7 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest()) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
-        
+
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
         AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
         NotificationChannels.setup(getApplicationContext());
