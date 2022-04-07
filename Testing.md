@@ -68,13 +68,11 @@ is a clear and readable way to check that a number is greater than or equal to o
 
 # Background / Async tasks
 
-You may find your test fails because it created a background task, and the failure message may include a message from the Robolectric framework indicating there were "pending tasks on the main looper" or similar.
 
-Currently, any call to background tasks really starts a new thread. This sets up a classic asynchronous / multi-thread race condition, and means that assertions sometime may be checked before the code you are testing executed and finished. If this happens, you can either: 
-* uses `advanceRobolectricLooperWithSleep` or `advanceRobolectricLooper` to ensure that a task is executed before moving on
-* calls `runTasksInForeground` to ensure that tasks are executed in the main thread. 
+AnkiDroid (and generally any software with a graphical user interface) is multi-threaded. While the main thread display the UI, any non-trivial tasks is send in a background thread to be executed without blocking the UI. However, unit tests traditionally interacts badly with multi-threading. In order to avoid this, by default, all backgrounds tasks are run in foreground during unit test.
 
-Once #8442 is merged, this section should be updated to indicate that the default changed, and that tasks will be run by default on foreground and that if required, some tasks should be run in background (e.g. tasks related to missing collection or broken database)
+If for some reason (e.g. tasks related to missing collection or broken database)
+, you need to actually run background tests in background, you can call `RobolectrictTest`'s method `runTasksInBackground()`. In this case, you may find your test fails because it created a background task, and the failure message may include a message from the Robolectric framework indicating there were "pending tasks on the main looper" or similar. This is a sign of the classic asynchronous / multi-thread race condition, and means that assertions sometime may be checked before the code you are testing executed and finished. If this happens, you can  uses `advanceRobolectricLooperWithSleep` or `advanceRobolectricLooper` to ensure that a task is executed before moving on.
 
 ### Parameterized Tests (Enclosed Runner)
 
