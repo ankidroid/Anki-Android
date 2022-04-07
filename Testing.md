@@ -6,6 +6,20 @@ This document explains how to create tests for AnkiDroid. Please see the [develo
 
 The remaining documents is about best practice to write tests for AnkiDroid. You may find past code not following those best practice, feel free to correct them, in particular if your change makes tests quicker. Please also get a look at our [code style](Code-style).
 
+# How to start with tests
+
+If you already know how to create tests and run them, you can skip this section. 
+
+The simplest way to understand how to test a software is to read tests, break a test, and see what occurs. Open any file that seems interesting in `AnkiDroid/src/test/` or `AnkiDroid/src/androidTest/` in Android studio. On the left of class names and of some method, you'll find a green arrow. If you click this arrow, the project will build and the test will run. Ideally, after some time, a dozen of seconds or up to the few minutes depending on the complexity of the tests and your computer speed, you'll see on the bottom of Android Studio a message stating that some tests were ignored and all other tests succeeded. That's the state we hope to always remain in.
+
+Now, have fun and break some tests. For example, you can replace a value by `null` and run a test again. It's possible that you can't run the test because Kotlin detect an error. Maybe a variable that is not used anymore, or a potentially null value sent to a method that don't accept null. Correct that in whatever way you want, until the code actually compiles. You'll probably get a `NullPointerException` during the execution of the test. You should be able to see the stack trace in the `run` part of Android Studio. That will help you figure out which value was null and should not have been null.
+
+Now, let's change an assertion. Usually, assertions are methods with the word `assert`. They state that some value has some properties. For example, a value is non-negative, a list is non-empty, an exception is raised during the run... Change the assertion the way you want. Assert the value is -1, the list has 2000 elements and look for a different exception. Run the tests again. This time, you should not see a crash, you should see a message stating that an assertion failed. You'll see sometime an English sentence explaining the issue (if it is provided by the test author). You'll see what was expected, and what occurs instead.
+
+And now, you are ready to write your first tests. Create a new method, with the `@Test` annotation, run the code you want to test, uses assertion on the result of the code, and here it is, you have written your first tests.
+
+Now, let's dive deep and see what are all of the tools we have to write tests!
+
 # Values
 ## Reused values
 Please avoid recreating variables if possible. Uses a `static final` variable to save values that never changes. We expect the content of those variables not to be changed by tests. If really necessary, it can be enforced with [Collections.unmodifiable](https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#unmodifiableList) but we generally don't do it as it would call an extra function, add more codes and we have not yet had a problem that it would have solved.
@@ -86,3 +100,10 @@ A special case of parameterized test consists in running tests with multiple API
 Most of the time, if a method is not available on our minimal supported API (currently 21, as of april 2022), we use [`Compat`](https://github.com/ankidroid/Anki-Android/tree/main/AnkiDroid/src/main/java/com/ichi2/compat)'s classes to implement them - sometime less efficiently, or less safely. Compat allows to use the standard library method when available, and our implementation otherwise. This means that methods using `Compat` may need to be tested on various API level.  For example, let's assume that a method we want to use is introduced in API 26. The test do not actually need to run on API 21, it only needs to use the method that would be used if we were in API 21. This difference is important because it saves time to run a test class on a single API. In order to do so, we have implemented the abstract class `Test21And26`, that ensure that all tests extending it are ran with Compat's using `Compat21` and `Compat26`. You may look atcom.ichi2.compat.Test21And26.DirectoryTest` for an example of how to use this class.  If you need to run on a different set of APIs, you can adapte `Test21And26` to a new set of APIs.
 
 If for some reason you actually need to run tests on multiple API, you can use the `@targetAPI` annotation. TODO: explain why one may need to do that and how to run on multiple API.
+
+
+# Todo:
+This section contains a list of topic we use in tests that may want to have a better coverage. 
+* Mock
+* Changing the behavior of an internal function
+* simulating a crash (e.g. a I/O function fail to read/write data)
