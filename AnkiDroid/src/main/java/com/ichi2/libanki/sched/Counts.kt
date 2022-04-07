@@ -72,8 +72,7 @@ class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var r
     }
 
     override fun hashCode(): Int {
-        @KotlinCleanup("Kotlin listOf instead of Java Arrays.asList")
-        return Arrays.asList(new, rev, lrn).hashCode()
+        return listOf(new, rev, lrn).hashCode()
     }
 
     override fun toString(): String {
