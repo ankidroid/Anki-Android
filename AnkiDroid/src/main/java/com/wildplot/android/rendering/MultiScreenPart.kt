@@ -20,8 +20,8 @@ import com.wildplot.android.rendering.interfaces.Drawable
 import java.util.*
 
 /**
- * This class is used to store informations for a certain plot in a multi-plot sheet.
- * The informations are the drawables for this plotsheet and the x and y limitations
+ * This class is used to store information for a certain plot in a multi-plot sheet.
+ * The information is the drawables for this plotsheet and the x and y limitations
  */
 class MultiScreenPart {
     private val xRange: DoubleArray
@@ -47,7 +47,7 @@ class MultiScreenPart {
 
     /**
      * Constructor for a screen part,
-     * a screen part is build with its information about x- and y-range, aswell as a list of Drawable objects that will be drawn
+     * a screen part is build with its information about x- and y-range, as well as a list of Drawable objects that will be drawn
      * onto the screen part
      */
     constructor(xRange: DoubleArray, yRange: DoubleArray, drawables: Vector<Drawable>) : super() {

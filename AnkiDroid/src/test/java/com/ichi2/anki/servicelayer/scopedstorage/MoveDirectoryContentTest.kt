@@ -165,7 +165,7 @@ class MoveDirectoryContentTest : Test21And26(), OperationTest {
 
     /**
      * Checking that `MoveDirectoryContent` don't delete the source directory.
-     * Deleting the source directory is the responsability of `MoveDirectory`
+     * Deleting the source directory is the responsibility of `MoveDirectory`
      */
     @Test
     fun empty_directory_is_not_deleted() {

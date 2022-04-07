@@ -97,7 +97,7 @@ public class ParserTest extends RobolectricTest {
     }
 
     @Test
-    public void test_emptyness() {
+    public void test_emptiness() {
         /* In the comment below, I assume Testi is the field FOOi in position i*/
 
         // No field. Req was `("none", [], [])`

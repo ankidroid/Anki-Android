@@ -26,7 +26,7 @@ import java.util.TimeZone;
 
 public class MockTime extends Time {
 
-    /** Number of miliseconds between each call. */
+    /** Number of milliseconds between each call. */
     private final int mStep;
     /** Time since epoch in MS. */
     private long mTime;
@@ -49,7 +49,7 @@ public class MockTime extends Time {
         mStep = step;
     }
 
-    /** Time in milisecond since epoch. */
+    /** Time in millisecond since epoch. */
     @Override
     public long intTimeMS() {
         long time = this.mTime;
@@ -61,7 +61,7 @@ public class MockTime extends Time {
         return mTime;
     }
 
-    /** Add ms milisecond*/
+    /** Add ms milliseconds */
     public void addMs(long ms) {
         mTime += ms;
     }
@@ -88,7 +88,7 @@ public class MockTime extends Time {
 
 
     /**
-     * Allow to get a timestamp which is independant of place where test occurs. MS are set to 0
+     * Allow to get a timestamp which is independent of place where test occurs. MS are set to 0
      * @param year Year
      * @param month Month, 0-based
      * @param date, day of month
@@ -103,22 +103,22 @@ public class MockTime extends Time {
 
 
     /**
-     * Allow to get a timestamp which is independant of place where test occurs.
+     * Allow to get a timestamp which is independent of place where test occurs.
      * @param year Year
      * @param month Month, 0-based
      * @param date, day of month
      * @param hourOfDay, hour, from 0 to 23
      * @param minute, from 0 to 59
      * @param second, From 0 to 59
-     * @param miliseconds, from 0 to 999
+     * @param milliseconds, from 0 to 999
      * @return the time stamp of this instant in GMT calendar
      */
     @SuppressLint("DirectGregorianInstantiation")
-    public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second, int miliseconds) {
+    public static long timeStamp(int year, int month, int date, int hourOfDay, int minute, int second, int milliseconds) {
         TimeZone timeZone = TimeZone.getTimeZone("GMT");
         Calendar gregorianCalendar = new GregorianCalendar(year, month, date, hourOfDay, minute, second);
         gregorianCalendar.setTimeZone(timeZone);
-        gregorianCalendar.set(Calendar.MILLISECOND, miliseconds);
+        gregorianCalendar.set(Calendar.MILLISECOND, milliseconds);
         return (gregorianCalendar.getTimeInMillis());
     }
 }

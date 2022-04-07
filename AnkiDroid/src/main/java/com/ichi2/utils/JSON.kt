@@ -21,7 +21,7 @@ import kotlin.Throws
 
 object JSON {
     /**
-     * Returns the input if it is a JSON-permissable value; throws otherwise.
+     * Returns the input if it is a JSON-permissible value; throws otherwise.
      */
     @JvmStatic
     @Throws(JSONException::class)

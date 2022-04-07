@@ -136,25 +136,25 @@ class FieldState private constructor(private val editor: NoteEditor) {
 
             @JvmStatic
             fun refresh(replaceNewlines: Boolean): FieldChangeType {
-                return frotype(Type.REFRESH, replaceNewlines)
+                return fromType(Type.REFRESH, replaceNewlines)
             }
 
             @JvmStatic
             fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType {
-                return frotype(Type.CLEAR_KEEP_STICKY, replaceNewlines)
+                return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines)
             }
 
             @JvmStatic
             fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType {
-                return frotype(Type.CHANGE_FIELD_COUNT, replaceNewlines)
+                return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines)
             }
 
             @JvmStatic
             fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType {
-                return frotype(Type.INIT, replaceNewlines)
+                return fromType(Type.INIT, replaceNewlines)
             }
 
-            private fun frotype(type: Type, replaceNewlines: Boolean): FieldChangeType {
+            private fun fromType(type: Type, replaceNewlines: Boolean): FieldChangeType {
                 return FieldChangeType(type, replaceNewlines)
             }
         }

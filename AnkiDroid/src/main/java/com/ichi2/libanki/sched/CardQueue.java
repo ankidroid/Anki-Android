@@ -39,7 +39,7 @@ abstract class CardQueue<T extends Card.Cache> {
 
     public void loadFirstCard() {
         if (!mQueue.isEmpty()) {
-            // No nead to reload. If the card was changed, reset would have been called and emptied the queue
+            // No need to reload. If the card was changed, reset would have been called and emptied the queue
             mQueue.get(0).loadQA(false, false);
         }
     }

@@ -136,8 +136,8 @@ open class StorageTest : RobolectricTest() {
 
         private fun loadDConf(col: Collection): String {
             val ret = JSONObject()
-            for (dcof in col.decks.allConf()) {
-                ret.put(dcof.getString("id"), dcof)
+            for (dconf in col.decks.allConf()) {
+                ret.put(dconf.getString("id"), dconf)
             }
             return ret.toString(0)
         }

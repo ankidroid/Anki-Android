@@ -91,6 +91,7 @@ import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
+import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
@@ -630,12 +631,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true)
             }
             mBackButtonPressedToReturn = true
-            Handler(Looper.getMainLooper()).postDelayed(
-                Runnable {
-                    mBackButtonPressedToReturn = false
-                },
-                Consts.SHORT_TOAST_DURATION
-            )
+            executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToReturn = false }
         }
     }
 
@@ -706,7 +702,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
-     * cannot be convered to text.
+     * cannot be converted to text.
      *
      * @return the text in clipboard or the empty string.
      */

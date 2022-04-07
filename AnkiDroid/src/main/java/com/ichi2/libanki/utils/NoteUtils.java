@@ -24,7 +24,7 @@ import java.util.List;
 public class NoteUtils {
 
     /** Set the set tags of currentNote to tagsList.  We make no
-     assumption on the content of tagsList, appart that its strings
+     assumption on the content of tagsList, except that its strings
      are valid tags (i.e. no spaces in it).*/
     public static void setTags(Note currentNote, List<String> tagsList) {
         String[] currentTags = currentNote.getTags().toArray(new String[0]);
