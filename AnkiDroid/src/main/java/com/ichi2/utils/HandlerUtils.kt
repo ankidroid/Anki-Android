@@ -76,10 +76,10 @@ object HandlerUtils {
      * Execute a function after a certain delay.
      * This will run on the main thread if called from the main thread.
      *
-     * @param function The function which needs to be executed.
      * @param time The time by which the function execution needs to be delayed.
+     * @param function The function which needs to be executed.
      */
-    fun executeFunctionWithDelay(function: () -> Unit, time: Long) {
+    fun executeFunctionWithDelay(time: Long, function: () -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 function()
