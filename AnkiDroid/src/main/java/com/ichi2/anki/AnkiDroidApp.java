@@ -283,7 +283,7 @@ public class AnkiDroidApp extends Application {
 
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
-            Timber.plant(new DebugTree());
+//            Timber.plant(new DebugTree());
             setDebugACRAConfig(preferences);
 
             List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
