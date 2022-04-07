@@ -14,10 +14,10 @@ Please avoid recreating variables if possible. Uses a `static final` variable to
 If you need to access the collection in your test you may extend the `RobolectricTest` class (more details below). Then you must access the collection by `getCol()`. You'll get a freshly initialized collection in each unit test, that is, only the default deck, no card... On the embedded test you'll get the device real collection, so any change you make here could have impact on the collection, or could fail if for some reason there was an interaction between the real collection and the tests. E.g. better make a backup of/rename your "ankidroid" folder before running the tests.
 
 ## Testing hypothesis
-Methods are only tested with inputs that they are supposed to accept. You can refer to javadoc and annotations to check what the method is supposed to accept. In the absence of javadoc or `@NonNull`/`@Nullable` annotations, you are encouraged to add them. As an example, if a method is noted to accept only `@NonNull` value, we do not test it with "null" value. Similarly, if a function takes an argument a "card type" value, we know it's a value between 0 and 3 and we do not test it on other values. 
+Methods are only tested with inputs that they are supposed to accept. You can refer to a method documentation, type and annotations to check what the method is supposed to accept. For example if a function takes an argument a "card type" value, we know it's a value between 0 and 3 and we do not test it on other values. 
 
 ### Null
-If a method parameter is annotated with `@NonNull`, we do not want a test to send it a `null` value. On the other hand if it is annotated with `@Nullable` we want to have test checking the case where the value is `null`. If there is no annotation and the type is not a scalar, then it is good practice to add the annotation. 
+If a method parameter is annotated with `@NonNull`, we do not want a test to send it a `null` value. On the other hand if it is annotated with `@Nullable` (in Java) or has a type ending with "?" (in Kotlin) we want to have test checking the case where the value is `null`. In a Java file, if there is no annotation and the type is not a scalar, then it is good practice to add the annotation or to [migrate](https://github.com/ankidroid/Anki-Android/blob/main/docs/kotlin-migration.md) the file to Kotlin
 
 ## Time
 Unit tests are run with simulated time. The collection is created the 7th of August 2020 at 7 hour, UTC. Each time the time is checked, it advanced by 10 milliseconds. You can also use 
@@ -40,7 +40,7 @@ Many of the tests rely on Android APIs or on having the collection database avai
 
 The general pattern here is to then create a test data scaffold in the new collection, execute the code under test, then verify the test data has been altered in the way you expect with assertions
 
-There are also facilities (provided by Robolectric) to start Activities and very correct behavior during the Android Activity Lifecycle (for instance to make sure code works across pause/resume) and the ability to access View elements to verify UI behavior.
+There are also facilities (provided by Robolectric) to start Activities and verify correct behavior during the Android Activity Lifecycle (for instance to make sure code works across pause/resume) and the ability to access View elements to verify UI behavior.
 
 ## On-Device Tests
 
