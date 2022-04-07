@@ -136,6 +136,7 @@ import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Computation;
+import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
@@ -957,6 +958,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     @Override
+    @KotlinCleanup("once in Kotlin: use HandlerUtils.executeFunctionWithDelay")
     public void onBackPressed() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (isDrawerOpen()) {
