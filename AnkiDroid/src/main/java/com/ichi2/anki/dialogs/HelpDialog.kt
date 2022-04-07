@@ -203,11 +203,13 @@ object HelpDialog {
     }
 
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
-        @KotlinCleanup("lateinit var")
-        private val mFunc: ActivityConsumer?
 
-        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer?) : super(titleRes, iconRes, analyticsRes) {
-            mFunc = func
+        private lateinit var mFunc: ActivityConsumer
+
+        constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer) : super(titleRes, iconRes, analyticsRes) {
+            if (func != null) {
+                mFunc = func
+            }
         }
 
         override fun onClicked(activity: AnkiActivity) {
@@ -215,7 +217,7 @@ object HelpDialog {
         }
 
         private constructor(`in`: Parcel) : super(`in`) {
-            mFunc = `in`.readSerializable() as ActivityConsumer?
+            mFunc = `in`.readSerializable() as ActivityConsumer
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {
@@ -227,9 +229,7 @@ object HelpDialog {
             dest.writeSerializable(mFunc)
         }
 
-        @FunctionalInterface
-        @KotlinCleanup("Change to Kotlin Functional Interface")
-        interface ActivityConsumer : Serializable {
+        fun interface ActivityConsumer : Serializable {
             fun consume(activity: AnkiActivity)
         }
 
