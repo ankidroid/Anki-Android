@@ -207,9 +207,7 @@ object HelpDialog {
         private lateinit var mFunc: ActivityConsumer
 
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer) : super(titleRes, iconRes, analyticsRes) {
-            if (func != null) {
                 mFunc = func
-            }
         }
 
         override fun onClicked(activity: AnkiActivity) {
