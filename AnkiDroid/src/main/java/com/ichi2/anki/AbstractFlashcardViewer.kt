@@ -28,9 +28,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.SystemClock
+import android.os.*
 import android.text.TextUtils
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -632,6 +630,12 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
                 showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true)
             }
             mBackButtonPressedToReturn = true
+            Handler(Looper.getMainLooper()).postDelayed(
+                Runnable {
+                    mBackButtonPressedToReturn = false
+                },
+                Consts.SHORT_TOAST_DURATION
+            )
         }
     }
 
