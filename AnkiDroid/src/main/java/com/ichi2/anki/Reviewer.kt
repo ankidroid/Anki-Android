@@ -618,16 +618,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.Direction.START)
     }
 
-    override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
-        postOnNewHandler {
-            for (i in 0 until menu.size()) {
-                val menuItem = menu.getItem(i)
-                shouldUseDefaultColor(menuItem)
-            }
-        }
-        return super.onMenuOpened(featureId, menu)
-    }
-
     /**
      * This Method changes the color of icon if user taps in overflow button.
      */
@@ -771,7 +761,17 @@ open class Reviewer : AbstractFlashcardViewer() {
         suspend_icon.icon.mutate().alpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
+        setMenuIconsColor(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setMenuIconsColor(menu: Menu) {
+        postOnNewHandler {
+            for (i in 0 until menu.size()) {
+                val menuItem = menu.getItem(i)
+                shouldUseDefaultColor(menuItem)
+            }
+        }
     }
 
     @SuppressLint("RestrictedApi")
