@@ -38,6 +38,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 
@@ -119,6 +121,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
@@ -970,6 +973,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     UIUtils.showThemedToast(this, getString(R.string.back_pressed_once), true);
                 }
                 mBackButtonPressedToExit = true;
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBackButtonPressedToExit = false;
+                    }
+                }, Consts.SHORT_TOAST_DURATION);
             }
         }
     }
