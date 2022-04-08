@@ -48,8 +48,8 @@ class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
-    private lateinit var mProgressDialog: MaterialDialog
-    lateinit var toolbar: Toolbar
+    private var mProgressDialog: MaterialDialog? = null
+    var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
     private fun switchToState(newState: Int) {
@@ -58,13 +58,17 @@ class MyAccount : AnkiActivity() {
                 val username = AnkiDroidApp.getSharedPrefs(baseContext).getString("username", "")
                 mUsernameLoggedIn.text = username
                 toolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar)
-                toolbar.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                if (toolbar != null) {
+                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                }
                 setSupportActionBar(toolbar)
                 setContentView(mLoggedIntoMyAccountView)
             }
             STATE_LOG_IN -> {
                 toolbar = mLoginToMyAccountView.findViewById(R.id.toolbar)
-                toolbar.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                if (toolbar != null) {
+                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                }
                 setSupportActionBar(toolbar)
                 setContentView(mLoginToMyAccountView)
             }
@@ -253,7 +257,7 @@ class MyAccount : AnkiActivity() {
 
         override fun onPreExecute() {
             Timber.d("loginListener.onPreExecute()")
-            if (!mProgressDialog.isShowing) {
+            if (mProgressDialog != null || !mProgressDialog!!.isShowing) {
                 mProgressDialog = StyledProgressDialog.show(
                     this@MyAccount, null,
                     resources.getString(R.string.alert_logging_message), false
@@ -262,7 +266,9 @@ class MyAccount : AnkiActivity() {
         }
 
         override fun onPostExecute(data: Connection.Payload) {
-            mProgressDialog.dismiss()
+            if (mProgressDialog != null) {
+                mProgressDialog!!.dismiss()
+            }
             if (data.success) {
                 Timber.i("User successfully logged in!")
                 saveUserInformation(data.data[0] as String, data.data[1] as String)
