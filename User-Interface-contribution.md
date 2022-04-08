@@ -5,6 +5,8 @@ As a general rule, we are conservatives and avoid changes. Almost every UI chang
 
 It’s easy for a lot of people to have an opinion on UI changes as they are very visible, and this leads to long discussions. We want to avoid this as we are currently time-constrained, since March 2021 we have a lot of active contributors, we must select a Google Summer of Code student, and we have little time left.
 
+Similarly nearly every change results in complaints from existing users that are used to the existing style, and even PRs from the community to turn the change into an option. Meaning we would have two styles to maintain forever if we accept the PR. So ours have demonstrated in their reviews and their actions (via PRs) they feel a real cost and many prefer there are now UI/UX changes.
+
 Here is a list of things that matter to us and may justify a rejection of a change
 
 # Criterias we take into consideration
@@ -19,7 +21,7 @@ AnkiDroid is available in 90+ languages. If any image/media contains hard-coded 
 We have users all around the world. In some places, internet access is expensive and devices do not have a lot of storage. We try to keep the app as small as possible. Any changes that increase the app size considerably, in particular adding images, sound and/or videos will probably be rejected unless there is an excellent reason for it. For example, we would prefer to link to a YouTube video rather than embed it in the app.
 
 ## Day and night
-AnkiDroid has a night mode toggle. We require screenshots in both modes as soon as we suspect one mode may break.
+AnkiDroid has multiple color themes. We require screenshots in both modes as soon as we suspect one mode may break.
 
 ## Screen size
 Some devices have very small screens. A lot of windows list elements one above the other, e.g. card in browser, deck in deck picker, fields in note editor. It means that if you increase the size of an element, less elements can be displayed at once. It can be an acceptable tradeoff but must be clearly explained.
@@ -34,7 +36,10 @@ Some users install AnkiDroid on e-ink devices. Those devices take time to displa
 Some of our users have phones with low memory, disk space and processor speed which would be considered low compared to latest models. We still want AnkiDroid to run smoothly to them. Any UX change that requires significant computing resources would be unacceptable.
 
 ## Accessibility
-AnkiDroid aims to be accessible and any change that is made should improve accessibility. We will ask you to check with accessibility tools that your change does not create any easy to detect accessibility issues. Ensure that no new issues are introduced.
+AnkiDroid aims to be accessible and any change that is made should improve accessibility. We will ask you to check with accessibility tools (like the [Accessibility Scanner](https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor) app) to ensure your change does not create any easy to detect accessibility issues. Ensure that no new issues are introduced.
+
+## Design
+We do our best to follow [Material Design](https://material.io) guidelines. Ideas that do not adhere to those standards will likely not be considered as they will not have the correct UI/UX experience on the platform.
 
 # Changes we may accept
 
@@ -55,6 +60,9 @@ If any other change is required for ease of use in a non-english speaking langua
 AnkiDroid does not yet satisfy accessibility criteria. If you make a change for accessibility reasons, we may consider it. We will still ask you to do the minimal change that allows the app to satisfy accessibility criteria. We also require you to explain which criteria is not satisfied so that we can check ourselves whether your solution is the best one. 
 
 This explanation can be either an automated accessibility tool. It can also be a free document about best practices, that our UX clearly violates.
+
+## Design
+These are accepted more rarely, but if there is an easily demonstrated difference between our design guidelines and the way the app is behaving, and we judge in our *opinion* that correcting the difference will benefit most users with as few irritated users as possible, we may accept a design change.
 
 ## Typo
 Feel free to correct any typos and other obvious mistakes. As an example, a user noted that a window had an empty title instead of having no title. Correcting it decreased the space used by the window, which is a clear win for users with small phones.
