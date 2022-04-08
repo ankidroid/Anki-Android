@@ -733,7 +733,7 @@ class Preferences : AnkiActivity() {
                 languageDialogLabels[0] = resources.getString(R.string.language_system)
                 languageDialogValues[0] = ""
                 val itemsList = items.toList()
-                for (i in 1..items.size) {
+                for (i in 1..itemsList.size) {
                     languageDialogLabels[i] = itemsList[i - 1].first
                     languageDialogValues[i] = itemsList[i - 1].second
                 }
