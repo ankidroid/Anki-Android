@@ -16,8 +16,7 @@
 
 package com.ichi2.libanki.sched
 
-import com.ichi2.utils.KotlinCleanup
-import java.util.*
+
 
 /**
  * Represents the three counts shown in deck picker and reviewer. Semantically more meaningful than int[]
