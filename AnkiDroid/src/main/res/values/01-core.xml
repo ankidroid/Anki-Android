@@ -34,6 +34,9 @@
     <string name="studyoptions_eta">Estimated time (min):</string>
     <string name="studyoptions_start">Study</string>
 
+    <!-- App shortcuts menu label -->
+    <string name="study_now" comments="Label of the app shortcut which reopens the study screen of the last opened deck" >Study now</string>
+
     <!-- DeckPicker.java -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
