@@ -28,7 +28,7 @@ public class StdModels {
     @StringRes
     private final int mDefaultName;
     /**
-     * Funtion creating the standard model. Needs to be a funtion to take the local language into account.
+     * Function creating the standard model. Needs to be a function to take the local language into account.
      */
     private final CreateStdModels mFun;
 

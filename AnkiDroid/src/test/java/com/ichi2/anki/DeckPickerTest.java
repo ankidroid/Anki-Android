@@ -306,7 +306,7 @@ public class DeckPickerTest extends RobolectricTest {
 
     @Test
     public void deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
-        // Refactor: It would be much better to use a spy - see if we can get this into Robolecteic
+        // Refactor: It would be much better to use a spy - see if we can get this into Robolectric
         try {
             InitialActivityWithConflictTest.grantWritePermissions();
             BackupManagerTestUtilities.setupSpaceForBackup(getTargetContext());

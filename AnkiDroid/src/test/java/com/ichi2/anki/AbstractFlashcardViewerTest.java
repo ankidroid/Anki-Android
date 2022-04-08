@@ -151,19 +151,19 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // as JS can call this function with arbitrary data.
         String url = "typeblurtext:%";
 
-        NonAbstractFlashcardViewer nafv = getViewer();
-        AnkiAssert.assertDoesNotThrow(() -> nafv.handleUrlFromJavascript(url));
+        NonAbstractFlashcardViewer viewer = getViewer();
+        AnkiAssert.assertDoesNotThrow(() -> viewer.handleUrlFromJavascript(url));
     }
 
     @Test
     public void validEncodingSetsAnswerCorrectly() {
         //你好%
         String url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25";
-        NonAbstractFlashcardViewer nafv = getViewer();
+        NonAbstractFlashcardViewer viewer = getViewer();
 
-        nafv.handleUrlFromJavascript(url);
+        viewer.handleUrlFromJavascript(url);
 
-        assertThat(nafv.getTypedInput(), is("你好%"));
+        assertThat(viewer.getTypedInput(), is("你好%"));
     }
 
     @Test
@@ -171,22 +171,22 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // 7363
        addNoteUsingBasicTypedModel("Hello", "World");
 
-        NonAbstractFlashcardViewer nafv = getViewer();
+        NonAbstractFlashcardViewer viewer = getViewer();
 
-        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+        assertThat(viewer.getCorrectTypedAnswer(), is("World"));
 
         waitForAsyncTasksToComplete();
 
-        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+        AbstractFlashcardViewer.setEditorCard(viewer.mCurrentCard);
 
-        Note note = nafv.mCurrentCard.note();
+        Note note = viewer.mCurrentCard.note();
         note.setField(1, "David");
 
-        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
 
         waitForAsyncTasksToComplete();
 
-        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
+        assertThat(viewer.getCorrectTypedAnswer(), is("David"));
     }
 
     @Test
@@ -194,28 +194,28 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World");
 
-        NonAbstractFlashcardViewer nafv = getViewer();
+        NonAbstractFlashcardViewer viewer = getViewer();
 
-        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+        assertThat(viewer.getCorrectTypedAnswer(), is("World"));
 
-        nafv.displayCardAnswer();
+        viewer.displayCardAnswer();
 
-        assertThat(nafv.getCardContent(), containsString("World"));
+        assertThat(viewer.getCardContent(), containsString("World"));
 
         waitForAsyncTasksToComplete();
 
-        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+        AbstractFlashcardViewer.setEditorCard(viewer.mCurrentCard);
 
-        Note note = nafv.mCurrentCard.note();
+        Note note = viewer.mCurrentCard.note();
         note.setField(1, "David");
 
-        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
 
         waitForAsyncTasksToComplete();
 
-        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
-        assertThat(nafv.getCardContent(), not(containsString("World")));
-        assertThat(nafv.getCardContent(), containsString("David"));
+        assertThat(viewer.getCorrectTypedAnswer(), is("David"));
+        assertThat(viewer.getCardContent(), not(containsString("World")));
+        assertThat(viewer.getCardContent(), containsString("David"));
     }
 
     @Test

@@ -92,7 +92,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
     }
 
     // original code from https://github.com/stleary/JSON-java/blob/master/JSONObject.java
-    // super() must be first instruction, thus it can't be in a try, and the exception can't be catched
+    // super() must be first instruction, thus it can't be in a try, and the exception can't be caught
     public JSONObject(JSONTokener x) {
         this();
         try {
@@ -170,7 +170,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     /**
         Iters on the keys. (Similar to iteration in Python's
-        dictionnary.
+        dictionary.
     */
     @NonNull
     public Iterator<String> iterator() {
@@ -184,7 +184,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
      * there should be no instance of JSONObject or JSONArray which is not a JSONObject or JSONArray.
      *
      * In theory, it would be easy to create a JSONObject similar to a JSONObject. It would suffices to iterate over key and add them here. But this would create two distinct objects, and update here would not be reflected in the initial object. So we must avoid this method.
-     * Since the actual map in JSONObject is private, the child class can't edit it directly and can't access it. Which means that there is no easy way to create a JSONObject with the same underlying map. Unless the JSONObject was saved in a variable here. Which would entirely defeat the purpose of inheritence.
+     * Since the actual map in JSONObject is private, the child class can't edit it directly and can't access it. Which means that there is no easy way to create a JSONObject with the same underlying map. Unless the JSONObject was saved in a variable here. Which would entirely defeat the purpose of inheritance.
      *
      * @param obj A json object
      * @return Exactly the same object, with a different type.

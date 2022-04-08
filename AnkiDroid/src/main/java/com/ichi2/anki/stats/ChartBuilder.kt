@@ -80,7 +80,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             return null
         }
         val rect = RectangleWrap(width, height)
-        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData)?.getmStandardTextSize() ?: 10f) * 0.85f
+        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData)?.standardTextSize ?: 10f) * 0.85f
         paint.textSize = textSize
         val fontHeight = paint.textSize
         val desiredPixelDistanceBetweenTicks = (paint.measureText("100000") * 2.6f).roundToInt()

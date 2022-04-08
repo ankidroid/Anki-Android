@@ -70,7 +70,7 @@ object DebugInfoService {
         try {
             return WebView(context).settings.userAgentString
         } catch (e: Throwable) {
-            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occured while extracting webview user agent")
+            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occurred while extracting webview user agent")
         }
         return null
     }

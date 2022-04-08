@@ -360,8 +360,8 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
                             continue
                         }
                         if (meaning.language!!.contentEquals(desiredLang)) {
-                            val unescappedString = Utils.unescape(meaning.text)
-                            res.add(unescappedString)
+                            val unescapedString = Utils.unescape(meaning.text)
+                            res.add(unescapedString)
                         }
                     }
                 }
@@ -371,8 +371,8 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
                         continue
                     }
                     if (phrase.language!!.contentEquals(desiredLang)) {
-                        val unescappedString = Utils.unescape(phrase.text)
-                        res.add(unescappedString)
+                        val unescapedString = Utils.unescape(phrase.text)
+                        res.add(unescapedString)
                     }
                 }
             }

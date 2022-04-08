@@ -63,7 +63,7 @@ public abstract class UndoAction {
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
-     * It's the caller reponsability to clone the object if necessary.*/
+     * It's the caller responsibility to clone the object if necessary.*/
     public UndoAction(@StringRes @UNDO_NAME_ID int undoNameId) {
         mUndoNameId = undoNameId;
     }
