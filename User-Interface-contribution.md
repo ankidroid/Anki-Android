@@ -48,14 +48,19 @@ A change that’s related to the first use of AnkiDroid and helps users understa
 
 ## Localization
 If for some reason our current choices do not work well for non-English users, we may accept change. For example, at the time I write this, people are working to improve the right-to-left experience for people using their app mainly in a RTL language. 
+
 If any other change is required for ease of use in a non-english speaking language, please discuss it with us.
 
 ## Accessibility
 AnkiDroid does not yet satisfy accessibility criteria. If you make a change for accessibility reasons, we may consider it. We will still ask you to do the minimal change that allows the app to satisfy accessibility criteria. We also require you to explain which criteria is not satisfied so that we can check ourselves whether your solution is the best one. 
+
 This explanation can be either an automated accessibility tool. It can also be a free document about best practices, that our UX clearly violates.
 
 ## Typo
-Feel free to correct any typos and other obvious mistakes. As an example, a user noted that a window had an empty title instead of having no title. Correcting it decreased the space used by the window, which is a clear win for users with small phones. 
+Feel free to correct any typos and other obvious mistakes. As an example, a user noted that a window had an empty title instead of having no title. Correcting it decreased the space used by the window, which is a clear win for users with small phones.
+
+## Guidelines and consistency with Android
+AnkiDroid should not be surprising the user. If we do not follow an Android guideline, if we behave differently from other standard Android application, it's okay to correct AnkiDroid behavior. Please either provide the guideline, or an example of Android application that shows the change you intend to make.
 
 ## Small improvements
 It is hard to describe precisely what a small improvement is. In general, it is change that improves a feature and presents no trade off, that won’t make the experience worse for any criteria mentioned above. Examples are simpler to give:
