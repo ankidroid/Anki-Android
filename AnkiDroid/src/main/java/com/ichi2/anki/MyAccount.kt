@@ -60,16 +60,16 @@ class MyAccount : AnkiActivity() {
                 toolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar)
                 if (toolbar != null) {
                     toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(toolbar)
                 }
-                setSupportActionBar(toolbar)
                 setContentView(mLoggedIntoMyAccountView)
             }
             STATE_LOG_IN -> {
                 toolbar = mLoginToMyAccountView.findViewById(R.id.toolbar)
                 if (toolbar != null) {
                     toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(toolbar)
                 }
-                setSupportActionBar(toolbar)
                 setContentView(mLoginToMyAccountView)
             }
         }
