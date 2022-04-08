@@ -107,26 +107,24 @@ class MyAccount : AnkiActivity() {
         if (username.isEmpty() || password.isEmpty()) {
             Timber.i("Auto-login cancelled - username/password missing")
             return
-        } else {
-            Timber.i("Attempting auto-login")
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username, password,
-                        getInstance(this)
-                    )
+        }
+        Timber.i("Attempting auto-login")
+        Connection.login(
+            mLoginListener,
+            Connection.Payload(
+                arrayOf(
+                    username, password,
+                    getInstance(this)
                 )
             )
-        }
+        )
     }
 
     private fun saveUserInformation(username: String, hkey: String) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         preferences.edit {
-            this.putString("username", username)
-            this.putString("hkey", hkey)
-            this.apply()
+            putString("username", username)
+            putString("hkey", hkey)
         }
     }
 
@@ -163,9 +161,8 @@ class MyAccount : AnkiActivity() {
     private fun logout() {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         preferences.edit {
-            this.putString("username", "")
-            this.putString("hkey", "")
-            this.apply()
+            putString("username", "")
+            putString("hkey", "")
         }
         getInstance(this).reset()
         //  force media resync on deauth
@@ -288,7 +285,7 @@ class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (result != null && result.isNotEmpty() && result[0] is Exception) {
+                    if (!result.isNullOrEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage(result[0] as Exception), false)
                     } else {
                         showSimpleSnackbar(this@MyAccount, message, false)
