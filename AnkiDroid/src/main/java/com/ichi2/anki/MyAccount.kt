@@ -229,7 +229,7 @@ class MyAccount : AnkiActivity() {
 
     private fun showLoginLogMessage(@StringRes messageResource: Int, loginMessage: String?) {
         run {
-            if (!loginMessage.isNullOrEmpty()) {
+            if (loginMessage.isNullOrEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     // val root = this.findViewById<View>(R.id.root_layout)
