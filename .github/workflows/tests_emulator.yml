@@ -146,7 +146,7 @@ jobs:
         shell: bash
 
       - name: Upload Emulator Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: adb_logs
