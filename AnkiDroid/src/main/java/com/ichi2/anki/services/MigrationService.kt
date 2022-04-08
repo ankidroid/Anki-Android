@@ -238,9 +238,9 @@ class MigrationService : Service() {
      *
      * See: https://developer.android.com/guide/components/bound-services#Binder
      */
-    inner class LocalBinder : Binder() {
+    inner class LocalBinder : Binder(), SimpleBinder<MigrationService> {
         @Suppress("unused")
-        fun getService(): MigrationService = this@MigrationService
+        override fun getService(): MigrationService = this@MigrationService
     }
 
     override fun onBind(intent: Intent): IBinder = LocalBinder()
