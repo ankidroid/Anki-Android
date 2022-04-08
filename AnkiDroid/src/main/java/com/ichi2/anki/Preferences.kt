@@ -720,7 +720,6 @@ class Preferences : AnkiActivity() {
             initializeLanguageDialog(screen)
         }
 
-        @KotlinCleanup("iteration with i")
         private fun initializeLanguageDialog(screen: PreferenceScreen) {
             val languageSelection = screen.findPreference<ListPreference>(LANGUAGE)
             if (languageSelection != null) {
@@ -733,11 +732,9 @@ class Preferences : AnkiActivity() {
                 val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
                 languageDialogLabels[0] = resources.getString(R.string.language_system)
                 languageDialogValues[0] = ""
-                var i = 1
-                for ((key, value) in items) {
-                    languageDialogLabels[i] = key
-                    languageDialogValues[i] = value
-                    i++
+                for (i in 1..items.size) {
+                    languageDialogLabels[i] = items.toList()[i - 1].first
+                    languageDialogValues[i] = items.toList()[i - 1].second
                 }
 
                 languageSelection.entries = languageDialogLabels
